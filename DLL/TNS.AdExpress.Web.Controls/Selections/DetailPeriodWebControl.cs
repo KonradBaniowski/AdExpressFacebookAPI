@@ -195,9 +195,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
             #region Variables
             StringBuilder t = new System.Text.StringBuilder();
-            ArrayList detailSelections = null;
             Dictionary<WebConstantes.DetailSelection.Type, string> tdList = new Dictionary<WebConstantes.DetailSelection.Type, string>();
             string tmpHTML = string.Empty;
+            string colSpan = "8";
+            bool addSpace = false;
             #endregion
 
             try {
@@ -206,20 +207,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 t.Append("<div align=\"left\"><table class=\"" + CssBackgroundColor + "\" cellpadding=2 cellspacing=0>");
                 #endregion
 
-                //_webSession.CustomerLogin.ModuleList();
                 TNS.AdExpress.Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
                 if (currentModule.Id == WebConstantes.Module.Name.TENDACES
                     || (currentModule.Id == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE && _webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)) return "";
                 
-
-                try {
-                    detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
-                }
-                catch (System.Exception) {
-                    if (currentModule.Id == WebConstantes.Module.Name.ALERTE_PORTEFEUILLE)
-                        detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
-                }
-
                 if (_webSession.isDatesSelected()) {
                     tmpHTML = GetDateSelected(_webSession, currentModule, _dateFormatText, _periodBeginning, _periodEnd);
                     if (tmpHTML.Length > 0)
@@ -287,63 +278,34 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     }
                 }
 
-                /*foreach (int currentType in detailSelections) {
-                    switch ((WebConstantes.DetailSelection.Type)currentType) {
-                        case WebConstantes.DetailSelection.Type.dateSelected:
-                            tmpHTML = GetDateSelected(_webSession, currentModule, _dateFormatText, _periodBeginning, _periodEnd);
-                            if(tmpHTML.Length>0)
-                                tdList.Add(WebConstantes.DetailSelection.Type.dateSelected, tmpHTML);
-                            break;
-                        case WebConstantes.DetailSelection.Type.studyDate:
-                            tmpHTML = GetStudyDate(_webSession);
-                            if(tmpHTML.Length>0)
-                                tdList.Add(WebConstantes.DetailSelection.Type.studyDate, tmpHTML);
-                            break;
-                        case WebConstantes.DetailSelection.Type.comparativeDate:
-                            tmpHTML = GetComparativeDate(_webSession);
-                            if (tmpHTML.Length > 0)
-                                tdList.Add(WebConstantes.DetailSelection.Type.comparativeDate, tmpHTML);
-                            break;
-                        case WebConstantes.DetailSelection.Type.comparativePeriodType:
-                            tmpHTML = GetComparativePeriodTypeDetail(_webSession);
-                            if (tmpHTML.Length > 0)
-                                tdList.Add(WebConstantes.DetailSelection.Type.comparativePeriodType, tmpHTML);
-                            break;
-                        case WebConstantes.DetailSelection.Type.periodDisponibilityType:
-                            tmpHTML = GetPeriodDisponibilityTypeDetail(_webSession);
-                            if (tmpHTML.Length > 0)
-                                tdList.Add(WebConstantes.DetailSelection.Type.periodDisponibilityType, tmpHTML);
-                            break;
-                        default:
-                            break;
-                    }
-                }*/
-
                 t.Append("<tr>");
-                t.Append(tdList[WebConstantes.DetailSelection.Type.dateSelected]);
-                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.comparativePeriodType))
-                    t.Append(tdList[WebConstantes.DetailSelection.Type.comparativePeriodType]);
-                t.Append("</tr>");
-
-                t.Append("<tr>");
-                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.studyDate))
+                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.dateSelected) && !tdList.ContainsKey(WebConstantes.DetailSelection.Type.studyDate))
+                    t.Append(tdList[WebConstantes.DetailSelection.Type.dateSelected]);
+                else if(tdList.ContainsKey(WebConstantes.DetailSelection.Type.studyDate))
                     t.Append(tdList[WebConstantes.DetailSelection.Type.studyDate]);
-                else if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.comparativeDate))
+
+                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.comparativeDate))
                     t.Append(tdList[WebConstantes.DetailSelection.Type.comparativeDate]);
-                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.periodDisponibilityType))
-                    t.Append(tdList[WebConstantes.DetailSelection.Type.periodDisponibilityType]);
                 t.Append("</tr>");
 
                 t.Append("<tr>");
-                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.studyDate) && tdList.ContainsKey(WebConstantes.DetailSelection.Type.comparativeDate))
-                    t.Append(tdList[WebConstantes.DetailSelection.Type.comparativeDate]);
+                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.studyDate)) {
+                    t.Append(tdList[WebConstantes.DetailSelection.Type.dateSelected]);
+                    colSpan = "4";
+                    addSpace = true;
+                }
+
+                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.comparativePeriodType) && tdList.ContainsKey(WebConstantes.DetailSelection.Type.periodDisponibilityType))
+                    t.Append("<td colspan=" + colSpan + " " + cssTitleData + "><font " + cssTitle + ">" + (addSpace  ? "&nbsp;" : "") + GestionWeb.GetWebWord(3001, _webSession.SiteLanguage) + " : </font>&nbsp; " + tdList[WebConstantes.DetailSelection.Type.comparativePeriodType] + "&nbsp;-&nbsp;"
+                                + tdList[WebConstantes.DetailSelection.Type.periodDisponibilityType] + "</td>");
+                else if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.comparativePeriodType))
+                    t.Append("<td colspan=" + colSpan + " " + cssTitleData + "><font " + cssTitle + ">" + (addSpace ? "&nbsp;" : "") + GestionWeb.GetWebWord(3002, _webSession.SiteLanguage) + " : </font>&nbsp; " + tdList[WebConstantes.DetailSelection.Type.comparativePeriodType] + "</td>");
+                else if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.periodDisponibilityType))
+                    t.Append("<td colspan=" + colSpan + " " + cssTitleData + "><font " + cssTitle + ">" + (addSpace ? "&nbsp;" : "") + GestionWeb.GetWebWord(3002, _webSession.SiteLanguage) + " : </font>&nbsp; " + tdList[WebConstantes.DetailSelection.Type.periodDisponibilityType] + "</td>");
+
                 t.Append("</tr>");
 
-                //t.Append(GetBlankLine());
                 t.Append("</table></div><br>");
-
-                // On libère htmodule pour pouvoir le sauvegarder dans les tendances
-                //_webSession.CustomerLogin.HtModulesList.Clear();
 
                 return Convertion.ToHtmlString(t.ToString());
             }
@@ -376,37 +338,37 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 startDate = WebFunctions.Dates.getPeriodTxt(webSession, webSession.DetailPeriodBeginningDate);
                 endDate = WebFunctions.Dates.getPeriodTxt(webSession, webSession.DetailPeriodEndDate);
 
-                html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font> " + startDate);
+                html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font>&nbsp; " + startDate);
                 if (!startDate.Equals(endDate))
                     html.Append(" - " + endDate);
-                html.Append("</td>");
+                html.Append("&nbsp;</td>");
             }
             else {
                 if (dateFormatText) {
                     startDate = WebFunctions.Dates.getPeriodTxt(webSession, webSession.PeriodBeginningDate);
                     endDate = WebFunctions.Dates.getPeriodTxt(webSession, webSession.PeriodEndDate);
 
-                    html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font> " + startDate);
+                    html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font>&nbsp; " + startDate);
                     if (!startDate.Equals(endDate))
                         html.Append(" - " + endDate);
-                    html.Append("</td>");
+                    html.Append("&nbsp;</td>");
                 }
                 else {
                     if (periodBeginning.Length == 0 || periodEnd.Length == 0) {
                         startDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType), webSession.SiteLanguage);
                         endDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType), webSession.SiteLanguage);
 
-                        html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font> " + startDate);
+                        html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font>&nbsp; " + startDate);
                         if (!startDate.Equals(endDate))
                             html.Append(" - " + endDate);
-                        html.Append("</td>");
+                        html.Append("&nbsp;</td>");
                     }
                     else {
                         // Predefined date
                         startDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType), webSession.SiteLanguage);
                         endDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(periodEnd, webSession.PeriodType), webSession.SiteLanguage);
 
-                        html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font> " + startDate);
+                        html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font>&nbsp; " + startDate);
                         if (!startDate.Equals(endDate))
                             html.Append(" - " + endDate);
                         html.Append("</td>");
@@ -434,10 +396,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 startDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.StartDate.ToString(), webSession.SiteLanguage);
                 endDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.EndDate.ToString(), webSession.SiteLanguage);
 
-                html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2291, webSession.SiteLanguage) + " </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + startDate);
+                html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2291, webSession.SiteLanguage) + " </font>&nbsp; " + startDate);
                 if (!startDate.Equals(endDate))
                     html.Append(" - " + endDate);
-                html.Append("</td>");
+                html.Append("&nbsp;</td>");
 
             }
 
@@ -479,10 +441,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 endDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
             }
 
-            //startDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeStartDate.ToString(), webSession.SiteLanguage);
-            //endDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
-
-            html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2292, webSession.SiteLanguage) + " </font>&nbsp; " + startDate);
+            html.Append("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">&nbsp;" + GestionWeb.GetWebWord(2292, webSession.SiteLanguage) + " </font>&nbsp; " + startDate);
             if (!startDate.Equals(endDate))
                 html.Append(" - " + endDate);
             html.Append("</td>");
@@ -509,9 +468,9 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
             switch (comparativePeriodType) {
                 case WebConstantes.globalCalendar.comparativePeriodType.comparativeWeekDate:
-                    return ("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2293, webSession.SiteLanguage) + "</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + GestionWeb.GetWebWord(2295, webSession.SiteLanguage) + "</td>");
+                    return (GestionWeb.GetWebWord(2295, webSession.SiteLanguage));
                 case WebConstantes.globalCalendar.comparativePeriodType.dateToDate:
-                    return ("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2293, webSession.SiteLanguage) + "</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + GestionWeb.GetWebWord(2294, webSession.SiteLanguage) + "</td>");
+                    return (GestionWeb.GetWebWord(2294, webSession.SiteLanguage));
                 default:
                     return "";
             }
@@ -529,9 +488,9 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
             switch (webSession.CustomerPeriodSelected.PeriodDisponibilityType) {
                 case WebConstantes.globalCalendar.periodDisponibilityType.currentDay:
-                    return ("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2296, webSession.SiteLanguage) + "</font> " + GestionWeb.GetWebWord(2297, webSession.SiteLanguage) + "</td>");
+                    return (GestionWeb.GetWebWord(2297, webSession.SiteLanguage));
                 case WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod:
-                    return ("<td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2296, webSession.SiteLanguage) + "</font> " + GestionWeb.GetWebWord(2298, webSession.SiteLanguage) + "</td>");
+                    return (GestionWeb.GetWebWord(2298, webSession.SiteLanguage));
                 default:
                     return "";
             }

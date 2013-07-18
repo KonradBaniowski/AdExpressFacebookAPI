@@ -2244,5 +2244,8 @@
     <item mnemonic="w2998" type="System.String">Oui</item>
     <item mnemonic="w2999" type="System.String">Non</item>
     <item mnemonic="w3000" type="System.String">Web</item>
+    <!--Add Text for Detail Period Display-->
+    <item mnemonic="w3001" type="System.String">Types</item>
+    <item mnemonic="w3002" type="System.String">Type</item>
   </items>
 </localization>
