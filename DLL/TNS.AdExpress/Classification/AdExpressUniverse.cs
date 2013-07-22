@@ -39,51 +39,56 @@ namespace TNS.AdExpress.Classification  {
 		#endregion
 
 		#region Sql Conditions
-		/// <summary>
-		/// Get sql conditions corresponding to the selected universe items
-		/// </summary>
-		/// <param name="dataTablePrefix">Current dataTable Prefix</param>
-		/// <param name="beginByAnd">Indicates if condition begin by and</param>
-		/// <returns>String sql conditions</returns>
-		public string GetSqlConditions(string dataTablePrefix, bool beginByAnd) {
+       
 
-			string sql = "";
+        /// <summary>
+        /// Get sql conditions corresponding to the selected universe items
+        /// </summary>
+        /// <param name="dataTablePrefix">Current dataTable Prefix</param>
+        /// <param name="beginByAnd">Indicates if condition begin by and</param>
+        ///<param name="replaceIds">replace classificaion items ids</param>
+        /// <returns>String sql conditions</returns>
+        public string GetSqlConditions(string dataTablePrefix, bool beginByAnd, Func<long, string, string> replaceIds=null)
+        {
 
-			//Get include elements conditions
-			sql = GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.includes);
+            string sql = "";
 
-			//Get excludes elements conditions
-			if (sql.Length > 0) beginByAnd = true;
-			sql += GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.excludes);
+            //Get include elements conditions
+            sql = GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.includes, replaceIds);
 
-			return sql;
-		}
+            //Get excludes elements conditions
+            if (sql.Length > 0) beginByAnd = true;
+            sql += GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.excludes, replaceIds);
 
-		/// <summary>
+            return sql;
+        }
+
+       
+	    /// <summary>
 		/// Get sql conditions corresponding to the selected universe items according access type (include or exclude)
 		/// </summary>
 		/// <param name="dataTablePrefix">Current dataTable Prefix</param>
 		/// <param name="beginByAnd">Indicates if condition begin by and</param>
 		/// <returns>String sql conditions</returns>
 		/// <param name="accessType">access type (include or exclude)</param>
+		/// <param name="replaceIds">replace classificaion items ids</param>
 		/// <returns></returns>
-		public string GetSqlConditions(string dataTablePrefix, bool beginByAnd, AccessType accessType) {
-			List<NomenclatureElementsGroup> listGroup = null;
-			List<long> levelList = null;
-			StringBuilder sql = new StringBuilder(3000);
+		public string GetSqlConditions(string dataTablePrefix, bool beginByAnd, AccessType accessType
+            ,Func<long,string,string> replaceIds=null) {
+		    var sql = new StringBuilder(3000);
 			bool first = true;
-			string listIds = "";
 
-			//Get include or exlucdes elements conditions
-			listGroup = (accessType == AccessType.includes) ? GetIncludes() : GetExludes();
+		    //Get include or exlucdes elements conditions
+			List<NomenclatureElementsGroup> listGroup = (accessType == AccessType.includes) 
+                ? GetIncludes() : GetExludes();
 			if (listGroup != null && listGroup.Count > 0) {
 
 				for (int i = 0; i < listGroup.Count; i++) {
 					if (listGroup[i] != null && listGroup[i].Count() > 0) {
-						levelList = listGroup[i].GetLevelIdsList();
+						List<long> levelList = listGroup[i].GetLevelIdsList();
 						for (int j = 0; j < levelList.Count; j++) {
 							//For each level collection generate the sql condition
-							listIds = listGroup[i].GetAsString(levelList[j]);
+							string listIds = listGroup[i].GetAsString(levelList[j]);
 							if (accessType == AccessType.includes) {
 								if (first) {
 									if (beginByAnd) sql.Append(" and ");
@@ -98,10 +103,11 @@ namespace TNS.AdExpress.Classification  {
 								}
 								else sql.Append(" and ");
 							}
-							if (accessType == AccessType.includes)
-								sql.Append(" " + dataTablePrefix + "." + UniverseLevels.Get(levelList[j]).DataBaseIdField + " in (" + listIds + ") ");
-							else sql.Append(" " + dataTablePrefix + "." + UniverseLevels.Get(levelList[j]).DataBaseIdField + " not in (" + listIds + ") ");
-							first = false;
+						    if (replaceIds != null) listIds = replaceIds(levelList[j], listIds);
+						    sql.AppendFormat(accessType == AccessType.includes ? " {0}.{1} in ({2}) " 
+                                : " {0}.{1} not in ({2}) ",dataTablePrefix
+						                     , UniverseLevels.Get(levelList[j]).DataBaseIdField, listIds);
+						    first = false;
 						}
 						if (!first) sql.Append(" )");
 					}

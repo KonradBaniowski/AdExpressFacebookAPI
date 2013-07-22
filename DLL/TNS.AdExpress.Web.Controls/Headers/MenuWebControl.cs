@@ -148,6 +148,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// ID label export text
         /// </summary>
         private int _textExportWebtextId = 1913;
+        /// <summary>
+        /// Use to forbid the actions to display help icon
+        /// </summary>
+        private bool _forbidHelp = false;
         #endregion
 
         #region Accesseurs
@@ -301,6 +305,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
         {
             get { return _forceRawExcel; }
             set { _forceRawExcel = value; }
+        }
+
+        /// <summary>
+        /// Use to forbid the actions to display help icon
+        /// </summary>
+        public bool ForbidHelp
+        {
+            get { return _forbidHelp; }
+            set { _forbidHelp = value; }
         }
 
         #endregion
@@ -591,11 +604,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
 
                     // Aide
-                    if (_forceHelp.IndexOf("?") > 0) _forceHelp += "&siteLanguage=" + _webSession.SiteLanguage;
-                    else _forceHelp += "?siteLanguage=" + _webSession.SiteLanguage;
-                    js.Append(this.GetExportSubMenu("helpItem", GestionWeb.GetWebWord(1988, _webSession.SiteLanguage), MAIN_MENU,
-                        "javascript:popupRecallOpen('" + _forceHelp + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "','" + HELP_PAGE_WIDTH + "','" + HELP_PAGE_HEIGHT + "');"
-                        , "helpMenuIcon"));
+                    if (!_forbidHelp)
+                    {
+                        if (_forceHelp.IndexOf("?") > 0) _forceHelp += "&siteLanguage=" + _webSession.SiteLanguage;
+                        else _forceHelp += "?siteLanguage=" + _webSession.SiteLanguage;
+                        js.Append(this.GetExportSubMenu("helpItem", GestionWeb.GetWebWord(1988, _webSession.SiteLanguage), MAIN_MENU,
+                                                        "javascript:popupRecallOpen('" + _forceHelp + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "','" + HELP_PAGE_WIDTH + "','" + HELP_PAGE_HEIGHT + "');"
+                                                        , "helpMenuIcon"));
+                    }
 
                     jsTmp = " ";
                 }
@@ -713,9 +729,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
         private string GetHelpItem(string menuObjectName)
         {
             string js = string.Empty;
-            js += "\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(1988, _webSession.SiteLanguage) + "\", \"helpItem\",\"javascript:popupRecallOpen('"
-                + ((PageInformation)_module.GetPageInformation(this.Page.Request.Url.AbsolutePath, _webSession.CurrentTab)).HelpUrl + "?siteLanguage=" + _webSession.SiteLanguage + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "','" + HELP_PAGE_WIDTH + "','" + HELP_PAGE_HEIGHT + "');\"));";
-            js += "\r\n\t\t" + menuObjectName + ".items.helpItem.showIcon(\"helpMenuIcon\", \"helpMenuIcon\");";
+            string helpUrl =
+                ((PageInformation)
+                 _module.GetPageInformation(this.Page.Request.Url.AbsolutePath, _webSession.CurrentTab)).HelpUrl;
+
+            if(!_forbidHelp && !string.IsNullOrEmpty(helpUrl))
+            {
+                js += string.Format("\r\n\t\t{0}.addMenuItem(new menuItem(\"{1}\", \"helpItem\",\"javascript:popupRecallOpen('{2}?siteLanguage={3}{4}','{5}','{6}');\"));"
+                                    , menuObjectName, GestionWeb.GetWebWord(1988, _webSession.SiteLanguage), ((PageInformation)_module.GetPageInformation(this.Page.Request.Url.AbsolutePath
+             , _webSession.CurrentTab)).HelpUrl, _webSession.SiteLanguage, ((_urlParameters.Length > 0) ? "&" + _urlParameters : ""), HELP_PAGE_WIDTH, HELP_PAGE_HEIGHT);
+                js += "\r\n\t\t" + menuObjectName + ".items.helpItem.showIcon(\"helpMenuIcon\", \"helpMenuIcon\");";
+                
+            }
             return (js);
         }
 

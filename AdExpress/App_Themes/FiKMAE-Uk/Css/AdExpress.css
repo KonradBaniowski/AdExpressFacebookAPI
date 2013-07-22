@@ -1068,6 +1068,36 @@ td.portofolioSynthesisExcel2{
 	padding-left:4px;
 	padding-right:4px;
 }
+a.portofolioSynthesis, a.portofolioSynthesis:active, a.portofolioSynthesis:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 13px;
+ font-weight:normal;
+ color : #646262;
+ text-decoration : none;
+ background-color: #DFDFDF;
+	padding:0px,0px,0px,2px;
+	border-top-style: none; 
+	border-right-style: none; 
+	border-left-style: none; 
+	border-bottom-style: none;
+	padding-left:4px;
+	padding-right:4px;
+}
+a.portofolioSynthesis:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 13px;
+ color : #000000;
+font-weight:normal;
+ text-decoration : none;
+ background-color: #DFDFDF;
+	padding:0px,0px,0px,2px;
+	border-top-style: none; 
+	border-right-style: none; 
+	border-left-style: none; 
+	border-bottom-style: none;
+	padding-left:4px;
+	padding-right:4px;
+}
 /* Table title */
 td.p2{
 	font-family: Arial, Helvetica, sans-serif;

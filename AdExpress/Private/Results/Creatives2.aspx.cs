@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebCst = TNS.AdExpress.Constantes.Web;
@@ -160,7 +160,8 @@ namespace Private.Results{
                 //Current page
                 this.CreativesWebControl1.PageIndex = (page != null && page.Length > 0) ? Convert.ToInt32(page) : 1;
 
-
+                //Is All Period Is Restrict To 4 Month In Insertion Report
+                this.CreativesWebControl1.IsAllPeriodIsRestrictTo4Month = WebApplicationParameters.InsertionOptions.IsAllPeriodIsRestrictTo4Month;
             }
             catch (System.Exception exc)
             {

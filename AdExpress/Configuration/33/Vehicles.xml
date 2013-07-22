@@ -1304,7 +1304,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- Mail Valo -->
-  <vehicle id="mailValo" databaseId="19" showInsertions="false" showCreations="false">
+  <vehicle id="mailValo" databaseId="19" showInsertions="false" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>

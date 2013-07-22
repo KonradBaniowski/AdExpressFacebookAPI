@@ -20,6 +20,8 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
     public class VpScheduleSelectionDropDownDateListWebControl : AjaxSelectionBaseWebControl {
 
         #region AjaxEventScript
+       
+
         /// <summary>
         /// Get Evenement Ajax
         /// </summary>

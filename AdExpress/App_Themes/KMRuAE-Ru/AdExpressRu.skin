@@ -115,6 +115,11 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             FlashUrl="/App_Themes/KMRuAE-Ru/Flash/Common/HeaderStrip.swf" 
                             MissingFlashUrl="/App_Themes/KMRuAE-Ru/Images/Common/FlashReplacement/HeaderStrip.gif" 
 />
+<%-- Menu web control : used to show the right click Menu in the site--%>
+<ctrHeader:MenuWebControl  
+                            runat="server" 
+                            ForbidHelp="True"                            
+/>
 
 <%-- Flash web control : used to show a flash animation --%>
 <ctrHeader:FlashWebControl  

@@ -1854,6 +1854,11 @@ CheckActiveVehicle="True"
                             PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/Button/save_down2.gif"
                             CssClass="excelSelectionWebControlSelection"
 />
+<ctrVpSelection:VpScheduleSelectionExcluWebControl   
+                            runat="server" 
+                            SkinID="ExcluWebSelectionWebControl" 
+                            CssClass="excluWebSelectionWebControl"
+/>
 <%--Rolex result Container control --%>
 <ctrRolexResult:RolexScheduleContainerWebControl   
                             runat="server" 

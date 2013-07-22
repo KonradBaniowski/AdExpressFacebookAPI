@@ -36,7 +36,7 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// <returns>Html code</returns>
         override public string Render(){
 
-            return string.Format("onclick=\"javascript:portofolioCreation('{0}','{1}','{2}','{3}','{4}','{5}');\""
+            return string.Format("\"javascript:portofolioCreation('{0}','{1}','{2}','{3}','{4}','{5}');\""
                 , _idSession, _mediaId, _dateMediaNum, _dateCoverNum, _media, _numberPageMedia);
         }
      

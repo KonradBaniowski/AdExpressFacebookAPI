@@ -57,7 +57,7 @@
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>
-        <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+        <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984"  validationMethod="isAdvertisersSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -73,8 +73,8 @@
               <allowedUniverseBranch id="10"  name="advertiser\brand"/>             
             </allowedUniverseBranches>
           </selection>
-          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
-          <selection id="9" name="media" traductioncode="2539" url="/Private/Selection/RegionSelection.aspx" icone="region" menuTextId="2652" helpUrl="/Private/Helps/Default.aspx" validationMethod="IsPrincipalMediaUniversesSelected">
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985"  validationMethod="isMediaSelected" />
+          <selection id="9" name="media" traductioncode="2539" url="/Private/Selection/RegionSelection.aspx" icone="region" menuTextId="2652" validationMethod="IsPrincipalMediaUniversesSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="17" name="region"/>
             </allowedUniverseLevels>         
@@ -82,10 +82,10 @@
               <allowedUniverseBranch id="14" name="region"/>
             </allowedUniverseBranches>
           </selection>
-          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>        
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986"  validationMethod="isDatesSelected"/>        
       </selections>
         <optionalSelections>
-          <optionalSelection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <optionalSelection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="11" name="vehicle"/>
               <allowedUniverseLevel id="17" name="region"/>
@@ -95,7 +95,7 @@
               <allowedUniverseBranch id="11" name="vehicle\region\media"/>            
             </allowedUniverseBranches>
           </optionalSelection>
-          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="18" name="Advertisement Type"/>            
             </allowedUniverseLevels>
@@ -103,11 +103,11 @@
               <allowedUniverseBranch id="12" name="Advertisement Type"/>
             </allowedUniverseBranches>            
           </optionalSelection>
-          <optionalSelection id="7" name="Slogan" traductioncode="1993" url="/Private/Selection/SloganPersonalisationSelection.aspx" icone="slogan" menuTextId="1987" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
+          <optionalSelection id="7" name="Slogan" traductioncode="1993" url="/Private/Selection/SloganPersonalisationSelection.aspx" icone="slogan" menuTextId="1987" >
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <campaignTypes default="none">
               <campaignType>none</campaignType>
               <campaignType>national</campaignType>
@@ -198,23 +198,27 @@
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
-          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>         
-          <selection id="7" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/Russia/MediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected"/>                    
-          <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" validationMethod="isMediaSelected" allowRecall="false"/>         
+          <selection id="7" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/Russia/MediaSelection.aspx" icone="media" menuTextId="18"  validationMethod="isMediaSelected"/>                    
+          <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986"  validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
               <allowedUniverseLevel id="3" name="group_"/>
-              <!--<allowedUniverseLevel id="4" name="segment"/>-->
+               <allowedUniverseLevel id="6" name="advertiser"/>
+              <allowedUniverseLevel id="8" name="brand"/>
+              <allowedUniverseLevel id="16" name="sub_brand"/>
+              <allowedUniverseLevel id="5" name="product"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            <allowedUniverseBranch id="10"  name="advertiser\brand"/>  
             </allowedUniverseBranches>
           </optionalSelection>
-          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="18" name="Advertisement Type"/>
             </allowedUniverseLevels>
@@ -224,7 +228,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="18" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="0" resultid="18" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx"  menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -264,7 +268,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="19" name="Résultats communs" traductioncode="1127" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="1" resultid="19" name="Résultats communs" traductioncode="1127" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -304,7 +308,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="20" name="Résultats absents" traductioncode="1126" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="2" resultid="20" name="Résultats absents" traductioncode="1126" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
              <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -344,7 +348,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="21" name="Résultats exclusifs" traductioncode="1128" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="3" resultid="21" name="Résultats exclusifs" traductioncode="1128" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -384,7 +388,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="6" name="Résultats Forces" traductioncode="1157" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="4" resultid="6" name="Résultats Forces" traductioncode="1157" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -424,7 +428,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="5" resultid="7" name="Résultats Potentiels" traductioncode="1158" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="5" resultid="7" name="Résultats Potentiels" traductioncode="1158" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -464,7 +468,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="6" resultid="52" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="6" resultid="52" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -555,33 +559,32 @@
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
-          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
-          <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">-->
-          <selection id="6" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/Russia/MediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" validationMethod="isMediaSelected" allowRecall="false"/>
+          <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985"  validationMethod="isMediaSelected">-->
+          <selection id="6" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/Russia/MediaSelection.aspx" icone="media" menuTextId="1985" validationMethod="isMediaSelected">
             <loadableUnivers>
               <type id="8" name="category_media"/>
             </loadableUnivers>
           </selection>
-          <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"  functionName="PostBack">
+          <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" validationMethod="isDatesSelected"  functionName="PostBack">
             <subSelections>
-              <subSelection id="9" name="Calendar Comparaison" traductioncode="854" url="/Private/Selection/GlobalDateSelectionComparative.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"  functionName="PostBack" showLink="false">
+              <subSelection id="9" name="Calendar Comparaison" traductioncode="854" url="/Private/Selection/GlobalDateSelectionComparative.aspx" icone="calendar" menuTextId="1986"  validationMethod="isDatesSelected"  functionName="PostBack" showLink="false">
               </subSelection>
             </subSelections>
           </selection>
         </selections>
         <optionalSelections>
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
-              <allowedUniverseLevel id="3" name="group_"/>
-              <!--<allowedUniverseLevel id="4" name="segment"/>-->
+              <allowedUniverseLevel id="3" name="group_"/>             
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="1">
-              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>             
             </allowedUniverseBranches>
           </optionalSelection>
-          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="18" name="Advertisement Type"/>
             </allowedUniverseLevels>
@@ -591,7 +594,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="22" name="Résultats portefeuille" traductioncode="1240" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="0" resultid="22" name="Résultats portefeuille" traductioncode="1240" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -631,7 +634,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="23" name="Résultats fidèles" traductioncode="1241" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="1" resultid="23" name="Résultats fidèles" traductioncode="1241" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -671,7 +674,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="24" name="Résultats fidèles en baisse" traductioncode="1242" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="2" resultid="24" name="Résultats fidèles en baisse" traductioncode="1242" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -711,7 +714,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="25" name="Résultats fidèles en développement" traductioncode="1243" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="3" resultid="25" name="Résultats fidèles en développement" traductioncode="1243" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -751,7 +754,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="26" name="Résultats gagnés" traductioncode="1244" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="4" resultid="26" name="Résultats gagnés" traductioncode="1244" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -791,7 +794,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="5" resultid="27" name="Résultats perdus" traductioncode="1245" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="5" resultid="27" name="Résultats perdus" traductioncode="1245" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -831,7 +834,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="6" resultid="50" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="6" resultid="50" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -908,13 +911,13 @@
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <selections>
-          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
-          <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/PortofolioDetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>-->
-          <selection id="7" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/Russia/PortofolioMediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
-          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/PortofolioGlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" validationMethod="isMediaSelected" allowRecall="false"/>
+          <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/PortofolioDetailVehicleSelection.aspx" icone="media" menuTextId="1985"  validationMethod="isMediaSelected"/>-->
+          <selection id="7" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/Russia/PortofolioMediaSelection.aspx" icone="media" menuTextId="1985"  validationMethod="isMediaSelected"/>
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/PortofolioGlobalDateSelection.aspx" icone="calendar" menuTextId="1986"  validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -925,7 +928,7 @@
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </optionalSelection>
-          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="18" name="Advertisement Type"/>
             </allowedUniverseLevels>
@@ -935,7 +938,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="31" name="Synthèse publicitaire" traductioncode="1375" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="0" resultid="31" name="Synthèse publicitaire" traductioncode="1375" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <campaignTypes default="none">
               <campaignType>none</campaignType>
               <campaignType>national</campaignType>
@@ -955,7 +958,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <!-- s'il n'y en a pas toutes les unites sont disponibles-->
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>          
@@ -989,7 +992,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="100,101,102,103,200,201,202,300"/>
             </ResultAllowedMediaUniverse>
@@ -1018,7 +1021,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="100,101,102,103,200,201,202,300"/>
             </ResultAllowedMediaUniverse>
@@ -1050,7 +1053,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="100,101,102,103,200,201,202,300,400"/>
             </ResultAllowedMediaUniverse>
@@ -1100,8 +1103,8 @@
         </ModuleAllowedMediaUniverse>
         <!--<overrideDefaultUnits unit="kRubles"></overrideDefaultUnits>-->
         <selections>
-          <!--<selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">-->
-          <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
+          <!--<selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" validationMethod="isSelectionProductSelected">-->
+          <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -1117,17 +1120,17 @@
               <allowedUniverseBranch id="10"  name="advertiser\brand"/>
             </allowedUniverseBranches>
             <subSelections>
-              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/Russia/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >
+              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/Russia/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985">
               </subSelection>
-              <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDateSelectionHelp.aspx" >
+              <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986">
               </subSelection>
             </subSelections>
           </selection>
         </selections>
         <optionalSelections>
-          <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/Russia/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
+          <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/Russia/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984">
           </optionalSelection>
-          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="18" name="Advertisement Type"/>
             </allowedUniverseLevels>
@@ -1137,7 +1140,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ProductClassReport.aspx" printExcelUrl="/Private/Results/Excel/ProductClassReport.aspx" menuTextId="1983" helpUrl="/Private/Helps/ASDynamicTablesHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ProductClassReport.aspx" printExcelUrl="/Private/Results/Excel/ProductClassReport.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits forceDisplay="true">
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -1181,7 +1184,7 @@
         </ModuleAllowedMediaUniverse>       
         <!--<overrideDefaultUnits unit="kRubles"></overrideDefaultUnits>-->
         <selections>
-          <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
+          <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -1197,17 +1200,17 @@
               <allowedUniverseBranch id="10"  name="advertiser\brand"/>
             </allowedUniverseBranches>
             <subSelections>
-              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/Russia/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >
+              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/Russia/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" >
               </subSelection>
-              <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDateSelectionHelp.aspx" >
+              <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" >
               </subSelection>
             </subSelections>
           </selection>
         </selections>
         <optionalSelections>
-          <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/Russia/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
+          <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/Russia/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" >
           </optionalSelection>
-          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <optionalSelection id="8" name="Ad type" traductioncode="2672" url="/Private/Selection/RefineAdvertisementType.aspx" icone="product" menuTextId="2539" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="18" name="Advertisement Type"/>
             </allowedUniverseLevels>
@@ -1217,7 +1220,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="34" name="Seasonality" traductioncode="1139" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="0" resultid="34" name="Seasonality" traductioncode="1139" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits forceDisplay="true">
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -1244,7 +1247,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="35" name="Palmares" traductioncode="1165" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="1" resultid="35" name="Palmares" traductioncode="1165" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits forceDisplay="true">
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -1271,7 +1274,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="36" name="Nouveautés" traductioncode="1197" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="2" resultid="36" name="Nouveautés" traductioncode="1197" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits forceDisplay="true">
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -1298,7 +1301,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="37" name="Evolution" traductioncode="1207" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="3" resultid="37" name="Evolution" traductioncode="1207" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits forceDisplay="true">
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -1325,7 +1328,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="38" name="Stratégie média" traductioncode="1227" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="4" resultid="38" name="Stratégie média" traductioncode="1227" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits forceDisplay="true">
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -1353,7 +1356,7 @@
               <detailSelection id="33" name="Advertisement type selected"/>
             </detailSelections>
           </page>
-          <page id="5" resultid="54" name="Synthèse" traductioncode="1664" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="5" resultid="54" name="Synthèse" traductioncode="1664" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits forceDisplay="true">
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -1437,7 +1440,7 @@
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>
-          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984"  validationMethod="isAdvertisersSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -1452,7 +1455,7 @@
               <allowedUniverseBranch id="10"  name="advertiser\brand"/>
             </allowedUniverseBranches>
           </selection>
-          <selection id="5" name="Profession" traductioncode="798" url="/Private/Selection/UniverseProfessionSelection.aspx" icone="profession" menuTextId="2954" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsProfessionSelected">
+          <selection id="5" name="Profession" traductioncode="798" url="/Private/Selection/UniverseProfessionSelection.aspx" icone="profession" menuTextId="2954"  validationMethod="IsProfessionSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="21" name="Profession"/>
               <allowedUniverseLevel id="25" name="Name"/>              
@@ -1461,11 +1464,11 @@
               <allowedUniverseBranch id="15" name="Profession\Name"/>
             </allowedUniverseBranches>
           </selection>        
-          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />          
-          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985"  validationMethod="isMediaSelected" />          
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986"  validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
-          <optionalSelection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <optionalSelection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="11" name="vehicle"/>
               <allowedUniverseLevel id="14" name="media"/>
@@ -1476,7 +1479,7 @@
           </optionalSelection>           
         </optionalSelections>
         <results>
-          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/CelebritiesResults.aspx" printExcelUrl="/Private/Results/Excel/CelebritiesResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/CelebritiesResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">            
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/CelebritiesResults.aspx" printExcelUrl="/Private/Results/Excel/CelebritiesResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/CelebritiesResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">            
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>

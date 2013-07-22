@@ -479,9 +479,9 @@ namespace TNS.AdExpress.DataAccess {
             sql.Append(" from "+vehicleTable.SqlWithPrefix+","+categoryTable.SqlWithPrefix+","+mediaTable.SqlWithPrefix+" ");
             sql.Append(" where");
             // Langue
-            sql.Append(" "+vehicleTable.Prefix+".id_language="+WebApplicationParameters.DefaultLanguage.ToString());
-            sql.Append(" and "+categoryTable.Prefix+".id_language="+WebApplicationParameters.DefaultLanguage.ToString());
-            sql.Append(" and "+mediaTable.Prefix+".id_language="+WebApplicationParameters.DefaultLanguage.ToString());
+            sql.Append(" "+vehicleTable.Prefix+".id_language="+WebApplicationParameters.DefaultDataLanguage.ToString());
+            sql.Append(" and " + categoryTable.Prefix + ".id_language=" + WebApplicationParameters.DefaultDataLanguage.ToString());
+            sql.Append(" and " + mediaTable.Prefix + ".id_language=" + WebApplicationParameters.DefaultDataLanguage.ToString());
             // Activation
             sql.Append(" and "+vehicleTable.Prefix+".activation<"+DbCst.ActivationValues.UNACTIVATED);
             sql.Append(" and "+categoryTable.Prefix+".activation<"+DbCst.ActivationValues.UNACTIVATED);

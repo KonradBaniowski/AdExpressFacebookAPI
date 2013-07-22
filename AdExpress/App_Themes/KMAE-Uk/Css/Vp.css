@@ -16,6 +16,7 @@
 
 /* Selection Class */
 div.dateSelectionWebControlSelection, div.filtreSelectionWebControlSelection, div.excelSelectionWebControlSelection, div.pdfSelectionWebControlSelection
+,div.excluWebSelectionWebControl
 {
 	margin-right: 30px;
 	vertical-align: middle;
@@ -23,14 +24,14 @@ div.dateSelectionWebControlSelection, div.filtreSelectionWebControlSelection, di
 }
 
 
-.dateSelectionWebControlSelection, .filtreSelectionWebControlSelection, .excelSelectionWebControlSelection, .pdfSelectionWebControlSelection, .dateSelectionWebControlSelection select
+.dateSelectionWebControlSelection, .filtreSelectionWebControlSelection, .excelSelectionWebControlSelection, .pdfSelectionWebControlSelection, .dateSelectionWebControlSelection select,.excluWebSelectionWebControl, .excluWebSelectionWebControl input
 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: Black;
 }
 
-.filtreSelectionWebControlSelection img, .excelSelectionWebControlSelection img, .pdfSelectionWebControlSelection img, .filtreSelectionWebControlSelection label, .excelSelectionWebControlSelection label, .pdfSelectionWebControlSelection label
+.filtreSelectionWebControlSelection img, .excelSelectionWebControlSelection img, .pdfSelectionWebControlSelection img, .filtreSelectionWebControlSelection label, .excelSelectionWebControlSelection label, .pdfSelectionWebControlSelection label, .excluWebSelectionWebControl label
 {
 	cursor: pointer;
 	vertical-align: middle;

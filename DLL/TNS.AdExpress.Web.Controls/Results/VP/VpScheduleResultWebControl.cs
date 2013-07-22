@@ -8,34 +8,14 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Reflection;
-using AjaxPro;
-using TNS.AdExpress.Web.Controls.Headers;
-using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Common.Results;
-using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
-using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using FrmFct = TNS.FrameWork.WebResultUI.Functions;
-using TNS.FrameWork.Date;
-using TNS.FrameWork.Exceptions;
-using TNS.FrameWork.WebResultUI;
-using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-using CustomCst = TNS.AdExpress.Constantes.Customer;
-using TNS.AdExpress.Domain.Classification;
-
-using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.VP;
 namespace TNS.AdExpress.Web.Controls.Results.VP
 {
@@ -253,8 +233,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override string GetAjaxHTML()
         {
             TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.VP);
-            object[] param = new object[1] { _webSession };
-            IVeillePromo vpScheduleResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            var param = new object[1] { _webSession };
+            var vpScheduleResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class,
+                false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             vpScheduleResult.ResultControlId = this.ID;
             return (vpScheduleResult.GetHtml());
         }
@@ -313,8 +295,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 _webSession = (WebSession)WebSession.Load(idSession);
 
                 TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.VP);
-                object[] param = new object[2] { _webSession, idDataPromotion };
-                IVeillePromo vpScheduleResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                var param = new object[2] { _webSession, idDataPromotion };
+                var vpScheduleResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class
+                    , false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 vpScheduleResult.Theme = _themeName;
                 vpScheduleResult.ResultControlId = this.ID;
 

@@ -1,18 +1,12 @@
-using TNS.AdExpress.Web.Core.Sessions;
 using System.ComponentModel;
 using System.Web.UI;
 using System.Text;
 using System.Collections.Generic;
-using TNS.AdExpress.Domain.Translation;
-using TNS.FrameWork.Exceptions;
 using System;
-using System.Web.UI.WebControls;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Results;
 using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
 using System.Data;
-using TNS.AdExpress.Domain.Web.Navigation;
 using System.Collections;
 using TNS.AdExpress.Domain.Level;
 namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
@@ -365,18 +359,18 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// </summary>
         /// <returns></returns>
         protected DataSet GetData(GenericDetailLevel genericDetailLevel) {
-            StringBuilder html = new StringBuilder(1000);
-            DataSet ds;
-            object[] parameters = new object[3];
+          
+            var parameters = new object[3];
             parameters[0] = _webSession;
             parameters[1] = genericDetailLevel;
             parameters[2] = string.Empty;
-            ClassificationDAL classificationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification].AssemblyName, WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+            var classificationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                + @"Bin\" + WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.classification].AssemblyName
+                , WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.classification].Class, false,
+                BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
 
-            if (_genericDetailLevelComponentProfile == TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.product)
-                ds = classificationDAL.GetDetailProduct();
-            else
-                ds = classificationDAL.GetDetailMedia();
+            DataSet ds = _genericDetailLevelComponentProfile == Constantes.Web.GenericDetailLevel.ComponentProfile.product
+                             ? classificationDAL.GetDetailProduct() : classificationDAL.GetDetailMedia();
 
             return ds;
         }

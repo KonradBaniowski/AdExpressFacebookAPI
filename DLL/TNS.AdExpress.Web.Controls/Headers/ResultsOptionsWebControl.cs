@@ -2378,6 +2378,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                             case ClassificationCst.DB.Vehicles.names.newspaper:
                             case ClassificationCst.DB.Vehicles.names.magazine:
                             case ClassificationCst.DB.Vehicles.names.internationalPress:
+                            case ClassificationCst.DB.Vehicles.names.adnettrack:
                             case ClassificationCst.DB.Vehicles.names.internet:
                             case ClassificationCst.DB.Vehicles.names.czinternet:
                             case ClassificationCst.DB.Vehicles.names.mobileTelephony:

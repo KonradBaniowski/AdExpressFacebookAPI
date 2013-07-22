@@ -9,7 +9,7 @@
  */
 #endregion
 
-
+using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.MediaSchedule;
 using Aspose.Cells;
@@ -31,7 +31,13 @@ namespace TNS.AdExpressI.MediaSchedule{
             get;
             set;
         }
-
+        /// <summary>
+        /// Get /Set Active periods
+        /// </summary>
+         List<string> ActivePeriods
+        {
+            get; set;
+        }
         #endregion
 
         #region Methods

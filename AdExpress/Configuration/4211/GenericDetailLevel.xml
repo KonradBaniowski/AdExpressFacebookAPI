@@ -28,6 +28,7 @@
     <level id="25" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>
     <level id="26" name="Pays" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="co"/>
     <level id="27" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm"/>
+    <level id="28" name="Duration spot" webTextId="1933"  dbId="duration_spot" dbIdAlias="id_duration_spot" dbLabel="duration_spot" dbLabelAlias="duration_spot"/>
   </detaillevelItems>
 
   <detailLevels>

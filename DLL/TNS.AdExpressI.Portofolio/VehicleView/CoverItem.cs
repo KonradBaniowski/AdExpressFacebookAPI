@@ -34,7 +34,16 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         public string Src {
             get { return _src; }
         }
-        #endregion
+
+    /// <summary>
+    /// Cover link item
+    /// </summary>
+    public CoverLinkItem CoverLinkItem
+    {
+        get { return _coverLinkItem; }
+    }
+
+    #endregion
 
         #region Constructor
         /// <summary>
@@ -58,13 +67,13 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// Cover item render
         /// </summary>
         /// <returns>Html code</returns>
-        public string Render() {
-            if(_coverLinkItem != null)
-                return "<img id=\"" + _id + "\" alt=\"" + _alt + "\" src='' width=\"180\" height=\"218\" style=\"cursor : pointer;\" " + _coverLinkItem.Render() + ">";
-            else
-                return "<img id=\"" + _id + "\" alt=\"" + _alt + "\" src='' width=\"180\" height=\"218\">";
+        public string Render()
+        {
+            if(CoverLinkItem != null)
+                return string.Format("<img id=\"{0}\" alt=\"{1}\" src='' width=\"180\" height=\"218\" style=\"cursor : pointer;\" onclick={2}>", _id, _alt, CoverLinkItem.Render());
+            return string.Format("<img id=\"{0}\" alt=\"{1}\" src='' width=\"180\" height=\"218\">", _id, _alt);
         }
-      
-        #endregion
+
+    #endregion
     }
 }

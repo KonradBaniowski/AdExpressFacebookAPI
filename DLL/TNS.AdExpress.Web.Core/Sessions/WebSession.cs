@@ -3341,7 +3341,23 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 modificationDate = DateTime.Now;
             }
         }
+
+      
         #endregion
+
+        /// <summary>
+        /// Get / Set Exclu Web
+        /// </summary>
+        public bool IsExcluWeb
+        {
+            get
+            {
+                return userParameters.ContainsKey(CoreConstantes.SessionParamters.excluWeb) 
+                    && (Convert.ToBoolean(userParameters[CoreConstantes.SessionParamters.excluWeb]));
+            }
+            set { userParameters[CoreConstantes.SessionParamters.excluWeb] = value; }
+        }
+
 
         public void CopyFrom(WebSession session)
         {

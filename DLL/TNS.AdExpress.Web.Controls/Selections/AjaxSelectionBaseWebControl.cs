@@ -90,7 +90,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
         /// Evenement Ajax
         /// </summary>
         /// <returns></returns>
-        private string AjaxEventScript()
+        protected virtual string AjaxEventScript()
         {
 
             StringBuilder js = new StringBuilder(1000);

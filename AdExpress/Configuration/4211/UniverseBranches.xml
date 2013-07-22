@@ -30,15 +30,16 @@
     <level id="11" name="vehicle"/>
     <level id="12" name="category"/>
     <level id="14" name="media"/>
-    <level id="16" name="basic media"/>
   </branch>
   <branch id="8"  name="interest_center" labelId="1384">
     <level id="11" name="vehicle"/>
     <level id="15" name="interest_center"/>
     <level id="14" name="media"/>
-    <level id="16" name="basic media"/>
   </branch>
   <branch id="9"  name="advertiser" labelId="857">
     <level id="6" name ="advertiser"/>
+  </branch>
+  <branch id="11" name="brand" labelId="1889">
+    <level id="8" name ="brand"/>
   </branch>
 </universeBranches>

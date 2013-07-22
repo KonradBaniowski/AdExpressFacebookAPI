@@ -11,35 +11,18 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.DataAccess;
-using Oracle.DataAccess.Client;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
 using TNS.AdExpress.Web.DataAccess.MyAdExpress;
 using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Utilities;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using WebModule=TNS.AdExpress.Constantes.Web.Module;
-using WebRules=TNS.AdExpress.Web.Rules;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
-using TNS.Ares.Domain.LS;
-using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Date;
@@ -1002,6 +985,8 @@ namespace AdExpress.Private.MyAdExpress{
 				    _webSession.ProductDetailLevel = null;
 				    _webSession.SelectedLocations = webSessionSave.SelectedLocations;
                     _webSession.SelectedPresenceTypes = webSessionSave.SelectedPresenceTypes;
+
+				    _webSession.IsExcluWeb = webSessionSave.IsExcluWeb;
 
 					if(notValidPeriod){
 						//Erreur : période non disponible

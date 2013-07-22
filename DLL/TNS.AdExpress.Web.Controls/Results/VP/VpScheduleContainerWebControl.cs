@@ -8,37 +8,14 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Reflection;
-using AjaxPro;
-using TNS.AdExpress.Web.Controls.Headers;
-using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Controls.Selections;
-using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Common.Results;
-using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
-using WebFunctions = TNS.AdExpress.Web.Functions;
-using WebConstantes = TNS.AdExpress.Constantes.Web;
-using FrmFct = TNS.FrameWork.WebResultUI.Functions;
-using TNS.FrameWork.Date;
-using TNS.FrameWork.Exceptions;
-using TNS.FrameWork.WebResultUI;
-using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-using CustomCst = TNS.AdExpress.Constantes.Customer;
-using TNS.AdExpress.Domain.Classification;
-
-using TNS.AdExpressI.MediaSchedule;
-using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpressI.Insertions;
-using TNS.AdExpressI.VP;
-using TNS.AdExpress.Web.Controls.Selections.VP;
 using TNS.AdExpress.Domain.Layers;
 namespace TNS.AdExpress.Web.Controls.Results.VP
 {
@@ -151,7 +128,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
 
               #region SaveResult
               js.Append("\r\nfunction SaveResult(){");
-              js.AppendFormat("\r\n\t popupOpenBis('/Private/MyAdExpress/MySessionSavePopUp.aspx?idSession={0}&param={0}{1}','470','270','no');", _webSession.IdSession, DateTime.Now.Hour.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString());
+              js.AppendFormat("\r\n\t popupOpenBis('/Private/MyAdExpress/MySessionSavePopUp.aspx?idSession={0}&param={0}{1}','470','270','no');"
+                  , _webSession.IdSession, DateTime.Now.Hour.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString());
               js.Append("\r\n}");
               #endregion
 
@@ -173,7 +151,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
 
             _vpScheduleResultWebControlList = new List<ResultBaseWebControl>();
             foreach (ControlLayer cControlLayer in WebApplicationParameters.VpConfigurationDetail.ResultControlLayerList) {
-                _vpScheduleResultWebControlList.Add((ResultBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null));
+                _vpScheduleResultWebControlList.Add((ResultBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, cControlLayer.AssemblyName), cControlLayer.Class, 
+                    false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null));
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].SkinID = cControlLayer.SkinId;
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].Display = cControlLayer.Display;
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].ID = this.ID + cControlLayer.ControlId;
@@ -184,7 +164,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
 
             _vpScheduleSelectionBaseWebControlList = new List<SelectionBaseWebControl>();
             foreach (ControlLayer cControlLayer in WebApplicationParameters.VpConfigurationDetail.SelectionControlLayerList) {
-                _vpScheduleSelectionBaseWebControlList.Add((SelectionBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null));
+                _vpScheduleSelectionBaseWebControlList.Add((SelectionBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}",
+                    AppDomain.CurrentDomain.BaseDirectory, cControlLayer.AssemblyName), cControlLayer.Class,
+                    false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null));
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].SkinID = cControlLayer.SkinId;
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].ID = this.ID + cControlLayer.ControlId;
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].TextId = cControlLayer.TextId;

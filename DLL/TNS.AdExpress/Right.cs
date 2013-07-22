@@ -1072,6 +1072,7 @@ namespace TNS.AdExpress {
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INSTORE_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INSTORE_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_INSTORE_CREATION_ACCESS_FLAG] != null);
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)
@@ -1105,6 +1106,24 @@ namespace TNS.AdExpress {
 			}
 		}
         #endregion
+
+        /// <summary>
+        /// Indicate if the customer can access to the pages of a specific vehicle
+        /// </summary>
+        /// <param name="vehicleId">vehicle id</param>
+        /// <returns>True, if the customer has access</returns>
+        public bool ShowVehiclePages(Constantes.Classification.DB.Vehicles.names vehicleId)
+        {
+            switch (vehicleId) {       
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG)) return true;
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG] != null);
+                default:
+                    return (false);
+            }
+        }
+
         #endregion
 
         #region Recap Access Vehicle list

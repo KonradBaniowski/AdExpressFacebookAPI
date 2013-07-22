@@ -23,4 +23,6 @@
   <flag id="261" description="Accès Parrainage dans analyse sectorielle"/>
   <flag id="266" description="Accéder Spot à Spot TNT"/>
   <flag id="276" description="Accéder aux création Evaliant Mobile"/>
+  <flag id="286" description="Accès détail Publicité Interrieur"/>
+  <flag id="287" description="Accéder aux creations Pub Interrieur"/>
 </flags>

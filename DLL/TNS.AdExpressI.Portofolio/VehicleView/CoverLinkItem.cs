@@ -52,7 +52,7 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         public virtual string Render()
         {
 
-            return "onclick=\"javascript:portofolioDetailMedia('" + _idSession + "','" + _mediaId + "','" + _dateMediaNum + "','"+_dateCoverNum+"');\"";
+            return "\"javascript:portofolioDetailMedia('" + _idSession + "','" + _mediaId + "','" + _dateMediaNum + "','"+_dateCoverNum+"');\"";
         }
        
         #endregion

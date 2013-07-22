@@ -545,6 +545,7 @@
     <Compile Include="Selections\VP\Filter\VpScheduleSelectionDetailLevelWebControl.cs" />
     <Compile Include="Selections\VP\Filter\VpScheduleSelectionFilterBaseWebControl.cs" />
     <Compile Include="Selections\VP\Filter\VpScheduleSelectionNodeWebControl.cs" />
+    <Compile Include="Selections\VP\VpScheduleSelectionExcluWebControl.cs" />
     <Compile Include="Selections\VP\VpScheduleAjaxSelectionBaseWebControl.cs" />
     <Compile Include="Selections\VP\VpScheduleSelectionDropDownDateListWebControl.cs" />
     <Compile Include="Selections\VP\VpScheduleSelectionImageWebControl.cs" />

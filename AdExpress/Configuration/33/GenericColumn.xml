@@ -675,6 +675,24 @@
       <columnItem id="83" name="Format banner"/>
       <columnItem id="84" name="Dimension banner" visible="false"/>
       <columnItem id="80" name="url" visible="false"/>
+
+      <!-- Créations VMC via le COURRIER-->
+      <detailColumn id="36" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
+        <columnItem id="7" name="Annonceur"/>
+        <columnItem id="8" name="Groupe"/>
+        <columnItem id="9" name="Produit"/>
+        <columnItem id="6" name="slogan" isKey="true"/>
+        <columnItem id="3" name="Support"/>           
+        <columnItem id="62" name="Poid"/>
+        <columnItem id="63" name="Item"/>
+        <columnItem id="11" name="Format"/>
+        <columnItem id="64" name="Format enveloppe"/>
+        <columnItem id="66" name="Format enveloppe"/>
+        <columnItem id="60" name="Type de doc"/>
+        <columnItem id="59" name="rapidity"/>
+        <columnItem id="65" name="Contenu"/>   
+        <columnItem id="41" name="Visuel"/>
+      </detailColumn>
     </detailColumn>
     
   </detailColumns>

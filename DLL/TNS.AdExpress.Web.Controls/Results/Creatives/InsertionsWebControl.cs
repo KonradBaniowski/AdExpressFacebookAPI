@@ -348,10 +348,33 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             {
                 this._javaScriptRefresh = string.Format("get_{0}", this.ID);
             }
-           
-            CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
+             //date
+            WebCst.CustomerSessions.Period.Type periodType = _customerWebSession.PeriodType;
+            string periodBegin = _customerWebSession.PeriodBeginningDate;
+            string periodEnd = _customerWebSession.PeriodEndDate;
+
+            if (!string.IsNullOrEmpty(ZoomDate))
+            {
+                periodType = _customerWebSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly
+                    ? WebCst.CustomerSessions.Period.Type.dateToDateWeek : WebCst.CustomerSessions.Period.Type.dateToDateMonth;
+                _fromDate = Convert.ToInt32(
+                    WebFct.Dates.Max(WebFct.Dates.getZoomBeginningDate(ZoomDate, periodType),
+                        WebFct.Dates.getPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                    );
+                _toDate = Convert.ToInt32(
+                    WebFct.Dates.Min(WebFct.Dates.getZoomEndDate(ZoomDate, periodType),
+                        WebFct.Dates.getPeriodEndDate(periodEnd, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                    );
+            }
+            else
+            {
+                _fromDate = Convert.ToInt32(WebFct.Dates.getZoomBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
+                _toDate = Convert.ToInt32(WebFct.Dates.getZoomEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
+            }
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
-            object[] param = new object[2];
+            var param = new object[2];
             param[0] = _customerWebSession;
             param[1] = _idModule;
             _rulesLayer = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
@@ -362,24 +385,24 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             this._header.ID = string.Format("{0}_header", this.ID);
             this._header.PeriodContainerName = "resultParameters.Zoom";
             this._header.VehicleContainerName = "resultParameters.IdVehicle";
-            this._header.AutoInitRefresh = false;
+            this._header.AutoInitRefresh = false;           
             this.Vehicles = _rulesLayer.GetPresentVehicles(_idsFilter, this._idUnivers, this._isCreativeConfig);
             if (this.Vehicles.Count <= 0)
             {
                 return;
             }
+            //_header.ActivePeriods = _rulesLayer.GetActivePeriods(VehiclesInformation.Get(_idVehicle), _fromDate, _toDate,
+            //                                                    _idsFilter, _idUnivers, ZoomDate);
             if (!this._isCreativeConfig)
             {
                 this.Controls.Add(_columns);
             }
             else
             {
-                List<Int64> genericColumnList = new List<Int64>();
-                List<GenericColumnItemInformation> columnItemList = WebApplicationParameters.CreativesDetail.GetDetailColumns(_idVehicle, _customerWebSession.CurrentModule);
-                foreach (GenericColumnItemInformation column in columnItemList)
-                {
-                    genericColumnList.Add((int)column.Id);
-                }
+
+                List<GenericColumnItemInformation> columnItemList =
+                    WebApplicationParameters.CreativesDetail.GetDetailColumns(_idVehicle, _customerWebSession.CurrentModule);
+                var genericColumnList = columnItemList.Select(column => (int) column.Id).Select(dummy => (long) dummy).ToList();
                 _customerWebSession.GenericCreativesColumns = new GenericColumns(genericColumnList);
                 _customerWebSession.Save();
 
@@ -396,11 +419,16 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         protected override void OnLoad(EventArgs e)
         {
             AjaxPro.Utility.RegisterTypeForAjax(this.GetType());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openDownload")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openDownload", WebFct.Script.OpenDownload());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openPressCreation", WebFct.Script.OpenPressCreation());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenInternetCreation")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInternetCreation", WebFct.Script.OpenInternetCreation());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openGad")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openGad", WebFct.Script.OpenGad());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenWindow")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenWindow", WebFct.Script.OpenWindow());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openDownload")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openDownload", WebFct.Script.OpenDownload());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openPressCreation", WebFct.Script.OpenPressCreation());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenInternetCreation"))
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInternetCreation", WebFct.Script.OpenInternetCreation());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openGad")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openGad", WebFct.Script.OpenGad());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenWindow")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenWindow", WebFct.Script.OpenWindow());
             base.OnLoad(e);
         }
         #endregion
@@ -486,7 +514,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     {
                         if (_isCreativeConfig)
                         {
-                            this.PageSizeCookieName = TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSizeCreatives;
+                            this.PageSizeCookieName = Constantes.Web.Cookies.CurrentPageSizeCreatives;
                         }
                         RenderFiltersScripts(output);
                         output.WriteLine(this.AjaxEventScript());
@@ -522,7 +550,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     if (_data != null)
                     {
                         _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].CultureInfoExcel;
-                        string[] filters = new string[5] { long.MinValue.ToString(), long.MinValue.ToString(), long.MinValue.ToString(), long.MinValue.ToString(), "-1" };
+                        string[] filters = new string[5] { long.MinValue.ToString(), long.MinValue.ToString(),
+                            long.MinValue.ToString(), long.MinValue.ToString(), "-1" };
                         string[] tmp = _idsFilter.Split(',');
                         Array.Copy(tmp, filters, tmp.Length);
 
@@ -534,7 +563,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                             _customerWebSession.CurrentModule = _idModule;
                         }
                         output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
-                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), filters, Convert.ToInt32(_idVehicle)));
+                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession,
+                            false, _fromDate.ToString(), _toDate.ToString(), filters, Convert.ToInt32(_idVehicle)));
                         output.WriteLine(GetRawExcel());
                         output.WriteLine(detailSelectionWebControl.GetFooter());
                         _customerWebSession.CurrentModule = oldIdModule;
@@ -557,7 +587,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                             _customerWebSession.CurrentModule = _idModule;
                         }
                         output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));                       
-                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), filters, Convert.ToInt32(_idVehicle)));
+                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession,
+                            false, _fromDate.ToString(), _toDate.ToString(), filters, Convert.ToInt32(_idVehicle)));
                         output.WriteLine(base.GetExcel());
                         output.WriteLine(detailSelectionWebControl.GetFooter());
                         _customerWebSession.CurrentModule = oldIdModule;
@@ -601,7 +632,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
             CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
-            object[] param = new object[2];
+            var param = new object[2];
             param[0] = session;
             param[1] = module.Id;
             var result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
@@ -609,7 +640,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
 
 
-            if (!this._isCreativeConfig && (vehicle.Id == CstDBClassif.Vehicles.names.internet
+            if (!_isCreativeConfig && (vehicle.Id == CstDBClassif.Vehicles.names.internet
                 || vehicle.Id == CstDBClassif.Vehicles.names.czinternet)&& !result.CanShowInsertion(vehicle))
             {
                 message = GestionWeb.GetWebWord(2244, _customerWebSession.SiteLanguage);
@@ -618,8 +649,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             {
                 data = new ResultTable(1, 1);
                 data.AddNewLine(LineType.total);
-                var c = new CellLabel(message);
-                c.CssClass = "error";
+                var c = new CellLabel(message) {CssClass = "error"};
                 this.CssLTotal = "error";
                 data[0, 1] = c;
                 return data;
@@ -1094,8 +1124,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         #region GetFilters
         protected ListDictionary GetFilters(string[] filters)
         {
-            Domain.Web.Navigation.Module module = _customerWebSession.CustomerLogin.GetModule(this._idModule);
-            ListDictionary filtersList = new ListDictionary();
+            Domain.Web.Navigation.Module module = _customerWebSession.CustomerLogin.GetModule(_idModule);
+            var filtersList = new ListDictionary();
             if (filters != null && filters.Length > 0)
             {
                 GenericDetailLevel detailLevels = null;
@@ -1117,8 +1147,12 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
                 for (int i = 0; i < detailLevels.GetNbLevels; i++)
                 {
-                    DetailLevelItemInformation cLevel = (DetailLevelItemInformation)detailLevels.Levels[i];
-                    if (filters[i] != long.MinValue.ToString() || (((VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack) && _idVehicle == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack)) || (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile) && _idVehicle == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile))) && cLevel.Id == DetailLevelItemInformation.Levels.slogan && filters[i] != long.MinValue.ToString()))
+                    var cLevel = (DetailLevelItemInformation)detailLevels.Levels[i];
+                    if (filters[i] != long.MinValue.ToString() || (((VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack) 
+                        && _idVehicle == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack)) 
+                        || (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile) 
+                        && _idVehicle == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile))) 
+                        && cLevel.Id == DetailLevelItemInformation.Levels.slogan && filters[i] != long.MinValue.ToString()))
                     {
                         filtersList.Add(cLevel.DataBaseIdField, filters[i]);
                     }

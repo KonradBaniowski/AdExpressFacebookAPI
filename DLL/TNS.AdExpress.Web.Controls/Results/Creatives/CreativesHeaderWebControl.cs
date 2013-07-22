@@ -193,17 +193,34 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 _subPeriodSelectionWebControl.IsAllPeriodIsRestrictTo4Month = _isAllPeriodIsRestrictTo4Month;
             }
         }
-        
+
+	    protected List<string> _activePeriods = null;
+        /// <summary>
+        /// Get /Set Active Periods
+        /// </summary>
+	    public List<string> ActivePeriods {
+            get { return _activePeriods; }
+	   
+	        set
+	        {
+	            _activePeriods = value;
+	            _subPeriodSelectionWebControl.ActivePeriods = value;
+	        }
+	    }
         #endregion
 
         #region Constructor
-        /// <summary>
-        /// Default Builder
-        /// </summary>
-        public CreativesHeaderWebControl(){
-            _subPeriodSelectionWebControl = new SubPeriodSelectionWebControl(); 
-        }
-        #endregion
+
+	    /// <summary>
+	    /// Default Builder
+	    /// </summary>
+	    public CreativesHeaderWebControl()
+	    {
+	        //_subPeriodSelectionWebControl = new SubPeriodSelectionWebControl {ActivePeriods = ActivePeriods,UseCookie = false};
+	        _subPeriodSelectionWebControl = new SubPeriodSelectionWebControl();
+	    }
+
+	    #endregion
 
         #region RenderContents
         /// <summary>
@@ -308,8 +325,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         vehicle = GestionWeb.GetWebWord(648, _webSession.SiteLanguage); 
                         break;
                     case DBClassifCst.Vehicles.names.directMarketing:
+                    case DBClassifCst.Vehicles.names.mailValo:
                         vehicle = GestionWeb.GetWebWord(2989, _webSession.SiteLanguage); 
-                        break;
+                        break;                                         
                     case DBClassifCst.Vehicles.names.internet:
                     case DBClassifCst.Vehicles.names.czinternet:
                         vehicle = GestionWeb.GetWebWord(1301, _webSession.SiteLanguage); 

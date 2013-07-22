@@ -8,34 +8,25 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Reflection;
-using AjaxPro;
-using TNS.AdExpress.Web.Controls.Headers;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using FrmFct = TNS.FrameWork.WebResultUI.Functions;
-using TNS.FrameWork.Date;
 using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-using CustomCst = TNS.AdExpress.Constantes.Customer;
-using TNS.AdExpress.Domain.Classification;
-
 using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpressI.Insertions;
+
 namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 	/// <summary>
 	/// Affiche le résultat d'une alerte plan media
@@ -78,7 +69,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// Current Module
         /// </summary>
         protected TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
-        #endregion
+
+       
+            #endregion
 
 		#region Accesseurs
         
@@ -202,7 +195,10 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             get { return _module; }
             set { _module = value; }
         }
-        #endregion
+
+     
+
+	    #endregion
         #endregion
 
         #region Builder
@@ -606,7 +602,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 #region Period Detail
                 DateTime begin;
                 DateTime end;
-                if (_zoomDate != null && _zoomDate != string.Empty)
+                if (!string.IsNullOrEmpty(_zoomDate))
                 {
                     if (webSession.DetailPeriod == ConstantePeriod.DisplayLevel.weekly)
                     {
@@ -624,7 +620,8 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                         WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
                     webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
-                    if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && webSession.CurrentModule
+                        == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                         period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly, webSession.ComparativePeriodType);
                     else
                         period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
@@ -639,7 +636,8 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                         webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
                     }
 
-                    if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && webSession.CurrentModule
+                        == Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                         period = new MediaSchedulePeriod(begin, end, webSession.DetailPeriod, webSession.ComparativePeriodType);
                     else
                         period = new MediaSchedulePeriod(begin, end, webSession.DetailPeriod);
@@ -663,7 +661,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 _customerWebSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
                 param[0] = _customerWebSession;
                 param[1] = period;
-                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, _module.CountryRulesLayer.AssemblyName), _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 mediaScheduleResult.Module = _module;
                 result = mediaScheduleResult.GetHtml();
 
@@ -672,22 +672,26 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                     				
 					#region Construction du tableaux global
                     html.Append("<table width=100% align=\"left\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
-                    html.Append("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+_themeName+"/Images/Common/Result/header.gif\">&nbsp;</td></tr>");
+                    html.AppendFormat("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/{0}/Images/Common/Result/header.gif\">&nbsp;</td></tr>", _themeName);
                     html.Append("<tr><td align=\"center\" style=\"padding:10px;\" class=\"MSVioletRightLeftBorder\">");
 					html.Append("<table align=\"center\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
 					#endregion
 
 					#region Revenir aux versions sans zoom
-                    TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
+                    TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.creativesUtilities];
                     if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
-                    TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                    TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.
+                        CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}",
+                        AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, BindingFlags.CreateInstance
+                        | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
 
                     if (creativesUtilities.IsSloganZoom(webSession.SloganIdZoom))
                     {
                         html.Append("\r\n\t<tr align=\"left\" class=\"violetBackGroundV3\">\r\n\t\t<td>");
-						//todo txt en BDD
-						html.Append("<a class=\"roll06\" href=\"javascript:get_back();\" onmouseover=\"back_"+this.ID+".src='/App_Themes/"+_themeName+"/Images/Common/button/back_down.gif';\" onmouseout=\"back_"+this.ID+".src='/App_Themes/"+_themeName+"/Images/Common/button/back_up.gif';\"><img align=\"absmiddle\" name=\"back_"+this.ID+"\" border=0 src=\"/App_Themes/"+_themeName+"/Images/Common/button/back_up.gif\">&nbsp;" + GestionWeb.GetWebWord(1978 , webSession.SiteLanguage) + "</a>");
+					
+						html.AppendFormat("<a class=\"roll06\" href=\"javascript:get_back();\" onmouseover=\"back_{0}.src='/App_Themes/{1}/Images/Common/button/back_down.gif';\" onmouseout=\"back_{0}.src='/App_Themes/{1}/Images/Common/button/back_up.gif';\"><img align=\"absmiddle\" name=\"back_{0}\" border=0 src=\"/App_Themes/{1}/Images/Common/button/back_up.gif\">&nbsp;{2}</a>"
+                            , this.ID, _themeName, GestionWeb.GetWebWord(1978 , webSession.SiteLanguage));
 						html.Append("\r\n\t\t</td>\r\n\t</tr>");
 					}
 					#endregion
@@ -707,7 +711,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					html.Append("\r\n\t\t</td>\r\n\t</tr>");
 					html.Append("</table>");
                     html.Append("</td></tr>");
-                    html.Append("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+_themeName+"/Images/Common/Result/footer.gif\">&nbsp;</td></tr>");
+                    html.AppendFormat("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/{0}/Images/Common/Result/footer.gif\">&nbsp;</td></tr>", _themeName);
                     html.Append("</table>");
 
 				}else{
@@ -745,6 +749,16 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                     values.Append("';");
                     html.Append(keys);
                     html.Append(values);
+
+                    string activePeriods = string.Empty;
+                    //if (string.IsNullOrEmpty(_zoomDate) && mediaScheduleResult.ActivePeriods != null
+                    //    && mediaScheduleResult.ActivePeriods.Count > 0)
+                    //{
+                    //    activePeriods = string.Join(",", mediaScheduleResult.ActivePeriods);
+                    //    html.AppendFormat("\n setCookie('activeperiods','{0}',1);", activePeriods);
+                    //}
+                       
+                   
                     html.Append("\r\n</script>\r\n");
                 }
                 #endregion
@@ -769,7 +783,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// <returns></returns>
         protected string GetLoadingHTML()
         {
-            return ("<div id=\"res_" + this.ID + "\"><div align=\"center\" width = \"100%\"><img src=\"/App_Themes/"+_themeName+"/Images/Common/waitAjax.gif\"></div></div>");
+          string  html = "<div id=\"res_" + this.ID + "\"><div align=\"center\" width = \"100%\"><img src=\"/App_Themes/"+_themeName+"/Images/Common/waitAjax.gif\"></div></div>";
+           // html += "<input type=\"hidden\" name=\"activeperiods\" value = \"\" >";
+            return html;
         }
 
         /// <summary>

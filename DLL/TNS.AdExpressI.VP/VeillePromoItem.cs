@@ -41,6 +41,10 @@ namespace TNS.AdExpressI.VP
         /// Brand
         /// </summary>
         protected string _brand;
+        /// <summary>
+        /// Exclu web
+        /// </summary>
+        private long _excluWeb;
         #endregion
 
         #region Accessors
@@ -99,6 +103,16 @@ namespace TNS.AdExpressI.VP
                 return (_cssClass);
             }
         }
+
+        /// <summary>
+        /// Exclu web
+        /// </summary>
+        public long ExcluWeb
+        {
+            get { return _excluWeb; }
+            set { _excluWeb = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -120,13 +134,18 @@ namespace TNS.AdExpressI.VP
         /// <param name="dateBegin">Date Beginning </param>
         /// <param name="dateEnd">Date End</param>       
         /// <param name="promotionContent">Promotion Content</param>
-        public VeillePromoItem(VpCst.VeillePromo.itemType itemType, long idDataPromotion, DateTime dateBegin, DateTime dateEnd, string promotionContent,string cssClass,string brand) :this(itemType){
+        /// <param name="excluWeb">exclu Web</param>
+        public VeillePromoItem(VpCst.VeillePromo.itemType itemType, long idDataPromotion, DateTime dateBegin,
+            DateTime dateEnd, string promotionContent, string cssClass, string brand, long excluWeb)
+            : this(itemType)
+        {
                 _idDataPromotion = idDataPromotion;                  
             _dateBegin = dateBegin;
             _dateEnd = dateEnd;           
             _promotionContent = promotionContent;
             _cssClass = cssClass;
             _brand = brand;
+            _excluWeb = excluWeb;
         }
         #endregion
     }

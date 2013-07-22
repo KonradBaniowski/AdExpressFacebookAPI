@@ -1,22 +1,12 @@
-using TNS.AdExpress.Web.Core.Sessions;
 using System.ComponentModel;
 using System.Web.UI;
 using System.Text;
 using System.Collections.Generic;
 using TNS.AdExpress.Domain.Translation;
-using TNS.FrameWork.Exceptions;
 using System;
-using System.Web.UI.WebControls;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Results;
-using TNS.AdExpressI.Classification.DAL;
-using System.Reflection;
-using System.Data;
 using TNS.AdExpress.Domain.Web.Navigation;
-using System.Collections;
-using TNS.AdExpress.Domain.Level;
 using TNS.FrameWork.Date;
-using TNS.AdExpressI.VP.DAL;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 {

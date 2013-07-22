@@ -1345,6 +1345,17 @@ namespace TNS.AdExpress.Constantes.DB{
         /// la valeur du média publicité non adressée dans la base de données
         /// </summary>
         public const string PUBLICITE_NON_ADRESSEE= "5657";
+
+        /// <summary>
+        /// la valeur du média "COURRIER ADRESSE"  dans la base de données
+        /// </summary>
+        /// <remarks>Cette valeur est associée au courrier valorisé</remarks>
+        public const long COURRIER_ADRESSE_VALO = 19229;
+        /// <summary>
+        /// la valeur du média "IMPRIME PUBLICITAIRE"  dans la base de données
+        /// </summary>
+        /// <remarks>Cette valeur est associée au courrier valorisé</remarks>
+        public const long IMPRIME_PUBLICITAIRE_VALO = 19230;
         #endregion
 
     }
@@ -1362,6 +1373,18 @@ namespace TNS.AdExpress.Constantes.DB{
         /// la valeur de la gatégorie publicité non adressée dans la base de données
         /// </summary>
         public const string PUBLICITE_NON_ADRESSEE = "69";
+
+        /// <summary>
+        /// la valeur du média "COURRIER ADRESSE"  dans la base de données
+        /// </summary>
+        /// <remarks>Cette valeur est associée au courrier valorisé</remarks>
+        public const long COURRIER_ADRESSE_VALO = 271;
+        /// <summary>
+        /// la valeur du média "IMPRIME PUBLICITAIRE"  dans la base de données
+        /// </summary>
+        /// <remarks>Cette valeur est associée au courrier valorisé</remarks>
+        public const long IMPRIME_PUBLICITAIRE_VALO = 272;
+
         /// <summary>
         /// ID category corresponding to digital TV
         /// </summary>

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -29,6 +27,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// </summary>
         private const string IMAGE_PATTERN_SELECTED_MONTH = "/App_Themes/{0}/Images/Culture/GlobalCalendar/m{1}s.gif";
         /// <summary>
+        /// Pattern to determine the path to the active subperiod visual for monthes
+        /// </summary>
+        private const string IMAGE_PATTERN_ACTIVE_MONTH = "/App_Themes/{0}/Images/Culture/GlobalCalendar/m{1}p.gif";
+        /// <summary>
         /// Pattern to determine the path to the subperiod visual for monthes
         /// </summary>
         private const string IMAGE_PATTERN_MONTH = "/App_Themes/{0}/Images/Culture/GlobalCalendar/m{1}.gif";
@@ -40,6 +42,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// Pattern to determine the path to the selected subperiod visual
         /// </summary>
         private const string IMAGE_PATTERN_SELECTED = "/App_Themes/{0}/Images/Culture/GlobalCalendar/{1}s.gif";
+        /// <summary>
+        /// Pattern to determine the path to the active subperiod visual
+        /// </summary>
+        private const string IMAGE_PATTERN_ACTIVE = "/App_Themes/{0}/Images/Culture/GlobalCalendar/{1}p.gif";
         /// <summary>
         /// Pattern to determine the path to the subperiod visual
         /// </summary>
@@ -193,6 +199,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 _javascriptRefresh = value;
             }
         }
+
+        /// <summary>
+        /// Get /Set Active Periods
+        /// </summary>
+        public List<string> ActivePeriods { get; set; }
+        /// <summary>
+        /// Get set if Use Cookie for active period
+        /// </summary>
+        public bool UseCookie { get; set; }
         #endregion
 
         #region RenderContents
@@ -252,9 +267,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 periodBegin = realPeriodBegin.Substring(0, 6);
                 periodEnd = realPeriodEnd.Substring(0, 6);
             }
-            //_zoom = (_zoom.Length > 0) ? _zoom : periodBegin;
-
-            //if ((_zoom != periodBegin || _zoom != periodEnd) && _isZoomEnabled)
+          
             #region Period
             if ((_zoom.Length > 0 || _isAllPeriodAllowed) && _isZoomEnabled && (_zoom != periodBegin || _zoom != periodEnd) && periodBegin != periodEnd)
             {
@@ -264,18 +277,39 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 periodIndex = -1;
                 i = -1;
                 sb.Append("<script language=javascript>");
+
+
+                //HttpCookie activePeriodsCookie = null;
+                List<string> activePeriods = null;
+                //if (Page != null && UseCookie)
+                //{
+                //    activePeriodsCookie = Page.Request.Cookies["activeperiods"];
+
+                //    if (activePeriodsCookie != null && activePeriodsCookie.Value != null)
+                //    {
+                //        activePeriods = new List<string>(Page.Server.UrlDecode(activePeriodsCookie.Value).Split(','));
+                //    }
+                //}
+                //else
+                //{
+                //    activePeriods = ActivePeriods;
+                //}
+                   
+               
+
                 sb.AppendFormat("\r\nvar tab_zooms_{0} = new Array();", this.ID);
                 sb.AppendFormat("\r\nvar tab_periodLabel_{0} = new Array();", this.ID);
                 sb.AppendFormat("\r\nvar tab_periodImage_{0} = new Array();", this.ID);
                 sb.AppendFormat("\r\nvar tab_periodImage_selected_{0} = new Array();", this.ID);
                 sb.AppendFormat("\r\nvar tab_periodImage_over_{0} = new Array();", this.ID);
+                sb.AppendFormat("\r\nvar tab_periodImage_active_{0} = new Array();", this.ID);
 
                 do
                 {
 
                     i++;
 
-                    AppendPeriod(periodType, currentPeriod, i, sb, tmpSb, ref periodIndex, realPeriodBegin, realPeriodEnd, ref labBegin, ref labEnd);
+                    AppendPeriod(periodType, currentPeriod, i, sb, tmpSb, ref periodIndex, realPeriodBegin, realPeriodEnd, ref labBegin, ref labEnd, activePeriods);
 
                     if (periodType != WebCst.CustomerSessions.Period.Type.dateToDateWeek)
                     {
@@ -291,7 +325,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
                 //dernière période
                 i++;
-                AppendPeriod(periodType, currentPeriod, i, sb, tmpSb, ref periodIndex, realPeriodBegin, realPeriodEnd, ref labBegin, ref labEnd);
+                AppendPeriod(periodType, currentPeriod, i, sb, tmpSb, ref periodIndex, realPeriodBegin, realPeriodEnd, ref labBegin, ref labEnd, activePeriods);
                 //fin dernière période
 
                 if (_isAllPeriodAllowed)
@@ -353,9 +387,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 //function PeriodMouseOut
                 sb.AppendFormat("\r\nfunction PeriodMouseOut_{0}(index)", this.ID);
                 sb.Append("{");
+             
                 sb.AppendFormat("\r\n\tif (current_period_{0} != index) ", this.ID);
                 sb.Append("{");
-                sb.AppendFormat("\r\n\t\tdocument.getElementById('img_{0}_'+index).src = tab_periodImage_{0}[index];"
+                sb.AppendFormat("\r\n\t\tdocument.getElementById('img_{0}_'+index).src =  tab_periodImage_{0}[index];"
                     , this.ID);
                 sb.Append("\r\n\t}");
                 sb.Append("\r\n\telse{");
@@ -538,12 +573,11 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     sb.AppendFormat("\r\n\t\t\ttheScrollContainer_{0}.style.display = '';", this.ID);
                     sb.AppendFormat("\r\n\t\t\ttheBottomLine_{0}.style.height = '2px';", this.ID);
                     sb.AppendFormat("\r\n\t\t\tvar posInit_{0} = Math.max(0,{1} * (theScrollContentContainer_{0}.width-theScrollTrack_{0}.width) / {2});", this.ID, periodIndex, i);
-                    //sb.AppendFormat("\r\n\t\t\talert('posInit:' + posInit_{0} + ' - theScrollContentContainer_{0}.width: ' + theScrollContentContainer_{0}.width + ' - theScrollTrack_{0}.width:' + theScrollTrack_{0}.width + ' - periodIndex:' + {1} + ' - total:' + {2});", this.ID, periodIndex, i);
-                    //sb.AppendFormat("\r\n\t\t\talert('image courante:' + imgCurrent_{0}.offsetLeft);", this.ID, periodIndex, i);
+                   
                     sb.AppendFormat("\r\n\t\t\ttheScrollTrack_{0}.style.left = posInit_{0}+\"px\";", this.ID);
 
                     sb.AppendFormat("\r\n\t\t\ttheScrollTrack_{0}.onDrag(posInit_{0},0);", this.ID);
-                    //sb.AppendFormat("\r\n\t\t\talert('image courante:' + imgCurrent_{0}.offsetLeft);", this.ID, periodIndex, i);
+                   
                     sb.Append("\r\n\t\t}");
                     sb.Append("\r\n\t}");
                     sb.Append("\r\n\t}");
@@ -605,7 +639,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
         #endregion
 
         #region AppendPeriod
-        private void AppendPeriod(WebCst.CustomerSessions.Period.Type periodType, string currentPeriod, int i, StringBuilder sb, StringBuilder tmpSb, ref int periodIndex, string globalDateBegin, string globalDateEnd, ref string labBegin, ref string labEnd)
+        private void AppendPeriod(WebCst.CustomerSessions.Period.Type periodType, string currentPeriod, int i, StringBuilder sb,
+            StringBuilder tmpSb, ref int periodIndex, string globalDateBegin, string globalDateEnd, ref string labBegin, ref string labEnd,List<string> activePeriods)
         {
             string tmpBegin = string.Empty;
             string tmpEnd = string.Empty;
@@ -613,6 +648,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             string patternOver = (periodType == WebCst.CustomerSessions.Period.Type.dateToDateMonth) ? IMAGE_PATTERN_OVER_MONTH : IMAGE_PATTERN_OVER;
             string pattern = (periodType == WebCst.CustomerSessions.Period.Type.dateToDateMonth) ? IMAGE_PATTERN_MONTH : IMAGE_PATTERN;
             string patternSelected = (periodType == WebCst.CustomerSessions.Period.Type.dateToDateMonth) ? IMAGE_PATTERN_SELECTED_MONTH : IMAGE_PATTERN_SELECTED;
+            string patternActive = (periodType == WebCst.CustomerSessions.Period.Type.dateToDateMonth) ? IMAGE_PATTERN_ACTIVE_MONTH : IMAGE_PATTERN_ACTIVE;
 
             sb.AppendFormat("\r\ntab_zooms_{0}[{1}] = '{2}';", this.ID, i, currentPeriod);
             if (globalDateBegin.Length > 0)
@@ -649,26 +685,49 @@ namespace TNS.AdExpress.Web.Controls.Headers
             {
                 sb.AppendFormat("\r\ntab_periodLabel_{0}[{1}] = '{2}';", this.ID, i, tmpBegin);
             }
+            bool isActivePeriod = (activePeriods != null && activePeriods.Contains(currentPeriod));
+
             sb.AppendFormat("\r\ntab_periodImage_{0}[{1}] = '{2}';",
                 this.ID, i,
-                string.Format(pattern, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
+                isActivePeriod
+                                ? string.Format(patternActive, themeName, Int32.Parse(currentPeriod.Substring(4, 2)))
+                                : string.Format(pattern, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
+
             sb.AppendFormat("\r\ntab_periodImage_selected_{0}[{1}] = '{2}';",
                 this.ID, i,
                 string.Format(patternSelected, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
             sb.AppendFormat("\r\ntab_periodImage_over_{0}[{1}] = '{2}';",
                 this.ID, i,
                 string.Format(patternOver, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
+
+         
+
+            //sb.AppendFormat("\r\ntab_periodImage_active_{0}[{1}] = '{2}';",
+            //                this.ID, i,
+            //                isActivePeriod
+            //                    ? string.Format(patternActive, themeName, Int32.Parse(currentPeriod.Substring(4, 2)))
+            //                    : string.Format(pattern, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
+
+
             if (_zoom == currentPeriod)
             {
-                //style=\"display:none\" 
+
                 tmpSb.AppendFormat("<img id=img_{2}_{3} src=\"" + patternSelected + "\" onMouseOver=\"javascript:PeriodMouseOver_{2}({3});\" onMouseOut=\"javascript:PeriodMouseOut_{2}({3});\" style=\"cursor:pointer;\" onclick=\"javascript:PeriodSelect_{2}({3});\"/>"
                     , themeName
                     , Int32.Parse(currentPeriod.Substring(4, 2))
                     , this.ID, i);
             }
+            //else if (isActivePeriod)
+            //{
+            //    tmpSb.AppendFormat("<img id=img_{2}_{3} src=\"" + patternActive + "\" onMouseOver=\"javascript:PeriodMouseOver_{2}({3});\" onMouseOut=\"javascript:PeriodMouseOut_{2}({3},true);\" style=\"cursor:pointer;\" onclick=\"javascript:PeriodSelect_{2}({3},true);\"/>"
+            //       , themeName
+            //       , Int32.Parse(currentPeriod.Substring(4, 2))
+            //       , this.ID, i);
+            //}
             else
             {
-                tmpSb.AppendFormat("<img id=img_{2}_{3} src=\"" + pattern + "\" onMouseOver=\"javascript:PeriodMouseOver_{2}({3});\" onMouseOut=\"javascript:PeriodMouseOut_{2}({3});\" style=\"cursor:pointer;\" onclick=\"javascript:PeriodSelect_{2}({3});\"/>"
+                string ptrn = isActivePeriod ? patternActive : pattern;
+                tmpSb.AppendFormat("<img id=img_{2}_{3} src=\"" + ptrn + "\" onMouseOver=\"javascript:PeriodMouseOver_{2}({3});\" onMouseOut=\"javascript:PeriodMouseOut_{2}({3});\" style=\"cursor:pointer;\" onclick=\"javascript:PeriodSelect_{2}({3});\"/>"
                     , themeName
                     , Int32.Parse(currentPeriod.Substring(4, 2))
                     , this.ID, i);

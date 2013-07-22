@@ -10,13 +10,13 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
 {/// <summary>
     /// Contains information about one vehicle and a link to the vehicle view pop-up
     /// </summary>
-     public class VehicleItem
+    public class VehicleItem
     {
-          #region Variables
+        #region Variables
         /// <summary>
         /// Vehicle parution date
         /// </summary>
-         protected DateTime _parutionDate;
+        protected DateTime _parutionDate;
         /// <summary>
         /// Insertion number
         /// </summary>
@@ -33,43 +33,60 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// Site language
         /// </summary>
         protected int _siteLanguage = 33;
+        /// <summary>
+        /// Indicates if can show cover image
+        /// </summary>
+        protected bool _showCover = true;
         #endregion
 
         #region Accesssors
         /// <summary>
         /// Get / Set vehicle parution date
         /// </summary>
-        public DateTime ParutionDate {
+        public DateTime ParutionDate
+        {
             get { return _parutionDate; }
             set { _parutionDate = value; }
         }
         /// <summary>
         /// Get / Set Insertion number
         /// </summary>
-        public string InsertionNumber {
+        public string InsertionNumber
+        {
             get { return _insertionNumber; }
             set { _insertionNumber = value; }
         }
         /// <summary>
         /// Get / Set  Total investment
         /// </summary>
-        public string TotalInvestment {
+        public string TotalInvestment
+        {
             get { return _totalInvestment; }
             set { _totalInvestment = value; }
         }
         /// <summary>
         /// Get / Set  Vehicle cover item
         /// </summary>
-        public CoverItem CoverItem {
+        public CoverItem CoverItem
+        {
             get { return _coverItem; }
             set { _coverItem = value; }
         }
         /// <summary>
         /// Get / Set  Site language
         /// </summary>
-        public int SiteLanguage {
+        public int SiteLanguage
+        {
             get { return _siteLanguage; }
             set { _siteLanguage = value; }
+        }
+        /// <summary>
+        /// Get / Set if can show cover image
+        /// </summary>
+        public bool ShowCover
+        {
+            get { return _showCover; }
+            set { _showCover = value; }
         }
         #endregion
 
@@ -97,31 +114,48 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// Item Render
         /// </summary>
         /// <returns>Html code</returns>
-        public virtual string Render() {
-            
-            StringBuilder sb = new StringBuilder(5000);
-            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_siteLanguage].Localization);
+        public virtual string Render()
+        {
+
+            var sb = new StringBuilder(5000);
+            var cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_siteLanguage].Localization);
             string day = string.Empty;
 
-            day = DayString.GetCharacters(_parutionDate, cultureInfo) + " " + DateString.dateTimeToDD_MM_YYYY(_parutionDate, _siteLanguage); 
+            day = string.Format("{0} {1}", DayString.GetCharacters(_parutionDate, cultureInfo), 
+                DateString.dateTimeToDD_MM_YYYY(_parutionDate, _siteLanguage));
 
             sb.Append("<table cellpadding=0 cellspacing=0 width=100% border=0 >");
-            sb.Append("<tr><td class=\"portofolioSynthesis\" align=center >" + day + "</td><tr>");
+            if (_coverItem != null && _coverItem.CoverLinkItem != null && !string.IsNullOrEmpty(_coverItem.CoverLinkItem.Render()))
+                sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=center ><a class=\"portofolioSynthesis\" href={1}>{0}</a></td><tr>"
+                    , day, _coverItem.CoverLinkItem.Render());
+            else sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=center >{0}</td><tr>", day);
             sb.Append("<tr><td align=\"center\" class=\"portofolioSynthesis\" >");
 
-            sb.Append(_coverItem.Render());
+            if(_showCover)sb.Append(_coverItem.Render());
 
             sb.Append("</td></tr>");
+            if (_coverItem != null && _coverItem.CoverLinkItem != null && !string.IsNullOrEmpty(_coverItem.CoverLinkItem.Render()))
+            {
+                sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=\"center\"><a class=\"portofolioSynthesis\" href={0}>{1} : {2}</a></td><tr>"
+                    , _coverItem.CoverLinkItem.Render(), GestionWeb.GetWebWord(1398, _siteLanguage), _insertionNumber);
+                sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=\"center\"><a class=\"portofolioSynthesis\" href={0}>{1} : {2}</a></td><tr>"
+                    , _coverItem.CoverLinkItem.Render(), GestionWeb.GetWebWord(1399, _siteLanguage), _totalInvestment);
 
-            sb.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, _siteLanguage) + " : " + _insertionNumber + "</td><tr>");
-            sb.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, _siteLanguage) + " :" + _totalInvestment + "</td><tr>");
+            }
+            else
+            {
+                sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=\"center\">{0} : {1}</td><tr>"
+                    , GestionWeb.GetWebWord(1398, _siteLanguage), _insertionNumber);
+                sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=\"center\">{0} : {1}</td><tr>"
+                    , GestionWeb.GetWebWord(1399, _siteLanguage), _totalInvestment);
+            }
 
             sb.Append("</table>");
 
             return sb.ToString();
 
         }
-       
+
         #endregion
     }
 }

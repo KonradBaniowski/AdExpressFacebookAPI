@@ -107,8 +107,10 @@ namespace TNS.AdExpressI.Insertions
             param[1] = moduleId;
             CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.insertionsDAL];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions DAL"));
-            _dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false,
-                System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
+            _dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.
+                CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false,
+                System.Reflection.BindingFlags.CreateInstance | 
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
         }
         #endregion
 
@@ -196,6 +198,8 @@ namespace TNS.AdExpressI.Insertions
                     vehicles.Add(VehiclesInformation.Get(Vehicles.names.others));
                 if (VehiclesInformation.Contains(Vehicles.names.directMarketing))
                     vehicles.Add(VehiclesInformation.Get(Vehicles.names.directMarketing));
+                if (VehiclesInformation.Contains(Vehicles.names.mailValo))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.mailValo));
                 if (VehiclesInformation.Contains(Vehicles.names.internet))
                     vehicles.Add(VehiclesInformation.Get(Vehicles.names.internet));
                 if (VehiclesInformation.Contains(Vehicles.names.czinternet))
@@ -343,6 +347,7 @@ namespace TNS.AdExpressI.Insertions
                         case Vehicles.names.others:                            
                             vignettes = GetVignettes(idVehicle, currentRow, vignettes, themeName, "Picto_pellicule.gif");
                             break;
+                        case Vehicles.names.mailValo:
                         case Vehicles.names.directMarketing:
                         case Vehicles.names.outdoor:
                         case Vehicles.names.indoor:
@@ -370,9 +375,9 @@ namespace TNS.AdExpressI.Insertions
             sloganDetail += currentRow["id_slogan"].ToString();
             if (currentRow["advertDimension"] != DBNull.Value && currentRow["advertDimension"] != DBNull.Value)
             {
-                if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) != Vehicles.names.directMarketing
-                    || (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == Vehicles.names.directMarketing
-                    && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT)))
+                var vehicleEnum = VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()));
+                if ( (vehicleEnum != Vehicles.names.directMarketing && vehicleEnum != Vehicles.names.mailValo)
+                    || (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT)))
                     sloganDetail += string.Format(" - {0}", currentRow["advertDimension"].ToString());
             }
             sloganDetail += "\n</td></tr>";
@@ -382,6 +387,7 @@ namespace TNS.AdExpressI.Insertions
 
         }
 
+       
         protected virtual string GetEvaliantVignettes(DataRow currentRow, string vignettes, string themeName,string creativePath)
         {
             if (currentRow["associated_file"] != DBNull.Value && !string.IsNullOrEmpty(currentRow["associated_file"].ToString()))
@@ -401,8 +407,9 @@ namespace TNS.AdExpressI.Insertions
             string[] fileList = currentRow["associated_file"].ToString().Split(',');
             string idAssociatedFile = currentRow["associated_file"].ToString();
 
-            if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) ==
-                Vehicles.names.directMarketing)
+            var vehicleEnum = VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()));
+            if (vehicleEnum == Vehicles.names.directMarketing ||
+                vehicleEnum == Vehicles.names.mailValo)
                 pathWeb = CreationServerPathes.IMAGES_MD;
             else pathWeb = CreationServerPathes.IMAGES_OUTDOOR;
             string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
@@ -480,6 +487,26 @@ namespace TNS.AdExpressI.Insertions
 
         #endregion
 
+        /// <summary>
+        /// Get Active Periods
+        /// </summary>
+        /// <param name="vehicle"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="filters"></param>
+        /// <param name="universId"></param>
+        /// <param name="zoomDate"></param>
+        /// <returns>Active Periods</returns>
+        public List<string> GetActivePeriods(VehicleInformation vehicle, int fromDate, int toDate, string filters,
+            int universId, string zoomDate)
+        {
+            _zoomDate = zoomDate;
+            _universId = universId;
+
+            return _dalLayer.GetActiveDates(vehicle, fromDate, toDate, universId, filters);                    
+        }
+
+
         #region GetData
         /// <summary>
         /// Get Data
@@ -548,6 +575,7 @@ namespace TNS.AdExpressI.Insertions
                 case Vehicles.names.evaliantMobile:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG);
                     break;
+                case Vehicles.names.mailValo:
                 case Vehicles.names.directMarketing:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG);
                     break;
@@ -672,6 +700,7 @@ namespace TNS.AdExpressI.Insertions
                     switch (vehicle.Id)
                     {
                         case Vehicles.names.directMarketing:
+                        case Vehicles.names.mailValo:
                         case Vehicles.names.internationalPress:
                         case Vehicles.names.press:
                         case Vehicles.names.newspaper:
@@ -826,7 +855,8 @@ namespace TNS.AdExpressI.Insertions
                                 string idCat = "";
                                 try
                                 {
-                                    idCat = row[WebApplicationParameters.GenericColumnItemsInformation.Get((long)GenericColumnItemInformation.Columns.idCategory).DataBaseField].ToString();
+                                    idCat = row[WebApplicationParameters.GenericColumnItemsInformation.
+                                        Get((long)GenericColumnItemInformation.Columns.idCategory).DataBaseField].ToString();
                                 }
                                 catch (Exception e)
                                 {
@@ -858,29 +888,33 @@ namespace TNS.AdExpressI.Insertions
                         case GenericColumnItemInformation.Columns.associatedFile:
                             switch (vehicle.Id)
                             {
-                                case CstDBClassif.Vehicles.names.others:
-                                case CstDBClassif.Vehicles.names.tv:
-                                case CstDBClassif.Vehicles.names.tvGeneral:
-                                case CstDBClassif.Vehicles.names.tvSponsorship:
-                                case CstDBClassif.Vehicles.names.tvAnnounces:
-                                case CstDBClassif.Vehicles.names.tvNonTerrestrials:
+                                case Vehicles.names.others:
+                                case Vehicles.names.tv:
+                                case Vehicles.names.tvGeneral:
+                                case Vehicles.names.tvSponsorship:
+                                case Vehicles.names.tvAnnounces:
+                                case Vehicles.names.tvNonTerrestrials:
                                     s = row[columnsName[i]].ToString();
                                     if (s.Length > 0)
                                         tab[cLine, j] = new CellTvCreativeLink(s, _session, vehicle.DatabaseId);
                                     else
                                         tab[cLine, j] = new CellTvCreativeLink(string.Empty, _session, vehicle.DatabaseId);
                                     break;
-                                case CstDBClassif.Vehicles.names.radio:
-                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(), _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
+                                case Vehicles.names.radio:
+                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
+                                        _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
                                     break;
-                                case CstDBClassif.Vehicles.names.radioGeneral:
-                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(), _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioGeneral));
+                                case Vehicles.names.radioGeneral:
+                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
+                                        _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioGeneral));
                                     break;
-                                case CstDBClassif.Vehicles.names.radioSponsorship:
-                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(), _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioSponsorship));
+                                case Vehicles.names.radioSponsorship:
+                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
+                                        _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioSponsorship));
                                     break;
-                                case CstDBClassif.Vehicles.names.radioMusic:
-                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(), _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioMusic));
+                                case Vehicles.names.radioMusic:
+                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
+                                        _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioMusic));
                                     break;
                             }
                             break;
@@ -966,7 +1000,8 @@ namespace TNS.AdExpressI.Insertions
             {
                 switch (vehicle.Id)
                 {
-                    case Vehicles.names.directMarketing:
+                    case Vehicles.names.mailValo:    
+                    case Vehicles.names.directMarketing:                   
                         tab[cLine, 1] = c = new CellInsertionVMCInformation(_session, columns, columnsName, cells);
                         break;
                     default:
@@ -999,7 +1034,8 @@ namespace TNS.AdExpressI.Insertions
             {
                 switch (vehicle.Id)
                 {
-                    case CstDBClassif.Vehicles.names.directMarketing:
+                    case CstDBClassif.Vehicles.names.mailValo:   
+                    case CstDBClassif.Vehicles.names.directMarketing:                 
                         tab[cLine, 1] = c = new CellCreativesVMCInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
                     case CstDBClassif.Vehicles.names.radio:
@@ -1050,34 +1086,38 @@ namespace TNS.AdExpressI.Insertions
         {
 
             CellCreativesInformation c;
-            List<string> visuals = new List<string>();
+            var visuals = new List<string>();
             if (tab[cLine, 1] == null)
             {
                 switch (vehicle.Id)
                 {
-                    case CstDBClassif.Vehicles.names.directMarketing:
+                    case Vehicles.names.mailValo:
+                    case Vehicles.names.directMarketing:                 
                         tab[cLine, 1] = c = new CellCreativesVMCInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
                         break;
-                    case CstDBClassif.Vehicles.names.radio:
-                    case CstDBClassif.Vehicles.names.radioSponsorship:
-                    case CstDBClassif.Vehicles.names.radioGeneral:
-                    case CstDBClassif.Vehicles.names.radioMusic:
+                    case Vehicles.names.radio:
+                    case Vehicles.names.radioSponsorship:
+                    case Vehicles.names.radioGeneral:
+                    case Vehicles.names.radioMusic:
                         tab[cLine, 1] = c = new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
                         break;
-                    case CstDBClassif.Vehicles.names.tv:
-                    case CstDBClassif.Vehicles.names.tvGeneral:
-                    case CstDBClassif.Vehicles.names.tvSponsorship:
-                    case CstDBClassif.Vehicles.names.tvAnnounces:
-                    case CstDBClassif.Vehicles.names.tvNonTerrestrials:
-                    case CstDBClassif.Vehicles.names.others:
-                        tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
+                    case Vehicles.names.tv:
+                    case Vehicles.names.tvGeneral:
+                    case Vehicles.names.tvSponsorship:
+                    case Vehicles.names.tvAnnounces:
+                    case Vehicles.names.tvNonTerrestrials:
+                    case Vehicles.names.others:
+                        tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns,
+                            columnsName, cells, _module, idColumnsSet);
                         break;
-                    case CstDBClassif.Vehicles.names.adnettrack:
-                    case CstDBClassif.Vehicles.names.internet:
-                        tab[cLine, 1] = c = new CellCreativesEvaliantInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
+                    case Vehicles.names.adnettrack:
+                    case Vehicles.names.internet:
+                        tab[cLine, 1] = c = new CellCreativesEvaliantInformation(_session, vehicle, columns,
+                            columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
                         break;
-                    case CstDBClassif.Vehicles.names.evaliantMobile:
-                        tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
+                    case Vehicles.names.evaliantMobile:
+                        tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle,
+                            columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
                         break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
@@ -1090,7 +1130,8 @@ namespace TNS.AdExpressI.Insertions
             }
             foreach (GenericColumnItemInformation g in columns)
             {
-                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax)
+                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile
+                    || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax)
                 {
                     visuals = GetPath(vehicle, row, columns, columnsName);
                 }
@@ -1291,6 +1332,7 @@ namespace TNS.AdExpressI.Insertions
             {
                 switch (vehicle.Id)
                 {
+                    case Vehicles.names.mailValo:
                     case Vehicles.names.directMarketing:
                     case Vehicles.names.adnettrack:
                     case Vehicles.names.evaliantMobile:
@@ -1429,6 +1471,7 @@ namespace TNS.AdExpressI.Insertions
                     AddVisuals(row, visuals, GetCreativePathInStore);
                     break;
                 case Vehicles.names.directMarketing:
+                case Vehicles.names.mailValo:
                     if (
                         !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG))
                         break;

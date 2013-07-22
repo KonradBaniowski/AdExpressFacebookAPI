@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Web;
@@ -349,7 +350,18 @@ namespace TNS.AdExpressI.MediaSchedule {
             set { _style = value; }
         }
 
-
+        /// <summary>
+        /// Active periods
+        /// </summary>
+        private List<string> _activePeriods = null;
+        /// <summary>
+        /// Get /Set Active periods
+        /// </summary>
+        public List<string> ActivePeriods
+        {
+            get { return _activePeriods; }
+            set { _activePeriods = value; }
+        }
         #endregion
 
         #endregion
@@ -414,7 +426,10 @@ namespace TNS.AdExpressI.MediaSchedule {
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet)) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
+            _allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId) 
+                || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack
+                && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
+                && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
             _style = new DefaultMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -430,7 +445,12 @@ namespace TNS.AdExpressI.MediaSchedule {
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-			_allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.evaliantMobile && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet)) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
+			_allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId)
+                || (VehiclesInformation.Contains(_vehicleId) 
+                && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack
+                && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.evaliantMobile
+                && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet)) 
+                && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
             _style = new DefaultMediaScheduleStyle();
             return ComputeDesign(ComputeData());
 
@@ -2044,7 +2064,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 string cssClasseNb = string.Empty;
                 GenericDetailLevel detailLevel = null;
                 detailLevel = GetDetailsLevelSelected();
-
+                _activePeriods = new List<string>();
 
                 for (i = 1; i < nbline; i++)
                 {
@@ -2293,6 +2313,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                                             {
                                                 t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, stringItem);
                                             }
+                                            //if (string.IsNullOrEmpty(_zoom) && data[0, j] != null && !_activePeriods.Contains(Convert.ToString(data[0, j]).Trim()))
+                                            //{
+                                            //    _activePeriods.Add(Convert.ToString(data[0, j]).Trim());
+                                            //}
                                             break;
                                         case DetailledMediaPlan.graphicItemType.extended:
                                             t.AppendFormat("<td class=\"{0}\">&nbsp;</td>", cssExtendedClass);
@@ -2341,7 +2365,8 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="line">Current line</param>
         /// <param name="cssClasseNb">Line syle</param>
         /// <param name="tmpCol">Year column in data source</param>
-        protected virtual void AppendYearsTotal(object[,] data, StringBuilder t, int line, string cssClasseNb, int tmpCol, IFormatProvider fp, UnitInformation unit) {
+        protected virtual void AppendYearsTotal(object[,] data, StringBuilder t, int line,
+            string cssClasseNb, int tmpCol, IFormatProvider fp, UnitInformation unit) {
             if (_allowTotal)
             {
                 string s = string.Empty;
@@ -2377,7 +2402,8 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="cssClasseNb">Line syle for numbers</param>
         /// <param name="col">Column to consider</param>
         /// <param name="padding">Stirng to insert before Label</param>
-        protected virtual void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse, string cssClasseNb, int col, string padding, int labColSpan, IFormatProvider fp, UnitInformation unit) {
+        protected virtual void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse,
+            string cssClasseNb, int col, string padding, int labColSpan, IFormatProvider fp, UnitInformation unit) {
             if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb) {
                 t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{1}\">{4}{2}{3}{5}</td>"
                     , cssClasse
@@ -2474,7 +2500,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             }
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
                 //Evol
-                StringBuilder str = new StringBuilder();
+                var str = new StringBuilder();
                 //if (data[line, EVOL_COLUMN_INDEX] == null) data[line, EVOL_COLUMN_INDEX] = (double)0.0;
                 double evol = (double)data[line, EVOL_COLUMN_INDEX];
                 if (evol != 0) {
@@ -2579,14 +2605,20 @@ namespace TNS.AdExpressI.MediaSchedule {
         protected virtual string GetLevelFilter(object[,] data, int line, int level) {
             switch(level) {
                 case L1_COLUMN_INDEX:
-                    return string.Format("{0},{1},{1},{1},{1}", data[line, L1_ID_COLUMN_INDEX], long.MinValue.ToString());
+                    return string.Format("{0},{1},{1},{1},{1}"
+                        , data[line, L1_ID_COLUMN_INDEX], long.MinValue.ToString());
                 case L2_COLUMN_INDEX:
-                    return string.Format("{0},{1},{2},{2},{2}", data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX], long.MinValue.ToString());
+                    return string.Format("{0},{1},{2},{2},{2}"
+                        , data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX], long.MinValue.ToString());
                     break;
                 case L3_COLUMN_INDEX:
-                    return string.Format("{0},{1},{2},{3},-1", data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX], data[line, L3_ID_COLUMN_INDEX], long.MinValue.ToString());
+                    return string.Format("{0},{1},{2},{3},-1"
+                        , data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX],
+                        data[line, L3_ID_COLUMN_INDEX], long.MinValue.ToString());
                 case L4_COLUMN_INDEX:
-                    return string.Format("{0},{1},{2},{3},-1", data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX], data[line, L3_ID_COLUMN_INDEX], data[line, L4_ID_COLUMN_INDEX]);
+                    return string.Format("{0},{1},{2},{3},-1"
+                        , data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX],
+                        data[line, L3_ID_COLUMN_INDEX], data[line, L4_ID_COLUMN_INDEX]);
             }
             return string.Empty;
         }
@@ -2633,7 +2665,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
-                && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
+                && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) &&
+                VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack &&
+                VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
                 && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE
                 && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
                 && !HasOnlyLevelAgency()
@@ -2654,8 +2688,11 @@ namespace TNS.AdExpressI.MediaSchedule {
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
-                && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
-                && (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE || _session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
+                && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) &&
+                VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack &&
+                VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
+                && (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE ||
+                _session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                 && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
                 && !HasOnlyLevelAgency()
                 ;
@@ -2706,14 +2743,15 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// </summary>
         /// <returns>List of vehicles</returns>
         protected List<VehicleInformation> GetVehicles() {
-            List<VehicleInformation> vs = null;
+            List<VehicleInformation> vs;
             if(_vehicleId > 0) {
                 vs = new List<VehicleInformation>();
                 vs.Add(VehiclesInformation.Get(_vehicleId));
             }
             else {
                 string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
-                vs = new List<VehicleInformation>(Array.ConvertAll<string, VehicleInformation>(vehicles.Split(','), new Converter<string, VehicleInformation>(delegate(string str) { return VehiclesInformation.Get(Convert.ToInt64(str)); })));
+                vs = new List<VehicleInformation>(Array.ConvertAll(vehicles.Split(','),
+                                                                   str => VehiclesInformation.Get(Convert.ToInt64(str))));
             }
             return vs;
         }
@@ -2754,7 +2792,8 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// </summary>
         /// <param name="mediaScheduleResultDAL">DAL source</param>
         /// <returns>Data Levels</returns>
-        protected virtual DataTable GetDataLevels(IMediaScheduleResultDAL mediaScheduleResultDAL, GenericDetailLevel detailLevel, DataTable dt) {
+        protected virtual DataTable GetDataLevels(IMediaScheduleResultDAL mediaScheduleResultDAL
+            , GenericDetailLevel detailLevel, DataTable dt) {
 
             DataTable dtLevels = null;
 
@@ -2765,7 +2804,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             }
             else {
                 
-                List<string> columnsLevels = new List<string>();
+                var columnsLevels = new List<string>();
                 for (int iLevel = 1; iLevel <= detailLevel.GetNbLevels; iLevel++)
                 {
                     columnsLevels.Add(detailLevel.GetColumnNameLevelId(iLevel));
@@ -2781,11 +2820,11 @@ namespace TNS.AdExpressI.MediaSchedule {
                     dtLevels.Columns.Add(dt.Columns[columnLevel].ColumnName, dt.Columns[columnLevel].DataType);
 
                 //Fill DataTable
-                Dictionary<string, bool> rowsAddKey = new Dictionary<string, bool>();
+                var rowsAddKey = new Dictionary<string, bool>();
                 foreach (DataRow row in dt.Rows)
                 {
-                    List<Int64> columnsIds = new List<Int64>();
-                    List<object> columnsValues = new List<object>();
+                    var columnsIds = new List<Int64>();
+                    var columnsValues = new List<object>();
 
                     //Add Values for current row in local variables
                     for (int i = 0; i < columnsLevels.Count; i++ )
@@ -2795,7 +2834,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                     }
 
                     //Dertermine if values is already Add
-                    string currentRowKey = string.Join(";", columnsIds.ConvertAll<string>(p=>p.ToString()).ToArray());
+                    string currentRowKey = string.Join(";", columnsIds.ConvertAll(p=>p.ToString()).ToArray());
                     if (!rowsAddKey.ContainsKey(currentRowKey))
                     {
                         rowsAddKey.Add(currentRowKey, true);
@@ -2804,12 +2843,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 }
                 #endregion
 
-                List<DataColumn> dataColumnList = new List<DataColumn>();
-                foreach (DataColumn cColumn in dtLevels.Columns)
-                {
-                    dataColumnList.Add(cColumn);
-                }
-                dtLevels.PrimaryKey = dataColumnList.ToArray();
+                dtLevels.PrimaryKey = dtLevels.Columns.Cast<DataColumn>().ToArray();
 
             }
 

@@ -11,7 +11,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 {
     public interface IInsertionsDAL
     {
-         /// <summary>
+        /// <summary>
         /// Get Media types identifiers according to levels of classification selected by the customer
         /// <example> If the filters variable contain : (media type id = 1)/(sub media id = 11)
         ///     // get list of media type identifiers (in our classification we use vehicle for media type)
@@ -28,7 +28,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <returns>Media types identifiers list</returns>
         Int64[] GetVehiclesIds(Dictionary<DetailLevelItemInformation, Int64> filters);
 
-           /// <summary>
+        /// <summary>
         /// Get list of media type for which there're data in the database
         /// </summary>
         /// <param name="vehicles">List of Media type object to check</param>
@@ -40,7 +40,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="sloganNotNull">True if slogan not null</param>
         /// <returns>List of vehicles present</returns>
         List<VehicleInformation> GetPresentVehicles(List<VehicleInformation> vehicles, string filters, int fromDate, int toDate, int universId, Module module, bool sloganNotNull);
-        
+
         /// <summary>
         /// Extract advertising detail for insertions details 
         /// </summary>
@@ -96,7 +96,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="idVersion">ID version</param>   
         /// <param name="idVehicle">ID Media type</param>
         /// <returns>ID version , product label,group label,advertiser label</returns>
-        DataSet GetVersion(string idVersion,long idVehicle);
+        DataSet GetVersion(string idVersion, long idVehicle);
 
 
         /// <summary>
@@ -160,5 +160,17 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="endDate">date end (YYYYMMDD)</param>
         /// <returns>versions data ["id_advertiser","advertiser","id_product","product","id_vehicle","vehicle","id_slogan","date_media_num","id_media","advertDimension", "associated_file" </returns>
         DataSet GetVersions(string beginningDate, string endDate);
+
+        /// <summary>
+        /// Get Insertion / Crearive Active Dates
+        /// </summary>
+        /// <param name="vehicle"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="universId"></param>
+        /// <param name="filters"></param>
+        /// <returns>Active Dates</returns>
+        List<string> GetActiveDates(VehicleInformation vehicle, int fromDate, int toDate, int universId,
+                                             string filters);
     }
 }

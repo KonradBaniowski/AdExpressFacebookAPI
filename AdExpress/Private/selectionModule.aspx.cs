@@ -9,25 +9,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Windows.Forms;
 using DBConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
-using WebFunctions=TNS.AdExpress.Web.Functions;
-using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
@@ -142,7 +130,9 @@ namespace AdExpress{
                         
                         TNS.AdExpress.Domain.Layers.CoreLayer clMediaU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.mediaDetailLevelUtilities];
                         if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
-                        TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+                        TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel)
+                            AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class
+                            , false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
                         _webSession.PreformatedMediaDetail = mediaDetailLevelUtilities.GetDefaultPreformatedMediaDetails(_webSession);
                       
 						#region Niveau de détail media (Generic)
@@ -289,6 +279,8 @@ namespace AdExpress{
                     _webSession.AdvertisementTypeUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                     _webSession.SelectedLocations = new List<long>();
                     _webSession.SelectedPresenceTypes = new List<long>();
+
+				    _webSession.IsExcluWeb = false;
 
                     //Initialisation de customerPeriod
                     try {

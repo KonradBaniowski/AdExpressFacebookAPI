@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <smtp>
-    <server adress="frmitpu-msprod" port="25"/>
-    <message from="tnsadexpress@tnsmi.fr">
+    <server adress="195.168.127.142" port="25"/>
+    <message from="tnsadexpress@tns-global.sk">
 		<to>guillaume.facon@tnsmi.fr</to>
 		<to>benjamin.masson@tnsmi.fr</to>		
 		<to>youssef.rkaina@tnsmi.fr</to>

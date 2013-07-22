@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Web.Core;
 using System.Collections;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.FrameWork.DB.Common;
@@ -90,14 +88,12 @@ namespace TNS.AdExpressI.VP.DAL
         /// DataSet      
         public virtual DataSet GetBenchMarkData()
         {
-            DataSet ds = null;
-            string classifTableName = string.Empty, classifFieldName = string.Empty, classifOrderFieldName = string.Empty
-                , classifJoinCondition = string.Empty, universFilter = string.Empty, persoTableName = string.Empty
-                , persoJoins = string.Empty, segmtFields = string.Empty;
+            DataSet ds;
+            string classifTableName = string.Empty;
 
             try
             {
-                StringBuilder sql = new StringBuilder(5000);
+                var sql = new StringBuilder(5000);
 
 
                 string prefix = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
@@ -110,58 +106,63 @@ namespace TNS.AdExpressI.VP.DAL
 
 
                 // Get the SQL fields corresponding to the classification's items  
-                classifOrderFieldName ="";
 
 
                 /* Get the classif SQL joins  code*/
-                classifJoinCondition = "";//GetSqlJoins(prefix);
+                string classifJoinCondition = string.Empty;
 
 
 
                 //Segement fields                
-                DetailLevelItemInformation segemntLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpSegment);
-                segmtFields = segemntLevelInformation.GetSqlFieldId() + "," + segemntLevelInformation.GetSqlField();
-                classifOrderFieldName = segemntLevelInformation.GetSqlField() + "," + segemntLevelInformation.GetSqlFieldId();
-                classifFieldName = segmtFields;
+                DetailLevelItemInformation segemntLevelInformation = 
+                    DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpSegment);
+                string segmtFields = string.Format("{0},{1}", 
+                    segemntLevelInformation.GetSqlFieldId(), segemntLevelInformation.GetSqlField());
+                string classifOrderFieldName = string.Format("{0},{1}",
+                    segemntLevelInformation.GetSqlField(), segemntLevelInformation.GetSqlFieldId());
+                string classifFieldName = segmtFields;
 
-                persoTableName = segemntLevelInformation.GetTableNameWithPrefix();
+                string persoTableName = segemntLevelInformation.GetTableNameWithPrefix();
                 classifTableName +=  schPromo.Label + "." + persoTableName;
 
-                persoJoins = " and " + segemntLevelInformation.GetSqlFieldId() + "=" + prefix + "." + segemntLevelInformation.GetSqlFieldIdWithoutTablePrefix()
-                + " and " + segemntLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                string persoJoins = string.Format(" and {0}={1}.{2} and {3}.activation< {4}",
+                    segemntLevelInformation.GetSqlFieldId(), prefix, segemntLevelInformation.GetSqlFieldIdWithoutTablePrefix(),
+                    segemntLevelInformation.DataBaseTableNamePrefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
                 classifJoinCondition += persoJoins;
 
                 //product fileds
                 DetailLevelItemInformation productLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpProduct);
-                classifFieldName += ","+productLevelInformation.GetSqlFieldId() + "," + productLevelInformation.GetSqlField();
-                classifOrderFieldName += ","+ productLevelInformation.GetSqlField() + "," + productLevelInformation.GetSqlFieldId();
+                classifFieldName += string.Format(",{0},{1}", productLevelInformation.GetSqlFieldId(), productLevelInformation.GetSqlField());
+                classifOrderFieldName += string.Format(",{0},{1}", productLevelInformation.GetSqlField(), productLevelInformation.GetSqlFieldId());
 
-                classifTableName += "," + schPromo.Label + "." + productLevelInformation.GetTableNameWithPrefix();
+                classifTableName += string.Format(",{0}.{1}", schPromo.Label, productLevelInformation.GetTableNameWithPrefix());
 
-                classifJoinCondition += " and " + productLevelInformation.GetSqlFieldId() + "=" + prefix + "." + productLevelInformation.GetSqlFieldIdWithoutTablePrefix()
-                 + " and " + productLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                classifJoinCondition += string.Format(" and {0}={1}.{2} and {3}.activation< {4}"
+                    , productLevelInformation.GetSqlFieldId(), prefix, productLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                    , productLevelInformation.DataBaseTableNamePrefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
 
                 //Force brand field
 
                 DetailLevelItemInformation brandLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand);
-                classifFieldName += "," + brandLevelInformation.GetSqlFieldId() + "," + brandLevelInformation.GetSqlField();
-                classifOrderFieldName += "," + brandLevelInformation.GetSqlField() + "," + brandLevelInformation.GetSqlFieldId();
+                classifFieldName += string.Format(",{0},{1}", brandLevelInformation.GetSqlFieldId(), brandLevelInformation.GetSqlField());
+                classifOrderFieldName += string.Format(",{0},{1}", brandLevelInformation.GetSqlField(), brandLevelInformation.GetSqlFieldId());
 
-                classifTableName += "," + schPromo.Label + "." + brandLevelInformation.GetTableNameWithPrefix();
+                classifTableName += string.Format(",{0}.{1}", schPromo.Label, brandLevelInformation.GetTableNameWithPrefix());
 
-                classifJoinCondition += " and " + brandLevelInformation.GetSqlFieldId() + "=" + prefix + "." + brandLevelInformation.GetSqlFieldIdWithoutTablePrefix()
-                 + " and " + brandLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                classifJoinCondition += string.Format(" and {0}={1}.{2} and {3}.activation< {4}"
+                    , brandLevelInformation.GetSqlFieldId(), prefix, brandLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                    , brandLevelInformation.DataBaseTableNamePrefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
 
                 //get universe filters
-                universFilter = GetUniversFilter(prefix);
+                string universFilter = GetUniversFilter(prefix);
 
 
                 //SELECT
 
                 sql.AppendFormat(" select ID_DATA_PROMOTION,{0}, date_begin_num, date_end_num  ", classifFieldName);
-                sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual ");
+                sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual,EXCLU_WEB ");
 
 
                 //FROM
@@ -191,22 +192,18 @@ namespace TNS.AdExpressI.VP.DAL
 
             return ds;
         }
+
         /// <summary>
         /// Retreive the data for Veille promo schedule result
         /// </summary>
-        /// <returns>
-        /// DataSet      
+        /// <returns>Data Set</returns>
         public virtual DataSet GetData()
         {
-            DataSet ds = null;
-            string classifTableName = string.Empty, classifFieldName = string.Empty, classifOrderFieldName = string.Empty
-                , classifJoinCondition = string.Empty, universFilter = string.Empty, persoTableName = string.Empty
-                , persoJoins = string.Empty, persoFields = string.Empty;
+            DataSet ds;
 
             try
             {
-                StringBuilder sql = new StringBuilder(5000);
-
+                var sql = new StringBuilder(5000);
 
                 string prefix = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
 
@@ -217,18 +214,17 @@ namespace TNS.AdExpressI.VP.DAL
                 Table dataPromo = WebApplicationParameters.GetDataTable(TableIds.dataPromotion, false);
 
                 //Get classification tables name
-                classifTableName = _session.GenericMediaDetailLevel.GetSqlTables(schPromo.Label);
+                string classifTableName = _session.GenericMediaDetailLevel.GetSqlTables(schPromo.Label);
 
                 // Get the SQL  fields corresponding to the classification's items                 
-                classifFieldName = _session.GenericMediaDetailLevel.GetSqlFields();
-
+                string classifFieldName = _session.GenericMediaDetailLevel.GetSqlFields();
 
                 // Get the SQL fields corresponding to the classification's items  
-                classifOrderFieldName = _session.GenericMediaDetailLevel.GetSqlOrderFields();
+                string classifOrderFieldName = _session.GenericMediaDetailLevel.GetSqlOrderFields();
 
 
                 /* Get the classif SQL joins  code*/
-                classifJoinCondition = GetSqlJoins(prefix);
+                string classifJoinCondition = GetSqlJoins(prefix);
 
                 //Get  classification levels selected
                 GenericDetailLevel detailLevel = _session.GenericMediaDetailLevel;
@@ -237,37 +233,41 @@ namespace TNS.AdExpressI.VP.DAL
                 if (!detailLevel.ContainDetailLevelItem(_session.PersonnalizedLevel))
                 {
                     DetailLevelItemInformation persoLevelInformation = DetailLevelItemsInformation.Get(_session.PersonnalizedLevel);
-                    persoFields = persoLevelInformation.GetSqlFieldId() + "," + persoLevelInformation.GetSqlField();
-                    classifFieldName += "," + persoFields;
+                    string persoFields = string.Format("{0},{1}",
+                        persoLevelInformation.GetSqlFieldId(), persoLevelInformation.GetSqlField());
+                    classifFieldName += string.Format(",{0}", persoFields);
 
-                    persoTableName = persoLevelInformation.GetTableNameWithPrefix();
-                    classifTableName += "," + schPromo.Label + "." + persoTableName;
+                    string persoTableName = persoLevelInformation.GetTableNameWithPrefix();
+                    classifTableName += string.Format(",{0}.{1}", schPromo.Label, persoTableName);
 
-                    persoJoins = " and " + persoLevelInformation.GetSqlFieldId() + "=" + prefix + "." + persoLevelInformation.GetSqlFieldIdWithoutTablePrefix()
-                    + " and " + persoLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                    string persoJoins = string.Format(" and {0}={1}.{2} and {3}.activation< {4}"
+                        , persoLevelInformation.GetSqlFieldId(), prefix, persoLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                        , persoLevelInformation.DataBaseTableNamePrefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
                     classifJoinCondition += persoJoins;
                 }
                 //Force brand field
-                if (!detailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.vpBrand) && _session.PersonnalizedLevel != DetailLevelItemInformation.Levels.vpBrand)
+                if (!detailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.vpBrand) 
+                    && _session.PersonnalizedLevel != DetailLevelItemInformation.Levels.vpBrand)
                 {
                     DetailLevelItemInformation brandLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand);
-                    classifFieldName += "," + brandLevelInformation.GetSqlField();
+                    classifFieldName += string.Format(",{0}", brandLevelInformation.GetSqlField());
 
-                    classifTableName += "," + schPromo.Label + "." + brandLevelInformation.GetTableNameWithPrefix();
+                    classifTableName += string.Format(",{0}.{1}", schPromo.Label, brandLevelInformation.GetTableNameWithPrefix());
 
-                    classifJoinCondition += " and " + brandLevelInformation.GetSqlFieldId() + "=" + prefix + "." + brandLevelInformation.GetSqlFieldIdWithoutTablePrefix()
-                     + " and " + brandLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                    classifJoinCondition += string.Format(" and {0}={1}.{2} and {3}.activation< {4}"
+                        , brandLevelInformation.GetSqlFieldId(), prefix, brandLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                        , brandLevelInformation.DataBaseTableNamePrefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
                 }
 
                 //get universe filters
-                universFilter = GetUniversFilter(prefix);
+                string universFilter = GetUniversFilter(prefix);
 
 
                 //SELECT
 
                 sql.AppendFormat(" select ID_DATA_PROMOTION,{0}, date_begin_num, date_end_num  ", classifFieldName);
-                sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual ");
+                sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual,EXCLU_WEB ");
 
 
                 //FROM
@@ -279,7 +279,7 @@ namespace TNS.AdExpressI.VP.DAL
                 //Adding universe filters
                 sql.AppendFormat(" {0} ", universFilter);
 
-                //Adding claasification joins
+                //Adding classification joins
                 sql.AppendFormat(" {0}", classifJoinCondition);
 
                 //ORDER BY
@@ -290,7 +290,6 @@ namespace TNS.AdExpressI.VP.DAL
             }
             catch (Exception ex)
             {
-
                 throw new Exceptions.VeillePromoDALException(" Impossible to get Promotion Data ", ex);
             }
 
@@ -303,10 +302,10 @@ namespace TNS.AdExpressI.VP.DAL
         ///<param name="idDataPromotion">id Data Promotion</param>
         public virtual DataSet GetData(long idDataPromotion)
         {
-            DataSet ds = null;
+            DataSet ds;
             try
             {
-                StringBuilder sql = new StringBuilder(5000);
+                var sql = new StringBuilder(5000);
 
                 //Get data promo table
                 Table dataPromo = WebApplicationParameters.GetDataTable(TableIds.dataPromotion, false);
@@ -319,9 +318,10 @@ namespace TNS.AdExpressI.VP.DAL
                 //get universe filters
                 string universFilter = (idDataPromotion<0) ? GetUniversFilter(dataPromo.Prefix) :"";
 
-                sql.AppendFormat("select ID_DATA_PROMOTION, {0}.ID_PRODUCT , PRODUCT, {0}.ID_BRAND,BRAND, {0}.ID_SEGMENT, SEGMENT ", dataPromo.Prefix);
+                sql.AppendFormat("select ID_DATA_PROMOTION, {0}.ID_PRODUCT , PRODUCT, {0}.ID_BRAND,BRAND, {0}.ID_SEGMENT, SEGMENT ",
+                    dataPromo.Prefix);
                 sql.AppendFormat(", {0}.ID_CATEGORY, CATEGORY,{0}.ID_CIRCUIT ,CIRCUIT  ", dataPromo.Prefix);
-                sql.AppendFormat(", CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, PROMOTION_CONTENT, DATE_BEGIN_NUM, DATE_END_NUM", dataPromo.Prefix);
+                sql.AppendFormat(", CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, PROMOTION_CONTENT, EXCLU_WEB, DATE_BEGIN_NUM, DATE_END_NUM");
 
                 //FROM
                 sql.AppendFormat(" from  {0} ,{1} ,{2} ", dataPromo.SqlWithPrefix, promoCircuit.SqlWithPrefix, promoBrand.SqlWithPrefix);
@@ -332,11 +332,16 @@ namespace TNS.AdExpressI.VP.DAL
 
                 //Adding universe filters
                 if (idDataPromotion>-1) sql.AppendFormat(" and ID_DATA_PROMOTION={0} ", idDataPromotion);
-                sql.AppendFormat(" and {0}.ID_PRODUCT = {1}.ID_PRODUCT and  {1}.activation<{2}", dataPromo.Prefix, promoProduct.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-                sql.AppendFormat(" and {0}.ID_CATEGORY =  {1}.ID_CATEGORY and  {1}.activation<{2}", dataPromo.Prefix, promoCategory.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-                sql.AppendFormat(" and {0}.ID_SEGMENT =  {1}.ID_SEGMENT and  {1}.activation<{2}", dataPromo.Prefix, promoSegment.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-                sql.AppendFormat(" and {0}.ID_BRAND =  {1}.ID_BRAND and  {1}.activation<{2}", dataPromo.Prefix, promoBrand.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-                sql.AppendFormat(" and {0}.ID_CIRCUIT =  {1}.ID_CIRCUIT and  {1}.activation<{2}", dataPromo.Prefix, promoCircuit.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_PRODUCT = {1}.ID_PRODUCT and  {1}.activation<{2}",
+                    dataPromo.Prefix, promoProduct.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_CATEGORY =  {1}.ID_CATEGORY and  {1}.activation<{2}",
+                    dataPromo.Prefix, promoCategory.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_SEGMENT =  {1}.ID_SEGMENT and  {1}.activation<{2}",
+                    dataPromo.Prefix, promoSegment.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_BRAND =  {1}.ID_BRAND and  {1}.activation<{2}",
+                    dataPromo.Prefix, promoBrand.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_CIRCUIT =  {1}.ID_CIRCUIT and  {1}.activation<{2}",
+                    dataPromo.Prefix, promoCircuit.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
                 //universe filter to get all files for current selection
                 sql.Append(universFilter);
@@ -362,24 +367,25 @@ namespace TNS.AdExpressI.VP.DAL
         /// Obtient le code SQL des jointures correspondant aux éléments du niveau de détail
         /// </summary>
         /// <remarks>Début par And</remarks>
-        /// <param name="languageId">Langue à afficher</param>
         /// <param name="dataTablePrefix">Préfixe de la table de données sur laquelle on fait la jointure</param>
         /// <returns>Code SQL</returns>
         protected virtual string GetSqlJoins(string dataTablePrefix)
         {
-            if (dataTablePrefix == null || dataTablePrefix.Length == 0) throw (new ArgumentNullException("Parameter dataTablePrefix is invalid"));
-            string sql = "";
-            ArrayList levels = _session.GenericMediaDetailLevel.Levels;
+            if (string.IsNullOrEmpty(dataTablePrefix)) throw (new ArgumentNullException("Parameter dataTablePrefix is invalid"));
+            var sql = new StringBuilder();
+            var levels = _session.GenericMediaDetailLevel.Levels;
             foreach (DetailLevelItemInformation currentLevel in levels)
             {
                 if (currentLevel.DataBaseTableName != null)
                 {
-                    sql += " and " + currentLevel.DataBaseTableNamePrefix + "." + currentLevel.DataBaseIdField + "=" + dataTablePrefix + "." + currentLevel.DataBaseIdField;
-                    sql += " and " + currentLevel.DataBaseTableNamePrefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                    sql.AppendFormat(" and {0}.{1}={2}.{1}", currentLevel.DataBaseTableNamePrefix,
+                        currentLevel.DataBaseIdField, dataTablePrefix);
+                    sql.AppendFormat(" and {0}.activation<{1}", currentLevel.DataBaseTableNamePrefix,
+                        TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
                 }
             }
-            return (sql);
+            return (sql.ToString());
         }
 
         /// <summary>
@@ -389,7 +395,7 @@ namespace TNS.AdExpressI.VP.DAL
         /// <returns>SQl string for universes filter</returns>
         protected virtual string GetUniversFilter(string dataTablePrefix)
         {
-            StringBuilder sql = new StringBuilder();
+            var sql = new StringBuilder();
 
 
             //Filtering period
@@ -409,6 +415,8 @@ namespace TNS.AdExpressI.VP.DAL
             // Brand  Classification Selection
             sql.Append(GetBrandClassifFilters(dataTablePrefix, true));
 
+            //Exclu web
+            if (_session.IsExcluWeb) sql.AppendFormat(" and {0}.EXCLU_WEB = 1 ", dataTablePrefix);
 
             return sql.ToString();
         }

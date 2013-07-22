@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -246,7 +247,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
             #endregion
 
             // Vérifie si le client a le droit aux créations
-            if (_customerWebSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id))
+            if (ShowVehicleItems())
             {
 
 
@@ -262,7 +263,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
                         object[] parameters = new object[2];
                         parameters[0] = _customerWebSession;
                         parameters[1] = _resultType;
-                        Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                        Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain
+                            .CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory
+                            , module.CountryRulesLayer.AssemblyName) , module.CountryRulesLayer.Class, false,
+                            BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
 
                         _itemsCollection = portofolioResult.GetVehicleItems();
 
@@ -289,10 +293,11 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
                             switch (_resultType)
                             {
                                 case FrameWorkResultConstantes.Portofolio.SYNTHESIS:
-                                    sb.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _customerWebSession.SiteLanguage) + "</td></tr>");
+                                    sb.AppendFormat("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">{0}</td></tr>"
+                                        , GestionWeb.GetWebWord(1397, _customerWebSession.SiteLanguage));
                                     break;
                                 case FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA:
-                                    sb.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc14Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + _media + "</td></tr>");
+                                    sb.AppendFormat("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc14Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">{0}</td></tr>", _media);
                                     break;
                             }
 
@@ -356,7 +361,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
             sb.Append("\n   var indexSup_" + _controlName + " = 0;                                              ");
             sb.Append("\n   var time_" + _controlName + " = 0;                                                  ");
             foreach (VehicleItem vehicleItem in _itemsCollection)
-                sb.Append("\n imagesName_" + _controlName + "[" + imageIndex++ + "] = '" + vehicleItem.CoverItem.Src + "';");
+            {
+                if (vehicleItem.CoverItem != null)                   
+                        sb.Append("\n imagesName_" + _controlName + "[" + imageIndex++ + "] = '" + vehicleItem.CoverItem.Src + "';");
+            }
 
             sb.Append("\nvar navigatorIndex_" + _controlName + " = " + groupDivNumber + ";");
             sb.Append("\nvar prevNavigatorIndex_" + _controlName + " = -1;");
@@ -539,7 +547,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
 
             sb.Append("<div id=\"ItemsCollectionNavigator\">");
 
-            sb.Append("<div id=\"previous\" height=\"548px\" width=\"20px\"><img id=\"imgPrevious\" src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/preview.gif' onMouseOver=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/previewUp.gif'\" onMouseOut=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/preview.gif'\" style=\"cursor : pointer; margin-top:264px; margin-right:5px;margin-left:5px; visibility:hidden;\" onclick=\"javascript:prevPos_" + _controlName + "();\" /></div>");
+            sb.AppendFormat("<div id=\"previous\" height=\"548px\" width=\"20px\"><img id=\"imgPrevious\" src='/App_Themes/{0}/Images/Common/Button/preview.gif' onMouseOver=\"this.src='/App_Themes/{0}/Images/Common/Button/previewUp.gif'\" onMouseOut=\"this.src='/App_Themes/{0}/Images/Common/Button/preview.gif'\" style=\"cursor : pointer; margin-top:264px; margin-right:5px;margin-left:5px; visibility:hidden;\" onclick=\"javascript:prevPos_{1}();\" /></div>"
+                , WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name, _controlName);
 
             sb.Append("<div id=\"container\">");
             sb.Append("<div id=\"itemLoading\" class=\"item " + styleName + "\" style =\"display : none; text-align:center;\">");
@@ -614,7 +623,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
 
             sb.Append("</div>");
 
-            sb.Append("<div id=\"next\" height=\"548px\" width=\"20px\"><img id=\"imgNext\" src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/next.gif' onMouseOver=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/nextUp.gif'\" onMouseOut=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/next.gif'\"  style=\"cursor : pointer; margin-top:264px; margin-right:5px;margin-left:5px; visibility:hidden;\" onclick=\"javascipt:nextPos_" + _controlName + "();\"/></div>");
+            sb.AppendFormat("<div id=\"next\" height=\"548px\" width=\"20px\"><img id=\"imgNext\" src='/App_Themes/{0}/Images/Common/Button/next.gif' onMouseOver=\"this.src='/App_Themes/{0}/Images/Common/Button/nextUp.gif'\" onMouseOut=\"this.src='/App_Themes/{0}/Images/Common/Button/next.gif'\"  style=\"cursor : pointer; margin-top:264px; margin-right:5px;margin-left:5px; visibility:hidden;\" onclick=\"javascipt:nextPos_{1}();\"/></div>"
+                , WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name, _controlName);
 
 
             sb.Append("</div>");
@@ -631,7 +641,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
         /// <param name="e"></param>
         protected override void OnLoad(EventArgs e)
         {
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenWindow")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenWindow", Web.Functions.Script.OpenWindow());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenWindow"))
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenWindow", Web.Functions.Script.OpenWindow());
             base.OnLoad(e);
         }
         #endregion
@@ -713,6 +724,20 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
             return Math.Abs(monthsApart);
         }
         #endregion
+
+        /// <summary>
+        /// Check if can Show Vehicle Items
+        /// </summary>
+        /// <returns></returns>
+        private bool ShowVehicleItems()
+        {
+            if (Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG))
+            {
+                if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA) return true;//Will be managed in The Rules
+                return _customerWebSession.CustomerLogin.ShowVehiclePages(_vehicleInformation.Id);
+            }
+            return _customerWebSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id);
+        }
 
         #endregion
     }

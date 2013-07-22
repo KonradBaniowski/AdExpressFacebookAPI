@@ -125,6 +125,15 @@
         </detailColumn>
       </detailColumns>
     </vehicle>
+    <vehicle id="19"  name="COURRIER" >
+      <detailColumns>
+        <detailColumn id="36">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>           
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
   </vehicleGroups>
 
 </configuration>
