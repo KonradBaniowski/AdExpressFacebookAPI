@@ -167,13 +167,18 @@ namespace TNS.AdExpressI.NewCreatives {
             #endregion
 
             #region Chargement des données
-            if(_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-            object[] parameters = new object[4];
+            if(_module.CountryDataAccessLayer == null) 
+                throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            var parameters = new object[4];
             parameters[0] = _webSession;
             parameters[1] = _idSectors;
             parameters[2] = _beginingDate;
             parameters[3] = _endDate;
-            INewCreativeResultDAL newCreativesDAL = (INewCreativeResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+            var newCreativesDAL = (INewCreativeResultDAL)AppDomain.CurrentDomain.
+                CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, _module.CountryDataAccessLayer.AssemblyName),
+                _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
             ds = newCreativesDAL.GetData();
 
             if(ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) dt = ds.Tables[0];

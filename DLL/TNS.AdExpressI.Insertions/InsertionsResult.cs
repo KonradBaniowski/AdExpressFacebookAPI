@@ -69,11 +69,41 @@ namespace TNS.AdExpressI.Insertions
         /// List of media to test for creative acces (press specific)
         /// </summary>
         protected string[] _mediaList = null;
+
+        protected MediaItemsList _tntMediaItems = null;
+
+        public MediaItemsList TntMediaItems
+        {
+            get
+            {
+                if (_tntMediaItems==null &&
+                    Media.Contains(CstWeb.AdExpressUniverse.EXCLUDE_TNT_LIST_ID))
+                    _tntMediaItems = Media.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_TNT_LIST_ID);
+                return _tntMediaItems;
+            }
+        }
+
         /// <summary>
         /// List of category to test for top diffusion rule
         /// </summary>
-        protected string[] _topDiffCategory = 
-            TNS.AdExpress.Domain.Lists.GetIdList(GroupList.ID.category, GroupList.Type.digitalTv).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        private string[] _topDiffCategory = null;
+
+        /// <summary>
+        /// List of category to test for top diffusion rule
+        /// </summary>
+        public string[] TopDiffCategory
+        {
+            get
+            {
+                if (_topDiffCategory==null && TntMediaItems != null 
+                   && !string.IsNullOrEmpty(TntMediaItems.CategoryList) )
+                {
+                    _topDiffCategory = TntMediaItems.CategoryList.Split(new[] {','},
+                                                                        StringSplitOptions.RemoveEmptyEntries);
+                }
+                return _topDiffCategory;
+            }
+        }
         #endregion
 
         #region RenderType
@@ -89,6 +119,9 @@ namespace TNS.AdExpressI.Insertions
             get { return _renderType; }
             set { _renderType = value; }
         }
+
+       
+
         #endregion
 
         #region Constructor
@@ -487,24 +520,7 @@ namespace TNS.AdExpressI.Insertions
 
         #endregion
 
-        /// <summary>
-        /// Get Active Periods
-        /// </summary>
-        /// <param name="vehicle"></param>
-        /// <param name="fromDate"></param>
-        /// <param name="toDate"></param>
-        /// <param name="filters"></param>
-        /// <param name="universId"></param>
-        /// <param name="zoomDate"></param>
-        /// <returns>Active Periods</returns>
-        public List<string> GetActivePeriods(VehicleInformation vehicle, int fromDate, int toDate, string filters,
-            int universId, string zoomDate)
-        {
-            _zoomDate = zoomDate;
-            _universId = universId;
-
-            return _dalLayer.GetActiveDates(vehicle, fromDate, toDate, universId, filters);                    
-        }
+        
 
 
         #region GetData
@@ -862,7 +878,8 @@ namespace TNS.AdExpressI.Insertions
                                 {
                                     idCat = "";
                                 }
-                                if (Array.IndexOf(_topDiffCategory, idCat) >= 0)
+                                if (TopDiffCategory !=null &&
+                                    Array.IndexOf(TopDiffCategory, idCat) >= 0)
                                 {
                                     val = 0;
                                 }

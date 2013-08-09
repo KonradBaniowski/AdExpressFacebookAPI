@@ -2730,6 +2730,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Identifiant de la liste des média pour lesquels on utilise la date de kiosque pour accéder aux visuels
         /// </summary>
         public const int CREATIVES_KIOSQUE_LIST_ID = 365;
+        /// <summary>
+        /// Identifiant de la liste des supports et catégorie de la TNT à exclure
+        /// </summary>
+	    public const int EXCLUDE_TNT_LIST_ID = 505;
 	}
 	#endregion
 

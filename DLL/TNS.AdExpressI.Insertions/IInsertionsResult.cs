@@ -60,17 +60,6 @@ namespace TNS.AdExpressI.Insertions
         /// <returns>Creative Links string</returns>
         string GetCreativeLinks(long idVehicle, DataRow currentRow);
 
-        /// <summary>
-        /// Get Active Periods
-        /// </summary>
-        /// <param name="vehicle"></param>
-        /// <param name="fromDate"></param>
-        /// <param name="toDate"></param>
-        /// <param name="filters"></param>
-        /// <param name="universId"></param>
-        /// <param name="zoomDate"></param>
-        /// <returns>Active Periods</returns>
-        List<string> GetActivePeriods(VehicleInformation vehicle, int fromDate, int toDate, string filters,
-            int universId, string zoomDate);
+     
     }
 }

@@ -137,18 +137,25 @@ namespace TNS.AdExpressI.Portofolio.Engines
             #endregion
 
             if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-            object[] parameters = new object[6];
+            var parameters = new object[6];
             parameters[0] = _webSession;
             parameters[1] = _vehicleInformation;
             parameters[2] = _idMedia;
             parameters[3] = _periodBeginning;
             parameters[4] = _periodEnd;
             parameters[5] = _adBreak;
-            if ((_adBreak != null && _adBreak.Length > 0) || (_dayOfWeek != null && _dayOfWeek.Length > 0)) _allPeriod = false;
-            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-            string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.digitalTv);
-            if (idTNTCategory != null && idTNTCategory.Length > 0)
-                _isDigitalTV = portofolioDAL.IsMediaBelongToCategory(_idMedia, idTNTCategory);
+            if (!string.IsNullOrEmpty(_adBreak) || !string.IsNullOrEmpty(_dayOfWeek)) _allPeriod = false;
+            var portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, _module.CountryDataAccessLayer.AssemblyName),
+                _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+
+            MediaItemsList tntMediaItems = null;
+            if (Media.Contains(WebCst.AdExpressUniverse.EXCLUDE_TNT_LIST_ID))
+                tntMediaItems = Media.GetItemsList(WebCst.AdExpressUniverse.EXCLUDE_TNT_LIST_ID);
+          
+            if (tntMediaItems != null && !string.IsNullOrEmpty(tntMediaItems.CategoryList))
+                _isDigitalTV = portofolioDAL.IsMediaBelongToCategory(_idMedia, tntMediaItems.CategoryList);
 
             #region Product detail level (Generic)
             // Initialisation to product

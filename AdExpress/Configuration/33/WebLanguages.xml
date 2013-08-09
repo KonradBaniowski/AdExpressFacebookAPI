@@ -2,7 +2,7 @@
 <configuration>
   <languages default="33" defaultDataLanguage="33">
     <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="FRENCH" NumberDecimalSeparator="," NumberGroupSeparator=" "  PercentDecimalSeparator=",">      
-      <rss display="true" filePath="\\frmitpu-ws000\Web\France\AdExpress\Rss\33\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/33/AdExpressFeed.xml"/>
+      <rss display="true" filePath="\\frmitch-ws003\Web\France\AdExpress\Rss\33\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/33/AdExpressFeed.xml"/>
       <unitformats>
         <unitformat name="max0"               format="#,##0;-#,##0;&amp;nbsp\;"                       excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"/>
         <unitformat name="max1"               format="#,##0.#;-#,##0.#;&amp;nbsp\;"                   excelFormat="#,##0.0;-#,##0.0;&amp;nbsp\;"/>

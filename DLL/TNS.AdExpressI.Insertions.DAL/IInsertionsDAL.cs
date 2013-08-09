@@ -161,16 +161,6 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <returns>versions data ["id_advertiser","advertiser","id_product","product","id_vehicle","vehicle","id_slogan","date_media_num","id_media","advertDimension", "associated_file" </returns>
         DataSet GetVersions(string beginningDate, string endDate);
 
-        /// <summary>
-        /// Get Insertion / Crearive Active Dates
-        /// </summary>
-        /// <param name="vehicle"></param>
-        /// <param name="fromDate"></param>
-        /// <param name="toDate"></param>
-        /// <param name="universId"></param>
-        /// <param name="filters"></param>
-        /// <returns>Active Dates</returns>
-        List<string> GetActiveDates(VehicleInformation vehicle, int fromDate, int toDate, int universId,
-                                             string filters);
+        
     }
 }

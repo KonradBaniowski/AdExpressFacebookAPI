@@ -235,8 +235,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="webSession">Session du client</param>
         /// <param name="tablePrefixe">Préfixe de la table qui contient les données</param>
         /// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
+        /// <param name="replaceIds">Function  replace ids</param>
         /// <returns>Code SQL généré</returns>
-        public static string getAnalyseCustomerMediaRight(WebSession webSession, string tablePrefixe, bool beginByAnd)
+        public static string getAnalyseCustomerMediaRight(WebSession webSession, string tablePrefixe
+            , bool beginByAnd,Func<CustomerRightConstante.type ,string,string>  replaceIds =null)
         {
 
             string sql = "";
@@ -246,7 +248,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
             if (webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length > 0)
             {
                 if (beginByAnd) sql += " and";
-                sql += " ((" + tablePrefixe + ".id_vehicle in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess] + ") ";
+                sql += replaceIds != null
+                           ? string.Format(" (({0}.id_vehicle in ({1}) "
+                                           , tablePrefixe, replaceIds(CustomerRightConstante.type.vehicleAccess,
+                                                                      webSession.CustomerLogin[
+                                                                          CustomerRightConstante.type.vehicleAccess]))
+                           : string.Format(" (({0}.id_vehicle in ({1}) "
+                                           , tablePrefixe,
+                                           webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess]);
                 premier = false;
             }
             // Category
@@ -258,7 +267,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql += " and";
                     sql += " ((";
                 }
-                sql += " " + tablePrefixe + ".id_category in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess] + ") ";
+                sql += replaceIds != null
+                           ? string.Format(" {0}.id_category in ({1}) "
+                                           , tablePrefixe, replaceIds(CustomerRightConstante.type.categoryAccess,
+                                                                      webSession.CustomerLogin[
+                                                                          CustomerRightConstante.type.categoryAccess]))
+                           : string.Format(" {0}.id_category in ({1}) "
+                                           , tablePrefixe,
+                                           webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess]);
                 premier = false;
             }
             // Region
@@ -270,7 +286,13 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql += " and";
                     sql += " ((";
                 }
-                sql += " " + tablePrefixe + ".id_region in (" + webSession.CustomerLogin[CustomerRightConstante.type.regionAccess] + ") ";
+                sql += replaceIds != null
+                          ? string.Format(" {0}.id_region in ({1}) "
+                                          , tablePrefixe, replaceIds(CustomerRightConstante.type.regionAccess,
+                                                                     webSession.CustomerLogin[
+                                                                         CustomerRightConstante.type.regionAccess]))
+                          : string.Format(" {0}.id_region in ({1}) "
+                    , tablePrefixe, webSession.CustomerLogin[CustomerRightConstante.type.regionAccess]);
                 premier = false;
             }
             // Media
@@ -282,7 +304,13 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql += " and";
                     sql += " ((";
                 }
-                sql += " " + tablePrefixe + ".id_media in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess] + ") ";
+                sql += replaceIds != null
+                          ? string.Format(" {0}.id_media in ({1}) "
+                                          , tablePrefixe, replaceIds(CustomerRightConstante.type.mediaAccess,
+                                                                     webSession.CustomerLogin[
+                                                                         CustomerRightConstante.type.mediaAccess]))
+                          : string.Format(" {0}.id_media in ({1}) "
+                    , tablePrefixe, webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess]);
                 premier = false;
             }
             if (!premier) sql += " )";
@@ -297,7 +325,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql += " and";
                     sql += " (";
                 }
-                sql += " " + tablePrefixe + ".id_vehicle not in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleException] + ") ";
+                sql += replaceIds != null
+                           ? string.Format(" {0}.id_vehicle not in ({1}) "
+                                           , tablePrefixe, replaceIds(CustomerRightConstante.type.vehicleException,
+                                                                      webSession.CustomerLogin[
+                                                                          CustomerRightConstante.type.vehicleException]))
+                           : string.Format(" {0}.id_vehicle not in ({1}) "
+                                           , tablePrefixe,
+                                           webSession.CustomerLogin[CustomerRightConstante.type.vehicleException]);
                 premier = false;
             }
             // Category
@@ -309,7 +344,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql += " and";
                     sql += " (";
                 }
-                sql += " " + tablePrefixe + ".id_category not in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryException] + ") ";
+                sql += replaceIds != null
+                          ? string.Format(" {0}.id_category not in ({1}) "
+                                          , tablePrefixe, replaceIds(CustomerRightConstante.type.categoryException,
+                                                                     webSession.CustomerLogin[
+                                                                         CustomerRightConstante.type.categoryException]))
+                          : string.Format(" {0}.id_category not in ({1}) "
+                                          , tablePrefixe,
+                                          webSession.CustomerLogin[CustomerRightConstante.type.categoryException]);
                 premier = false;
             }
             // Region
@@ -321,7 +363,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql += " and";
                     sql += " (";
                 }
-                sql += " " + tablePrefixe + ".id_region not in (" + webSession.CustomerLogin[CustomerRightConstante.type.regionException] + ") ";
+                sql += replaceIds != null
+                         ? string.Format(" {0}.id_region not in ({1}) "
+                                         , tablePrefixe, replaceIds(CustomerRightConstante.type.regionException,
+                                                                    webSession.CustomerLogin[
+                                                                        CustomerRightConstante.type.regionException]))
+                         : string.Format(" {0}.id_region not in ({1}) "
+                                         , tablePrefixe,
+                                         webSession.CustomerLogin[CustomerRightConstante.type.regionException]);
+               
                 premier = false;
             }
             // Media
@@ -333,7 +383,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql += " and";
                     sql += " (";
                 }
-                sql += " " + tablePrefixe + ".id_media not in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaException] + ") ";
+                sql += replaceIds != null
+                        ? string.Format(" {0}.id_media not in ({1}) "
+                                        , tablePrefixe, replaceIds(CustomerRightConstante.type.mediaException,
+                                                                   webSession.CustomerLogin[
+                                                                       CustomerRightConstante.type.mediaException]))
+                        : string.Format(" {0}.id_media not in ({1}) "
+                                        , tablePrefixe,
+                                        webSession.CustomerLogin[CustomerRightConstante.type.mediaException]);              
                 premier = false;
             }
             if (!premier) sql += " )";

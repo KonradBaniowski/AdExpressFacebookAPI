@@ -160,19 +160,28 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				sql.Append( " " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
 				//Rights detail spot to spot TNT
+                MediaItemsList tntMediaItems = null;
+                if (Media.Contains(WebConstantes.AdExpressUniverse.EXCLUDE_TNT_LIST_ID))
+                    tntMediaItems = Media.GetItemsList(WebConstantes.AdExpressUniverse.EXCLUDE_TNT_LIST_ID);
+
 				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces)
 					&& !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG)) {					
-					string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category, WebConstantes.GroupList.Type.digitalTv);
-					if (!string.IsNullOrEmpty(idTNTCategory)) {
+				
+					 if (tntMediaItems!=null && !string.IsNullOrEmpty(tntMediaItems.CategoryList)){
 						sql.AppendFormat(" and {0}.id_category not in ({1})  ",
-                            WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, idTNTCategory);
+                            WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, tntMediaItems.CategoryList);
 					}		
 				}
+                if (tntMediaItems != null && !string.IsNullOrEmpty(tntMediaItems.MediaList))
+                {
+                    sql.AppendFormat(" and {0}.id_media not in ({1})  ", WebApplicationParameters
+                       .DataBaseDescription.DefaultResultTablePrefix, tntMediaItems.MediaList);
 
+                }
 				#endregion
 
                 //Group by
