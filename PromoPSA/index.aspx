@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
-<head id="Head1" runat="server">
+<head runat="server">
     <title>PSA</title>
     <meta http-equiv="Content-Type" content="text/html;"/>
 	<meta content="C#" name="CODE_LANGUAGE"/>
@@ -16,7 +16,6 @@
 </head>
 <body class="bodyStyle">
     <form id="form1" runat="server">
-    <div style="display:none;"><asp:TextBox runat="server" ID="__CUSTOMIZECLASSIFICATION"/></div>
     <div class="header"><asp:Image ID="Image1" runat="server" SkinID="logo_tns_home" /></div>
     <div id="global">
 	    <div id="content">

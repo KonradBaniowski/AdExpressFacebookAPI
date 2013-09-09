@@ -85,6 +85,7 @@ namespace KMI.PromoPSA.Web.Domain {
                        System.Web.Configuration.WebConfigurationManager.AppSettings["DbPassword"],
                        System.Web.Configuration.WebConfigurationManager.AppSettings["DbDataSource"]);
             _dbConfig.ConnectionString = connexionString;
+            _dbConfig.ProviderDataAccess = System.Web.Configuration.WebConfigurationManager.AppSettings["ProviderDataAccess"];
 
             //StatusInformations.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + Cste.Configuration.STATUS_INFORMATION_CONFIGURATION));
             //MenuList.Init(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + Cste.Configuration.MENU_CONFIGURATION));

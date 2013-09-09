@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KMI.PromoPSA.Rules.Exceptions;
-using KMI.PromoPSA.Web;
+using KMI.PromoPSA.Web.UI;
 using KMI.PromoPSA.Web.Core;
 using KMI.PromoPSA.Web.Core.Sessions;
 using KMI.PromoPSA.Web.Domain;
@@ -19,7 +19,6 @@ public partial class index : WebPage {
     /// </summary>
     private bool _hasError = false;
     #endregion
-
 
     #region Event
 

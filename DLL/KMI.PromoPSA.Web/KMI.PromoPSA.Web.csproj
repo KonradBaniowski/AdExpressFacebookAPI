@@ -56,7 +56,7 @@
     <Compile Include="UI\PrivateWebPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebPage.cs">
+    <Compile Include="UI\WebPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

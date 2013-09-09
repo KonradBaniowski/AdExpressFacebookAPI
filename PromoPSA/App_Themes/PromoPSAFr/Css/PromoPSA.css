@@ -1,0 +1,53 @@
+﻿.bodyStyle {
+	background-image: none; 
+	margin: 0px; 
+	background-color: #ffffff;
+	z-index:1;
+}
+.header {
+	background-image:url(/App_Themes/PromoPSAFr/Images/header_background.gif);
+	background-repeat:repeat-x;
+	height:64px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight:normal;
+	font-size:11px;
+	color:#525252;
+}
+.promotionsInformationDiv{
+	width:100%; 
+	background-color:#CBCBCB; 
+	vertical-align:top;
+	border-bottom:solid 1px #eee;
+	height:19px;
+	text-align:left;
+}
+
+/* Text */
+.txtGreyBold12 {
+	font-family:Arial;
+	font-weight:bold;
+    font-size:12px;
+    color:#666;
+}
+/* Global */
+.textBox {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:12px;
+	border: 1px solid #CBCBCB;
+	width: 150px;
+	height:18px;
+}
+.validateButton {
+	border: 1px solid #CBCBCB;
+	background-color:#eee;
+}
+/* Identification */
+#global {
+	position: absolute;
+	width: 300px;
+	margin-left: -150px;
+	left: 50%;
+	height: 88px;
+	margin-top: -44px;
+	top: 50%;
+}

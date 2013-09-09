@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KMI.PromoPSA.BusinessEntities;
 
 namespace KMI.PromoPSA.Rules {
     /// <summary>
@@ -22,5 +23,6 @@ namespace KMI.PromoPSA.Rules {
         /// <param name="password">Password</param>
         /// <returns></returns>
         bool CanAccessToPSA(string login, string password);
+        List<Advert> GetAdverts(long loadDate);
     }
 }

@@ -5,8 +5,10 @@ using System.Text;
 using System.Web;
 using KMI.PromoPSA.Web.Domain;
 
-namespace KMI.PromoPSA.Web
-{
+namespace KMI.PromoPSA.Web.UI {
+    /// <summary>
+    /// Web Page
+    /// </summary>
     public class WebPage : System.Web.UI.Page {
   
         #region Variables

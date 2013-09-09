@@ -171,5 +171,6 @@
     <item mnemonic="w165" type="System.String">Evolution des pages vues pour le site</item>
     <item mnemonic="w166" type="System.String">Période</item>
     <item mnemonic="w167" type="System.String">Durée</item>
+    <item mnemonic="w168" type="System.String">Nombre de promotions</item>
   </items>
 </localization>

@@ -1,0 +1,54 @@
+﻿.disconnectUser {
+	margin-left:10px;
+}
+
+.disconnectUser,
+.disconnectUser a {
+	cursor:pointer;
+	font-family:Arial;
+    font-weight:normal;
+    font-size:11px;
+	color:#525252;
+	text-decoration:none;
+	text-align:left;
+	vertical-align:middle;
+}
+
+.disconnectUser img {
+	border-width:0px;
+	padding:0px 5px 0px 0px;
+}
+
+.loginInformation {
+	margin-left:10px;
+}
+
+.loginInformation,
+.loginInformation a {
+	cursor:pointer;
+	font-family:Arial;
+    font-weight:normal;
+    font-size:11px;
+	color:#525252;
+	text-decoration:none;
+	text-align:left;
+	vertical-align:middle;
+}
+
+.loginInformation img {
+	border-width:0px;
+	padding:0px 0px 0px 0px;
+}
+
+.headerPromotionInformation {
+	font-family:Arial;
+    font-weight:normal;
+    font-size:11px;
+	color:#525252;
+	margin-left:10px;
+}
+
+.headerPromotionInformation img {
+	border-width:0px;
+	padding:0px 2px 0px 0px;
+}
