@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-using KMI.PromoPSA.Domain;
+using KMI.PromoPSA.Web.Domain;
 
 namespace KMI.PromoPSA.Web
 {
@@ -24,22 +24,17 @@ namespace KMI.PromoPSA.Web
         /// <summary>
         /// Constructor
         /// </summary>
-        public WebPage()
-        {
-            try
-            {
+        public WebPage() {
+            try {
                 if (HttpContext.Current.Request.QueryString.Get("siteLanguage") != null && 
-                    WebApplicationParameters.AllowedLanguages.ContainsKey(int.Parse(HttpContext.Current.Request.QueryString.Get("siteLanguage"))))
-                {
+                    WebApplicationParameters.AllowedLanguages.ContainsKey(int.Parse(HttpContext.Current.Request.QueryString.Get("siteLanguage")))) {
                     _siteLanguage = int.Parse(HttpContext.Current.Request.QueryString.Get("siteLanguage"));
                 }
-                else
-                {
+                else {
                     _siteLanguage = WebApplicationParameters.DefaultLanguage;
                 }
             }
-            catch (System.Exception)
-            {
+            catch (System.Exception) {
                 _siteLanguage = WebApplicationParameters.DefaultLanguage;
             }
         }
@@ -52,8 +47,7 @@ namespace KMI.PromoPSA.Web
         /// OnPreInit event
         /// </summary>
         /// <param name="e">Arguments</param>
-        protected override void OnPreInit(EventArgs e)
-        {
+        protected override void OnPreInit(EventArgs e) {
             // TODO Gestion des exceptions
             if (_useThemes)
                 this.Theme = WebApplicationParameters.Themes[_siteLanguage].Name;
@@ -66,16 +60,17 @@ namespace KMI.PromoPSA.Web
         /// OnInit Event
         /// </summary>
         /// <param name="e">Parameter e</param>
-        protected override void OnInit(EventArgs e)
-        {
+        protected override void OnInit(EventArgs e) {
             base.OnInit(e);
         }
         #endregion
-      
 
         #region redirect
-        protected virtual void Redirect(int errorId)
-        {
+        /// <summary>
+        /// Redirect to error page
+        /// </summary>
+        /// <param name="errorId">Error Id</param>
+        protected virtual void Redirect(int errorId) {
             Response.Redirect(Page.ResolveUrl("~/error.aspx?id=" + errorId));
         }
         #endregion

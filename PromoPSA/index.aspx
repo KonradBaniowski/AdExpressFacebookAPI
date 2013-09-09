@@ -22,12 +22,12 @@
 	    <div id="content">
 		    <table border="0" width="300" cellpadding="3" cellspacing="0">
 			    <tr>
-			        <td align="right" width="50%"><asp:Label ID="_loginLabel" runat="server" CssClass="txtGreyBold12"></asp:Label></td>
-			        <td align="left"><asp:TextBox ID="_loginTextBox" runat="server" CssClass="textBox"></asp:TextBox></td>
+			        <td align="right" width="50%"><asp:Label ID="loginLabel" runat="server" CssClass="txtGreyBold12"></asp:Label></td>
+			        <td align="left"><asp:TextBox ID="loginTextBox" runat="server" CssClass="textBox"></asp:TextBox></td>
 			    </tr>
 			    <tr>
-			        <td align="right"><asp:Label ID="_passwordLabel" runat="server" CssClass="txtGreyBold12"></asp:Label></td>
-			        <td align="left"><asp:TextBox ID="_passwordTextBox" runat="server" TextMode="Password" CssClass="textBox"></asp:TextBox></td>
+			        <td align="right"><asp:Label ID="passwordLabel" runat="server" CssClass="txtGreyBold12"></asp:Label></td>
+			        <td align="left"><asp:TextBox ID="passwordTextBox" runat="server" TextMode="Password" CssClass="textBox"></asp:TextBox></td>
 			    </tr>
 			    <tr>
 			        <td>&nbsp;</td>

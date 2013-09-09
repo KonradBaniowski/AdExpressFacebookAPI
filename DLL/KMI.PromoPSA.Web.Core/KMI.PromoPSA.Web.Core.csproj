@@ -59,13 +59,13 @@
       <Project>{4ce71c74-45b6-4d6a-a055-446d39da6137}</Project>
       <Name>KMI.PromoPSA.Constantes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KMI.PromoPSA.Domain\KMI.PromoPSA.Domain.csproj">
-      <Project>{BF692FAA-B6F2-4ADE-8E07-9FFE2AB551C3}</Project>
-      <Name>KMI.PromoPSA.Domain</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KMI.PromoPSA.Rules\KMI.PromoPSA.Rules.csproj">
       <Project>{F3EDD3EB-288A-45B1-BD89-B1B45D91804C}</Project>
       <Name>KMI.PromoPSA.Rules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KMI.PromoPSA.Web.Domain\KMI.PromoPSA.Web.Domain.csproj">
+      <Project>{de0ef26a-4e1c-4a92-971e-ca597d050f57}</Project>
+      <Name>KMI.PromoPSA.Web.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

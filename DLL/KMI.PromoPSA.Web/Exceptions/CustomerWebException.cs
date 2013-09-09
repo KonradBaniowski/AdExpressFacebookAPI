@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using KMI.PromoPSA.Domain;
 using KMI.PromoPSA.Web.Core.Sessions;
 using TNS.FrameWork;
 using TNSMail = TNS.FrameWork.Net.Mail;
 using Cste = KMI.PromoPSA.Constantes;
+using KMI.PromoPSA.Web.Domain;
 
 namespace KMI.PromoPSA.Web.Exceptions
 {
@@ -247,7 +247,7 @@ namespace KMI.PromoPSA.Web.Exceptions
                 body += "<html><b><u>" + _serverName + ":</u></b><br>" + "<font color=#FF0000>Erreur client:<br></font>";
                 body += "Numéro de session: " + _webSession.IdSession + "<br>";
                 body += "Login: " + _webSession.CustomerLogin.Login + "<br>";
-                body += "Password: " + _webSession.CustomerLogin.PassWord + "<br>";
+                body += "Password: " + _webSession.CustomerLogin.Password + "<br>";
                 #endregion
 
                 #region Message d'erreur

@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
-using KMI.PromoPSA.Domain;
+using KMI.PromoPSA.Web.Domain;
 using CsteWebSession = KMI.PromoPSA.Constantes.WebSession;
 namespace KMI.PromoPSA.Web.Core.Sessions
 {
