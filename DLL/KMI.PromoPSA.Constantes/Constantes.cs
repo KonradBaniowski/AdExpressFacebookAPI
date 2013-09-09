@@ -11,7 +11,7 @@ namespace KMI.PromoPSA.Constantes
 
         public static long ACTIVATION_CODE_TO_CODIFY = 40;
 
-        public static  long ACTIVATION_CODE_INACTIVE = 50;
+        public static long ACTIVATION_CODE_INACTIVE = 50;
 
         public static long ACTIVATION_CODE_CODIFIED = 20;
 
@@ -177,4 +177,11 @@ namespace KMI.PromoPSA.Constantes
         public const int CHECKING_NB_DAY_VIEW = 8;
     }
     #endregion
+
+    public class Db
+    {
+        public const String ADEXPRESS_SCHEMA = "ADEXPR03";
+
+        public const String PROMO_SCHEMA = "PROMO03";
+    }
 }
