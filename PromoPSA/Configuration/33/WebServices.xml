@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <WebServices timeout="120000">
+    <WebService name="rights" url="http://frmitch-ws001:2019/Rights.asmx"       />
+    <!--<WebService name="dispacher" url="http://frmitch-ws001:2009/Dispacher.asmx" />
+    <WebService name="banner" url="http://localhost:1265/Banner.asmx"       timeout="300000"/>
+    <WebService name="service" url="http://frmitch-ws001:2029/Service.asmx"     />-->
+  </WebServices>
+</configuration>

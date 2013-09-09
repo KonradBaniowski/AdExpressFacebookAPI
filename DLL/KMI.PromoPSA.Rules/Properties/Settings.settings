@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="KMI.PromoPSA.Rules.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="KMI_PromoPSA_Rules_Rights_Rights" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://frmitch-ws001:2019/Rights.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

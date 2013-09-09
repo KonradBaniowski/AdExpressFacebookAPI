@@ -23,6 +23,22 @@ namespace KMI.PromoPSA.Constantes
 
     }
 
+    #region Project
+    /// <summary>
+    /// Project Constantes
+    /// </summary>
+    public class Project {
+        /// <summary>
+        /// AdExpress Id
+        /// </summary>
+        public const long ADEXPRESS_ID = 1;
+        /// <summary>
+        /// Evailiant
+        /// </summary>
+        public const long EVALIANT_ID = 68;
+    }
+    #endregion
+
     #region WebSession
     /// <summary>
     /// Constantes de session

@@ -82,7 +82,7 @@ public partial class index : WebPage {
                         WebSessions.Add(webSession);
                         webSession.Save(Session);
                         if (!Page.ClientScript.IsClientScriptBlockRegistered("Login")) {
-                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", KMI.PromoPSA.Web.Functions.Script.Login("TODO link to home page"));
+                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", KMI.PromoPSA.Web.Functions.Script.Login("/Private/Home.aspx"));
                         }
                     }
 

@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="IsAccessible">
+        <s:complexType />
+      </s:element>
+      <s:element name="IsAccessibleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsAccessibleResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAccessToProject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="projectId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAccessToProjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CanAccessToProjectResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetModuleIds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="projectId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetModuleIdsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetModuleIdsResult" type="tns:ArrayOfLong" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLong">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="long" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetFlagIds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="projectId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFlagIdsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFlagIdsResult" type="tns:ArrayOfLong" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAccessToEvaliant">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAccessToEvaliantResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CanAccessToEvaliantResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvaliantModuleIds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvaliantModuleIdsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEvaliantModuleIdsResult" type="tns:ArrayOfLong" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvaliantLoginId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvaliantLoginIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetEvaliantLoginIdResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAccessToBastet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAccessToBastetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CanAccessToBastetResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="ArrayOfLong" nillable="true" type="tns:ArrayOfLong" />
+      <s:element name="long" type="s:long" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="IsAccessibleSoapIn">
+    <wsdl:part name="parameters" element="tns:IsAccessible" />
+  </wsdl:message>
+  <wsdl:message name="IsAccessibleSoapOut">
+    <wsdl:part name="parameters" element="tns:IsAccessibleResponse" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToProjectSoapIn">
+    <wsdl:part name="parameters" element="tns:CanAccessToProject" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToProjectSoapOut">
+    <wsdl:part name="parameters" element="tns:CanAccessToProjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetModuleIdsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetModuleIds" />
+  </wsdl:message>
+  <wsdl:message name="GetModuleIdsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetModuleIdsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFlagIdsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFlagIds" />
+  </wsdl:message>
+  <wsdl:message name="GetFlagIdsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFlagIdsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToEvaliantSoapIn">
+    <wsdl:part name="parameters" element="tns:CanAccessToEvaliant" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToEvaliantSoapOut">
+    <wsdl:part name="parameters" element="tns:CanAccessToEvaliantResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantModuleIdsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEvaliantModuleIds" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantModuleIdsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEvaliantModuleIdsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantLoginIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEvaliantLoginId" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantLoginIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEvaliantLoginIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToBastetSoapIn">
+    <wsdl:part name="parameters" element="tns:CanAccessToBastet" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToBastetSoapOut">
+    <wsdl:part name="parameters" element="tns:CanAccessToBastetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsAccessibleHttpGetIn" />
+  <wsdl:message name="IsAccessibleHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToProjectHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="projectId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToProjectHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetModuleIdsHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="projectId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetModuleIdsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLong" />
+  </wsdl:message>
+  <wsdl:message name="GetFlagIdsHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="projectId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFlagIdsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLong" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToEvaliantHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToEvaliantHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantModuleIdsHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantModuleIdsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLong" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantLoginIdHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantLoginIdHttpGetOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToBastetHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToBastetHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="IsAccessibleHttpPostIn" />
+  <wsdl:message name="IsAccessibleHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToProjectHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="projectId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToProjectHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetModuleIdsHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="projectId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetModuleIdsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLong" />
+  </wsdl:message>
+  <wsdl:message name="GetFlagIdsHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="projectId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFlagIdsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLong" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToEvaliantHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToEvaliantHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantModuleIdsHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantModuleIdsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLong" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantLoginIdHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaliantLoginIdHttpPostOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToBastetHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CanAccessToBastetHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="RightsSoap">
+    <wsdl:operation name="IsAccessible">
+      <wsdl:input message="tns:IsAccessibleSoapIn" />
+      <wsdl:output message="tns:IsAccessibleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToProject">
+      <wsdl:input message="tns:CanAccessToProjectSoapIn" />
+      <wsdl:output message="tns:CanAccessToProjectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleIds">
+      <wsdl:input message="tns:GetModuleIdsSoapIn" />
+      <wsdl:output message="tns:GetModuleIdsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFlagIds">
+      <wsdl:input message="tns:GetFlagIdsSoapIn" />
+      <wsdl:output message="tns:GetFlagIdsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToEvaliant">
+      <wsdl:input message="tns:CanAccessToEvaliantSoapIn" />
+      <wsdl:output message="tns:CanAccessToEvaliantSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantModuleIds">
+      <wsdl:input message="tns:GetEvaliantModuleIdsSoapIn" />
+      <wsdl:output message="tns:GetEvaliantModuleIdsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantLoginId">
+      <wsdl:input message="tns:GetEvaliantLoginIdSoapIn" />
+      <wsdl:output message="tns:GetEvaliantLoginIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToBastet">
+      <wsdl:input message="tns:CanAccessToBastetSoapIn" />
+      <wsdl:output message="tns:CanAccessToBastetSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="RightsHttpGet">
+    <wsdl:operation name="IsAccessible">
+      <wsdl:input message="tns:IsAccessibleHttpGetIn" />
+      <wsdl:output message="tns:IsAccessibleHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToProject">
+      <wsdl:input message="tns:CanAccessToProjectHttpGetIn" />
+      <wsdl:output message="tns:CanAccessToProjectHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleIds">
+      <wsdl:input message="tns:GetModuleIdsHttpGetIn" />
+      <wsdl:output message="tns:GetModuleIdsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFlagIds">
+      <wsdl:input message="tns:GetFlagIdsHttpGetIn" />
+      <wsdl:output message="tns:GetFlagIdsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToEvaliant">
+      <wsdl:input message="tns:CanAccessToEvaliantHttpGetIn" />
+      <wsdl:output message="tns:CanAccessToEvaliantHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantModuleIds">
+      <wsdl:input message="tns:GetEvaliantModuleIdsHttpGetIn" />
+      <wsdl:output message="tns:GetEvaliantModuleIdsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantLoginId">
+      <wsdl:input message="tns:GetEvaliantLoginIdHttpGetIn" />
+      <wsdl:output message="tns:GetEvaliantLoginIdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToBastet">
+      <wsdl:input message="tns:CanAccessToBastetHttpGetIn" />
+      <wsdl:output message="tns:CanAccessToBastetHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="RightsHttpPost">
+    <wsdl:operation name="IsAccessible">
+      <wsdl:input message="tns:IsAccessibleHttpPostIn" />
+      <wsdl:output message="tns:IsAccessibleHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToProject">
+      <wsdl:input message="tns:CanAccessToProjectHttpPostIn" />
+      <wsdl:output message="tns:CanAccessToProjectHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleIds">
+      <wsdl:input message="tns:GetModuleIdsHttpPostIn" />
+      <wsdl:output message="tns:GetModuleIdsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFlagIds">
+      <wsdl:input message="tns:GetFlagIdsHttpPostIn" />
+      <wsdl:output message="tns:GetFlagIdsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToEvaliant">
+      <wsdl:input message="tns:CanAccessToEvaliantHttpPostIn" />
+      <wsdl:output message="tns:CanAccessToEvaliantHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantModuleIds">
+      <wsdl:input message="tns:GetEvaliantModuleIdsHttpPostIn" />
+      <wsdl:output message="tns:GetEvaliantModuleIdsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantLoginId">
+      <wsdl:input message="tns:GetEvaliantLoginIdHttpPostIn" />
+      <wsdl:output message="tns:GetEvaliantLoginIdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToBastet">
+      <wsdl:input message="tns:CanAccessToBastetHttpPostIn" />
+      <wsdl:output message="tns:CanAccessToBastetHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RightsSoap" type="tns:RightsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsAccessible">
+      <soap:operation soapAction="http://tempuri.org/IsAccessible" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToProject">
+      <soap:operation soapAction="http://tempuri.org/CanAccessToProject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleIds">
+      <soap:operation soapAction="http://tempuri.org/GetModuleIds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFlagIds">
+      <soap:operation soapAction="http://tempuri.org/GetFlagIds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToEvaliant">
+      <soap:operation soapAction="http://tempuri.org/CanAccessToEvaliant" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantModuleIds">
+      <soap:operation soapAction="http://tempuri.org/GetEvaliantModuleIds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantLoginId">
+      <soap:operation soapAction="http://tempuri.org/GetEvaliantLoginId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToBastet">
+      <soap:operation soapAction="http://tempuri.org/CanAccessToBastet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RightsSoap12" type="tns:RightsSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsAccessible">
+      <soap12:operation soapAction="http://tempuri.org/IsAccessible" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToProject">
+      <soap12:operation soapAction="http://tempuri.org/CanAccessToProject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleIds">
+      <soap12:operation soapAction="http://tempuri.org/GetModuleIds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFlagIds">
+      <soap12:operation soapAction="http://tempuri.org/GetFlagIds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToEvaliant">
+      <soap12:operation soapAction="http://tempuri.org/CanAccessToEvaliant" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantModuleIds">
+      <soap12:operation soapAction="http://tempuri.org/GetEvaliantModuleIds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantLoginId">
+      <soap12:operation soapAction="http://tempuri.org/GetEvaliantLoginId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToBastet">
+      <soap12:operation soapAction="http://tempuri.org/CanAccessToBastet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RightsHttpGet" type="tns:RightsHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="IsAccessible">
+      <http:operation location="/IsAccessible" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToProject">
+      <http:operation location="/CanAccessToProject" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleIds">
+      <http:operation location="/GetModuleIds" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFlagIds">
+      <http:operation location="/GetFlagIds" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToEvaliant">
+      <http:operation location="/CanAccessToEvaliant" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantModuleIds">
+      <http:operation location="/GetEvaliantModuleIds" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantLoginId">
+      <http:operation location="/GetEvaliantLoginId" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToBastet">
+      <http:operation location="/CanAccessToBastet" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RightsHttpPost" type="tns:RightsHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="IsAccessible">
+      <http:operation location="/IsAccessible" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToProject">
+      <http:operation location="/CanAccessToProject" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleIds">
+      <http:operation location="/GetModuleIds" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFlagIds">
+      <http:operation location="/GetFlagIds" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToEvaliant">
+      <http:operation location="/CanAccessToEvaliant" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantModuleIds">
+      <http:operation location="/GetEvaliantModuleIds" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaliantLoginId">
+      <http:operation location="/GetEvaliantLoginId" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAccessToBastet">
+      <http:operation location="/CanAccessToBastet" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Rights">
+    <wsdl:port name="RightsSoap" binding="tns:RightsSoap">
+      <soap:address location="http://frmitch-ws001:2019/Rights.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RightsSoap12" binding="tns:RightsSoap12">
+      <soap12:address location="http://frmitch-ws001:2019/Rights.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RightsHttpGet" binding="tns:RightsHttpGet">
+      <http:address location="http://frmitch-ws001:2019/Rights.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RightsHttpPost" binding="tns:RightsHttpPost">
+      <http:address location="http://frmitch-ws001:2019/Rights.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <languages default="33" defaultDataLanguage="33">
+    <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8">
+      <unitformats>
+        <unitformat name="percentage"         format="#,##0.00\%;-#,##0.00\%" />
+        <unitformat name="nb_banner"          format="#,##0;-#,##0"/>
+        <unitformat name="nb_media"          format="#,##0;-#,##0"/>
+      </unitformats>
+      <dateFormats>
+        <dateFormat name="shortdatepattern"   format="dd/MM/yyyy"/>
+        <dateFormat name="customdatepattern"  format="ddd dd MMM yyyy"/>
+      </dateFormats>
+    </language>
+    <language id="44" name="English" imageSourceText="/Images/Common/france.gif"  localization="en-GB" classificationLanguageId="33" charset="utf-8">
+      <unitformats>
+        <unitformat name="percentage"         format="#,##0.00\%;-#,##0.00\%" />
+        <unitformat name="nb_banner"          format="#,##0;-#,##0"/>
+        <unitformat name="nb_media"          format="#,##0;-#,##0"/>
+      </unitformats>
+      <dateFormats>
+        <dateFormat name="shortdatepattern"   format="dd/MM/yyyy"/>
+        <dateFormat name="customdatepattern"  format="ddd dd MMM yyyy"/>
+      </dateFormats>
+    </language>
+  </languages>
+</configuration>
