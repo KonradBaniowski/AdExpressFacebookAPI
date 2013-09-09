@@ -39,6 +39,7 @@
       <HintPath>\\frmitch-fs04\Programme\Projets\France\PromoPSA\Trunk\Bin\PromoPSA.Localization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -54,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\PromoPSAWebService.cs" />
     <Compile Include="Configuration\PromoPSAWebServices.cs" />
     <Compile Include="Exceptions\PromoPSAWebServicesException.cs" />

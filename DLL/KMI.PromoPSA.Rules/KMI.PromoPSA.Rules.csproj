@@ -15,6 +15,8 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\MesSolutions\Trunk - PromoPSA\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\..\..\MesSolutions\Trunk - PromoPSA\packages\BLToolkit.4.1.21.9\lib\net40-full\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.Data.DataProvider.Generic.4">
+      <HintPath>..\..\..\..\MesSolutions\Trunk - PromoPSA\packages\BLToolkit.Generic.4.1.21.9\lib\net40\BLToolkit.Data.DataProvider.Generic.4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.EnterpriseServices" />
@@ -71,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -101,9 +110,17 @@
     <None Include="Web References\Rights\Rights.disco" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KMI.PromoPSA.BusinessEntities\KMI.PromoPSA.BusinessEntities.csproj">
+      <Project>{D8AB005D-2164-4068-AC56-464C37BEFA2E}</Project>
+      <Name>KMI.PromoPSA.BusinessEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KMI.PromoPSA.Constantes\KMI.PromoPSA.Constantes.csproj">
       <Project>{4ce71c74-45b6-4d6a-a055-446d39da6137}</Project>
       <Name>KMI.PromoPSA.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KMI.PromoPSA.DAL\KMI.PromoPSA.DAL.csproj">
+      <Project>{4c9d8c84-dba0-40bd-98d2-6a4efbdc3adb}</Project>
+      <Name>KMI.PromoPSA.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\KMI.PromoPSA.Web.Domain\KMI.PromoPSA.Web.Domain.csproj">
       <Project>{de0ef26a-4e1c-4a92-971e-ca597d050f57}</Project>
@@ -111,6 +128,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

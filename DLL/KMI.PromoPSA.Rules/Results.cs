@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLToolkit.Data;
+using BLToolkit.Data.DataProvider;
+using KMI.PromoPSA.BusinessEntities;
+using KMI.PromoPSA.DAL;
 using KMI.PromoPSA.Rules.Exceptions;
 using KMI.PromoPSA.Web.Domain;
 using KMI.PromoPSA.Web.Domain.Configuration;
@@ -66,6 +70,18 @@ namespace KMI.PromoPSA.Rules {
             return isisRights;
         }
         #endregion
+
+        public List<Advert>  GetAdverts(long loadDate)
+        {
+            List<Advert> adverts;
+            using (var db = new DbManager(new GenericDataProvider(WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString))
+            {
+                var dal = new PromoPsaDAL();
+                adverts = dal.GetAdverts(db, loadDate);
+            }
+            return adverts;
+        }
 
         #endregion
     }
