@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\..\..\MesSolutions\Trunk - PromoPSA\packages\BLToolkit.4.1.21.9\lib\net40-full\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.Data.DataProvider.Generic.4">
+      <HintPath>..\..\..\..\MesSolutions\Trunk - PromoPSA\packages\BLToolkit.Generic.4.1.21.9\lib\net40\BLToolkit.Data.DataProvider.Generic.4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,11 +49,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PromoPSADAL.cs" />
+    <Compile Include="ClassificationDAL.cs" />
+    <Compile Include="DbType\DataAllBrand.cs" />
+    <Compile Include="DbType\DataAllProduct.cs" />
+    <Compile Include="DbType\DataBrand.cs" />
+    <Compile Include="DbType\DataCategory.cs" />
+    <Compile Include="DbType\DataCircuit.cs" />
+    <Compile Include="DbType\DataProduct.cs" />
+    <Compile Include="DbType\DataPromotion.cs" />
+    <Compile Include="DbType\DataSegment.cs" />
+    <Compile Include="PromoPsaDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DbType\" />
+    <ProjectReference Include="..\KMI.PromoPSA.BusinessEntities\KMI.PromoPSA.BusinessEntities.csproj">
+      <Project>{d8ab005d-2164-4068-ac56-464c37befa2e}</Project>
+      <Name>KMI.PromoPSA.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KMI.PromoPSA.Constantes\KMI.PromoPSA.Constantes.csproj">
+      <Project>{4CE71C74-45B6-4D6A-A055-446D39DA6137}</Project>
+      <Name>KMI.PromoPSA.Constantes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

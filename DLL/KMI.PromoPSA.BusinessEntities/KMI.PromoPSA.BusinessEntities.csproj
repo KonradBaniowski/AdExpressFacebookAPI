@@ -45,6 +45,14 @@
   <ItemGroup>
     <Compile Include="Advert.cs" />
     <Compile Include="AdvertStatus.cs" />
+    <Compile Include="Classification\AllBrand.cs" />
+    <Compile Include="Classification\AllProduct.cs" />
+    <Compile Include="Classification\Brand.cs" />
+    <Compile Include="Classification\Category.cs" />
+    <Compile Include="Classification\Circuit.cs" />
+    <Compile Include="Classification\ClassificationItem.cs" />
+    <Compile Include="Classification\Product.cs" />
+    <Compile Include="Classification\Segment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,7 +9,7 @@ namespace KMI.PromoPSA.BusinessEntities
     public class Advert
     {
 
-        public long IdForm { get; set; }
+        public long? IdForm { get; set; }
 
         public long Status { get; set; }
 
@@ -31,11 +31,20 @@ namespace KMI.PromoPSA.BusinessEntities
 
         public string PromotionContent { get; set; }
 
+        public string PromotionVisual { get; set; }
+
         public string ConditionText { get; set; }
 
         public string Script { get; set; }
 
         public long ExcluWeb { get; set; }
 
+        public long DateMediaNum { get; set; }
+
+        public long Activation { get; set; }
+
+        public long LoadDate { get; set; }
+
+        public long IdVehicle { get; set; }
     }
 }
