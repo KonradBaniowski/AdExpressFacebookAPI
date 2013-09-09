@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<localization>
+  <globalization>
+    <culture>en</culture>
+  </globalization>
+  <items>
+    <item mnemonic="w1" type="System.String">Classification</item>
+    <item mnemonic="w2" type="System.String">Reject</item>
+    <item mnemonic="w3" type="System.String">Clip</item>
+    <item mnemonic="w4" type="System.String">Classification</item>
+    <item mnemonic="w5" type="System.String">Update</item>
+    <item mnemonic="w6" type="System.String">Classification Read</item>
+    <item mnemonic="w7" type="System.String">Advert Classification</item>
+    <item mnemonic="w8" type="System.String">Web site list</item>
+    <item mnemonic="w9" type="System.String">Web site tools</item>
+    <item mnemonic="w10" type="System.String">Create</item>
+    <item mnemonic="w11" type="System.String">Modify</item>
+    <item mnemonic="w12" type="System.String">Self promotion tool</item>
+    <item mnemonic="w13" type="System.String">Search</item>
+    <item mnemonic="w14" type="System.String">Add</item>
+    <item mnemonic="w15" type="System.String">Delete</item>
+    <item mnemonic="w16" type="System.String">Verify</item>
+    <item mnemonic="w17" type="System.String">Total adverts</item>
+    <item mnemonic="w18" type="System.String">My adverts</item>
+    <item mnemonic="w19" type="System.String">Logout</item>
+    <item mnemonic="w20" type="System.String">Adverts request</item>
+    <item mnemonic="w21" type="System.String">Media type</item>
+    <item mnemonic="w22" type="System.String">My media type</item>
+    <item mnemonic="w23" type="System.String">Rewind</item>
+    <item mnemonic="w24" type="System.String">Read</item>
+    <item mnemonic="w25" type="System.String">Pause</item>
+    <item mnemonic="w26" type="System.String">Repeat</item>
+    <item mnemonic="w27" type="System.String">Evaliant</item>
+    <item mnemonic="w28" type="System.String">VMTM</item>
+    <item mnemonic="w29" type="System.String">Emailing</item>
+    <item mnemonic="w30" type="System.String">No</item>
+    <item mnemonic="w31" type="System.String">This login is already in use, you want to disconnect the person using that login?</item>
+    <item mnemonic="w32" type="System.String">You are not logged in</item>
+    <item mnemonic="w33" type="System.String">Advert identifier</item>
+    <item mnemonic="w34" type="System.String">First Time</item>
+    <item mnemonic="w35" type="System.String">Target page</item>
+    <item mnemonic="w36" type="System.String">Height</item>
+    <item mnemonic="w37" type="System.String">Width</item>
+    <item mnemonic="w38" type="System.String">Advert Type</item>
+    <item mnemonic="w39" type="System.String">Picture path</item>
+    <item mnemonic="w40" type="System.String">Url list</item>
+    <item mnemonic="w41" type="System.String">Web site</item>
+    <item mnemonic="w42" type="System.String">Page</item>
+    <item mnemonic="w43" type="System.String">Administration</item>
+    <item mnemonic="w44" type="System.String">Bad connection</item>
+    <item mnemonic="w45" type="System.String">Invalid login</item>
+    <item mnemonic="w46" type="System.String">User</item>
+    <item mnemonic="w47" type="System.String">Password</item>
+    <item mnemonic="w48" type="System.String">Valid</item>
+    <item mnemonic="w49" type="System.String">Check / uncheck all</item>
+    <item mnemonic="w50" type="System.String">Media type</item>
+    <item mnemonic="w51" type="System.String">Clip product</item>
+    <item mnemonic="w52" type="System.String">Advert number</item>
+    <item mnemonic="w53" type="System.String">Clip list</item>
+    <item mnemonic="w54" type="System.String">Select a product</item>
+    <item mnemonic="w55" type="System.String">Product id</item>
+    <item mnemonic="w56" type="System.String">Product</item>
+    <item mnemonic="w57" type="System.String">Group</item>
+    <item mnemonic="w58" type="System.String">Advertiser</item>
+    <item mnemonic="w59" type="System.String">Entry an advert identifier</item>
+    <item mnemonic="w60" type="System.String">Reject</item>
+    <item mnemonic="w61" type="System.String">Cancel</item>
+    <item mnemonic="w62" type="System.String">An error has occurred</item>
+    <item mnemonic="w63" type="System.String">No result</item>
+    <item mnemonic="w64" type="System.String">Warning, you are reject this advert </item>
+    <item mnemonic="w65" type="System.String">Last update</item>
+    <item mnemonic="w66" type="System.String">Last advert status update</item>
+    <item mnemonic="w67" type="System.String">Advert consolidation in progress</item>
+    <item mnemonic="w68" type="System.String">Advert reject in progress</item>
+    <item mnemonic="w69" type="System.String">Advert cliping in progress</item>
+    <item mnemonic="w70" type="System.String">Advert recycling in progress</item>
+    <item mnemonic="w71" type="System.String">An error has occured</item>
+    <item mnemonic="w72" type="System.String">Please, Product id field is mandatory</item>
+    <item mnemonic="w73" type="System.String">Please, clip field is mandatory</item>
+    <item mnemonic="w74" type="System.String">Please, select the adverts</item>
+    <item mnemonic="w75" type="System.String">Clip product</item>
+    <item mnemonic="w76" type="System.String">Date</item>
+    <item mnemonic="w77" type="System.String">In progress</item>
+    <item mnemonic="w78" type="System.String">Overall adverts consolidation</item>
+    <item mnemonic="w79" type="System.String">My Preferences</item>
+    <item mnemonic="w80" type="System.String">Date begin</item>
+    <item mnemonic="w81" type="System.String">Date end</item>
+    <item mnemonic="w82" type="System.String">Status</item>
+    <item mnemonic="w83" type="System.String">Selection</item>
+    <item mnemonic="w84" type="System.String">ID Group</item>
+    <item mnemonic="w85" type="System.String">Number</item>
+    <item mnemonic="w86" type="System.String">Advert consolidation</item>
+    <item mnemonic="w87" type="System.String">Set clip</item>
+    <item mnemonic="w88" type="System.String">Recycle</item>
+    <item mnemonic="w89" type="System.String">INSERT</item>
+    <item mnemonic="w90" type="System.String">VALID</item>
+    <item mnemonic="w91" type="System.String">REJECT</item>
+    <item mnemonic="w92" type="System.String">CLIP</item>
+    <item mnemonic="w93" type="System.String">An error occurred, unable to access the webservice rights management</item>
+    <item mnemonic="w94" type="System.String">An error occurred, unable to access the webservice dispatcher advert</item>
+    <item mnemonic="w95" type="System.String">An error occurred, unable to access the webservice classification</item>
+    <item mnemonic="w96" type="System.String">An error occurred, unable to access the webservice classification tool</item>
+    <item mnemonic="w97" type="System.String">You have entered an or more invalid characters</item>
+    <item mnemonic="w98" type="System.String">An error has occured</item>
+    <item mnemonic="w99" type="System.String">There are more banner to assume</item>
+    <item mnemonic="w100" type="System.String">An error has occurred, the number of banners to be treated does not match your acquisition</item>
+    <item mnemonic="w101" type="System.String">Id</item>
+    <item mnemonic="w102" type="System.String">logout</item>
+    <item mnemonic="w103" type="System.String">Disconnect user</item>
+    <item mnemonic="w104" type="System.String">Disconnect user in progress</item>
+    <item mnemonic="w105" type="System.String">Be careful, you'll ask for a request to update the screenshot</item>
+    <item mnemonic="w106" type="System.String">Request an updated screenshott</item>
+    <item mnemonic="w107" type="System.String">A request to update this screenshot is being</item>
+    <item mnemonic="w108" type="System.String">This clip is acquired by another person, you can not appropriated</item>
+    <item mnemonic="w109" type="System.String">Your session has expired please reconnect</item>
+    <item mnemonic="w110" type="System.String">No product in clip</item>
+    <item mnemonic="w111" type="System.String">Approve the request advert</item>
+    <item mnemonic="w112" type="System.String">Recycle your adverts</item>
+    <item mnemonic="w113" type="System.String">Total adverts</item>
+    <item mnemonic="w114" type="System.String">Variation adverts</item>
+    <item mnemonic="w115" type="System.String">No result with this parameters</item>
+    <item mnemonic="w116" type="System.String">Number of rows per page</item>
+    <item mnemonic="w117" type="System.String">Repeat hierarchy</item>
+    <item mnemonic="w118" type="System.String">The table has requested too many lines to be displayed by your browser. You can:</item>
+    <item mnemonic="w119" type="System.String">Refine your selection or change the options table.</item>
+    <item mnemonic="w120" type="System.String">Close</item>
+    <item mnemonic="w121" type="System.String">or Escape</item>
+    <item mnemonic="w122" type="System.String">Warning</item>
+    <item mnemonic="w123" type="System.String">Adverts list</item>
+    <item mnemonic="w124" type="System.String">Product search</item>
+    <item mnemonic="w125" type="System.String">Product</item>
+    <item mnemonic="w126" type="System.String">Web Site</item>
+    <item mnemonic="w127" type="System.String">Related product</item>
+    <item mnemonic="w128" type="System.String">Not related product</item>
+    <item mnemonic="w129" type="System.String">Related web site</item>
+    <item mnemonic="w130" type="System.String">not related web site</item>
+    <item mnemonic="w131" type="System.String">Association or sites being</item>
+    <item mnemonic="w132" type="System.String">Dissociation or sites being</item>
+    <item mnemonic="w133" type="System.String">Dissociation or products being</item>
+    <item mnemonic="w134" type="System.String">Please select web sites</item>
+    <item mnemonic="w135" type="System.String">Please select products</item>
+    <item mnemonic="w136" type="System.String">Enter by product</item>
+    <item mnemonic="w137" type="System.String">Enter by web site</item>
+    <item mnemonic="w138" type="System.String">Pige - Actif</item>
+    <item mnemonic="w139" type="System.String">Pas Pige - Actif</item>
+    <item mnemonic="w140" type="System.String">Pige - Pas Actif</item>
+    <item mnemonic="w141" type="System.String">Pas Pige - Pas Actif</item>
+    <item mnemonic="w142" type="System.String">The various statutes web sites</item>
+    <item mnemonic="w143" type="System.String">Filter statutes web sites</item>
+    <item mnemonic="w144" type="System.String">Search type</item>
+    <item mnemonic="w145" type="System.String">My current position</item>
+    <item mnemonic="w146" type="System.String">Bad pige</item>
+    <item mnemonic="w147" type="System.String">Variation pige</item>
+    <item mnemonic="w148" type="System.String">Set in treatment</item>
+    <item mnemonic="w149" type="System.String">Adverts free</item>
+    <item mnemonic="w150" type="System.String">An error has occurred, the product ID does not exist</item>
+    <item mnemonic="w151" type="System.String">Real size</item>
+    <item mnemonic="w152" type="System.String">See size</item>
+    <item mnemonic="w153" type="System.String">Advert size</item>
+    <item mnemonic="w154" type="System.String">Real</item>
+    <item mnemonic="w155" type="System.String">See</item>
+    <item mnemonic="w156" type="System.String">My options</item>
+    <item mnemonic="w157" type="System.String">IP</item>
+    <item mnemonic="w158" type="System.String">Part</item>
+    <item mnemonic="w159" type="System.String">The site is not accessible between 8pm and 6am</item>
+    <item mnemonic="w160" type="System.String">Pages views</item>
+    <item mnemonic="w161" type="System.String">Number of pages</item>
+    <item mnemonic="w162" type="System.String">Theorical</item>
+    <item mnemonic="w163" type="System.String">Real</item>
+    <item mnemonic="w164" type="System.String">Error</item>
+    <item mnemonic="w165" type="System.String">Evolution of page views for the site</item>
+    <item mnemonic="w166" type="System.String">Period</item>
+    <item mnemonic="w167" type="System.String">Duration</item>
+  </items>
+</localization>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assembly>
+  <name>PromoPSA.Localization</name>
+  <compiler>C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727</compiler>
+  <alinker>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin</alinker>
+  <projects>
+    <project id="Global">
+      <files>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\KMI.PromoPSA.Web.Domain\Resources\PromoPSA.fr.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\KMI.PromoPSA.Web.Domain\Resources\PromoPSA.en.xml</file>
+      </files>
+    </project>
+  </projects>
+  <outputs>
+    <dir>\\frmitch-fs04\Programme\Projets\France\PromoPSA\Trunk\Bin</dir>
+  </outputs>
+</assembly>

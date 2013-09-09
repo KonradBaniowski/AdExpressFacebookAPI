@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<localization>
+  <globalization>
+    <culture>Neutral</culture>
+  </globalization>
+  <items>
+    <item mnemonic="w1" type="System.String">Codification</item>
+    <item mnemonic="w2" type="System.String">Rejet</item>
+    <item mnemonic="w3" type="System.String">Trombone</item>
+    <item mnemonic="w4" type="System.String">Codification</item>
+    <item mnemonic="w5" type="System.String">Mise à jour</item>
+    <item mnemonic="w6" type="System.String">Passage de lecture</item>
+    <item mnemonic="w7" type="System.String">Liste des bandeaux</item>
+    <item mnemonic="w8" type="System.String">Liste des sites</item>
+    <item mnemonic="w9" type="System.String">Gestion des sites</item>
+    <item mnemonic="w10" type="System.String">Créer</item>
+    <item mnemonic="w11" type="System.String">Modifier</item>
+    <item mnemonic="w12" type="System.String">Gestion de l'autopromo</item>
+    <item mnemonic="w13" type="System.String">Rechercher</item>
+    <item mnemonic="w14" type="System.String">Ajouter</item>
+    <item mnemonic="w15" type="System.String">Supprimer</item>
+    <item mnemonic="w16" type="System.String">Vérification</item>
+    <item mnemonic="w17" type="System.String">Total des bannières</item>
+    <item mnemonic="w18" type="System.String">Mes bannières</item>
+    <item mnemonic="w19" type="System.String">Déconnexion</item>
+    <item mnemonic="w20" type="System.String">Demande de bannière</item>
+    <item mnemonic="w21" type="System.String">Choix du média</item>
+    <item mnemonic="w22" type="System.String">Mon média</item>
+    <item mnemonic="w23" type="System.String">Rembobiner</item>
+    <item mnemonic="w24" type="System.String">Lecture</item>
+    <item mnemonic="w25" type="System.String">Pause</item>
+    <item mnemonic="w26" type="System.String">Répéter</item>
+    <item mnemonic="w27" type="System.String">Evaliant</item>
+    <item mnemonic="w28" type="System.String">VMTM</item>
+    <item mnemonic="w29" type="System.String">Emailing</item>
+    <item mnemonic="w30" type="System.String">Aucun</item>
+    <item mnemonic="w31" type="System.String">Ce login est deja en cours d'utilisation, voulez vous déconnecter la personne utilisant ce login ?</item>
+    <item mnemonic="w32" type="System.String">Vous n'etes pas connecté</item>
+    <item mnemonic="w33" type="System.String">Hashcode</item>
+    <item mnemonic="w34" type="System.String">1ère date de parution</item>
+    <item mnemonic="w35" type="System.String">Page de destination</item>
+    <item mnemonic="w36" type="System.String">Hauteur</item>
+    <item mnemonic="w37" type="System.String">Largeur</item>
+    <item mnemonic="w38" type="System.String">Format</item>
+    <item mnemonic="w39" type="System.String">Source de l'image</item>
+    <item mnemonic="w40" type="System.String">Liste des url</item>
+    <item mnemonic="w41" type="System.String">Site</item>
+    <item mnemonic="w42" type="System.String">Page</item>
+    <item mnemonic="w43" type="System.String">Administration</item>
+    <item mnemonic="w44" type="System.String">Connexion refusée</item>
+    <item mnemonic="w45" type="System.String">Cet identifiant ne possède aucun droit</item>
+    <item mnemonic="w46" type="System.String">Utilisateur</item>
+    <item mnemonic="w47" type="System.String">Mot de passe</item>
+    <item mnemonic="w48" type="System.String">Valider</item>
+    <item mnemonic="w49" type="System.String">Tout cocher / décocher</item>
+    <item mnemonic="w50" type="System.String">Média</item>
+    <item mnemonic="w51" type="System.String">Produit en trombone</item>
+    <item mnemonic="w52" type="System.String">Nb bannières</item>
+    <item mnemonic="w53" type="System.String">Liste des trombones</item>
+    <item mnemonic="w54" type="System.String">Sélectionner une référence</item>
+    <item mnemonic="w55" type="System.String">ID Produit</item>
+    <item mnemonic="w56" type="System.String">Produit</item>
+    <item mnemonic="w57" type="System.String">Groupe</item>
+    <item mnemonic="w58" type="System.String">Annonceur</item>
+    <item mnemonic="w59" type="System.String">Saisissez un hashcode</item>
+    <item mnemonic="w60" type="System.String">Rejeter</item>
+    <item mnemonic="w61" type="System.String">Annuler</item>
+    <item mnemonic="w62" type="System.String">Une erreur est survenue, le résultat ne peut être calculé</item>
+    <item mnemonic="w63" type="System.String">Aucun résultat</item>
+    <item mnemonic="w64" type="System.String">Attention, vous allez supprimer l’image suivante</item>
+    <item mnemonic="w65" type="System.String">Dernière modification</item>
+    <item mnemonic="w66" type="System.String">Dernière modification du statut</item>
+    <item mnemonic="w67" type="System.String">Codification de bannières en cours</item>
+    <item mnemonic="w68" type="System.String">Rejet de bannières en cours</item>
+    <item mnemonic="w69" type="System.String">Mise en trombone de bannières en cours</item>
+    <item mnemonic="w70" type="System.String">Recyclage de bannières en cours</item>
+    <item mnemonic="w71" type="System.String">Une erreur est survenue, le traitement ne peut aboutir</item>
+    <item mnemonic="w72" type="System.String">Veuillez renseigner le champs ID Produit</item>
+    <item mnemonic="w73" type="System.String">Veuillez renseigner le champs Produit en trombone</item>
+    <item mnemonic="w74" type="System.String">Veuillez sélectionner des bannières</item>
+    <item mnemonic="w75" type="System.String">Produits en trombone</item>
+    <item mnemonic="w76" type="System.String">Date</item>
+    <item mnemonic="w77" type="System.String">Traitement en cours</item>
+    <item mnemonic="w78" type="System.String">Validation globale</item>
+    <item mnemonic="w79" type="System.String">Mes préférences</item>
+    <item mnemonic="w80" type="System.String">Date de début</item>
+    <item mnemonic="w81" type="System.String">Date de fin</item>
+    <item mnemonic="w82" type="System.String">Statut</item>
+    <item mnemonic="w83" type="System.String">Sélection</item>
+    <item mnemonic="w84" type="System.String">ID Groupe</item>
+    <item mnemonic="w85" type="System.String">Nombre</item>
+    <item mnemonic="w86" type="System.String">Codifier</item>
+    <item mnemonic="w87" type="System.String">Mettre en trombone</item>
+    <item mnemonic="w88" type="System.String">Recycler</item>
+    <item mnemonic="w89" type="System.String">INSERE</item>
+    <item mnemonic="w90" type="System.String">VALIDE</item>
+    <item mnemonic="w91" type="System.String">REJETE</item>
+    <item mnemonic="w92" type="System.String">TROMBONE</item>
+    <item mnemonic="w93" type="System.String">Une erreur est survenue, impossible d'accéder au webservice de gestion des droits</item>
+    <item mnemonic="w94" type="System.String">Une erreur est survenue, impossible d'accéder au webservice de gestion de la distribution des bannières</item>
+    <item mnemonic="w95" type="System.String">Une erreur est survenue, impossible d'accéder au webservice classification</item>
+    <item mnemonic="w96" type="System.String">Une erreur est survenue, impossible d'accéder au webservice outils</item>
+    <item mnemonic="w97" type="System.String">Vous avez inscrit un ou plusieurs caractères invalides</item>
+    <item mnemonic="w98" type="System.String">Une erreur est survenue</item>
+    <item mnemonic="w99" type="System.String">Il n'y a plus de bannière à s'attribuer</item>
+    <item mnemonic="w100" type="System.String">Une erreur est survenue, le nombre de bannières à traiter ne correspond pas à votre acquisition</item>
+    <item mnemonic="w101" type="System.String">Id</item>
+    <item mnemonic="w102" type="System.String">déco</item>
+    <item mnemonic="w103" type="System.String">Déconnecter l'utilisateur</item>
+    <item mnemonic="w104" type="System.String">Déconnection de l'utilisateur en cours</item>
+    <item mnemonic="w105" type="System.String">Attention, vous allez demander une demande d'actualisation du screenshot</item>
+    <item mnemonic="w106" type="System.String">Demander une actualisation du screenshot</item>
+    <item mnemonic="w107" type="System.String">Une demande d'actualisation de ce screenshot est en cours</item>
+    <item mnemonic="w108" type="System.String">Ce trombone est en acquisition par une autre personne, vous ne pouvez pas vous l'approprier</item>
+    <item mnemonic="w109" type="System.String">Votre session a expirée, veuillez vous reconnecter</item>
+    <item mnemonic="w110" type="System.String">Aucun produit en trombone</item>
+    <item mnemonic="w111" type="System.String">Valide la demande de bannières</item>
+    <item mnemonic="w112" type="System.String">Recycle vos bannières</item>
+    <item mnemonic="w113" type="System.String">Total de bannières</item>
+    <item mnemonic="w114" type="System.String">Variation bannières</item>
+    <item mnemonic="w115" type="System.String">Aucun r&amp;eacute;sultat avec ces param&amp;egrave;tres</item>
+    <item mnemonic="w116" type="System.String">Nombre de lignes par page</item>
+    <item mnemonic="w117" type="System.String">Répéter hiérarchie</item>
+    <item mnemonic="w118" type="System.String">Le tableau demandé comporte trop de lignes pour être affiché par votre navigateur. Vous pouvez :</item>
+    <item mnemonic="w119" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
+    <item mnemonic="w120" type="System.String">Fermer</item>
+    <item mnemonic="w121" type="System.String">ou Touche Echap</item>
+    <item mnemonic="w122" type="System.String">Attention</item>
+    <item mnemonic="w123" type="System.String">Listes des bannières</item>
+    <item mnemonic="w124" type="System.String">Rechercher des Références</item>
+    <item mnemonic="w125" type="System.String">Références</item>
+    <item mnemonic="w126" type="System.String">Sites</item>
+    <item mnemonic="w127" type="System.String">Références associès</item>
+    <item mnemonic="w128" type="System.String">Références non associès</item>
+    <item mnemonic="w129" type="System.String">Sites associès</item>
+    <item mnemonic="w130" type="System.String">Sites non associès</item>
+    <item mnemonic="w131" type="System.String">Association du ou des sites en cours</item>
+    <item mnemonic="w132" type="System.String">Dissociation du ou des sites en cours</item>
+    <item mnemonic="w133" type="System.String">Dissociation de la ou des références en cours</item>
+    <item mnemonic="w134" type="System.String">Veuillez sélectionner des sites</item>
+    <item mnemonic="w135" type="System.String">Veuillez sélectionner des références</item>
+    <item mnemonic="w136" type="System.String">Entrée par référence</item>
+    <item mnemonic="w137" type="System.String">Entrée par site</item>
+    <item mnemonic="w138" type="System.String">Pige - Actif</item>
+    <item mnemonic="w139" type="System.String">Pas Pige - Actif</item>
+    <item mnemonic="w140" type="System.String">Pige - Pas Actif</item>
+    <item mnemonic="w141" type="System.String">Pas Pige - Pas Actif</item>
+    <item mnemonic="w142" type="System.String">Les différents statuts des sites</item>
+    <item mnemonic="w143" type="System.String">Filtrer les statuts des sites</item>
+    <item mnemonic="w144" type="System.String">Type de recherche</item>
+    <item mnemonic="w145" type="System.String">Ma position courante</item>
+    <item mnemonic="w146" type="System.String">Mauvaises piges</item>
+    <item mnemonic="w147" type="System.String">Variation piges</item>
+    <item mnemonic="w148" type="System.String">Mettre en codification</item>
+    <item mnemonic="w149" type="System.String">Libère les bannières</item>
+    <item mnemonic="w150" type="System.String">Une erreur est survenue, l'identifiant du produit n'exist pas</item>
+    <item mnemonic="w151" type="System.String">Taille réelle</item>
+    <item mnemonic="w152" type="System.String">Taille pigée</item>
+    <item mnemonic="w153" type="System.String">Tailles des publicités</item>
+    <item mnemonic="w154" type="System.String">Réelles</item>
+    <item mnemonic="w155" type="System.String">Pigées</item>
+    <item mnemonic="w156" type="System.String">Mes options</item>
+    <item mnemonic="w157" type="System.String">IP</item>
+    <item mnemonic="w158" type="System.String">Part</item>
+    <item mnemonic="w159" type="System.String">Le site n'est pas accessible entre 20h et 6h</item>
+    <item mnemonic="w160" type="System.String">Pages vues</item>
+    <item mnemonic="w161" type="System.String">Nombre de pages</item>
+    <item mnemonic="w162" type="System.String">Théorique</item>
+    <item mnemonic="w163" type="System.String">Réel</item>
+    <item mnemonic="w164" type="System.String">Erreur</item>
+    <item mnemonic="w165" type="System.String">Evolution des pages vues pour le site</item>
+    <item mnemonic="w166" type="System.String">Période</item>
+    <item mnemonic="w167" type="System.String">Durée</item>
+  </items>
+</localization>
