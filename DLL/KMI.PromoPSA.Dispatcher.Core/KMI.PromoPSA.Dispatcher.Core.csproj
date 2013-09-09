@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0C8FED21-D107-49E8-BF75-36A22306604E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KMI.PromoPSA.Dispatcher.Core</RootNamespace>
+    <AssemblyName>KMI.PromoPSA.Dispatcher.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BLToolkit.4">
+      <HintPath>C:\Users\dede.mussuma\Documents\Visual Studio 2012\Projects\KMI.PromoPSA.WebService.Dispatcher (2)\packages\BLToolkit.4.1.21.9\lib\net40-full\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.Data.DataProvider.Generic.4">
+      <HintPath>C:\Users\dede.mussuma\Documents\Visual Studio 2012\Projects\KMI.PromoPSA.WebService.Dispatcher (2)\packages\BLToolkit.Generic.4.1.21.9\lib\net40\BLToolkit.Data.DataProvider.Generic.4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adverts.cs" />
+    <Compile Include="DispatcherConfig.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KMI.PromoPSA.BusinessEntities\KMI.PromoPSA.BusinessEntities.csproj">
+      <Project>{d8ab005d-2164-4068-ac56-464c37befa2e}</Project>
+      <Name>KMI.PromoPSA.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KMI.PromoPSA.Constantes\KMI.PromoPSA.Constantes.csproj">
+      <Project>{4ce71c74-45b6-4d6a-a055-446d39da6137}</Project>
+      <Name>KMI.PromoPSA.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KMI.PromoPSA.Dispatcher.DAL\KMI.PromoPSA.Dispatcher.DAL.csproj">
+      <Project>{4a0d98d5-c423-4913-b6b7-4dfc427be9fc}</Project>
+      <Name>KMI.PromoPSA.Dispatcher.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
