@@ -51,3 +51,15 @@
 	margin-top: -44px;
 	top: 50%;
 }
+.pressStyle {
+    background-color : #CBCBCB;
+    background-image: url();
+}
+.tvStyle {
+    background-color : #b6ff00;
+    background-image: url();
+}
+.internetStyle {
+    background-color : #ffd800;
+    background-image: url();
+}
