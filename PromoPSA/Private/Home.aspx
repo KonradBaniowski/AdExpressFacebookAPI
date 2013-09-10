@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Home.aspx.cs" Inherits="Private_Home" %>
 <%@ Register TagPrefix="cc1" Namespace="KMI.PromoPSA.Web.Controls.Header" Assembly="KMI.PromoPSA.Web.Controls" %>
-<%@ Register Assembly="Trirand.Web" TagPrefix="trirand" Namespace="Trirand.Web.UI.WebControls" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,17 +13,7 @@
 	<meta http-equiv="expires" content="0"/>
 	<meta http-equiv="pragma" content="no-cache"/>
 	<meta content="no-cache" name="Cache-control"/>
-    <!-- The jQuery UI theme that will be used by the grid -->
-    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/redmond/jquery-ui.css" />
-    <!-- The jQuery UI theme extension jqGrid needs -->
-    <link rel="stylesheet" type="text/css" media="screen" href="/themes/ui.jqgrid.css" />
-    <!-- jQuery runtime minified -->
-    <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>    
-    <!-- The localization file we need, English in this case -->
-    <script src="/js/trirand/i18n/grid.locale-fr.js" type="text/javascript"></script>
-    <!-- The jqGrid client-side javascript -->
-    <script src="/js/trirand/jquery.jqGrid.min.js" type="text/javascript"></script>    
-    <!-- This jQuery UI library is needed only for the code tabs, not needed by the grid per se -->
+    <link rel="stylesheet" type="text/css" media="screen" href="path_to_ui_css_file/jquery-ui-1.7.1.custom.css" />
 </head>
 <body class="bodyStyle">
     <form id="form1" runat="server">
@@ -43,13 +32,7 @@
             </table>
         </div>
         <div style="margin-top:10px; margin-left:10px;">
-            <trirand:JQGrid runat="server" ID="LinqAtRuntimeGrid" Width="900" Height="500">            
-                <Columns>                
-                    <trirand:JQGridColumn DataField="IdForm" />                
-                    <trirand:JQGridColumn DataField="IdVehicle" />                
-                    <trirand:JQGridColumn DataField="DateMediaNum" />                
-                </Columns>        
-            </trirand:JQGrid>
+            
         </div>
     </form>
 </body>

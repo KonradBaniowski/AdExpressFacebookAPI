@@ -18,8 +18,8 @@ public partial class Private_Home : PrivateWebPage {
         LoginInformationWebControl1.WebSession = _webSession;
         PromotionInformationWebControl1.WebSession = _webSession;
 
-        IResults results = new Results();
+        /*IResults results = new Results();
         LinqAtRuntimeGrid.DataSource = results.GetAdverts(201309); 
-        LinqAtRuntimeGrid.DataBind();
+        LinqAtRuntimeGrid.DataBind();*/
     }
 }
