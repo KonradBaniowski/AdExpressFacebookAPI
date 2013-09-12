@@ -71,7 +71,6 @@ namespace TNS.AdExpressI.Date.DAL {
         /// </summary>
         /// <returns>The year corresponding to the starting date : date format yyyy example 2008</returns>
         int GetCalendarStartDate();
-
         /// <summary>
         /// Get Media type's last available date  which has data 
         /// </summary>
@@ -87,5 +86,10 @@ namespace TNS.AdExpressI.Date.DAL {
         /// <param name="EndPeriod">End period</param>
         /// <returns>Period End</returns>
         string CheckPeriodValidity(WebSession _session, string EndPeriod);
+        /// <summary>
+        /// Get Tendencies Last Available Date
+        /// </summary>
+        /// <returns>Last Available Date</returns>
+        DateTime GetTendenciesLastAvailableDate();
     }
 }

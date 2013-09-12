@@ -2,6 +2,7 @@
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,6 +42,11 @@
                     </td>
                     <td valign="top">
                         <table>
+                            <tr>
+                                <td>
+                                    <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                </td>
+                            </tr>
                             <tr valign="top"><td valign="top"><cc1:SubPeriodSelectionWebControl id="SubPeriodSelectionWebControl1" runat="server" /></td></tr>
                             <tr>
                                 <td class="backGroundWhite" height="15">

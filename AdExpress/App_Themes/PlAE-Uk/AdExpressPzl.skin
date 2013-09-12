@@ -1582,3 +1582,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="MonthWeekCalendarWebControl1" 
                            
 />
+<ctrSelections:DetailPeriodWebControl   
+                            runat="server" 
+                            CssTitle="dpTitle"
+                            CssTitleData="dpTitleData"
+                            CssBackgroundColor="dpTable"
+                            SkinID="detailPeriodWebControl" 
+/>

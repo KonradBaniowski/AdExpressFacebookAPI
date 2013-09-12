@@ -210,6 +210,59 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
             }
         }
+        /// <summary>
+        /// Extract period end
+        /// </summary>
+        /// <param name="period">Period to study</param>
+        /// <param name="periodType">Type of period</param>
+        /// <param name="comparative">Comparative</param>
+        /// <returns>End of the period</returns>
+        /// <remarks>
+        /// Uses TNS.FrameWork.Date.AtomicPeriodWeek
+        /// </remarks>
+        public static DateTime getPeriodEndDate(string period, CstPeriod.Type periodType, bool comparative) {
+            switch (periodType) {
+                case CstPeriod.Type.dateToDateWeek:
+                case CstPeriod.Type.nLastWeek:
+                case CstPeriod.Type.previousWeek:
+                case CstPeriod.Type.LastLoadedWeek:
+                    if (period.Length == 6)
+                        if (comparative)
+                            return (new AtomicPeriodWeek(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)))).LastDay;
+                        else
+                            return (new AtomicPeriodWeek(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)))).LastDay;
+                    else
+                        if (comparative)
+                            return new DateTime(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                        else
+                            return new DateTime(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                case CstPeriod.Type.dateToDateMonth:
+                case CstPeriod.Type.LastLoadedMonth:
+                case CstPeriod.Type.nLastMonth:
+                case CstPeriod.Type.nLastYear:
+                case CstPeriod.Type.previousMonth:
+                case CstPeriod.Type.previousYear:
+                case CstPeriod.Type.nextToLastYear:
+                case CstPeriod.Type.currentYear:
+                    if (period.Length == 6)
+                        if (comparative)
+                            return (new DateTime(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)), 1)).AddMonths(1).AddDays(-1);
+                        else
+                            return (new DateTime(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)), 1)).AddMonths(1).AddDays(-1);
+                    else
+                        if (comparative)
+                            return new DateTime(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                        else
+                            return new DateTime(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                default:
+                case CstPeriod.Type.nLastDays:
+                case CstPeriod.Type.previousDay:
+                    if (comparative)
+                        return new DateTime(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                    else
+                        return new DateTime(int.Parse(period.Substring(0, 4)) - 1, int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+            }
+        }
         #endregion
 
         #region Year ID : 0==N , 1==N-1,2==N-2 (only for Analyse secto==to move)

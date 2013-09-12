@@ -128,6 +128,10 @@ namespace AdExpress.Private.Results
                 }
                 #endregion
 
+                DetailPeriodWebControl1.WebSession = _webSession;
+                DetailPeriodWebControl1.ModuleId = TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA;
+                if (!string.IsNullOrEmpty(_zoom)) DetailPeriodWebControl1.DisplayContent = false;
+
                 #region Menu
                 MenuWebControl1.ForcePrint = string.Format("/Private/Results/Excel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
                     this._webSession.IdSession,

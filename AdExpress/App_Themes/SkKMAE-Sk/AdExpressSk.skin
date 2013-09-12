@@ -1646,3 +1646,10 @@ CheckActiveVehicle="False"
                            SkinID="MonthWeekCalendarWebControl1" 
                            
 />
+<ctrSelections:DetailPeriodWebControl   
+                            runat="server" 
+                            CssTitle="dpTitle"
+                            CssTitleData="dpTitleData"
+                            CssBackgroundColor="dpTable"
+                            SkinID="detailPeriodWebControl" 
+/>

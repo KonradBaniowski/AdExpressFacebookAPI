@@ -577,6 +577,43 @@ namespace TNS.AdExpressI.Date.DAL {
         }
         #endregion
 
+        #region GetTendenciesLastAvailableDate
+        /// <summary>
+        /// Get Tendencies Last Available Date
+        /// </summary>
+        /// <returns>Last Available Date</returns>
+        public DateTime GetTendenciesLastAvailableDate() {
+
+            DateTime date = new DateTime(1,1,1);
+            StringBuilder sql = new StringBuilder();
+            Table tableName = WebApplicationParameters.GetDataTable(TableIds.tendencyWeek, false);
+            IDataSource dataSource = GetDataSource();
+
+            sql.Append(" SELECT max(date_period) as lastAvailableDate ");
+            sql.AppendFormat(" FROM {0} ", tableName.Sql);
+
+            #region Execution of the query
+            try {
+                /* Execute the SQL request
+                 * */
+                DataSet ds = dataSource.Fill(sql.ToString());
+                /* Return the last date
+                 * */
+                if (ds != null && ds.Tables[0].Rows.Count > 0){
+                    string dateStr = ds.Tables[0].Rows[0]["lastAvailableDate"].ToString();
+                    AtomicPeriodWeek week = new AtomicPeriodWeek(int.Parse(dateStr.Substring(0, 4)), int.Parse(dateStr.Substring(4, 2)));
+                    return (week.LastDay);
+                }
+            }
+            catch (System.Exception err) {
+                throw (new Exception.DateDALException("Error while trying to get the last publication date", err));
+            }
+            #endregion
+
+            return date;
+        }
+        #endregion
+
         #endregion
 
     }

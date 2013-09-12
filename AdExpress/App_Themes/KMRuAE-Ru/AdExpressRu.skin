@@ -1867,3 +1867,10 @@ CheckActiveVehicle="False"
                             PictureSrcPathOver="/App_Themes/KMRuAE-Ru/Images/Common/Button/save_down2.gif"
                             CssClass="excelSelectionWebControlSelection"
 />
+<ctrSelections:DetailPeriodWebControl   
+                            runat="server" 
+                            CssTitle="dpTitle"
+                            CssTitleData="dpTitleData"
+                            CssBackgroundColor="dpTable"
+                            SkinID="detailPeriodWebControl" 
+/>

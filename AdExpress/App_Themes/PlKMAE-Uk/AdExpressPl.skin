@@ -1960,3 +1960,10 @@ CheckActiveVehicle="False"
                             PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/Button/save_down2.gif"
                             CssClass="excelSelectionWebControlSelection"
 />
+<ctrSelections:DetailPeriodWebControl   
+                            runat="server" 
+                            CssTitle="dpTitle"
+                            CssTitleData="dpTitleData"
+                            CssBackgroundColor="dpTable"
+                            SkinID="detailPeriodWebControl" 
+/>
