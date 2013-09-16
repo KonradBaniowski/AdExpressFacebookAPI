@@ -202,7 +202,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if(oTab[cLine, cCol] == null) {
                 oTab[cLine, cCol] = cellFactory.Get(0);
             }
-            if(value != null && isLeaf) {
+            if (value != null && !string.IsNullOrEmpty(value.ToString()) && isLeaf)
+            {
                 //Get values
                 string[] tIds = value.ToString().Split(',');
                 //Affect value

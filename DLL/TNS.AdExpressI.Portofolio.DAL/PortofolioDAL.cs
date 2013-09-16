@@ -495,7 +495,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                 WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix);
 			t.AppendFormat(" and {0}.id_category = {1}.id_category ", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix,
                 WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix);
-			t.AppendFormat(" and {0}.id_category = {1}",
+			t.AppendFormat(" and {0}.id_category in ({1}) ",
                 WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix, idCategory);
 			t.AppendFormat(" and {0}.id_language = {1}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix, _webSession.DataLanguage);
 			t.AppendFormat(" and {0}.id_language = {1}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix,

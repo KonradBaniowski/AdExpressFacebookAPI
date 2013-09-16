@@ -234,7 +234,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             UnitInformation unitInformation = null;
             string unitWebText = string.Empty;
             string cssClass = "sc1";
-			bool isTvNatThematiques = false;
+			//bool isTvNatThematiques = false;
 			string style = "cursorHand";
 			DataTable dt = null;
 			StringBuilder t = new StringBuilder(20000);
@@ -262,14 +262,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#endregion
 
 			//Checks if media belong to TV Nat Thematics
-			string idThematicCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.thematicTv);
-			if(idThematicCategory!=null && idThematicCategory.Length>0)
-			isTvNatThematiques = portofolioDAL.IsMediaBelongToCategory(_idMedia,idThematicCategory);
+            //string idThematicCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.thematicTv);
+            //if(idThematicCategory!=null && idThematicCategory.Length>0)
+            //isTvNatThematiques = portofolioDAL.IsMediaBelongToCategory(_idMedia,idThematicCategory);
 			
 			List<UnitInformation> unitsList = _webSession.GetValidUnitForResult();
 
 			//if (isTvNatThematiques) style = "";
-			if (!_excel && !isTvNatThematiques) {
+			if (!_excel ) {//&& !isTvNatThematiques
 				//Link to acccess all spot detail
 				GetAllPeriodInsertions(t, GestionWeb.GetWebWord(1836, _webSession.SiteLanguage));
 			}
@@ -357,12 +357,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         {
 
                             t.Append("<td class=\"" + cssClass + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
-                            if (!_excel && !isTvNatThematiques)
+                            if (!_excel)//&& !isTvNatThematiques
                                 t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','" + dayName[i] + "','" + dr["screenCode"].ToString() + "');\" class=\"txtLinkBlack11\"> ");
 
                             t.Append(Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));
 
-                            if (!_excel && !isTvNatThematiques)
+                            if (!_excel)//&& !isTvNatThematiques
                                 t.Append("</a>");
                             t.Append("</td>");
                         }

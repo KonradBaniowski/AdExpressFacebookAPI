@@ -5,19 +5,10 @@
 #endregion
 
 using System;
-using System.Data;
-using System.Collections;
-using System.Text;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.ComponentModel;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.DataAccess.Session;
-using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -109,10 +100,20 @@ namespace TNS.AdExpress.Web.Controls.Headers{
         /// Option Detail de la période
         /// </summary>
         PeriodDetailWebControl _periodDetail = null;
+
         /// <summary>
         /// Theme name
         /// </summary>
         protected string _themeName = string.Empty;
+        /// <summary>
+        /// Option liste des Unités
+        /// </summary>
+        UnitWebControl _unitControl = null;
+
+        /// <summary>
+        /// Booléen pour l'affichage de l'option "Unité"
+        /// </summary>
+        private bool _displayUnitOption = false;
         #endregion
 
 		#region Constructeur
@@ -123,6 +124,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
             _periodDetail = new PeriodDetailWebControl();
             this.Controls.Add(_periodDetail);
             _periodDetail.LabelCssClass = "txtViolet11Bold";
+
+          
+                _unitControl = new UnitWebControl { LabelCssClass = "txtViolet11Bold" };
+                this.Controls.Add(_unitControl);
+            
 		}
 		#endregion
 	
@@ -143,6 +149,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 _customerWebSession = value;
                 _periodDetail.Session = value;
 				_periodDetail.LanguageCode = _customerWebSession.SiteLanguage;
+
+                _unitControl.Session = value;
+                _unitControl.LanguageCode = _customerWebSession.SiteLanguage;
             }
 		}
 		/// <summary>
@@ -320,7 +329,26 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		}
 		#endregion
 
-		#endregion
+        /// <summary>
+        /// Control option "Unités"
+        /// </summary>
+        [Bindable(false),
+        Description("Control sélection des unités")]
+        public UnitWebControl UnitControl
+        {
+            get { return (_unitControl); }
+        }
+
+	    /// <summary>
+        /// Obtient ou définit Booléen pour l'affichage de l'option "Unité"
+	    /// </summary>
+	    public bool DisplayUnitOption
+	    {
+	        get { return _displayUnitOption; }
+	        set { _displayUnitOption = value; }
+	    }
+
+	    #endregion
 
 		#region Evènements
 
@@ -331,7 +359,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// <param name="e">Arguments</param>
 		protected override void OnInit(EventArgs e) {
 			base.OnInit (e);
-			// Composant info bouton droit
+
+           
+            // Composant info bouton droit
 			if(DisplayInformationComponent){
 				_informationWebControl=new InformationWebControl();
 				_informationWebControl.Language=_customerWebSession.SiteLanguage;
@@ -426,6 +456,23 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 output.Write("<td width=\"3\" bgColor=\"" + _backgroundColor + "\">&nbsp;</td>");
                 output.Write("<td>");
                 _periodDetail.RenderControl(output);
+                output.Write("</td>");
+                output.Write("</tr>");
+
+                output.Write("<tr>");
+                output.Write("<td width=\"3\" bgColor=\"" + _backgroundColor + "\"></td>");
+                output.Write("<td height=\"10\">&nbsp;</td>");
+                output.Write("</tr>");
+            }
+
+            // Option Unité 
+            if (_displayUnitOption)
+            {
+                _unitControl.BackgroundColor = _backgroundColor;
+                output.Write("<tr>");
+                output.Write("<td width=\"3\" bgColor=\"" + _backgroundColor + "\">&nbsp;</td>");
+                output.Write("<td>");
+                _unitControl.RenderControl(output);
                 output.Write("</td>");
                 output.Write("</tr>");
 

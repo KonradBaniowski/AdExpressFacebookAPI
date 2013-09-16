@@ -324,6 +324,7 @@
     </Compile>
     <Compile Include="Headers\SectorWebControl.cs" />
     <Compile Include="Headers\SubPeriodSelectionWebControl.cs" />
+    <Compile Include="Headers\UnitWebControl.cs" />
     <Compile Include="Headers\VehicleHeaderWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

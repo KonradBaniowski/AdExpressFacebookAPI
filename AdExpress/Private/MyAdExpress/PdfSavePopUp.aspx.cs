@@ -58,6 +58,8 @@ namespace AdExpress.Private.MyAdExpress
         protected string _levelsValue = string.Empty;
         protected string _dateBegin = string.Empty;
         protected string _dateEnd = string.Empty;
+        private string _idUnit = string.Empty;
+        private string _idModule = string.Empty;
         #endregion
 
         #region Varaibles MMI
@@ -144,6 +146,9 @@ namespace AdExpress.Private.MyAdExpress
                 _levelsValue = Page.Request.QueryString.Get("levelsValue");
                 _dateBegin = Page.Request.QueryString.Get("datebegin");
                 _dateEnd = Page.Request.QueryString.Get("dateend");
+                _idUnit = Page.Request.QueryString.Get("u");
+                _idModule = Page.Request.QueryString.Get("m");
+               
 
                 askremoteexportwebControl1.ResultType = _resultType;
 
@@ -242,6 +247,8 @@ namespace AdExpress.Private.MyAdExpress
             int maxChar = 80;
             try
             {
+                if (!string.IsNullOrEmpty(_idModule))
+                    _webSession.CurrentModule = long.Parse(_idModule);
 
                 if (fileName == null || mail == null || fileName.Length == 0 || mail.Length == 0)
                 {
@@ -374,6 +381,9 @@ namespace AdExpress.Private.MyAdExpress
                                 _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
                                 #endregion
 
+                                if (!string.IsNullOrEmpty(_idUnit))
+                                    _webSession.Unit = (CustomerSessions.Unit)int.Parse(_idUnit);
+
                                 idStaticNavSession = (_webSession.CurrentModule== Module.Name.CELEBRITIES) ? TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.apis):
                                     TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
                             }
@@ -386,7 +396,7 @@ namespace AdExpress.Private.MyAdExpress
                             idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.hotep);
                             break;
                         case Module.Name.JUSTIFICATIFS_PRESSE:
-                            ProofDetail pDetail = new ProofDetail(_webSession, _idMedia, _idProduct, _dateCover, _dateParution, _pageNumber);
+                            var pDetail = new ProofDetail(_webSession, _idMedia, _idProduct, _dateCover, _dateParution, _pageNumber);
                             idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(pDetail, TNS.AdExpress.Anubis.Constantes.Result.type.shou, _webSession.ExportedPDFFileName);
                             break;
                         case Module.Name.DONNEES_DE_CADRAGE:

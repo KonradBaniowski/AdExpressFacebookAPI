@@ -1758,7 +1758,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                     if (_module.Id != CstWeb.Module.Name.BILAN_CAMPAGNE)
                     {
                         t.Append(FctExcel.GetLogo(_session));
-                        if (VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
+                        if (VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack
+                            || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
                         {
                             t.Append(FctExcel.GetExcelHeaderForAdnettrackMediaPlanPopUp(_session, false, Zoom, (int)_session.DetailPeriod));
                         }
@@ -1804,7 +1805,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                 if (_allowTotal)
                 {
                     MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
-                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, 
+                        TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) 
+                        + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
 
                     //int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
                     int nbtot;
@@ -1838,7 +1841,9 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (_allowTotal)
             {
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
-                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, 
+                        TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) 
+                        + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
                 else
                     t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
 
@@ -1882,7 +1887,9 @@ namespace TNS.AdExpressI.MediaSchedule {
             // Insertions
             if (_allowInsertions)
             {
-                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, _session.SiteLanguage), rowSpanNb);
+                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle,
+                    GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.
+                    Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, _session.SiteLanguage), rowSpanNb);
             }
             if (!WebApplicationParameters.UseComparativeMediaSchedule)
             {
@@ -1937,13 +1944,14 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                 if (!isExport)
                                 {
-                                    periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}\">&nbsp;{5}&nbsp;</td>"
+                                    periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}&u={6}\">&nbsp;{5}&nbsp;</td>"
                                         , periodClass
                                         , _style.CellPeriod
                                         , link
                                         , _session.IdSession
                                         , data[0, j]
-                                        , MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1));
+                                        , MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1)
+                                        ,_session.Unit.GetHashCode());
                                 }
                                 else
                                 {
@@ -1966,13 +1974,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 if (!isExport && !IsCreativeDivisionMS)
                                 {
 
-                                    periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}\">&nbsp;{5}&nbsp;</a></td>"
+                                    periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}&u={6}\">&nbsp;{5}&nbsp;</a></td>"
                                         , periodClass
                                         , _style.CellPeriod
                                         , link
                                         , _session.IdSession
                                         , data[0, j]
-                                        , data[0, j].ToString().Substring(4, 2));
+                                        , data[0, j].ToString().Substring(4, 2)
+                                        , _session.Unit.GetHashCode());
                                 }
                                 else
                                 {

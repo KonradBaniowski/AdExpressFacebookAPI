@@ -69,8 +69,15 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// Current Module
         /// </summary>
         protected TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+        /// <summary>
+        /// Current Unit 
+        /// </summary>
+        private Constantes.Web.CustomerSessions.Unit _currentUnit = WebConstantes.CustomerSessions.Unit.none;
 
-       
+        /// <summary>
+        /// True if Use Current Unit (designed for Media Plan Schedules)
+        /// </summary>
+        private bool _useCurrentUnit = false;
             #endregion
 
 		#region Accesseurs
@@ -196,7 +203,23 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             set { _module = value; }
         }
 
-     
+	    /// <summary>
+	    /// Current Unit 
+	    /// </summary>
+	    public WebConstantes.CustomerSessions.Unit CurrentUnit
+	    {
+	        get { return _currentUnit; }
+	        set { _currentUnit = value; }
+	    }
+
+	    /// <summary>
+	    /// True if Use Current Unit (designed for Media Plan Schedules)
+	    /// </summary>
+	    public bool UseCurrentUnit
+	    {
+	        get { return _useCurrentUnit; }
+	        set { _useCurrentUnit = value; }
+	    }
 
 	    #endregion
         #endregion
@@ -219,9 +242,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// <returns>Code JavaScript</returns>
         private string AjaxProTimeOutScript()
         {
-            StringBuilder js = new StringBuilder(100);
+            var js = new StringBuilder(100);
             js.Append("\r\n<SCRIPT language=javascript>\r\n<!--");
-            js.Append("\r\nAjaxPro.timeoutPeriod=" + _ajaxProTimeOut.ToString() + "*1000;");
+            js.AppendFormat("\r\nAjaxPro.timeoutPeriod={0}*1000;", _ajaxProTimeOut.ToString());
             js.Append("\r\n-->\r\n</SCRIPT>");
             return (js.ToString());
         }
@@ -234,20 +257,21 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// <returns></returns>
         protected string  AjaxEventScript(){
 
-            StringBuilder js = new StringBuilder(1000);
+            var js = new StringBuilder(1000);
             js.Append("\r\n<SCRIPT language=javascript>\r\n");
-            js.Append("\r\nfunction get_" + this.ID + "(){");
-            js.Append("\r\n\tvar oN=document.getElementById('res_" + this.ID + "');");
-            js.Append("\r\n\toN.innerHTML='" + GetLoadingHTML() + "';");
-            js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".GetData(o_genericMediaSchedule,get_" + this.ID + "_callback);");
+            js.AppendFormat("\r\nfunction get_{0}(){{", this.ID);
+            js.AppendFormat("\r\n\tvar oN=document.getElementById('res_{0}');", this.ID);
+            js.AppendFormat("\r\n\toN.innerHTML='{0}';", GetLoadingHTML());
+            js.AppendFormat("\r\n\t{0}.{1}.GetData(o_genericMediaSchedule,get_{2}_callback);"
+                , this.GetType().Namespace, this.GetType().Name, this.ID);
             js.Append("\r\n}");
 
-            js.Append("\r\nfunction get_" + this.ID + "_callback(res){");
-            js.Append("\r\n\tvar oN=document.getElementById('res_" + this.ID + "');");
+            js.AppendFormat("\r\nfunction get_{0}_callback(res){{", this.ID);
+            js.AppendFormat("\r\n\tvar oN=document.getElementById('res_{0}');", this.ID);
             js.Append("\r\n\toN.innerHTML=res.value;");
             js.Append("\r\n\tUpdateParameters(oN);");
             js.Append("\r\n}\r\n");
-            js.Append("\r\naddEvent(window, \"load\", get_" + this.ID + ");");
+            js.AppendFormat("\r\naddEvent(window, \"load\", get_{0});", this.ID);
 
             js.Append("\r\n\r\n</SCRIPT>");
             return (js.ToString());
@@ -260,7 +284,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// </summary>
         /// <returns></returns>
 		private string AjaxVersionEventScript(){
-			StringBuilder js=new StringBuilder(2000);
+			var js=new StringBuilder(2000);
 			js.Append("\r\n<SCRIPT language=javascript>\r\n");
 
             #region Update parameters
@@ -282,7 +306,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             js.Append("{\r\n\tif (idVersion > -1){");
             js.Append("\r\n\t\tget_version(idVersion);");
             js.Append("\r\n\t}else{");
-            js.Append("\r\n\t\tget_" + this.ID + "();");
+            js.AppendFormat("\r\n\t\tget_{0}();", this.ID);
             js.Append("\r\n\t}");
             js.Append("\r\n}");
             #endregion
@@ -370,7 +394,8 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                         }
                     }
                 }
-
+                CurrentUnit = (WebConstantes.CustomerSessions.Unit)Int32.Parse(o["CurrentUnit"].Value.Replace("\"", ""));
+                UseCurrentUnit = Boolean.Parse(o["UseCurrentUnit"].Value.Replace("\"", ""));                   
             }
         }
         #endregion
@@ -480,17 +505,18 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// <returns>Message d'erreur</returns>
         protected string OnAjaxMethodError(Exception errorException, WebSession customerSession)
         {
-            TNS.AdExpress.Web.Exceptions.CustomerWebException cwe = null;
+            Web.Exceptions.CustomerWebException cwe = null;
             try
             {
-                BaseException err = (BaseException)errorException;
+                var err = (BaseException)errorException;
                 cwe = new TNS.AdExpress.Web.Exceptions.CustomerWebException(err.Message, err.GetHtmlDetail(), customerSession);
             }
             catch (System.Exception)
             {
                 try
                 {
-                    cwe = new TNS.AdExpress.Web.Exceptions.CustomerWebException(errorException.Message, errorException.StackTrace, customerSession);
+                    cwe = new TNS.AdExpress.Web.Exceptions.
+                        CustomerWebException(errorException.Message, errorException.StackTrace, customerSession);
                 }
                 catch (System.Exception es)
                 {
@@ -515,15 +541,19 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             this.Page.ClientScript.RegisterClientScriptInclude("AjaxScript4", "/ajaxpro/TNS.AdExpress.Web.Controls.Results.MediaPlan.GenericMediaScheduleWebControl,TNS.AdExpress.Web.Controls.ashx");
 
             #region parameters
-            StringBuilder js = new StringBuilder();
+            var js = new StringBuilder();
             js.Append("\r\n<SCRIPT language=javascript>\r\n");
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("IdSession", this.CustomerWebSession.IdSession);
-            parameters.Add("Zoom", _zoomDate);
-            parameters.Add("IdModule", _module.Id);
-            parameters.Add("versionKeys", string.Empty);
-            parameters.Add("versionStyle", string.Empty);
-            parameters.Add("themeName", _themeName);
+            var parameters = new Dictionary<string, object>
+                {
+                    {"IdSession", this.CustomerWebSession.IdSession},
+                    {"Zoom", _zoomDate},
+                    {"IdModule", _module.Id},
+                    {"versionKeys", string.Empty},
+                    {"versionStyle", string.Empty},
+                    {"themeName", _themeName},
+                    {"CurrentUnit", CurrentUnit.GetHashCode()},
+                    {"UseCurrentUnit", UseCurrentUnit}
+                };
             js.Append(FrmFct.Scripts.GetAjaxParametersScripts("genericMediaSchedule", "o_genericMediaSchedule", parameters));
             js.Append("\r\n</SCRIPT>\r\n");
             this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "AjaxScript4", js.ToString()); 
@@ -544,13 +574,20 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 		{
 
 			base.OnPreRender (e);
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenInsertions")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInsertions", WebFunctions.Script.OpenInsertions());
-            if(!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenCreatives")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"OpenCreatives",WebFunctions.Script.OpenCreatives());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openPressCreation", WebFunctions.Script.OpenPressCreation());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenInternetCreation")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInternetCreation", WebFunctions.Script.OpenInternetCreation());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("Popup")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Popup", WebFunctions.Script.Popup());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openDownload")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openDownload", WebFunctions.Script.OpenDownload());
-            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("AppmInsertions")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "AppmInsertions", WebFunctions.Script.PopUpInsertion(false));
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenInsertions")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInsertions", WebFunctions.Script.OpenInsertions());
+            if(!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenCreatives")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"OpenCreatives",WebFunctions.Script.OpenCreatives());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation"))
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openPressCreation", WebFunctions.Script.OpenPressCreation());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenInternetCreation"))
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInternetCreation", WebFunctions.Script.OpenInternetCreation());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("Popup")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Popup", WebFunctions.Script.Popup());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openDownload")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openDownload", WebFunctions.Script.OpenDownload());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("AppmInsertions"))
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "AppmInsertions", WebFunctions.Script.PopUpInsertion(false));
 			
 			
 		}
@@ -564,7 +601,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 		protected override void Render(HtmlTextWriter output){
 
 			base.Render(output);
-            StringBuilder html = new StringBuilder(1000);
+            var html = new StringBuilder(1000);
             html.Append(AjaxProTimeOutScript());
             html.Append(AjaxEventScript());
             html.Append(AjaxVersionEventScript());
@@ -586,18 +623,17 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
 			StringBuilder html=new StringBuilder(10000);
             StringBuilder periodNavigation = new StringBuilder(10000);
-            MediaScheduleData result = null;
-			//MediaPlanResultData result=null;
+            MediaScheduleData result = null;		
             MediaSchedulePeriod period = null;
 			Int64 moduleId = webSession.CurrentModule;
-            //object[,] tab = null;
             ConstantePeriod.DisplayLevel periodDisplay = webSession.DetailPeriod;
+            WebConstantes.CustomerSessions.Unit oldUnit = webSession.Unit;
+		    if (UseCurrentUnit) webSession.Unit = CurrentUnit;
             object[] param = null;
             long oldCurrentTab = _customerWebSession.CurrentTab;
             System.Windows.Forms.TreeNode oldReferenceUniversMedia = _customerWebSession.ReferenceUniversMedia;
 			try{
-				
-				//webSession.CurrentModule = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
+							
 
                 #region Period Detail
                 DateTime begin;
@@ -644,8 +680,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
                 }
                 #endregion
-
-                //tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, -1);
+              
                 if (_module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
                 if (_zoomDate.Length > 0)
                 {
@@ -678,9 +713,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					#endregion
 
 					#region Revenir aux versions sans zoom
-                    TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.creativesUtilities];
+                    Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.creativesUtilities];
                     if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
-                    TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.
+                    var creativesUtilities = (Core.Utilities.Creatives)AppDomain.
                         CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}",
                         AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, BindingFlags.CreateInstance
                         | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
@@ -697,7 +732,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					#endregion
 
                     if (result.VersionsDetail.Count > 0) {
-                        VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(webSession, period, _zoomDate);
+                        var versionsUI = new VersionsPluriMediaUI(webSession, period, _zoomDate);
                         html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
                         html.Append(versionsUI.GetMSCreativesHtml());
                         html.Append("\r\n\t\t</td>\r\n\t</tr>");
@@ -716,7 +751,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
 				}else{
 
-					html.Append("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(177,webSession.SiteLanguage));
+					html.AppendFormat("<div align=\"center\" class=\"txtViolet11Bold\">{0}", GestionWeb.GetWebWord(177,webSession.SiteLanguage));
 					html.Append("<br><br></div>");
 
                 }
@@ -727,8 +762,8 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 {
                     html.Append("\r\n<script language=javascript>\r\n");
                     bool first = true;
-                    StringBuilder keys = new StringBuilder();
-                    StringBuilder values = new StringBuilder();
+                    var keys = new StringBuilder();
+                    var values = new StringBuilder();
                     keys.Append("\r\n\to_genericMediaSchedule.versionKeys='");
                     values.Append("\r\n\to_genericMediaSchedule.versionStyle='");
                     foreach (Int64 key in webSession.SloganColors.Keys)
@@ -751,13 +786,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                     html.Append(values);
 
                     string activePeriods = string.Empty;
-                    //if (string.IsNullOrEmpty(_zoomDate) && mediaScheduleResult.ActivePeriods != null
-                    //    && mediaScheduleResult.ActivePeriods.Count > 0)
-                    //{
-                    //    activePeriods = string.Join(",", mediaScheduleResult.ActivePeriods);
-                    //    html.AppendFormat("\n setCookie('activeperiods','{0}',1);", activePeriods);
-                    //}
-                       
+                   
                    
                     html.Append("\r\n</script>\r\n");
                 }
@@ -771,7 +800,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 				webSession.CurrentModule = moduleId;
                 webSession.DetailPeriod = periodDisplay;
                 webSession.CurrentTab = oldCurrentTab;
-                webSession.CurrentTab = oldCurrentTab;
+                webSession.Unit = oldUnit;
                 webSession.ReferenceUniversMedia = oldReferenceUniversMedia;
 			}
 			return(html.ToString());

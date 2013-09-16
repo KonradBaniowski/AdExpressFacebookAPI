@@ -1464,14 +1464,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                     GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse
                     .EXCLUDE_PRODUCT_LIST_ID, tData.Prefix, true, false));
             }
-            /* This test is specific to the French version of the site
-             * */
-            string idCategoryThematic = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb
-                .GroupList.ID.category, CstWeb.GroupList.Type.thematicTv);
-            if (!string.IsNullOrEmpty(idCategoryThematic))
-            {
-                sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", tData.Prefix, idCategoryThematic);
-            }
+           
             #endregion
 
             #region Banners Format Filter
@@ -1704,27 +1697,20 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             /* Get rights detail spot to spot TNT
              * */
-            MediaItemsList tntMediaItems =null;
-            if (Media.Contains(CstWeb.AdExpressUniverse.EXCLUDE_TNT_LIST_ID)) 
-                tntMediaItems = Media.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_TNT_LIST_ID);
-
             if (vehicle.Id == Vehicles.names.tv
-                && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG) && !_creaConfig)
+              && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG) && !_creaConfig)
             {
-                if (tntMediaItems!=null && !string.IsNullOrEmpty(tntMediaItems.CategoryList))
+                string idTNTCategory = TNS.AdExpress.Domain.Lists
+                    .GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.digitalTv);
+                if (!string.IsNullOrEmpty(idTNTCategory))
                 {
-
                     sql.AppendFormat(" and {0}.id_category not in ({1})  ", WebApplicationParameters
-                   .DataBaseDescription.DefaultResultTablePrefix, tntMediaItems.CategoryList);
-                }               
-            }
-            if (tntMediaItems != null && !string.IsNullOrEmpty(tntMediaItems.MediaList))
-            {
-                sql.AppendFormat(" and {0}.id_media not in ({1})  ", WebApplicationParameters
-                   .DataBaseDescription.DefaultResultTablePrefix, tntMediaItems.MediaList);
-
+                   .DataBaseDescription.DefaultResultTablePrefix, idTNTCategory);
+                }
             }
 
+
+           
             #endregion
 
             #region Sponsorship univers
@@ -1779,11 +1765,11 @@ namespace TNS.AdExpressI.Insertions.DAL
             }
             /* This test is specific to the French version of the site
              * */
-            string idCategoryThematic = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.thematicTv);
-            if (!string.IsNullOrEmpty(idCategoryThematic))
-            {
-                sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", tData.Prefix, idCategoryThematic);
-            }
+            //string idCategoryThematic = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.thematicTv);
+            //if (!string.IsNullOrEmpty(idCategoryThematic))
+            //{
+            //    sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", tData.Prefix, idCategoryThematic);
+            //}
             #endregion
 
             #region Banners Format Filter

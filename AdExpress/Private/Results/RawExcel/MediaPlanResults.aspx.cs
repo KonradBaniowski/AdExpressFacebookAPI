@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
-using System.Web;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpressI.MediaSchedule;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace Private.Results.RawExcel
 {
@@ -15,7 +15,8 @@ namespace Private.Results.RawExcel
         /// <summary>
         /// Code HTML du résultat
         /// </summary>
-        public string result = "";    
+        public string result = string.Empty;
+        private string _idUnit = string.Empty;
         #endregion
 
         #region Constructeur
@@ -40,11 +41,10 @@ namespace Private.Results.RawExcel
         protected void Page_Load(object sender, System.EventArgs e)
         {
 
-            TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType = _webSession.PeriodType;
-            TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel periodDisplayLevel = _webSession.DetailPeriod;
+            CustomerSessions.Period.Type periodType = _webSession.PeriodType;
+            CustomerSessions.Period.DisplayLevel periodDisplayLevel = _webSession.DetailPeriod;
             string periodBegSave = _webSession.PeriodBeginningDate;
             string periodEndSave = _webSession.PeriodEndDate;
-            string zoomDate;
             long oldModuleId = _webSession.CurrentModule;
             long oldCurrentTab = _webSession.CurrentTab;
             System.Windows.Forms.TreeNode oldReferenceUniversMedia = _webSession.ReferenceUniversMedia;
@@ -54,7 +54,11 @@ namespace Private.Results.RawExcel
                 Response.ContentType = "application/vnd.ms-excel";
 
                 #region Period Detail
-                zoomDate = Page.Request.QueryString.Get("zoomDate");
+                string zoomDate = Page.Request.QueryString.Get("zoomDate");
+
+                _idUnit = Page.Request.QueryString.Get("u");
+                if (!string.IsNullOrEmpty(_idUnit))
+                    _webSession.Unit = (CustomerSessions.Unit)int.Parse(_idUnit);
 
                 DateTime begin;
                 DateTime end;

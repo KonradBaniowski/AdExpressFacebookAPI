@@ -2734,6 +2734,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Identifiant de la liste des supports et catégorie de la TNT à exclure
         /// </summary>
 	    public const int EXCLUDE_TNT_LIST_ID = 505;
+        /// <summary>
+        /// TV VEHICLE WITHOUT TOP DIFFUSION
+        /// </summary>
+	    public const int TV_VEHICLE_WITHOUT_TOP_DIFFUSION = 525;
 	}
 	#endregion
 

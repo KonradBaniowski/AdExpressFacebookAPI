@@ -7,10 +7,11 @@
 
 using System;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-
+using TNS.AdExpress.Domain;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Result;
@@ -60,11 +61,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
         /// <summary>
         /// Define if the study is for all the periods
         /// </summary>
-        protected bool _allPeriod = true;
-        /// <summary>
-        /// Define if is digital TV
-        /// </summary>
-        protected bool _isDigitalTV = false;
+        protected bool _allPeriod = true;       
         /// <summary>
         /// Define if we can show creatives
         /// </summary>
@@ -89,6 +86,11 @@ namespace TNS.AdExpressI.Portofolio.Engines
         /// Vehicle
         /// </summary>
         protected VehicleInformation _vehicle;
+
+        /// <summary>
+        /// Show top diffusion
+        /// </summary>
+        protected bool _showTopDiffusion = true;
         #endregion
 
         #region Constructor
@@ -116,6 +118,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
         #region Abstract methods implementation
 
         #region ComputeResultTable
+
+       
+
         /// <summary>
         /// Get portofolio media detail insertions 
         /// </summary>
@@ -150,26 +155,20 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
                 | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
 
-            MediaItemsList tntMediaItems = null;
-            if (Media.Contains(WebCst.AdExpressUniverse.EXCLUDE_TNT_LIST_ID))
-                tntMediaItems = Media.GetItemsList(WebCst.AdExpressUniverse.EXCLUDE_TNT_LIST_ID);
-          
-            if (tntMediaItems != null && !string.IsNullOrEmpty(tntMediaItems.CategoryList))
-                _isDigitalTV = portofolioDAL.IsMediaBelongToCategory(_idMedia, tntMediaItems.CategoryList);
+
+             _showTopDiffusion = CanShowTopDiffusion(_vehicleInformation, portofolioDAL);
 
             #region Product detail level (Generic)
             // Initialisation to product
-            ArrayList levels = new ArrayList();
-            levels.Add(10);
-            _webSession.GenericProductDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+            var levels = new ArrayList {10};
+            _webSession.GenericProductDetailLevel = new GenericDetailLevel(levels,
+                TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
             #endregion
 
             #region Columns levels (Generic)
             _columnItemList = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(_vehicle.DetailColumnId);
 
-            List<Int64> columnIdList = new List<Int64>();
-            foreach (GenericColumnItemInformation Column in _columnItemList)
-                columnIdList.Add((int)Column.Id);
+            var columnIdList = _columnItemList.Select(column => (int) column.Id).Select(dummy => (long) dummy).ToList();
 
             _webSession.GenericInsertionColumns = new GenericColumns(columnIdList);
             _webSession.Save();
@@ -194,10 +193,10 @@ namespace TNS.AdExpressI.Portofolio.Engines
             #region Press and Internatioanl Press cases
             try
             {
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
-                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
-                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                if (_vehicleInformation.Id == Vehicles.names.press
+                    || _vehicleInformation.Id == Vehicles.names.internationalPress
+                    || _vehicleInformation.Id == Vehicles.names.newspaper
+                    || _vehicleInformation.Id == Vehicles.names.magazine
                     )
                     SetDataTable(dt, _dayOfWeek, _allPeriod);
             }
@@ -265,7 +264,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                     headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
                                 break;
                             case GenericColumnItemInformation.Columns.topDiffusion:
-                                if (!_isDigitalTV)
+                                if (_showTopDiffusion)
                                     headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
                                 break;
                             case GenericColumnItemInformation.Columns.product:
@@ -293,6 +292,49 @@ namespace TNS.AdExpressI.Portofolio.Engines
             }
 
             return tab;
+        }
+
+        #endregion
+
+        #region CanShowTopDiffusion
+
+        /// <summary>
+        /// Can Show Top Diffusion
+        /// </summary>
+        /// <param name="vehicleInformation"></param>
+        /// <param name="portofolioDAL"></param>
+        /// <returns></returns>
+        protected bool CanShowTopDiffusion(VehicleInformation vehicleInformation, IPortofolioDAL portofolioDAL)
+        {
+            string idCategories = string.Empty;
+            if (vehicleInformation.Id == Vehicles.names.tv
+                && !_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))
+            {
+                idCategories = Lists
+                                  .GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.digitalTv);
+            }
+
+            MediaItemsList tntMediaItems = null;
+            if (Media.Contains(WebCst.AdExpressUniverse.TV_VEHICLE_WITHOUT_TOP_DIFFUSION))
+                tntMediaItems = Media.GetItemsList(WebCst.AdExpressUniverse.TV_VEHICLE_WITHOUT_TOP_DIFFUSION);
+
+            if (tntMediaItems != null && !string.IsNullOrEmpty(tntMediaItems.CategoryList))
+            {
+                idCategories = !string.IsNullOrEmpty(idCategories)
+                                   ? string.Format("{0},{1}", idCategories, tntMediaItems.CategoryList)
+                                   : tntMediaItems.CategoryList;
+            }
+
+            if (!string.IsNullOrEmpty(idCategories))
+                _showTopDiffusion = !portofolioDAL.IsMediaBelongToCategory(_idMedia, idCategories);
+
+            if (_showTopDiffusion && tntMediaItems != null && !string.IsNullOrEmpty(tntMediaItems.MediaList))
+            {
+                _showTopDiffusion =
+                    !new List<string>(tntMediaItems.MediaList.Split(',')).ConvertAll(Convert.ToInt64).Contains(_idMedia);
+            }
+
+            return _showTopDiffusion;
         }
 
         #endregion
@@ -416,7 +458,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                     {
                         string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
                         if (mediaList != null && mediaList.Length > 0)
-                            _mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
+                            _mediaList = new List<string>(mediaList).ConvertAll(Convert.ToInt64);
                     }
                     catch { }
                 }
@@ -467,8 +509,8 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                             foreach (string str in files)
                                             {
                                                 if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                                    listVisual += "/ImagesPresse/" + _idMedia + "/" + row["date_media_num"] + "/" + str + ",";
-                                                else listVisual += "/ImagesPresse/" + _idMedia + "/" + row["date_cover_num"] + "/" + str + ",";
+                                                    listVisual += string.Format("/ImagesPresse/{0}/{1}/{2},", _idMedia, row["date_media_num"], str);
+                                                else listVisual += string.Format("/ImagesPresse/{0}/{1}/{2},", _idMedia, row["date_cover_num"], str);
                                             }
                                             if (listVisual.Length > 0)
                                             {
@@ -478,7 +520,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                             listVisual = "";
                                         }
                                         else
-                                            tab[iCurLine, iCurColumn++] = new CellPressCreativeLink("", _webSession);
+                                            tab[iCurLine, iCurColumn++] = new CellPressCreativeLink(string.Empty, _webSession);
                                     }
                                     break;
                                 case GenericColumnItemInformation.Columns.associatedFile://Visual radio/tv
@@ -486,28 +528,34 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                     {
                                         switch (_vehicleInformation.Id)
                                         {
-                                            case DBClassificationConstantes.Vehicles.names.radio:
-                                                tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(), _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
+                                            case Vehicles.names.radio:
+                                                tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(),
+                                                    _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
                                                 break;
-                                            case DBClassificationConstantes.Vehicles.names.radioMusic:
-                                                tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(), _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioMusic));
+                                            case Vehicles.names.radioMusic:
+                                                tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(),
+                                                    _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioMusic));
                                                 break;
-                                            case DBClassificationConstantes.Vehicles.names.radioSponsorship:
-                                                tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(), _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioSponsorship));
+                                            case Vehicles.names.radioSponsorship:
+                                                tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(),
+                                                    _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioSponsorship));
                                                 break;
-                                            case DBClassificationConstantes.Vehicles.names.radioGeneral:
-                                                tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(), _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioGeneral));
+                                            case Vehicles.names.radioGeneral:
+                                                tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString()
+                                                    , _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioGeneral));
                                                 break;
-                                            case DBClassificationConstantes.Vehicles.names.tv:
-                                            case DBClassificationConstantes.Vehicles.names.tvGeneral:
-                                            case DBClassificationConstantes.Vehicles.names.tvSponsorship:
-                                            case DBClassificationConstantes.Vehicles.names.tvAnnounces:
-                                            case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
-                                            case DBClassificationConstantes.Vehicles.names.others:
+                                            case Vehicles.names.tv:
+                                            case Vehicles.names.tvGeneral:
+                                            case Vehicles.names.tvSponsorship:
+                                            case Vehicles.names.tvAnnounces:
+                                            case Vehicles.names.tvNonTerrestrials:
+                                            case Vehicles.names.others:
                                                 if (row[Column.DataBaseField].ToString().Length > 0)
-                                                    tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(Convert.ToString(row[Column.DataBaseField]), _webSession, _vehicleInformation.Id.GetHashCode());
+                                                    tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(
+                                                        Convert.ToString(row[Column.DataBaseField]), _webSession, _vehicleInformation.Id.GetHashCode());
                                                 else
-                                                    tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(string.Empty, _webSession, _vehicleInformation.Id.GetHashCode());
+                                                    tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(string.Empty,
+                                                        _webSession, _vehicleInformation.Id.GetHashCode());
 
                                                 break;
                                         }
@@ -528,11 +576,13 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                     if (_showDate)
                                     {
                                         type = assembly.GetType(Column.CellType);
-                                        curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
+                                        curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
+                                            | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
                                         date = row[Column.DataBaseField].ToString();
                                         if (date.Length > 0)
-                                            curCell.SetCellValue((object)new DateTime(int.Parse(date.Substring(0, 4)), int.Parse(date.Substring(4, 2)), int.Parse(date.Substring(6, 2))));
+                                            curCell.SetCellValue((object)new DateTime(int.Parse(date.Substring(0, 4)),
+                                                int.Parse(date.Substring(4, 2)), int.Parse(date.Substring(6, 2))));
                                         else
                                             curCell.SetCellValue(null);
                                         tab[iCurLine, iCurColumn++] = curCell;
@@ -540,20 +590,22 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                     break;
                                 case GenericColumnItemInformation.Columns.topDiffusion:
                                 case GenericColumnItemInformation.Columns.idTopDiffusion:
-                                    if (!_isDigitalTV)
+                                    if (_showTopDiffusion)
                                     {
                                         if (row[Column.DataBaseField].ToString().Length > 0)
-                                            tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
+                                            tab[iCurLine, iCurColumn++] = new CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
                                         else
-                                            tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(0);
+                                            tab[iCurLine, iCurColumn++] = new CellAiredTime(0);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
                                     }
                                     break;
                                 case GenericColumnItemInformation.Columns.product:
-                                    if (_showProduct && WebApplicationParameters.GenericColumnsInformation.IsVisible(_vehicle.DetailColumnId, Column.Id))
+                                    if (_showProduct && WebApplicationParameters.
+                                        GenericColumnsInformation.IsVisible(_vehicle.DetailColumnId, Column.Id))
                                     {
                                         type = assembly.GetType(Column.CellType);
-                                        curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
+                                        curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
+                                            | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
                                         curCell.SetCellValue(GetColumnValue(Column, row[Column.DataBaseField]));
                                         tab[iCurLine, iCurColumn++] = curCell;
@@ -563,7 +615,8 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                     if (WebApplicationParameters.GenericColumnsInformation.IsVisible(_vehicle.DetailColumnId, Column.Id))
                                     {
                                         type = assembly.GetType(Column.CellType);
-                                        curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
+                                        curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
+                                            | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
                                         curCell.SetCellValue(GetColumnValue(Column, row[Column.DataBaseField]));
                                         tab[iCurLine, iCurColumn++] = curCell;

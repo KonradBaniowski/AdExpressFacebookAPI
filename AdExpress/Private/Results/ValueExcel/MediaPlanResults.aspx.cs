@@ -5,16 +5,8 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Drawing;
 using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.Core.Selection;
-using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using ConstantePeriods = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using WebFunctions = TNS.AdExpress.Web.Functions;
@@ -33,11 +25,13 @@ namespace AdExpress.Private.Results.ValueExcel{
 		/// <summary>
 		/// Code HTML du résultat
 		/// </summary>
-		public string result="";
+		public string result=string.Empty;
 		/// <summary>
 		/// Identifiant de session
 		/// </summary>
-		public string idsession="";
+		public string idsession=string.Empty;
+
+        private string _idUnit = string.Empty;
 		#endregion
 
 		#region Constructeur
@@ -77,9 +71,13 @@ namespace AdExpress.Private.Results.ValueExcel{
                 #region Period Detail
                 zoomDate = Page.Request.QueryString.Get("zoomDate");
 
+                _idUnit = Page.Request.QueryString.Get("u");
+                if (!string.IsNullOrEmpty(_idUnit))
+                    _webSession.Unit = (WebConstantes.CustomerSessions.Unit)int.Parse(_idUnit);
+
                 DateTime begin;
                 DateTime end;
-                if (zoomDate != null && zoomDate != string.Empty)
+                if (!string.IsNullOrEmpty(zoomDate))
                 {
                     if (_webSession.DetailPeriod == ConstantePeriods.DisplayLevel.weekly)
                     {
@@ -97,7 +95,8 @@ namespace AdExpress.Private.Results.ValueExcel{
                         WebFunctions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType));
 
                     _webSession.DetailPeriod = ConstantePeriods.DisplayLevel.dayly;
-                    if (_webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    if (_webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule 
+                        && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                         period = new MediaSchedulePeriod(begin, end, ConstantePeriods.DisplayLevel.dayly, _webSession.ComparativePeriodType);
                     else
                         period = new MediaSchedulePeriod(begin, end, ConstantePeriods.DisplayLevel.dayly);
@@ -111,7 +110,8 @@ namespace AdExpress.Private.Results.ValueExcel{
                     {
                         _webSession.DetailPeriod = ConstantePeriods.DisplayLevel.monthly;
                     }
-                    if (_webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    if (_webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule 
+                        && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                         period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod, _webSession.ComparativePeriodType);
                     else
                         period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
@@ -121,13 +121,12 @@ namespace AdExpress.Private.Results.ValueExcel{
 
                 #region Calcul du résultat
                 // On charge les données
-                //result = GenericMediaScheduleUI.GetExcel(GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, zoomDate, true,(int)periodDisplayLevel).HTMLCode;
                 object[] param = null;
                 TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
                 _webSession.CurrentTab = 0;
                 _webSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
-                if (zoomDate != null && zoomDate.Length > 0)
+                if (!string.IsNullOrEmpty(zoomDate))
                 {
                     param = new object[3];
                     param[2] = zoomDate;
@@ -139,7 +138,10 @@ namespace AdExpress.Private.Results.ValueExcel{
                 _webSession.CurrentModule = module.Id;
                 param[0] = _webSession;
                 param[1] = period;
-                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap
+                    (string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, 
+                    module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class,
+                    false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 result = mediaScheduleResult.GetExcelHtml(true).HTMLCode;
 
                 #endregion

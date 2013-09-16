@@ -256,7 +256,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             if (periodDisplay == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
             {
                 periodType = WebCst.CustomerSessions.Period.Type.dateToDateWeek;
-                AtomicPeriodWeek tmp = new AtomicPeriodWeek(new DateTime(int.Parse(realPeriodBegin.Substring(0, 4)), int.Parse(realPeriodBegin.Substring(4, 2)), int.Parse(realPeriodBegin.Substring(6, 2))));
+                var tmp = new AtomicPeriodWeek(new DateTime(int.Parse(realPeriodBegin.Substring(0, 4)), int.Parse(realPeriodBegin.Substring(4, 2)), int.Parse(realPeriodBegin.Substring(6, 2))));
                 periodBegin = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
                 tmp = new AtomicPeriodWeek(new DateTime(int.Parse(realPeriodEnd.Substring(0, 4)), int.Parse(realPeriodEnd.Substring(4, 2)), int.Parse(realPeriodEnd.Substring(6, 2))));
                 periodEnd = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
@@ -317,7 +317,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     }
                     else
                     {
-                        AtomicPeriodWeek tmp = new AtomicPeriodWeek(int.Parse(currentPeriod.Substring(0, 4)), int.Parse(currentPeriod.Substring(4, 2)));
+                        var tmp = new AtomicPeriodWeek(int.Parse(currentPeriod.Substring(0, 4)), int.Parse(currentPeriod.Substring(4, 2)));
                         tmp.Increment();
                         currentPeriod = string.Format("{0}{1}", tmp.Year, tmp.Week.ToString("0#"));
                     }

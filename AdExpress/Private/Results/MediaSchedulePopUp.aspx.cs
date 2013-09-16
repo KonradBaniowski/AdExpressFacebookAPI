@@ -1,45 +1,13 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
 using System.Text;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-
-using System.Windows.Forms;
-using Oracle.DataAccess.Client;
-
-using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Selection;
-using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Constantes.Customer;
-using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Rules.Results;
-using TNS.AdExpress.Web.UI.Results;
 using TNS.AdExpress.Domain.Web.Navigation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
-using TNS.FrameWork.Date;
-
-using TNS.AdExpress.Web.Controls.Results.MediaPlan;
-using AjaxPro;
-using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.DataAccess.Classification.ProductBranch;
-using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Units;
-using TNS.AdExpress.Domain.Layers;
-using TNS.AdExpressI.Classification.DAL;
-using System.Reflection;
-using Module = TNS.AdExpress.Domain.Web.Navigation.Module;
 
 
 //OpenGenericMediaSchedule 
@@ -66,27 +34,38 @@ namespace AdExpress.Private.Results
         /// <summary>
         /// Cancel Zoom Button
         /// </summary>
-        public string zoomButton = "";
+        public string zoomButton = string.Empty;
         /// <summary>
         /// Change zoom period
         /// </summary>
-        public string SetZoom = "";
+        public string SetZoom = string.Empty;
         /// <summary>
         /// Initial Period Detail Saving
         /// </summary>
         ConstantesPeriod.DisplayLevel _savePeriod = ConstantesPeriod.DisplayLevel.monthly;
         /// <summary>
+        /// Current Unit Saved
+        /// </summary>
+        private WebConstantes.CustomerSessions.Unit _savedUnit;
+        /// <summary>
         /// Niveau de la nomenclature produit
         /// </summary>
-        string Level = "";
+        string Level = string.Empty;
         /// <summary>
         /// Id de nomenclature
         /// </summary>
-        string id = "";
+        string id = string.Empty;
         /// <summary>
         /// Current Module Save
         /// </summary>
         long _saveModule;
+
+        private bool _isNewCreativesModule = false;
+
+        /// <summary>
+        /// Zoom Period
+        /// </summary>
+        protected string _idUnit= string.Empty;
         #endregion
 
 
@@ -96,6 +75,7 @@ namespace AdExpress.Private.Results
         {
             try
             {
+
 
                 #region Flash d'attente
                 Page.Response.Write(LoadingSystem.GetHtmlDiv(_webSession.SiteLanguage, Page));
@@ -107,23 +87,80 @@ namespace AdExpress.Private.Results
                 #endregion
 
                 #region Period Detail
-                if (_zoom == null || _zoom == string.Empty)
+                if (string.IsNullOrEmpty(_zoom))
                 {
                     if (!IsPostBack)
                     {
                         OptionLayerWebControl1.PeriodDetailControl.Select(_webSession.DetailPeriod);
+                        if (_isNewCreativesModule)
+                        {
+                            OptionLayerWebControl1.UnitControl.Select(!string.IsNullOrEmpty(_idUnit) 
+                                ? (WebConstantes.CustomerSessions.Unit)Convert.ToInt32(_idUnit) : _webSession.Unit);
+                            GenericMediaScheduleWebControl1.CurrentUnit = !string.IsNullOrEmpty(_idUnit) 
+                                ? (WebConstantes.CustomerSessions.Unit)Convert.ToInt32(_idUnit) : _webSession.Unit;
+                            _webSession.Unit = GenericMediaScheduleWebControl1.CurrentUnit;
+                        }
                     }
                     else
                     {
                         _webSession.DetailPeriod = OptionLayerWebControl1.PeriodDetailControl.SelectedValue;
+                        if (_isNewCreativesModule)
+                        {
+                            _webSession.Unit = OptionLayerWebControl1.UnitControl.SelectedValue;
+                            GenericMediaScheduleWebControl1.CurrentUnit = _webSession.Unit;
+                        }
                     }
                 }
                 else
                 {
-                    zoomButton = string.Format("<tr bgcolor=\"#ffffff\" ><td colspan=\"2\" align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaSchedulePopUp.aspx?idSession={0}\">{2}</a></td></tr><tr><td bgColor=\"#ffffff\" height=\"5\"></td></tr>",
-                        _webSession.IdSession,
-                        _webSession.SiteLanguage,
-                        GestionWeb.GetWebWord(2309, _webSession.SiteLanguage));
+                    if(_isNewCreativesModule)
+                    {
+                       
+                        if (!IsPostBack)
+                        {
+                            if (!string.IsNullOrEmpty(_idUnit))
+                            {
+                                GenericMediaScheduleWebControl1.CurrentUnit =
+                                    (WebConstantes.CustomerSessions.Unit) Convert.ToInt32(_idUnit);
+                                OptionLayerWebControl1.UnitControl.Select(GenericMediaScheduleWebControl1.CurrentUnit);
+                                _webSession.Unit = GenericMediaScheduleWebControl1.CurrentUnit;
+                            }
+                        }
+                        else
+                        {
+                            GenericMediaScheduleWebControl1.CurrentUnit = OptionLayerWebControl1.UnitControl.SelectedValue;
+                            _webSession.Unit = GenericMediaScheduleWebControl1.CurrentUnit;
+                            _idUnit = GenericMediaScheduleWebControl1.CurrentUnit.GetHashCode().ToString();
+                        }
+                    }
+                    zoomButton = "<tr bgcolor=\"#ffffff\" ><td colspan=\"2\" align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\"";
+                    zoomButton += " codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\"";
+                    zoomButton +=
+                        string.Format(
+                            " height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/{0}/Flash/Common/Arrow_Back.swf\">"
+                            , Theme);
+                    zoomButton += "<param name=quality value=\"high\"><param name=menu value=\"false\">";
+                    zoomButton +=
+                        string.Format(
+                            "<embed src=\"/App_Themes/{0}/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\"",
+                            Theme);
+                    zoomButton +=
+                        " pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\">";
+
+                    if (_isNewCreativesModule)
+                    {
+                        zoomButton += string.Format("</embed></object><a class=\"roll06\" href=\"/Private/Results/MediaSchedulePopUp.aspx?idSession={0}&u={2}\">{1}</a>",
+                                                    _webSession.IdSession,
+                                                    GestionWeb.GetWebWord(2309, _webSession.SiteLanguage), GenericMediaScheduleWebControl1.CurrentUnit.GetHashCode());
+                    }
+                    else
+                    {
+                        zoomButton += string.Format("</embed></object><a class=\"roll06\" href=\"/Private/Results/MediaSchedulePopUp.aspx?idSession={0}\">{1}</a>",
+                       _webSession.IdSession,
+                       GestionWeb.GetWebWord(2309, _webSession.SiteLanguage));
+                    }
+
+                    zoomButton += "</td></tr><tr><td bgColor=\"#ffffff\" height=\"5\"></td></tr>";
 
                 }
                 #endregion
@@ -133,12 +170,23 @@ namespace AdExpress.Private.Results
                 if (!string.IsNullOrEmpty(_zoom)) DetailPeriodWebControl1.DisplayContent = false;
 
                 #region Menu
-                MenuWebControl1.ForcePrint = string.Format("/Private/Results/Excel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
+                MenuWebControl1.ForcePrint = (_isNewCreativesModule) ? string.Format("/Private/Results/Excel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}&u={4}",
+                    this._webSession.IdSession,
+                    _zoom,
+                    id,
+                    Level, _webSession.Unit.GetHashCode())
+                    : string.Format("/Private/Results/Excel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
                     this._webSession.IdSession,
                     _zoom,
                     id,
                     Level);
-                MenuWebControl1.ForceExcelUnit = string.Format("/Private/Results/ValueExcel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
+
+                MenuWebControl1.ForceExcelUnit = (_isNewCreativesModule) ? string.Format("/Private/Results/ValueExcel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}&u={4}",
+                    this._webSession.IdSession,
+                    _zoom,
+                    id,
+                    Level, _webSession.Unit.GetHashCode())
+                    : string.Format("/Private/Results/ValueExcel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
                     this._webSession.IdSession,
                     _zoom,
                     id,
@@ -147,18 +195,29 @@ namespace AdExpress.Private.Results
                 var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
                 if (module != null && module.GetResultPageInformation(0) != null && module.GetResultPageInformation(0).CanDisplayRawExcelPage())
                 {
-                    MenuWebControl1.ForceRawExcel = string.Format("/Private/Results/RawExcel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
+                    MenuWebControl1.ForceRawExcel = (_isNewCreativesModule) ? string.Format("/Private/Results/RawExcel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}&u={4}",
+               _webSession.IdSession,
+               _zoom,
+               id,
+                     Level, _webSession.Unit.GetHashCode())
+                    : string.Format("/Private/Results/RawExcel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
                _webSession.IdSession,
                _zoom,
                id,
                Level);
                 }
 
-                MenuWebControl1.ForcePdfExportResult = string.Format("/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
+                MenuWebControl1.ForcePdfExportResult = (_isNewCreativesModule) ? 
+                    string.Format("/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}&m={4}&u={5}",
                     this._webSession.IdSession,
                     _zoom,
                     id,
-                    Level);
+                    Level, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA,_webSession.Unit.GetHashCode())
+                    : string.Format("/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}&m={4}",
+                    this._webSession.IdSession,
+                    _zoom,
+                    id,
+                    Level, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
                 #endregion
 
             }
@@ -177,30 +236,55 @@ namespace AdExpress.Private.Results
         protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
         {
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
-
+            _isNewCreativesModule =
+                (_webSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES);
             #region Session Init
             MenuWebControl1.CustomerWebSession = _webSession;
             MenuWebControl1.ForbidHelpPages = true;
 
             OptionLayerWebControl1.CustomerWebSession = _webSession;
             OptionLayerWebControl1.PeriodDetailControl.ListCssClass = "txtNoir11Bold";
+
             GenericMediaScheduleWebControl1.CustomerWebSession = _webSession;
+           
+
             SubPeriodSelectionWebControl1.WebSession = _webSession;
             _saveModule = _webSession.CurrentModule;
+            _savedUnit = _webSession.Unit;
             // On force l'initialisation du composant avec les valeurs du plan media
             OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
+
+            if (_isNewCreativesModule)
+            {
+                OptionLayerWebControl1.UnitControl.ListCssClass = "txtNoir11Bold";
+                GenericMediaScheduleWebControl1.UseCurrentUnit = true;              
+                OptionLayerWebControl1.DisplayUnitOption = true;
+                _idUnit = Page.Request.QueryString.Get("u");
+            }
             #endregion
 
             #region Period Init
             _zoom = Page.Request.QueryString.Get("zoomDate");
-            if (_zoom != null && _zoom != string.Empty)
+         
+            if (!string.IsNullOrEmpty(_zoom))
             {
+                if (_isNewCreativesModule)
+                {
+                    OptionLayerWebControl1.DisplayUnitOption = true;                   
+                    if (!IsPostBack && !string.IsNullOrEmpty(_idUnit))
+                    {                      
+                        GenericMediaScheduleWebControl1.CurrentUnit = (WebConstantes.CustomerSessions.Unit)Convert.ToInt32(_idUnit);
+                        OptionLayerWebControl1.UnitControl.Select(GenericMediaScheduleWebControl1.CurrentUnit);
+                    }             
+                    else GenericMediaScheduleWebControl1.CurrentUnit = OptionLayerWebControl1.UnitControl.SelectedValue;
+                }
 
                 if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
                 {
                     _zoom = Page.Request.Form.GetValues("zoomParam")[0];
                 }
                 OptionLayerWebControl1.DisplayPeriodDetailOption = false;
+   
                 SubPeriodSelectionWebControl1.Visible = true;
                 SubPeriodSelectionWebControl1.AllPeriodAllowed = false;
                 _savePeriod = _webSession.DetailPeriod;
@@ -212,25 +296,31 @@ namespace AdExpress.Private.Results
                 zoomParam.Value = _zoom;
 
                 #region SetZoom
-                StringBuilder js = new StringBuilder();
+                var js = new StringBuilder();
                 js.Append("\r\n<script type=\"text/javascript\">");
                 js.Append("\r\nfunction SetZoom(){");
                 js.AppendFormat("\r\n\tif ({0} == '')", SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.Append("\r\n\t{");
-                js.AppendFormat("\r\n\t\tdocument.location='/Private/Results/MediaSchedulePopUp.aspx?idSession={0}'", _webSession.IdSession);
+                js.AppendFormat("\r\n\t\tdocument.location='/Private/Results/MediaSchedulePopUp.aspx?idSession={0}'"
+                    , _webSession.IdSession);
                 js.Append("\r\n\t}");
                 js.Append("\r\n\telse {");
                 js.AppendFormat("\r\n\t\t{0}();", GenericMediaScheduleWebControl1.RefreshDataMethod);
                 js.AppendFormat("\r\n\t\tvar date = document.getElementById(\"zoomParam\").value;");
-                js.AppendFormat("\r\n\t\tmenu.items.printMenuItem.actionOnClick = menu.items.printMenuItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
-                js.AppendFormat("\r\n\t\tmenu.items.excelUnitItem.actionOnClick = menu.items.excelUnitItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
-                js.AppendFormat("\r\n\t\tmenu.items.pdfExportResultItem.actionOnClick = menu.items.pdfExportResultItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\tmenu.items.printMenuItem.actionOnClick = menu.items.printMenuItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});"
+                    , SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\tmenu.items.excelUnitItem.actionOnClick = menu.items.excelUnitItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});"
+                    , SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\tmenu.items.pdfExportResultItem.actionOnClick = menu.items.pdfExportResultItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});"
+                    , SubPeriodSelectionWebControl1.PeriodContainerName);
 
                 //Debut export Excel brute
-                js.AppendFormat("\r\n\t\tmenu.itemsexcelExportItem.actionOnClick = menu.items.excelExportItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\tmenu.itemsexcelExportItem.actionOnClick = menu.items.excelExportItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});"
+                    , SubPeriodSelectionWebControl1.PeriodContainerName);
                 //Fin export Excel brute
 
-                js.AppendFormat("\r\n\t\tdocument.getElementById(\"zoomParam\").value = {0};", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\tdocument.getElementById(\"zoomParam\").value = {0};"
+                    , SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.Append("\r\n\t}");
                 js.Append("\r\n}");
                 js.Append("\r\n</script>");
@@ -244,9 +334,22 @@ namespace AdExpress.Private.Results
             }
             else
             {
-                OptionLayerWebControl1.DisplayPeriodDetailOption = true;
+
+                if (_isNewCreativesModule)
+                {
+                    OptionLayerWebControl1.DisplayUnitOption = true;
+                    if (!string.IsNullOrEmpty(_idUnit))
+                    {                  
+                        GenericMediaScheduleWebControl1.CurrentUnit = (WebConstantes.CustomerSessions.Unit)Convert.ToInt32(_idUnit);
+                        OptionLayerWebControl1.UnitControl.Select(GenericMediaScheduleWebControl1.CurrentUnit);
+                    } 
+                    else GenericMediaScheduleWebControl1.CurrentUnit = OptionLayerWebControl1.UnitControl.SelectedValue;
+                }
+
                 SubPeriodSelectionWebControl1.Visible = false;
+                OptionLayerWebControl1.DisplayPeriodDetailOption = true;       
                 _webSession.DetailPeriod = OptionLayerWebControl1.PeriodDetailControl.SelectedValue;
+                
                 if (_webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
                 {
                     DateTime begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
@@ -284,10 +387,11 @@ namespace AdExpress.Private.Results
             {
 
                 #region MAJ _webSession
-                if (_zoom != null && _zoom != string.Empty)
+                if (!string.IsNullOrEmpty(_zoom))
                 {
                     _webSession.DetailPeriod = _savePeriod;
                 }
+                _webSession.Unit = _savedUnit;
                 _webSession.CurrentModule = _saveModule;
                 _webSession.Save();
                 #endregion
