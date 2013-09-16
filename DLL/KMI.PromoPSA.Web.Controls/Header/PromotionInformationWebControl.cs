@@ -8,6 +8,8 @@ using System.Text;
 using KMI.PromoPSA.Web.Domain;
 using KMI.PromoPSA.Web.Domain.Translation;
 using TNS.FrameWork.Exceptions;
+using KMI.PromoPSA.Rules;
+using KMI.PromoPSA.BusinessEntities;
 
 namespace KMI.PromoPSA.Web.Controls.Header {
     /// <summary>
@@ -85,7 +87,10 @@ namespace KMI.PromoPSA.Web.Controls.Header {
             try {
 
                 #region Variables
-                int promoNumber = 0;
+                
+                IResults results = new Results();
+                var list = results.GetAdverts(201309);
+                int promoNumber = list.Count;
                 #endregion
 
                 if (_webSession != null) {

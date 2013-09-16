@@ -6,10 +6,13 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KMI.PromoPSA.BusinessEntities;
+using KMI.PromoPSA.Constantes;
 using KMI.PromoPSA.Rules;
 using KMI.PromoPSA.Web.UI;
 
 public partial class Private_Home : PrivateWebPage {
+
+    #region Page Load
     /// <summary>
     /// Page Load
     /// </summary>
@@ -19,34 +22,116 @@ public partial class Private_Home : PrivateWebPage {
         DisconnectUserWebControl1.WebSession = _webSession;
         LoginInformationWebControl1.WebSession = _webSession;
         PromotionInformationWebControl1.WebSession = _webSession;
-
-        /*IResults results = new Results();
-        LinqAtRuntimeGrid.DataSource = results.GetAdverts(201309); 
-        LinqAtRuntimeGrid.DataBind();*/
     }
+    #endregion
 
+    #region Get Chart Data
+    /// <summary>
+    /// Get Chart Data
+    /// </summary>
+    /// <returns>Chart Data</returns>
+    [WebMethod]
+    public static string getChartData() {
 
+        string result = null;
+        IResults results = new Results();
+        int advertsNbToCodify = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_TO_CODIFY);
+        int advertsNbCodified = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_CODIFIED);
+        int advertsNbRejected = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_REJECTED);
+
+        //--- format json
+        var jsonData = new[] {new[]{
+                                    new object[] {"Nombre de promotions à codifier : " + advertsNbToCodify + "", advertsNbToCodify },
+                                    new object[] {"Nombre de promotions codifiées : " + advertsNbCodified + "", advertsNbCodified },
+                                    new object[] {"Nombre de promotions rejetées : " + advertsNbRejected + "", advertsNbRejected }
+                                    }
+            }.ToArray();
+
+        result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
+
+        return result;
+
+    }
+    #endregion
+
+    #region Get Grid Data
+    /// <summary>
+    /// Get Grid Data
+    /// </summary>
+    /// <param name="numRows">Rows number</param>
+    /// <param name="page">Select Page</param>
+    /// <param name="sortField">Sort Field</param>
+    /// <param name="sortOrder">Sort Order</param>
+    /// <param name="isSearch">Is Search</param>
+    /// <param name="searchField">Search Field</param>
+    /// <param name="searchString">Search String</param>
+    /// <param name="searchOper">Search Operation</param>
+    /// <returns>Grid Data</returns>
     [WebMethod]
     public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch, string searchField, string searchString, string searchOper) {
         string result = null;
 
         IResults results = new Results();
-        var list = results.GetAdverts(201309);
-
+        IEnumerable<Advert> list = results.GetAdverts(201309);
 
         try {
 
-            //if (isSearch) {
-            //    searchOper = getOperator(searchOper); // need to associate correct operator to value sent from jqGrid
-            //    string whereClause = String.Format("{0} {1} {2}", searchField, searchOper, "@" + searchField);
+            if (isSearch) {
 
-            //    //--- associate value to field parameter
-            //    Dictionary<string, object> param = new Dictionary<string, object>();
-            //    param.Add("@" + searchField, searchString);
+                switch (searchField) {
+                    case "IdForm":
+                        switch (searchOper) { 
+                            case "eq" :
+                                list = list.Where(x => x.IdForm == Int64.Parse(searchString));
+                                break;
+                            case "ne":
+                                list = list.Where(x => x.IdForm != Int64.Parse(searchString));
+                                break;
+                        }
+                        break;
+                    case "VehicleName":
+                        switch (searchOper) {
+                            case "eq":
+                                list = list.Where(x => x.IdVehicle == Int64.Parse(searchString));
+                                break;
+                            case "ne":
+                                list = list.Where(x => x.IdVehicle != Int64.Parse(searchString));
+                                break;
+                        }
+                        break;
+                    case "DateMediaNum":
+                        switch (searchOper) {
+                            case "eq":
+                                list = list.Where(x => x.DateMediaNumFormated == searchString);
+                                break;
+                            case "ne":
+                                list = list.Where(x => x.DateMediaNumFormated != searchString);
+                                break;
+                        }
+                        break;
+                    case "ActivationName":
+                        switch (searchOper) {
+                            case "eq":
+                                list = list.Where(x => x.Activation == Int64.Parse(searchString));
+                                break;
+                            case "ne":
+                                list = list.Where(x => x.Activation != Int64.Parse(searchString));
+                                break;
+                        }
+                        break;
+                    case "LoadDate":
+                        switch (searchOper) {
+                            case "eq":
+                                list = list.Where(x => x.LoadDateFormated == searchString);
+                                break;
+                            case "ne":
+                                list = list.Where(x => x.LoadDateFormated != searchString);
+                                break;
+                        }
+                        break;
+                }
 
-            //    query = query.Where(whereClause, new object[1] { param });
-            //}
-
+            }
 
             //--- setup calculations
             int pageIndex = page ?? 1; //--- current page
@@ -59,8 +144,9 @@ public partial class Private_Home : PrivateWebPage {
 
             switch (sortField) {
                 case "IdForm": orderedRecords = list.OrderBy(x => x.IdForm); break;
-                case "IdVehicle": orderedRecords = list.OrderBy(x => x.IdVehicle); break;
+                case "VehicleName": orderedRecords = list.OrderBy(x => x.VehicleName); break;
                 case "DateMediaNum": orderedRecords = list.OrderBy(x => x.DateMediaNum); break;
+                case "ActivationName": orderedRecords = list.OrderBy(x => x.ActivationName); break;
             }
 
             IEnumerable<Advert> sortedRecords = orderedRecords.ToList();
@@ -68,7 +154,6 @@ public partial class Private_Home : PrivateWebPage {
             sortedRecords = sortedRecords
               .Skip((pageIndex - 1) * pageSize) //--- page the data
               .Take(pageSize);
-
 
             //--- format json
             var jsonData = new {
@@ -80,7 +165,7 @@ public partial class Private_Home : PrivateWebPage {
                     select new {
                         i = row.IdForm,
                         cell = new string[] {
-                        row.IdForm.ToString(), row.IdVehicle.ToString(), row.DateMediaNum.ToString(), ("Edit.aspx?formId=" +  row.IdForm.ToString())
+                        row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString()), row.ActivationName, row.LoadDateFormated
                     }
                     }
                ).ToArray()
@@ -97,6 +182,35 @@ public partial class Private_Home : PrivateWebPage {
 
         return result;
     }
+    #endregion
 
+    #region Get Load Dates
+    /// <summary>
+    /// Get Chart Data
+    /// </summary>
+    /// <returns>Chart Data</returns>
+    [WebMethod]
+    public static string getLoadDates() {
+
+        string result = null;
+        IResults results = new Results();
+        int advertsNbToCodify = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_TO_CODIFY);
+        int advertsNbCodified = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_CODIFIED);
+        int advertsNbRejected = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_REJECTED);
+
+        //--- format json
+        var jsonData = new[] {new[]{
+                                    new object[] {"Nombre de promotions à codifier : " + advertsNbToCodify + "", advertsNbToCodify },
+                                    new object[] {"Nombre de promotions codifiées : " + advertsNbCodified + "", advertsNbCodified },
+                                    new object[] {"Nombre de promotions rejetées : " + advertsNbRejected + "", advertsNbRejected }
+                                    }
+            }.ToArray();
+
+        result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
+
+        return result;
+
+    }
+    #endregion
 
 }

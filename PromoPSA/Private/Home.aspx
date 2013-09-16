@@ -16,6 +16,10 @@
     <script src="/js/jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="/js/i18n/grid.locale-fr.js" type="text/javascript"></script>
     <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+    <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="excanvas.js"></script><![endif]-->
+    <script src="/js/jquery.jqplot.min.js" type="text/javascript" ></script>
+    <script src="/js/jqplot.pieRenderer.js" type="text/javascript" ></script>
+     <script src="/js/jqplot.json2.min.js" type="text/javascript" ></script>
 </head>
 <body class="bodyStyle">
     <form id="form1" runat="server">
@@ -33,17 +37,72 @@
                 </tr>
             </table>
         </div>
-        <div style="margin-top:10px; margin-left:10px;">
-            <table id="grid"></table>
+        <div id="chart1" style="height:220px; width:460px; margin-left: 450px;"></div>
+        <div style=" margin-left:250px;">
+            <table id="grid" style="margin-right:auto; margin-left:auto;"></table>
             <div id="pager"></div>
 
         </div>
     
-    
     <script type="text/javascript">
         $(document).ready(function () {
+            
+            var dataG ;
+
+            $.ajax({
+                url: 'Home.aspx/getChartData',
+                type: "POST",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, st) {
+                    if (st == "success") {
+                        dataG = JSON.parse(data.d);
+                    }
+                },
+                error: function () {
+                    alert("Error with AJAX callback");
+                }
+            });
+
+            plot2 = jQuery.jqplot('chart1', dataG, {
+                title: ' ',
+                seriesColors: ['#e8e8e8', '#94d472', '#fed2d2'],
+                grid: {
+                    
+                    background: '#ffffff',      // CSS color spec for background color of grid.
+                },
+                seriesDefaults: {
+                    shadow: false,
+                    renderer: jQuery.jqplot.PieRenderer,
+                    rendererOptions: {
+                        startAngle: 180,
+                        sliceMargin: 4,
+                        showDataLabels: true
+                    }
+                }, legend: { show: true, location: 'e' }
+            });
 
             var grid = $("#grid");
+            var vehicleStr = {'0':'' , '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
+            var activationStr = { '0': '', '40': 'A Codifier', '30': 'Rejetée', '20': 'Codifiée' };
+            var loadDateStr;
+
+            $.ajax({
+                url: 'Home.aspx/getLoadDates',
+                type: "POST",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, st) {
+                    if (st == "success") {
+                        loadDateStr = JSON.parse(data.d);
+                    }
+                },
+                error: function () {
+                    alert("Error with AJAX callback");
+                }
+            });
 
             $("#grid").jqGrid({
                 // setup custom parameter names to pass to server
@@ -88,34 +147,36 @@
                     userdata: "userdata",
                     repeatitems: true
                 },
-                colNames: ['Id Form', 'Media', 'Parution Date', 'Edit'],
+                colNames: ['Id Form', 'Media', 'Parution Date', 'Edit', 'Activation', 'Load Date'],
                 colModel: [
                     { name: 'IdForm', index: 'IdForm', width: 55, search: false },
-                    { name: 'IdVehicle', index: 'IdVehicle', width: 200, searchoptions: { sopt: ['eq', 'ne', 'cn'] } },
-                    { name: 'DateMediaNum', index: 'DateMediaNum', width: 200, searchoptions: { sopt: ['eq', 'ne', 'cn'] } },
-                    { name: 'Link', index: 'Link', formatter: linkFormat, width: 55, search: false, sortable:false }
+                    { name: 'VehicleName', index: 'VehicleName', width: 200, stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: vehicleStr, defaultValue: '1' } },
+                    { name: 'DateMediaNum', index: 'DateMediaNum', width: 200, search: false },
+                    { name: 'Link', index: 'Link', formatter: linkFormat, width: 55, search: false, sortable: false },
+                    { name: 'ActivationName', index: 'ActivationName', hidden: false, stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: activationStr, defaultValue: '1' } },
+                    { name: 'LoadDate', index: 'LoadDate', hidden: false, searchoptions: { sopt: ['eq', 'ne'], value: loadDateStr, defaultValue: '1' }, sortable: false }
                 ],
-                rowNum: 10,
+                rowNum: 20,
                 rowList: [10, 20, 30],
                 pager: jQuery("#pager"),
                 sortname: "IdForm",
                 sortorder: "asc",
                 viewrecords: true,
                 width: 800,
-                height: 400,
+                height: 479,
                 gridview: true,
                 rowattr: function (rd) {
-                    if (rd.IdVehicle === "1") { // verify that the testing is correct in your case
-                        return { "class": "pressStyle" };
+                    if (rd.ActivationName == "A Codifier") { // verify that the testing is correct in your case
+                        return { "class": "toCodifyStyle" };
                     }
-                    else if (rd.IdVehicle === "3") { // verify that the testing is correct in your case
-                        return { "class": "tvStyle" };
+                    else if (rd.ActivationName == "Codifiée") { // verify that the testing is correct in your case
+                        return { "class": "codifiedStyle" };
                     }
-                    else if (rd.IdVehicle === "7") { // verify that the testing is correct in your case
-                        return { "class": "internetStyle" };
+                    else if (rd.ActivationName == "Rejetée") { // verify that the testing is correct in your case
+                        return { "class": "rejectedStyle" };
                     }
                 },
-                caption: "Grid Title Here",
+                caption: "Promotions PSA",
                 gridComplete: function () {
                     $(".loading").hide();
                 }
@@ -127,11 +188,13 @@
             {}
         )
         });
+        
         function linkFormat(cellvalue, options, rowObject) {
             return '<a href="' + cellvalue + '" >Edit</a>';
         }
 
     </script>
+
         </form>
 </body>
 </html>

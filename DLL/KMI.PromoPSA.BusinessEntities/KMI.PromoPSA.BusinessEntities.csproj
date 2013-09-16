@@ -53,6 +53,7 @@
     <Compile Include="Classification\ClassificationItem.cs" />
     <Compile Include="Classification\Product.cs" />
     <Compile Include="Classification\Segment.cs" />
+    <Compile Include="LoadDate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

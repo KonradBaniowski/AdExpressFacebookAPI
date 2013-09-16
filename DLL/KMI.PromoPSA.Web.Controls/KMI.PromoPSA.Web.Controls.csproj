@@ -55,6 +55,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KMI.PromoPSA.BusinessEntities\KMI.PromoPSA.BusinessEntities.csproj">
+      <Project>{d8ab005d-2164-4068-ac56-464c37befa2e}</Project>
+      <Name>KMI.PromoPSA.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KMI.PromoPSA.Rules\KMI.PromoPSA.Rules.csproj">
+      <Project>{f3edd3eb-288a-45b1-bd89-b1b45d91804c}</Project>
+      <Name>KMI.PromoPSA.Rules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KMI.PromoPSA.Web.Core\KMI.PromoPSA.Web.Core.csproj">
       <Project>{81c46103-5db9-4143-a54a-6359b14249cc}</Project>
       <Name>KMI.PromoPSA.Web.Core</Name>

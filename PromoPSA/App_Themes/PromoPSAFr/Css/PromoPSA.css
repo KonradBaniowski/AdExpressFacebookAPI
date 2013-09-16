@@ -1,7 +1,7 @@
 ﻿.bodyStyle {
 	background-image: none; 
 	margin: 0px; 
-	background-color: #ffffff;
+	background-color: #eeeeee;
 	z-index:1;
 }
 .header {
@@ -51,15 +51,15 @@
 	margin-top: -44px;
 	top: 50%;
 }
-.pressStyle {
-    background-color : #CBCBCB;
+.toCodifyStyle {
+    background-color : #e8e8e8;
     background-image: url();
 }
-.tvStyle {
-    background-color : #b6ff00;
+.codifiedStyle {
+    background-color : #94d472;
     background-image: url();
 }
-.internetStyle {
-    background-color : #ffd800;
+.rejectedStyle {
+    background-color : #fed2d2;
     background-image: url();
 }

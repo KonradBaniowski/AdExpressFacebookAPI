@@ -66,6 +66,19 @@ namespace KMI.PromoPSA.DAL
 
             return query.ToList();
         }
+
+        public List<LoadDateBE> GetLoadDates(DbManager db) {
+
+            var query = from p in db.GetTable<DataPromotion>()
+                        orderby p.LoadDate
+                        group new { p.LoadDate } by new { p.LoadDate } into g
+                        select new LoadDateBE {
+                            LoadDate = g.Key.LoadDate
+                        };
+
+            return query.ToList();
+        
+        }
       
     }
 }

@@ -57,6 +57,7 @@
     <Compile Include="DbType\DataBrand.cs" />
     <Compile Include="DbType\DataCategory.cs" />
     <Compile Include="DbType\DataCircuit.cs" />
+    <Compile Include="DbType\DataLoadDate.cs" />
     <Compile Include="DbType\DataProduct.cs" />
     <Compile Include="DbType\DataPromotion.cs" />
     <Compile Include="DbType\DataSegment.cs" />

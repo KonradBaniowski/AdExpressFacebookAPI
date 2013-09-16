@@ -71,17 +71,64 @@ namespace KMI.PromoPSA.Rules {
         }
         #endregion
 
-        public List<Advert>  GetAdverts(long loadDate)
-        {
+        #endregion
+
+        #region Data Methods
+
+        #region Get Adverts
+        /// <summary>
+        /// Get Adverts
+        /// </summary>
+        /// <param name="loadDate">Load Date</param>
+        /// <returns>Advert List</returns>
+        public List<Advert> GetAdverts(long loadDate) {
             List<Advert> adverts;
             using (var db = new DbManager(new GenericDataProvider(WebApplicationParameters.DBConfig.ProviderDataAccess)
-                                          , WebApplicationParameters.DBConfig.ConnectionString))
-            {
+                                          , WebApplicationParameters.DBConfig.ConnectionString)) {
                 var dal = new PromoPsaDAL();
                 adverts = dal.GetAdverts(db, loadDate);
             }
             return adverts;
         }
+        #endregion
+
+        #region Get Nb Adverts
+        /// <summary>
+        /// Get Nb Adverts
+        /// </summary>
+        /// <param name="loadDate">Load Date</param>
+        /// <param name="activationCode"></param>
+        /// <returns></returns>
+        public int GetNbAdverts(long loadDate, long activationCode) {
+
+            int advertsNb;
+            using (var db = new DbManager(new GenericDataProvider(WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString)) {
+                var dal = new PromoPsaDAL();
+                advertsNb = dal.GetNbAdverts(db, loadDate, activationCode);
+            }
+            return advertsNb;
+
+        }
+        #endregion
+
+        #region Get load Date
+        /// <summary>
+        /// Get load Date
+        /// </summary>
+        /// <returns>Load Dates</returns>
+        public List<LoadDateBE> GetLoadDates() {
+
+            List<LoadDateBE> loadDates;
+            using (var db = new DbManager(new GenericDataProvider(WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString)) {
+                var dal = new PromoPsaDAL();
+                loadDates = dal.GetLoadDates(db);
+            }
+
+            return loadDates;
+        }
+        #endregion
 
         #endregion
     }
