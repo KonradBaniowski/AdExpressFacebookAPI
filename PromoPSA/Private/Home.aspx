@@ -70,7 +70,7 @@
                 seriesColors: ['#e8e8e8', '#94d472', '#fed2d2'],
                 grid: {
                     
-                    background: '#ffffff',      // CSS color spec for background color of grid.
+                    background: '#ffffff'     // CSS color spec for background color of grid.
                 },
                 seriesDefaults: {
                     shadow: false,
