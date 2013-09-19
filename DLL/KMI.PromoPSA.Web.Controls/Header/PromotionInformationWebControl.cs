@@ -104,7 +104,7 @@ namespace KMI.PromoPSA.Web.Controls.Header {
                     html.AppendFormat("<img src=\"{0}\" align=\"absBottom\"/>", _imageUrl);
                     html.AppendFormat("</td>");
                     html.Append("<td>");
-                    html.Append(GestionWeb.GetWebWord(168, _webSession.SiteLanguage) + " : <strong>" + promoNumber + "</strong>");
+                    html.Append(GestionWeb.GetWebWord(168, _webSession.SiteLanguage) + " : <font id=\"promotionsNb\"><strong>" + promoNumber + "</strong></font>");
                     html.Append("</td>");
                     html.Append("</tr></table>");
                     html.Append("</td></tr></table>");

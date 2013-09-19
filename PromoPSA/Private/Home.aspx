@@ -13,13 +13,17 @@
 	<meta http-equiv="expires" content="0"/>
 	<meta http-equiv="pragma" content="no-cache"/>
 	<meta content="no-cache" name="Cache-control"/>
+    
     <script src="/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+    
     <script src="/js/i18n/grid.locale-fr.js" type="text/javascript"></script>
     <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
-    <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="excanvas.js"></script><![endif]-->
+        <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/js/excanvas.js"></script><![endif]-->
     <script src="/js/jquery.jqplot.min.js" type="text/javascript" ></script>
     <script src="/js/jqplot.pieRenderer.js" type="text/javascript" ></script>
-     <script src="/js/jqplot.json2.min.js" type="text/javascript" ></script>
+    <script src="/js/jqplot.json2.min.js" type="text/javascript" ></script>
+    <script src="/js/json2.js" type="text/javascript" ></script>
+
 </head>
 <body class="bodyStyle">
     <form id="form1" runat="server">
@@ -40,53 +44,20 @@
         <div id="chart1" style="height:220px; width:460px; margin-left: 450px;"></div>
         <div style=" margin-left:250px;">
             <table id="grid" style="margin-right:auto; margin-left:auto;"></table>
-            <div id="pager"></div>
+            <div id="pager" style="height:24px;"></div>
 
         </div>
     
     <script type="text/javascript">
         $(document).ready(function () {
             
-            var dataG ;
-
-            $.ajax({
-                url: 'Home.aspx/getChartData',
-                type: "POST",
-                async: false,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data, st) {
-                    if (st == "success") {
-                        dataG = JSON.parse(data.d);
-                    }
-                },
-                error: function () {
-                    alert("Error with AJAX callback");
-                }
-            });
-
-            plot2 = jQuery.jqplot('chart1', dataG, {
-                title: ' ',
-                seriesColors: ['#e8e8e8', '#94d472', '#fed2d2'],
-                grid: {
-                    
-                    background: '#ffffff'     // CSS color spec for background color of grid.
-                },
-                seriesDefaults: {
-                    shadow: false,
-                    renderer: jQuery.jqplot.PieRenderer,
-                    rendererOptions: {
-                        startAngle: 180,
-                        sliceMargin: 4,
-                        showDataLabels: true
-                    }
-                }, legend: { show: true, location: 'e' }
-            });
+            InitChartComponent();
 
             var grid = $("#grid");
             var vehicleStr = {'0':'' , '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
             var activationStr = { '0': '', '40': 'A Codifier', '30': 'Rejetée', '20': 'Codifiée' };
-            var loadDateStr;
+            var loadDateStr = new Object();
+            var loadDateList = new Array();
 
             $.ajax({
                 url: 'Home.aspx/getLoadDates',
@@ -96,13 +67,17 @@
                 dataType: "json",
                 success: function (data, st) {
                     if (st == "success") {
-                        loadDateStr = JSON.parse(data.d);
+                        loadDateList = JSON.parse(data.d);
+                        for (var i = 0; i < loadDateList.length; i++)
+                            loadDateStr['' + loadDateList[i] + ''] = loadDateList[i];
                     }
                 },
                 error: function () {
                     alert("Error with AJAX callback");
                 }
             });
+
+            
 
             $("#grid").jqGrid({
                 // setup custom parameter names to pass to server
@@ -129,6 +104,9 @@
                             if (st == "success") {
                                 var grid = $("#grid")[0];
                                 grid.addJSONData(JSON.parse(data.d));
+                                var myPostData = $('#grid').jqGrid("getGridParam", "postData");
+                                if(myPostData.searchField == "LoadDate")
+                                    InitPromotionNb(myPostData.searchString);
                             }
                         },
                         error: function () {
@@ -149,12 +127,12 @@
                 },
                 colNames: ['Id Form', 'Media', 'Parution Date', 'Edit', 'Activation', 'Load Date'],
                 colModel: [
-                    { name: 'IdForm', index: 'IdForm', width: 55, search: false },
-                    { name: 'VehicleName', index: 'VehicleName', width: 200, stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: vehicleStr, defaultValue: '1' } },
-                    { name: 'DateMediaNum', index: 'DateMediaNum', width: 200, search: false },
-                    { name: 'Link', index: 'Link', formatter: linkFormat, width: 55, search: false, sortable: false },
+                    { name: 'IdForm', index: 'IdForm', search: false },
+                    { name: 'VehicleName', index: 'VehicleName', stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: vehicleStr, defaultValue: '1' } },
+                    { name: 'DateMediaNum', index: 'DateMediaNum', search: false },
+                    { name: 'Link', index: 'Link', formatter: linkFormat, search: false, sortable: false },
                     { name: 'ActivationName', index: 'ActivationName', hidden: false, stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: activationStr, defaultValue: '1' } },
-                    { name: 'LoadDate', index: 'LoadDate', hidden: false, searchoptions: { sopt: ['eq', 'ne'], value: loadDateStr, defaultValue: '1' }, sortable: false }
+                    { name: 'LoadDate', index: 'LoadDate', hidden: false, stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: loadDateStr, defaultValue: '1' }, sortable: false }
                 ],
                 rowNum: 20,
                 rowList: [10, 20, 30],
@@ -162,8 +140,9 @@
                 sortname: "IdForm",
                 sortorder: "asc",
                 viewrecords: true,
-                width: 800,
-                height: 479,
+                width: 900,
+                height: "100%",
+                //height: 500,
                 gridview: true,
                 rowattr: function (rd) {
                     if (rd.ActivationName == "A Codifier") { // verify that the testing is correct in your case
@@ -191,6 +170,75 @@
         
         function linkFormat(cellvalue, options, rowObject) {
             return '<a href="' + cellvalue + '" >Edit</a>';
+        }
+
+        function InitChartComponent() {
+
+            var dataG;
+
+            $.ajax({
+                url: 'Home.aspx/getChartData',
+                type: "POST",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, st) {
+                    if (st == "success") {
+                        dataG = JSON.parse(data.d);
+                    }
+                },
+                error: function () {
+                    alert("Error with AJAX callback");
+                }
+            });
+
+            plot2 = jQuery.jqplot('chart1', dataG, {
+                title: ' ',
+                seriesColors: ['#e8e8e8', '#94d472', '#fed2d2'],
+                grid: {
+                    background: '#ffffff'     // CSS color spec for background color of grid.
+                },
+                seriesDefaults: {
+                    shadow: false,
+                    renderer: jQuery.jqplot.PieRenderer,
+                    rendererOptions: {
+                        startAngle: 180,
+                        sliceMargin: 4,
+                        showDataLabels: true
+                    }
+                },
+                legend: {
+                    show: true,
+                    location: 'e'
+                }
+            });
+
+        }
+
+        function InitPromotionNb(loadDate) {
+            
+            var promotionNb;
+            var loadDateFormatting = loadDate.substring(3, 7) + loadDate.substring(0, 2)
+
+            $.ajax({
+                type: "POST",
+                url: 'Home.aspx/getPromotionsNb',
+                async: false,
+                data: JSON.stringify({ loadingDate: loadDateFormatting }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg, st) {
+                    if (st == "success") {
+                        promotionNb = JSON.parse(msg.d);
+                    }
+                },
+                error: function () {
+                    alert("Error with AJAX callback");
+                }
+            });
+
+            var oN = document.getElementById("promotionsNb");
+            oN.innerHTML = "<strong>" + promotionNb + "</strong>";
         }
 
     </script>

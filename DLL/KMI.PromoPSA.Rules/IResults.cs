@@ -25,5 +25,6 @@ namespace KMI.PromoPSA.Rules {
         bool CanAccessToPSA(string login, string password);
         List<Advert> GetAdverts(long loadDate);
         int GetNbAdverts(long loadDate, long activationCode);
+        List<LoadDateBE> GetLoadDates();
     }
 }

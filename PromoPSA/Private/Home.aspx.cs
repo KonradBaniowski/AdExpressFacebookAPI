@@ -194,17 +194,41 @@ public partial class Private_Home : PrivateWebPage {
 
         string result = null;
         IResults results = new Results();
-        int advertsNbToCodify = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_TO_CODIFY);
-        int advertsNbCodified = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_CODIFIED);
-        int advertsNbRejected = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_REJECTED);
+        List<LoadDateBE> loadDates = results.GetLoadDates();
 
         //--- format json
-        var jsonData = new[] {new[]{
-                                    new object[] {"Nombre de promotions à codifier : " + advertsNbToCodify + "", advertsNbToCodify },
-                                    new object[] {"Nombre de promotions codifiées : " + advertsNbCodified + "", advertsNbCodified },
-                                    new object[] {"Nombre de promotions rejetées : " + advertsNbRejected + "", advertsNbRejected }
-                                    }
-            }.ToArray();
+        List<Object> list = new List<Object>();
+        int i = 0;
+
+        foreach (LoadDateBE loadDate in loadDates) {
+            string date = loadDate.LoadDate.ToString();
+            list.Add(date.Substring(4, 2) + "/" + date.Substring(0, 4));
+            i++;
+        }
+
+        var jsonData = list.ToArray();
+
+        result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
+
+        return result;
+
+    }
+    #endregion
+
+    #region Get Promotions Number
+    /// <summary>
+    /// Get Promotions Number
+    /// </summary>
+    /// <returns>Promotions Number</returns>
+    [WebMethod]
+    public static string getPromotionsNb(string loadingDate) {
+
+        string result = null;
+        IResults results = new Results();
+        var list = results.GetAdverts(Int64.Parse(loadingDate));
+        int promoNumber = list.Count;
+
+        var jsonData = promoNumber;
 
         result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
 
