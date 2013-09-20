@@ -174,16 +174,19 @@ namespace KMI.PromoPSA.Dispatcher.Core
 
         }
 
-        public static void ValidateMonth(long loadDate)
+        public static bool ValidateMonth(long loadDate)
         {
             lock (_adverts)
             {
+                bool isValidated = false;
                 var adverts = _adverts.Where(p => p.LoadDate == loadDate).ToList();
 
                 foreach (var advert in adverts)
                 {
                     advert.Activation = Constantes.Constantes.ACTIVATION_CODE_VALIDATED;
+                    isValidated = true;
                 }
+                return isValidated;
             }
 
         }
