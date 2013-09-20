@@ -90,25 +90,69 @@
                             $("#brand").get(0).options[$("#brand").get(0).options.length - 1].selected = true;
                         }
                     });
+                    
+                    if (msg.d.Advert.PromotionContent)
+                        $("#pcontent").val(msg.d.Advert.PromotionContent);
+                    
+                    if (msg.d.Advert.ConditionText)
+                        $("#conditiontext").val(msg.d.Advert.ConditionText);
+                    
+                    if (msg.d.Advert.Script)
+                        $("#script_").val(msg.d.Advert.Script);
+                    
+                    if (msg.d.Advert.DateEndNum && msg.d.Advert.DateEndNum > 0) {
+                        var endDate = msg.d.Advert.DateEndNum.toString();
+                         endDate = endDate.substr(6, 2)   +'/' + endDate.substr(4, 2) + '/' + endDate.substr(0, 4);
+                        $("#enddatepicker").val(endDate);
+                    }
+                    
+                    if (msg.d.Advert.DateBeginNum && msg.d.Advert.DateBeginNum > 0) {
+                        var datebegin = msg.d.Advert.DateBeginNum.toString();
+                        datebegin = datebegin.substr(6, 2) + '/' + datebegin.substr(4, 2) + '/' + datebegin.substr(0, 4);
+                        $("#startdatepicker").val(datebegin);
+                    }
+
+
+                    if (msg.d.Advert.ExcluWeb == 1)
+                        $("#excluweb_ok").prop('checked', true);
+                    else
+                        $("#excluweb_ok").prop('checked', false);
+
+                  
+                    if (msg.d.Advert.ExcluWeb == 0)
+                        $("#excluweb_ko").prop('checked', true);
+                    else
+                        $("#excluweb_ko").prop('checked', false);
+                        
                 },
                 error: function () {
-                    alert("Impossible de charger les données de la promotion");
+                     alert("Impossible de charger les données de la promotion");
+                  
                 }
             });
             //Set Data picker
             $("#startdatepicker").datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 1,
                 regional: "fr",
                 showOn: "button",
                 buttonImage: "/App_Themes/PromoPSAFr/Images/calendar.gif",
                 buttonImageOnly: true,
                 beforeShow: function () {
                     $(".ui-datepicker").css('font-size', 11);
+                },
+                onclose:function(selectedDate) {
+                    $("#enddatepicker").datepicker("option", "minDate", selectedDate);
                 }
             });
 
-            $("#datepicker").datepicker("option", $.datepicker.regional["fr"]);
+            //$("#startdatepicker").datepicker("option", $.datepicker.regional["fr"]);
 
             $("#enddatepicker").datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 1,
                 regional: "fr",
                 showOn: "button",
                 buttonImage: "/App_Themes/PromoPSAFr/Images/calendar.gif",
@@ -116,18 +160,40 @@
                 beforeShow: function () {
                     $(".ui-datepicker").css('font-size', 11);
                 }
+                ,
+                onclose: function (selectedDate) {
+                    $("#startdatepicker").datepicker("option", "maxDate", selectedDate);
+                }
 
             });
 
-            $("#enddatepicker").datepicker("option", $.datepicker.regional["fr"]);
+          //  $("#enddatepicker").datepicker("option", $.datepicker.regional["fr"]);
 
             // validate the comment form when it is submitted
             //$("#commentForm").validate();
 
 
-            CodificationEvent("#codifify",20);
+            CodificationEvent("#codifify", 20);
 
             CodificationEvent("#rejectcodif", 30);
+
+            CancelForm("#cancelcodif");
+            
+            $(function () {
+                $("#dialog").dialog({
+                    autoOpen: false,
+                    dialogClass: "alert",
+                    modal: true,
+                    show: {
+                        effect: "highlight",
+                        duration: 1000
+                    },
+                    hide: {
+                        effect: "fade",
+                        duration: 1000
+                    }
+                });
+            });
 
         });
 
@@ -147,7 +213,19 @@
                 return $.getUrlVars()[name];
             }
         });
-    
+        function CancelForm(selectorId) {
+            $(selectorId).off("click");
+            $(selectorId).on("click", function () {
+               
+
+              
+
+
+                document.location.href = "/Private/Home.aspx";
+                return false;
+
+            });
+        }
         function GetProducts(segmentId) {
             if (segmentId.length > 0) {
                 $("#product").get(0).options.length = 0;
@@ -180,12 +258,22 @@
         }
 
         function CodificationEvent(selectorId, activationCode) {
-          
+
             $(selectorId).off("click");
             $(selectorId).on("click", function () {
                 debugger;
                 //Hide errors essage
                 $("#commentForm").validate({
+                    rules: {
+                        startdatepicker: {
+                            required: true,
+                            date: true,                            
+                        },
+                        enddatepicker: {
+                            required: true,
+                            date: true,
+                        }
+                    },
                     messages: {
                         startdatepicker: {
                             required: '',
@@ -266,9 +354,9 @@
                                 //if (msg.d > 0) {
                                 //    document.location.href = "/Private/Edit.aspx?formId=" + msg.d;
                                 //} else {
-                                    document.location.href = "/Private/Home.aspx";
+                                document.location.href = "/Private/Home.aspx";
                                 //}
-                                
+
                             },
                             error: function () {
                                 $("#product").get(0).options.length = 0;
@@ -281,8 +369,8 @@
 
             });
         }
-        
-      
+
+
 
     </script>
 
@@ -376,7 +464,7 @@
                             <label for="startdatepicker">Date de début *</label>
                         </td>
                         <td class="field">
-                            <input type="text" class="required" id="startdatepicker" name="startdatepicker" />
+                            <input type="text"  id="startdatepicker" name="startdatepicker" />
 
 
 
@@ -387,7 +475,7 @@
                             <label for="enddatepicker">Date de fin *</label>
                         </td>
                         <td class="field">
-                            <input type="text" class="required" id="enddatepicker" name="enddatepicker" />
+                            <input type="text"  id="enddatepicker" name="enddatepicker" />
 
 
 
@@ -431,13 +519,13 @@
                     <tr>
                         <td></td>
                         <td>
-                            <div>
+                            <div class="vButton">
+
+                                <input class="validateButton" type="submit" id="codifify" name="codifify" value="Codifier" style="width: 80px" tabindex="14" />
                                 <span></span>
-                                <input class="validateButton" type="submit" id="codifify" name="codifify" value="Codifier" style="width: 100px" tabindex="14" />
+                                <input class="validateButton" type="submit" id="rejectcodif" name="rejectcodif" value="Rejeter" style="width: 80px" tabindex="15" />
                                 <span></span>
-                                <input class="validateButton" type="submit" id="rejectcodif" name="rejectcodif" value="Rejeter" style="width: 100px" tabindex="15" />
-                                <%-- <span></span>
-                                   <input class="validateButton" type="submit" id="cancelcodif" name ="cancelcodif" value="Annuler" style="width: 100px" tabindex="16" />--%>
+                                <input class="validateButton" type="submit" id="cancelcodif" name="cancelcodif" value="Annuler" style="width: 80px" tabindex="16" />
                             </div>
 
                         </td>
@@ -447,6 +535,9 @@
 
 
             </div>
+           <%--  <div id="dialog" title="Alert" style="font-size:12px;">
+            <p>Erreur !</p>
+        </div>--%>
         </fieldset>
     </form>
 

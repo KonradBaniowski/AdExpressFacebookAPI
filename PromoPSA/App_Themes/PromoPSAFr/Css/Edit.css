@@ -27,6 +27,10 @@ input[type=text]
      font-size: 11px;
       color: #525252;
 }
+div.vButton {
+ width:400px;   
+}
+ 
 /***label***/
 label.error
 {
