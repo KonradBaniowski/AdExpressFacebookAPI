@@ -5,6 +5,7 @@ using System.Text;
 
 namespace KMI.PromoPSA.BusinessEntities.Classification
 {
+    [Serializable]
   public  class ClassificationItem
     {
         public long Id{ get; set; }

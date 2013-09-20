@@ -107,7 +107,24 @@ namespace KMI.PromoPSA.Dispatcher.Core
 
         }
 
+        public static bool LockAdvertStatus(long userId, long idForm)
+        {
 
+            lock (_adverts)
+            {
+                bool status = false;
+                var adverts = _adverts.Where(p => p.IdUser == userId
+                    && p.IdForm == idForm).ToList();
+
+                foreach (var advert in adverts)
+                {
+                    advert.IdUser = userId;
+                    status = true;
+                }
+                return status;
+            }
+
+        }
 
 
         public static AdvertStatus GetAdvertStatus(long userId, long idForm)
@@ -133,6 +150,20 @@ namespace KMI.PromoPSA.Dispatcher.Core
             {
                 var advertStatus = _adverts.Find(p => p.IdForm == idForm);
                 if (advertStatus != null) advertStatus.Activation = activationCode;
+            }
+
+        }
+
+        public static void ValidateMonth(long loadDate)
+        {
+            lock (_adverts)
+            {
+                var adverts = _adverts.Where(p => p.LoadDate == loadDate).ToList();
+
+                foreach (var advert in adverts)
+                {
+                    advert.Activation = Constantes.Constantes.ACTIVATION_CODE_VALIDATED;
+                }
             }
 
         }

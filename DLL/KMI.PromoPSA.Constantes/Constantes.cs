@@ -21,6 +21,8 @@ namespace KMI.PromoPSA.Constantes
 
         public static long ACTIVATION_CODE_VALIDATED = 0;
 
+        public static long DEFAULT_LANGUAGE = 33;
+
     }
 
     #region Project
