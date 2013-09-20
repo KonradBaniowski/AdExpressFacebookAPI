@@ -51,10 +51,19 @@
     <script type="text/javascript">
         $(document).ready(function () {
             
-            InitChartComponent();
+            InitChartComponent(currentMonth);
+            InitGridComponent(currentMonth);
+            
+        });
+        
+        function linkFormat(cellvalue, options, rowObject) {
+            return '<a href="' + cellvalue + '" >Edit</a>';
+        }
+
+        function InitGridComponent(loadDate) {
 
             var grid = $("#grid");
-            var vehicleStr = {'0':'' , '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
+            var vehicleStr = { '0': '', '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
             var activationStr = { '0': '', '40': 'A Codifier', '30': 'Rejetée', '20': 'Codifiée' };
             var loadDateStr = new Object();
             var loadDateList = new Array();
@@ -77,7 +86,7 @@
                 }
             });
 
-            
+
 
             $("#grid").jqGrid({
                 // setup custom parameter names to pass to server
@@ -90,7 +99,7 @@
                     order: "sortOrder"
                 },
                 // add by default to avoid webmethod parameter conflicts
-                postData: { searchString: '', searchField: '', searchOper: '' },
+                postData: { searchString: '', searchField: '', searchOper: '', loadingDate: loadDate, sessionId: sessionId },
                 // setup ajax call to webmethod
                 datatype: function (postdata) {
                     $(".loading").show(); // make sure we can see loader text
@@ -105,8 +114,11 @@
                                 var grid = $("#grid")[0];
                                 grid.addJSONData(JSON.parse(data.d));
                                 var myPostData = $('#grid').jqGrid("getGridParam", "postData");
-                                if(myPostData.searchField == "LoadDate")
-                                    InitPromotionNb(myPostData.searchString);
+                                if (myPostData.searchField == "LoadDate") {
+                                    var loadDateFormatting = myPostData.searchString.substring(3, 7) + myPostData.searchString.substring(0, 2)
+                                    InitPromotionNb(loadDateFormatting);
+                                    InitChartComponent(loadDateFormatting);
+                                }
                             }
                         },
                         error: function () {
@@ -125,7 +137,7 @@
                     userdata: "userdata",
                     repeatitems: true
                 },
-                colNames: ['Id Form', 'Media', 'Parution Date', 'Edit', 'Activation', 'Load Date'],
+                colNames: ['Numero de fiche', 'Media', 'Date de parution', 'Edit', 'Activation', 'Date de chargement'],
                 colModel: [
                     { name: 'IdForm', index: 'IdForm', search: false },
                     { name: 'VehicleName', index: 'VehicleName', stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: vehicleStr, defaultValue: '1' } },
@@ -137,6 +149,7 @@
                 rowNum: 20,
                 rowList: [10, 20, 30],
                 pager: jQuery("#pager"),
+                toppager:true,
                 sortname: "IdForm",
                 sortorder: "asc",
                 viewrecords: true,
@@ -159,20 +172,27 @@
                 gridComplete: function () {
                     $(".loading").hide();
                 }
-            }).jqGrid('navGrid', '#pager', { edit: false, add: false, del: false },
+            }).jqGrid('navGrid', '#grid_toppager', {
+                edit: false, add: false, del: false,
+                beforeRefresh: function () {
+                    //alert('Here');
+                    var myPostData = $('#grid').jqGrid("getGridParam", "postData");
+                    if (myPostData.searchField == "LoadDate") {
+                        myPostData.searchString = currentMonth.substring(4, 6) + "/" + currentMonth.substring(0, 4);
+                    }
+                    //jQuery(table).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+                }
+            },
             {}, // default settings for edit
             {}, // add
             {}, // delete
             { closeOnEscape: true, closeAfterSearch: true }, //search
             {}
         )
-        });
-        
-        function linkFormat(cellvalue, options, rowObject) {
-            return '<a href="' + cellvalue + '" >Edit</a>';
+            //$("#grid").jqGrid('navGrid', '#grid_toppager');
         }
 
-        function InitChartComponent() {
+        function InitChartComponent(loadDate) {
 
             var dataG;
 
@@ -180,6 +200,7 @@
                 url: 'Home.aspx/getChartData',
                 type: "POST",
                 async: false,
+                data: JSON.stringify({ loadingDate: loadDate }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data, st) {
@@ -218,13 +239,12 @@
         function InitPromotionNb(loadDate) {
             
             var promotionNb;
-            var loadDateFormatting = loadDate.substring(3, 7) + loadDate.substring(0, 2)
 
             $.ajax({
                 type: "POST",
                 url: 'Home.aspx/getPromotionsNb',
                 async: false,
-                data: JSON.stringify({ loadingDate: loadDateFormatting }),
+                data: JSON.stringify({ loadingDate: loadDate }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg, st) {

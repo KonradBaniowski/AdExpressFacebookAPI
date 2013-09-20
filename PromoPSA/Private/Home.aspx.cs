@@ -22,6 +22,11 @@ public partial class Private_Home : PrivateWebPage {
         DisconnectUserWebControl1.WebSession = _webSession;
         LoginInformationWebControl1.WebSession = _webSession;
         PromotionInformationWebControl1.WebSession = _webSession;
+        IResults results = new Results();
+        List<LoadDateBE> list = results.GetLoadDates();
+        var loadDate = list.Max(x => x.LoadDate);
+        string scriptGlobalVariables = "var currentMonth = '" + loadDate.Value + "'; \n var sessionId = '" + _webSession.IdSession + "';";
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "globaVariables", scriptGlobalVariables, true);
     }
     #endregion
 
@@ -31,13 +36,13 @@ public partial class Private_Home : PrivateWebPage {
     /// </summary>
     /// <returns>Chart Data</returns>
     [WebMethod]
-    public static string getChartData() {
+    public static string getChartData(string loadingDate) {
 
         string result = null;
         IResults results = new Results();
-        int advertsNbToCodify = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_TO_CODIFY);
-        int advertsNbCodified = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_CODIFIED);
-        int advertsNbRejected = results.GetNbAdverts(201309, Constantes.ACTIVATION_CODE_REJECTED);
+        int advertsNbToCodify = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_TO_CODIFY);
+        int advertsNbCodified = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_CODIFIED);
+        int advertsNbRejected = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_REJECTED);
 
         //--- format json
         var jsonData = new[] {new[]{
@@ -68,11 +73,11 @@ public partial class Private_Home : PrivateWebPage {
     /// <param name="searchOper">Search Operation</param>
     /// <returns>Grid Data</returns>
     [WebMethod]
-    public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch, string searchField, string searchString, string searchOper) {
+    public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch, string searchField, string searchString, string searchOper, string loadingDate, string sessionId) {
         string result = null;
 
         IResults results = new Results();
-        IEnumerable<Advert> list = results.GetAdverts(201309);
+        IEnumerable<Advert> list = results.GetAdverts(Int64.Parse(loadingDate));
 
         try {
 
@@ -165,7 +170,7 @@ public partial class Private_Home : PrivateWebPage {
                     select new {
                         i = row.IdForm,
                         cell = new string[] {
-                        row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString()), row.ActivationName, row.LoadDateFormated
+                        row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString() + "&sessionId=" + sessionId), row.ActivationName, row.LoadDateFormated
                     }
                     }
                ).ToArray()

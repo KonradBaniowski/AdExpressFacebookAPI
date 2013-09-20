@@ -89,7 +89,9 @@ namespace KMI.PromoPSA.Web.Controls.Header {
                 #region Variables
                 
                 IResults results = new Results();
-                var list = results.GetAdverts(201309);
+                List<LoadDateBE> listLD = results.GetLoadDates();
+                var loadDate = listLD.Max(x => x.LoadDate);
+                var list = results.GetAdverts(loadDate.Value);
                 int promoNumber = list.Count;
                 #endregion
 

@@ -84,7 +84,7 @@ namespace KMI.PromoPSA.Web.Controls.Header {
                 StringBuilder html = new StringBuilder();
                 
                 html.Append("<table class=\"disconnectUser\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" height=\"100%\"><tr>");
-                html.Append("<td><a href=\"#\" onclick=\"javascript:document.location='" + Page.ResolveUrl("~/disconnectUser.aspx") + "';\">");
+                html.Append("<td><a href=\"#\" onclick=\"javascript:document.location='" + Page.ResolveUrl("~/disconnectUser.aspx?id=" + _webSession.CustomerLogin.IdLogin) + "';\">");
                 html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" height=\"100%\"><tr>");
                 html.AppendFormat("<td>");
                 html.AppendFormat("<img src=\"{0}\" align=\"absBottom\"/>", _imageUrl);
