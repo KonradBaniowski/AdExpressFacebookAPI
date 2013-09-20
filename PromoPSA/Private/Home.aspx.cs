@@ -37,10 +37,10 @@ public partial class Private_Home : PrivateWebPage {
     /// <param name="month"></param>
     /// <returns>True if succed</returns>
     [WebMethod]
-    public static void ValidateMonth(string month) {
+    public static bool ValidateMonth(string month) {
 
         IResults results = new Results();
-        results.ValidateMonth(Int64.Parse(month));
+        return results.ValidateMonth(Int64.Parse(month));
 
     }
     #endregion
@@ -55,8 +55,7 @@ public partial class Private_Home : PrivateWebPage {
     public static bool checkFormIdAvailability(string loginId, string formId) {
 
         IResults results = new Results();
-        results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(formId));
-        return false;
+        return results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(formId));
     }
     #endregion
 

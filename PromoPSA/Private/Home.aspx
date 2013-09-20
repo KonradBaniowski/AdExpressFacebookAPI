@@ -86,6 +86,8 @@
 
         function ValidateMonth() {
 
+            var verif;
+
             $.ajax({
                 type: "POST",
                 url: 'Home.aspx/validateMonth',
@@ -95,13 +97,16 @@
                 dataType: "json",
                 success: function (msg, st) {
                     if (st == "success") {
-                        alert("Mois validé");
+                        verif = JSON.parse(msg.d);
                     }
                 },
                 error: function () {
                     alert("Error with AJAX callback");
                 }
             });
+
+            if (verif == true)
+                alert("Mois Validé");
 
         }
         
