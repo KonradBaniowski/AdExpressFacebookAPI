@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="IsAccessible">
+        <s:complexType />
+      </s:element>
+      <s:element name="IsAccessibleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsAccessibleResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AdvertReload">
+        <s:complexType />
+      </s:element>
+      <s:element name="AdvertReloadResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAdvertStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loginId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="nbAdvert" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAdvertStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAdvertStatusResult" type="tns:ArrayOfAdvertStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAdvertStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AdvertStatus" nillable="true" type="tns:AdvertStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AdvertStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IdForm" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Activation" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdLogin" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="LoadDate" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdDataPromotion" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAvailableIdForm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loginId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAvailableIdFormResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetAvailableIdFormResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReleaseAdvertStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loginId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReleaseAdvertStatusResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="LockAdvertStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loginId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="idForm" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LockAdvertStatusResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReleaseOneAdvertStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loginId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="idForm" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReleaseOneAdvertStatusResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetOneAdvertStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loginId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="idForm" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOneAdvertStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOneAdvertStatusResult" type="tns:AdvertStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeAdvertStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idForm" nillable="true" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="activationCode" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeAdvertStatusResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ValidateMonth">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loadDate" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateMonthResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="IsAccessibleSoapIn">
+    <wsdl:part name="parameters" element="tns:IsAccessible" />
+  </wsdl:message>
+  <wsdl:message name="IsAccessibleSoapOut">
+    <wsdl:part name="parameters" element="tns:IsAccessibleResponse" />
+  </wsdl:message>
+  <wsdl:message name="AdvertReloadSoapIn">
+    <wsdl:part name="parameters" element="tns:AdvertReload" />
+  </wsdl:message>
+  <wsdl:message name="AdvertReloadSoapOut">
+    <wsdl:part name="parameters" element="tns:AdvertReloadResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAdvertStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAdvertStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetAdvertStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAdvertStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAvailableIdFormSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAvailableIdForm" />
+  </wsdl:message>
+  <wsdl:message name="GetAvailableIdFormSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAvailableIdFormResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReleaseAdvertStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:ReleaseAdvertStatus" />
+  </wsdl:message>
+  <wsdl:message name="ReleaseAdvertStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:ReleaseAdvertStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="LockAdvertStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:LockAdvertStatus" />
+  </wsdl:message>
+  <wsdl:message name="LockAdvertStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:LockAdvertStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReleaseOneAdvertStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:ReleaseOneAdvertStatus" />
+  </wsdl:message>
+  <wsdl:message name="ReleaseOneAdvertStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:ReleaseOneAdvertStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOneAdvertStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOneAdvertStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetOneAdvertStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOneAdvertStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAdvertStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeAdvertStatus" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAdvertStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeAdvertStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateMonthSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateMonth" />
+  </wsdl:message>
+  <wsdl:message name="ValidateMonthSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateMonthResponse" />
+  </wsdl:message>
+  <wsdl:portType name="DispacherSoap">
+    <wsdl:operation name="IsAccessible">
+      <wsdl:input message="tns:IsAccessibleSoapIn" />
+      <wsdl:output message="tns:IsAccessibleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AdvertReload">
+      <wsdl:input message="tns:AdvertReloadSoapIn" />
+      <wsdl:output message="tns:AdvertReloadSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertStatus">
+      <wsdl:input message="tns:GetAdvertStatusSoapIn" />
+      <wsdl:output message="tns:GetAdvertStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableIdForm">
+      <wsdl:input message="tns:GetAvailableIdFormSoapIn" />
+      <wsdl:output message="tns:GetAvailableIdFormSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseAdvertStatus">
+      <wsdl:input message="tns:ReleaseAdvertStatusSoapIn" />
+      <wsdl:output message="tns:ReleaseAdvertStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LockAdvertStatus">
+      <wsdl:input message="tns:LockAdvertStatusSoapIn" />
+      <wsdl:output message="tns:LockAdvertStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseOneAdvertStatus">
+      <wsdl:input message="tns:ReleaseOneAdvertStatusSoapIn" />
+      <wsdl:output message="tns:ReleaseOneAdvertStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOneAdvertStatus">
+      <wsdl:input message="tns:GetOneAdvertStatusSoapIn" />
+      <wsdl:output message="tns:GetOneAdvertStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAdvertStatus">
+      <wsdl:input message="tns:ChangeAdvertStatusSoapIn" />
+      <wsdl:output message="tns:ChangeAdvertStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateMonth">
+      <wsdl:input message="tns:ValidateMonthSoapIn" />
+      <wsdl:output message="tns:ValidateMonthSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DispacherSoap" type="tns:DispacherSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsAccessible">
+      <soap:operation soapAction="http://tempuri.org/IsAccessible" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AdvertReload">
+      <soap:operation soapAction="http://tempuri.org/AdvertReload" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertStatus">
+      <soap:operation soapAction="http://tempuri.org/GetAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableIdForm">
+      <soap:operation soapAction="http://tempuri.org/GetAvailableIdForm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseAdvertStatus">
+      <soap:operation soapAction="http://tempuri.org/ReleaseAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LockAdvertStatus">
+      <soap:operation soapAction="http://tempuri.org/LockAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseOneAdvertStatus">
+      <soap:operation soapAction="http://tempuri.org/ReleaseOneAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOneAdvertStatus">
+      <soap:operation soapAction="http://tempuri.org/GetOneAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAdvertStatus">
+      <soap:operation soapAction="http://tempuri.org/ChangeAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateMonth">
+      <soap:operation soapAction="http://tempuri.org/ValidateMonth" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DispacherSoap12" type="tns:DispacherSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsAccessible">
+      <soap12:operation soapAction="http://tempuri.org/IsAccessible" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AdvertReload">
+      <soap12:operation soapAction="http://tempuri.org/AdvertReload" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertStatus">
+      <soap12:operation soapAction="http://tempuri.org/GetAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableIdForm">
+      <soap12:operation soapAction="http://tempuri.org/GetAvailableIdForm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseAdvertStatus">
+      <soap12:operation soapAction="http://tempuri.org/ReleaseAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LockAdvertStatus">
+      <soap12:operation soapAction="http://tempuri.org/LockAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseOneAdvertStatus">
+      <soap12:operation soapAction="http://tempuri.org/ReleaseOneAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOneAdvertStatus">
+      <soap12:operation soapAction="http://tempuri.org/GetOneAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAdvertStatus">
+      <soap12:operation soapAction="http://tempuri.org/ChangeAdvertStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateMonth">
+      <soap12:operation soapAction="http://tempuri.org/ValidateMonth" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Dispacher">
+    <wsdl:port name="DispacherSoap" binding="tns:DispacherSoap">
+      <soap:address location="http://localhost:56081/Dispacher.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DispacherSoap12" binding="tns:DispacherSoap12">
+      <soap12:address location="http://localhost:56081/Dispacher.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
