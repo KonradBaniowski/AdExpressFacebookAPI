@@ -109,7 +109,7 @@ namespace KMI.PromoPSA.Rules {
         /// </summary>
         /// <param name="idForm"></param>
         /// <param name="activationCode"></param>
-        public void ChangeAdvertStatus(long? idForm, long activationCode)
+        public void ChangeAdvertStatus(long idForm, long activationCode)
         {
             Dispacher.Dispacher dispacher = GetWebServiceDispacher();
             dispacher.ChangeAdvertStatus(idForm,activationCode);

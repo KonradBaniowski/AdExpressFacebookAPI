@@ -115,7 +115,7 @@
       <s:element name="ChangeAdvertStatus">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="idForm" nillable="true" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="idForm" type="s:long" />
             <s:element minOccurs="1" maxOccurs="1" name="activationCode" type="s:long" />
           </s:sequence>
         </s:complexType>

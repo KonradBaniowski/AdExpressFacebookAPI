@@ -352,19 +352,19 @@ namespace KMI.PromoPSA.Rules.Dispacher {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ChangeAdvertStatus", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ChangeAdvertStatus([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<long> idForm, long activationCode) {
+        public void ChangeAdvertStatus(long idForm, long activationCode) {
             this.Invoke("ChangeAdvertStatus", new object[] {
                         idForm,
                         activationCode});
         }
         
         /// <remarks/>
-        public void ChangeAdvertStatusAsync(System.Nullable<long> idForm, long activationCode) {
+        public void ChangeAdvertStatusAsync(long idForm, long activationCode) {
             this.ChangeAdvertStatusAsync(idForm, activationCode, null);
         }
         
         /// <remarks/>
-        public void ChangeAdvertStatusAsync(System.Nullable<long> idForm, long activationCode, object userState) {
+        public void ChangeAdvertStatusAsync(long idForm, long activationCode, object userState) {
             if ((this.ChangeAdvertStatusOperationCompleted == null)) {
                 this.ChangeAdvertStatusOperationCompleted = new System.Threading.SendOrPostCallback(this.OnChangeAdvertStatusOperationCompleted);
             }

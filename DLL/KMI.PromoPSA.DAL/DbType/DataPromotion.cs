@@ -54,7 +54,7 @@ namespace KMI.PromoPSA.DAL.DbType
         public long Activation { get; set; }
 
         [MapField("ID_FORM")]
-        public long? IdForm { get; set; }
+        public long IdForm { get; set; }
 
         [MapField("LOAD_DATE")]
         public long LoadDate { get; set; }
