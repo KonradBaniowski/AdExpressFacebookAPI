@@ -59,17 +59,17 @@ namespace KMI.PromoPSA.Dispatcher.Core
         }
         #endregion
 
-        public static List<AdvertStatus> GetAdvertStatus(long userId, int nbAdvert)
+        public static List<AdvertStatus> GetAdvertStatus(long loginId, int nbAdvert)
         {
             lock (_adverts)
             {
-                var adverts = _adverts.Where(p => p.IdUser == Constantes.Constantes.NO_USER_VALUE
+                var adverts = _adverts.Where(p => p.IdLogin == Constantes.Constantes.NO_USER_VALUE
                 && p.Activation == Constantes.Constantes.ACTIVATION_CODE_TO_CODIFY)
                 .Take(nbAdvert).ToList();
 
                 foreach (var advert in adverts)
                 {
-                    advert.IdUser = userId;
+                    advert.IdLogin = loginId;
                 }
 
                 return adverts;
@@ -77,48 +77,64 @@ namespace KMI.PromoPSA.Dispatcher.Core
            
         }
 
-        public static void ReleaseAdvertStatus(long userId)
+        public static long GetAvailableIdForm(long loginId)
         {
             lock (_adverts)
             {
-                var adverts = _adverts.Where(p => p.IdUser == userId).ToList();
+                var advert = _adverts.FirstOrDefault(p => p.IdLogin == Constantes.Constantes.NO_USER_VALUE
+                                                 && p.Activation == Constantes.Constantes.ACTIVATION_CODE_TO_CODIFY);
+
+                if (advert != null)
+                {
+                    advert.IdLogin = loginId;
+                    return advert.IdForm;
+                }
+
+                return 0;
+            }    
+        }
+        public static void ReleaseAdvertStatus(long loginId)
+        {
+            lock (_adverts)
+            {
+                var adverts = _adverts.Where(p => p.IdLogin == loginId).ToList();
 
                 foreach (var advert in adverts)
                 {
-                    advert.IdUser = Constantes.Constantes.NO_USER_VALUE;
+                    advert.IdLogin = Constantes.Constantes.NO_USER_VALUE;
                 }
               
             }
 
         }
-        public static void ReleaseAdvertStatus(long userId,long idForm)
+        public static void ReleaseAdvertStatus(long loginId, long idForm)
         {
             lock (_adverts)
             {
-                var adverts = _adverts.Where(p => p.IdUser == userId
+                var adverts = _adverts.Where(p => p.IdLogin == loginId
                     && p.IdForm==idForm).ToList();
 
                 foreach (var advert in adverts)
                 {
-                    advert.IdUser = Constantes.Constantes.NO_USER_VALUE;
+                    advert.IdLogin = Constantes.Constantes.NO_USER_VALUE;
                 }
 
             }
 
         }
 
-        public static bool LockAdvertStatus(long userId, long idForm)
+        public static bool LockAdvertStatus(long loginId, long idForm)
         {
 
             lock (_adverts)
             {
                 bool status = false;
-                var adverts = _adverts.Where(p => p.IdUser == userId
+                var adverts = _adverts.Where(p => p.IdLogin == loginId
                     && p.IdForm == idForm).ToList();
 
                 foreach (var advert in adverts)
                 {
-                    advert.IdUser = userId;
+                    advert.IdLogin = loginId;
                     status = true;
                 }
                 return status;
@@ -127,16 +143,16 @@ namespace KMI.PromoPSA.Dispatcher.Core
         }
 
 
-        public static AdvertStatus GetAdvertStatus(long userId, long idForm)
+        public static AdvertStatus GetAdvertStatus(long loginId, long idForm)
         {
             lock (_adverts)
             {
-              var  advert = _adverts.Find(p => p.IdForm == idForm 
-                  && p.IdUser == Constantes.Constantes.NO_USER_VALUE);
+              var  advert = _adverts.Find(p => p.IdForm == idForm
+                  && p.IdLogin == Constantes.Constantes.NO_USER_VALUE);
 
                 if (advert != null)
                 {
-                    advert.IdUser = userId;
+                    advert.IdLogin = loginId;
                     return advert;
                 }
                 return null;
@@ -152,7 +168,7 @@ namespace KMI.PromoPSA.Dispatcher.Core
                 if (advertStatus != null)
                 {
                     advertStatus.Activation = activationCode;
-                    advertStatus.IdUser = Constantes.Constantes.NO_USER_VALUE;
+                    advertStatus.IdLogin = Constantes.Constantes.NO_USER_VALUE;
                 }
             }
 

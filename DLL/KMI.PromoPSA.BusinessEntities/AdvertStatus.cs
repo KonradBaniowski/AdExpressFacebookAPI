@@ -6,11 +6,11 @@ namespace KMI.PromoPSA.BusinessEntities
    public class AdvertStatus
     {
         
-        public long? IdForm { get; set; }
+        public long IdForm { get; set; }
 
         public long Activation { get; set; }
 
-        public long IdUser { get; set; }
+        public long IdLogin { get; set; }
 
         public long LoadDate { get; set; }
 
