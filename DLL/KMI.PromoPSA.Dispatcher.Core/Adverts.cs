@@ -144,7 +144,7 @@ namespace KMI.PromoPSA.Dispatcher.Core
 
         }
 
-        public static void ChangeAdvertStatus(long idForm, long activationCode)
+        public static void ChangeAdvertStatus(long? idForm, long activationCode)
         {
             lock (_adverts)
             {
