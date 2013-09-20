@@ -129,7 +129,7 @@ namespace KMI.PromoPSA.Dispatcher.Core
             lock (_adverts)
             {
                 bool status = false;
-                var adverts = _adverts.Where(p => p.IdLogin == loginId
+                var adverts = _adverts.Where(p => p.IdLogin == Constantes.Constantes.NO_USER_VALUE
                     && p.IdForm == idForm).ToList();
 
                 foreach (var advert in adverts)
@@ -186,6 +186,27 @@ namespace KMI.PromoPSA.Dispatcher.Core
                     advert.Activation = Constantes.Constantes.ACTIVATION_CODE_VALIDATED;
                     isValidated = true;
                 }
+                //if (isValidated)
+                //{                   
+                //    using (var db = new DbManager(new GenericDataProvider(_dispatcherConfig.ProviderDataAccess)
+                //        , _dispatcherConfig.ConnectionString))
+                //    {
+                //        try
+                //        {
+                //            var dal = new DispatcherDAL();
+
+                //            dal.UpdateMonth(db, loadDate
+                //               , Constantes.Constantes.ACTIVATION_CODE_VALIDATED);
+                            
+                //        }
+                //        catch
+                //        {
+                //            isValidated = false;
+                //        }
+                       
+
+                //    }
+                //}
                 return isValidated;
             }
 

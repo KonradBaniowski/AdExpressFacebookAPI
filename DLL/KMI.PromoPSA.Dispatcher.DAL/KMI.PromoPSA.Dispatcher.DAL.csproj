@@ -61,6 +61,10 @@
       <Project>{d8ab005d-2164-4068-ac56-464c37befa2e}</Project>
       <Name>KMI.PromoPSA.BusinessEntities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KMI.PromoPSA.Constantes\KMI.PromoPSA.Constantes.csproj">
+      <Project>{4CE71C74-45B6-4D6A-A055-446D39DA6137}</Project>
+      <Name>KMI.PromoPSA.Constantes</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

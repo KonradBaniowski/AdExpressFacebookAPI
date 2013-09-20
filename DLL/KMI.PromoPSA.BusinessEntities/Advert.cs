@@ -9,7 +9,7 @@ namespace KMI.PromoPSA.BusinessEntities
     public class Advert
     {
 
-        public long? IdForm { get; set; }
+        public long IdForm { get; set; }
 
         public long Status { get; set; }
 
