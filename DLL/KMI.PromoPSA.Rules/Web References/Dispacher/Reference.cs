@@ -260,10 +260,11 @@ namespace KMI.PromoPSA.Rules.Dispacher {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/LockAdvertStatus", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void LockAdvertStatus(long loginId, long idForm) {
-            this.Invoke("LockAdvertStatus", new object[] {
+        public bool LockAdvertStatus(long loginId, long idForm) {
+            object[] results = this.Invoke("LockAdvertStatus", new object[] {
                         loginId,
                         idForm});
+            return ((bool)(results[0]));
         }
         
         /// <remarks/>
@@ -284,7 +285,7 @@ namespace KMI.PromoPSA.Rules.Dispacher {
         private void OnLockAdvertStatusOperationCompleted(object arg) {
             if ((this.LockAdvertStatusCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.LockAdvertStatusCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.LockAdvertStatusCompleted(this, new LockAdvertStatusCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -381,9 +382,10 @@ namespace KMI.PromoPSA.Rules.Dispacher {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ValidateMonth", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ValidateMonth(long loadDate) {
-            this.Invoke("ValidateMonth", new object[] {
+        public bool ValidateMonth(long loadDate) {
+            object[] results = this.Invoke("ValidateMonth", new object[] {
                         loadDate});
+            return ((bool)(results[0]));
         }
         
         /// <remarks/>
@@ -403,7 +405,7 @@ namespace KMI.PromoPSA.Rules.Dispacher {
         private void OnValidateMonthOperationCompleted(object arg) {
             if ((this.ValidateMonthCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ValidateMonthCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.ValidateMonthCompleted(this, new ValidateMonthCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -583,7 +585,29 @@ namespace KMI.PromoPSA.Rules.Dispacher {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
-    public delegate void LockAdvertStatusCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void LockAdvertStatusCompletedEventHandler(object sender, LockAdvertStatusCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class LockAdvertStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal LockAdvertStatusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
@@ -621,7 +645,29 @@ namespace KMI.PromoPSA.Rules.Dispacher {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
-    public delegate void ValidateMonthCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void ValidateMonthCompletedEventHandler(object sender, ValidateMonthCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ValidateMonthCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ValidateMonthCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
 }
 
 #pragma warning restore 1591

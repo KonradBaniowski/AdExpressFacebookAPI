@@ -80,11 +80,11 @@ namespace KMI.PromoPSA.Rules {
         /// </summary>
         /// <param name="loginId">Login id</param>
         /// <param name="formId">Form Id</param>
-        void LockAdvertStatus(long loginId, long formId);
+        bool LockAdvertStatus(long loginId, long formId);
         /// <summary>
         /// Validate Month
         /// </summary>
         /// <param name="month">Month</param>
-        void ValidateMonth(long month);
+        bool ValidateMonth(long month);
     }
 }

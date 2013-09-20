@@ -263,11 +263,11 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (msg) {
-                                if (msg.d > 0) {
-                                    document.location.href = "/Private/Edit.aspx?formId=" + msg.d;
-                                } else {
+                                //if (msg.d > 0) {
+                                //    document.location.href = "/Private/Edit.aspx?formId=" + msg.d;
+                                //} else {
                                     document.location.href = "/Private/Home.aspx";
-                                }
+                                //}
                                 
                             },
                             error: function () {

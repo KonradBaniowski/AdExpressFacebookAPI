@@ -80,7 +80,11 @@
         </s:complexType>
       </s:element>
       <s:element name="LockAdvertStatusResponse">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="LockAdvertStatusResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="ReleaseOneAdvertStatus">
         <s:complexType>
@@ -127,7 +131,11 @@
         </s:complexType>
       </s:element>
       <s:element name="ValidateMonthResponse">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateMonthResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
     </s:schema>
   </wsdl:types>
