@@ -149,7 +149,11 @@ namespace KMI.PromoPSA.Dispatcher.Core
             lock (_adverts)
             {
                 var advertStatus = _adverts.Find(p => p.IdForm == idForm);
-                if (advertStatus != null) advertStatus.Activation = activationCode;
+                if (advertStatus != null)
+                {
+                    advertStatus.Activation = activationCode;
+                    advertStatus.IdUser = Constantes.Constantes.NO_USER_VALUE;
+                }
             }
 
         }
