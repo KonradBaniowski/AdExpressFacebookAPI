@@ -30,6 +30,22 @@ public partial class Private_Home : PrivateWebPage {
     }
     #endregion
 
+    #region Get Available Id Form
+    /// <summary>
+    /// Get Available Id Form
+    /// </summary>
+    /// <param name="loginId">Login Id</param>
+    /// <returns>True if succed</returns>
+    [WebMethod]
+    public static long getAvailableIdForm(string loginId) {
+
+        IResults results = new Results();
+        return results.GetAvailableIdForm(Int64.Parse(loginId));
+
+    }
+    #endregion
+
+
     #region Validate Month
     /// <summary>
     /// Validate Month

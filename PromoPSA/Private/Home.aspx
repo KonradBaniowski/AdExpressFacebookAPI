@@ -45,10 +45,10 @@
         <table style="margin-left:350px; margin-bottom: 20px;">
             <tr>
                 <td>
-                    <a href="#" class="validateMonth" onclick="javascript:ValidateMonth();">Valider Mois</a>
+                    <a href="#" class="validateMonth" onclick="javascript:VerifDialog();">Valider Mois</a>
                 </td>
                 <td class="buttonSpace">
-                    <a href="#" class="startCodification">Commencer Codification</a>
+                    <a href="#" class="startCodification" onclick="javascript:StartCodif();">Commencer Codification</a>
                 </td>
             </tr>
         </table>
@@ -60,7 +60,7 @@
         <div id="dialog" title="Alert" style="font-size:12px;">
             <p>Cette fiche est déjà en cours de codification !</p>
         </div>
-    
+            
     <script type="text/javascript">
         $(document).ready(function () {
             
@@ -73,6 +73,7 @@
             $("#dialog").dialog({
                 autoOpen: false,
                 dialogClass: "alert",
+                modal:true,
                 show: {
                     effect: "highlight",
                     duration: 1000
@@ -83,6 +84,46 @@
                 }
             });
         });
+        
+        function StartCodif() {
+
+            var formIdFromWS;
+
+            $.ajax({
+                type: "POST",
+                url: 'Home.aspx/getAvailableIdForm ',
+                async: false,
+                data: JSON.stringify({ loginId: loginId }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg, st) {
+                    if (st == "success") {
+                        formIdFromWS = JSON.parse(msg.d);
+                    }
+                },
+                error: function () {
+                    alert("Error with AJAX callback");
+                }
+            });
+
+            if (formIdFromWS > 0)
+                document.location = "Edit.aspx?formId=" + formIdFromWS + "&sessionId=" + sessionId + "&loginId=" + loginId;
+            else
+                alert("Aucune fiche n'est disponible !");
+
+        }
+
+        function VerifDialog() {
+
+            var r = confirm("Valider Mois");
+
+            if (r == true) {
+                ValidateMonth()
+            }
+            else {
+                return;
+            }
+        }
 
         function ValidateMonth() {
 
