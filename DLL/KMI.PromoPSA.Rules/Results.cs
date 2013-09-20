@@ -12,6 +12,8 @@ using KMI.PromoPSA.Rules.Exceptions;
 using KMI.PromoPSA.Web.Domain;
 using KMI.PromoPSA.Web.Domain.Configuration;
 using KMI.PromoPSA.Constantes;
+using AdvertStatus = KMI.PromoPSA.BusinessEntities.AdvertStatus;
+
 namespace KMI.PromoPSA.Rules {
     /// <summary>
     /// Results
@@ -111,6 +113,12 @@ namespace KMI.PromoPSA.Rules {
         {
             Dispacher.Dispacher dispacher = GetWebServiceDispacher();
             dispacher.ChangeAdvertStatus(idForm,activationCode);
+        }
+
+        public long GetAvailableIdForm(long loginId)
+        {
+            Dispacher.Dispacher dispacher = GetWebServiceDispacher();
+           return dispacher.GetAvailableIdForm(loginId);
         }
 
         #endregion

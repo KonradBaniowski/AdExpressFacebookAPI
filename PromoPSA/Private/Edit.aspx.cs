@@ -21,14 +21,12 @@ public partial class Private_Edit : PrivateWebPage
     }
 
     [WebMethod]
-    public static void SaveCodification(Advert advert, string loginId)
+    public static long SaveCodification(Advert advert, string loginId)
     {
         IResults results = new Results();
         results.UpdateCodification(advert);
         results.ChangeAdvertStatus(advert.IdForm, advert.Activation);
-
-        var session = WebSessions.Get(Convert.ToInt64(loginId));
-        int t= 0;
+        return results.GetAvailableIdForm(Convert.ToInt64(loginId));
     }
     [WebMethod]
     public static Codification GetCodification(long idForm)

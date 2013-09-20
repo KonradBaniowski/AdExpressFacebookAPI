@@ -6,7 +6,7 @@
       <Value Profile="(Default)">http://frmitch-ws001:2019/Rights.asmx</Value>
     </Setting>
     <Setting Name="KMI_PromoPSA_Rules_Dispacher_Dispacher" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:33802/Dispacher.asmx</Value>
+      <Value Profile="(Default)">http://localhost:56081/Dispacher.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

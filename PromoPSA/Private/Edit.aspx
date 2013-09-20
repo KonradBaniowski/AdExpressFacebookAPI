@@ -263,7 +263,12 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (msg) {
-                                document.location.href = "/Private/Edit.aspx?formId=4230429";
+                                if (msg.d > 0) {
+                                    document.location.href = "/Private/Edit.aspx?formId=" + msg.d;
+                                } else {
+                                    document.location.href = "/Private/Home.aspx";
+                                }
+                                
                             },
                             error: function () {
                                 $("#product").get(0).options.length = 0;

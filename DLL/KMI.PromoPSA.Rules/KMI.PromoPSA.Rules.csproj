@@ -118,10 +118,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>KMI_PromoPSA_Rules_Rights_Rights</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://localhost:33802/Dispacher.asmx">
+    <WebReferenceUrl Include="http://localhost:56081/Dispacher.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\Dispacher\</RelPath>
-      <UpdateFromURL>http://localhost:33802/Dispacher.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:56081/Dispacher.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -152,10 +152,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <None Include="Web References\Dispacher\Dispacher.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Web References\Dispacher\Dispacher.disco" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
