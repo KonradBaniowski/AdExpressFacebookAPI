@@ -1,0 +1,117 @@
+﻿:-moz-any-link :focus
+{
+    outline: none;
+}
+
+:focus
+{
+    -moz-outline-style: none;
+    outline: none;
+}
+
+.tadc table
+{
+    padding: 5px 5px 5px 5px;
+    border: 0;
+}
+
+legend
+{
+    color: #525252;
+    font-weight: bold;
+    font-size: 12px;
+}
+input[type=text]
+{   
+    width: 100px;
+     font-size: 11px;
+      color: #525252;
+}
+/***label***/
+label.error
+{
+    display: none;
+    color: red;
+    font-style: italic;
+    font-weight: normal;
+}
+
+label
+{
+    width: 150px;
+    font-size: 11px;
+    color: #525252;
+    font-weight: bold;
+}
+
+select {
+    font-size: 11px;
+    color: #525252;
+}
+td.label
+{
+    width: 150px;
+    font-size: 11px;
+    color: #525252;
+    font-weight: bold;
+}
+
+tr.required td.label
+{
+    font-weight: bold;
+    background: url(/App_Themes/PromoPSAFr/Images/backRequiredGray.gif) no-repeat right center;
+    font-size: 11px;
+}
+
+div.subTableDiv td.label
+{
+    width: 135px;
+}
+/***Field***/
+td.field input.error, td.field select.error , tr.errorRow td.field input, tr.errorRow td.field select
+{
+    border: 2px solid red;
+    background-color: #FFFFD5;
+    margin: 0px;
+    color: red;
+    font-size: 11px;
+}
+td.field {
+     width: 300px;
+}
+tr td.field div.formError
+{
+    display: none;
+    color: #FF0000;
+    font-size: 11px;   
+}
+
+tr.errorRow td.field div.formError
+{
+    display: block;
+    font-weight: normal;
+    font-size: 11px;
+}
+/***error***/
+
+textarea.error {
+      border: 2px solid red; 
+}
+input.error
+{
+    border: 2px solid red;
+    width: 100px;
+}
+
+div.error
+{
+    color: red;
+      font-size: 11px;
+}
+
+    div.error a
+    {
+        color: #336699;
+        font-size: 12px;
+        text-decoration: underline;
+    }

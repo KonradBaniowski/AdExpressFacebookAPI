@@ -7,21 +7,22 @@ using BLToolkit.Mapping;
 
 namespace KMI.PromoPSA.DAL.DbType
 {
-  public  class DataBrand
+    [TableName(Name = Constantes.Db.PROMO_SCHEMA + ".BRAND")]
+    public class DataBrand
     {
         [MapField("ID_BRAND"), PrimaryKey, NotNull]
         public long IdBrand { get; set; }
 
-       [MapField("ID_LANGUAGE"), PrimaryKey, NotNull]
+        [MapField("ID_LANGUAGE"), PrimaryKey, NotNull]
         public long IdLanguage { get; set; }
 
-       [MapField("ID_CIRCUIT"), NotNull]
+        [MapField("ID_CIRCUIT"), NotNull]
         public long IdCircuit { get; set; }
 
         [MapField("BRAND"), NotNull]
         public string Brand { get; set; }
 
-       [MapField("ACTIVATION"), NotNull]
+        [MapField("ACTIVATION"), NotNull]
         public long Activation { get; set; }
     }
 }

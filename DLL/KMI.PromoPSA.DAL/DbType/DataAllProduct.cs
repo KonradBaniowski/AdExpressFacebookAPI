@@ -6,11 +6,11 @@ namespace KMI.PromoPSA.DAL.DbType
     [TableName(Name = Constantes.Db.PROMO_SCHEMA + ".ALL_PRODUCT")]
     public class DataAllProduct
     {
-        [MapField("ID_BRAND")]
+        [MapField("ID_PRODUCT")]
         public long IdProduct { get; set; }
 
         [MapField("PRODUCT")]
-        public long Product { get; set; }
+        public string Product { get; set; }
 
         [MapField("ID_CATEGORY")]
         public long IdCategory { get; set; }

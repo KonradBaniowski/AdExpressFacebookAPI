@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KMI.PromoPSA.BusinessEntities;
+using KMI.PromoPSA.BusinessEntities.Classification;
 
 namespace KMI.PromoPSA.Rules {
     /// <summary>
@@ -23,8 +24,38 @@ namespace KMI.PromoPSA.Rules {
         /// <param name="password">Password</param>
         /// <returns></returns>
         bool CanAccessToPSA(string login, string password);
+        /// <summary>
+        /// Get Adverts
+        /// </summary>
+        /// <param name="loadDate"></param>
+        /// <returns></returns>
         List<Advert> GetAdverts(long loadDate);
+        /// <summary>
+        /// Get Nb Adverts
+        /// </summary>
+        /// <param name="loadDate"></param>
+        /// <param name="activationCode"></param>
+        /// <returns></returns>
         int GetNbAdverts(long loadDate, long activationCode);
+
         List<LoadDateBE> GetLoadDates();
+        /// <summary>
+        /// Get codification
+        /// </summary>
+        /// <param name="idForm">id Form</param>
+        /// <returns></returns>
+        Codification GetCodification(long idForm);
+        /// <summary>
+        /// Get Products BySegment
+        /// </summary>
+        /// <param name="segmentId"></param>
+        /// <returns></returns>
+        List<Product> GetProductsBySegment(long segmentId);
+
+        /// <summary>
+        /// Update Codification
+        /// </summary>
+        /// <param name="advert"></param>
+        void UpdateCodification(Advert advert);
     }
 }

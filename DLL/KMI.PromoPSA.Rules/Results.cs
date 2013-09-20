@@ -5,11 +5,13 @@ using System.Text;
 using BLToolkit.Data;
 using BLToolkit.Data.DataProvider;
 using KMI.PromoPSA.BusinessEntities;
+using KMI.PromoPSA.BusinessEntities.Classification;
 using KMI.PromoPSA.DAL;
+using KMI.PromoPSA.Rules.Dispatcher;
 using KMI.PromoPSA.Rules.Exceptions;
 using KMI.PromoPSA.Web.Domain;
 using KMI.PromoPSA.Web.Domain.Configuration;
-
+using KMI.PromoPSA.Constantes;
 namespace KMI.PromoPSA.Rules {
     /// <summary>
     /// Results
@@ -73,6 +75,35 @@ namespace KMI.PromoPSA.Rules {
 
         #endregion
 
+        #region Methods WebService Dispatcher
+
+        #region Get Web Service Dispatcher
+        /// <summary>
+        /// Get Web Service Dispatcher
+        /// </summary>
+        /// <returns>Web Service Dispatcher</returns>
+        public static Dispacher GetWebServiceDispatcher()
+        {
+            var psaDispatcher = new Dispacher
+                {
+                    Url = PromoPSAWebServices.GerWebService(WebServices.Names.dispacher).Url,
+                    Timeout = PromoPSAWebServices.GerWebService(WebServices.Names.dispacher).Timeout
+                };
+
+            try
+            {
+                psaDispatcher.IsAccessible();
+            }
+            catch (Exception err)
+            {
+                throw new WebServiceRightException("Error, Can't access to Dispatcher webservice", err);
+            }
+            return psaDispatcher;
+        }
+        #endregion
+
+        #endregion
+
         #region Data Methods
 
         #region Get Adverts
@@ -128,6 +159,64 @@ namespace KMI.PromoPSA.Rules {
 
             return loadDates;
         }
+
+       #endregion
+
+        #region GetCodification
+
+        public Codification GetCodification(long idForm)
+        {
+            var codification = new Codification();
+            using (var db = new DbManager(new GenericDataProvider
+                (WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString))
+            {
+                var dal = new PromoPsaDAL();
+                codification.Advert = dal.GetOneAdvert(db, idForm).First();
+                codification.CurrentBrand = codification.Advert.IdBrand;
+                codification.CurrentProduct = codification.Advert.IdProduct;
+                codification.CurrentSegment = codification.Advert.IdSegment;
+
+                var dal2 = new ClassificationDAL();
+                codification.Brands = dal2.GetBrands(db, Constantes.Constantes.DEFAULT_LANGUAGE);
+                codification.Products = dal2.GetProducts(db, Constantes.Constantes.DEFAULT_LANGUAGE);
+                codification.Segments = dal2.GetSegments(db, Constantes.Constantes.DEFAULT_LANGUAGE);
+
+                if (codification.CurrentSegment > 0)
+                {
+                    codification.CurrentProducts = dal2.GetProductBySegment(db, 
+                        Constantes.Constantes.DEFAULT_LANGUAGE, codification.CurrentSegment);
+                }
+
+            }
+            return codification;
+        }
+
+        public List<Product> GetProductsBySegment(long segmentId)
+        {
+            List<Product> products;
+            using (var db = new DbManager(new GenericDataProvider
+                                              (WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString))
+            {
+                var dal = new ClassificationDAL();
+                products = dal.GetProductBySegment(db,
+                        Constantes.Constantes.DEFAULT_LANGUAGE, segmentId);
+            }
+            return products;
+        }
+
+        public void UpdateCodification(Advert advert)
+        {
+            using (var db = new DbManager(new GenericDataProvider
+                                              (WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString))
+            {
+                var dal = new PromoPsaDAL();
+               dal.UpdateCodification(db,advert);
+            }
+        }
+
         #endregion
 
         #endregion

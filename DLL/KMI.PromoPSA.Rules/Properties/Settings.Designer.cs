@@ -32,5 +32,15 @@ namespace KMI.PromoPSA.Rules.Properties {
                 return ((string)(this["KMI_PromoPSA_Rules_Rights_Rights"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:33802/Dispacher.asmx")]
+        public string KMI_PromoPSA_Rules_Dispatcher_Dispacher {
+            get {
+                return ((string)(this["KMI_PromoPSA_Rules_Dispatcher_Dispacher"]));
+            }
+        }
     }
 }

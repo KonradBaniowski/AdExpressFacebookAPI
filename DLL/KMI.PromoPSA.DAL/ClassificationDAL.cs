@@ -102,5 +102,19 @@ namespace KMI.PromoPSA.DAL
         }
 
 
+        public  List<Product>  GetProductBySegment(DbManager db ,long idLanguage,long idSegment)
+        {
+            var query = from p in db.GetTable<DataAllProduct>()
+                        where p.IdSegment == idSegment
+                       
+                           select new Product
+                        {
+                            Id = p.IdProduct,
+                            Label = p.Product,
+                            IdLanguage = idLanguage,
+                            IdCategory = p.IdCategory
+                        };
+            return query.ToList();
+        }
     }
 }
