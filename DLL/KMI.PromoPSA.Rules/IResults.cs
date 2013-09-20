@@ -70,5 +70,21 @@ namespace KMI.PromoPSA.Rules {
         /// <param name="loginId"></param>      
         /// <returns></returns>
         long GetAvailableIdForm(long loginId);
+        /// <summary>
+        /// Release User 
+        /// </summary>
+        /// <param name="loginId">Login Id</param>
+        void ReleaseUser(long loginId);
+        /// <summary>
+        /// Lock Advert Status
+        /// </summary>
+        /// <param name="loginId">Login id</param>
+        /// <param name="formId">Form Id</param>
+        void LockAdvertStatus(long loginId, long formId);
+        /// <summary>
+        /// Validate Month
+        /// </summary>
+        /// <param name="month">Month</param>
+        void ValidateMonth(long month);
     }
 }

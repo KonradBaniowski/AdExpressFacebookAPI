@@ -15,7 +15,7 @@
 	<meta content="no-cache" name="Cache-control"/>
     
     <script src="/js/jquery-1.9.0.min.js" type="text/javascript"></script>
-    
+    <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
     <script src="/js/i18n/grid.locale-fr.js" type="text/javascript"></script>
     <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
         <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/js/excanvas.js"></script><![endif]-->
@@ -42,10 +42,23 @@
             </table>
         </div>
         <div id="chart1" style="height:220px; width:460px; margin-left: 450px;"></div>
+        <table style="margin-left:350px; margin-bottom: 20px;">
+            <tr>
+                <td>
+                    <a href="#" class="validateMonth" onclick="javascript:ValidateMonth();">Valider Mois</a>
+                </td>
+                <td class="buttonSpace">
+                    <a href="#" class="startCodification">Commencer Codification</a>
+                </td>
+            </tr>
+        </table>
         <div style=" margin-left:250px;">
             <table id="grid" style="margin-right:auto; margin-left:auto;"></table>
             <div id="pager" style="height:24px;"></div>
 
+        </div>
+        <div id="dialog" title="Alert" style="font-size:12px;">
+            <p>Cette fiche est déjà en cours de codification !</p>
         </div>
     
     <script type="text/javascript">
@@ -55,9 +68,73 @@
             InitGridComponent(currentMonth);
             
         });
+
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                dialogClass: "alert",
+                show: {
+                    effect: "highlight",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 1000
+                }
+            });
+        });
+
+        function ValidateMonth() {
+
+            $.ajax({
+                type: "POST",
+                url: 'Home.aspx/validateMonth',
+                async: false,
+                data: JSON.stringify({ month: selectedMonth }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg, st) {
+                    if (st == "success") {
+                        alert("Mois validé");
+                    }
+                },
+                error: function () {
+                    alert("Error with AJAX callback");
+                }
+            });
+
+        }
         
+        function EditRequest(formId) {
+
+            var verif;
+
+            $.ajax({
+                type: "POST",
+                url: 'Home.aspx/checkFormIdAvailability',
+                async: false,
+                data: JSON.stringify({ loginId : loginId, formId: formId }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg, st) {
+                    if (st == "success") {
+                        verif = JSON.parse(msg.d);
+                    }
+                },
+                error: function () {
+                    alert("Error with AJAX callback");
+                }
+            });
+
+            if (verif == true)
+                document.location = "Edit.aspx?formId=" + formId + "&sessionId=" + sessionId + "&loginId=" + loginId;
+            else
+                $("#dialog").dialog("open");
+
+        }
+
         function linkFormat(cellvalue, options, rowObject) {
-            return '<a href="' + cellvalue + '" >Edit</a>';
+            return "<a href=\"#\" onclick=\"javascript:EditRequest('"+cellvalue+"');\">Edit</a>";
         }
 
         function InitGridComponent(loadDate) {
@@ -115,7 +192,8 @@
                                 grid.addJSONData(JSON.parse(data.d));
                                 var myPostData = $('#grid').jqGrid("getGridParam", "postData");
                                 if (myPostData.searchField == "LoadDate") {
-                                    var loadDateFormatting = myPostData.searchString.substring(3, 7) + myPostData.searchString.substring(0, 2)
+                                    var loadDateFormatting = myPostData.searchString.substring(3, 7) + myPostData.searchString.substring(0, 2);
+                                    selectedMonth = loadDateFormatting;
                                     InitPromotionNb(loadDateFormatting);
                                     InitChartComponent(loadDateFormatting);
                                 }

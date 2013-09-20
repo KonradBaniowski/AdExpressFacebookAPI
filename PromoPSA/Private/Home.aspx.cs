@@ -25,8 +25,38 @@ public partial class Private_Home : PrivateWebPage {
         IResults results = new Results();
         List<LoadDateBE> list = results.GetLoadDates();
         var loadDate = list.Max(x => x.LoadDate);
-        string scriptGlobalVariables = "var currentMonth = '" + loadDate.Value + "'; \n var sessionId = '" + _webSession.IdSession + "';" + "\n var loginId = '" + _webSession.CustomerLogin.IdLogin + "';";
+        string scriptGlobalVariables = "var currentMonth = '" + loadDate.Value + "'; \n var sessionId = '" + _webSession.IdSession + "';" + "\n var loginId = '" + _webSession.CustomerLogin.IdLogin + "';" + "\n var selectedMonth = '" + loadDate.Value + "';";
         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "globaVariables", scriptGlobalVariables, true);
+    }
+    #endregion
+
+    #region Validate Month
+    /// <summary>
+    /// Validate Month
+    /// </summary>
+    /// <param name="month"></param>
+    /// <returns>True if succed</returns>
+    [WebMethod]
+    public static void ValidateMonth(string month) {
+
+        IResults results = new Results();
+        results.ValidateMonth(Int64.Parse(month));
+
+    }
+    #endregion
+
+    #region Check Form Id Availability
+    /// <summary>
+    /// Check Form Id Availability
+    /// </summary>
+    /// <param name="formId">Form Id</param>
+    /// <returns>True if form available</returns>
+    [WebMethod]
+    public static bool checkFormIdAvailability(string loginId, string formId) {
+
+        IResults results = new Results();
+        results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(formId));
+        return false;
     }
     #endregion
 
@@ -170,7 +200,8 @@ public partial class Private_Home : PrivateWebPage {
                     select new {
                         i = row.IdForm,
                         cell = new string[] {
-                        row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString() + "&sessionId=" + sessionId+ "&loginId=" + loginId), row.ActivationName, row.LoadDateFormated
+                            row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, row.IdForm.ToString(), row.ActivationName, row.LoadDateFormated
+                        //row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString() + "&sessionId=" + sessionId+ "&loginId=" + loginId), row.ActivationName, row.LoadDateFormated
                     }
                     }
                ).ToArray()

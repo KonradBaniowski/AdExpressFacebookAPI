@@ -121,6 +121,21 @@ namespace KMI.PromoPSA.Rules {
            return dispacher.GetAvailableIdForm(loginId);
         }
 
+        public void ReleaseUser(long loginId) {
+            Dispacher.Dispacher dispacher = GetWebServiceDispacher();
+            dispacher.ReleaseAdvertStatus(loginId);
+        }
+
+        public void LockAdvertStatus(long loginId, long formId) {
+            Dispacher.Dispacher dispacher = GetWebServiceDispacher();
+            dispacher.LockAdvertStatus(loginId, formId);
+        }
+
+        public void ValidateMonth(long month) {
+            Dispacher.Dispacher dispacher = GetWebServiceDispacher();
+            dispacher.ValidateMonth(month);
+        }
+
         #endregion
 
         #region Data Methods

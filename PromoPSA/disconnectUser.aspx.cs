@@ -23,9 +23,8 @@ public partial class disconnectUser : System.Web.UI.Page {
             catch { }
 
             if (id > 0 && WebSessions.Contains(Convert.ToInt64(Page.Request.QueryString["id"]))) {
-                /*object[] parameters = null;
-                IResults result = ((IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.RulesLayer.AssemblyName, WebApplicationParameters.RulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null));
-                result.DisconnectUser(Convert.ToInt64(Page.Request.QueryString["id"]));*/
+                IResults results = new Results();
+                results.ReleaseUser(id);
                 WebSessions.Remove(Convert.ToInt64(Page.Request.QueryString["id"]));
             }
             else {
