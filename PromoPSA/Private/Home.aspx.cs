@@ -25,7 +25,7 @@ public partial class Private_Home : PrivateWebPage {
         IResults results = new Results();
         List<LoadDateBE> list = results.GetLoadDates();
         var loadDate = list.Max(x => x.LoadDate);
-        string scriptGlobalVariables = "var currentMonth = '" + loadDate.Value + "'; \n var sessionId = '" + _webSession.IdSession + "';";
+        string scriptGlobalVariables = "var currentMonth = '" + loadDate.Value + "'; \n var sessionId = '" + _webSession.IdSession + "';" + "\n var loginId = '" + _webSession.CustomerLogin.IdLogin + "';";
         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "globaVariables", scriptGlobalVariables, true);
     }
     #endregion
@@ -73,7 +73,7 @@ public partial class Private_Home : PrivateWebPage {
     /// <param name="searchOper">Search Operation</param>
     /// <returns>Grid Data</returns>
     [WebMethod]
-    public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch, string searchField, string searchString, string searchOper, string loadingDate, string sessionId) {
+    public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch, string searchField, string searchString, string searchOper, string loadingDate, string sessionId, string loginId) {
         string result = null;
 
         IResults results = new Results();
@@ -170,7 +170,7 @@ public partial class Private_Home : PrivateWebPage {
                     select new {
                         i = row.IdForm,
                         cell = new string[] {
-                        row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString() + "&sessionId=" + sessionId), row.ActivationName, row.LoadDateFormated
+                        row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString() + "&sessionId=" + sessionId+ "&loginId=" + loginId), row.ActivationName, row.LoadDateFormated
                     }
                     }
                ).ToArray()

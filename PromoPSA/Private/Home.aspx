@@ -99,7 +99,7 @@
                     order: "sortOrder"
                 },
                 // add by default to avoid webmethod parameter conflicts
-                postData: { searchString: '', searchField: '', searchOper: '', loadingDate: loadDate, sessionId: sessionId },
+                postData: { searchString: '', searchField: '', searchOper: '', loadingDate: loadDate, sessionId: sessionId, loginId: loginId },
                 // setup ajax call to webmethod
                 datatype: function (postdata) {
                     $(".loading").show(); // make sure we can see loader text
