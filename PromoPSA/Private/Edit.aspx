@@ -125,9 +125,9 @@
             //$("#commentForm").validate();
 
 
-            CodifyEvent();
+            CodificationEvent("#codifify",20);
 
-            RejectEvent();
+            CodificationEvent("#rejectcodif", 30);
 
         });
 
@@ -179,9 +179,10 @@
             }
         }
 
-        function CodifyEvent() {
-            $(".codifify").off("click");
-            $("#codifify").on("click", function () {
+        function CodificationEvent(selectorId, activationCode) {
+          
+            $(selectorId).off("click");
+            $(selectorId).on("click", function () {
                 debugger;
                 //Hide errors essage
                 $("#commentForm").validate({
@@ -224,7 +225,7 @@
                         var action;
                         debugger;
                         var formId = $.getUrlVar('formId');
-                        //alert("submitted!");
+                        var loginId = $.getUrlVar('loginId');
                         var idProduct = $("#product option:selected").val();
                         var idBrand = $("#brand option:selected").val();
                         var idSegment = $("#segment option:selected").val();
@@ -239,7 +240,7 @@
                         var advertData = {
                             'advert': {
                                 'IdForm': formId,
-                                'Activation': 20,
+                                'Activation': activationCode,
                                 'IdProduct': idProduct,
                                 'IdBrand': idBrand,
                                 'DateBeginNum': dateBeginNum,
@@ -249,13 +250,16 @@
                                 'ConditionText': conditionText,
                                 'Script': script_,
                                 'ExcluWeb': excluWeb
-                            }
+                            },
+                            'loginId': loginId
                         };
+                        var mokdata = JSON.stringify(advertData);
+                        debugger;
                         $.ajax({
                             type: "POST",
                             async: false,
                             url: "Edit.aspx/SaveCodification",
-                            data: JSON.stringify(advertData),
+                            data: mokdata,
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (msg) {
@@ -273,100 +277,7 @@
             });
         }
         
-        function RejectEvent() {
-            $("#rejectcodif").off("click");
-            $("#rejectcodif").on("click", function () {
-                debugger;
-                //Hide errors essage
-                $("#commentForm").validate({
-                    messages: {
-                        startdatepicker: {
-                            required: '',
-                        },
-                        enddatepicker: {
-                            required: '',
-                        },
-                        segment: {
-                            required: '',
-                        },
-                        product: {
-                            required: '',
-                        },
-                        brand: {
-                            required: '',
-                        },
-                        pcontent: {
-                            required: '',
-                        },
-                        conditiontext: {
-                            required: '',
-                        },
-                        script_: {
-                            required: '',
-                        },
-                    },
-                    invalidHandler: function (event, validator) {
-                        // 'this' refers to the form    
-                        var errors = validator.numberOfInvalids();
-                        if (errors) {
-                            var message = errors == 1 ?
-                                'Vous avez oublié un 1 champ. Il a été surligné' : 'Vous avez oublié ' + errors + ' champs. Ils ont été surlignés';
-                            $("div.error span").html(message); $("div.error").show();
-                        } else { $("div.error").hide(); }
-                    },
-                    submitHandler: function () {
-                        var action;
-                        debugger;
-                        var formId = $.getUrlVar('formId');
-                        //alert("submitted!");
-                        var idProduct = $("#product option:selected").val();
-                        var idBrand = $("#brand option:selected").val();
-                        var idSegment = $("#segment option:selected").val();
-                        var startdates = $("#startdatepicker").val().split('/');
-                        var dateBeginNum = startdates[2] + startdates[1] + startdates[0];
-                        var enddates = $("#enddatepicker").val().split('/');
-                        var dateEndNum = enddates[2] + enddates[1] + enddates[0];
-                        var promotionContent = $("#pcontent").val();
-                        var conditionText = $("#conditiontext").val();
-                        var script_ = $("#script_").val();
-                        var excluWeb = $("input[name=excluweb]:checked").val();
-                        var advertData = {
-                            'advert': {
-                                'IdForm': formId,
-                                'Activation': 30,
-                                'IdProduct': idProduct,
-                                'IdBrand': idBrand,
-                                'DateBeginNum': dateBeginNum,
-                                'DateEndNum': dateEndNum,
-                                'IdSegment': idSegment,
-                                'PromotionContent': promotionContent,
-                                'ConditionText': conditionText,
-                                'Script': script_,
-                                'ExcluWeb': excluWeb
-                            }
-                        };
-                        $.ajax({
-                            type: "POST",
-                            async: false,
-                            url: "Edit.aspx/SaveCodification",
-                            data: JSON.stringify(advertData),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (msg) {
-                                debugger;
-                                document.location.href = "/Private/Edit.aspx?formId=4230429";
-                            },
-                            error: function () {
-                                $("#product").get(0).options.length = 0;
-                                alert("Erreur lors sauvegarde la fiche");
-                            }
-                        });
-                        //      //form.submit();
-                    }
-                });
-
-            });
-        }
+      
 
     </script>
 

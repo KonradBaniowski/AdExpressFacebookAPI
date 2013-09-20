@@ -7,7 +7,7 @@ using BLToolkit.Data.DataProvider;
 using KMI.PromoPSA.BusinessEntities;
 using KMI.PromoPSA.BusinessEntities.Classification;
 using KMI.PromoPSA.DAL;
-using KMI.PromoPSA.Rules.Dispatcher;
+using KMI.PromoPSA.Rules.Dispacher;
 using KMI.PromoPSA.Rules.Exceptions;
 using KMI.PromoPSA.Web.Domain;
 using KMI.PromoPSA.Web.Domain.Configuration;
@@ -82,9 +82,9 @@ namespace KMI.PromoPSA.Rules {
         /// Get Web Service Dispatcher
         /// </summary>
         /// <returns>Web Service Dispatcher</returns>
-        public static Dispacher GetWebServiceDispatcher()
+        public static Dispacher.Dispacher GetWebServiceDispacher()
         {
-            var psaDispatcher = new Dispacher
+            var psaDispatcher = new Dispacher.Dispacher
                 {
                     Url = PromoPSAWebServices.GerWebService(WebServices.Names.dispacher).Url,
                     Timeout = PromoPSAWebServices.GerWebService(WebServices.Names.dispacher).Timeout
@@ -101,6 +101,17 @@ namespace KMI.PromoPSA.Rules {
             return psaDispatcher;
         }
         #endregion
+
+        /// <summary>
+        /// Change Advert Status
+        /// </summary>
+        /// <param name="idForm"></param>
+        /// <param name="activationCode"></param>
+        public void ChangeAdvertStatus(long? idForm, long activationCode)
+        {
+            Dispacher.Dispacher dispacher = GetWebServiceDispacher();
+            dispacher.ChangeAdvertStatus(idForm,activationCode);
+        }
 
         #endregion
 
@@ -217,6 +228,7 @@ namespace KMI.PromoPSA.Rules {
             }
         }
 
+       
         #endregion
 
         #endregion

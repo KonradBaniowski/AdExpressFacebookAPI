@@ -57,5 +57,12 @@ namespace KMI.PromoPSA.Rules {
         /// </summary>
         /// <param name="advert"></param>
         void UpdateCodification(Advert advert);
+
+        /// <summary>
+        /// Change Advert Status
+        /// </summary>
+        /// <param name="idForm"></param>
+        /// <param name="activationCode"></param>
+        void ChangeAdvertStatus(long? idForm, long activationCode);
     }
 }
