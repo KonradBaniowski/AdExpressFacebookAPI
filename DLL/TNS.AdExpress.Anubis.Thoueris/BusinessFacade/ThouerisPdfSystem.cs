@@ -12,61 +12,28 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
-using System.Windows.Forms;
 using System.Reflection;
 
 using TNS.AdExpress.Anubis.Thoueris.Common;
 using TNS.AdExpress.Anubis.Thoueris.Exceptions;
-
-using TNS.AdExpress.Web.UI.Results;
-
-using TNS.AdExpress.Constantes.Customer;
-using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
-using TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.Date;
-
-using TNS.AdExpress.Web.BusinessFacade.Results;
-using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
-using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Rules.Results.APPM;
 using TNS.AdExpress.Web.UI;
-using TNS.AdExpress.Web.Rules.Results;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using DBCst = TNS.AdExpress.Constantes.Classification.DB;
-using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
-
 using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
 
 using PDFCreatorPilotLib;
 using TNS.FrameWork.DB.Common;
-
-using TNS.AdExpress.Classification;
-using TNS.AdExpress.Web.Common.Results;
-using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
-using ExcelFunction = TNS.AdExpress.Web.UI.ExcelWebPage;
-using System.Globalization;
-using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
-using DomainLevel = TNS.AdExpress.Domain.Level;
-using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-using TNS.Ares;
 using TNS.Ares.Pdf;
 using TNS.FrameWork.WebTheme;
-using TNS.AdExpress.Anubis.Thoueris.Common;
-using TNS.AdExpress.Anubis.Thoueris.Exceptions;
 using TNS.AdExpressI.VP;
-using TNS.AdExpressI.VP.DAL;
-using TNS.AdExpress.Anubis.Thoueris.Exceptions;
 using TNS.AdExpress.Domain.Level;
 #endregion
 
@@ -227,12 +194,12 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
 
             try
             {
-                ArrayList to = new ArrayList();
+                var to = new ArrayList();
                 foreach (string s in _webSession.EmailRecipient)
                 {
                     to.Add(s);
                 }
-                SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
+                var mail = new SmtpUtilities(_config.CustomerMailFrom, to,
                     GestionWeb.GetWebWord(2898, _webSession.SiteLanguage),
                     GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName
                     + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
@@ -241,10 +208,10 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
                     true, _config.CustomerMailServer, _config.CustomerMailPort);
                 mail.SubjectEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].ContentEncoding);
                 mail.BodyEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].ContentEncoding);
-                mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
+                mail.mailKoHandler += mail_mailKoHandler;
                 mail.SendWithoutThread(false);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw new ThouerisPdfException("Error to Send mail to client in Send(string fileName)", e);
             }
@@ -371,7 +338,7 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
             string dateBegin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd");
             string dateEnd = WebFunctions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd");
 
-            StringBuilder html = new StringBuilder();
+            var html = new StringBuilder();
 
             html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 
@@ -439,6 +406,24 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
             html.Append("</TR>");
             #endregion
 
+            #region Exclu web
+            html.Append("<TR height=\"7\">");
+            html.Append("<TD></TD>");
+            html.Append("</TR>");
+            html.Append("<TR height=\"1\" class=\"lightPurple\">");
+            html.Append("<TD></TD>");
+            html.Append("</TR>");
+            html.Append("<TR>");
+            html.AppendFormat("<TD class=\"txtViolet11Bold\">&nbsp;{0} : {1}</TD>",
+                              Convertion.ToHtmlString(GestionWeb.GetWebWord(2997, _webSession.SiteLanguage))
+                              ,
+                              _webSession.IsExcluWeb
+                                  ? Convertion.ToHtmlString(GestionWeb.GetWebWord(2998, _webSession.SiteLanguage))
+                                  : Convertion.ToHtmlString(GestionWeb.GetWebWord(2999, _webSession.SiteLanguage))
+                );
+            html.Append("</TR>");           
+            #endregion
+
             #region Concurrents
             bool withConcurrents = false;
             if (_webSession.SelectionUniversMedia != null && _webSession.SelectionUniversMedia.Nodes.Count > 0)
@@ -455,7 +440,8 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
                 html.Append("</TR>");
                 html.Append("<TR>");
                 html.Append("<TD align=\"left\">");                
-                html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia, false, false, true, 600, true, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, _webSession.Source, true));
+                html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia, false, false, true,
+                    600, true, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, _webSession.Source, true));
                 html.Append("</TD>");
                 html.Append("</TR>");
             }
@@ -522,8 +508,10 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 
             TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.VP);
-            object[] param = new object[1] { _webSession };
-            IVeillePromo vpResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            var param = new object[1] { _webSession };
+            var vpResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class
+                , false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             VeillePromoScheduleData veillePromoScheduleData = vpResult.GetData();
             const int nbLineByPage = 30, NB_HEADER_LINES = 2;
             int currentHtmlLine = 0;
@@ -685,7 +673,7 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
                             bool endIncomplete = false, startIncomplete = false;
                             if (dr[j] != null)
                             {
-                                VeillePromoItem vpi = (VeillePromoItem)dr[j];
+                                var vpi = (VeillePromoItem)dr[j];
                                 if (vpi.ItemType == CstResult.VeillePromo.itemType.presentStart
                                     || vpi.ItemType == CstResult.VeillePromo.itemType.presentStartIncomplete)
                                 {
@@ -693,7 +681,7 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
                                     brand = vpi.Brand;
                                     for (int k = j; k < dr.Length; k++)
                                     {
-                                        VeillePromoItem vpi2 = (VeillePromoItem)dr[k];
+                                        var vpi2 = (VeillePromoItem)dr[k];
                                         if ((j == k) || (vpi2.ItemType == CstResult.VeillePromo.itemType.extended
                                         || vpi2.ItemType == CstResult.VeillePromo.itemType.endIncomplete))
                                         {
@@ -718,16 +706,18 @@ namespace TNS.AdExpress.Anubis.Thoueris.BusinessFacade
 
                                     html.Append("<table class=\"vp\">");
                                     html.AppendFormat("<tr><td class=\"{0}\">", vpi.CssClass);
-                                    //string promoAnchor = "<a class=\"tooltip\"  href=\"javascript:displayPromoFile_" + _resultControlId + "(" + vpi.IdDataPromotion + ", true);\">";
-                                    //promoAnchor += "<em><span></span><b>" + (Convertion.ToHtmlString(brand)) + " : " + promoPeriod + "</b><br/>" + (Convertion.ToHtmlString(vpi.PromotionContent)).Replace("'", "\'") + "</em>";
 
+                                    string excluWeb = vpi.ExcluWeb == 1
+                                                     ? GestionWeb.GetWebWord(3000, _webSession.DataLanguage)
+                                                     : string.Empty;
 
                                     //html.Append(promoAnchor);
                                     if (startIncomplete) html.Append("<span class=\"flg\">&lsaquo;&nbsp;</span>");
                                     //Add promotion period
                                     if (colSpan >= CstResult.VeillePromo.NB_MIN_WEEKS_TO_SHOW_PERIOD)
                                     {
-                                        html.Append(promoPeriod);
+                                        if (!string.IsNullOrEmpty(excluWeb)) html.AppendFormat("{0} {1}", promoPeriod, excluWeb);
+                                        else html.AppendFormat(promoPeriod);
                                     }
                                     if (endIncomplete) html.Append("<span class=\"fld\">&nbsp;&rsaquo;</span>");
                                     //html.Append("</a>");
