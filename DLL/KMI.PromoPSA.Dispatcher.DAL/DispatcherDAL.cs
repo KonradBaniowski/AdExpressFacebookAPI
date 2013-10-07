@@ -34,12 +34,10 @@ namespace KMI.PromoPSA.Dispatcher.DAL
 
                 query.Append("BEGIN ");
                 query.AppendFormat(" UPDATE  {0}.DATA_PROMOTION SET ", Constantes.Db.PROMO_SCHEMA);
-
-               
-
-                query.AppendFormat(" ACTIVATION = to_number('{0}'), ", activationCode.ToString(cultureInfo));
-                query.AppendFormat(" WHERE LOAD_DATE = to_number('{0}'); ", loadDate.ToString(cultureInfo));
-                query.AppendFormat(" AND ACTIVATION == to_number('{0}'); "
+            
+                query.AppendFormat(" ACTIVATION = to_number('{0}') ", activationCode.ToString(cultureInfo));
+                query.AppendFormat(" WHERE LOAD_DATE = to_number('{0}') ", loadDate.ToString(cultureInfo));
+                query.AppendFormat(" AND ACTIVATION = to_number('{0}'); "
                     , Constantes.Constantes.ACTIVATION_CODE_CODIFIED.ToString(cultureInfo));
                 query.Append(" END; ");
                 var dbCmd = db.SetCommand(query.ToString());

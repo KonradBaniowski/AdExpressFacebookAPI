@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BLToolkit.Data;
 using BLToolkit.Data.DataProvider;
 using KMI.PromoPSA.BusinessEntities;
@@ -30,9 +29,10 @@ namespace KMI.PromoPSA.Dispatcher.Core
         /// <summary>
         /// Load / reload Object
         /// </summary> 
-        /// <param name="dispatcherConfig">Dispatcher Config </param>       
+        /// <param name="dispatcherConfig">Dispatcher Config </param>       g
         public static void Load(DispatcherConfig dispatcherConfig)
         {
+           
             _adverts = new List<AdvertStatus>();
             lock (_adverts)
             {
@@ -186,27 +186,27 @@ namespace KMI.PromoPSA.Dispatcher.Core
                     advert.Activation = Constantes.Constantes.ACTIVATION_CODE_VALIDATED;
                     isValidated = true;
                 }
-                //if (isValidated)
-                //{                   
-                //    using (var db = new DbManager(new GenericDataProvider(_dispatcherConfig.ProviderDataAccess)
-                //        , _dispatcherConfig.ConnectionString))
-                //    {
-                //        try
-                //        {
-                //            var dal = new DispatcherDAL();
+                if (isValidated)
+                {
+                    using (var db = new DbManager(new GenericDataProvider(_dispatcherConfig.ProviderDataAccess)
+                        , _dispatcherConfig.ConnectionString))
+                    {
+                        try
+                        {
+                            var dal = new DispatcherDAL();
 
-                //            dal.UpdateMonth(db, loadDate
-                //               , Constantes.Constantes.ACTIVATION_CODE_VALIDATED);
-                            
-                //        }
-                //        catch
-                //        {
-                //            isValidated = false;
-                //        }
-                       
+                            dal.UpdateMonth(db, loadDate
+                               , Constantes.Constantes.ACTIVATION_CODE_VALIDATED);
 
-                //    }
-                //}
+                        }
+                        catch
+                        {
+                            isValidated = false;
+                        }
+
+
+                    }
+                }
                 return isValidated;
             }
 
