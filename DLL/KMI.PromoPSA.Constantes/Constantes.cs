@@ -17,7 +17,7 @@ namespace KMI.PromoPSA.Constantes
 
         public static long ACTIVATION_CODE_REJECTED = 30;
 
-        public static long ACTIVATION_CODE_WAITING = 10;
+        public static long ACTIVATION_CODE_WAITING = 90;
 
         public static long ACTIVATION_CODE_VALIDATED = 0;
 

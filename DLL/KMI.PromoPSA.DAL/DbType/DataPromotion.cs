@@ -38,8 +38,12 @@ namespace KMI.PromoPSA.DAL.DbType
         [MapField("PROMOTION_CONTENT")]
         public string PromotionContent { get; set; }
 
-        [MapField("PROMOTION_VISUAL")]
+        
+            [MapField("PROMOTION_VISUAL")]
         public string PromotionVisual { get; set; }
+
+        [MapField("PROMOTION_BRAND")]
+        public string PromotionBrand { get; set; }
 
         [MapField("CONDITION_TEXT")]
         public string ConditionText { get; set; }

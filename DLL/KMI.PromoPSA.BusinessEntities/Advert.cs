@@ -29,6 +29,8 @@ namespace KMI.PromoPSA.BusinessEntities
 
         public long IdCategory { get; set; }
 
+        public string PromotionBrand { get; set; }
+
         public string PromotionContent { get; set; }
 
         public string PromotionVisual { get; set; }
@@ -73,6 +75,8 @@ namespace KMI.PromoPSA.BusinessEntities
                         return "Rejetée";
                     case 40:
                         return "A Codifier";
+                    case 90:
+                        return "Litige";
                     default:
                         return "";
                 }

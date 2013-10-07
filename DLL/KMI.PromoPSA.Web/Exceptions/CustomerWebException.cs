@@ -266,7 +266,7 @@ namespace KMI.PromoPSA.Web.Exceptions
                 body += "</html>";
             }
             TNSMail.SmtpUtilities errorMail = new TNSMail.SmtpUtilities(WebApplicationParameters.ConfigurationDirectoryRoot + Cste.Configuration.FILE_ERROR_MAIL);
-            errorMail.SendWithoutThread("Cyberpub Error (" + _serverName + ")", Convertion.ToHtmlString(body), true, false);
+            errorMail.SendWithoutThread("PSA Promo Web site Error (" + _serverName + ")", Convertion.ToHtmlString(body), true, false);
 
         }
         #endregion

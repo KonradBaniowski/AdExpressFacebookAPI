@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using KMI.PromoPSA.Rules.Exceptions;
 using KMI.PromoPSA.Web.Core.Sessions;
 using TNS.FrameWork.Exceptions;

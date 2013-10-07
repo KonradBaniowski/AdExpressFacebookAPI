@@ -118,7 +118,7 @@
             var r = confirm("Valider Mois");
 
             if (r == true) {
-                ValidateMonth()
+                ValidateMonth();
             }
             else {
                 return;
@@ -187,7 +187,7 @@
 
             var grid = $("#grid");
             var vehicleStr = { '0': '', '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
-            var activationStr = { '0': '', '40': 'A Codifier', '30': 'Rejetée', '20': 'Codifiée' };
+            var activationStr = { '0': '', '40': 'A Codifier', '30': 'Rejetée', '20': 'Codifiée', '90': 'Litige' };
             var loadDateStr = new Object();
             var loadDateList = new Array();
 
@@ -291,6 +291,9 @@
                     else if (rd.ActivationName == "Rejetée") { // verify that the testing is correct in your case
                         return { "class": "rejectedStyle" };
                     }
+                    else if (rd.ActivationName == "Litige") { // verify that the testing is correct in your case
+                        return { "class": "pendingStyle" };
+                    }
                 },
                 caption: "Promotions PSA",
                 gridComplete: function () {
@@ -339,7 +342,7 @@
 
             plot2 = jQuery.jqplot('chart1', dataG, {
                 title: ' ',
-                seriesColors: ['#e8e8e8', '#94d472', '#fed2d2'],
+                seriesColors: ['#e8e8e8', '#94d472', '#fed2d2', '#f0c95b'],
                 grid: {
                     background: '#ffffff'     // CSS color spec for background color of grid.
                 },

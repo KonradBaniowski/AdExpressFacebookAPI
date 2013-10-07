@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BLToolkit.Data;
 using BLToolkit.Data.DataProvider;
 using KMI.PromoPSA.BusinessEntities;
 using KMI.PromoPSA.BusinessEntities.Classification;
 using KMI.PromoPSA.DAL;
-using KMI.PromoPSA.Rules.Dispacher;
 using KMI.PromoPSA.Rules.Exceptions;
 using KMI.PromoPSA.Web.Domain;
 using KMI.PromoPSA.Web.Domain.Configuration;
-using KMI.PromoPSA.Constantes;
-using AdvertStatus = KMI.PromoPSA.BusinessEntities.AdvertStatus;
 
 namespace KMI.PromoPSA.Rules {
     /// <summary>
@@ -104,6 +100,40 @@ namespace KMI.PromoPSA.Rules {
         }
         #endregion
 
+        #region UpdateCodification
+
+        public void UpdateCodification(long idForm, long activationCode)
+        {
+            using (var db = new DbManager(new GenericDataProvider
+                                             (WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                         , WebApplicationParameters.DBConfig.ConnectionString))
+            {
+                var dal = new PromoPsaDAL();
+                dal.UpdateCodification(db, idForm, activationCode);
+            }
+        }
+
+        public void UpdateCodification(Advert advert)
+        {
+            using (var db = new DbManager(new GenericDataProvider
+                                              (WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString))
+            {
+                var dal = new PromoPsaDAL();
+                var dal2 = new ClassificationDAL();
+                long idCircuit = dal2.GetBrand(db, Constantes.Constantes.DEFAULT_LANGUAGE,
+                    advert.IdBrand).IdCircuit;
+                long idCategory = dal2.GetProduct(db, Constantes.Constantes.DEFAULT_LANGUAGE,
+                  advert.IdProduct).IdCategory;
+                advert.IdCategory = idCategory;
+                advert.IdCircuit = idCircuit;
+
+                dal.UpdateCodification(db, advert);
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Change Advert Status
         /// </summary>
@@ -122,6 +152,7 @@ namespace KMI.PromoPSA.Rules {
         }
 
         public void ReleaseUser(long loginId) {
+           
             Dispacher.Dispacher dispacher = GetWebServiceDispacher();
             dispacher.ReleaseAdvertStatus(loginId);
         }
@@ -200,6 +231,7 @@ namespace KMI.PromoPSA.Rules {
 
         public Codification GetCodification(long idForm)
         {
+          
             var codification = new Codification();
             using (var db = new DbManager(new GenericDataProvider
                 (WebApplicationParameters.DBConfig.ProviderDataAccess)
@@ -228,6 +260,7 @@ namespace KMI.PromoPSA.Rules {
 
         public List<Product> GetProductsBySegment(long segmentId)
         {
+           
             List<Product> products;
             using (var db = new DbManager(new GenericDataProvider
                                               (WebApplicationParameters.DBConfig.ProviderDataAccess)
@@ -240,16 +273,7 @@ namespace KMI.PromoPSA.Rules {
             return products;
         }
 
-        public void UpdateCodification(Advert advert)
-        {
-            using (var db = new DbManager(new GenericDataProvider
-                                              (WebApplicationParameters.DBConfig.ProviderDataAccess)
-                                          , WebApplicationParameters.DBConfig.ConnectionString))
-            {
-                var dal = new PromoPsaDAL();
-               dal.UpdateCodification(db,advert);
-            }
-        }
+      
 
        
         #endregion

@@ -27,14 +27,14 @@ namespace KMI.PromoPSA.Rules {
         /// <summary>
         /// Get Adverts
         /// </summary>
-        /// <param name="loadDate"></param>
+        /// <param name="loadDate">loaded Date</param>
         /// <returns></returns>
         List<Advert> GetAdverts(long loadDate);
         /// <summary>
         /// Get Nb Adverts
         /// </summary>
-        /// <param name="loadDate"></param>
-        /// <param name="activationCode"></param>
+        /// <param name="loadDate">loaded Date</param>
+        /// <param name="activationCode">activation Code</param>
         /// <returns></returns>
         int GetNbAdverts(long loadDate, long activationCode);
 
@@ -57,6 +57,13 @@ namespace KMI.PromoPSA.Rules {
         /// </summary>
         /// <param name="advert"></param>
         void UpdateCodification(Advert advert);
+
+        /// <summary>
+        /// Update Codification
+        /// </summary>
+        /// <param name="idForm">id Form</param>
+        /// <param name="activationCode">activation Code</param>
+        void UpdateCodification(long idForm,  long activationCode);
 
         /// <summary>
         /// Change Advert Status

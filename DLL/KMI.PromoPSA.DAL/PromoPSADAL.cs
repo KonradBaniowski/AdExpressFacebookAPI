@@ -16,6 +16,7 @@ namespace KMI.PromoPSA.DAL
         {
             var query = from p in db.GetTable<DataPromotion>()
                         where p.LoadDate == loadDate
+                        && p.IdForm>0
                         select new Advert
                             {
                                 IdForm = p.IdForm,
@@ -34,6 +35,7 @@ namespace KMI.PromoPSA.DAL
         {
             var query = from p in db.GetTable<DataPromotion>()
                         where p.LoadDate == loadDate && p.Activation==activationCode
+                         && p.IdForm > 0
                         select p;
 
             return query.Count();
@@ -60,6 +62,7 @@ namespace KMI.PromoPSA.DAL
                             DateBeginNum =  p.DateBeginNum,
                             DateEndNum = p.DateEndNum,
                             DateMediaNum = p.DateMediaNum,
+                            PromotionBrand = p.PromotionBrand,
                             PromotionVisual = p.PromotionVisual,
                             PromotionContent = p.PromotionContent,
                             ConditionText = p.ConditionText,
@@ -73,6 +76,7 @@ namespace KMI.PromoPSA.DAL
         public List<LoadDateBE> GetLoadDates(DbManager db) {
 
             var query = from p in db.GetTable<DataPromotion>()
+                        where  p.IdForm >0
                         orderby p.LoadDate
                         group new { p.LoadDate } by new { p.LoadDate } into g
                         select new LoadDateBE {
@@ -93,41 +97,52 @@ namespace KMI.PromoPSA.DAL
                 query.Append("BEGIN ");
                 query.AppendFormat(" UPDATE  {0}.DATA_PROMOTION SET ", Constantes.Db.PROMO_SCHEMA);
 
-                query.AppendFormat(" ID_SEGMENT = to_number('{0}'), "
+                query.AppendFormat(" ID_SEGMENT = to_number('{0}') "
                      , advert.IdSegment.ToString(cultureInfo));
 
-                query.AppendFormat(" ID_PRODUCT = to_number('{0}'), "
+                query.AppendFormat(" ,ID_CATEGORY = to_number('{0}') "
+                   , advert.IdCategory.ToString(cultureInfo));
+
+                query.AppendFormat(" ,ID_CIRCUIT = to_number('{0}') "
+                  , advert.IdCircuit.ToString(cultureInfo));
+
+                query.AppendFormat(" ,ID_PRODUCT = to_number('{0}') "
                     , advert.IdProduct.ToString(cultureInfo));
 
-                query.AppendFormat(" ID_BRAND = to_number('{0}'), "
+                query.AppendFormat(" ,ID_BRAND = to_number('{0}') "
                    , advert.IdBrand.ToString(cultureInfo));
 
-                query.AppendFormat(" DATE_BEGIN_NUM = to_number('{0}'), "
+                query.AppendFormat(" ,DATE_BEGIN_NUM = to_number('{0}') "
                   , advert.DateBeginNum.ToString(cultureInfo));
 
-                query.AppendFormat(" DATE_END_NUM = to_number('{0}'), "
+                query.AppendFormat(" ,DATE_END_NUM = to_number('{0}') "
                 , advert.DateEndNum.ToString(cultureInfo));
 
-                query.AppendFormat(" EXCLU_WEB = to_number('{0}'), "
+                query.AppendFormat(" ,EXCLU_WEB = to_number('{0}') "
                , advert.ExcluWeb.ToString(cultureInfo));
 
-                query.AppendFormat(" ACTIVATION = to_number('{0}'), "
+                query.AppendFormat(" ,ACTIVATION = to_number('{0}') "
              , advert.Activation.ToString(cultureInfo));
 
+                if (!string.IsNullOrEmpty(advert.PromotionBrand))
+                {
+                    var promotionBrand = Regex.Replace(advert.PromotionBrand, "[']", "''");
+                    query.AppendFormat(" ,PROMOTION_BRAND='{0}'", promotionBrand);
+                }
                 if (!string.IsNullOrEmpty(advert.PromotionContent))
                 {
                     var promotionContent =  Regex.Replace(advert.PromotionContent, "[']", "''");
-                    query.AppendFormat(" PROMOTION_CONTENT='{0}',", promotionContent);
+                    query.AppendFormat(" ,PROMOTION_CONTENT='{0}'", promotionContent);
                 }
                 if (!string.IsNullOrEmpty(advert.ConditionText))
                 {
                     var conditionText = Regex.Replace(advert.ConditionText, "[']", "''");
-                    query.AppendFormat(" CONDITION_TEXT='{0}',", conditionText);
+                    query.AppendFormat(" ,CONDITION_TEXT='{0}'", conditionText);
                 }
                 if (!string.IsNullOrEmpty(advert.Script))
                 {
                     var script = Regex.Replace(advert.Script, "[']", "''");
-                    query.AppendFormat(" SCRIPT='{0}'", script);
+                    query.AppendFormat(" ,SCRIPT='{0}'", script);
                 }
                 query.AppendFormat(" WHERE ID_FORM = to_number('{0}'); ", advert.IdForm);
                 query.Append(" END; ");
@@ -135,6 +150,21 @@ namespace KMI.PromoPSA.DAL
                 dbCmd.ExecuteNonQuery();
               
             }
+        }
+
+        public void UpdateCodification(DbManager db, long idForm, long activationCode)
+        {
+            var query = new StringBuilder();
+            var cultureInfo = new CultureInfo("fr-FR");
+
+            query.Append("BEGIN ");
+            query.AppendFormat(" UPDATE  {0}.DATA_PROMOTION SET ", Constantes.Db.PROMO_SCHEMA);
+            query.AppendFormat(" ACTIVATION = to_number('{0}') "
+         , activationCode.ToString(cultureInfo));
+            query.AppendFormat(" WHERE ID_FORM = to_number('{0}'); ", idForm);
+            query.Append(" END; ");
+            var dbCmd = db.SetCommand(query.ToString());
+            dbCmd.ExecuteNonQuery();
         }
     }
 }

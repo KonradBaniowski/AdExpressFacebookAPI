@@ -88,12 +88,14 @@ public partial class Private_Home : PrivateWebPage {
         int advertsNbToCodify = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_TO_CODIFY);
         int advertsNbCodified = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_CODIFIED);
         int advertsNbRejected = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_REJECTED);
+        int advertsNbPending = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_WAITING);
 
         //--- format json
         var jsonData = new[] {new[]{
                                     new object[] {"Nombre de promotions à codifier : " + advertsNbToCodify + "", advertsNbToCodify },
                                     new object[] {"Nombre de promotions codifiées : " + advertsNbCodified + "", advertsNbCodified },
-                                    new object[] {"Nombre de promotions rejetées : " + advertsNbRejected + "", advertsNbRejected }
+                                    new object[] {"Nombre de promotions rejetées : " + advertsNbRejected + "", advertsNbRejected },
+                                      new object[] {"Nombre de promotions en litige : " + advertsNbPending + "", advertsNbPending }
                                     }
             }.ToArray();
 
@@ -122,7 +124,18 @@ public partial class Private_Home : PrivateWebPage {
         string result = null;
 
         IResults results = new Results();
-        IEnumerable<Advert> list = results.GetAdverts(Int64.Parse(loadingDate));
+        IEnumerable<Advert> list;
+        if (isSearch && !string.IsNullOrEmpty(searchField)
+            && !string.IsNullOrEmpty(searchString) && searchField.Equals("LoadDate"))
+        {
+            string strDate = searchString.Substring(3, 4) + searchString.Substring(0, 2);
+            list = results.GetAdverts(Int64.Parse(strDate));
+        }
+        else
+        {
+            list = results.GetAdverts(Int64.Parse(loadingDate));
+        }
+       
 
         try {
 

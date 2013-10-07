@@ -64,6 +64,10 @@
     background-color : #fed2d2;
     background-image: url();
 }
+.pendingStyle {
+    background-color : #f0c95b;
+    background-image: url();
+}
 .validateMonth{
     color:#222222;
     text-decoration: none;

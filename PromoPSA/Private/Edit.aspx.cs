@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Services;
-using System.Web.SessionState;
 using KMI.PromoPSA.BusinessEntities;
 using KMI.PromoPSA.BusinessEntities.Classification;
 using KMI.PromoPSA.Rules;
-using KMI.PromoPSA.Web.Core.Sessions;
+using KMI.PromoPSA.Web.Exceptions;
 using KMI.PromoPSA.Web.UI;
-using WebSession = KMI.PromoPSA.Constantes.WebSession;
-using System.Web.SessionState;
+
 public partial class Private_Edit : PrivateWebPage
 {
 
@@ -17,30 +15,134 @@ public partial class Private_Edit : PrivateWebPage
         DisconnectUserWebControl1.WebSession = _webSession;
         LoginInformationWebControl1.WebSession = _webSession;
         PromotionInformationWebControl1.WebSession = _webSession;
-       
+
     }
 
     [WebMethod]
     public static long SaveCodification(Advert advert, string loginId)
     {
-        IResults results = new Results();
-        results.UpdateCodification(advert);
-        results.ChangeAdvertStatus(advert.IdForm, advert.Activation);
-        return results.GetAvailableIdForm(Convert.ToInt64(loginId));
+
+        try
+        {
+            IResults results = new Results();
+            results.UpdateCodification(advert);
+            results.ChangeAdvertStatus(advert.IdForm, advert.Activation);
+            return results.GetAvailableIdForm(Convert.ToInt64(loginId));
+        }
+        catch (Exception e)
+        {
+            string message = " Erreur lors de la sauvegarde de la fiche.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            if (advert != null) message += string.Format("Fiche numero : {0}<br/>", advert.IdForm);
+            message += string.Format("Login Id : {0}", loginId);
+            SendErrorMail(message, e);
+            throw new Exception("Erreur de sauvegarde", e);
+        }
     }
+
+   
+
+    [WebMethod]
+    public static long RejectForm(long idForm, string loginId, long activationCode)
+    {
+        try
+        {
+            IResults results = new Results();
+            results.UpdateCodification(idForm, activationCode);
+            results.ChangeAdvertStatus(idForm, activationCode);
+            return results.GetAvailableIdForm(Convert.ToInt64(loginId));
+        }
+        catch (Exception e)
+        {
+            string message = " Erreur lors du rejet de la fiche.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Fiche numero : {0}<br/>", idForm);
+            if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
+            SendErrorMail(message, e);
+            throw new Exception("Erreur de rejet de fiche", e);
+        }
+    }
+
+     [WebMethod]
+    public static long PendingForm(long idForm, string loginId, long activationCode)
+    {
+        try
+        {
+            IResults results = new Results();
+            results.UpdateCodification(idForm, activationCode);
+            results.ChangeAdvertStatus(idForm, activationCode);
+            return results.GetAvailableIdForm(Convert.ToInt64(loginId));
+        }
+        catch (Exception e)
+        {
+            string message = " Erreur lors de la mise en litige de la fiche.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Fiche numero : {0}<br/>", idForm);
+            if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
+            SendErrorMail(message, e);
+            throw new Exception("Erreur de la mise en litige de la fiche", e);
+        }
+    }
+    
     [WebMethod]
     public static Codification GetCodification(long idForm)
     {
-        IResults results = new Results();
-        return results.GetCodification(idForm);
+        try
+        {
+            IResults results = new Results();
+            return results.GetCodification(idForm);
+        }
+        catch (Exception e)
+        {
+            string message = " Erreur pour obtenir la fiche de codification.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Fiche numero : {0}<br/>", idForm);
+            SendErrorMail(message, e);
+            throw new Exception("Erreur obtention fiche de codification", e);
+        }
+    }
+
+    [WebMethod]
+    public static void ReleaseUser(string loginId)
+    {
+        try
+        {
+            IResults results = new Results();
+            results.ReleaseUser(Convert.ToInt64(loginId));
+        }
+        catch (Exception e)
+        {
+            string message = string.Format(" Erreur lors de la liberatrion de(s) fiches du login.{0}<br/>"
+                , loginId);
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
+            SendErrorMail(message, e);
+            throw new Exception("Erreur libération de fiches", e);
+        }
     }
 
     [WebMethod]
     public static List<Product> GetProductsBySegment(long segmentId)
     {
-        IResults results = new Results();
-        return results.GetProductsBySegment(segmentId);
+        try
+        {
+            IResults results = new Results();
+            return results.GetProductsBySegment(segmentId);
+        }
+        catch (Exception e)
+        {
+            string message = string.Format(" Erreur pour obtenir la liste des produits du segment.{0}<br/>", segmentId);
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Segment Id : {0}", segmentId);
+            SendErrorMail(message, e);
+            throw new Exception("Erreur obtention produit par segment", e);
+        }
     }
 
-   
+    private static void SendErrorMail(string message, Exception e)
+    {
+        var cwe = new CustomerWebException(message, e.StackTrace);
+        cwe.SendMail();
+
+    }
 }
