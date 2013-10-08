@@ -35,10 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BLToolkit.4">
-      <HintPath>$(SolutionDir)\packages\BLToolkit.4.1.21.11\lib\net40-full\BLToolkit.4.dll</HintPath>
+      <HintPath>..\..\..\..\MesSolutions\Trunk - WebService Dispatcher\packages\BLToolkit.4.1.21.11\lib\net40-full\BLToolkit.4.dll</HintPath>
     </Reference>
     <Reference Include="BLToolkit.Data.DataProvider.Generic.4">
-      <HintPath>$(SolutionDir)\packages\BLToolkit.Generic.4.1.21.11\lib\net40\BLToolkit.Data.DataProvider.Generic.4.dll</HintPath>
+      <HintPath>..\..\..\..\MesSolutions\Trunk - WebService Dispatcher\packages\BLToolkit.Generic.4.1.21.11\lib\net40\BLToolkit.Data.DataProvider.Generic.4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,9 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\KMI.PromoPSA.BusinessEntities\KMI.PromoPSA.BusinessEntities.csproj">
       <Project>{d8ab005d-2164-4068-ac56-464c37befa2e}</Project>
       <Name>KMI.PromoPSA.BusinessEntities</Name>
@@ -65,6 +62,9 @@
       <Project>{4CE71C74-45B6-4D6A-A055-446D39DA6137}</Project>
       <Name>KMI.PromoPSA.Constantes</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

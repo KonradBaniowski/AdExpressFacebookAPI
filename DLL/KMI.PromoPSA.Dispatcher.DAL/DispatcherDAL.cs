@@ -14,7 +14,7 @@ namespace KMI.PromoPSA.Dispatcher.DAL
         public List<AdvertStatus> GetAdverts(DbManager db)
         {
             var query = from p in db.GetTable<DataPromotion>() 
-                        where p.Activation > 0
+                        where p.Activation > 0 && p.IdForm>0
                         select new AdvertStatus
                             {
                                 IdForm = p.IdForm,
