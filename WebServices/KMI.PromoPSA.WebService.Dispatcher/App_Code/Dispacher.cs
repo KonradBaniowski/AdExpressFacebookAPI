@@ -59,9 +59,9 @@ public class Dispacher : System.Web.Services.WebService
     #region GetAdvertStatus
 
     [WebMethod]
-    public long GetAvailableIdForm(long loginId)
+    public long GetAvailablePromotionId(long loginId)
     {
-        return Adverts.GetAvailableIdForm(loginId);
+        return Adverts.GetAvailablePromotionId(loginId);
     }
 
     #endregion
@@ -80,9 +80,9 @@ public class Dispacher : System.Web.Services.WebService
     #region LockAdvertStatus
 
     [WebMethod]
-    public bool LockAdvertStatus(long loginId, long idForm)
+    public bool LockAdvertStatus(long loginId, long promotionId)
     {
-       return Adverts.LockAdvertStatus(loginId, idForm);
+        return Adverts.LockAdvertStatus(loginId, promotionId);
     }
 
     #endregion
@@ -90,9 +90,9 @@ public class Dispacher : System.Web.Services.WebService
     #region ReleaseOneAdvertStatus
 
     [WebMethod]
-    public void ReleaseOneAdvertStatus(long loginId, long idForm)
+    public void ReleaseOneAdvertStatus(long loginId, long promotionId)
     {
-        Adverts.ReleaseAdvertStatus(loginId, idForm);
+        Adverts.ReleaseAdvertStatus(loginId, promotionId);
     }
 
     #endregion
@@ -100,9 +100,9 @@ public class Dispacher : System.Web.Services.WebService
     #region GetOneAdvertStatus
 
     [WebMethod]
-    public AdvertStatus GetOneAdvertStatus(long loginId, long idForm)
+    public AdvertStatus GetOneAdvertStatus(long loginId, long promotionId)
     {
-        return Adverts.GetAdvertStatus(loginId, idForm);
+        return Adverts.GetAdvertStatus(loginId, promotionId);
     }
 
     #endregion
@@ -110,9 +110,9 @@ public class Dispacher : System.Web.Services.WebService
     #region ChangeAdvertStatus
 
     [WebMethod]
-    public void ChangeAdvertStatus(long idForm, long activationCode)
+    public void ChangeAdvertStatus(long promotionId, long activationCode)
     {
-        Adverts.ChangeAdvertStatus(idForm, activationCode);
+        Adverts.ChangeAdvertStatus(promotionId, activationCode);
     }
 
     #endregion

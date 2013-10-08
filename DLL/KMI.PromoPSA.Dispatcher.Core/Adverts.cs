@@ -77,7 +77,7 @@ namespace KMI.PromoPSA.Dispatcher.Core
            
         }
 
-        public static long GetAvailableIdForm(long loginId)
+        public static long GetAvailablePromotionId(long loginId)
         {
             lock (_adverts)
             {
@@ -87,7 +87,7 @@ namespace KMI.PromoPSA.Dispatcher.Core
                 if (advert != null)
                 {
                     advert.IdLogin = loginId;
-                    return advert.IdForm;
+                    return advert.IdDataPromotion;
                 }
 
                 return 0;
@@ -107,12 +107,12 @@ namespace KMI.PromoPSA.Dispatcher.Core
             }
 
         }
-        public static void ReleaseAdvertStatus(long loginId, long idForm)
+        public static void ReleaseAdvertStatus(long loginId, long promotionId)
         {
             lock (_adverts)
             {
                 var adverts = _adverts.Where(p => p.IdLogin == loginId
-                    && p.IdForm==idForm).ToList();
+                    && p.IdDataPromotion == promotionId).ToList();
 
                 foreach (var advert in adverts)
                 {
@@ -123,14 +123,14 @@ namespace KMI.PromoPSA.Dispatcher.Core
 
         }
 
-        public static bool LockAdvertStatus(long loginId, long idForm)
+        public static bool LockAdvertStatus(long loginId, long promotionId)
         {
 
             lock (_adverts)
             {
                 bool status = false;
                 var adverts = _adverts.Where(p => p.IdLogin == Constantes.Constantes.NO_USER_VALUE
-                    && p.IdForm == idForm).ToList();
+                    && p.IdDataPromotion == promotionId).ToList();
 
                 foreach (var advert in adverts)
                 {
@@ -143,11 +143,11 @@ namespace KMI.PromoPSA.Dispatcher.Core
         }
 
 
-        public static AdvertStatus GetAdvertStatus(long loginId, long idForm)
+        public static AdvertStatus GetAdvertStatus(long loginId, long promotionId)
         {
             lock (_adverts)
             {
-              var  advert = _adverts.Find(p => p.IdForm == idForm
+                var advert = _adverts.Find(p => p.IdDataPromotion == promotionId
                   && p.IdLogin == Constantes.Constantes.NO_USER_VALUE);
 
                 if (advert != null)
@@ -160,11 +160,11 @@ namespace KMI.PromoPSA.Dispatcher.Core
 
         }
 
-        public static void ChangeAdvertStatus(long? idForm, long activationCode)
+        public static void ChangeAdvertStatus(long? promotionId, long activationCode)
         {
             lock (_adverts)
             {
-                var advertStatus = _adverts.Find(p => p.IdForm == idForm);
+                var advertStatus = _adverts.Find(p => p.IdDataPromotion == promotionId);
                 if (advertStatus != null)
                 {
                     advertStatus.Activation = activationCode;
