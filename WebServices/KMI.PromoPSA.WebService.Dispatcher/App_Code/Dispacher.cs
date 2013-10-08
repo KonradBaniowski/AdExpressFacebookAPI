@@ -66,6 +66,15 @@ public class Dispacher : System.Web.Services.WebService
 
     #endregion
 
+    #region Lock Promotion Id
+
+    [WebMethod]
+    public long GetDuplicatedPromotionId(long loginId, long formId) {
+        return Adverts.GetDuplicatedPromotionId(loginId, formId);
+    }
+
+    #endregion
+
 
     #region ReleaseAdvertStatus
 

@@ -93,6 +93,30 @@ namespace KMI.PromoPSA.Dispatcher.Core
                 return 0;
             }    
         }
+
+        public static long GetDuplicatedPromotionId(long loginId, long formId) {
+
+            AdvertStatus duplicatedAdvert;
+
+            using (var db = new DbManager(new GenericDataProvider(_dispatcherConfig.ProviderDataAccess)
+                    , _dispatcherConfig.ConnectionString)) {
+                var dal = new DispatcherDAL();
+
+                duplicatedAdvert = dal.GetAdvertsByFormId(db, formId).Last();
+                duplicatedAdvert.IdLogin = loginId;
+            }
+
+            lock (_adverts) {
+                _adverts.Add(duplicatedAdvert);
+
+                if (duplicatedAdvert != null) {
+                    return duplicatedAdvert.IdDataPromotion;
+                }
+
+                return 0;
+            }
+        }
+
         public static void ReleaseAdvertStatus(long loginId)
         {
             lock (_adverts)

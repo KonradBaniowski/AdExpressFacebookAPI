@@ -37,6 +37,12 @@ namespace KMI.PromoPSA.Dispatcher.DAL.DbType
         [MapField("PROMOTION_CONTENT")]
         public string PromotionContent { get; set; }
 
+        [MapField("PROMOTION_VISUAL")]
+        public string PromotionVisual { get; set; }
+
+        [MapField("PROMOTION_BRAND")]
+        public string PromotionBrand { get; set; }
+
         [MapField("CONDITION_TEXT")]
         public string ConditionText { get; set; }
 
@@ -54,5 +60,20 @@ namespace KMI.PromoPSA.Dispatcher.DAL.DbType
 
         [MapField("LOAD_DATE")]
         public long LoadDate { get; set; }
+
+        [MapField("ID_VEHICLE")]
+        public long IdVehicle { get; set; }
+
+        [MapField("DATE_MEDIA_NUM")]
+        public long DateMediaNum { get; set; }
+
+        [MapField("NATIONAL"), NotNull]
+        public long National { get; set; }
+
+        [MapField("ID_SLOGAN"), NotNull]
+        public long IdSlogan { get; set; }
+
+        [MapField("TV_BOARD"), NotNull]
+        public string TvBoard { get; set; }
     }
 }

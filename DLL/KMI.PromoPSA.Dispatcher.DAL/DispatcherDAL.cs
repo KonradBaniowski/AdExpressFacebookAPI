@@ -26,6 +26,20 @@ namespace KMI.PromoPSA.Dispatcher.DAL
             return query.ToList();
         }
 
+        public List<AdvertStatus> GetAdvertsByFormId(DbManager db, long formId) {
+            var query = from p in db.GetTable<DataPromotion>()
+                        where p.Activation > 0 && p.IdForm == formId
+                        orderby p.IdDataPromotion
+                        select new AdvertStatus {
+                            IdForm = p.IdForm,
+                            Activation = p.Activation,
+                            LoadDate = p.LoadDate,
+                            IdDataPromotion = p.IdDataPromotion
+                        };
+
+            return query.ToList();
+        }
+
         public void UpdateMonth(DbManager db, long loadDate,long activationCode)
         {
            

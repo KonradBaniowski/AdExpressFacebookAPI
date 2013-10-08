@@ -51,6 +51,10 @@ namespace KMI.PromoPSA.BusinessEntities
 
         public long National { get; set; }
 
+        public long IdSlogan { get; set; }
+
+        public string TvBoard { get; set; }
+
         public string VehicleName {
             get {
                 switch (IdVehicle) { 

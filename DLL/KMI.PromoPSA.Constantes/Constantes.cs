@@ -202,4 +202,89 @@ namespace KMI.PromoPSA.Constantes
 
         public const String PROMO_SCHEMA = "PROMO03";
     }
+
+    public class PromotionDB {
+        /// <summary>
+        /// Id language data
+        /// </summary>
+        public const string ID_LANGUAGE_DATA_I = "33";
+        /// <summary>
+        /// Indicates if the promo is exclusively for web
+        /// </summary>
+        public const string EXCLU_WEB = "0";
+        /// <summary>
+        /// Indicates if the promo is national
+        /// </summary>
+        public const string NATIONAL = "1";
+        /// <summary>
+        /// Indicates that the row is loaded
+        /// </summary>
+        public const string ACTIVATION_LOADED = "40";
+        /// <summary>
+        /// Indicates that the row is rejected
+        /// </summary>
+        public const string ACTIVATION_REJECTED = "30";
+        /// <summary>
+        /// Indicates that the row is codified
+        /// </summary>
+        public const string ACTIVATION_CODIFIED = "20";
+    }
+
+    #region Vehicles
+    /// <summary>
+    /// Media type List
+    /// </summary>
+    public class Vehicles {
+        /// <summary>
+        /// Media type
+        /// </summary>
+        public enum names {
+            /// <summary>
+            /// No Media
+            /// </summary>
+            DEFAULT = 0,
+            /// <summary>
+            /// Press
+            /// </summary>
+            PRESSE = 1,
+            /// <summary>
+            /// Radio
+            /// </summary>
+            RADIO = 2,
+            /// <summary>
+            /// Television
+            /// </summary>
+            TELEVISION = 3,
+            /// <summary>
+            /// Media tactique
+            /// </summary>
+            MEDIASTACTICS = 4,
+            /// <summary>
+            /// Others media types
+            /// </summary>
+            OTHERS = 5,
+            /// <summary>
+            /// AdNetTrack
+            /// </summary>
+            ADNETTRACK = 6,
+            /// <summary>
+            /// Internet
+            /// </summary>
+            INTERNET = 7,
+            /// <summary>
+            /// Outdoor
+            /// </summary>
+            PUBLICITE_EXTERIEURE = 8,
+            /// <summary>
+            /// COURRIER CREATIONS
+            /// </summary>
+            COURRIER_CREATIONS = 10,
+            /// <summary>
+            /// Evaliant mobilr
+            /// </summary>
+            EVALIANT_MOBILE = 15
+        }
+    }
+    #endregion
+
 }
