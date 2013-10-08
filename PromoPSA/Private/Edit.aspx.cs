@@ -26,14 +26,14 @@ public partial class Private_Edit : PrivateWebPage
         {
             IResults results = new Results();
             results.UpdateCodification(advert);
-            results.ChangeAdvertStatus(advert.IdForm, advert.Activation);
-            return results.GetAvailableIdForm(Convert.ToInt64(loginId));
+            results.ChangeAdvertStatus(advert.IdDataPromotion, advert.Activation);
+            return results.GetAvailablePromotionId(Convert.ToInt64(loginId));
         }
         catch (Exception e)
         {
             string message = " Erreur lors de la sauvegarde de la fiche.<br/>";
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
-            if (advert != null) message += string.Format("Fiche numero : {0}<br/>", advert.IdForm);
+            if (advert != null) message += string.Format("Promotion numero : {0}<br/>", advert.IdDataPromotion);
             message += string.Format("Login Id : {0}", loginId);
             SendErrorMail(message, e);
             throw new Exception("Erreur de sauvegarde", e);
@@ -43,20 +43,20 @@ public partial class Private_Edit : PrivateWebPage
    
 
     [WebMethod]
-    public static long RejectForm(long idForm, string loginId, long activationCode)
+    public static long RejectForm(long promotionId, string loginId, long activationCode)
     {
         try
         {
             IResults results = new Results();
-            results.UpdateCodification(idForm, activationCode);
-            results.ChangeAdvertStatus(idForm, activationCode);
-            return results.GetAvailableIdForm(Convert.ToInt64(loginId));
+            results.UpdateCodification(promotionId, activationCode);
+            results.ChangeAdvertStatus(promotionId, activationCode);
+            return results.GetAvailablePromotionId(Convert.ToInt64(loginId));
         }
         catch (Exception e)
         {
             string message = " Erreur lors du rejet de la fiche.<br/>";
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
-            message += string.Format("Fiche numero : {0}<br/>", idForm);
+            message += string.Format("Promotion numero : {0}<br/>", promotionId);
             if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
             SendErrorMail(message, e);
             throw new Exception("Erreur de rejet de fiche", e);
@@ -64,20 +64,20 @@ public partial class Private_Edit : PrivateWebPage
     }
 
      [WebMethod]
-    public static long PendingForm(long idForm, string loginId, long activationCode)
+    public static long PendingForm(long promotionId, string loginId, long activationCode)
     {
         try
         {
             IResults results = new Results();
-            results.UpdateCodification(idForm, activationCode);
-            results.ChangeAdvertStatus(idForm, activationCode);
-            return results.GetAvailableIdForm(Convert.ToInt64(loginId));
+            results.UpdateCodification(promotionId, activationCode);
+            results.ChangeAdvertStatus(promotionId, activationCode);
+            return results.GetAvailablePromotionId(Convert.ToInt64(loginId));
         }
         catch (Exception e)
         {
             string message = " Erreur lors de la mise en litige de la fiche.<br/>";
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
-            message += string.Format("Fiche numero : {0}<br/>", idForm);
+            message += string.Format("Promotion numero : {0}<br/>", promotionId);
             if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
             SendErrorMail(message, e);
             throw new Exception("Erreur de la mise en litige de la fiche", e);
@@ -85,18 +85,18 @@ public partial class Private_Edit : PrivateWebPage
     }
     
     [WebMethod]
-    public static Codification GetCodification(long idForm)
+    public static Codification GetCodification(long idDataPromotion)
     {
         try
         {
             IResults results = new Results();
-            return results.GetCodification(idForm);
+            return results.GetCodification(idDataPromotion);
         }
         catch (Exception e)
         {
             string message = " Erreur pour obtenir la fiche de codification.<br/>";
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
-            message += string.Format("Fiche numero : {0}<br/>", idForm);
+            message += string.Format("Promotion numero : {0}<br/>", idDataPromotion);
             SendErrorMail(message, e);
             throw new Exception("Erreur obtention fiche de codification", e);
         }

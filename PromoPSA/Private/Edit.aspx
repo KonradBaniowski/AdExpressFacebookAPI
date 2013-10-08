@@ -37,13 +37,13 @@
 
             $('#loaderdiv').show();
             // Getting URL var by its form id
-            var formId = $.getUrlVar('formId');
+            var promotionId = $.getUrlVar('promotionId');
 
             //Get codification form                       
             $.ajax({
                 type: "POST",
                 async: false,
-                data: "{idForm:" + formId + "}",
+                data: "{idDataPromotion:" + promotionId + "}",
                 url: "Edit.aspx/GetCodification",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -119,6 +119,16 @@
                         $("#excluweb_ko").prop('checked', true);
                     else
                         $("#excluweb_ko").prop('checked', false);
+
+                    if (msg.d.Advert.National == 1)
+                        $("#national_ok").prop('checked', true);
+                    else
+                        $("#national_ok").prop('checked', false);
+
+                    if (msg.d.Advert.National == 0)
+                        $("#national_ko").prop('checked', true);
+                    else
+                        $("#national_ko").prop('checked', false);
 
                     //Set Visuals
                     LoadVisuals(msg);
@@ -367,7 +377,7 @@
             $(selectorId).on("click", function () {
 
                 $('#loaderdiv').show();
-                var formId = $.getUrlVar('formId');
+                var promotionId = $.getUrlVar('promotionId');
                 var loginId = $.getUrlVar('loginId');
 
                 if (fValidator) {
@@ -376,12 +386,12 @@
                         type: "POST",
                         async: false,
                         url: "Edit.aspx/PendingForm",
-                        data: "{idForm:" + formId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                        data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
                             if (msg.d > 0) {
-                                document.location.href = "/Private/Edit.aspx?formId=" + msg.d + '&loginId=' + loginId;
+                                document.location.href = "/Private/Edit.aspx?promotionId=" + msg.d + '&loginId=' + loginId;
                             } else {
                                 document.location.href = "/Private/Home.aspx";
                             }
@@ -420,12 +430,12 @@
                                 type: "POST",
                                 async: false,
                                 url: "Edit.aspx/PendingForm",
-                                data: "{idForm:" + formId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                                data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function (msg) {
                                     if (msg.d > 0) {
-                                        document.location.href = "/Private/Edit.aspx?formId=" + msg.d + '&loginId=' + loginId;
+                                        document.location.href = "/Private/Edit.aspx?promotionId=" + msg.d + '&loginId=' + loginId;
                                     } else {
                                         document.location.href = "/Private/Home.aspx";
                                     }
@@ -451,7 +461,7 @@
             $(selectorId).on("click", function () {
                 
                 $('#loaderdiv').show();
-                var formId = $.getUrlVar('formId');
+                var promotionId = $.getUrlVar('promotionId');
                 var loginId = $.getUrlVar('loginId');
 
                 if (fValidator) {
@@ -460,12 +470,12 @@
                         type: "POST",
                         async: false,
                         url: "Edit.aspx/RejectForm",
-                        data: "{idForm:" + formId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                        data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
                             if (msg.d > 0) {
-                                document.location.href = "/Private/Edit.aspx?formId=" + msg.d + '&loginId=' + loginId;
+                                document.location.href = "/Private/Edit.aspx?promotionId=" + msg.d + '&loginId=' + loginId;
                             } else {
                                 document.location.href = "/Private/Home.aspx";
                             }
@@ -504,12 +514,12 @@
                                 type: "POST",
                                 async: false,
                                 url: "Edit.aspx/RejectForm",
-                                data: "{idForm:" + formId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                                data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function (msg) {
                                     if (msg.d > 0) {
-                                        document.location.href = "/Private/Edit.aspx?formId=" + msg.d + '&loginId=' + loginId;
+                                        document.location.href = "/Private/Edit.aspx?promotionId=" + msg.d + '&loginId=' + loginId;
                                     } else {
                                         document.location.href = "/Private/Home.aspx";
                                     }
@@ -598,6 +608,7 @@
                     submitHandler: function () {
                         var action;
                         //debugger;
+                        var promotionId = $.getUrlVar('promotionId');
                         var formId = $.getUrlVar('formId');
                         var loginId = $.getUrlVar('loginId');
                         var idProduct = $("#product option:selected").val();
@@ -611,9 +622,11 @@
                         var conditionText = $("#conditiontext").val();
                         var script_ = $("#script_").val();
                         var excluWeb = $("input[name=excluweb]:checked").val();
+                        var national = $("input[name=national]:checked").val();
                         var promotionBrand = $("#pbrand").val();
                         var advertData = {
                             'advert': {
+                                'IdDataPromotion': promotionId,
                                 'IdForm': formId,
                                 'Activation': activationCode,
                                 'IdProduct': idProduct,
@@ -625,7 +638,8 @@
                                 'PromotionContent': promotionContent,
                                 'ConditionText': conditionText,
                                 'Script': script_,
-                                'ExcluWeb': excluWeb
+                                'ExcluWeb': excluWeb,
+                                'National': national
                             },
                             'loginId': loginId
                         };
@@ -641,7 +655,7 @@
                             dataType: "json",
                             success: function (msg) {
                                 if (msg.d > 0) {
-                                    document.location.href = "/Private/Edit.aspx?formId=" + msg.d + '&loginId=' + loginId;
+                                    document.location.href = "/Private/Edit.aspx?promotionId=" + msg.d + '&loginId=' + loginId;
                                 } else {
                                     document.location.href = "/Private/Home.aspx";
                                 }
@@ -1161,6 +1175,22 @@
                                         </label>
                                         <label for="excluweb_ko">
                                             <input type="radio" id="excluweb_ko" value="0" name="excluweb" checked="checked" />
+                                            Non		
+                                        </label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="label">
+                                        <label for="nat">National *</label>
+                                    </td>
+                                    <td class="field">
+                                        <label for="national_ok">
+                                            <input type="radio" id="national_ok" value="1" name="national" checked="checked"/>
+                                            Oui
+                                        </label>
+                                        <label for="national_ko">
+                                            <input type="radio" id="national_ko" value="0" name="national"/>
                                             Non		
                                         </label>
                                     </td>

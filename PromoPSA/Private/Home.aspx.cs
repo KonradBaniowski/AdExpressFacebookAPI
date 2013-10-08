@@ -32,15 +32,15 @@ public partial class Private_Home : PrivateWebPage {
 
     #region Get Available Id Form
     /// <summary>
-    /// Get Available Id Form
+    /// Get Available promotion Id
     /// </summary>
     /// <param name="loginId">Login Id</param>
     /// <returns>True if succed</returns>
     [WebMethod]
-    public static long getAvailableIdForm(string loginId) {
+    public static long getAvailablePromotionId(string loginId) {
 
         IResults results = new Results();
-        return results.GetAvailableIdForm(Int64.Parse(loginId));
+        return results.GetAvailablePromotionId(Int64.Parse(loginId));
 
     }
     #endregion
@@ -68,10 +68,10 @@ public partial class Private_Home : PrivateWebPage {
     /// <param name="formId">Form Id</param>
     /// <returns>True if form available</returns>
     [WebMethod]
-    public static bool checkFormIdAvailability(string loginId, string formId) {
+    public static bool checkFormIdAvailability(string loginId, string promotionId) {
 
         IResults results = new Results();
-        return results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(formId));
+        return results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(promotionId));
     }
     #endregion
 
@@ -228,7 +228,7 @@ public partial class Private_Home : PrivateWebPage {
                     select new {
                         i = row.IdForm,
                         cell = new string[] {
-                            row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, row.IdForm.ToString(), row.ActivationName, row.LoadDateFormated
+                            row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, row.IdDataPromotion.ToString(), row.ActivationName, row.LoadDateFormated
                         //row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString() + "&sessionId=" + sessionId+ "&loginId=" + loginId), row.ActivationName, row.LoadDateFormated
                     }
                     }

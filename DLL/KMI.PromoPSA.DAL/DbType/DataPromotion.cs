@@ -68,5 +68,8 @@ namespace KMI.PromoPSA.DAL.DbType
 
         [MapField("DATE_MEDIA_NUM")]
         public long DateMediaNum { get; set; }
+
+        [MapField("NATIONAL"), NotNull]
+        public long National { get; set; }
     }
 }

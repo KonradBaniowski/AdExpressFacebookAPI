@@ -36,7 +36,7 @@ namespace KMI.PromoPSA.Rules.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:56081/Dispacher.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:39012/Dispacher.asmx")]
         public string KMI_PromoPSA_Rules_Dispacher_Dispacher {
             get {
                 return ((string)(this["KMI_PromoPSA_Rules_Dispacher_Dispacher"]));

@@ -91,7 +91,7 @@
 
             $.ajax({
                 type: "POST",
-                url: 'Home.aspx/getAvailableIdForm ',
+                url: 'Home.aspx/getAvailablePromotionId ',
                 async: false,
                 data: JSON.stringify({ loginId: loginId }),
                 contentType: "application/json; charset=utf-8",
@@ -151,7 +151,7 @@
 
         }
         
-        function EditRequest(formId) {
+        function EditRequest(promotionId) {
 
             var verif;
 
@@ -159,7 +159,7 @@
                 type: "POST",
                 url: 'Home.aspx/checkFormIdAvailability',
                 async: false,
-                data: JSON.stringify({ loginId : loginId, formId: formId }),
+                data: JSON.stringify({ loginId: loginId, promotionId: promotionId }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg, st) {
@@ -173,7 +173,7 @@
             });
 
             if (verif == true)
-                document.location = "Edit.aspx?formId=" + formId + "&sessionId=" + sessionId + "&loginId=" + loginId;
+                document.location = "Edit.aspx?promotionId=" + promotionId + "&sessionId=" + sessionId + "&loginId=" + loginId;
             else
                 $("#dialog").dialog("open");
 

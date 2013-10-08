@@ -49,6 +49,8 @@ namespace KMI.PromoPSA.BusinessEntities
 
         public long IdVehicle { get; set; }
 
+        public long National { get; set; }
+
         public string VehicleName {
             get {
                 switch (IdVehicle) { 

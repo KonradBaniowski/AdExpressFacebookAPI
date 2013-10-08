@@ -43,10 +43,10 @@ namespace KMI.PromoPSA.DAL
            
         }
 
-        public List<Advert> GetOneAdvert(DbManager db, long idForm)
+        public List<Advert> GetOneAdvert(DbManager db, long promotionId)
         {
             var query = from p in db.GetTable<DataPromotion>()
-                        where p.IdForm == idForm
+                        where p.IdDataPromotion == promotionId
                         select new Advert
                         {
                             IdForm = p.IdForm,
@@ -67,7 +67,8 @@ namespace KMI.PromoPSA.DAL
                             PromotionContent = p.PromotionContent,
                             ConditionText = p.ConditionText,
                             Script = p.Script,
-                            ExcluWeb = p.ExcluWeb
+                            ExcluWeb = p.ExcluWeb,
+                            National = p.National
                         };
 
             return query.ToList();
@@ -124,6 +125,9 @@ namespace KMI.PromoPSA.DAL
                 query.AppendFormat(" ,ACTIVATION = to_number('{0}') "
              , advert.Activation.ToString(cultureInfo));
 
+                query.AppendFormat(" ,NATIONAL = to_number('{0}') "
+               , advert.National.ToString(cultureInfo));
+
                 if (!string.IsNullOrEmpty(advert.PromotionBrand))
                 {
                     var promotionBrand = Regex.Replace(advert.PromotionBrand, "[']", "''");
@@ -144,7 +148,7 @@ namespace KMI.PromoPSA.DAL
                     var script = Regex.Replace(advert.Script, "[']", "''");
                     query.AppendFormat(" ,SCRIPT='{0}'", script);
                 }
-                query.AppendFormat(" WHERE ID_FORM = to_number('{0}'); ", advert.IdForm);
+                query.AppendFormat(" WHERE ID_DATA_PROMOTION = to_number('{0}'); ", advert.IdDataPromotion);
                 query.Append(" END; ");
                 var dbCmd = db.SetCommand(query.ToString());
                 dbCmd.ExecuteNonQuery();
@@ -152,7 +156,7 @@ namespace KMI.PromoPSA.DAL
             }
         }
 
-        public void UpdateCodification(DbManager db, long idForm, long activationCode)
+        public void UpdateCodification(DbManager db, long promotionId, long activationCode)
         {
             var query = new StringBuilder();
             var cultureInfo = new CultureInfo("fr-FR");
@@ -161,7 +165,7 @@ namespace KMI.PromoPSA.DAL
             query.AppendFormat(" UPDATE  {0}.DATA_PROMOTION SET ", Constantes.Db.PROMO_SCHEMA);
             query.AppendFormat(" ACTIVATION = to_number('{0}') "
          , activationCode.ToString(cultureInfo));
-            query.AppendFormat(" WHERE ID_FORM = to_number('{0}'); ", idForm);
+            query.AppendFormat(" WHERE ID_DATA_PROMOTION = to_number('{0}'); ", promotionId);
             query.Append(" END; ");
             var dbCmd = db.SetCommand(query.ToString());
             dbCmd.ExecuteNonQuery();

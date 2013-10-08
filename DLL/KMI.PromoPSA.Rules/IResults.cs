@@ -42,9 +42,9 @@ namespace KMI.PromoPSA.Rules {
         /// <summary>
         /// Get codification
         /// </summary>
-        /// <param name="idForm">id Form</param>
+        /// <param name="promotionId">Promotion Id</param>
         /// <returns></returns>
-        Codification GetCodification(long idForm);
+        Codification GetCodification(long promotionId);
         /// <summary>
         /// Get Products BySegment
         /// </summary>
@@ -61,22 +61,22 @@ namespace KMI.PromoPSA.Rules {
         /// <summary>
         /// Update Codification
         /// </summary>
-        /// <param name="idForm">id Form</param>
+        /// <param name="promotionId">Promotion Id</param>
         /// <param name="activationCode">activation Code</param>
-        void UpdateCodification(long idForm,  long activationCode);
+        void UpdateCodification(long promotionId,  long activationCode);
 
         /// <summary>
         /// Change Advert Status
         /// </summary>
-        /// <param name="idForm"></param>
+        /// <param name="promotionId">Promotion Id</param>
         /// <param name="activationCode"></param>
-        void ChangeAdvertStatus(long idForm, long activationCode);
+        void ChangeAdvertStatus(long promotionId, long activationCode);
         /// <summary>
-        /// Get Advert Status
+        /// Get Available Promotion Id
         /// </summary>
         /// <param name="loginId"></param>      
         /// <returns></returns>
-        long GetAvailableIdForm(long loginId);
+        long GetAvailablePromotionId(long loginId);
         /// <summary>
         /// Release User 
         /// </summary>
@@ -86,8 +86,8 @@ namespace KMI.PromoPSA.Rules {
         /// Lock Advert Status
         /// </summary>
         /// <param name="loginId">Login id</param>
-        /// <param name="formId">Form Id</param>
-        bool LockAdvertStatus(long loginId, long formId);
+        /// <param name="promotionId">Promotion Id</param>
+        bool LockAdvertStatus(long loginId, long promotionId);
         /// <summary>
         /// Validate Month
         /// </summary>

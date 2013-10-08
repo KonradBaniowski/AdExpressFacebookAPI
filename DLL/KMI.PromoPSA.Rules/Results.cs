@@ -102,14 +102,14 @@ namespace KMI.PromoPSA.Rules {
 
         #region UpdateCodification
 
-        public void UpdateCodification(long idForm, long activationCode)
+        public void UpdateCodification(long promotionId, long activationCode)
         {
             using (var db = new DbManager(new GenericDataProvider
                                              (WebApplicationParameters.DBConfig.ProviderDataAccess)
                                          , WebApplicationParameters.DBConfig.ConnectionString))
             {
                 var dal = new PromoPsaDAL();
-                dal.UpdateCodification(db, idForm, activationCode);
+                dal.UpdateCodification(db, promotionId, activationCode);
             }
         }
 
@@ -137,18 +137,18 @@ namespace KMI.PromoPSA.Rules {
         /// <summary>
         /// Change Advert Status
         /// </summary>
-        /// <param name="idForm"></param>
+        /// <param name="promotionId">Promotion Id</param>
         /// <param name="activationCode"></param>
-        public void ChangeAdvertStatus(long idForm, long activationCode)
+        public void ChangeAdvertStatus(long promotionId, long activationCode)
         {
             Dispacher.Dispacher dispacher = GetWebServiceDispacher();
-            dispacher.ChangeAdvertStatus(idForm,activationCode);
+            dispacher.ChangeAdvertStatus(promotionId, activationCode);
         }
 
-        public long GetAvailableIdForm(long loginId)
+        public long GetAvailablePromotionId(long loginId)
         {
             Dispacher.Dispacher dispacher = GetWebServiceDispacher();
-           return dispacher.GetAvailableIdForm(loginId);
+           return dispacher.GetAvailablePromotionId(loginId);
         }
 
         public void ReleaseUser(long loginId) {
@@ -157,9 +157,9 @@ namespace KMI.PromoPSA.Rules {
             dispacher.ReleaseAdvertStatus(loginId);
         }
 
-        public bool LockAdvertStatus(long loginId, long formId) {
+        public bool LockAdvertStatus(long loginId, long promotionId) {
             Dispacher.Dispacher dispacher = GetWebServiceDispacher();
-            return  dispacher.LockAdvertStatus(loginId, formId);
+            return dispacher.LockAdvertStatus(loginId, promotionId);
         }
 
         public bool ValidateMonth(long month) {
@@ -229,7 +229,7 @@ namespace KMI.PromoPSA.Rules {
 
         #region GetCodification
 
-        public Codification GetCodification(long idForm)
+        public Codification GetCodification(long promotionId)
         {
           
             var codification = new Codification();
@@ -238,7 +238,7 @@ namespace KMI.PromoPSA.Rules {
                                           , WebApplicationParameters.DBConfig.ConnectionString))
             {
                 var dal = new PromoPsaDAL();
-                codification.Advert = dal.GetOneAdvert(db, idForm).First();
+                codification.Advert = dal.GetOneAdvert(db, promotionId).First();
                 codification.CurrentBrand = codification.Advert.IdBrand;
                 codification.CurrentProduct = codification.Advert.IdProduct;
                 codification.CurrentSegment = codification.Advert.IdSegment;
