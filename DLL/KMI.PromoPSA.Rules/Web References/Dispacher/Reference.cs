@@ -37,6 +37,8 @@ namespace KMI.PromoPSA.Rules.Dispacher {
         
         private System.Threading.SendOrPostCallback GetAvailablePromotionIdOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetDuplicatedPromotionIdOperationCompleted;
+        
         private System.Threading.SendOrPostCallback ReleaseAdvertStatusOperationCompleted;
         
         private System.Threading.SendOrPostCallback LockAdvertStatusOperationCompleted;
@@ -98,6 +100,9 @@ namespace KMI.PromoPSA.Rules.Dispacher {
         
         /// <remarks/>
         public event GetAvailablePromotionIdCompletedEventHandler GetAvailablePromotionIdCompleted;
+        
+        /// <remarks/>
+        public event GetDuplicatedPromotionIdCompletedEventHandler GetDuplicatedPromotionIdCompleted;
         
         /// <remarks/>
         public event ReleaseAdvertStatusCompletedEventHandler ReleaseAdvertStatusCompleted;
@@ -227,6 +232,37 @@ namespace KMI.PromoPSA.Rules.Dispacher {
             if ((this.GetAvailablePromotionIdCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetAvailablePromotionIdCompleted(this, new GetAvailablePromotionIdCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetDuplicatedPromotionId", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public long GetDuplicatedPromotionId(long loginId, long formId) {
+            object[] results = this.Invoke("GetDuplicatedPromotionId", new object[] {
+                        loginId,
+                        formId});
+            return ((long)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetDuplicatedPromotionIdAsync(long loginId, long formId) {
+            this.GetDuplicatedPromotionIdAsync(loginId, formId, null);
+        }
+        
+        /// <remarks/>
+        public void GetDuplicatedPromotionIdAsync(long loginId, long formId, object userState) {
+            if ((this.GetDuplicatedPromotionIdOperationCompleted == null)) {
+                this.GetDuplicatedPromotionIdOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetDuplicatedPromotionIdOperationCompleted);
+            }
+            this.InvokeAsync("GetDuplicatedPromotionId", new object[] {
+                        loginId,
+                        formId}, this.GetDuplicatedPromotionIdOperationCompleted, userState);
+        }
+        
+        private void OnGetDuplicatedPromotionIdOperationCompleted(object arg) {
+            if ((this.GetDuplicatedPromotionIdCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetDuplicatedPromotionIdCompleted(this, new GetDuplicatedPromotionIdCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -566,6 +602,32 @@ namespace KMI.PromoPSA.Rules.Dispacher {
         private object[] results;
         
         internal GetAvailablePromotionIdCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public long Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
+    public delegate void GetDuplicatedPromotionIdCompletedEventHandler(object sender, GetDuplicatedPromotionIdCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetDuplicatedPromotionIdCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetDuplicatedPromotionIdCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

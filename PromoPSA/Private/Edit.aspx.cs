@@ -19,7 +19,7 @@ public partial class Private_Edit : PrivateWebPage
     }
 
     [WebMethod]
-    public static long SaveCodification(Advert advert, string loginId)
+    public static long SaveCodification(Advert advert, string loginId, string multiPromo)
     {
 
         try
@@ -27,7 +27,12 @@ public partial class Private_Edit : PrivateWebPage
             IResults results = new Results();
             results.UpdateCodification(advert);
             results.ChangeAdvertStatus(advert.IdDataPromotion, advert.Activation);
-            return results.GetAvailablePromotionId(Convert.ToInt64(loginId));
+            if (Convert.ToInt64(multiPromo) == 0)
+                return results.GetAvailablePromotionId(Convert.ToInt64(loginId));
+            else {
+                long formId = results.InsertPromotion(advert);
+                return results.GetDuplicatedPromotionId(Convert.ToInt64(loginId), formId);
+            }
         }
         catch (Exception e)
         {

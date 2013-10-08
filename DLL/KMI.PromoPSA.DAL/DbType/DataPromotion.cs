@@ -71,5 +71,11 @@ namespace KMI.PromoPSA.DAL.DbType
 
         [MapField("NATIONAL"), NotNull]
         public long National { get; set; }
+
+        [MapField("ID_SLOGAN"), NotNull]
+        public long IdSlogan { get; set; }
+
+        [MapField("TV_BOARD"), NotNull]
+        public string TvBoard { get; set; }
     }
 }

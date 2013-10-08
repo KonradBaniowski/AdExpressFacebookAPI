@@ -61,6 +61,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetDuplicatedPromotionId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loginId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="formId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDuplicatedPromotionIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetDuplicatedPromotionIdResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="ReleaseAdvertStatus">
         <s:complexType>
           <s:sequence>
@@ -163,6 +178,12 @@
   <wsdl:message name="GetAvailablePromotionIdSoapOut">
     <wsdl:part name="parameters" element="tns:GetAvailablePromotionIdResponse" />
   </wsdl:message>
+  <wsdl:message name="GetDuplicatedPromotionIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDuplicatedPromotionId" />
+  </wsdl:message>
+  <wsdl:message name="GetDuplicatedPromotionIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDuplicatedPromotionIdResponse" />
+  </wsdl:message>
   <wsdl:message name="ReleaseAdvertStatusSoapIn">
     <wsdl:part name="parameters" element="tns:ReleaseAdvertStatus" />
   </wsdl:message>
@@ -215,6 +236,10 @@
     <wsdl:operation name="GetAvailablePromotionId">
       <wsdl:input message="tns:GetAvailablePromotionIdSoapIn" />
       <wsdl:output message="tns:GetAvailablePromotionIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDuplicatedPromotionId">
+      <wsdl:input message="tns:GetDuplicatedPromotionIdSoapIn" />
+      <wsdl:output message="tns:GetDuplicatedPromotionIdSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ReleaseAdvertStatus">
       <wsdl:input message="tns:ReleaseAdvertStatusSoapIn" />
@@ -272,6 +297,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAvailablePromotionId">
       <soap:operation soapAction="http://tempuri.org/GetAvailablePromotionId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDuplicatedPromotionId">
+      <soap:operation soapAction="http://tempuri.org/GetDuplicatedPromotionId" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -365,6 +399,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAvailablePromotionId">
       <soap12:operation soapAction="http://tempuri.org/GetAvailablePromotionId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDuplicatedPromotionId">
+      <soap12:operation soapAction="http://tempuri.org/GetDuplicatedPromotionId" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

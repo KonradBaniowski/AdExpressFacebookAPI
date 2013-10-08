@@ -66,6 +66,12 @@ namespace KMI.PromoPSA.Rules {
         void UpdateCodification(long promotionId,  long activationCode);
 
         /// <summary>
+        /// Insert Promotion
+        /// </summary>
+        /// <param name="advert">Advert</param>
+        long InsertPromotion(Advert advert);
+
+        /// <summary>
         /// Change Advert Status
         /// </summary>
         /// <param name="promotionId">Promotion Id</param>
@@ -77,6 +83,13 @@ namespace KMI.PromoPSA.Rules {
         /// <param name="loginId"></param>      
         /// <returns></returns>
         long GetAvailablePromotionId(long loginId);
+        /// <summary>
+        /// Get Duplicated Promotion Id
+        /// </summary>
+        /// <param name="loginId">Login Id</param>     
+        /// <param name="formId">Form Id</param>
+        /// <returns>Promotion Id</returns>
+        long GetDuplicatedPromotionId(long loginId, long formId);
         /// <summary>
         /// Release User 
         /// </summary>

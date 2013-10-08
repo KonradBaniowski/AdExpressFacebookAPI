@@ -181,7 +181,9 @@
 
             // validate the comment form when it is submitted            
 
-            CodificationEvent("#codifify", 20);
+            CodificationEvent("#codifify", 20, 0);
+
+            CodificationEvent("#codifyAndDuplicate", 20, 1);
 
             RejectFormEvent("#rejectcodif", 30);
 
@@ -541,7 +543,7 @@
             });
         }
 
-        function CodificationEvent(selectorId, activationCode) {
+        function CodificationEvent(selectorId, activationCode, multiPromo) {
 
             $(selectorId).off("click");
             $(selectorId).on("click", function () {
@@ -641,7 +643,8 @@
                                 'ExcluWeb': excluWeb,
                                 'National': national
                             },
-                            'loginId': loginId
+                            'loginId': loginId,
+                            'multiPromo': multiPromo
                         };
                         var mokdata = JSON.stringify(advertData);
                         
@@ -1206,8 +1209,10 @@
                                             <input class="validateButton" type="submit" id="rejectcodif" name="rejectcodif" value="Rejeter" style="width: 80px;" tabindex="15" />
                                             <span></span>
                                             <input class="validateButton" type="submit" id="cancelcodif" name="cancelcodif" value="Annuler" style="width: 80px;" tabindex="16" />
-                                              <span></span>
+                                            <span></span>
                                             <input class="validateButton" type="submit" id="pendingcodif" name="pendingcodif" value="Litige" style="width: 80px;" tabindex="17" />
+                                            <span></span>
+                                            <input class="duplicateButton" type="submit" id="codifyAndDuplicate" name="codifyAndDuplicate" value="Codifier et dupliquer" style="width: 160px;" tabindex="18" />
                                         </div>
 
                                     </td>

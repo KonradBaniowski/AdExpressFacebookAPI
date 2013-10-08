@@ -42,6 +42,10 @@
 	border: 1px solid #CBCBCB;
 	background-color:#eee;
 }
+.duplicateButton {
+	border: 1px solid #CBCBCB;
+	background-color:#FFDDDD;
+}
 /* Identification */
 #global {
 	position: absolute;

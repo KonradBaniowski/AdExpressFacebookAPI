@@ -43,7 +43,7 @@ namespace KMI.PromoPSA.DAL
            
         }
 
-        public List<Advert> GetOneAdvert(DbManager db, long promotionId)
+        public List<Advert> GetOneAdvertByPromotionId(DbManager db, long promotionId)
         {
             var query = from p in db.GetTable<DataPromotion>()
                         where p.IdDataPromotion == promotionId
@@ -68,7 +68,40 @@ namespace KMI.PromoPSA.DAL
                             ConditionText = p.ConditionText,
                             Script = p.Script,
                             ExcluWeb = p.ExcluWeb,
-                            National = p.National
+                            National = p.National,
+                            IdSlogan = p.IdSlogan,
+                            TvBoard = p.TvBoard
+                        };
+
+            return query.ToList();
+        }
+
+        public List<Advert> GetOneAdvertByFormId(DbManager db, long formId) {
+            var query = from p in db.GetTable<DataPromotion>()
+                        where p.IdForm == formId
+                        select new Advert {
+                            IdForm = p.IdForm,
+                            IdCategory = p.IdCategory,
+                            IdCircuit = p.IdCircuit,
+                            IdProduct = p.IdProduct,
+                            IdBrand = p.IdBrand,
+                            IdSegment = p.IdSegment,
+                            Activation = p.Activation,
+                            LoadDate = p.LoadDate,
+                            IdDataPromotion = p.IdDataPromotion,
+                            IdVehicle = p.IdVehicle,
+                            DateBeginNum = p.DateBeginNum,
+                            DateEndNum = p.DateEndNum,
+                            DateMediaNum = p.DateMediaNum,
+                            PromotionBrand = p.PromotionBrand,
+                            PromotionVisual = p.PromotionVisual,
+                            PromotionContent = p.PromotionContent,
+                            ConditionText = p.ConditionText,
+                            Script = p.Script,
+                            ExcluWeb = p.ExcluWeb,
+                            National = p.National,
+                            IdSlogan = p.IdSlogan,
+                            TvBoard = p.TvBoard
                         };
 
             return query.ToList();
@@ -86,6 +119,67 @@ namespace KMI.PromoPSA.DAL
 
             return query.ToList();
         
+        }
+
+        public long InsertPromotion(DbManager db, Advert advert)
+        {
+            if (advert != null)
+            {
+                var query = new StringBuilder();
+                var cultureInfo = new CultureInfo("fr-FR");
+
+                advert = GetOneAdvertByPromotionId(db, advert.IdDataPromotion).First();
+
+                query.AppendFormat(" BEGIN   ");
+                query.AppendFormat(" INSERT INTO promo03.data_promotion   ");
+                query.AppendFormat(" (                                    ");
+                query.AppendFormat(" id_data_promotion,                   ");
+                query.AppendFormat(" id_language_data_i,                  ");
+                query.AppendFormat(" promotion_visual,                    ");
+                query.AppendFormat(" activation,                          ");
+                query.AppendFormat(" load_date,                           ");
+                query.AppendFormat(" exclu_web,                           ");
+                query.AppendFormat(" national,                           ");
+                query.AppendFormat(" id_form,                             ");
+                query.AppendFormat(" id_vehicle,                          ");
+                if (advert.IdVehicle == Constantes.Vehicles.names.TELEVISION.GetHashCode()) {
+                    query.AppendFormat(" id_slogan,                           ");
+                    query.AppendFormat(" tv_board,                            ");
+                    if (advert.Script.Length > 0)
+                        query.AppendFormat(" script,                              ");
+                }
+                query.AppendFormat(" date_media_num                       ");
+                query.AppendFormat(" )                                    ");
+
+                query.AppendFormat(" VALUES                               ");
+
+                query.AppendFormat(" (                                    ");
+                query.AppendFormat(" PROMO03.SEQ_DATA_PROMOTION.NEXTVAL,  ");
+                query.AppendFormat(" {0},                                 ", Constantes.PromotionDB.ID_LANGUAGE_DATA_I);
+                query.AppendFormat(" '{0}',                               ", advert.PromotionVisual);
+                query.AppendFormat(" {0},                                 ", Constantes.PromotionDB.ACTIVATION_LOADED);
+                query.AppendFormat(" {0},                                 ", advert.LoadDate);
+                query.AppendFormat(" {0},                                 ", Constantes.PromotionDB.EXCLU_WEB);
+                query.AppendFormat(" {0},                                 ", Constantes.PromotionDB.NATIONAL);
+                query.AppendFormat(" {0},                                 ", advert.IdForm);
+                query.AppendFormat(" {0},                                 ", advert.IdVehicle);
+                if (advert.IdVehicle == Constantes.Vehicles.names.TELEVISION.GetHashCode()) {
+                    query.AppendFormat(" {0},                                 ", advert.IdSlogan);
+                    query.AppendFormat(" '{0}',                               ", advert.TvBoard);
+                    if (advert.Script.Length > 0)
+                        query.AppendFormat(" '{0}',                               ", advert.Script);
+                }
+                query.AppendFormat(" {0}                                 ", advert.DateMediaNum);
+                query.AppendFormat(" );  \n                                ");
+                query.AppendFormat(" END; ");
+
+                var dbCmd = db.SetCommand(query.ToString());
+                dbCmd.ExecuteNonQuery();
+
+                return advert.IdForm;
+            }
+
+            return 0;
         }
 
         public void UpdateCodification(DbManager db, Advert advert)

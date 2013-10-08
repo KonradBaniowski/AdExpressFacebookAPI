@@ -132,6 +132,16 @@ namespace KMI.PromoPSA.Rules {
             }
         }
 
+        public long InsertPromotion(Advert advert) {
+            using (var db = new DbManager(new GenericDataProvider
+                                              (WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString)) {
+                var dal = new PromoPsaDAL();
+
+                return dal.InsertPromotion(db, advert);
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -151,15 +161,20 @@ namespace KMI.PromoPSA.Rules {
            return dispacher.GetAvailablePromotionId(loginId);
         }
 
+        public long GetDuplicatedPromotionId(long loginId, long promotionId) {
+            Dispacher.Dispacher dispacher = GetWebServiceDispacher();
+            return dispacher.GetDuplicatedPromotionId(loginId, promotionId);
+        }
+
         public void ReleaseUser(long loginId) {
            
             Dispacher.Dispacher dispacher = GetWebServiceDispacher();
             dispacher.ReleaseAdvertStatus(loginId);
         }
 
-        public bool LockAdvertStatus(long loginId, long promotionId) {
+        public bool LockAdvertStatus(long loginId, long formId) {
             Dispacher.Dispacher dispacher = GetWebServiceDispacher();
-            return dispacher.LockAdvertStatus(loginId, promotionId);
+            return dispacher.LockAdvertStatus(loginId, formId);
         }
 
         public bool ValidateMonth(long month) {
@@ -238,7 +253,7 @@ namespace KMI.PromoPSA.Rules {
                                           , WebApplicationParameters.DBConfig.ConnectionString))
             {
                 var dal = new PromoPsaDAL();
-                codification.Advert = dal.GetOneAdvert(db, promotionId).First();
+                codification.Advert = dal.GetOneAdvertByPromotionId(db, promotionId).First();
                 codification.CurrentBrand = codification.Advert.IdBrand;
                 codification.CurrentProduct = codification.Advert.IdProduct;
                 codification.CurrentSegment = codification.Advert.IdSegment;
