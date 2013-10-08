@@ -65,10 +65,10 @@ public partial class Private_Home : PrivateWebPage {
     /// <summary>
     /// Check Form Id Availability
     /// </summary>
-    /// <param name="formId">Form Id</param>
+    /// <param name="promotionId">Promotion Id</param>
     /// <returns>True if form available</returns>
     [WebMethod]
-    public static bool checkFormIdAvailability(string loginId, string promotionId) {
+    public static bool checkPromotionIdAvailability(string loginId, string promotionId) {
 
         IResults results = new Results();
         return results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(promotionId));
@@ -229,7 +229,6 @@ public partial class Private_Home : PrivateWebPage {
                         i = row.IdForm,
                         cell = new string[] {
                             row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, row.IdDataPromotion.ToString(), row.ActivationName, row.LoadDateFormated
-                        //row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, ("Edit.aspx?formId=" +  row.IdForm.ToString() + "&sessionId=" + sessionId+ "&loginId=" + loginId), row.ActivationName, row.LoadDateFormated
                     }
                     }
                ).ToArray()

@@ -87,7 +87,7 @@
         
         function StartCodif() {
 
-            var formIdFromWS;
+            var promotionIdFromWS;
 
             $.ajax({
                 type: "POST",
@@ -98,7 +98,7 @@
                 dataType: "json",
                 success: function (msg, st) {
                     if (st == "success") {
-                        formIdFromWS = JSON.parse(msg.d);
+                        promotionIdFromWS = JSON.parse(msg.d);
                     }
                 },
                 error: function () {
@@ -106,8 +106,8 @@
                 }
             });
 
-            if (formIdFromWS > 0)
-                document.location = "Edit.aspx?formId=" + formIdFromWS + "&sessionId=" + sessionId + "&loginId=" + loginId;
+            if (promotionIdFromWS > 0)
+                document.location = "Edit.aspx?promotionId=" + promotionIdFromWS + "&sessionId=" + sessionId + "&loginId=" + loginId;
             else
                 alert("Aucune fiche n'est disponible !");
 
@@ -157,7 +157,7 @@
 
             $.ajax({
                 type: "POST",
-                url: 'Home.aspx/checkFormIdAvailability',
+                url: 'Home.aspx/checkPromotionIdAvailability',
                 async: false,
                 data: JSON.stringify({ loginId: loginId, promotionId: promotionId }),
                 contentType: "application/json; charset=utf-8",
