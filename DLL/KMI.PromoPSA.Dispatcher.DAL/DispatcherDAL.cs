@@ -14,7 +14,7 @@ namespace KMI.PromoPSA.Dispatcher.DAL
         public List<AdvertStatus> GetAdverts(DbManager db)
         {
             var query = from p in db.GetTable<DataPromotion>() 
-                        where  p.IdForm>0 && p.Activation > 0 
+                        where  p.IdForm>0 
                           && p.Activation != Constantes.Constantes.ACTIVATION_CODE_INACTIVE
                         select new AdvertStatus
                             {
@@ -29,7 +29,7 @@ namespace KMI.PromoPSA.Dispatcher.DAL
 
         public List<AdvertStatus> GetAdvertsByFormId(DbManager db, long formId) {
             var query = from p in db.GetTable<DataPromotion>()
-                        where p.Activation > 0 && p.IdForm == formId
+                        where  p.IdForm == formId
                          && p.Activation != Constantes.Constantes.ACTIVATION_CODE_INACTIVE
                         orderby p.IdDataPromotion
                         select new AdvertStatus {
