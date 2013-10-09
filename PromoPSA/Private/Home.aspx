@@ -169,8 +169,7 @@
                     if (verif == true)
                         document.location = "Edit.aspx?promotionId=" + promotionId + "&sessionId=" + sessionId + "&loginId=" + loginId;
                     else
-                        alert("Cette fiche est déjà en cours de codification !");
-                        //$("#dialog").dialog("open");
+                        $("#dialog").dialog("open");
                 },
                 error: function () {
                     alert("Une Erreur est survenue. Impossible  d\'editer la fiche!");
