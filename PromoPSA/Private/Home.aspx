@@ -128,8 +128,6 @@
 
         function ValidateMonth() {
 
-            var verif;
-
             $.ajax({
                 type: "POST",
                 url: 'Home.aspx/validateMonth',
@@ -139,16 +137,17 @@
                 dataType: "json",
                 success: function (msg, st) {
                     if (st == "success") {
-                        verif = JSON.parse(msg.d);
+                        JSON.parse(msg.d);
+                        $("#grid").trigger("reloadGrid");
+                        InitPromotionNb(selectedMonth);
+                        InitChartComponent(selectedMonth);
+                        alert("Mois Validé");
                     }
                 },
                 error: function () {
                     alert("Erreur lors de la validation du mois!");
                 }
             });
-
-            if (verif == true)
-                alert("Mois Validé");
 
         }
         
@@ -170,7 +169,8 @@
                     if (verif == true)
                         document.location = "Edit.aspx?promotionId=" + promotionId + "&sessionId=" + sessionId + "&loginId=" + loginId;
                     else
-                        $("#dialog").dialog("open");
+                        alert("Cette fiche est déjà en cours de codification !");
+                        //$("#dialog").dialog("open");
                 },
                 error: function () {
                     alert("Une Erreur est survenue. Impossible  d\'editer la fiche!");
@@ -284,17 +284,20 @@
                 //height: 500,
                 gridview: true,
                 rowattr: function (rd) {
-                    if (rd.ActivationName == "A Codifier") { // verify that the testing is correct in your case
+                    if (rd.ActivationName == "A Codifier") { 
                         return { "class": "toCodifyStyle" };
                     }
-                    else if (rd.ActivationName == "Codifiée") { // verify that the testing is correct in your case
+                    else if (rd.ActivationName == "Codifiée") { 
                         return { "class": "codifiedStyle" };
                     }
-                    else if (rd.ActivationName == "Rejetée") { // verify that the testing is correct in your case
+                    else if (rd.ActivationName == "Rejetée") { 
                         return { "class": "rejectedStyle" };
                     }
-                    else if (rd.ActivationName == "Litige") { // verify that the testing is correct in your case
+                    else if (rd.ActivationName == "Litige") { 
                         return { "class": "pendingStyle" };
+                    }
+                    else if (rd.ActivationName == "Validée") { 
+                        return { "class": "validatedStyle" };
                     }
                 },
                 caption: "Promotions PSA",
@@ -338,13 +341,13 @@
                     }
                 },
                 error: function () {
-                    alert("Error with AJAX callback");
+                    alert("Erreur lors de la création du graphique.");
                 }
             });
 
             plot2 = jQuery.jqplot('chart1', dataG, {
                 title: ' ',
-                seriesColors: ['#e8e8e8', '#94d472', '#fed2d2', '#f0c95b'],
+                seriesColors: ['#e8e8e8', '#94d472', '#fed2d2', '#f0c95b', '#B8D0DE'],
                 grid: {
                     background: '#ffffff'     // CSS color spec for background color of grid.
                 },

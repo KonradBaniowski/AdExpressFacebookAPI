@@ -114,8 +114,9 @@ public partial class Private_Home : PrivateWebPage
     /// </summary>
     /// <returns>Chart Data</returns>
     [WebMethod]
-    public static string getChartData(string loadingDate)
-    {
+    public static string getChartData(string loadingDate) {
+
+        try {
 
         string result = null;
         IResults results = new Results();
@@ -123,13 +124,15 @@ public partial class Private_Home : PrivateWebPage
         int advertsNbCodified = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_CODIFIED);
         int advertsNbRejected = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_REJECTED);
         int advertsNbPending = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_WAITING);
+        int advertsNbValidated = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_VALIDATED);
 
         //--- format json
         var jsonData = new[] {new[]{
                                     new object[] {"Nombre de promotions à codifier : " + advertsNbToCodify + "", advertsNbToCodify },
                                     new object[] {"Nombre de promotions codifiées : " + advertsNbCodified + "", advertsNbCodified },
                                     new object[] {"Nombre de promotions rejetées : " + advertsNbRejected + "", advertsNbRejected },
-                                      new object[] {"Nombre de promotions en litige : " + advertsNbPending + "", advertsNbPending }
+                                    new object[] {"Nombre de promotions en litige : " + advertsNbPending + "", advertsNbPending },
+                                    new object[] {"Nombre de promotions validée : " + advertsNbValidated + "", advertsNbValidated }
                                     }
             }.ToArray();
 
@@ -137,6 +140,14 @@ public partial class Private_Home : PrivateWebPage
 
         return result;
 
+        }
+        catch (Exception e) {
+            string message = " Erreur lors de la récupération des données pour le graphique.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Date de chargement : {0}", loadingDate);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de la création du graphique", e);
+        }
     }
     #endregion
 

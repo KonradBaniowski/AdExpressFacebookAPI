@@ -72,6 +72,10 @@
     background-color : #f0c95b;
     background-image: url();
 }
+.validatedStyle {
+    background-color : #B8D0DE;
+    background-image: url();
+}
 .validateMonth{
     color:#222222;
     text-decoration: none;
