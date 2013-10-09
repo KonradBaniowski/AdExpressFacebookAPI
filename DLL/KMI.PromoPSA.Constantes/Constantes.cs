@@ -7,21 +7,21 @@ namespace KMI.PromoPSA.Constantes
 {
     public class Constantes
     {
-        public static long NO_USER_VALUE = 0;
+        public const long NO_USER_VALUE = 0;
 
-        public static long ACTIVATION_CODE_TO_CODIFY = 80; //40;
+        public const long ACTIVATION_CODE_TO_CODIFY = 80; //40;
 
-        public static long ACTIVATION_CODE_INACTIVE = 50;
+        public const long ACTIVATION_CODE_INACTIVE = 50;
 
-        public static long ACTIVATION_CODE_CODIFIED = 90; //20;
+        public  const long ACTIVATION_CODE_CODIFIED = 90; //20;
 
-        public static long ACTIVATION_CODE_REJECTED = 60;//30;
+        public const long ACTIVATION_CODE_REJECTED = 60;//30;
 
-        public static long ACTIVATION_CODE_WAITING = 770; //90;
+        public const long ACTIVATION_CODE_WAITING = 770; //90;
 
-        public static long ACTIVATION_CODE_VALIDATED = 0;
+        public const long ACTIVATION_CODE_VALIDATED = 0;
 
-        public static long DEFAULT_LANGUAGE = 33;
+        public const long DEFAULT_LANGUAGE = 33;
 
     }
 

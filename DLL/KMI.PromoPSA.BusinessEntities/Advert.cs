@@ -75,13 +75,13 @@ namespace KMI.PromoPSA.BusinessEntities
         public string ActivationName {
             get {
                 switch (Activation) {
-                    case 20:
+                    case Constantes.Constantes.ACTIVATION_CODE_CODIFIED:
                         return "Codifiée";
-                    case 30:
+                    case Constantes.Constantes.ACTIVATION_CODE_REJECTED:
                         return "Rejetée";
-                    case 40:
+                    case Constantes.Constantes.ACTIVATION_CODE_TO_CODIFY:
                         return "A Codifier";
-                    case 90:
+                    case Constantes.Constantes.ACTIVATION_CODE_WAITING:
                         return "Litige";
                     default:
                         return "";
