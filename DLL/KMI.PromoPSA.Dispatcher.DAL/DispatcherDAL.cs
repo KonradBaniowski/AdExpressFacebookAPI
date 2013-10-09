@@ -14,7 +14,8 @@ namespace KMI.PromoPSA.Dispatcher.DAL
         public List<AdvertStatus> GetAdverts(DbManager db)
         {
             var query = from p in db.GetTable<DataPromotion>() 
-                        where p.Activation > 0 && p.IdForm>0
+                        where  p.IdForm>0 && p.Activation > 0 
+                          && p.Activation != Constantes.Constantes.ACTIVATION_CODE_INACTIVE
                         select new AdvertStatus
                             {
                                 IdForm = p.IdForm,
@@ -29,6 +30,7 @@ namespace KMI.PromoPSA.Dispatcher.DAL
         public List<AdvertStatus> GetAdvertsByFormId(DbManager db, long formId) {
             var query = from p in db.GetTable<DataPromotion>()
                         where p.Activation > 0 && p.IdForm == formId
+                         && p.Activation != Constantes.Constantes.ACTIVATION_CODE_INACTIVE
                         orderby p.IdDataPromotion
                         select new AdvertStatus {
                             IdForm = p.IdForm,
@@ -40,19 +42,18 @@ namespace KMI.PromoPSA.Dispatcher.DAL
             return query.ToList();
         }
 
-        public void UpdateMonth(DbManager db, long loadDate,long activationCode)
+        public void UpdateMonth(DbManager db, long loadDate,long activationCode,long targettedCode)
         {
            
                 var query = new StringBuilder();
                 var cultureInfo = new CultureInfo("fr-FR");
 
                 query.Append("BEGIN ");
-                query.AppendFormat(" UPDATE  {0}.DATA_PROMOTION SET ", Constantes.Db.PROMO_SCHEMA);
-            
+                query.AppendFormat(" UPDATE  {0}.DATA_PROMOTION SET ", Constantes.Db.PROMO_SCHEMA);            
                 query.AppendFormat(" ACTIVATION = to_number('{0}') ", activationCode.ToString(cultureInfo));
                 query.AppendFormat(" WHERE LOAD_DATE = to_number('{0}') ", loadDate.ToString(cultureInfo));
-                query.AppendFormat(" AND ACTIVATION = to_number('{0}'); "
-                    , Constantes.Constantes.ACTIVATION_CODE_CODIFIED.ToString(cultureInfo));
+                query.AppendFormat(" AND ACTIVATION = to_number('{0}') AND ID_FORM > 0; "
+                    , targettedCode);
                 query.Append(" END; ");
                 var dbCmd = db.SetCommand(query.ToString());
                 dbCmd.ExecuteNonQuery();

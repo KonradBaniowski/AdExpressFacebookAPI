@@ -207,7 +207,8 @@ namespace KMI.PromoPSA.Dispatcher.Core
 
                 foreach (var advert in adverts)
                 {
-                    advert.Activation = Constantes.Constantes.ACTIVATION_CODE_VALIDATED;
+                    advert.Activation = (advert.Activation==Constantes.Constantes.ACTIVATION_CODE_REJECTED)
+                        ? Constantes.Constantes.ACTIVATION_CODE_INACTIVE : Constantes.Constantes.ACTIVATION_CODE_VALIDATED;
                     isValidated = true;
                 }
                 if (isValidated)
@@ -219,8 +220,13 @@ namespace KMI.PromoPSA.Dispatcher.Core
                         {
                             var dal = new DispatcherDAL();
 
+                            //Delete rejected rows (set activation code to 50)
                             dal.UpdateMonth(db, loadDate
-                               , Constantes.Constantes.ACTIVATION_CODE_VALIDATED);
+                               , Constantes.Constantes.ACTIVATION_CODE_INACTIVE, Constantes.Constantes.ACTIVATION_CODE_REJECTED);
+
+                            //Validate codified rows
+                            dal.UpdateMonth(db, loadDate
+                               , Constantes.Constantes.ACTIVATION_CODE_VALIDATED, Constantes.Constantes.ACTIVATION_CODE_CODIFIED);
 
                         }
                         catch
