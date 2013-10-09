@@ -216,18 +216,6 @@ namespace KMI.PromoPSA.Constantes
         /// Indicates if the promo is national
         /// </summary>
         public const string NATIONAL = "1";
-        /// <summary>
-        /// Indicates that the row is loaded
-        /// </summary>
-        public const string ACTIVATION_LOADED = "40";
-        /// <summary>
-        /// Indicates that the row is rejected
-        /// </summary>
-        public const string ACTIVATION_REJECTED = "30";
-        /// <summary>
-        /// Indicates that the row is codified
-        /// </summary>
-        public const string ACTIVATION_CODIFIED = "20";
     }
 
     #region Vehicles

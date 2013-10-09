@@ -160,7 +160,7 @@ namespace KMI.PromoPSA.DAL
                 query.AppendFormat(" PROMO03.SEQ_DATA_PROMOTION.NEXTVAL,  ");
                 query.AppendFormat(" {0},                                 ", Constantes.PromotionDB.ID_LANGUAGE_DATA_I);
                 query.AppendFormat(" '{0}',                               ", advert.PromotionVisual);
-                query.AppendFormat(" {0},                                 ", Constantes.PromotionDB.ACTIVATION_LOADED);
+                query.AppendFormat(" {0},                                 ", Constantes.Constantes.ACTIVATION_CODE_TO_CODIFY);
                 query.AppendFormat(" {0},                                 ", advert.LoadDate);
                 query.AppendFormat(" {0},                                 ", Constantes.PromotionDB.EXCLU_WEB);
                 query.AppendFormat(" {0},                                 ", Constantes.PromotionDB.NATIONAL);
