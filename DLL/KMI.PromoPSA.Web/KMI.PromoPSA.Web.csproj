@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\CustomerWebException.cs" />
     <Compile Include="Functions\Script.cs" />
+    <Compile Include="Functions\Utils.cs" />
     <Compile Include="UI\ErrorEventArgs.cs" />
     <Compile Include="UI\PrivateWebPage.cs">
       <SubType>ASPXCodeBehind</SubType>

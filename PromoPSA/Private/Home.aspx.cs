@@ -8,9 +8,11 @@ using System.Web.UI.WebControls;
 using KMI.PromoPSA.BusinessEntities;
 using KMI.PromoPSA.Constantes;
 using KMI.PromoPSA.Rules;
+using KMI.PromoPSA.Web.Functions;
 using KMI.PromoPSA.Web.UI;
 
-public partial class Private_Home : PrivateWebPage {
+public partial class Private_Home : PrivateWebPage
+{
 
     #region Page Load
     /// <summary>
@@ -18,14 +20,16 @@ public partial class Private_Home : PrivateWebPage {
     /// </summary>
     /// <param name="sender">Object Sender</param>
     /// <param name="e">Event Args</param>
-    protected void Page_Load(object sender, EventArgs e) {
+    protected void Page_Load(object sender, EventArgs e)
+    {
         DisconnectUserWebControl1.WebSession = _webSession;
         LoginInformationWebControl1.WebSession = _webSession;
         PromotionInformationWebControl1.WebSession = _webSession;
         IResults results = new Results();
         List<LoadDateBE> list = results.GetLoadDates();
         var loadDate = list.Max(x => x.LoadDate);
-        string scriptGlobalVariables = "var currentMonth = '" + loadDate.Value + "'; \n var sessionId = '" + _webSession.IdSession + "';" + "\n var loginId = '" + _webSession.CustomerLogin.IdLogin + "';" + "\n var selectedMonth = '" + loadDate.Value + "';";
+        string scriptGlobalVariables = string.Format("var currentMonth = '{0}'; \n var sessionId = '{1}';" + "\n var loginId = '{2}';" + "\n var selectedMonth = '{0}';"
+            , loadDate.Value, _webSession.IdSession, _webSession.CustomerLogin.IdLogin);
         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "globaVariables", scriptGlobalVariables, true);
     }
     #endregion
@@ -37,11 +41,22 @@ public partial class Private_Home : PrivateWebPage {
     /// <param name="loginId">Login Id</param>
     /// <returns>True if succed</returns>
     [WebMethod]
-    public static long getAvailablePromotionId(string loginId) {
-
-        IResults results = new Results();
-        return results.GetAvailablePromotionId(Int64.Parse(loginId));
-
+    public static long getAvailablePromotionId(string loginId)
+    {
+        try
+        {
+        
+            IResults results = new Results();
+            return results.GetAvailablePromotionId(Int64.Parse(loginId));
+        }
+        catch (Exception e)
+        {
+            string message = " Erreur lors de l'obtetion d'une fiche à codifier.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);          
+            message += string.Format("Login Id : {0}", loginId);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de l'obtetion d'une fiche à codifier", e);
+        }
     }
     #endregion
 
@@ -53,7 +68,8 @@ public partial class Private_Home : PrivateWebPage {
     /// <param name="month"></param>
     /// <returns>True if succed</returns>
     [WebMethod]
-    public static bool ValidateMonth(string month) {
+    public static bool ValidateMonth(string month)
+    {
 
         IResults results = new Results();
         return results.ValidateMonth(Int64.Parse(month));
@@ -62,16 +78,33 @@ public partial class Private_Home : PrivateWebPage {
     #endregion
 
     #region Check Form Id Availability
+
     /// <summary>
     /// Check Form Id Availability
     /// </summary>
+    /// <param name="loginId">login Id</param>
     /// <param name="promotionId">Promotion Id</param>
     /// <returns>True if form available</returns>
     [WebMethod]
-    public static bool checkPromotionIdAvailability(string loginId, string promotionId) {
+    public static bool checkPromotionIdAvailability(string loginId, string promotionId)
+    {
 
-        IResults results = new Results();
-        return results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(promotionId));
+        try
+        {
+            IResults results = new Results();
+            return results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(promotionId));
+
+          
+        }
+        catch (Exception e)
+        {
+            string message = " Erreur lors de l'obtetion d'une fiche à codifier.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Promotion numero : {0}<br/>", promotionId);
+            message += string.Format("Login Id : {0}", loginId);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de l'obtetion d'une fiche à codifier", e);
+        }
     }
     #endregion
 
@@ -81,7 +114,8 @@ public partial class Private_Home : PrivateWebPage {
     /// </summary>
     /// <returns>Chart Data</returns>
     [WebMethod]
-    public static string getChartData(string loadingDate) {
+    public static string getChartData(string loadingDate)
+    {
 
         string result = null;
         IResults results = new Results();
@@ -120,7 +154,9 @@ public partial class Private_Home : PrivateWebPage {
     /// <param name="searchOper">Search Operation</param>
     /// <returns>Grid Data</returns>
     [WebMethod]
-    public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch, string searchField, string searchString, string searchOper, string loadingDate, string sessionId, string loginId) {
+    public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch,
+        string searchField, string searchString, string searchOper, string loadingDate, string sessionId, string loginId)
+    {
         string result = null;
 
         IResults results = new Results();
@@ -135,16 +171,20 @@ public partial class Private_Home : PrivateWebPage {
         {
             list = results.GetAdverts(Int64.Parse(loadingDate));
         }
-       
 
-        try {
 
-            if (isSearch) {
+        try
+        {
 
-                switch (searchField) {
+            if (isSearch)
+            {
+
+                switch (searchField)
+                {
                     case "IdForm":
-                        switch (searchOper) { 
-                            case "eq" :
+                        switch (searchOper)
+                        {
+                            case "eq":
                                 list = list.Where(x => x.IdForm == Int64.Parse(searchString));
                                 break;
                             case "ne":
@@ -153,7 +193,8 @@ public partial class Private_Home : PrivateWebPage {
                         }
                         break;
                     case "VehicleName":
-                        switch (searchOper) {
+                        switch (searchOper)
+                        {
                             case "eq":
                                 list = list.Where(x => x.IdVehicle == Int64.Parse(searchString));
                                 break;
@@ -163,7 +204,8 @@ public partial class Private_Home : PrivateWebPage {
                         }
                         break;
                     case "DateMediaNum":
-                        switch (searchOper) {
+                        switch (searchOper)
+                        {
                             case "eq":
                                 list = list.Where(x => x.DateMediaNumFormated == searchString);
                                 break;
@@ -173,7 +215,8 @@ public partial class Private_Home : PrivateWebPage {
                         }
                         break;
                     case "ActivationName":
-                        switch (searchOper) {
+                        switch (searchOper)
+                        {
                             case "eq":
                                 list = list.Where(x => x.Activation == Int64.Parse(searchString));
                                 break;
@@ -183,7 +226,8 @@ public partial class Private_Home : PrivateWebPage {
                         }
                         break;
                     case "LoadDate":
-                        switch (searchOper) {
+                        switch (searchOper)
+                        {
                             case "eq":
                                 list = list.Where(x => x.LoadDateFormated == searchString);
                                 break;
@@ -205,7 +249,8 @@ public partial class Private_Home : PrivateWebPage {
             //--- filter dataset for paging and sorting
             IOrderedEnumerable<Advert> orderedRecords = null;
 
-            switch (sortField) {
+            switch (sortField)
+            {
                 case "IdForm": orderedRecords = list.OrderBy(x => x.IdForm); break;
                 case "VehicleName": orderedRecords = list.OrderBy(x => x.VehicleName); break;
                 case "DateMediaNum": orderedRecords = list.OrderBy(x => x.DateMediaNum); break;
@@ -219,16 +264,19 @@ public partial class Private_Home : PrivateWebPage {
               .Take(pageSize);
 
             //--- format json
-            var jsonData = new {
+            var jsonData = new
+            {
                 totalpages = totalPages, //--- number of pages
                 page = pageIndex, //--- current page
                 totalrecords = totalRecords, //--- total items
                 rows = (
                     from row in sortedRecords
-                    select new {
+                    select new
+                    {
                         i = row.IdForm,
                         cell = new string[] {
-                            row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated, row.IdDataPromotion.ToString(), row.ActivationName, row.LoadDateFormated
+                            row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated,
+                            row.IdDataPromotion.ToString(), row.ActivationName, row.LoadDateFormated
                     }
                     }
                ).ToArray()
@@ -237,10 +285,12 @@ public partial class Private_Home : PrivateWebPage {
             result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
 
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             //Debug.WriteLine(ex);
         }
-        finally {
+        finally
+        {
         }
 
         return result;
@@ -253,17 +303,19 @@ public partial class Private_Home : PrivateWebPage {
     /// </summary>
     /// <returns>Chart Data</returns>
     [WebMethod]
-    public static string getLoadDates() {
+    public static string getLoadDates()
+    {
 
         string result = null;
         IResults results = new Results();
         List<LoadDateBE> loadDates = results.GetLoadDates();
 
         //--- format json
-        List<Object> list = new List<Object>();
+        var list = new List<Object>();
         int i = 0;
 
-        foreach (LoadDateBE loadDate in loadDates) {
+        foreach (LoadDateBE loadDate in loadDates)
+        {
             string date = loadDate.LoadDate.ToString();
             list.Add(date.Substring(4, 2) + "/" + date.Substring(0, 4));
             i++;
@@ -284,7 +336,8 @@ public partial class Private_Home : PrivateWebPage {
     /// </summary>
     /// <returns>Promotions Number</returns>
     [WebMethod]
-    public static string getPromotionsNb(string loadingDate) {
+    public static string getPromotionsNb(string loadingDate)
+    {
 
         string result = null;
         IResults results = new Results();

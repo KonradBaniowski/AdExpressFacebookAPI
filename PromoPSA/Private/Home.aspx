@@ -100,17 +100,18 @@
                     if (st == "success") {
                         promotionIdFromWS = JSON.parse(msg.d);
                     }
+                    if (promotionIdFromWS > 0)
+                        document.location = "Edit.aspx?promotionId=" + promotionIdFromWS + "&sessionId=" + sessionId + "&loginId=" + loginId;
+                    else
+                        alert("Aucune fiche n'est disponible !");
+
                 },
                 error: function () {
-                    alert("Error with AJAX callback");
+                    alert("Erreur lors de la récupération d'une fiche disponible.");
                 }
             });
 
-            if (promotionIdFromWS > 0)
-                document.location = "Edit.aspx?promotionId=" + promotionIdFromWS + "&sessionId=" + sessionId + "&loginId=" + loginId;
-            else
-                alert("Aucune fiche n'est disponible !");
-
+        
         }
 
         function VerifDialog() {
@@ -142,7 +143,7 @@
                     }
                 },
                 error: function () {
-                    alert("Error with AJAX callback");
+                    alert("Erreur lors de la validation du mois!");
                 }
             });
 
@@ -166,16 +167,17 @@
                     if (st == "success") {
                         verif = JSON.parse(msg.d);
                     }
+                    if (verif == true)
+                        document.location = "Edit.aspx?promotionId=" + promotionId + "&sessionId=" + sessionId + "&loginId=" + loginId;
+                    else
+                        $("#dialog").dialog("open");
                 },
                 error: function () {
-                    alert("Error with AJAX callback");
+                    alert("Une Erreur est survenue. Impossible  d\'editer la fiche!");
                 }
             });
 
-            if (verif == true)
-                document.location = "Edit.aspx?promotionId=" + promotionId + "&sessionId=" + sessionId + "&loginId=" + loginId;
-            else
-                $("#dialog").dialog("open");
+           
 
         }
 
@@ -205,7 +207,7 @@
                     }
                 },
                 error: function () {
-                    alert("Error with AJAX callback");
+                    alert("Impossible d\'initilaiser la liste des fiches. Erreur lors du chargement des dates.");
                 }
             });
 
@@ -246,7 +248,7 @@
                             }
                         },
                         error: function () {
-                            alert("Error with AJAX callback");
+                            alert("Erreur lors de la récupération de la liste des fiches.");
                         }
                     });
                 },
@@ -380,7 +382,7 @@
                     }
                 },
                 error: function () {
-                    alert("Error with AJAX callback");
+                    alert("Erreur lors de la récupération du nombre de fiches.");
                 }
             });
 

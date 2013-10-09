@@ -5,6 +5,7 @@ using KMI.PromoPSA.BusinessEntities;
 using KMI.PromoPSA.BusinessEntities.Classification;
 using KMI.PromoPSA.Rules;
 using KMI.PromoPSA.Web.Exceptions;
+using KMI.PromoPSA.Web.Functions;
 using KMI.PromoPSA.Web.UI;
 
 public partial class Private_Edit : PrivateWebPage
@@ -40,7 +41,7 @@ public partial class Private_Edit : PrivateWebPage
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
             if (advert != null) message += string.Format("Promotion numero : {0}<br/>", advert.IdDataPromotion);
             message += string.Format("Login Id : {0}", loginId);
-            SendErrorMail(message, e);
+            Utils.SendErrorMail(message, e);
             throw new Exception("Erreur de sauvegarde", e);
         }
     }
@@ -63,7 +64,7 @@ public partial class Private_Edit : PrivateWebPage
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
             message += string.Format("Promotion numero : {0}<br/>", promotionId);
             if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
-            SendErrorMail(message, e);
+            Utils.SendErrorMail(message, e);
             throw new Exception("Erreur de rejet de fiche", e);
         }
     }
@@ -84,7 +85,7 @@ public partial class Private_Edit : PrivateWebPage
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
             message += string.Format("Promotion numero : {0}<br/>", promotionId);
             if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
-            SendErrorMail(message, e);
+            Utils.SendErrorMail(message, e);
             throw new Exception("Erreur de la mise en litige de la fiche", e);
         }
     }
@@ -102,7 +103,7 @@ public partial class Private_Edit : PrivateWebPage
             string message = " Erreur pour obtenir la fiche de codification.<br/>";
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
             message += string.Format("Promotion numero : {0}<br/>", idDataPromotion);
-            SendErrorMail(message, e);
+            Utils.SendErrorMail(message, e);
             throw new Exception("Erreur obtention fiche de codification", e);
         }
     }
@@ -121,7 +122,7 @@ public partial class Private_Edit : PrivateWebPage
                 , loginId);
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
             if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
-            SendErrorMail(message, e);
+            Utils.SendErrorMail(message, e);
             throw new Exception("Erreur libération de fiches", e);
         }
     }
@@ -139,15 +140,9 @@ public partial class Private_Edit : PrivateWebPage
             string message = string.Format(" Erreur pour obtenir la liste des produits du segment.{0}<br/>", segmentId);
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
             message += string.Format("Segment Id : {0}", segmentId);
-            SendErrorMail(message, e);
+           Utils.SendErrorMail(message, e);
             throw new Exception("Erreur obtention produit par segment", e);
         }
     }
 
-    private static void SendErrorMail(string message, Exception e)
-    {
-        var cwe = new CustomerWebException(message, e.StackTrace);
-        cwe.SendMail();
-
-    }
 }
