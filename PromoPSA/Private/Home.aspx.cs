@@ -132,7 +132,7 @@ public partial class Private_Home : PrivateWebPage
                                     new object[] {"Nombre de promotions codifiées : " + advertsNbCodified + "", advertsNbCodified },
                                     new object[] {"Nombre de promotions rejetées : " + advertsNbRejected + "", advertsNbRejected },
                                     new object[] {"Nombre de promotions en litige : " + advertsNbPending + "", advertsNbPending },
-                                    new object[] {"Nombre de promotions validée : " + advertsNbValidated + "", advertsNbValidated }
+                                    new object[] {"Nombre de promotions validées : " + advertsNbValidated + "", advertsNbValidated }
                                     }
             }.ToArray();
 
