@@ -181,15 +181,15 @@
 
             // validate the comment form when it is submitted            
 
-            CodificationEvent("#codifify", 20, 0);
+            CodificationEvent("#codifify", 90, 0);
 
-            CodificationEvent("#codifyAndDuplicate", 20, 1);
+            CodificationEvent("#codifyAndDuplicate", 90, 1);
 
-            RejectFormEvent("#rejectcodif", 30);
+            RejectFormEvent("#rejectcodif", 60);
 
             CancelForm("#cancelcodif");
 
-            PendingFormEvent("#pendingcodif",90);
+            PendingFormEvent("#pendingcodif",70);
 
             $(function () {
                 $("#dialog").dialog({

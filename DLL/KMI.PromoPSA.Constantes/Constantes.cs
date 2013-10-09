@@ -9,15 +9,15 @@ namespace KMI.PromoPSA.Constantes
     {
         public static long NO_USER_VALUE = 0;
 
-        public static long ACTIVATION_CODE_TO_CODIFY = 40;
+        public static long ACTIVATION_CODE_TO_CODIFY = 80; //40;
 
         public static long ACTIVATION_CODE_INACTIVE = 50;
 
-        public static long ACTIVATION_CODE_CODIFIED = 20;
+        public static long ACTIVATION_CODE_CODIFIED = 90; //20;
 
-        public static long ACTIVATION_CODE_REJECTED = 30;
+        public static long ACTIVATION_CODE_REJECTED = 60;//30;
 
-        public static long ACTIVATION_CODE_WAITING = 90;
+        public static long ACTIVATION_CODE_WAITING = 770; //90;
 
         public static long ACTIVATION_CODE_VALIDATED = 0;
 

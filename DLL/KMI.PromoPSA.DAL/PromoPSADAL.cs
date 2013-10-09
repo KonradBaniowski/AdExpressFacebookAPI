@@ -16,7 +16,8 @@ namespace KMI.PromoPSA.DAL
         {
             var query = from p in db.GetTable<DataPromotion>()
                         where p.LoadDate == loadDate
-                        && p.IdForm>0
+                        && p.IdForm > 0
+                        &&  p.Activation != Constantes.Constantes.ACTIVATION_CODE_INACTIVE
                         select new Advert
                             {
                                 IdForm = p.IdForm,
@@ -36,6 +37,7 @@ namespace KMI.PromoPSA.DAL
             var query = from p in db.GetTable<DataPromotion>()
                         where p.LoadDate == loadDate && p.Activation==activationCode
                          && p.IdForm > 0
+                           && p.Activation != Constantes.Constantes.ACTIVATION_CODE_INACTIVE
                         select p;
 
             return query.Count();
@@ -46,7 +48,7 @@ namespace KMI.PromoPSA.DAL
         public List<Advert> GetOneAdvertByPromotionId(DbManager db, long promotionId)
         {
             var query = from p in db.GetTable<DataPromotion>()
-                        where p.IdDataPromotion == promotionId
+                        where p.IdDataPromotion == promotionId                      
                         select new Advert
                         {
                             IdForm = p.IdForm,
@@ -79,6 +81,7 @@ namespace KMI.PromoPSA.DAL
         public List<Advert> GetOneAdvertByFormId(DbManager db, long formId) {
             var query = from p in db.GetTable<DataPromotion>()
                         where p.IdForm == formId
+                         && p.Activation != Constantes.Constantes.ACTIVATION_CODE_INACTIVE
                         select new Advert {
                             IdForm = p.IdForm,
                             IdCategory = p.IdCategory,

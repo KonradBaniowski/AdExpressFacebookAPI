@@ -187,7 +187,7 @@
 
             var grid = $("#grid");
             var vehicleStr = { '0': '', '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
-            var activationStr = { '0': '', '40': 'A Codifier', '30': 'Rejetée', '20': 'Codifiée', '90': 'Litige' };
+            var activationStr = { '0': '', '80': 'A Codifier', '60': 'Rejetée', '90': 'Codifiée', '70': 'Litige' };
             var loadDateStr = new Object();
             var loadDateList = new Array();
 
