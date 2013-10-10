@@ -15,6 +15,7 @@ namespace KMI.PromoPSA.DAL
             var query = from p in db.GetTable<DataSegment>()
                         where p.Activation < 50
                         && p.IdLanguage == idLanguage
+                        orderby p.Segment
                         select new Segment
                             {
                                 Id = p.IdSegment,
@@ -30,6 +31,7 @@ namespace KMI.PromoPSA.DAL
                         where p.Activation < 50
                         && p.IdLanguage == idLanguage
                         && p.IdSegment == idSegment
+                        orderby p.Segment
                         select new Segment
                         {
                             Id = p.IdSegment,
@@ -44,6 +46,7 @@ namespace KMI.PromoPSA.DAL
             var query = from p in db.GetTable<DataProduct>()
                         where p.Activation < 50
                         && p.IdLanguage == idLanguage
+                        orderby p.Product
                         select new Product
                         {
                             Id = p.IdProduct,
@@ -60,6 +63,7 @@ namespace KMI.PromoPSA.DAL
                         where p.Activation < 50
                         && p.IdLanguage == idLanguage
                         && p.IdProduct == idProduct
+                        orderby p.Product
                         select new Product
                         {
                             Id = p.IdProduct,
@@ -75,6 +79,7 @@ namespace KMI.PromoPSA.DAL
             var query = from p in db.GetTable<DataBrand>()
                         where p.Activation < 50
                         && p.IdLanguage == idLanguage
+                        orderby p.Brand
                         select new Brand
                         {
                             Id = p.IdBrand,
@@ -91,6 +96,7 @@ namespace KMI.PromoPSA.DAL
                         where p.Activation < 50
                         && p.IdLanguage == idLanguage
                         && p.IdBrand == idBrand
+                        orderby p.Brand
                         select new Brand
                         {
                             Id = p.IdBrand,
@@ -106,7 +112,7 @@ namespace KMI.PromoPSA.DAL
         {
             var query = from p in db.GetTable<DataAllProduct>()
                         where p.IdSegment == idSegment
-                       
+                        orderby p.Product
                            select new Product
                         {
                             Id = p.IdProduct,

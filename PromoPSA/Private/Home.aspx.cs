@@ -11,8 +11,7 @@ using KMI.PromoPSA.Rules;
 using KMI.PromoPSA.Web.Functions;
 using KMI.PromoPSA.Web.UI;
 
-public partial class Private_Home : PrivateWebPage
-{
+public partial class Private_Home : PrivateWebPage {
 
     #region Page Load
     /// <summary>
@@ -20,8 +19,7 @@ public partial class Private_Home : PrivateWebPage
     /// </summary>
     /// <param name="sender">Object Sender</param>
     /// <param name="e">Event Args</param>
-    protected void Page_Load(object sender, EventArgs e)
-    {
+    protected void Page_Load(object sender, EventArgs e) {
         DisconnectUserWebControl1.WebSession = _webSession;
         LoginInformationWebControl1.WebSession = _webSession;
         PromotionInformationWebControl1.WebSession = _webSession;
@@ -41,25 +39,22 @@ public partial class Private_Home : PrivateWebPage
     /// <param name="loginId">Login Id</param>
     /// <returns>True if succed</returns>
     [WebMethod]
-    public static long getAvailablePromotionId(string loginId)
-    {
-        try
-        {
+    public static long getAvailablePromotionId(string loginId) {
         
+        try {
             IResults results = new Results();
             return results.GetAvailablePromotionId(Int64.Parse(loginId));
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             string message = " Erreur lors de l'obtetion d'une fiche à codifier.<br/>";
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);          
             message += string.Format("Login Id : {0}", loginId);
             Utils.SendErrorMail(message, e);
             throw new Exception("Erreur lors de l'obtetion d'une fiche à codifier", e);
         }
+
     }
     #endregion
-
 
     #region Validate Month
     /// <summary>
@@ -68,17 +63,24 @@ public partial class Private_Home : PrivateWebPage
     /// <param name="month"></param>
     /// <returns>True if succed</returns>
     [WebMethod]
-    public static bool ValidateMonth(string month)
-    {
+    public static bool ValidateMonth(string month) {
 
-        IResults results = new Results();
-        return results.ValidateMonth(Int64.Parse(month));
+        try {
+            IResults results = new Results();
+            return results.ValidateMonth(Int64.Parse(month));
+        }
+        catch (Exception e) {
+            string message = " Erreur lors de la validation d'un mois.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Month : {0}", month);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de l'obtetion d'une fiche à codifier", e);
+        }
 
     }
     #endregion
 
     #region Check Form Id Availability
-
     /// <summary>
     /// Check Form Id Availability
     /// </summary>
@@ -86,18 +88,13 @@ public partial class Private_Home : PrivateWebPage
     /// <param name="promotionId">Promotion Id</param>
     /// <returns>True if form available</returns>
     [WebMethod]
-    public static bool checkPromotionIdAvailability(string loginId, string promotionId)
-    {
+    public static bool checkPromotionIdAvailability(string loginId, string promotionId) {
 
-        try
-        {
+        try {
             IResults results = new Results();
             return results.LockAdvertStatus(Int64.Parse(loginId), Int64.Parse(promotionId));
-
-          
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             string message = " Erreur lors de l'obtetion d'une fiche à codifier.<br/>";
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
             message += string.Format("Promotion numero : {0}<br/>", promotionId);
@@ -118,16 +115,16 @@ public partial class Private_Home : PrivateWebPage
 
         try {
 
-        string result = null;
-        IResults results = new Results();
-        int advertsNbToCodify = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_TO_CODIFY);
-        int advertsNbCodified = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_CODIFIED);
-        int advertsNbRejected = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_REJECTED);
-        int advertsNbPending = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_WAITING);
-        int advertsNbValidated = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_VALIDATED);
+            string result = null;
+            IResults results = new Results();
+            int advertsNbToCodify = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_TO_CODIFY);
+            int advertsNbCodified = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_CODIFIED);
+            int advertsNbRejected = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_REJECTED);
+            int advertsNbPending = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_WAITING);
+            int advertsNbValidated = results.GetNbAdverts(Int64.Parse(loadingDate), Constantes.ACTIVATION_CODE_VALIDATED);
 
-        //--- format json
-        var jsonData = new[] {new[]{
+            //--- format json
+            var jsonData = new[] {new[]{
                                     new object[] {"Nombre de promotions à codifier : " + advertsNbToCodify + "", advertsNbToCodify },
                                     new object[] {"Nombre de promotions codifiées : " + advertsNbCodified + "", advertsNbCodified },
                                     new object[] {"Nombre de promotions rejetées : " + advertsNbRejected + "", advertsNbRejected },
@@ -136,9 +133,9 @@ public partial class Private_Home : PrivateWebPage
                                     }
             }.ToArray();
 
-        result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
+            result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
 
-        return result;
+            return result;
 
         }
         catch (Exception e) {
@@ -166,35 +163,27 @@ public partial class Private_Home : PrivateWebPage
     /// <returns>Grid Data</returns>
     [WebMethod]
     public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch,
-        string searchField, string searchString, string searchOper, string loadingDate, string sessionId, string loginId)
-    {
+        string searchField, string searchString, string searchOper, string loadingDate, string sessionId, string loginId) {
+
         string result = null;
 
-        IResults results = new Results();
-        IEnumerable<Advert> list;
-        if (isSearch && !string.IsNullOrEmpty(searchField)
-            && !string.IsNullOrEmpty(searchString) && searchField.Equals("LoadDate"))
-        {
-            string strDate = searchString.Substring(3, 4) + searchString.Substring(0, 2);
-            list = results.GetAdverts(Int64.Parse(strDate));
-        }
-        else
-        {
-            list = results.GetAdverts(Int64.Parse(loadingDate));
-        }
+        try {
+            IResults results = new Results();
+            IEnumerable<Advert> list;
+            if (isSearch && !string.IsNullOrEmpty(searchField)
+                && !string.IsNullOrEmpty(searchString) && searchField.Equals("LoadDate")) {
+                string strDate = searchString.Substring(3, 4) + searchString.Substring(0, 2);
+                list = results.GetAdverts(Int64.Parse(strDate));
+            }
+            else {
+                list = results.GetAdverts(Int64.Parse(loadingDate));
+            }
 
+            if (isSearch) {
 
-        try
-        {
-
-            if (isSearch)
-            {
-
-                switch (searchField)
-                {
+                switch (searchField) {
                     case "IdForm":
-                        switch (searchOper)
-                        {
+                        switch (searchOper) {
                             case "eq":
                                 list = list.Where(x => x.IdForm == Int64.Parse(searchString));
                                 break;
@@ -204,8 +193,7 @@ public partial class Private_Home : PrivateWebPage
                         }
                         break;
                     case "VehicleName":
-                        switch (searchOper)
-                        {
+                        switch (searchOper) {
                             case "eq":
                                 list = list.Where(x => x.IdVehicle == Int64.Parse(searchString));
                                 break;
@@ -215,8 +203,7 @@ public partial class Private_Home : PrivateWebPage
                         }
                         break;
                     case "DateMediaNum":
-                        switch (searchOper)
-                        {
+                        switch (searchOper) {
                             case "eq":
                                 list = list.Where(x => x.DateMediaNumFormated == searchString);
                                 break;
@@ -226,8 +213,7 @@ public partial class Private_Home : PrivateWebPage
                         }
                         break;
                     case "ActivationName":
-                        switch (searchOper)
-                        {
+                        switch (searchOper) {
                             case "eq":
                                 list = list.Where(x => x.Activation == Int64.Parse(searchString));
                                 break;
@@ -237,8 +223,7 @@ public partial class Private_Home : PrivateWebPage
                         }
                         break;
                     case "LoadDate":
-                        switch (searchOper)
-                        {
+                        switch (searchOper) {
                             case "eq":
                                 list = list.Where(x => x.LoadDateFormated == searchString);
                                 break;
@@ -260,8 +245,7 @@ public partial class Private_Home : PrivateWebPage
             //--- filter dataset for paging and sorting
             IOrderedEnumerable<Advert> orderedRecords = null;
 
-            switch (sortField)
-            {
+            switch (sortField) {
                 case "IdForm": orderedRecords = list.OrderBy(x => x.IdForm); break;
                 case "VehicleName": orderedRecords = list.OrderBy(x => x.VehicleName); break;
                 case "DateMediaNum": orderedRecords = list.OrderBy(x => x.DateMediaNum); break;
@@ -275,15 +259,13 @@ public partial class Private_Home : PrivateWebPage
               .Take(pageSize);
 
             //--- format json
-            var jsonData = new
-            {
+            var jsonData = new {
                 totalpages = totalPages, //--- number of pages
                 page = pageIndex, //--- current page
                 totalrecords = totalRecords, //--- total items
                 rows = (
                     from row in sortedRecords
-                    select new
-                    {
+                    select new {
                         i = row.IdForm,
                         cell = new string[] {
                             row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated,
@@ -296,12 +278,11 @@ public partial class Private_Home : PrivateWebPage
             result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
 
         }
-        catch (Exception ex)
-        {
-            //Debug.WriteLine(ex);
-        }
-        finally
-        {
+        catch (Exception e) {
+            string message = " Erreur lors de la récupération des données pour le tableau.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de la création du tableau", e);
         }
 
         return result;
@@ -314,30 +295,34 @@ public partial class Private_Home : PrivateWebPage
     /// </summary>
     /// <returns>Chart Data</returns>
     [WebMethod]
-    public static string getLoadDates()
-    {
+    public static string getLoadDates() {
+        try {
+            string result = null;
+            IResults results = new Results();
+            List<LoadDateBE> loadDates = results.GetLoadDates();
 
-        string result = null;
-        IResults results = new Results();
-        List<LoadDateBE> loadDates = results.GetLoadDates();
+            //--- format json
+            var list = new List<Object>();
+            int i = 0;
 
-        //--- format json
-        var list = new List<Object>();
-        int i = 0;
+            foreach (LoadDateBE loadDate in loadDates) {
+                string date = loadDate.LoadDate.ToString();
+                list.Add(date.Substring(4, 2) + "/" + date.Substring(0, 4));
+                i++;
+            }
 
-        foreach (LoadDateBE loadDate in loadDates)
-        {
-            string date = loadDate.LoadDate.ToString();
-            list.Add(date.Substring(4, 2) + "/" + date.Substring(0, 4));
-            i++;
+            var jsonData = list.ToArray();
+
+            result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
+
+            return result;
         }
-
-        var jsonData = list.ToArray();
-
-        result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
-
-        return result;
-
+        catch (Exception e) {
+            string message = " Erreur lors de l'obtetion des dates de chargement.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de l'obtetion des dates de chargement", e);
+        }
     }
     #endregion
 
@@ -347,20 +332,27 @@ public partial class Private_Home : PrivateWebPage
     /// </summary>
     /// <returns>Promotions Number</returns>
     [WebMethod]
-    public static string getPromotionsNb(string loadingDate)
-    {
+    public static string getPromotionsNb(string loadingDate) {
 
-        string result = null;
-        IResults results = new Results();
-        var list = results.GetAdverts(Int64.Parse(loadingDate));
-        int promoNumber = list.Count;
+        try {
+            string result = null;
+            IResults results = new Results();
+            var list = results.GetAdverts(Int64.Parse(loadingDate));
+            int promoNumber = list.Count;
 
-        var jsonData = promoNumber;
+            var jsonData = promoNumber;
 
-        result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
+            result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
 
-        return result;
-
+            return result;
+        }
+        catch (Exception e) {
+            string message = " Erreur lors de l'obtetion du nombre de promotion.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Date de chargement : {0}", loadingDate);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de l'obtetion du nombre de promotion", e);
+        }
     }
     #endregion
 

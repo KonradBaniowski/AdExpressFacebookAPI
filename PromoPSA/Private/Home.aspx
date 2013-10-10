@@ -63,7 +63,7 @@
             
     <script type="text/javascript">
         $(document).ready(function () {
-            
+
             InitChartComponent(currentMonth);
             InitGridComponent(currentMonth);
             
@@ -241,9 +241,9 @@
                                 if (myPostData.searchField == "LoadDate") {
                                     var loadDateFormatting = myPostData.searchString.substring(3, 7) + myPostData.searchString.substring(0, 2);
                                     selectedMonth = loadDateFormatting;
-                                    InitPromotionNb(loadDateFormatting);
-                                    InitChartComponent(loadDateFormatting);
                                 }
+                                InitPromotionNb(selectedMonth);
+                                InitChartComponent(selectedMonth);
                             }
                         },
                         error: function () {
@@ -280,7 +280,6 @@
                 viewrecords: true,
                 width: 900,
                 height: "100%",
-                //height: 500,
                 gridview: true,
                 rowattr: function (rd) {
                     if (rd.ActivationName == "A Codifier") { 
@@ -318,9 +317,37 @@
             {}, // add
             {}, // delete
             { closeOnEscape: true, closeAfterSearch: true }, //search
-            {}
+            {  }
         )
-            //$("#grid").jqGrid('navGrid', '#grid_toppager');
+            //$("#grid").jqGrid('searchGrid', {multipleSearch: true });
+        }
+
+        function RefreshChart(loadDate) {
+
+            var dataG;
+
+            $.ajax({
+                url: 'Home.aspx/getChartData',
+                type: "POST",
+                async: false,
+                data: JSON.stringify({ loadingDate: loadDate }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, st) {
+                    if (st == "success") {
+                        dataG = JSON.parse(data.d);
+                    }
+                },
+                error: function () {
+                    alert("Erreur lors de la création du graphique.");
+                }
+            });
+
+            var chartObj = jQuery.jqplot('chart1');
+
+            chartObj.series[0].data = dataG;
+            chartObj.replot();
+
         }
 
         function InitChartComponent(loadDate) {
@@ -344,7 +371,9 @@
                 }
             });
 
-            plot2 = jQuery.jqplot('chart1', dataG, {
+            $('#chart1').empty();
+
+            var plot2 = jQuery.jqplot('chart1', dataG, {
                 title: ' ',
                 seriesColors: ['#e8e8e8', '#94d472', '#fed2d2', '#f0c95b', '#B8D0DE'],
                 grid: {
