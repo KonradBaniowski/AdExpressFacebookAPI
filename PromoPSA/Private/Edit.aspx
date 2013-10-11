@@ -554,12 +554,12 @@
                     rules: {
                         startdatepicker: {
                             required: true,
-                            date: true,
+                            //date: true,
                             dateComparison: true
                         },
                         enddatepicker: {
                             required: true,
-                            date: true,
+                           // date: true,
                             dateComparison: true
                         }
                     },
