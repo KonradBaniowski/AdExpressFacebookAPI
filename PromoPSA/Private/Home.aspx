@@ -64,10 +64,30 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            InitChartComponent(currentMonth);
+            ReleaseUser();
             InitGridComponent(currentMonth);
             
         });
+
+        function ReleaseUser() {
+        
+            $.ajax({
+                type: "POST",
+                url: 'Home.aspx/releaseUser',
+                async: false,
+                data: JSON.stringify({ loginId: loginId }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg, st) {
+                    if (st == "success") {
+                    }
+                },
+                error: function () {
+                    alert("Erreur lors de la liberation de la fiche!");
+                }
+            });
+
+        }
 
         $(function () {
             $("#dialog").dialog({
@@ -187,8 +207,8 @@
         function InitGridComponent(loadDate) {
 
             var grid = $("#grid");
-            var vehicleStr = { '0': '', '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
-            var activationStr = { '0': '', '80': 'A Codifier', '60': 'Rejetée', '90': 'Codifiée', '70': 'Litige' };
+            var vehicleStr = { '-1': 'Tous', '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
+            var activationStr = { '-1': 'Toutes', '80': 'A Codifier', '60': 'Rejetée', '90': 'Codifiée', '70': 'Litige', '0': 'Validée' };
             var loadDateStr = new Object();
             var loadDateList = new Array();
 
@@ -201,7 +221,7 @@
                 success: function (data, st) {
                     if (st == "success") {
                         loadDateList = JSON.parse(data.d);
-                        for (var i = 0; i < loadDateList.length; i++)
+                        for (var i = loadDateList.length-1; i >= 0; i--)
                             loadDateStr['' + loadDateList[i] + ''] = loadDateList[i];
                     }
                 },
@@ -209,8 +229,6 @@
                     alert("Impossible d\'initilaiser la liste des fiches. Erreur lors du chargement des dates.");
                 }
             });
-
-
 
             $("#grid").jqGrid({
                 // setup custom parameter names to pass to server
@@ -223,7 +241,7 @@
                     order: "sortOrder"
                 },
                 // add by default to avoid webmethod parameter conflicts
-                postData: { searchString: '', searchField: '', searchOper: '', loadingDate: loadDate, sessionId: sessionId, loginId: loginId },
+                postData: { loadingDate: loadDate, sessionId: sessionId, loginId: loginId, filters: '' },
                 // setup ajax call to webmethod
                 datatype: function (postdata) {
                     $(".loading").show(); // make sure we can see loader text
@@ -237,16 +255,19 @@
                             if (st == "success") {
                                 var grid = $("#grid")[0];
                                 grid.addJSONData(JSON.parse(data.d));
-                                var myPostData = $('#grid').jqGrid("getGridParam", "postData");
-                                if (myPostData.searchField == "LoadDate") {
-                                    var loadDateFormatting = myPostData.searchString.substring(3, 7) + myPostData.searchString.substring(0, 2);
-                                    selectedMonth = loadDateFormatting;
+                                var postFilters = jQuery("#grid").jqGrid('getGridParam', 'postData').filters;
+                                if (postFilters.length > 0) {
+                                    var j = JSON.parse(postFilters);
+                                    if (j != null && j.rules != null && j.rules.length == 3) {
+                                        var loadDateFormatting = j.rules[2].data.substring(3, 7) + j.rules[2].data.substring(0, 2);
+                                        selectedMonth = loadDateFormatting;
+                                    }
                                 }
                                 InitPromotionNb(selectedMonth);
                                 InitChartComponent(selectedMonth);
                             }
                         },
-                        error: function () {
+                        error: function (data) {
                             alert("Erreur lors de la récupération de la liste des fiches.");
                         }
                     });
@@ -265,11 +286,11 @@
                 colNames: ['Numero de fiche', 'Media', 'Date de parution', 'Edit', 'Activation', 'Date de chargement'],
                 colModel: [
                     { name: 'IdForm', index: 'IdForm', search: false },
-                    { name: 'VehicleName', index: 'VehicleName', stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: vehicleStr, defaultValue: '1' } },
+                    { name: 'VehicleName', index: 'VehicleName', stype: 'select', search: true, searchoptions: {  value: vehicleStr, defaultValue: '-1' } },
                     { name: 'DateMediaNum', index: 'DateMediaNum', search: false },
                     { name: 'Link', index: 'Link', formatter: linkFormat, search: false, sortable: false },
-                    { name: 'ActivationName', index: 'ActivationName', hidden: false, stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: activationStr, defaultValue: '1' } },
-                    { name: 'LoadDate', index: 'LoadDate', hidden: false, stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: loadDateStr, defaultValue: '1' }, sortable: false }
+                    { name: 'ActivationName', index: 'ActivationName', hidden: false, search: true, stype: 'select', searchoptions: {  value: activationStr, defaultValue: '-1' } },
+                    { name: 'LoadDate', index: 'LoadDate', hidden: false, stype: 'select', search: true, searchoptions: { value: loadDateStr, defaultValue: currentMonth.substring(4, 6) + "/" + currentMonth.substring(0, 4) }, sortable: false }
                 ],
                 rowNum: 20,
                 rowList: [10, 20, 30],
@@ -303,15 +324,7 @@
                     $(".loading").hide();
                 }
             }).jqGrid('navGrid', '#grid_toppager', {
-                edit: false, add: false, del: false,
-                beforeRefresh: function () {
-                    //alert('Here');
-                    var myPostData = $('#grid').jqGrid("getGridParam", "postData");
-                    if (myPostData.searchField == "LoadDate") {
-                        myPostData.searchString = currentMonth.substring(4, 6) + "/" + currentMonth.substring(0, 4);
-                    }
-                    //jQuery(table).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
-                }
+                edit: false, add: false, del: false, search: false
             },
             {}, // default settings for edit
             {}, // add
@@ -319,7 +332,7 @@
             { closeOnEscape: true, closeAfterSearch: true }, //search
             {  }
         )
-            //$("#grid").jqGrid('searchGrid', {multipleSearch: true });
+            jQuery("#grid").jqGrid('filterToolbar', { autosearch: true, stringResult: true });
         }
 
         function RefreshChart(loadDate) {

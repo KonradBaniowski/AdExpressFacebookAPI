@@ -10,6 +10,7 @@ using KMI.PromoPSA.Web.Core;
 using KMI.PromoPSA.Web.Core.Sessions;
 using KMI.PromoPSA.Web.Domain;
 using KMI.PromoPSA.Web.Domain.Translation;
+using KMI.PromoPSA.Rules;
 
 public partial class index : WebPage {
 
@@ -72,19 +73,16 @@ public partial class index : WebPage {
 
                     //If login already use
                     if (WebSessions.Contains(webSession.CustomerLogin.IdLogin)) {
-                        if (!Page.ClientScript.IsClientScriptBlockRegistered("LoginOutSession")) {
-                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "LoginOutSession", KMI.PromoPSA.Web.Functions.Script.LoginAlreadyInUse(webSession.SiteLanguage, webSession.CustomerLogin.IdLogin));
-                        }
+                        IResults results = new Results();
+                        results.ReleaseUser(webSession.CustomerLogin.IdLogin);
+                        WebSessions.Remove(webSession.CustomerLogin.IdLogin);
                     }
-                    //ELSE
-                    else {
-                        WebSessions.Add(webSession);
-                        webSession.Save(Session);
-                        if (!Page.ClientScript.IsClientScriptBlockRegistered("Login")) {
-                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", KMI.PromoPSA.Web.Functions.Script.Login("/Private/Home.aspx"));
-                        }
+                    
+                    WebSessions.Add(webSession);
+                    webSession.Save(Session);
+                    if (!Page.ClientScript.IsClientScriptBlockRegistered("Login")) {
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", KMI.PromoPSA.Web.Functions.Script.Login("/Private/Home.aspx"));
                     }
-
                 }
 
                 else {

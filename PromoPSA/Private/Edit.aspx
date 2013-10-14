@@ -22,12 +22,6 @@
     <script src="/js/jquery.ui.datepicker-fr.js" type="text/javascript"></script>
     <script src="/js/jquery.bxslider.min.js" type="text/javascript"></script>
 
-
-
-
-
-
-
     <script type="text/javascript">
 
         var fValidator;
@@ -136,10 +130,7 @@
                 },
                 error: function () {
                     alert("Impossible de charger les données de la promotion");
-
                 }
-
-
             });
             //Set Data picker
             $("#startdatepicker").datepicker({
@@ -157,7 +148,6 @@
                     $("#enddatepicker").datepicker("option", "minDate", selectedDate);
                 }
             });
-
 
             $("#enddatepicker").datepicker({
                 defaultDate: "+1w",
@@ -177,18 +167,12 @@
 
             });
 
-
-
             // validate the comment form when it is submitted            
 
             CodificationEvent("#codifify", 90, 0);
-
             CodificationEvent("#codifyAndDuplicate", 90, 1);
-
             RejectFormEvent("#rejectcodif", 60);
-
             CancelForm("#cancelcodif");
-
             PendingFormEvent("#pendingcodif",70);
 
             $(function () {
@@ -207,12 +191,7 @@
                 });
             });
 
-
-
             $('#loaderdiv').hide();
-
-
-
 
         });
 
@@ -235,7 +214,6 @@
                     result = true;
                 }
             }
-              
 
             return result;
 
@@ -308,9 +286,6 @@
                         },
                         submitHandler: function () {
 
-                           
-
-
                             $.ajax({
                                 type: "POST",
                                 async: false,
@@ -329,15 +304,7 @@
                             //      //form.submit();
                         }
                     });
-
-
                 }
-
-
-
-
-
-
             });
         }
 
@@ -397,7 +364,6 @@
                             } else {
                                 document.location.href = "/Private/Home.aspx";
                             }
-
                         },
                         error: function () {
                             $('#loaderdiv').hide();
@@ -426,8 +392,6 @@
                         },
                         submitHandler: function (form) {
 
-
-
                             $.ajax({
                                 type: "POST",
                                 async: false,
@@ -448,16 +412,12 @@
                                     alert("Erreur lors de la mise en litige de la fiche");
                                 }
                             });
-
                         }
                     });
-
                 }
-
-
-
             });
         }
+
         function RejectFormEvent(selectorId, activationCode) {
             $(selectorId).off("click");
             $(selectorId).on("click", function () {
@@ -481,7 +441,6 @@
                             } else {
                                 document.location.href = "/Private/Home.aspx";
                             }
-
                         },
                         error: function () {
                             $('#loaderdiv').hide();
@@ -510,8 +469,6 @@
                         },
                         submitHandler: function (form) {
 
-                          
-
                             $.ajax({
                                 type: "POST",
                                 async: false,
@@ -525,21 +482,15 @@
                                     } else {
                                         document.location.href = "/Private/Home.aspx";
                                     }
-
                                 },
                                 error: function () {
                                     $('#loaderdiv').hide();
                                     alert("Erreur lors du rejet de la fiche");
                                 }
                             });
-                         
                         }
                     });
-
                 }
-
-
-
             });
         }
 
@@ -547,7 +498,6 @@
 
             $(selectorId).off("click");
             $(selectorId).on("click", function () {
-               
 
                 //Hide errors essage
                 fValidator = $("#commentForm").validate({
@@ -567,7 +517,6 @@
                     errorContainer: $('#errorContainer'),
                     errorLabelContainer: $('#errorContainer ul'),
                     wrapper: 'li',
-
 
                     messages: {
                         startdatepicker: {
@@ -670,16 +619,10 @@
                                 alert("Erreur lors sauvegarde la fiche");
                             }
                         });
-                        
                     }
                 });
-
-
-
-
             });
         }
-
 
         //If validation errors are occured in any field, it will display field name with link, clicking on link it will set focus of perticular field.
         function setFocus(ele) {
@@ -687,8 +630,14 @@
         }
 
         function LoadVideo(videofile, year,isZoom) {
+
             var filePath = '/VideoPsa/' + year + '/' + videofile;
-            var vids = ' <object type=\"video/mpeg\" data=\"' + filePath + '\" width=\"100%\" ';
+            var vids = '';
+
+            if (!isZoom)
+                vids = '<img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadVideo(\'' + videofile + '\',' + year + ',true)\"><br/>';
+            
+            vids += ' <object type=\"video/mpeg\" data=\"' + filePath + '\" width=\"100%\" ';
             vids += (isZoom) ? 'height=\"800\">' : 'height=\"500\">';
             vids += '  <param name=\"src\" value=\"' + filePath + '\" />';
             vids += ' <param name=\"autoplay\" value=\"false\" />';
@@ -698,8 +647,6 @@
             vids += ' autoplay=\"false\" controller=\"true\" ';
             vids += ' pluginspage=\"http://www.apple.com/quicktime/download/\">';
             vids += '</object>';//alt :
-            if (!isZoom)
-                vids += ' <br/><img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadVideo(\'' + videofile + '\',' + year + ',true)\">';
 
             if (isZoom) {
                 $('.modalBody').html(vids);
@@ -707,20 +654,21 @@
             } else {
                 $('.slider').hide();
                 $('.containingBlock').html(vids);
-
             }
-         
-           
         }
 
         function LoadBanner(bannerFile,isZoom) {
+
+            var banners = '';
             var filePath = '/BannersPsa';
             filePath += '/' + bannerFile.substr(0, 1) + '/' + bannerFile.substr(1, 3);
             filePath += '/' + bannerFile;
 
+            if (!isZoom)
+                banners = '<img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadBanner(\'' + bannerFile + '\',true)\"><br/>';
+
             // Flash banner
-            var banners = ' <OBJECT classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"100%\" height=\"800\">';//height=\"100%\"
-          
+            banners += ' <OBJECT classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"100%\" height=\"800\">';//height=\"100%\"
             banners += ' <PARAM name=\"movie\" value=\"' + filePath + '\">';
             banners += '  <PARAM name=\"play\" value=\"true\">';
             banners += ' <PARAM name=\"quality\" value=\"high\">';
@@ -728,26 +676,27 @@
             banners += ' <param name=\"allowfullscreen\" value=\"true\" />';
             banners += '<param name=\"scale\" value=\"default\" />';
             banners += ' </OBJECT>';
-            if (!isZoom)
-                banners += ' <br/><img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadBanner(\'' + bannerFile + '\',true)\">';
-            
-        
+
             if (isZoom) {
                 $('.modalBody').html(banners);
                 revealModal('modalPage', bannerFile, 3);
             } else {
                 $('.slider').hide();
                 $('.containingBlock').html(banners);
-
             }
         }
 
         function LoadFlv(flvFile, isZoom) {
+
+            var flv = '';
             var filePath = '/BannersPsa';
             filePath += '/' + flvFile.substr(0, 1) + '/' + flvFile.substr(1, 3);
             filePath += '/' + flvFile;
 
-            var flv = '<object id=\"video_"promo\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" ';
+            if (!isZoom)
+                flv = '<img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadFlv(\'' + flvFile + '\',true)\"><br/>';
+
+            flv += '<object id=\"video_"promo\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" ';
             flv += (isZoom) ? ' width=\"100%\"  height=\"800\">' : ' width=\"400\" height=\"315\">';// height=\"100%\"
             flv += '<param name=\"movie\" value=\"/Player/playerflv.swf\" />';
             flv += '<param name=\"allowfullscreen\" value=\"true\" />';
@@ -761,9 +710,6 @@
             flv += 'flashvars=\"file=' + filePath + '\" ';
             flv += '/>';
             flv += '</object>';
-            if (!isZoom)
-                flv += ' <br/><img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadFlv(\'' + flvFile + '\',true)\">';
-
 
             if (isZoom) {
                 $('.modalBody').html(flv);
@@ -771,23 +717,18 @@
             } else {
                 $('.slider').hide();
                 $('.containingBlock').html(flv);
-
             }
         }
 
         function LoadVisuals(msg) {
 
-
-
             if (msg.d.Advert && msg.d.Advert.PromotionVisual) {
-
 
                 //Set IMAGES
                 if (msg.d.Advert.IdVehicle == 1 || msg.d.Advert.IdVehicle == 8
                     || msg.d.Advert.IdVehicle == 10
                     || (msg.d.Advert.IdVehicle == 7 && msg.d.Advert.PromotionVisual.indexOf("SWF") < 0
                         && msg.d.Advert.PromotionVisual.indexOf("FLV") < 0)) {
-
 
                     var pVisuals = msg.d.Advert.PromotionVisual.split(',');
                     var pLi = '';                  
@@ -798,8 +739,6 @@
                         pLi += '/' + pVisuals[i];
                         pLi += '\"  width=\"100%\" ';
                         pLi +=  ' onclick=\"revealModal(\'modalPage\',\'' + pVisuals[i] + '\','+msg.d.Advert.IdVehicle+')\" /></li>';                    
-                        
-
                     }
                     $('.containingBlock').hide();
                     $('.bxslider').html(pLi);
@@ -816,7 +755,6 @@
                 else if (msg.d.Advert.IdVehicle == 3)
                     LoadVideo(msg.d.Advert.PromotionVisual.replace("mp4", "mpg").replace("MP4", "MPG"),
                         msg.d.Advert.LoadDate.toString().substr(0, 4),false);
-
                     //Set banner
                 else if (msg.d.Advert.IdVehicle == 7 && msg.d.Advert.PromotionVisual.indexOf("SWF") > 0)
                     LoadBanner(msg.d.Advert.PromotionVisual, false);
@@ -824,13 +762,9 @@
                 else if (msg.d.Advert.IdVehicle == 7 && msg.d.Advert.PromotionVisual.indexOf("FLV") > 0)
                     LoadFlv(msg.d.Advert.PromotionVisual);
 
-
             } else {
                 $('.containingBlock').html("<table  style =\"width: 400px; height: 400px; border: 1px solid #525252;text-align: center; font-size: 16px; font-weight: bold;\"><tr> <td>Aucune création</td></tr></table>");
             }
-
-
-
         }
 
         function revealModal(divID, visual, idVehicle) {
@@ -842,7 +776,6 @@
                 img += '\"  width=\"100%\" height=\"100%\" />';
                 $('.modalBody').html(img);
             }
-         
          
             window.onscroll = function() {
                  document.getElementById(divID).style.top = document.body.scrollTop;
@@ -862,32 +795,28 @@
     </script>
 
     <style type="text/css">
-        #containingBlock
-        {
+        #containingBlock {
             width: 100%;
             height: 100%;
         }
 
-        .videoWrapper
-        {
+        .videoWrapper {
             position: relative;
             padding-bottom: 56.25%;
             padding-top: 25px;
             height: 0;
         }
 
-            .videoWrapper object,
-            .videoWrapper embed
-            {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
+        .videoWrapper object,
+        .videoWrapper embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
-        #errorContainer
-        {
+        #errorContainer {
             display: none;
             overflow: auto;
             background-color: #FFDDDD;
@@ -896,14 +825,12 @@
             font-size: 11px;
         }
 
-            #errorContainer label
-            {
-                float: none;
-                width: auto;
-            }
+        #errorContainer label {
+            float: none;
+            width: auto;
+        }
 
-        #loaderdiv
-        {
+        #loaderdiv {
             position: absolute;
             top: 0;
             left: 0;
@@ -914,8 +841,7 @@
             opacity: .8;
         }
 
-        .ajax-loader
-        {
+        .ajax-loader {
             position: absolute;
             left: 50%;
             top: 50%;
@@ -924,13 +850,11 @@
             display: block;
         }
 
-        .bxslider
-        {
+        .bxslider {
             padding: 0;
         }
 
-        .nocreation
-        {
+        .nocreation {
             width: 400px;
             height: 400px;
             border: 1px solid #525252;
@@ -939,21 +863,20 @@
             font-weight: bold;
         }
 
-        .cofs
-        {
+        .cofs {
             margin: 0;
             border-spacing: 0px;
         }
 
-        .lvid
-        {
+        .lvid {
             font-size: 12px;
             font-weight: bold;
             color: #525252;
+            cursor:pointer;
         }
+
         /* This is the CSS for the normal div */
-        .normal
-        {
+        .normal {
             background-color: lightblue;
             width: 900px;
             min-height: 200px;
@@ -961,8 +884,7 @@
         }
 
         /* This is the CSS for the modal dialog window */
-        #modalPage
-        {
+        #modalPage {
             display: none;
             position: absolute;
             width: 100%;
@@ -971,8 +893,7 @@
             left: 0px;
         }
 
-        .modalBackground
-        {
+        .modalBackground {
             filter: Alpha(Opacity=60);
             -moz-opacity: 0.6;
             opacity: 0.6;
@@ -985,8 +906,7 @@
             left: 0px;
         }
 
-        .modalContainer
-        {
+        .modalContainer {
             position: absolute;
             width: 800px;
              /*height: 800px;*/                   
@@ -995,8 +915,7 @@
             z-index: 1750;
         }
 
-        .modal
-        {
+        .modal {
             background-color: white;
             border: solid 1px  #525252;
             position: relative;
@@ -1010,8 +929,7 @@
             padding: 0px;
         }
 
-        .modalTop
-        {
+        .modalTop {
             width: 792px;
             background-color:  #525252;
             padding: 4px;
@@ -1019,25 +937,17 @@
             text-align: right;
         }
 
-            .modalTop a, .modalTop a:visited
-            {
-                color: #ffffff;
-            }
+        .modalTop a, .modalTop a:visited {
+            color: #ffffff;
+        }
 
-        .modalBody
-        {
+        .modalBody {
             padding: 10px;
-           
         }
     </style>
 </head>
 <body class="bodyStyle">
     <form id="commentForm" class="cmxform" runat="server" method="post" action="">
-        <div class="header">
-            <div style="float: left;">
-                <asp:Image ID="Image1" runat="server" SkinID="logo_tns_home" />
-            </div>
-        </div>
         <div class="promotionsInformationDiv">
             <table cellspacing="0" cellpadding="0" border="0" height="100%">
                 <tr>

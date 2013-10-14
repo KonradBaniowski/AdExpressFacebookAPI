@@ -24,6 +24,7 @@ namespace KMI.PromoPSA.Web.Core.Sessions
       private int _siteLanguage = 33;
       private int _currentAdvertNumber;
       private HttpContext _currentHttpContext;
+      private string _filtredDate = string.Empty;
 
       #region Constructeur
         /// <summary>
@@ -115,6 +116,18 @@ namespace KMI.PromoPSA.Web.Core.Sessions
         public string ServerName
         {
             get { return _serverName; }
+        }
+        #endregion
+
+        #region Filtred Date
+        /// <summary>
+        /// Get / Set filtred date
+        /// </summary>
+        public string FiltredDate {
+            get { return (_filtredDate); }
+            set {
+                _filtredDate = value;
+            }
         }
         #endregion
 
