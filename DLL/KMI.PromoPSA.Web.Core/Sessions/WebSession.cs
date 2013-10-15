@@ -24,7 +24,9 @@ namespace KMI.PromoPSA.Web.Core.Sessions
       private int _siteLanguage = 33;
       private int _currentAdvertNumber;
       private HttpContext _currentHttpContext;
-      private string _filtredDate = string.Empty;
+      private string _selectedDate = string.Empty;
+      private string _selectedVehicle = string.Empty;
+      private string _selectedActivation = string.Empty;
 
       #region Constructeur
         /// <summary>
@@ -119,14 +121,32 @@ namespace KMI.PromoPSA.Web.Core.Sessions
         }
         #endregion
 
-        #region Filtred Date
+        #region Filtrs
         /// <summary>
-        /// Get / Set filtred date
+        /// Get / Set selected date
         /// </summary>
-        public string FiltredDate {
-            get { return (_filtredDate); }
+        public string SelectedDate {
+            get { return (_selectedDate); }
             set {
-                _filtredDate = value;
+                _selectedDate = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set selected vehicle
+        /// </summary>
+        public string SelectedVehicle {
+            get { return (_selectedVehicle); }
+            set {
+                _selectedVehicle = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set selected activation
+        /// </summary>
+        public string SelectedActivation {
+            get { return (_selectedActivation); }
+            set {
+                _selectedActivation = value;
             }
         }
         #endregion

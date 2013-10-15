@@ -65,6 +65,9 @@
         $(document).ready(function () {
 
             ReleaseUser();
+            $('#gs_VehicleName').val(selectedVehicle);
+            $('#gs_ActivationName').val(selectedActivation);
+            $('#gs_LoadDate').val(selectedMonth);
             InitGridComponent(currentMonth);
             
         });
@@ -79,7 +82,12 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg, st) {
-                    if (st == "success") {
+                    var resultStr = msg.d;
+                    if (resultStr.length > 0) {
+                        var elements = resultStr.split(";");
+                        selectedVehicle = elements[0];
+                        selectedActivation = elements[1];
+                        selectedMonth = elements[2];
                     }
                 },
                 error: function () {
@@ -241,7 +249,7 @@
                     order: "sortOrder"
                 },
                 // add by default to avoid webmethod parameter conflicts
-                postData: { loadingDate: loadDate, sessionId: sessionId, loginId: loginId, filters: '' },
+                postData: { selectedDate: selectedMonth, selectedVehicle: selectedVehicle, selectedActivation: selectedActivation, sessionId: sessionId, loginId: loginId, filters: '' },
                 // setup ajax call to webmethod
                 datatype: function (postdata) {
                     $(".loading").show(); // make sure we can see loader text
@@ -261,6 +269,8 @@
                                     if (j != null && j.rules != null && j.rules.length == 3) {
                                         var loadDateFormatting = j.rules[2].data.substring(3, 7) + j.rules[2].data.substring(0, 2);
                                         selectedMonth = loadDateFormatting;
+                                        selectedActivation = j.rules[1].data;
+                                        selectedVehicle = j.rules[0].data;
                                     }
                                 }
                                 InitPromotionNb(selectedMonth);
@@ -286,16 +296,16 @@
                 colNames: ['Numero de fiche', 'Media', 'Date de parution', 'Edit', 'Activation', 'Date de chargement'],
                 colModel: [
                     { name: 'IdForm', index: 'IdForm', search: false },
-                    { name: 'VehicleName', index: 'VehicleName', stype: 'select', search: true, searchoptions: {  value: vehicleStr, defaultValue: '-1' } },
+                    { name: 'VehicleName', index: 'VehicleName', stype: 'select', search: true, searchoptions: { value: vehicleStr, defaultValue: selectedVehicle } },
                     { name: 'DateMediaNum', index: 'DateMediaNum', search: false },
                     { name: 'Link', index: 'Link', formatter: linkFormat, search: false, sortable: false },
-                    { name: 'ActivationName', index: 'ActivationName', hidden: false, search: true, stype: 'select', searchoptions: {  value: activationStr, defaultValue: '-1' } },
-                    { name: 'LoadDate', index: 'LoadDate', hidden: false, stype: 'select', search: true, searchoptions: { value: loadDateStr, defaultValue: currentMonth.substring(4, 6) + "/" + currentMonth.substring(0, 4) }, sortable: false }
+                    { name: 'ActivationName', index: 'ActivationName', hidden: false, search: true, stype: 'select', searchoptions: { value: activationStr, defaultValue: selectedActivation } },
+                    { name: 'LoadDate', index: 'LoadDate', hidden: false, stype: 'select', search: true, searchoptions: { value: loadDateStr, defaultValue: selectedMonth.substring(4, 6) + "/" + selectedMonth.substring(0, 4) }, sortable: false }
                 ],
                 rowNum: 20,
                 rowList: [10, 20, 30],
                 pager: jQuery("#pager"),
-                toppager:true,
+                toppager: true,
                 sortname: "IdForm",
                 sortorder: "asc",
                 viewrecords: true,
@@ -303,19 +313,19 @@
                 height: "100%",
                 gridview: true,
                 rowattr: function (rd) {
-                    if (rd.ActivationName == "A Codifier") { 
+                    if (rd.ActivationName == "A Codifier") {
                         return { "class": "toCodifyStyle" };
                     }
-                    else if (rd.ActivationName == "Codifiée") { 
+                    else if (rd.ActivationName == "Codifiée") {
                         return { "class": "codifiedStyle" };
                     }
-                    else if (rd.ActivationName == "Rejetée") { 
+                    else if (rd.ActivationName == "Rejetée") {
                         return { "class": "rejectedStyle" };
                     }
-                    else if (rd.ActivationName == "Litige") { 
+                    else if (rd.ActivationName == "Litige") {
                         return { "class": "pendingStyle" };
                     }
-                    else if (rd.ActivationName == "Validée") { 
+                    else if (rd.ActivationName == "Validée") {
                         return { "class": "validatedStyle" };
                     }
                 },
@@ -324,14 +334,16 @@
                     $(".loading").hide();
                 }
             }).jqGrid('navGrid', '#grid_toppager', {
-                edit: false, add: false, del: false, search: false
+                edit: false, add: false, del: false, search: false, refresh: false,
+                beforeRefresh: function () {
+                }
             },
             {}, // default settings for edit
             {}, // add
             {}, // delete
             { closeOnEscape: true, closeAfterSearch: true }, //search
-            {  }
-        )
+            {}
+        );
             jQuery("#grid").jqGrid('filterToolbar', { autosearch: true, stringResult: true });
         }
 

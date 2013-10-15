@@ -11,6 +11,9 @@ using KMI.PromoPSA.Web.Core.Sessions;
 using KMI.PromoPSA.Web.Domain;
 using KMI.PromoPSA.Web.Domain.Translation;
 using KMI.PromoPSA.Rules;
+using System.Web.Services;
+using KMI.PromoPSA.Web.Functions;
+using System.Web.SessionState;
 
 public partial class index : WebPage {
 
@@ -52,6 +55,37 @@ public partial class index : WebPage {
     }
     #endregion
 
+    #region Verif User
+    /// <summary>
+    /// Verif User
+    /// </summary>
+    /// <param name="loginId">Login Id</param>
+    /// <returns>True if succed</returns>
+    [WebMethod]
+    public static string verifUser(string login, string password) {
+
+        WebSession webSession = null;
+
+        try {
+                Right right = new Right(login, password);
+                
+                if (right.CanAccessToPSA()) {
+                    if (WebSessions.Contains(right.IdLogin)) {
+                        return "true";
+                    }
+                }
+                return "false";
+        }
+        catch (Exception e) {
+            string message = " Erreur lors de la liberation de la fiche.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            message += string.Format("Login Id : {0}", webSession.CustomerLogin.IdLogin);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de la liberation de la fiche", e);
+        }
+
+    }
+    #endregion
 
     #region Validation Login
     /// <summary>
@@ -69,6 +103,7 @@ public partial class index : WebPage {
 
                 Right right = new Right(loginText, passwordText);
                 if (right.CanAccessToPSA()) {
+
                     WebSession webSession = new WebSession(right, Session, Page);
 
                     //If login already use
@@ -95,7 +130,7 @@ public partial class index : WebPage {
                 Response.Write("<script language=\"javascript\">alert(\"" + GestionWeb.GetWebWord(93, WebApplicationParameters.DefaultLanguage) + "\");</script>");
                 this.OnError(new KMI.PromoPSA.Web.UI.ErrorEventArgs(this, err));
             }
-            catch {
+            catch (System.Exception eee) {
                 // Connexion refusé
                 Response.Write("<script language=\"javascript\">alert(\"" + GestionWeb.GetWebWord(44, WebApplicationParameters.DefaultLanguage) + "\");</script>");
             }

@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using KMI.PromoPSA.BusinessEntities;
 using KMI.PromoPSA.Constantes;
 using KMI.PromoPSA.Rules;
+using KMI.PromoPSA.Web.Core.Sessions;
 using KMI.PromoPSA.Web.Functions;
 using KMI.PromoPSA.Web.UI;
 using Newtonsoft.Json.Linq;
@@ -30,8 +31,15 @@ public partial class Private_Home : PrivateWebPage {
             results.ReleaseUser(_webSession.CustomerLogin.IdLogin);
             List<LoadDateBE> list = results.GetLoadDates();
             var loadDate = list.Max(x => x.LoadDate);
-            string scriptGlobalVariables = string.Format("var currentMonth = '{0}'; \n var sessionId = '{1}';" + "\n var loginId = '{2}';" + "\n var selectedMonth = '{0}';"
+            string scriptGlobalVariables;
+
+            if (_webSession.SelectedDate.Length > 0 && _webSession.SelectedVehicle.Length > 0 && _webSession.SelectedActivation.Length > 0)
+                scriptGlobalVariables = string.Format("var currentMonth = '{0}'; \n var sessionId = '{1}';" + "\n var loginId = '{2}';" + "\n var selectedMonth = '{3}';" + "\n var selectedVehicle = '{4}';" + "\n var selectedActivation = '{5}';"
+                    , loadDate.Value, _webSession.IdSession, _webSession.CustomerLogin.IdLogin, _webSession.SelectedDate.Substring(3, 4) + _webSession.SelectedDate.Substring(0,2), _webSession.SelectedVehicle, _webSession.SelectedActivation);
+            else
+                scriptGlobalVariables = string.Format("var currentMonth = '{0}'; \n var sessionId = '{1}';" + "\n var loginId = '{2}';" + "\n var selectedMonth = '{0}';" + "\n var selectedVehicle = '-1';" + "\n var selectedActivation = '-1';"
                 , loadDate.Value, _webSession.IdSession, _webSession.CustomerLogin.IdLogin);
+
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "globaVariables", scriptGlobalVariables, true);
         }
         catch (Exception ex) {
@@ -52,11 +60,18 @@ public partial class Private_Home : PrivateWebPage {
     /// <param name="loginId">Login Id</param>
     /// <returns>True if succed</returns>
     [WebMethod]
-    public static void releaseUser(string loginId) {
+    public static string releaseUser(string loginId) {
 
         try {
             IResults results = new Results();
             results.ReleaseUser(Int64.Parse(loginId));
+
+            KMI.PromoPSA.Web.Core.Sessions.WebSession webSession = WebSessions.Get(Int64.Parse(loginId));
+
+            if (webSession.SelectedVehicle.Length > 0 && webSession.SelectedActivation.Length > 0 && webSession.SelectedDate.Length > 0)
+                return webSession.SelectedVehicle + ";" + webSession.SelectedActivation + ";" + webSession.SelectedDate.Substring(3, 4) + webSession.SelectedDate.Substring(0, 2);
+            else
+                return "";
         }
         catch (Exception e) {
             string message = " Erreur lors de la liberation de la fiche.<br/>";
@@ -200,7 +215,7 @@ public partial class Private_Home : PrivateWebPage {
     /// <returns>Grid Data</returns>
     [WebMethod]
     public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch,
-        string loadingDate, string sessionId, string loginId, string filters) { //, string filters
+        string selectedDate, string selectedVehicle, string selectedActivation, string sessionId, string loginId, string filters) { //, string filters
 
         string result = null;
         Dictionary<string, string> searchFilters = new Dictionary<string, string>();
@@ -211,24 +226,44 @@ public partial class Private_Home : PrivateWebPage {
                 dynamic t = Newtonsoft.Json.JsonConvert.DeserializeObject(filters);
 
                 List<string> fields = new List<string>();
+                KMI.PromoPSA.Web.Core.Sessions.WebSession webSession = WebSessions.Get(Int64.Parse(loginId));
 
                 foreach (var rule in t.rules) {
+                    switch ((string)rule.field.Value) {
+                        case "LoadDate":
+                            webSession.SelectedDate = rule.data.Value; 
+                            break;
+                        case "VehicleName":
+                            webSession.SelectedVehicle = rule.data.Value; 
+                            break;
+                        case "ActivationName":
+                            webSession.SelectedActivation = rule.data.Value;
+                            break;
+                    }
                     if (rule.data.Value != "-1")
                         searchFilters.Add(rule.field.Value, rule.data.Value);
                 }
             }
+            else {
+                if (selectedDate.Length == 7)
+                    searchFilters.Add("LoadDate", selectedDate);
+                else
+                    searchFilters.Add("LoadDate", selectedDate.Substring(4, 2) + "/" + selectedDate.Substring(0,4));
+                searchFilters.Add("VehicleName", selectedVehicle);
+                searchFilters.Add("ActivationName", selectedActivation);
+            }
 
             IResults results = new Results();
             IEnumerable<Advert> list;
-            if (isSearch && searchFilters.Keys.Contains("LoadDate")) {
+            if ((isSearch || searchFilters.Count > 0) && searchFilters.Keys.Contains("LoadDate")) {
                 string strDate = searchFilters["LoadDate"].Substring(3, 4) + searchFilters["LoadDate"].Substring(0, 2);
                 list = results.GetAdverts(Int64.Parse(strDate));
             }
             else {
-                list = results.GetAdverts(Int64.Parse(loadingDate));
+                list = results.GetAdverts(Int64.Parse(selectedDate));
             }
 
-            if (isSearch) {
+            if (isSearch || searchFilters.Count > 0) {
 
                 foreach (string searchField in searchFilters.Keys) {
 
@@ -237,13 +272,15 @@ public partial class Private_Home : PrivateWebPage {
                             list = list.Where(x => x.IdForm == Int64.Parse(searchFilters[searchField]));
                             break;
                         case "VehicleName":
-                            list = list.Where(x => x.IdVehicle == Int64.Parse(searchFilters[searchField]));
+                            if (Int64.Parse(searchFilters[searchField]) != -1)
+                                list = list.Where(x => x.IdVehicle == Int64.Parse(searchFilters[searchField]));
                             break;
                         case "DateMediaNum":
                             list = list.Where(x => x.DateMediaNumFormated == searchFilters[searchField]);
                             break;
                         case "ActivationName":
-                            list = list.Where(x => x.Activation == Int64.Parse(searchFilters[searchField]));
+                            if (Int64.Parse(searchFilters[searchField]) != -1)
+                                list = list.Where(x => x.Activation == Int64.Parse(searchFilters[searchField]));
                             break;
                         case "LoadDate":
                             list = list.Where(x => x.LoadDateFormated == searchFilters[searchField]);

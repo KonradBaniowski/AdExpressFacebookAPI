@@ -13,7 +13,56 @@
 	<meta http-equiv="expires" content="0"/>
 	<meta http-equiv="pragma" content="no-cache"/>
 	<meta content="no-cache" name="Cache-control"/>
+    <script src="/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="/js/json2.js" type="text/javascript" ></script>
 </head>
+<script type="text/javascript" language="javascript">
+
+    $(document).ready(function () {
+        $("#passwordTextBox").keypress(function (event) {
+            if (event.keyCode == 13) {
+                $("#sbtButton").click();
+            }
+        });
+    });
+
+    function VerifUser() {
+        var loginObj = document.getElementById("loginTextBox");
+        var passwordObj = document.getElementById("passwordTextBox");
+
+        $.ajax({
+            type: "POST",
+            url: 'index.aspx/verifUser',
+            async: false,
+            data: JSON.stringify({ login: loginObj.value, password: passwordObj.value }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg, st) {
+                var res = JSON.parse(msg.d);
+                if (res == true)
+                    VerifDialog();
+                else {
+                    document.getElementById('Button1').click();
+                }
+            },
+            error: function () {
+                alert("Erreur lors de la connexion");
+            }
+        });
+    }
+
+    function VerifDialog() {
+
+        var res = confirm("Ce login est deja en cours d'utilisation, voulez vous déconnecter la personne utilisant ce login ?");
+
+        if (res == true) {
+            document.getElementById('Button1').click();
+        }
+        else {
+            return;
+        }
+    }
+</script>
 <body class="bodyStyle">
     <form id="form1" runat="server">
     <div class="header"><asp:Image ID="Image1" runat="server" SkinID="logo_tns_home" /></div>
@@ -30,7 +79,8 @@
 			    </tr>
 			    <tr>
 			        <td>&nbsp;</td>
-			        <td align="left"><asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Valider" CssClass="validateButton" /></td>
+                    <td><input type="button" id="sbtButton" name="sbtButton" onclick="VerifUser()" value="Valider" class="validateButton"/></td>
+			        <td align="left"><asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Valider" CssClass="validateButton" style="display:none;"/></td>
 			    </tr>
 		    </table>
         </div>
