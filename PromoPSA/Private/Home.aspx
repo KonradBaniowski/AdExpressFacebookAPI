@@ -215,7 +215,7 @@
         function InitGridComponent(loadDate) {
 
             var grid = $("#grid");
-            var vehicleStr = { '-1': 'Tous', '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur' };
+            var vehicleStr = { '-1': 'Tous', '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur', '2': 'Radio' };
             var activationStr = { '-1': 'Toutes', '80': 'A Codifier', '60': 'Rejetée', '90': 'Codifiée', '70': 'Litige', '0': 'Validée' };
             var loadDateStr = new Object();
             var loadDateList = new Array();

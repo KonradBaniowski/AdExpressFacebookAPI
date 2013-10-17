@@ -60,6 +60,8 @@ namespace KMI.PromoPSA.BusinessEntities
                 switch (IdVehicle) { 
                     case 1:
                         return "Presse";
+                    case 2:
+                        return "Radio";
                     case 3:
                         return "Tv";
                     case 7:

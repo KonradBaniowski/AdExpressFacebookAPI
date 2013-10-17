@@ -629,17 +629,19 @@
             $(ele).focus();
         }
 
-        function LoadVideo(videofile, year,isZoom) {
-
-            var filePath = '/VideoPsa/' + year + '/' + videofile;
+        function LoadVideo(creativeFile, year,isZoom,idVehicle) {
+       
+            var filePath = (idVehicle == 3) ? '/VideoPsa/' + year + '/' + creativeFile : '/RadioPsa/' + year + '/WAV/' + creativeFile;
+            var mimeType = (idVehicle == 3) ? 'video/mpeg' : 'audio/wav';
             var vids = '';
 
-            if (!isZoom)
-                vids = '<img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadVideo(\'' + videofile + '\',' + year + ',true)\"><br/>';
+            if (!isZoom && idVehicle == 3)
+                vids = '<img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadVideo(\'' + creativeFile + '\',' + year + ',true,'+idVehicle+')\"><br/>';
             
-            vids += ' <object type=\"video/mpeg\" data=\"' + filePath + '\" width=\"100%\" ';
+            vids += ' <object type=\"'+mimeType+'\" data=\"' + filePath + '\" width=\"100%\" ';
             vids += (isZoom) ? 'height=\"800\">' : 'height=\"500\">';
             vids += '  <param name=\"src\" value=\"' + filePath + '\" />';
+            vids += '<param name=\"controller\" value=\"true\" />';
             vids += ' <param name=\"autoplay\" value=\"false\" />';
             vids += ' <param name=\"autoStart\" value=\"0\" />';
             vids += '<embed src=\"' + filePath + '\"  width=\"100%\"  ';
@@ -650,7 +652,7 @@
 
             if (isZoom) {
                 $('.modalBody').html(vids);
-                revealModal('modalPage', videofile, 3);
+                revealModal('modalPage', creativeFile, 3);
             } else {
                 $('.slider').hide();
                 $('.containingBlock').html(vids);
@@ -752,9 +754,11 @@
                     });
                 }
                     //Set vidéo
-                else if (msg.d.Advert.IdVehicle == 3)
-                    LoadVideo(msg.d.Advert.PromotionVisual.replace("mp4", "mpg").replace("MP4", "MPG"),
-                        msg.d.Advert.LoadDate.toString().substr(0, 4),false);
+                else if (msg.d.Advert.IdVehicle == 3 || msg.d.Advert.IdVehicle == 2) {
+                    var promoVisual = (msg.d.Advert.IdVehicle == 3) ? msg.d.Advert.PromotionVisual.replace("mp4", "mpg").replace("MP4", "MPG")
+                        : msg.d.Advert.PromotionVisual;
+                    LoadVideo(promoVisual, msg.d.Advert.LoadDate.toString().substr(0, 4), false, msg.d.Advert.IdVehicle);
+                }                  
                     //Set banner
                 else if (msg.d.Advert.IdVehicle == 7 && msg.d.Advert.PromotionVisual.indexOf("SWF") > 0)
                     LoadBanner(msg.d.Advert.PromotionVisual, false);
