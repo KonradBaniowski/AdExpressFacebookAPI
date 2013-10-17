@@ -203,7 +203,10 @@ namespace KMI.PromoPSA.Dispatcher.Core
             lock (_adverts)
             {
                 bool isValidated = false;
-                var adverts = _adverts.Where(p => p.LoadDate == loadDate).ToList();
+                var adverts = _adverts.Where(p => p.LoadDate == loadDate
+                    && (p.Activation == Constantes.Constantes.ACTIVATION_CODE_CODIFIED
+                    || p.Activation == Constantes.Constantes.ACTIVATION_CODE_REJECTED)
+                    ).ToList();
 
                 foreach (var advert in adverts)
                 {
