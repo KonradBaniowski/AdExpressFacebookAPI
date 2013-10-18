@@ -23,6 +23,7 @@
     <script src="/js/jqplot.pieRenderer.js" type="text/javascript" ></script>
     <script src="/js/jqplot.json2.min.js" type="text/javascript" ></script>
     <script src="/js/json2.js" type="text/javascript" ></script>
+    <script src="/js/vex.combined.min.js" type="text/javascript"></script>
 
 </head>
 <body class="bodyStyle">
@@ -57,11 +58,16 @@
             <div id="pager" style="height:24px;"></div>
 
         </div>
-        <div id="dialog" title="Alert" style="font-size:12px;">
-            <p>Cette fiche est déjà en cours de codification !</p>
+        <div id="dialog" title="Alert" style="font-size:12px; display: none; padding-top: 14px; margin-bottom: -14px;">
+            <p></p>
+        </div>
+
+        <div id="dialog-confirm" title="Alert" style="font-size:12px; display: none; padding-top: 14px; margin-bottom: -14px;">
+            <p></p>
         </div>
             
     <script type="text/javascript">
+
         $(document).ready(function () {
 
             ReleaseUser();
@@ -91,7 +97,8 @@
                     }
                 },
                 error: function () {
-                    alert("Erreur lors de la liberation de la fiche!");
+                    $("#dialog").html("Erreur lors de la liberation de la fiche!");
+                    $("#dialog").dialog("open");
                 }
             });
 
@@ -130,12 +137,15 @@
                     }
                     if (promotionIdFromWS > 0)
                         document.location = "Edit.aspx?promotionId=" + promotionIdFromWS + "&sessionId=" + sessionId + "&loginId=" + loginId;
-                    else
-                        alert("Aucune fiche n'est disponible !");
+                    else {
+                        $("#dialog").html("Aucune fiche n'est disponible !");
+                        $("#dialog").dialog("open");
+                    }
 
                 },
                 error: function () {
-                    alert("Erreur lors de la récupération d'une fiche disponible.");
+                    $("#dialog").html("Erreur lors de la récupération d'une fiche disponible.");
+                    $("#dialog").dialog("open");
                 }
             });
 
@@ -169,11 +179,13 @@
                         $("#grid").trigger("reloadGrid");
                         InitPromotionNb(selectedMonth);
                         InitChartComponent(selectedMonth);
-                        alert("Mois Validé");
+                        $("#dialog").html("Mois Validé");
+                        $("#dialog").dialog("open");
                     }
                 },
                 error: function () {
-                    alert("Erreur lors de la validation du mois!");
+                    $("#dialog").html("Erreur lors de la validation du mois!");
+                    $("#dialog").dialog("open");
                 }
             });
 
@@ -196,11 +208,14 @@
                     }
                     if (verif == true)
                         document.location = "Edit.aspx?promotionId=" + promotionId + "&sessionId=" + sessionId + "&loginId=" + loginId;
-                    else
+                    else {
+                        $("#dialog").html("Cette fiche est déjà en cours de codification !");
                         $("#dialog").dialog("open");
+                    }
                 },
                 error: function () {
-                    alert("Une Erreur est survenue. Impossible  d\'editer la fiche!");
+                    $("#dialog").html("Une Erreur est survenue. Impossible  d\'editer la fiche!");
+                    $("#dialog").dialog("open");
                 }
             });
 
@@ -234,7 +249,8 @@
                     }
                 },
                 error: function () {
-                    alert("Impossible d\'initilaiser la liste des fiches. Erreur lors du chargement des dates.");
+                    $("#dialog").html("Impossible d\'initilaiser la liste des fiches. Erreur lors du chargement des dates.");
+                    $("#dialog").dialog("open");
                 }
             });
 
@@ -278,7 +294,8 @@
                             }
                         },
                         error: function (data) {
-                            alert("Erreur lors de la récupération de la liste des fiches.");
+                            $("#dialog").html("Erreur lors de la récupération de la liste des fiches.");
+                            $("#dialog").dialog("open");
                         }
                     });
                 },
@@ -364,7 +381,8 @@
                     }
                 },
                 error: function () {
-                    alert("Erreur lors de la création du graphique.");
+                    $("#dialog").html("Erreur lors de la création du graphique.");
+                    $("#dialog").dialog("open");
                 }
             });
 
@@ -392,7 +410,8 @@
                     }
                 },
                 error: function () {
-                    alert("Erreur lors de la création du graphique.");
+                    $("#dialog").html("Erreur lors de la création du graphique.");
+                    $("#dialog").dialog("open");
                 }
             });
 
@@ -438,7 +457,8 @@
                     }
                 },
                 error: function () {
-                    alert("Erreur lors de la récupération du nombre de fiches.");
+                    $("#dialog").html("Erreur lors de la récupération du nombre de fiches.");
+                    $("#dialog").dialog("open");
                 }
             });
 

@@ -26,6 +26,22 @@
 
         var fValidator;
 
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                dialogClass: "alert",
+                modal: true,
+                show: {
+                    effect: "highlight",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 1000
+                }
+            });
+        });
+
         $(document).ready(function () {
             //debugger;
 
@@ -126,10 +142,10 @@
 
                     //Set Visuals
                     LoadVisuals(msg);
-
                 },
                 error: function () {
-                    alert("Impossible de charger les données de la promotion");
+                    $("#dialog").html("Impossible de charger les données de la promotion");
+                    $("#dialog").dialog("open");
                 }
             });
             //Set Data picker
@@ -174,22 +190,6 @@
             RejectFormEvent("#rejectcodif", 60);
             CancelForm("#cancelcodif");
             PendingFormEvent("#pendingcodif",70);
-
-            $(function () {
-                $("#dialog").dialog({
-                    autoOpen: false,
-                    dialogClass: "alert",
-                    modal: true,
-                    show: {
-                        effect: "highlight",
-                        duration: 1000
-                    },
-                    hide: {
-                        effect: "fade",
-                        duration: 1000
-                    }
-                });
-            });
 
             $('#loaderdiv').hide();
 
@@ -261,7 +261,8 @@
                         },
                         error: function () {
                             $('#loaderdiv').hide();
-                            alert("Erreur! Impossible de retourner à la page de sélection des fiches.");
+                            $("#dialog").html("Erreur! Impossible de retourner à la page de sélection des fiches.");
+                            $("#dialog").dialog("open");
                         }
                     });
 
@@ -298,7 +299,8 @@
                                 },
                                 error: function () {
                                     $('#loaderdiv').hide();
-                                    alert("Erreur! Impossible de retourner à la page de sélection des fiches.");
+                                    $("#dialog").html("Erreur! Impossible de retourner à la page de sélection des fiches.");
+                                    $("#dialog").dialog("open");
                                 }
                             });
                             //      //form.submit();
@@ -332,7 +334,8 @@
                     error: function () {
                         $("#product").get(0).options.length = 0;
                         $('#loaderdiv').hide();
-                        alert("Echec du chargement des types de pièce");
+                        $("#dialog").html("Echec du chargement des types de pièce");
+                        $("#dialog").dialog("open");
                     }
                 });
             }
@@ -367,7 +370,8 @@
                         },
                         error: function () {
                             $('#loaderdiv').hide();
-                            alert("Erreur lors de la mise en litige de la fiche");
+                            $("#dialog").html("Erreur lors de la mise en litige de la fiche");
+                            $("#dialog").dialog("open");
                         }
                     });
 
@@ -409,7 +413,8 @@
                                 },
                                 error: function () {
                                     $('#loaderdiv').hide();
-                                    alert("Erreur lors de la mise en litige de la fiche");
+                                    $("#dialog").html("Erreur lors de la mise en litige de la fiche");
+                                    $("#dialog").dialog("open");
                                 }
                             });
                         }
@@ -444,7 +449,8 @@
                         },
                         error: function () {
                             $('#loaderdiv').hide();
-                            alert("Erreur lors du rejet de la fiche");
+                            $("#dialog").html("Erreur lors du rejet de la fiche");
+                            $("#dialog").dialog("open");
                         }
                     });
 
@@ -485,7 +491,8 @@
                                 },
                                 error: function () {
                                     $('#loaderdiv').hide();
-                                    alert("Erreur lors du rejet de la fiche");
+                                    $("#dialog").html("Erreur lors du rejet de la fiche");
+                                    $("#dialog").dialog("open");
                                 }
                             });
                         }
@@ -616,7 +623,8 @@
                             error: function () {
                                 $("#product").get(0).options.length = 0;
                                 $('#loaderdiv').hide();
-                                alert("Erreur lors sauvegarde la fiche");
+                                $("#dialog").html("Erreur lors sauvegarde la fiche");
+                                $("#dialog").dialog("open");
                             }
                         });
                     }
@@ -1185,7 +1193,9 @@
             <img src="/App_Themes/PromoPSAFr/Images/bx_loader.gif" class="ajax-loader" />
         </div>
         
-       
+       <div id="dialog" title="Alert" style="font-size:12px; display: none; padding-top: 14px; margin-bottom: -14px;">
+            <p></p>
+        </div>
     </form>
 
 
