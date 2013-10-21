@@ -119,6 +119,31 @@
                 }
             });
         });
+
+        $(function () {
+            $("#dialog-confirm").dialog({
+                autoOpen: false,
+                dialogClass: "alert",
+                modal: true,
+                show: {
+                    effect: "highlight",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 1000
+                },
+                buttons: {
+                    "Ok": function () {
+                        ValidateMonth();
+                        $(this).dialog("close");
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+            });
+        });
         
         function StartCodif() {
 
@@ -148,20 +173,14 @@
                     $("#dialog").dialog("open");
                 }
             });
-
         
         }
 
         function VerifDialog() {
 
-            var r = confirm("Valider Mois");
-
-            if (r == true) {
-                ValidateMonth();
-            }
-            else {
-                return;
-            }
+            $("#dialog-confirm").html("Valider Mois");
+            $("#dialog-confirm").dialog("open");
+            
         }
 
         function ValidateMonth() {
