@@ -73,9 +73,13 @@ namespace TNS.AdExpress.Domain.Results
 
         private long _excluWeb;
 
+        private long _isNational;
+
+        private long _idVehicle;
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -91,9 +95,12 @@ namespace TNS.AdExpress.Domain.Results
         /// <param name="conditionText">Condition Text</param>
         /// <param name="promotionBrand">Promotion Brand</param>
         /// <param name="promotionVisual">Promotion Visual</param>
+        /// <param name="excluWeb">exclu Web</param>
+        /// <param name="isNational">Is National</param>
+        /// <param name="idVehicle">id Vehicle</param>
         public DataPromotionDetail(long idProduct, long idBrand, DateTime dateBegin, DateTime dateEnd, long idSegment, long idCategory, long idCircuit
             , string promotionContent, List<string> conditionVisual, string conditionText, string promotionBrand, List<string> promotionVisual
-            ,long excluWeb) {
+            ,long excluWeb, long isNational, long idVehicle) {
             if (idProduct < 1) throw new ArgumentException(" Paramter idProduct  is invalid");
             _idProduct = idProduct;
             if (idBrand < 1) throw new ArgumentException(" Paramter idBrand  is invalid");
@@ -112,6 +119,8 @@ namespace TNS.AdExpress.Domain.Results
             _promotionBrand = promotionBrand;
             _promotionVisual = promotionVisual;
             _excluWeb = excluWeb;
+            _isNational = isNational;
+            _idVehicle = idVehicle;
             }
         #endregion
 
@@ -193,6 +202,16 @@ namespace TNS.AdExpress.Domain.Results
         public long ExcluWeb
         {
             get { return _excluWeb; }
+        }
+
+        public long IsNational
+        {
+            get { return _isNational; }          
+        }
+
+        public long IdVehicle
+        {
+            get { return _idVehicle; }
         }
 
         #endregion

@@ -1,3 +1,4 @@
+using System.Linq;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.ComponentModel;
 using System.Web.UI;
@@ -74,7 +75,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// </summary>
         /// <returns>Evenement Ajax</returns>
         protected override string GetAjaxEventScript() {
-            StringBuilder js = new StringBuilder(1000);
+            var js = new StringBuilder(1000);
             js.Append("\r\nvar isChanged_" + this.ID + " = false;");
 
             js.Append("\r\nfunction onclickPernalize_" + this.ID + "(){");
@@ -83,23 +84,23 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 
             js.Append("\r\nfunction onClickDetailTab_"+this.ID+"(lvl){");
             js.Append("\r\n\tisChanged_" + this.ID + " = true;");
-            js.Append("\r\n\tif(lvl==0 && document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value!='none'){");
-            js.Append("\r\n\t\tif(document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value == document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value)");
-            js.Append("\r\n\t\t\tdocument.getElementById('lvl1_" + this.ID + "').selectedIndex = 0;");
-            js.Append("\r\n\t\tif(document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value == document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value)");
-            js.Append("\r\n\t\t\tdocument.getElementById('lvl2_" + this.ID + "').selectedIndex = 0;");
+            js.AppendFormat("\r\n\tif(lvl==0 && document.getElementById('lvl0_{0}').options[document.getElementById('lvl0_{0}').selectedIndex].value!='none'){{", this.ID);
+            js.AppendFormat("\r\n\t\tif(document.getElementById('lvl1_{0}').options[document.getElementById('lvl1_{0}').selectedIndex].value == document.getElementById('lvl0_{0}').options[document.getElementById('lvl0_{0}').selectedIndex].value)", this.ID);
+            js.AppendFormat("\r\n\t\t\tdocument.getElementById('lvl1_{0}').selectedIndex = 0;", ID);
+            js.AppendFormat("\r\n\t\tif(document.getElementById('lvl2_{0}').options[document.getElementById('lvl2_{0}').selectedIndex].value == document.getElementById('lvl0_{0}').options[document.getElementById('lvl0_{0}').selectedIndex].value)", this.ID);
+            js.AppendFormat("\r\n\t\t\tdocument.getElementById('lvl2_{0}').selectedIndex = 0;", this.ID);
             js.Append("\r\n\t}");
-            js.Append("\r\n\telse if(lvl==1 && document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value!='none'){");
-            js.Append("\r\n\t\tif(document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value == document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value)");
-            js.Append("\r\n\t\t\tdocument.getElementById('lvl0_" + this.ID + "').selectedIndex = 0;");
-            js.Append("\r\n\t\tif(document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value == document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value)");
-            js.Append("\r\n\t\t\tdocument.getElementById('lvl2_" + this.ID + "').selectedIndex = 0;");
+            js.AppendFormat("\r\n\telse if(lvl==1 && document.getElementById('lvl1_{0}').options[document.getElementById('lvl1_{0}').selectedIndex].value!='none'){{", this.ID);
+            js.AppendFormat("\r\n\t\tif(document.getElementById('lvl0_{0}').options[document.getElementById('lvl0_{0}').selectedIndex].value == document.getElementById('lvl1_{0}').options[document.getElementById('lvl1_{0}').selectedIndex].value)", this.ID);
+            js.AppendFormat("\r\n\t\t\tdocument.getElementById('lvl0_{0}').selectedIndex = 0;", this.ID);
+            js.AppendFormat("\r\n\t\tif(document.getElementById('lvl2_{0}').options[document.getElementById('lvl2_{0}').selectedIndex].value == document.getElementById('lvl1_{0}').options[document.getElementById('lvl1_{0}').selectedIndex].value)", this.ID);
+            js.AppendFormat("\r\n\t\t\tdocument.getElementById('lvl2_{0}').selectedIndex = 0;", this.ID);
             js.Append("\r\n\t}");
-            js.Append("\r\n\telse if(lvl==2 && document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value!='none'){");
-            js.Append("\r\n\t\tif(document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value == document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value)");
-            js.Append("\r\n\t\t\tdocument.getElementById('lvl1_" + this.ID + "').selectedIndex = 0;");
-            js.Append("\r\n\t\tif(document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value == document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value)");
-            js.Append("\r\n\t\t\tdocument.getElementById('lvl0_" + this.ID + "').selectedIndex = 0;");
+            js.AppendFormat("\r\n\telse if(lvl==2 && document.getElementById('lvl2_{0}').options[document.getElementById('lvl2_{0}').selectedIndex].value!='none'){{", this.ID);
+            js.AppendFormat("\r\n\t\tif(document.getElementById('lvl1_{0}').options[document.getElementById('lvl1_{0}').selectedIndex].value == document.getElementById('lvl2_{0}').options[document.getElementById('lvl2_{0}').selectedIndex].value)", this.ID);
+            js.AppendFormat("\r\n\t\t\tdocument.getElementById('lvl1_{0}').selectedIndex = 0;", this.ID);
+            js.AppendFormat("\r\n\t\tif(document.getElementById('lvl0_{0}').options[document.getElementById('lvl0_{0}').selectedIndex].value == document.getElementById('lvl2_{0}').options[document.getElementById('lvl2_{0}').selectedIndex].value)", this.ID);
+            js.AppendFormat("\r\n\t\t\tdocument.getElementById('lvl0_{0}').selectedIndex = 0;", this.ID);
             js.Append("\r\n\t}");
 
             js.Append("\r\n}\r\n");
@@ -113,7 +114,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// </summary>
         /// <returns>Evenement Ajax</returns>
         protected override string GetValuesSelectedMethodScriptContent() {
-            StringBuilder js = new StringBuilder(1000);
+            var js = new StringBuilder(1000);
             js.Append("\r\n\tif(isChanged_" + this.ID + " == false) return null;");
             js.Append("\r\n\tvar tab = new Array();");
 
@@ -153,18 +154,18 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 
         #region Enregistrement des paramètres pour les styles
         protected override string SetCurrentStyleParametersScript() {
-            StringBuilder js = new StringBuilder();
+            var js = new StringBuilder();
 
-            js.Append("\r\n\t obj.CssClassLvl1 = '" + CssClassLvl1 + "';");
-            js.Append("\r\n\t obj.CssClassLvl2 = '" + CssClassLvl2 + "';");
-            js.Append("\r\n\t obj.CssClassLvl3 = '" + CssClassLvl3 + "';");
-            js.Append("\r\n\t obj.CssClassLvl4 = '" + CssClassLvl4 + "';");
-            js.Append("\r\n\t obj.CssClassDetailTab = '" + CssClassDetailTab + "';");
-            js.Append("\r\n\t obj.CssClassDetailTabHeader = '" + CssClassDetailTabHeader + "';");
-            js.Append("\r\n\t obj.CssClassSeparator = '" + CssClassSeparator + "';");
-            js.Append("\r\n\t obj.CssClassPersonnalisationHeader = '" + CssClassPersonnalisationHeader + "';");
-            js.Append("\r\n\t obj.CssClassPersonnalisationHeaderBis = '" + CssClassPersonnalisationHeaderBis + "';");
-            js.Append("\r\n\t obj.CssClassPersonnalisation = '" + CssClassPersonnalisation + "';");
+            js.AppendFormat("\r\n\t obj.CssClassLvl1 = '{0}';", CssClassLvl1);
+            js.AppendFormat("\r\n\t obj.CssClassLvl2 = '{0}';", CssClassLvl2);
+            js.AppendFormat("\r\n\t obj.CssClassLvl3 = '{0}';", CssClassLvl3);
+            js.AppendFormat("\r\n\t obj.CssClassLvl4 = '{0}';", CssClassLvl4);
+            js.AppendFormat("\r\n\t obj.CssClassDetailTab = '{0}';", CssClassDetailTab);
+            js.AppendFormat("\r\n\t obj.CssClassDetailTabHeader = '{0}';", CssClassDetailTabHeader);
+            js.AppendFormat("\r\n\t obj.CssClassSeparator = '{0}';", CssClassSeparator);
+            js.AppendFormat("\r\n\t obj.CssClassPersonnalisationHeader = '{0}';", CssClassPersonnalisationHeader);
+            js.AppendFormat("\r\n\t obj.CssClassPersonnalisationHeaderBis = '{0}';", CssClassPersonnalisationHeaderBis);
+            js.AppendFormat("\r\n\t obj.CssClassPersonnalisation = '{0}';", CssClassPersonnalisation);
 
             return (base.SetCurrentStyleParametersScript() + js.ToString());
         }
@@ -213,15 +214,14 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// </summary>
         /// <returns></returns>
         protected override string GetAjaxHTML() {
-            StringBuilder html = new StringBuilder(1000);
+            var html = new StringBuilder(1000);
 
             int nbMonthVisu = 2;
 
-            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
+            Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
 
-
-            //List<DetailLevelItemsInformation> detailLevelItemsInformationList = new List<DetailLevelItemsInformation>(module.AllowedMediaDetailLevelItems);
-            //DetailLevelItemsInformation
+            List<DetailLevelItemInformation> allowedMediaDetailLevelItems = GetAllowedMediaDetailLevelItems(module);
+           
 
 
             html.AppendFormat("<div id=\"div_{0}\" width=\"100%\" class=\"{1}\">", this.ID, CssClass);
@@ -229,23 +229,24 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             html.Append("<tr><td class=\"" + CssClassDetailTab + "\">");
 
             #region Detail Tab
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\" class=\"" + CssClassDetailTab + "\">");
-            html.Append("<tr><td class=\"" + CssClassDetailTabHeader + "\">" + GestionWeb.GetWebWord(2873, _webSession.SiteLanguage) + " :</td></tr>");
+            html.AppendFormat("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\" class=\"{0}\">", CssClassDetailTab);
+            html.AppendFormat("<tr><td class=\"{0}\">{1} :</td></tr>", CssClassDetailTabHeader, GestionWeb.GetWebWord(2873, _webSession.SiteLanguage));
             html.Append("<tr><td align=\"center\">");
 
             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
             html.Append("<tr>");
 
-            html.Append("<td class=\"pt\" rowspan=\"2\">" + GestionWeb.GetWebWord(2872, _webSession.SiteLanguage) + "</td>");
+            html.AppendFormat("<td class=\"pt\" rowspan=\"2\">{0}</td>", GestionWeb.GetWebWord(2872, _webSession.SiteLanguage));
 
             for (int i = 0; i < nbMonthVisu; i++) {
-                html.Append("<td class=\"ptm\" colspan=\"4\">" + MonthString.GetHTMLCharacters(i + 1, _webSession.SiteLanguage, 3) + " " + DateTime.Now.ToString("yy") + "</td>");
+                html.AppendFormat("<td class=\"ptm\" colspan=\"4\">{0} {1}</td>"
+                    , MonthString.GetHTMLCharacters(i + 1, _webSession.SiteLanguage, 3), DateTime.Now.ToString("yy"));
             }
 
 
             html.Append("<tr>");
             for (int j = 0; j < nbMonthVisu * 4; j++) {
-                html.Append("<td class=\"vpw\">" + (j + 1).ToString("00") + "</td>");
+                html.AppendFormat("<td class=\"vpw\">{0}</td>", (j + 1).ToString("00"));
             }
             html.Append("</tr>");
 
@@ -254,33 +255,35 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 
             #region LvL1
             bool hasSelected = false;
-            StringBuilder htmlDropDownOptionsLvL1 = new StringBuilder(1000);
-            foreach (DetailLevelItemInformation cDetailLevelItemsInformation in module.AllowedMediaDetailLevelItems) {
-                htmlDropDownOptionsLvL1.Append("<option value=\"" + cDetailLevelItemsInformation.Id.ToString() + "\" ");
+            var htmlDropDownOptionsLvL1 = new StringBuilder(1000);
+            foreach (DetailLevelItemInformation cDetailLevelItemsInformation in allowedMediaDetailLevelItems)
+            {
+                htmlDropDownOptionsLvL1.AppendFormat("<option value=\"{0}\" ", cDetailLevelItemsInformation.Id.ToString());
                 if (_webSession.GenericMediaDetailLevel.LevelIds.Count >= 1
                     && ((DetailLevelItemInformation.Levels)_webSession.GenericMediaDetailLevel.LevelIds[0]) == cDetailLevelItemsInformation.Id) {
                     htmlDropDownOptionsLvL1.Append("selected = \"selected\"");
                     hasSelected = true;
                 }
-                htmlDropDownOptionsLvL1.Append(">" + GestionWeb.GetWebWord(cDetailLevelItemsInformation.WebTextId, _webSession.SiteLanguage) + "</option>");
+                htmlDropDownOptionsLvL1.AppendFormat(">{0}</option>", GestionWeb.GetWebWord(cDetailLevelItemsInformation.WebTextId, _webSession.SiteLanguage));
             }
             htmlDropDownOptionsLvL1 = new StringBuilder("<option value=\"none\">-------</option " + ((!hasSelected) ? "selected = \"selected\"" : string.Empty) + ">" + htmlDropDownOptionsLvL1.ToString());
             html.Append("<tr>");
-            html.Append("<td class=\"L0\">" + space);
-            html.Append("<select id=\"lvl0_" + this.ID + "\" onchange=\"javascript:onClickDetailTab_" + this.ID + "(0);\">");
+            html.AppendFormat("<td class=\"L0\">{0}", space);
+            html.AppendFormat("<select id=\"lvl0_{0}\" onchange=\"javascript:onClickDetailTab_{0}(0);\">", this.ID);
             html.Append(htmlDropDownOptionsLvL1.ToString());
             html.Append("</select>");
             html.Append("</td>");
-            html.Append("<td class=\"p3\" colspan=\"" + 4 * nbMonthVisu + "\">&nbsp;</td>");
+            html.AppendFormat("<td class=\"p3\" colspan=\"{0}\">&nbsp;</td>", 4 * nbMonthVisu);
             html.Append("</tr>");
             space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
             #endregion
 
             #region LvL2
             hasSelected = false;
-            StringBuilder htmlDropDownOptionsLvL2 = new StringBuilder(1000);
-            foreach (DetailLevelItemInformation cDetailLevelItemsInformation in module.AllowedMediaDetailLevelItems) {
-                htmlDropDownOptionsLvL2.Append("<option value=\"" + cDetailLevelItemsInformation.Id.ToString() + "\" ");
+            var htmlDropDownOptionsLvL2 = new StringBuilder(1000);
+            foreach (DetailLevelItemInformation cDetailLevelItemsInformation in allowedMediaDetailLevelItems)
+            {
+                htmlDropDownOptionsLvL2.AppendFormat("<option value=\"{0}\" ", cDetailLevelItemsInformation.Id.ToString());
                 if (_webSession.GenericMediaDetailLevel.LevelIds.Count >= 2
                     && ((DetailLevelItemInformation.Levels)_webSession.GenericMediaDetailLevel.LevelIds[1]) == cDetailLevelItemsInformation.Id) {
                     htmlDropDownOptionsLvL2.Append("selected = \"selected\"");
@@ -291,36 +294,40 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             htmlDropDownOptionsLvL2 = new StringBuilder("<option value=\"none\" " + ((!hasSelected) ? "selected = \"selected\"" : string.Empty) + ">-------</option>" + htmlDropDownOptionsLvL2.ToString());
 
             html.Append("<tr>");
-            html.Append("<td class=\"L1\">" + space);
-            html.Append("<select id=\"lvl1_" + this.ID + "\" onchange=\"javascript:onClickDetailTab_" + this.ID + "(1);\">");
+            html.AppendFormat("<td class=\"L1\">{0}", space);
+            html.AppendFormat("<select id=\"lvl1_{0}\" onchange=\"javascript:onClickDetailTab_{0}(1);\">", this.ID);
             html.Append(htmlDropDownOptionsLvL2.ToString());
             html.Append("</select>");
             html.Append("</td>");
-            html.Append("<td class=\"p3\" colspan=\"" + 4 * nbMonthVisu + "\">&nbsp;</td>");
+            html.AppendFormat("<td class=\"p3\" colspan=\"{0}\">&nbsp;</td>", 4 * nbMonthVisu);
             html.Append("</tr>");
             space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
             #endregion
 
             #region LvL3
             hasSelected = false;
-            StringBuilder htmlDropDownOptionsLvL3 = new StringBuilder(1000);
-            foreach (DetailLevelItemInformation cDetailLevelItemsInformation in module.AllowedMediaDetailLevelItems) {
-                htmlDropDownOptionsLvL3.Append("<option value=\"" + cDetailLevelItemsInformation.Id.ToString() + "\" ");
+            var htmlDropDownOptionsLvL3 = new StringBuilder(1000);
+            foreach (DetailLevelItemInformation cDetailLevelItemsInformation in allowedMediaDetailLevelItems)
+            {
+                htmlDropDownOptionsLvL3.AppendFormat("<option value=\"{0}\" ", cDetailLevelItemsInformation.Id.ToString());
                 if (_webSession.GenericMediaDetailLevel.LevelIds.Count >= 3
                     && ((DetailLevelItemInformation.Levels)_webSession.GenericMediaDetailLevel.LevelIds[2]) == cDetailLevelItemsInformation.Id) {
                     htmlDropDownOptionsLvL3.Append("selected = \"selected\"");
                     hasSelected = true;
                 }
-                htmlDropDownOptionsLvL3.Append(">" + GestionWeb.GetWebWord(cDetailLevelItemsInformation.WebTextId, _webSession.SiteLanguage) + "</option>");
+                htmlDropDownOptionsLvL3.AppendFormat(">{0}</option>"
+                    , GestionWeb.GetWebWord(cDetailLevelItemsInformation.WebTextId, _webSession.SiteLanguage));
             }
             htmlDropDownOptionsLvL3 = new StringBuilder("<option value=\"none\" "+((!hasSelected)?"selected = \"selected\"":string.Empty)+">-------</option>" + htmlDropDownOptionsLvL3.ToString());
             html.Append("<tr>");
             html.Append("<td class=\"L2\">" + space);
-            html.Append("<select id=\"lvl2_" + this.ID + "\" onchange=\"javascript:onClickDetailTab_" + this.ID + "(2);\">");
+            html.AppendFormat("<select id=\"lvl2_{0}\" onchange=\"javascript:onClickDetailTab_{0}(2);\">"
+                , this.ID);
             html.Append(htmlDropDownOptionsLvL3.ToString());
             html.Append("</select>");
             html.Append("</td>");
-            html.Append("<td class=\"p3\" colspan=\"" + 4 * nbMonthVisu + "\">&nbsp;</td>");
+            html.AppendFormat("<td class=\"p3\" colspan=\"{0}\">&nbsp;</td>"
+                , 4 * nbMonthVisu);
             html.Append("</tr>");
             space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
             #endregion
@@ -332,30 +339,39 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             #endregion
 
             html.Append("</td></tr>");
-            html.Append("<tr><td class=\"" + CssClassSeparator + "\">&nbsp;</td></tr>");
+            html.AppendFormat("<tr><td class=\"{0}\">&nbsp;</td></tr>"
+                , CssClassSeparator);
             html.Append("<tr><td>");
 
             #region Promo personnalisation
             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\"  class=\"" + CssClassPersonnalisation + "\">");
-            html.Append("<tr><td class=\"" + CssClassPersonnalisationHeader + "\">" + GestionWeb.GetWebWord(2874, _webSession.SiteLanguage) + " :</td></tr>");
+            html.AppendFormat("<tr><td class=\"{0}\">{1} :</td></tr>"
+                , CssClassPersonnalisationHeader, GestionWeb.GetWebWord(2874, _webSession.SiteLanguage));
 
             html.Append("<tr><td>");
 
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"" + CssClassPersonnalisationHeaderBis + "\">");
+            html.AppendFormat("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"{0}\">"
+                , CssClassPersonnalisationHeaderBis);
 
-            html.Append("<tr><td class=\"" + CssClassPersonnalisationHeaderBis + "\">" + GestionWeb.GetWebWord(2875, _webSession.SiteLanguage) + " :</td></tr>");
+            html.AppendFormat("<tr><td class=\"{0}\">{1} :</td></tr>"
+                , CssClassPersonnalisationHeaderBis, GestionWeb.GetWebWord(2875, _webSession.SiteLanguage));
 
             html.Append("<tr><td>");
 
             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
 
             html.Append("<tr>");
-            for (int i = 0; i < ((module.AllowedMediaDetailLevelItems.Count % 2 == 0) ? module.AllowedMediaDetailLevelItems.Count : module.AllowedMediaDetailLevelItems.Count + 1); i++) {
+            for (int i = 0; i < ((allowedMediaDetailLevelItems.Count % 2 == 0) ?
+                allowedMediaDetailLevelItems.Count : allowedMediaDetailLevelItems.Count + 1); i++)
+            {
                 if (i > 0 && i % 2 == 0) html.Append("</tr><tr>");
                 html.Append("<td>");
-                if (i < module.AllowedMediaDetailLevelItems.Count) {
-                    DetailLevelItemInformation cDetailLevelItemInformation = ((DetailLevelItemInformation)module.AllowedMediaDetailLevelItems[i]);
-                    html.Append("<input type=\"radio\" name=\"personalize_" + this.ID + "\" onclick=\"javascript:onclickPernalize_"+this.ID+"();\" value=\"" + cDetailLevelItemInformation.Id + "\" " + ((_webSession.PersonnalizedLevel == cDetailLevelItemInformation.Id) ? "checked" : string.Empty) + ">" + GestionWeb.GetWebWord(((DetailLevelItemInformation)module.AllowedMediaDetailLevelItems[i]).WebTextId, _webSession.SiteLanguage) + "</input>");
+                if (i < allowedMediaDetailLevelItems.Count)
+                {
+                    var cDetailLevelItemInformation = allowedMediaDetailLevelItems[i];
+                    html.AppendFormat("<input type=\"radio\" name=\"personalize_{0}\" onclick=\"javascript:onclickPernalize_{0}();\" value=\"{1}\" {2}>{3}</input>"
+                        , this.ID, cDetailLevelItemInformation.Id, ((_webSession.PersonnalizedLevel == cDetailLevelItemInformation.Id) ? "checked" : string.Empty),
+                        GestionWeb.GetWebWord(allowedMediaDetailLevelItems[i].WebTextId, _webSession.SiteLanguage));
                 }
                 html.Append("</td>");
             }
@@ -379,6 +395,21 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         }
         #endregion
 
+        protected List<DetailLevelItemInformation> GetAllowedMediaDetailLevelItems(Domain.Web.Navigation.Module module)
+        {
+            string vpVehicleAccess = _webSession.CustomerLogin[Constantes.Customer.Right.type.vpVehicleAccess];
+            if (!string.IsNullOrEmpty(vpVehicleAccess))
+            {
+                var vpArr = vpVehicleAccess.Split(',');
+                if (vpArr.Count() == 1)
+                {
+                    return module.AllowedMediaDetailLevelItems.Cast<DetailLevelItemInformation>()
+                          .Where(p => p.Id != DetailLevelItemInformation.Levels.vehicle).ToList();
+                }
+
+            }
+            return module.AllowedMediaDetailLevelItems.Cast<DetailLevelItemInformation>().ToList();
+        }
     }
 }
 

@@ -254,7 +254,15 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             /// Site in exception
             /// </summary>
-            siteException
+            siteException,
+            /// <summary>
+            /// VP media type in access
+            /// </summary>
+            vpVehicleAccess,
+            /// <summary>
+            ///  VP media type in exception
+            /// </summary>
+            vpVehicleException
 		}
 		#endregion
 	}

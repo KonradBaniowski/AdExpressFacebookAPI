@@ -9,22 +9,11 @@
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpress.Domain.Web.Navigation;
-using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.DataBaseDescription;
-using DBConstantes = TNS.AdExpress.Constantes.DB;
-using WebConstantes = TNS.AdExpress.Constantes.Web;
-using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
-using VehicleClassificationCst = TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 
 
 namespace TNS.AdExpressI.Classification.DAL {
@@ -74,6 +63,14 @@ namespace TNS.AdExpressI.Classification.DAL {
             else
                 return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct).Sql;
         }
+
+        protected override string GetCustomerRights()
+        {
+            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
+                return _session.GetVpProductsRights(string.Empty, true);
+            return string.Empty;
+        }
+
 
 	}
 }

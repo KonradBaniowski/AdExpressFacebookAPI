@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
 using CstClassification = TNS.AdExpress.Constantes.Classification;
@@ -263,6 +262,11 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                     IsOthersFileExists(out realFormatFound, out windowsFormatFound);
                     GetOthersCreativePathes();
                     break;
+                case CstClassificationVehicle.names.adnettrack:
+                   
+                    IsEvaliantFileExists(out realFormatFound, out windowsFormatFound);
+                    GetEvaliantCreativePathes();
+                    break;                 
                 default:
                     _webSession.Source.Close();
                     _popUp.Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}",
@@ -275,6 +279,23 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
         #endregion
 
+        /// <summary>
+        /// Get Evaliant Creative Pathes
+        /// </summary>
+        protected virtual void GetEvaliantCreativePathes()
+        {
+           // Func<string, string> getCreativePath = s =>string.Format("{0}/{1}", s, _file.Replace("/","\\"));
+
+            //Construction des chemins real et wm	
+            if (_hasCreationReadRights)
+                _pathReadingWindowsFile = _file;
+
+
+            if (_hasCreationDownloadRights)
+                _pathDownloadingWindowsFile = _file;// getCreativePath(CstWeb.CreationServerPathes.CREA_ADNETTRACK);
+
+
+        }
 
         #region GetOthersCreativePathes
 
@@ -300,7 +321,13 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
         #endregion
 
-
+        protected virtual void IsEvaliantFileExists(out bool realFormatFound, out bool windowsFormatFound)
+        {
+            realFormatFound = false;
+            windowsFormatFound = File.Exists(string.Format("{0}{1}"
+                                                           , CstWeb.CreationServerPathes.LOCAL_PATH_EVALIANT
+                                                           , _file.Replace(string.Format("{0}/", CstWeb.CreationServerPathes.CREA_ADNETTRACK), "").Replace("/", "\\")));
+        }
         #region IsOthersFileExists
 
         /// <summary>
@@ -485,7 +512,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
             var result = new StringBuilder(1000);
             bool withDetail = false;
-
+               const string AVI_EXTENSION = "AVI";
             DataSet ds = GetCreativeDS();
 
             if ((ds != null && ds.Tables[0].Rows.Count > 0) || (_hasCreationDownloadRights))
@@ -535,8 +562,13 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                             GestionWeb.GetWebWord(code, _webSession.SiteLanguage) +
                             "</span></td></tr>");
                         result.Append("<TR><TD align=\"left\">");
-                        result.Append("<img src=/App_Themes/" + _popUp.Theme + "/Images/Common/icoWindowsMediaPlayer.gif align=absmiddle>&nbsp;<a href=\""
-                            + path2 + "\"  class=txtViolet11>" + GestionWeb.GetWebWord(2086, _webSession.SiteLanguage) + "</a>");
+
+                        string formatTypeText = !string.IsNullOrEmpty(path2) 
+                            && Path.GetExtension(path2).ToUpper().Trim() == string.Format(".{0}", AVI_EXTENSION)
+                                               ? GestionWeb.GetWebWord(3003, _webSession.SiteLanguage)
+                                               : GestionWeb.GetWebWord(2086, _webSession.SiteLanguage);
+                        result.AppendFormat("<img src=/App_Themes/{0}/Images/Common/icoWindowsMediaPlayer.gif align=absmiddle>&nbsp;<a href=\"{1}\"  class=txtViolet11>{2}</a>"
+                            , _popUp.Theme, path2, formatTypeText);
                         result.Append("</td></tr>");
                     }
 
@@ -548,8 +580,8 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                                 GestionWeb.GetWebWord(code, _webSession.SiteLanguage) +
                                 "</span></td></tr>");
                         }
-                        result.Append("<tr><td align=\"left\"><img src=/App_Themes/" + _popUp.Theme + "/Images/Common/icoRealPlayer.gif align=absmiddle>&nbsp;<a href=\""
-                            + path1 + "\"   class=txtViolet11>" + GestionWeb.GetWebWord(2085, _webSession.SiteLanguage) + "</a>");
+                        result.AppendFormat("<tr><td align=\"left\"><img src=/App_Themes/{0}/Images/Common/icoRealPlayer.gif align=absmiddle>&nbsp;<a href=\"{1}\"   class=txtViolet11>{2}</a>"
+                            , _popUp.Theme, path1, GestionWeb.GetWebWord(2085, _webSession.SiteLanguage));
                         result.Append("</td></tr>");
                     }
                     if (!withDetail) result.Append("<TR height=100%><TD>&nbsp;</TD></TR>");
@@ -596,12 +628,12 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         #endregion
 
         #region DownLoad Player Render
+
         /// <summary>
         /// Obtient le texte qui propose de télécharger le(s) lecteur(s) de fichier média
         /// </summary>
         /// <param name="realFormatFound">Indique si fichier real media existe</param>
         /// <param name="windowsFormatFound">Indique si fichier windows media existe</param>
-        /// <param name="webSession">Session du client</param>
         /// <returns>Texte télécharger le(s) lecteur(s) de fichier média</returns>
         protected virtual string DownLoadPlayerRender(bool windowsFormatFound, bool realFormatFound)
         {
@@ -644,15 +676,14 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         {
 
             var res = new StringBuilder(2000);
-            HttpCookie cspotFileType = null;
 
             //Vérifie si le navigateur accepte les cookies
             if (_popUp.Request.Browser.Cookies)
             {
-                //if(false){
+              
 
                 //Si les cookies existent				
-                cspotFileType = _popUp.Request.Cookies[CstWeb.Cookies.SpotFileType];
+                HttpCookie cspotFileType = _popUp.Request.Cookies[CstWeb.Cookies.SpotFileType];
 
                 //Ouvrir le fichier en lecture seule
                 if (realFormatFound && windowsFormatFound)

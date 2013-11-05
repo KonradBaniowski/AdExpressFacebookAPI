@@ -35,7 +35,7 @@ namespace TNS.AdExpressI.Portofolio.Russia.VehicleView
         /// <returns>Html code</returns>
         override public string Render(){
 
-            return  !string.IsNullOrEmpty(_src2)  ? string.Format(" onclick=\"javascript:OpenWindow('{0}');\"", _src2):string.Empty;         
+            return  !string.IsNullOrEmpty(_src2)  ? string.Format(" \"javascript:OpenWindow('{0}');\"", _src2):string.Empty;         
         }
      
         #endregion

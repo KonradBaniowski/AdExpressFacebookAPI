@@ -1370,4 +1370,7 @@
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
   </vehicle>
+  <!-- Promotion web -->
+  <vehicle id="webPromotion" databaseId="9999" showInsertions="false" showCreations="false">    
+  </vehicle>
 </vehicles>

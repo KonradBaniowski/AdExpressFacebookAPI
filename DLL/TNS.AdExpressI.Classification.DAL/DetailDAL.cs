@@ -127,9 +127,9 @@ namespace TNS.AdExpressI.Classification.DAL {
 			#region Variables
 			//bool premier = true;
 			DataSet dsListAdvertiser = null;
-			StringBuilder sql = new StringBuilder(500);
-			string activeMediaList = string.Empty;
-			#endregion
+			var sql = new StringBuilder(500);
+
+            #endregion
 
 			#region Building SQL Query
 			try {
@@ -157,38 +157,26 @@ namespace TNS.AdExpressI.Classification.DAL {
                 /*Get the identifier of the selected current media type. 
                  * Example if the user as selected the media PRESS,
                 the joins could be like this : id_vehicle = 3" */
-                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP
-                    && _session.CustomerDataFilters != null && _session.CustomerDataFilters.SelectedMediaType != null && _session.CustomerDataFilters.SelectedMediaType.Length > 0)
-                    sql.AppendFormat(" and id_vehicle={0}", _session.CustomerDataFilters.SelectedMediaType);
+			    FilterWithSelectedMediaType(sql);
 
                 /*Filter data with the identifier of the sub media selected.
                  Remark : Use in Russia
                  */
-                string idSubMedia = null;
-                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && _session.CustomerDataFilters != null)
-                    idSubMedia = _session.CustomerDataFilters.SelectedMediaCategory;
-                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && idSubMedia != null && idSubMedia.Length > 0)
-                    sql.AppendFormat(" and id_category ={0}", idSubMedia);
+			    FilterWithSubMedia(sql);
 
                 //This section is specifical to the media Internet. obtains the list of active vehicle for Internet. (Only for France)
-                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && VehiclesInformation.Contains(VehicleClassificationCst.internet) && _session.SelectionUniversMedia != null && _session.SelectionUniversMedia.FirstNode != null && ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
-                    activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
-                    string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_media",activeMediaList);
-                    if(inClauseSQLCode.Length > 0) {
-                        sql.AppendFormat(" and {0} ",inClauseSQLCode);
-                    }
-                }
+			    GetInternetActiveVehicles(sql);
+
 				//Restriction on the vehicles selected by the customer
-                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && _listMedia != null && _listMedia.Length > 0) {
+                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && !string.IsNullOrEmpty(_listMedia)) {
                     sql.AppendFormat(" and id_media in ({0}) ", _listMedia);
 				}
 
                 //Restriction on the media universe allowed for the customer and module of TV sponsorship
-                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && _module != null && _module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
-					sql.Append(_module.GetAllowedMediaUniverseSqlWithOutPrefix(true));
+			    FilterWithTvSponsorshipUniverse(sql);
 
                 //Obtains the media rights of the customer
-                sql.Append(GetMediaRights("",true));
+                sql.Append(GetCustomerRights());
 				
                 //Order by current levels
 				sql.AppendFormat(" order by {0}" , orderFields);
@@ -400,10 +388,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 
         /// <summary>
         /// Get media universe sql conditions
-        /// </summary>
-        /// <param name="vehiclePrefix">Vehicle prefix</param>
-        /// <param name="categoryPrefix">Category prefix</param>
-        /// <param name="mediaPrefix">Media prefix</param>
+        /// </summary>       
         /// <param name="startWithAnd">Determine if sql condition start with "and"</param>
         /// <returns>Sql conditions</returns>
         protected string GetAllowedMediaUniverseSql(bool startWithAnd)
@@ -460,5 +445,55 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </summary>
         /// <returns>View</returns>
         protected abstract string GetView();
+
+        protected virtual string GetCustomerRights()
+        {
+            return  GetMediaRights(string.Empty, true);
+        }
+
+        protected virtual void GetInternetActiveVehicles(StringBuilder sql)
+        {
+            if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP 
+                && VehiclesInformation.Contains(VehicleClassificationCst.internet)
+                   && _session.SelectionUniversMedia != null && _session.SelectionUniversMedia.FirstNode != null &&
+                   ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID 
+                   == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet))
+            {
+                string activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.
+                    GetActiveMediaList(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
+                string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.
+                    SQLGenerator.GetInClauseMagicMethod("id_media", activeMediaList);
+                if (inClauseSQLCode.Length > 0)
+                {
+                    sql.AppendFormat(" and {0} ", inClauseSQLCode);
+                }
+            }
+        }
+
+        protected virtual void FilterWithSubMedia(StringBuilder sql)
+        {
+            string idSubMedia = null;
+            if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP
+                && _session.CustomerDataFilters != null)
+                idSubMedia = _session.CustomerDataFilters.SelectedMediaCategory;
+            if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP
+                && !string.IsNullOrEmpty(idSubMedia))
+                sql.AppendFormat(" and id_category ={0}", idSubMedia);
+        }
+
+        protected virtual void FilterWithSelectedMediaType(StringBuilder sql)
+        {
+            if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP
+                   && _session.CustomerDataFilters != null &&
+                   !string.IsNullOrEmpty(_session.CustomerDataFilters.SelectedMediaType))
+                sql.AppendFormat(" and id_vehicle={0}", _session.CustomerDataFilters.SelectedMediaType);
+        }
+
+        protected virtual void FilterWithTvSponsorshipUniverse(StringBuilder sql)
+        {
+            if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && _module != null
+                  && _module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
+                sql.Append(_module.GetAllowedMediaUniverseSqlWithOutPrefix(true));
+        }
 	}
 }

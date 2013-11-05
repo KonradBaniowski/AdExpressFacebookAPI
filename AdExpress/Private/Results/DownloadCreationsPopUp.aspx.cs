@@ -5,34 +5,13 @@
 #endregion
 
 using System;
-using System.Text;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using System.IO;
-using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-
-using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstClassification = TNS.AdExpress.Constantes.Classification;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-
 using TNS.AdExpress.Web.UI;
-using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpressI.Insertions.DAL;
-using TNS.AdExpressI.Insertions;
 
 namespace AdExpress.Private.Results{
 	/// <summary>
@@ -134,16 +113,15 @@ namespace AdExpress.Private.Results{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			string[] fileArr = null;
-
-			#region Chargement de la session
+		    #region Chargement de la session
 			try{
 				_webSession = (WebSession)WebSession.Load(Page.Request.QueryString.Get("idSession"));
 					
 			}
 			catch(System.Exception){
 				//_webSession.Source.Close();
-				Response.Redirect("/Public/Message.aspx?msgTxt="+GestionWeb.GetWebWord(891, CstDB.Language.ENGLISH)+"&title="+GestionWeb.GetWebWord(887, CstDB.Language.ENGLISH));
+				Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}"
+                    , GestionWeb.GetWebWord(891, CstDB.Language.ENGLISH), GestionWeb.GetWebWord(887, CstDB.Language.ENGLISH)));
 			}
 			#endregion
 			
@@ -152,10 +130,9 @@ namespace AdExpress.Private.Results{
             file="";
 			
             try{
-                VehicleInformation vehicleInformation = VehiclesInformation.Get(int.Parse(Page.Request.QueryString.Get("idVehicle")));
-				//vehicle = (CstClassification.DB.Vehicles.names) int.Parse(Page.Request.QueryString.Get("idVehicle"));
+                VehicleInformation vehicleInformation = VehiclesInformation.Get(int.Parse(Page.Request.QueryString.Get("idVehicle")));				
                 vehicle = vehicleInformation.Id;
-				//_idSlogan = Page.Request.QueryString.Get("idSlogan");
+				
 				file = Page.Request.QueryString.Get("creation");
 				if (
                 (vehicle==CstClassification.DB.Vehicles.names.radio
@@ -163,17 +140,19 @@ namespace AdExpress.Private.Results{
                 || vehicle == CstClassification.DB.Vehicles.names.radioMusic
                 || vehicle == CstClassification.DB.Vehicles.names.radioSponsorship
 				) 
-                    && file != null && file.Length > 0) {
-					fileArr = file.Split(',');
-					if (fileArr != null && fileArr.Length > 0) {
+                    && !string.IsNullOrEmpty(file))
+				{
+				    string[] fileArr = file.Split(',');
+				    if (fileArr != null && fileArr.Length > 0) {
 						file = fileArr[0];
 						if (fileArr.Length > 1) _idSlogan = fileArr[1];
 					}
 				}
-			}
+            }
 			catch(System.Exception){
 				_webSession.Source.Close();
-				Response.Redirect("/Public/Message.aspx?msgTxt="+GestionWeb.GetWebWord(880, _webSession.SiteLanguage)+"&title="+GestionWeb.GetWebWord(887, _webSession.SiteLanguage));
+				Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}"
+                    , GestionWeb.GetWebWord(880, _webSession.SiteLanguage), GestionWeb.GetWebWord(887, _webSession.SiteLanguage)));
 			}
 
 			#region Droits et sélection des options de résultats
@@ -193,7 +172,7 @@ namespace AdExpress.Private.Results{
 
             CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativePopUp];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the creative pop up"));
-            object[] param = new object[8];
+            var param = new object[8];
             param[0] = this;
             param[1] = vehicle;
             param[2] = _idSlogan;
@@ -202,7 +181,9 @@ namespace AdExpress.Private.Results{
             param[5] = title;
             param[6] = _hasCreationReadRights;
             param[7] = _hasCreationDownloadRights;
-            TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp result = (TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
+            var result = (TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
             
             streamingCreationsResult = result.CreativePopUpRender();
 		}

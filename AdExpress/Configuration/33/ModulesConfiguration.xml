@@ -1817,7 +1817,8 @@
             <allowedMediaLevelItem id="64" name="Segment VP"/>
             <allowedMediaLevelItem id="65" name="Sub Segment VP"/>
             <allowedMediaLevelItem id="66" name="Brand VP"/>
-            <allowedMediaLevelItem id="67" name="Product VP"/>            
+            <allowedMediaLevelItem id="67" name="Product VP"/>  
+               <allowedMediaLevelItem id="1" name="Media"/>
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <results>

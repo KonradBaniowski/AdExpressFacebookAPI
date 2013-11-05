@@ -45,6 +45,11 @@ namespace TNS.AdExpressI.VP
         /// Exclu web
         /// </summary>
         private long _excluWeb;
+
+        /// <summary>
+        /// Id vehicle
+        /// </summary>
+        private long _idVehicle;
         #endregion
 
         #region Accessors
@@ -113,6 +118,13 @@ namespace TNS.AdExpressI.VP
             set { _excluWeb = value; }
         }
 
+        /// <summary>
+        /// Id vehicle
+        /// </summary>
+        public long IdVehicle
+        {
+            get { return _idVehicle; }
+        }
         #endregion
 
         #region Constructor
@@ -134,9 +146,12 @@ namespace TNS.AdExpressI.VP
         /// <param name="dateBegin">Date Beginning </param>
         /// <param name="dateEnd">Date End</param>       
         /// <param name="promotionContent">Promotion Content</param>
+        /// <param name="cssClass">cssClass</param>
+        /// <param name="brand">brand</param>
         /// <param name="excluWeb">exclu Web</param>
+        /// <param name="idVehicle">idVehicle</param>
         public VeillePromoItem(VpCst.VeillePromo.itemType itemType, long idDataPromotion, DateTime dateBegin,
-            DateTime dateEnd, string promotionContent, string cssClass, string brand, long excluWeb)
+            DateTime dateEnd, string promotionContent, string cssClass, string brand, long excluWeb, long idVehicle)
             : this(itemType)
         {
                 _idDataPromotion = idDataPromotion;                  
@@ -146,6 +161,7 @@ namespace TNS.AdExpressI.VP
             _cssClass = cssClass;
             _brand = brand;
             _excluWeb = excluWeb;
+            _idVehicle = idVehicle;
         }
         #endregion
     }

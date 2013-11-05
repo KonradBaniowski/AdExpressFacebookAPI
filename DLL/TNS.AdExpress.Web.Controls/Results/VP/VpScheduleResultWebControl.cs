@@ -238,6 +238,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class,
                 false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             vpScheduleResult.ResultControlId = this.ID;
+            vpScheduleResult.Theme = _themeName;
             return (vpScheduleResult.GetHtml());
         }
 

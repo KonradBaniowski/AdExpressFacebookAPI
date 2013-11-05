@@ -160,6 +160,7 @@
     <Compile Include="Utilities\Converters.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\QueryStringEncryption.cs" />
+    <Compile Include="Utilities\SessionExtensionMethods.cs" />
     <Compile Include="VehicleFormatList.cs" />
     <Compile Include="VehiclesFormatList.cs" />
     <Compile Include="ActiveMediaList.cs" />

@@ -3,13 +3,14 @@ using System;
 using System.Data;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
-using WebCst=TNS.AdExpress.Constantes.Web;
-using CustomerCst=TNS.AdExpress.Constantes.Customer;
+using WebCst = TNS.AdExpress.Constantes.Web;
+using CustomerCst = TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.DataAccess;
 using TNS.AdExpress.Domain.Exceptions;
@@ -18,12 +19,14 @@ using TNS.AdExpress.Domain.Classification;
 
 
 
-namespace TNS.AdExpress {
+namespace TNS.AdExpress
+{
     /// <summary>
     /// AdExpress customer rights
     /// </summary>
     [System.Serializable]
-    public class Right {
+    public class Right
+    {
 
         #region Variables
         /// <summary>
@@ -115,41 +118,47 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="login">Customer Login</param>
         /// <param name="password">Customer Password</param>
-        public Right(string login,string password) {
-            if(login==null || login.Length==0) throw (new ArgumentException("Invalid login parameter"));
-            if(password==null || password.Length==0) throw (new ArgumentException("Invalid password parameter"));
-            _login=login;
-            _password=password;
-            _connectionDate=DateTime.Now;
-            try {
-                _loginId=RightDAL.GetLoginId(Source,_login,_password);
+        public Right(string login, string password)
+        {
+            if (login == null || login.Length == 0) throw (new ArgumentException("Invalid login parameter"));
+            if (password == null || password.Length == 0) throw (new ArgumentException("Invalid password parameter"));
+            _login = login;
+            _password = password;
+            _connectionDate = DateTime.Now;
+            try
+            {
+                _loginId = RightDAL.GetLoginId(Source, _login, _password);
             }
-            catch(System.Exception err) {
-                throw (new RightException("Impossible to access to the Database",err));
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to access to the Database", err));
             }
         }
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="login">Customer Login</param>
-		/// <param name="password">Customer Password</param>
-		/// <param name="sitelanguage">Site language</param>
-		public Right(string login, string password,int sitelanguage) {
-			if (login == null || login.Length == 0) throw (new ArgumentException("Invalid login parameter"));
-			if (password == null || password.Length == 0) throw (new ArgumentException("Invalid password parameter"));
-			_login = login;
-			_password = password;
-			_connectionDate = DateTime.Now;
-			_siteLanguage = sitelanguage;
-			try {
-				
-				_loginId = RightDAL.GetLoginId(Source, _login, _password);
-			}   
-			catch (System.Exception err) {
-				throw (new RightException("Impossible to access to the Database", err));
-			}
-		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="login">Customer Login</param>
+        /// <param name="password">Customer Password</param>
+        /// <param name="sitelanguage">Site language</param>
+        public Right(string login, string password, int sitelanguage)
+        {
+            if (login == null || login.Length == 0) throw (new ArgumentException("Invalid login parameter"));
+            if (password == null || password.Length == 0) throw (new ArgumentException("Invalid password parameter"));
+            _login = login;
+            _password = password;
+            _connectionDate = DateTime.Now;
+            _siteLanguage = sitelanguage;
+            try
+            {
+
+                _loginId = RightDAL.GetLoginId(Source, _login, _password);
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to access to the Database", err));
+            }
+        }
         #endregion
 
         #region Accessors
@@ -167,14 +176,18 @@ namespace TNS.AdExpress {
         /// <summary>
         /// Get Customer Data Source
         /// </summary>
-        public IDataSource Source {
-            get {
-                if(_source==null){
-					string nlsSort = "";
-					if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(_siteLanguage.ToString()))) {
-						nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(_siteLanguage.ToString())].NlsSort;
-					}
-                    if(UseDefaultConnection)
+        public IDataSource Source
+        {
+            get
+            {
+                if (_source == null)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(_siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(_siteLanguage.ToString())].NlsSort;
+                    }
+                    if (UseDefaultConnection)
                         _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
                     else _source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort, CustomerConnectionIds.adexpr03);
                 }
@@ -188,19 +201,24 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="typeRight">Choix d'une liste en accès ou en exception</param>
         /// <returns>string d'une liste</returns>
-        public string this[CustomerCst.Right.type typeRight] {
-            get {
-                try {
-                  
-                    if(!_rights.ContainsKey(typeRight)||_rights[typeRight]==null) return ("");
-                    string list="";
-                    foreach(string currentItem in _rights[typeRight]) {
-                        list+=currentItem+",";
+        public string this[CustomerCst.Right.type typeRight]
+        {
+            get
+            {
+                try
+                {
+
+                    if (!_rights.ContainsKey(typeRight) || _rights[typeRight] == null) return ("");
+                    string list = "";
+                    foreach (string currentItem in _rights[typeRight])
+                    {
+                        list += currentItem + ",";
                     }
-                    return (list.Substring(0,list.Length-1));
+                    return (list.Substring(0, list.Length - 1));
                 }
-                catch(System.Exception e) {
-                    throw (new RightException("Impossible to retreive right list",e));
+                catch (System.Exception e)
+                {
+                    throw (new RightException("Impossible to retreive right list", e));
                 }
             }
         }
@@ -208,21 +226,24 @@ namespace TNS.AdExpress {
         /// <summary>
         /// Get login Id
         /// </summary>
-        public Int64 IdLogin {
+        public Int64 IdLogin
+        {
             get { return _loginId; }
         }
 
         /// <summary>
         /// Get login
         /// </summary>
-        public string Login {
+        public string Login
+        {
             get { return _login; }
         }
 
         /// <summary>
         /// Get password
         /// </summary>
-        public string PassWord {
+        public string PassWord
+        {
             get { return _password; }
         }
 
@@ -236,8 +257,9 @@ namespace TNS.AdExpress {
         /// Si true assigne idLogin
         /// </summary>
         /// <returns></returns>
-        public bool CanAccessToAdExpress() {			
-            return (RightDAL.CanAccessToAdExpressDB(Source,_loginId));
+        public bool CanAccessToAdExpress()
+        {
+            return (RightDAL.CanAccessToAdExpressDB(Source, _loginId));
 
         }
 
@@ -245,13 +267,14 @@ namespace TNS.AdExpress {
         /// vérifie le Login-mot de passe
         /// </summary>
         /// <returns>true si login-mot de passe correct, false sinon</returns>
-        public bool CheckLogin(IDataSource source) {
-			
-            _loginId=RightDAL.GetLoginId(source,_login,_password);
-            if(_loginId==-1) return (false);
+        public bool CheckLogin(IDataSource source)
+        {
+
+            _loginId = RightDAL.GetLoginId(source, _login, _password);
+            if (_loginId == -1) return (false);
             return (true);
 
-        } 
+        }
         #endregion
 
         #region Right last modification date
@@ -259,9 +282,10 @@ namespace TNS.AdExpress {
         /// Customer rights have been modified ?
         /// </summary>
         /// <returns>True if the rights have been modified</returns>
-        protected bool isRightModifiedDB() {			
-            _lastModificationDate=RightDAL.LastModificationDate(_source,_loginId);
-            if(_lastModificationDate<_connectionDate)return false;
+        protected bool isRightModifiedDB()
+        {
+            _lastModificationDate = RightDAL.LastModificationDate(_source, _loginId);
+            if (_lastModificationDate < _connectionDate) return false;
             return true;
         }
         #endregion
@@ -271,18 +295,20 @@ namespace TNS.AdExpress {
         /// Check if some product tempates exist
         /// </summary>
         /// <returns>True if some templates exist</returns>
-        public bool IsProductTemplateExist() {
-					
-            return(RightDAL.IsProductTemplateExist(Source,_loginId));
+        public bool IsProductTemplateExist()
+        {
+
+            return (RightDAL.IsProductTemplateExist(Source, _loginId));
         }
 
         /// <summary>
         /// Check if some media tempates exist
         /// </summary>
         /// <returns>True if some templates exist</returns>
-        public  bool IsMediaTemplateExist() {
-			
-            return(RightDAL.IsMediaTemplateExist(Source,_loginId));
+        public bool IsMediaTemplateExist()
+        {
+
+            return (RightDAL.IsMediaTemplateExist(Source, _loginId));
         }
         #endregion
 
@@ -291,361 +317,308 @@ namespace TNS.AdExpress {
         /// Remplit les droits d'un utilisateur dans _rights
         /// </summary>
         /// <returns>_rights</returns>
-        public void SetRights() {
+        public void SetRights()
+        {
 
             #region Variables
             DataSet ds;
-            string vh="";
-            string vehicleAccess="";
-            string vehicleException="";
-            string categoryAccess="";
-            string categoryException="";
+            string vh = "";
+            string vehicleAccess = "";
+            string vehicleException = "";
+            string categoryAccess = "";
+            string categoryException = "";
             string regionAccess = "";
             string regionException = "";
-            string mediaAccess="";
-            string mediaException="";
-            string listVehicleForRecap="";
-            _rights=new Dictionary<CustomerCst.Right.type,string[]>();
+            string mediaAccess = "";
+            string mediaException = "";
+            string listVehicleForRecap = "";
+            _rights = new Dictionary<CustomerCst.Right.type, string[]>();
             #endregion
 
             #region Product Template
-            if(IsProductTemplateExist()) {
-				ds=RightDAL.GetProductTemplate(Source,_loginId);
-                try {
-                    if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
-                        foreach(DataRow row in ds.Tables[0].Rows) {
+            if (IsProductTemplateExist())
+            {
+                ds = RightDAL.GetProductTemplate(Source, _loginId);
+                try
+                {
+                    if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                    {
+                        foreach (DataRow row in ds.Tables[0].Rows)
+                        {
                             //sector en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_SECTOR_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.sectorAccess,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_SECTOR_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.sectorAccess, row[0].ToString().Split(','));
+
                             //sector en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_SECTOR_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.sectorException,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_SECTOR_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.sectorException, row[0].ToString().Split(','));
+
                             //subsector en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_SUBSECTOR_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.subSectorAccess,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_SUBSECTOR_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.subSectorAccess, row[0].ToString().Split(','));
+
                             //subsector en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_SUBSECTOR_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.subSectorException,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_SUBSECTOR_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.subSectorException, row[0].ToString().Split(','));
+
                             //Group en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_GROUP_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.groupAccess,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_GROUP_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.groupAccess, row[0].ToString().Split(','));
+
                             //Group en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_GROUP_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.groupException,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_GROUP_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.groupException, row[0].ToString().Split(','));
+
                             //Segment en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_SEGMENT_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.segmentAccess,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_SEGMENT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.segmentAccess, row[0].ToString().Split(','));
+
                             //Segment en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_SEGMENT_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.segmentException,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_SEGMENT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.segmentException, row[0].ToString().Split(','));
+
                             //Holding_company en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_HOLDING_COMPANY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.holdingCompanyAccess,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_HOLDING_COMPANY_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.holdingCompanyAccess, row[0].ToString().Split(','));
+
                             //Holding_company en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_HOLDING_COMPANY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.holdingCompanyException,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_HOLDING_COMPANY_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.holdingCompanyException, row[0].ToString().Split(','));
+
                             //advertiser en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_ADVERTISER_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.advertiserAccess,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_ADVERTISER_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.advertiserAccess, row[0].ToString().Split(','));
+
                             //advertiser en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_ADVERTISER_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.advertiserException,row[0].ToString().Split(','));
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_ADVERTISER_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.advertiserException, row[0].ToString().Split(','));
 
                             //marque en accès
                             if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
-                            {
                                 _rights.Add(CustomerCst.Right.type.brandAccess, row[0].ToString().Split(','));
-                            }
+
                             //marque en exception
                             if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
-                            {
                                 _rights.Add(CustomerCst.Right.type.brandException, row[0].ToString().Split(','));
-                            }
+
+                            //VP Segment in access
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_SEGMENT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.vpSegmentAccess, row[0].ToString().Split(','));
+
+                            //VP Segment in exception
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_SEGMENT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.vpSegmentAccess, row[0].ToString().Split(','));
+
+                            //VP Sub Segment in access
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_SUB_SEGMENT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.vpSubSegmentAccess, row[0].ToString().Split(','));
+
+                            //VP Sub Segment in exception
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_SUB_SEGMENT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.vpSubSegmentException, row[0].ToString().Split(','));
+
+                            //VP Product in access
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_PRODUCT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.vpProductAccess, row[0].ToString().Split(','));
+
+                            //VP Product in exception
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_PRODUCT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.vpProductException, row[0].ToString().Split(','));
+
+                            //VP Enseigne en accès
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.vpBrandAccess, row[0].ToString().Split(','));
+                         
+                            //VP Enseigne  en exception
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.vpBrandException, row[0].ToString().Split(','));
+                           
                         }
                     }
                 }
-                catch(System.Exception err) {
-                    throw (new RightException("Impossible to load template product right",err));
+                catch (System.Exception err)
+                {
+                    throw (new RightException("Impossible to load template product right", err));
                 }
             }
             #endregion
 
             #region Customer rights
-			 ds=RightDAL.GetProductRights(Source,_loginId);
-            try {
-                if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
-                    foreach(DataRow row in ds.Tables[0].Rows) {
-                        //sector en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_SECTOR_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.sectorAccess)) {
-                                _rights.Add(CustomerCst.Right.type.sectorAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.sectorAccess]=listValue(_rights[CustomerCst.Right.type.sectorAccess],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //sector en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_SECTOR_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.sectorException)) {
-                                _rights.Add(CustomerCst.Right.type.sectorException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.sectorException]=listValue(_rights[CustomerCst.Right.type.sectorException],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //subsector en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_SUBSECTOR_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.subSectorAccess)) {
-                                _rights.Add(CustomerCst.Right.type.subSectorAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.subSectorAccess]=listValue(_rights[CustomerCst.Right.type.subSectorAccess],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //subsector en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_SUBSECTOR_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.subSectorException)) {
-                                _rights.Add(CustomerCst.Right.type.subSectorException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.subSectorException]=listValue(_rights[CustomerCst.Right.type.subSectorException],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //Group en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_GROUP_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.groupAccess)) {
-                                _rights.Add(CustomerCst.Right.type.groupAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.groupAccess]=listValue(_rights[CustomerCst.Right.type.groupAccess],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //Group en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_GROUP_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.groupException)) {
-                                _rights.Add(CustomerCst.Right.type.groupException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.groupException]=listValue(_rights[CustomerCst.Right.type.groupException],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //Segment en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_SEGMENT_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.segmentAccess)) {
-                                _rights.Add(CustomerCst.Right.type.segmentAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.segmentAccess]=listValue(_rights[CustomerCst.Right.type.segmentAccess],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //Segment en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_SEGMENT_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.segmentException)) {
-                                _rights.Add(CustomerCst.Right.type.segmentException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.segmentException]=listValue(_rights[CustomerCst.Right.type.segmentException],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //Holding_company en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_HOLDING_COMPANY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.holdingCompanyAccess)) {
-                                _rights.Add(CustomerCst.Right.type.holdingCompanyAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.holdingCompanyAccess]=listValue(_rights[CustomerCst.Right.type.holdingCompanyAccess],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //Holding_company en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_HOLDING_COMPANY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.holdingCompanyException)) {
-                                _rights.Add(CustomerCst.Right.type.holdingCompanyException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.holdingCompanyException]=listValue(_rights[CustomerCst.Right.type.holdingCompanyException],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //advertiser en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_ADVERTISER_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.advertiserAccess)) {
-                                _rights.Add(CustomerCst.Right.type.advertiserAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.advertiserAccess]=listValue(_rights[CustomerCst.Right.type.advertiserAccess],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //advertiser en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_ADVERTISER_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.advertiserException)) {
-                                _rights.Add(CustomerCst.Right.type.advertiserException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.advertiserException]=listValue(_rights[CustomerCst.Right.type.advertiserException],row[0].ToString().Split(',')).Split(',');
-                        }
-                        //marque en accès
-                        if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
-                        {
-                            if (!_rights.ContainsKey(CustomerCst.Right.type.brandAccess))
-                            {
-                                _rights.Add(CustomerCst.Right.type.brandAccess, row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.brandAccess] = listValue(_rights[CustomerCst.Right.type.brandAccess], row[0].ToString().Split(',')).Split(',');
-                        }
+            ds = RightDAL.GetProductRights(Source, _loginId);
+            try
+            {
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        //sector en accès                    
+                        AddRights(row, MediaProductIdType.ID_SECTOR_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.sectorAccess);
+                        //sector en exception                       
+                        AddRights(row, MediaProductIdType.ID_SECTOR_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.sectorException);
+                        //subsector en accès                       
+                        AddRights(row, MediaProductIdType.ID_SUBSECTOR_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.subSectorAccess);
+                        //subsector en exception                       
+                        AddRights(row, MediaProductIdType.ID_SUBSECTOR_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.subSectorException);
+                        //Group en accès                       
+                        AddRights(row, MediaProductIdType.ID_GROUP_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.groupAccess);
+                        //Group en exception                      
+                        AddRights(row, MediaProductIdType.ID_GROUP_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.groupException);
+                        //Segment en accès                      
+                        AddRights(row, MediaProductIdType.ID_SEGMENT_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.segmentAccess);
+                        //Segment en exception                       
+                        AddRights(row, MediaProductIdType.ID_SEGMENT_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.segmentException);
+                        //Holding_company en accès                       
+                        AddRights(row, MediaProductIdType.ID_HOLDING_COMPANY_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.holdingCompanyAccess);
+                        //Holding_company en exception                      
+                        AddRights(row, MediaProductIdType.ID_HOLDING_COMPANY_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.holdingCompanyException);
+                        //advertiser en accès                       
+                        AddRights(row, MediaProductIdType.ID_ADVERTISER_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.advertiserAccess);
+                        //advertiser en exception                      
+                        AddRights(row, MediaProductIdType.ID_ADVERTISER_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.advertiserException);
+                        //marque en accès                      
+                        AddRights(row, MediaProductIdType.ID_BRAND_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.brandAccess);
                         //marque en exception
-                        if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
-                        {
-                            if (!_rights.ContainsKey(CustomerCst.Right.type.brandException))
-                            {
-                                _rights.Add(CustomerCst.Right.type.brandException, row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.brandException] = listValue(_rights[CustomerCst.Right.type.brandException], row[0].ToString().Split(',')).Split(',');
-                        }
+                        AddRights(row, MediaProductIdType.ID_BRAND_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.brandException);
+                        //VP Segment in access
+                        AddRights(row, MediaProductIdType.ID_VP_SEGMENT_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.vpSegmentAccess);
+                        //VP Segment in exception
+                        AddRights(row, MediaProductIdType.ID_VP_SEGMENT_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.vpSegmentException);
+                        //VP Sub Segment in access
+                        AddRights(row, MediaProductIdType.ID_VP_SUB_SEGMENT_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.vpSubSegmentAccess);
+                        //VP Sub Segment in  exception
+                        AddRights(row, MediaProductIdType.ID_VP_SUB_SEGMENT_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.vpSubSegmentException);
+                        //VP Product in access
+                        AddRights(row, MediaProductIdType.ID_VP_PRODUCT_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.vpProductAccess);
+                        //VP Product in  exception
+                        AddRights(row, MediaProductIdType.ID_VP_PRODUCT_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.vpProductException);
+                        //VP Brand in  access
+                        AddRights(row, MediaProductIdType.ID_VP_BRAND_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.vpBrandAccess);
+                        //VP Brand in exception
+                        AddRights(row, MediaProductIdType.ID_VP_BRAND_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.vpBrandException);
                     }
                 }
             }
-            catch(System.Exception err) {
-                throw (new RightException("Impossible to load product right",err));
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to load product right", err));
             }
             #endregion
 
             #region Media Template
-            if(IsMediaTemplateExist()) {
-				ds=RightDAL.GetMediaTemplate(Source,_loginId);
-                try {
-                    if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
-                        foreach(DataRow row in ds.Tables[0].Rows) {
+            if (IsMediaTemplateExist())
+            {
+                ds = RightDAL.GetMediaTemplate(Source, _loginId);
+                try
+                {
+                    if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                    {
+                        foreach (DataRow row in ds.Tables[0].Rows)
+                        {
                             //Vehicle en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_VEHICLE_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                vh=row[0].ToString();
-                                _rights.Add(CustomerCst.Right.type.vehicleAccess,vh.Split(','));
-                                vehicleAccess=vh;
+                            if ((Int64)row[2] == MediaProductIdType.ID_VEHICLE_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                            {
+                                vh = row[0].ToString();
+                                _rights.Add(CustomerCst.Right.type.vehicleAccess, vh.Split(','));
+                         
                                 // On ajoute AdNetTrack si Internet est présent
                             }
                             //Vehicle en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_VEHICLE_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.vehicleException,row[0].ToString().Split(','));
-                                vehicleException=row[0].ToString();
+                            if ((Int64)row[2] == MediaProductIdType.ID_VEHICLE_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.vehicleException, row[0].ToString().Split(','));
+                                
                             }
                             //Category en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.categoryAccess,row[0].ToString().Split(','));
-                                categoryAccess=row[0].ToString();
+                            if ((Int64)row[2] == MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.categoryAccess, row[0].ToString().Split(','));
+                               
                             }
                             //Category en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.categoryException,row[0].ToString().Split(','));
-                                categoryException=row[0].ToString();
+                            if ((Int64)row[2] == MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.categoryException, row[0].ToString().Split(','));
+                                categoryException = row[0].ToString();
                             }
                             //Region en accès
                             if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
                             {
                                 _rights.Add(CustomerCst.Right.type.regionAccess, row[0].ToString().Split(','));
-                                regionAccess = row[0].ToString();
+                              
                             }
                             //Region en exception
                             if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
                             {
                                 _rights.Add(CustomerCst.Right.type.regionException, row[0].ToString().Split(','));
-                                regionException = row[0].ToString();
+                              
                             }
                             //média en accès
-                            if((Int64)row[2]==MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.mediaAccess,row[0].ToString().Split(','));
-                                mediaAccess=row[0].ToString();
-                            }
+                            if ((Int64)row[2] == MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.mediaAccess, row[0].ToString().Split(','));
+                           
+
                             //média en exception
-                            if((Int64)row[2]==MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                                _rights.Add(CustomerCst.Right.type.mediaException,row[0].ToString().Split(','));
-                                mediaException=row[0].ToString();
+                            if ((Int64)row[2] == MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.mediaException, row[0].ToString().Split(','));
+
+                            //VP Vehicle in access
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_VEHICLE_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.vpVehicleAccess, row[0].ToString().Split(','));
+
                             }
+                            //VP Vehicle in exception
+                            if ((Int64)row[2] == MediaProductIdType.ID_VP_VEHICLE_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.vpVehicleException, row[0].ToString().Split(','));                              
+                            }
+                        
 
                         }
                     }
                 }
-                catch(System.Exception err) {
-                    throw (new RightException("Impossible to load template media right",err));
+                catch (System.Exception err)
+                {
+                    throw (new RightException("Impossible to load template media right", err));
                 }
             }
             #endregion
 
             #region Customer media rights
-			 ds=RightDAL.GetMediaRights(Source,_loginId);
-            try {
-                if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
-                    foreach(DataRow row in ds.Tables[0].Rows) {
-                        //Vehicle en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_VEHICLE_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.vehicleAccess)) {
-                                _rights.Add(CustomerCst.Right.type.vehicleAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.vehicleAccess]=listValue((string[])_rights[CustomerCst.Right.type.vehicleAccess],row[0].ToString().Split(',')).Split(',');
-                            if(vehicleAccess.Length>0) vehicleAccess+=","+row[0].ToString();
-                            else vehicleAccess+=row[0].ToString();
-                        }
-                        //Vehicle en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_VEHICLE_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.vehicleException)) {
-                                _rights.Add(CustomerCst.Right.type.vehicleException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.vehicleException]=listValue((string[])_rights[CustomerCst.Right.type.vehicleException],row[0].ToString().Split(',')).Split(',');
-                            if(vehicleException.Length>0) vehicleException+=","+row[0].ToString();
-                            else vehicleException=row[0].ToString();
+            ds = RightDAL.GetMediaRights(Source, _loginId);
+            try
+            {
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
 
-                        }
-                        //Category en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.categoryAccess)) {
-                                _rights.Add(CustomerCst.Right.type.categoryAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.categoryAccess]=listValue((string[])_rights[CustomerCst.Right.type.categoryAccess],row[0].ToString().Split(',')).Split(',');
-                            if(categoryAccess.Length>0) categoryAccess+=","+row[0].ToString();
-                            else categoryAccess=row[0].ToString();
-                        }
-                        //Category en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.categoryException)) {
-                                _rights.Add(CustomerCst.Right.type.categoryException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.categoryException]=listValue((string[])_rights[CustomerCst.Right.type.categoryException],row[0].ToString().Split(',')).Split(',');
-                            if(categoryException.Length>0) categoryException+=","+row[0].ToString();
-                            else categoryException=row[0].ToString();
-                        }
-                        //Region en accès
-                        if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
-                        {
-                            if (!_rights.ContainsKey(CustomerCst.Right.type.regionAccess))
-                            {
-                                _rights.Add(CustomerCst.Right.type.regionAccess, row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.regionAccess] = listValue((string[])_rights[CustomerCst.Right.type.regionAccess], row[0].ToString().Split(',')).Split(',');
-                            if (regionAccess.Length > 0) regionAccess += "," + row[0].ToString();
-                            else regionAccess = row[0].ToString();
-                        }
-                        //Region en exception
-                        if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
-                        {
-                            if (!_rights.ContainsKey(CustomerCst.Right.type.regionException))
-                            {
-                                _rights.Add(CustomerCst.Right.type.regionException, row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.regionException] = listValue((string[])_rights[CustomerCst.Right.type.regionException], row[0].ToString().Split(',')).Split(',');
-                            if (regionException.Length > 0) regionException += "," + row[0].ToString();
-                            else regionException = row[0].ToString();
-                        }
-                        //média en accès
-                        if((Int64)row[2]==MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.mediaAccess)) {
-                                _rights.Add(CustomerCst.Right.type.mediaAccess,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.mediaAccess]=listValue((string[])_rights[CustomerCst.Right.type.mediaAccess],row[0].ToString().Split(',')).Split(',');
-                            if(mediaAccess.Length>0) mediaAccess+=","+row[0].ToString();
-                            else mediaAccess=row[0].ToString();
-
-                        }
-                        //média en exception
-                        if((Int64)row[2]==MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
-                            if(!_rights.ContainsKey(CustomerCst.Right.type.mediaException)) {
-                                _rights.Add(CustomerCst.Right.type.mediaException,row[0].ToString().Split(','));
-                            }
-                            else _rights[CustomerCst.Right.type.mediaException]=listValue((string[])_rights[CustomerCst.Right.type.mediaException],row[0].ToString().Split(',')).Split(',');
-                            if(mediaException.Length>0) mediaException+=","+row[0].ToString();
-                            else mediaException=row[0].ToString();
-                        }
+                        //Vehicle en accès                      
+                        AddRights(row, MediaProductIdType.ID_VEHICLE_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.vehicleAccess);
+                        //Vehicle en exception                      
+                        AddRights(row, MediaProductIdType.ID_VEHICLE_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.vehicleException);
+                        //Category en accès                     
+                        AddRights(row, MediaProductIdType.ID_CATEGORY_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.categoryAccess);
+                        //Category en exception                       
+                        AddRights(row, MediaProductIdType.ID_CATEGORY_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.categoryException);
+                        //Region en accès                       
+                        AddRights(row, MediaProductIdType.ID_REGION_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.regionAccess);
+                        //Region en exception                       
+                        AddRights(row, MediaProductIdType.ID_REGION_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.regionException);
+                        //média en accès                      
+                        AddRights(row, MediaProductIdType.ID_MEDIA_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.mediaAccess);
+                        //média en exception                       
+                        AddRights(row, MediaProductIdType.ID_MEDIA_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.mediaException);
+                        //VP Media Type in acccess                     
+                        AddRights(row, MediaProductIdType.ID_VP_VEHICLE_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.vpVehicleAccess);
+                        //VP Media Type in exception                       
+                        AddRights(row, MediaProductIdType.ID_VP_VEHICLE_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.vpVehicleException);                    
                     }
                 }
             }
-            catch(System.Exception err) {
-                throw (new RightException("Impossible to load media template right",err));
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to load media template right", err));
             }
             #endregion
 
@@ -657,14 +630,17 @@ namespace TNS.AdExpress {
                 {
                     try
                     {
-                        IDataSource recapSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+                        IDataSource recapSource = WebApplicationParameters.
+                            DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
                         ds = RightDAL.GetProductClassAnalysisRights(recapSource, _rights);
-                        if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                        if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
                         {
-                            foreach (DataRow row in ds.Tables[0].Rows) listVehicleForRecap += row[0] + ",";
+                            listVehicleForRecap = ds.Tables[0].Rows.Cast<DataRow>().
+                                Aggregate(listVehicleForRecap, (current, row) => current + (row[0] + ","));
                             if (listVehicleForRecap.Length > 0)
                             {
-                                _rights.Add(CustomerCst.Right.type.vehicleAccessForRecap, listVehicleForRecap.Substring(0, listVehicleForRecap.Length - 1).Split(','));
+                                _rights.Add(CustomerCst.Right.type.vehicleAccessForRecap, 
+                                    listVehicleForRecap.Substring(0, listVehicleForRecap.Length - 1).Split(','));
                             }
                         }
                     }
@@ -677,53 +653,78 @@ namespace TNS.AdExpress {
             #endregion
 
         }
+
+        private void AddRights(DataRow row, long dbClassificationType, Int16 dbExceptionType, CustomerCst.Right.type rightType)
+        {
+            if ((Int64)row[2] == dbClassificationType && Convert.ToInt32(row[1]) == dbExceptionType)
+            {
+                if (!_rights.ContainsKey(rightType))
+                {
+                    _rights.Add(rightType, row[0].ToString().Split(','));
+                }
+                else
+                    _rights[rightType] =
+                        listValue(_rights[rightType], row[0].ToString().Split(',')).Split(',');
+            }
+        }
+
         #endregion
 
         #region Module rights
         /// <summary>
         /// Clear Modules list
         /// </summary>
-        public void ClearModulesList() {
+        public void ClearModulesList()
+        {
             _modulesRights.Clear();
         }
 
         /// <summary>
         /// Set module rights
         /// </summary>
-        public void SetModuleRights() {
+        public void SetModuleRights()
+        {
             DataSet ds;
-            try {
-				ds=RightDAL.GetModulesRights(Source,_loginId);
-                _modulesRights=new Dictionary<Int64,Module>();
-                if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
-                    foreach(DataRow row in ds.Tables[0].Rows) {
-                        _modulesRights.Add((Int64)row[1],ModulesList.GetModule((Int64)row[1]));
+            try
+            {
+                ds = RightDAL.GetModulesRights(Source, _loginId);
+                _modulesRights = new Dictionary<Int64, Module>();
+                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        _modulesRights.Add((Int64)row[1], ModulesList.GetModule((Int64)row[1]));
                     }
                 }
             }
-            catch(System.Exception err) {
-				throw (new RightException("Impossible to retreive module rights", err));
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to retreive module rights", err));
             }
         }
         /// <summary>
         /// Get Modules list
         /// </summary>
         /// <returns>modules lists</returns>
-        public DataTable GetCustomerModuleListHierarchy() {
-            DataSet ds=null;
-            try {
-                if(_modulesRights==null) SetModuleRights();
-				ds=RightDAL.GetModulesRights(Source,_loginId);
-                if(ds!=null && ds.Tables[0]!=null && ds.Tables[0].Rows!=null) {
-                    ds.Tables[0].TableName="listModule";
-                    ds.Tables[0].Columns[0].ColumnName="idGroupModule";
-                    ds.Tables[0].Columns[1].ColumnName="idModule";
-                    ds.Tables[0].Columns[2].ColumnName="idModuleCategory";
+        public DataTable GetCustomerModuleListHierarchy()
+        {
+            DataSet ds = null;
+            try
+            {
+                if (_modulesRights == null) SetModuleRights();
+                ds = RightDAL.GetModulesRights(Source, _loginId);
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
+                    ds.Tables[0].TableName = "listModule";
+                    ds.Tables[0].Columns[0].ColumnName = "idGroupModule";
+                    ds.Tables[0].Columns[1].ColumnName = "idModule";
+                    ds.Tables[0].Columns[2].ColumnName = "idModuleCategory";
                 }
                 else throw (new RightException("Impossible to load module classification"));
             }
-            catch(System.Exception err) {
-				throw (new RightException("Impossible to build DataTable module hierarchy", err));
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to build DataTable module hierarchy", err));
             }
             return (ds.Tables[0]);
         }
@@ -733,14 +734,17 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="moduleId">module Id</param>
         /// <returns>Module</returns>
-        public Module GetModule(Int64 moduleId) {
-            try {
-                if(_modulesRights==null||_modulesRights.Keys.Count==0) SetModuleRights();
-                if(_modulesRights.ContainsKey(moduleId)) return (_modulesRights[moduleId]);
+        public Module GetModule(Int64 moduleId)
+        {
+            try
+            {
+                if (_modulesRights == null || _modulesRights.Keys.Count == 0) SetModuleRights();
+                if (_modulesRights.ContainsKey(moduleId)) return (_modulesRights[moduleId]);
                 return (null);
             }
-            catch(System.Exception err) {
-                throw (new RightException("Impossible to build DataTable module hierarchy",err));
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to build DataTable module hierarchy", err));
             }
         }
         #endregion
@@ -749,18 +753,23 @@ namespace TNS.AdExpress {
         /// <summary>
         /// Set Module frequencies
         /// </summary>
-        private void SetModuleFrequencies() {
+        private void SetModuleFrequencies()
+        {
             DataSet ds;
-            try {
-                 ds = RightDAL.GetModuleFrequencies(Source, _loginId);
+            try
+            {
+                ds = RightDAL.GetModuleFrequencies(Source, _loginId);
                 _moduleFrequencies = new Dictionary<Int64, Int64>();
-                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
-                    foreach (DataRow row in ds.Tables[0].Rows) {
+                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
                         _moduleFrequencies.Add((Int64)row[0], (Int64)row[1]);
                     }
                 }
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new RightException("Impossible to retreive module frequencies", err));
             }
         }
@@ -770,16 +779,20 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="moduleId">identifiant du module</param>
         /// <returns>Valeur de la fréquence</returns>
-        public Int64 GetIdFrequency(Int64 moduleId) {
-            try {
+        public Int64 GetIdFrequency(Int64 moduleId)
+        {
+            try
+            {
                 if (_moduleFrequencies == null) SetModuleFrequencies();
-                if (_moduleFrequencies[moduleId] != null) {
+                if (_moduleFrequencies[moduleId] != null)
+                {
                     return _moduleFrequencies[moduleId];
                 }
                 else return Frequency.DEFAULT;
 
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new RightException("Impossible to retreive module frequency", err));
             }
         }
@@ -789,21 +802,26 @@ namespace TNS.AdExpress {
         /// <summary>
         /// Set Module frequencies
         /// </summary>
-        private void SetModuleAssignmentAlertsAdExpress() {
+        private void SetModuleAssignmentAlertsAdExpress()
+        {
             DataSet ds;
-            try {
-               ds = RightDAL.GetModuleAssignment(Source, _loginId);
+            try
+            {
+                ds = RightDAL.GetModuleAssignment(Source, _loginId);
                 _moduleAssignmentAlertsAdExpress = null;
-                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
-                    foreach (DataRow row in ds.Tables[0].Rows) {
-                        if(WebCst.Module.Name.ALERT_ADEXPRESS == (Int64)row[0])
+                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        if (WebCst.Module.Name.ALERT_ADEXPRESS == (Int64)row[0])
                             _moduleAssignmentAlertsAdExpress = new ModuleAssignment((Int64)row[0], (DateTime)row[1], (DateTime)row[2], (Int64)row[3], ((row[4].ToString().Length > 0) ? (Int64)row[4] : -1));
                     }
                     if (_moduleAssignmentAlertsAdExpress == null)
                         _moduleAssignmentAlertsAdExpress = new ModuleAssignment(WebCst.Module.Name.ALERT_ADEXPRESS, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-10), 0, -1);
                 }
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new RightException("Impossible to build SetModuleAssignmentAlertsAdExpress", err));
             }
         }
@@ -814,13 +832,16 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="moduleId">module Id</param>
         /// <returns>boolean</returns>
-        public bool HasModuleAssignmentAlertsAdExpress() {
-            try {
+        public bool HasModuleAssignmentAlertsAdExpress()
+        {
+            try
+            {
                 if (_moduleAssignmentAlertsAdExpress == null) SetModuleAssignmentAlertsAdExpress();
-                if (_moduleAssignmentAlertsAdExpress != null && _moduleAssignmentAlertsAdExpress.NbAlert>=0) return true;
+                if (_moduleAssignmentAlertsAdExpress != null && _moduleAssignmentAlertsAdExpress.NbAlert >= 0) return true;
                 return (false);
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new RightException("Impossible to build HasModuleAssignmentAlertsAdExpress", err));
             }
         }
@@ -830,13 +851,16 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="moduleId">module Id</param>
         /// <returns>boolean</returns>
-        public bool IsModuleAssignmentValidDateAlertsAdExpress() {
-            try {
+        public bool IsModuleAssignmentValidDateAlertsAdExpress()
+        {
+            try
+            {
                 if (_moduleAssignmentAlertsAdExpress == null) SetModuleAssignmentAlertsAdExpress();
                 if (_moduleAssignmentAlertsAdExpress != null && _moduleAssignmentAlertsAdExpress.NbAlert >= 0 && _moduleAssignmentAlertsAdExpress.DateBegin < DateTime.Now && _moduleAssignmentAlertsAdExpress.DateEnd > DateTime.Now) return true;
                 return (false);
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new RightException("Impossible to build IsModuleAssignmentValidDateAlertsAdExpress", err));
             }
         }
@@ -846,16 +870,20 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="moduleId">identifiant du module</param>
         /// <returns>Nb Alerts</returns>
-        public Int64 GetNbAlertsAdExpress() {
-            try {
+        public Int64 GetNbAlertsAdExpress()
+        {
+            try
+            {
                 if (_moduleAssignmentAlertsAdExpress == null) SetModuleAssignmentAlertsAdExpress();
-                if (_moduleAssignmentAlertsAdExpress!=null && _moduleAssignmentAlertsAdExpress.NbAlert >= 0) {
+                if (_moduleAssignmentAlertsAdExpress != null && _moduleAssignmentAlertsAdExpress.NbAlert >= 0)
+                {
                     return _moduleAssignmentAlertsAdExpress.NbAlert;
                 }
                 else return 0;
 
-        }
-            catch (System.Exception err) {
+            }
+            catch (System.Exception err)
+            {
                 throw (new RightException("Impossible to Get Nb Alerts AdExpress", err));
             }
         }
@@ -865,16 +893,20 @@ namespace TNS.AdExpress {
         /// <summary>
         /// Set Banners Format Assignement
         /// </summary>
-        public void SetBannersAssignement() {
-            try {
+        public void SetBannersAssignement()
+        {
+            try
+            {
                 _rightsBannersAssignementList = new Dictionary<CustomerCst.RightBanners.Type, Int64[]>();
                 var ds = RightDAL.GetBannersFormatAssignement(Source, _loginId);
-                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
                     foreach (DataRow row in ds.Tables[0].Rows)
                         _rightsBannersAssignementList.Add(CustomerCst.RightBanners.Type.FormatEvaliantInternet, new List<string>(row[0].ToString().Split(',')).ConvertAll<Int64>(Int64.Parse).ToArray());
                 }
             }
-            catch (Exception err) {
+            catch (Exception err)
+            {
                 throw (new RightException("Impossible to build SetBannersFormatAssignement", err));
             }
         }
@@ -882,7 +914,8 @@ namespace TNS.AdExpress {
         /// Get Banners Format Assignement 
         /// </summary>
         /// <returns>Format identifier list</returns>
-        public List<Int64> GetBannersFormatAssignement(List<Constantes.Customer.RightBanners.Type> typeRightBannersList) {
+        public List<Int64> GetBannersFormatAssignement(List<Constantes.Customer.RightBanners.Type> typeRightBannersList)
+        {
             try
             {
                 var rightFormatList = new List<Int64>();
@@ -891,11 +924,11 @@ namespace TNS.AdExpress {
                 {
                     foreach (var type in typeRightBannersList)
                     {
-                        if(_rightsBannersAssignementList.ContainsKey(type))
+                        if (_rightsBannersAssignementList.ContainsKey(type))
                         {
                             foreach (var cFormatIdList in _rightsBannersAssignementList[type])
                             {
-                                if(!rightFormatList.Contains(cFormatIdList))
+                                if (!rightFormatList.Contains(cFormatIdList))
                                     rightFormatList.Add(cFormatIdList);
                             }
                         }
@@ -903,7 +936,8 @@ namespace TNS.AdExpress {
                 }
                 return rightFormatList;
             }
-            catch (Exception err) {
+            catch (Exception err)
+            {
                 throw (new RightException("Impossible to Get Banners Format Assignement", err));
             }
         }
@@ -911,46 +945,53 @@ namespace TNS.AdExpress {
 
         #region Flags rights
 
-		/// <summary>
-		/// Set flags rights
-		/// </summary>
-		public void SetFlagsRights() {			
-			DataSet ds;
-			try {
-				ds = RightDAL.GetFlagsRights(Source, _loginId);
-				_flagsRights = new Dictionary<Int64, string>();
-                if (ds != null && ds.Tables.Count>0 && ds.Tables[0].Rows != null)
+        /// <summary>
+        /// Set flags rights
+        /// </summary>
+        public void SetFlagsRights()
+        {
+            DataSet ds;
+            try
+            {
+                ds = RightDAL.GetFlagsRights(Source, _loginId);
+                _flagsRights = new Dictionary<Int64, string>();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows != null)
                 {
-					foreach (DataRow row in ds.Tables[0].Rows) {
-						_flagsRights.Add((Int64)row[0], row[1].ToString());
-					}
-				}
-			}
-			catch (System.Exception err) {
-				throw (new RightException("Impossible to retreive flags rights", err));
-			}
-		}		
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        _flagsRights.Add((Int64)row[0], row[1].ToString());
+                    }
+                }
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to retreive flags rights", err));
+            }
+        }
 
-		/// <summary>
-		/// Indicate if the customer have access to a flag
-		/// </summary>
-		/// <param name="flagId">Flag id</param>
-		/// <returns>True if the customer have access to the flag</returns>
-		public bool CustormerFlagAccess(Int64 flagId) {
-			try {				
-				
-				if(!Domain.AllowedFlags.ContainFlag(flagId))return true;
-				if (_flagsRights == null) SetFlagsRights();
-                if (_flagsRights!= null && _flagsRights.ContainsKey(flagId)) return (true);
-				return (false);
-			}
-			catch (System.Exception err) {
-				throw (new RightException("Impossible to retreive flags rights",err));
-			}
-		}
+        /// <summary>
+        /// Indicate if the customer have access to a flag
+        /// </summary>
+        /// <param name="flagId">Flag id</param>
+        /// <returns>True if the customer have access to the flag</returns>
+        public bool CustormerFlagAccess(Int64 flagId)
+        {
+            try
+            {
+
+                if (!Domain.AllowedFlags.ContainFlag(flagId)) return true;
+                if (_flagsRights == null) SetFlagsRights();
+                if (_flagsRights != null && _flagsRights.ContainsKey(flagId)) return (true);
+                return (false);
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to retreive flags rights", err));
+            }
+        }
 
         #region Media agency / Flag
-       
+
         /// <summary>
         /// Verify if vehicles Id list have all media agencies flags
         /// </summary>
@@ -965,10 +1006,10 @@ namespace TNS.AdExpress {
                     List<Int64> ids = VehiclesInformation.GetMediaAgencyFlagIds(vehicleIds);
                     for (int i = 0; i < ids.Count; i++)
                     {
-                        if(!Domain.AllowedFlags.ContainFlag(ids[i])) throw new RightException(" Media Agency flag "+ ids[i].ToString() +" must be defined in both files Vehicles.XML and Flags.xml" );
-                        if (_flagsRights == null || _flagsRights.Count == 0 
+                        if (!Domain.AllowedFlags.ContainFlag(ids[i])) throw new RightException(" Media Agency flag " + ids[i].ToString() + " must be defined in both files Vehicles.XML and Flags.xml");
+                        if (_flagsRights == null || _flagsRights.Count == 0
                             || !_flagsRights.ContainsKey(ids[i]))
-                             return (false);                       
+                            return (false);
                     }
                     return true;
                 }
@@ -990,8 +1031,8 @@ namespace TNS.AdExpress {
             {
                 if (VehiclesInformation.ContainsMediaAgencyFlag(vehicleId))
                 {
-                   Int64 id = VehiclesInformation.GetMediaAgencyFlagId(vehicleId);
-                   if (id != long.MinValue)
+                    Int64 id = VehiclesInformation.GetMediaAgencyFlagId(vehicleId);
+                    if (id != long.MinValue)
                     {
                         if (!Domain.AllowedFlags.ContainFlag(id)) throw new RightException(" Media Agency flag " + id.ToString() + " must be defined in both files Vehicles.XML and Flags.xml");
                         if (_flagsRights == null || _flagsRights.Count == 0
@@ -1019,7 +1060,7 @@ namespace TNS.AdExpress {
                 List<Int64> ids = VehiclesInformation.GetAllMediaAgencyFlagIds();
                 for (int i = 0; i < ids.Count; i++)
                 {
-                    if(_flagsRights.ContainsKey(ids[i]))return true;
+                    if (_flagsRights.ContainsKey(ids[i])) return true;
                 }
             }
             return false;
@@ -1032,57 +1073,59 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="vehicleId">vehicle id</param>
         /// <returns>True, if the customer has access</returns>
-        public bool ShowCreatives(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicleId) {			
-			switch (vehicleId) {
+        public bool ShowCreatives(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicleId)
+        {
+            switch (vehicleId)
+            {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
-					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CREATION_ACCESS_FLAG)) return true;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_PRESS_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_PRESS_CREATION_ACCESS_FLAG] != null);
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioGeneral:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioSponsorship:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioMusic:
-					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_RADIO_CREATION_ACCESS_FLAG)) return true;
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_RADIO_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_RADIO_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_RADIO_CREATION_ACCESS_FLAG] != null);
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvGeneral:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvSponsorship:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
-					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_TV_CREATION_ACCESS_FLAG)) return true;
-                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_TV_CREATION_ACCESS_FLAG) 
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_TV_CREATION_ACCESS_FLAG)) return true;
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_TV_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_TV_CREATION_ACCESS_FLAG] != null);
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.czinternet:
-					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) return true;
-                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG) 
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) return true;
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
-					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)) return true;
-                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) 
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)) return true;
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.indoor:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INDOOR_CREATION_ACCESS_FLAG)) return true;
-                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INDOOR_CREATION_ACCESS_FLAG) 
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INDOOR_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_INDOOR_CREATION_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INSTORE_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INSTORE_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_INSTORE_CREATION_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo:
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
-					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)) return true;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG] != null);
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
-					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OTHERS_CREATION_ACCESS_FLAG)) return true;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OTHERS_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_OTHERS_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_OTHERS_CREATION_ACCESS_FLAG] != null);
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
-					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG)) return true;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
@@ -1096,15 +1139,15 @@ namespace TNS.AdExpress {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.editorial:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG)
-                        && _flagsRights[Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG] != null);               
+                        && _flagsRights[Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.pressClipping:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG] != null);
                 default:
-					return (false);
-			}
-		}
+                    return (false);
+            }
+        }
         #endregion
 
         /// <summary>
@@ -1114,8 +1157,9 @@ namespace TNS.AdExpress {
         /// <returns>True, if the customer has access</returns>
         public bool ShowVehiclePages(Constantes.Classification.DB.Vehicles.names vehicleId)
         {
-            switch (vehicleId) {       
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+            switch (vehicleId)
+            {
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG] != null);
@@ -1132,10 +1176,12 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <remarks>A vehicle is accessible so at least an element from this vehicle is accessible.</remarks>
         /// <returns>vehicle list</returns>
-        public string GetProductClassVehicleList() {
-            string listVehicle="";
-            if(this[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap]!=null) {
-                listVehicle=this[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap];
+        public string GetProductClassVehicleList()
+        {
+            string listVehicle = "";
+            if (this[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap] != null)
+            {
+                listVehicle = this[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap];
             }
             return (listVehicle);
         }
@@ -1148,27 +1194,33 @@ namespace TNS.AdExpress {
         /// <param name="tab1">right string table</param>
         /// <param name="tab2">right string table</param>
         /// <returns>string</returns>
-        protected string listValue(string[] tab1,string[] tab2) {
+        protected string listValue(string[] tab1, string[] tab2)
+        {
 
-            string res="";
-            int i=0;
-            int j=0;
-            bool notExist=true;
-            for(i=0;i<tab1.Length;i++) {
-                res+=tab1[i]+",";
+            string res = "";
+            int i = 0;
+            int j = 0;
+            bool notExist = true;
+            for (i = 0; i < tab1.Length; i++)
+            {
+                res += tab1[i] + ",";
             }
-            for(i=0;i<tab2.Length;i++) {
-                notExist=true;
-                for(j=0;j<tab1.Length;j++) {
-                    if(tab1[j]==tab2[i]) {
-                        notExist=false;
+            for (i = 0; i < tab2.Length; i++)
+            {
+                notExist = true;
+                for (j = 0; j < tab1.Length; j++)
+                {
+                    if (tab1[j] == tab2[i])
+                    {
+                        notExist = false;
                     }
                 }
-                if(notExist) {
-                    res+=tab2[i]+",";
+                if (notExist)
+                {
+                    res += tab2[i] + ",";
                 }
             }
-            return (res.Substring(0,res.Length-1));
+            return (res.Substring(0, res.Length - 1));
         }
         #endregion
     }

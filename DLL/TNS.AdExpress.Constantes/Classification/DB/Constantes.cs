@@ -223,7 +223,11 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// <summary>
             /// Mail valorized with France Pub data
             /// </summary>
-            mailValo = 32
+            mailValo = 32,
+            /// <summary>
+            /// Web Promotion
+            /// </summary>
+            webPromotion =9999
 		}
 	}
 	#endregion

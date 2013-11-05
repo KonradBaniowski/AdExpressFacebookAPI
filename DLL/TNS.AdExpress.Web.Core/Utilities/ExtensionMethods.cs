@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
+using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -46,5 +48,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
             return levels;
         }
 
+      
+
+
     }
+
 }

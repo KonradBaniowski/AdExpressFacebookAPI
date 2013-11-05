@@ -47,7 +47,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellCreativesTvInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module)
+        public CellCreativesTvInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns
+            , List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module)
             : base(session, vehicle, columns, columnNames, cells, module)
         {
         }
@@ -55,7 +56,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellCreativesTvInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, Int64 idColumnsSet)
+        public CellCreativesTvInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns
+            , List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, Int64 idColumnsSet)
             : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet) {
         }
         #endregion
@@ -88,7 +90,9 @@ namespace TNS.AdExpressI.Insertions.Cells
                 i++;
                 _values[i].Parent = this.Parent;
                 value = _values[i].ToString();
-                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && 
+                    g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster &&
+                    g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
                 {
 
                     StringBuilder tmpStr = new StringBuilder();
@@ -150,7 +154,8 @@ namespace TNS.AdExpressI.Insertions.Cells
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp)
                 {
-                    str.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><div class=\"videoFileBackGround\"></div></a>", s, this._session.IdSession, _vehicle.DatabaseId);
+                    str.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><div class=\"videoFileBackGround\"></div></a>"
+                        , s, this._session.IdSession, _vehicle.DatabaseId);
                     hasVisual = true;
                 }
             }
@@ -219,14 +224,18 @@ namespace TNS.AdExpressI.Insertions.Cells
             str.Append("<tr align=\"left\"><td align=\"left\" nowrap=\"nowrap\" " +
                 ((_session.SloganColors[_idVersion].ToString().Length > 0) ? "class=\"" + _session.SloganColors[_idVersion] + "\">" : "class=\"sloganVioletBackGround\">"));
 
-            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
-            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+            var creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain
+                .CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
             if (!creativesUtilities.IsSloganZoom(_session.SloganIdZoom))
             {
-                str.Append("<a href=\"javascript:get_version('" + _idVersion + "');\" onmouseover=\"res_" + _idVersion + ".src='/App_Themes/" + themeName + "/Images/Common/button/result2_down.gif';\" onmouseout=\"res_" + _idVersion + ".src ='/App_Themes/" + themeName + "/Images/Common/button/result2_up.gif';\">");
-                str.Append("<img name=\"res_" + _idVersion + "\" border=0  align=\"left\" src=\"/App_Themes/" + themeName + "/Images/Common/button/result2_up.gif\">");
+                str.AppendFormat("<a href=\"javascript:get_version('{0}');\" onmouseover=\"res_{0}.src='/App_Themes/{1}/Images/Common/button/result2_down.gif';\" onmouseout=\"res_{0}.src ='/App_Themes/{1}/Images/Common/button/result2_up.gif';\">"
+                    , _idVersion, themeName);
+                str.AppendFormat("<img name=\"res_{0}\" border=0  align=\"left\" src=\"/App_Themes/{1}/Images/Common/button/result2_up.gif\">"
+                    , _idVersion, themeName);
                 str.Append("</a>");
             }
 
@@ -258,7 +267,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             string baseColor = colorList[0].Name.Substring(2, 6);
             color = color.Insert(0, "#");
             baseColor = baseColor.Insert(0, "#");
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             string value;
             string[] values;
             int i = -1;

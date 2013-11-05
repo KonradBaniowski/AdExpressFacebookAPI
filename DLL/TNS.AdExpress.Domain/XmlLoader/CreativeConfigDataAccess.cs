@@ -190,6 +190,30 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "LOCAL_PATH_ROLEX":
                                         CreationServerPathes.LOCAL_PATH_ROLEX = value;
                                         break;
+                                    case "IMAGES_PSA" :
+                                        CreationServerPathes.IMAGES_PSA = value;
+                                        break;
+                                    case "IMAGES_PSA_MR" :
+                                        CreationServerPathes.IMAGES_PSA_MR = value;
+                                         break;
+                                    case "VIDEOS_PSA":
+                                         CreationServerPathes.VIDEOS_PSA = value;
+                                         break;
+                                    case "RADIOS_PSA":
+                                         CreationServerPathes.RADIOS_PSA = value;
+                                         break;
+                                    case "BANNERS_PSA":
+                                         CreationServerPathes.BANNERS_PSA = value;
+                                         break;
+                                    case "LOCAL_PATH_IMAGES_PSA_MR":
+                                         CreationServerPathes.LOCAL_PATH_IMAGES_PSA_MR = value;
+                                         break;
+                                    case "LOCAL_PATH_BANNERS_PSA":
+                                         CreationServerPathes.LOCAL_PATH_BANNERS_PSA = value;
+                                         break;
+                                    case "LOCAL_PATH_EVALIANT":
+                                         CreationServerPathes.LOCAL_PATH_EVALIANT = value;
+                                         break;  
                                 }
                                 break;
                         }

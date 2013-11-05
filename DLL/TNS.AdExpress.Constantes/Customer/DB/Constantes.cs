@@ -52,7 +52,32 @@ namespace TNS.AdExpress.Constantes.Customer.DB {
         /// Identifiant Brand
         /// </summary>
         public const Int64 ID_BRAND_TYPE = 66;
+        /// <summary>
+        /// Identifiant VP Circuit
+        /// </summary>
+        public const Int64 ID_CIRCUIT_TYPE = 14;
+        /// <summary>
+        /// Identifiant VP Brand
+        /// </summary>
+        public const Int64 ID_VP_BRAND_TYPE = 205;
 
+        /// <summary>
+        /// Identifiant VP Segment
+        /// </summary>
+        public const Int64 ID_VP_SEGMENT_TYPE = 204;
+        /// <summary>
+        /// Identifiant VP Sub Segment
+        /// </summary>
+        public const Int64 ID_VP_SUB_SEGMENT_TYPE = 203;
+        /// <summary>
+        /// Identifiant VP Product
+        /// </summary>
+        public const Int64 ID_VP_PRODUCT_TYPE = 202;
+
+        /// <summary>
+        /// Identifiant Veille Promo Vehicle
+        /// </summary>
+        public const Int64 ID_VP_VEHICLE_TYPE = 14;
 		#endregion
 	}
 

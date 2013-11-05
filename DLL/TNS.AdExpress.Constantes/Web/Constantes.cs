@@ -2598,6 +2598,42 @@ namespace TNS.AdExpress.Constantes.Web{
         ///Rolex files' physical directory
         /// </summary>
         public static string  LOCAL_PATH_ROLEX = string.Empty;
+
+        /// <summary>
+        /// PSA creative's virtual directory
+        /// </summary>
+        public static string IMAGES_PSA = string.Empty;
+        /// <summary>
+        /// PSA creative's middle resolution virtual directory
+        /// </summary>
+        public static string IMAGES_PSA_MR = string.Empty;
+        /// <summary>
+        /// PSA vidéo creative's virtual directory
+        /// </summary>
+        public static string VIDEOS_PSA = string.Empty;
+        /// <summary>
+        /// PSA banners creative's virtual directory
+        /// </summary>
+        public static string BANNERS_PSA = string.Empty;
+
+        /// <summary>
+        /// Répertoire contenant les visuels de la veille promotionnelle de peugeot
+        /// </summary>
+        public static string LOCAL_PATH_IMAGES_PSA_MR = string.Empty;
+
+        /// <summary>
+        /// Répertoire contenant les bannières de la veille promotionnelle de peugeot
+        /// </summary>
+        public static string LOCAL_PATH_BANNERS_PSA = string.Empty;
+
+        /// <summary>
+        /// PSA radio creative's virtual directory
+        /// </summary>
+        public static string RADIOS_PSA = string.Empty;
+        /// <summary>
+        /// Répertoire contenant les visuels evaliant
+        /// </summary>
+        public static string LOCAL_PATH_EVALIANT = string.Empty;
     }
     #endregion
 

@@ -85,6 +85,10 @@ namespace TNS.AdExpressI.Insertions.Cells {
         /// </summary>
         private const string FLASH_TEXT = "FLASH";
         /// <summary>
+        /// FLV id
+        /// </summary>
+        private const string AVI_ID = "AVI";
+        /// <summary>
         /// Chemin de la page des plans médias AdNetTrack
         /// </summary>
         private const string MEDIA_SCHEDULE_PATH = "/Private/Results/AdNetTrackMediaSchedule.aspx";
@@ -379,7 +383,8 @@ namespace TNS.AdExpressI.Insertions.Cells {
                     else
                     {
                         var vehicleInformationList = new Dictionary<Int64, VehicleInformation>();
-                        vehicleInformationList.Add(VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack).DatabaseId, VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack));
+                        vehicleInformationList.Add(VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack).DatabaseId,
+                            VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack));
                         List<Int64> formatIdList = _session.GetValidFormatSelectedList(vehicleInformationList, true);
 
                         displayFlv = (formatIdList!=null && formatIdList.Contains(AdExpress.Constantes.Classification.DB.Formats.InStream));
@@ -405,6 +410,10 @@ namespace TNS.AdExpressI.Insertions.Cells {
                         output.AppendFormat("<img border=0 src=\"/App_Themes/{0}/Images/Common/no_visuel_flv.jpeg\" border=\"0\">",
                             WebApplicationParameters.Themes[_session.SiteLanguage].Name);
                     }
+                }else   if (_format.ToUpper() == AVI_ID)
+                {
+                    output.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><div class=\"videoFileBackGround\"></div></a>"
+                        , _visuals[0].Replace("\\", "/"), _session.IdSession, _vehicle.DatabaseId);
                 }
                 else if (_format.ToUpper() == MULTIPART_ID) {
                     Descriptor descriptor = null;

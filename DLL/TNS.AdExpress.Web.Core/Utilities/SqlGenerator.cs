@@ -45,7 +45,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
     /// <summary>
     /// Générateur de code SQL
     /// </summary>
-    public class SQLGenerator {
+    public partial class SQLGenerator {
 
         #region In Clause Method
         /// <summary>

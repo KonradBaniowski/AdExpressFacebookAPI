@@ -354,20 +354,23 @@ namespace TNS.AdExpressI.Insertions.Russia
                 data = new ResultTable(nbLine, 1);
             }
 
-            SetLine setLine = null;
-            SetSpecificLine setSpecificLine = null;
+            Action<VehicleInformation, ResultTable, DataRow, int,
+             List<GenericColumnItemInformation>, List<string>, List<Cell>, string> setLine;
+
+            Action<VehicleInformation, ResultTable, DataRow, int,
+             List<GenericColumnItemInformation>, List<string>, List<Cell>, Int64> setSpecificLine = null;
+
             if (_getMSCreatives)
             {
-                setSpecificLine = new SetSpecificLine(SetMSCreativeLine);
+                setSpecificLine = SetMSCreativeLine;
             }
             if (_getCreatives)
             {
-                setLine = new SetLine(SetCreativeLine);
+                setLine = SetCreativeLine;
             }
             else
             {
-                setLine = new SetLine(SetRawLine);
-
+                setLine = SetRawLine;
             }
             #endregion
 
@@ -563,7 +566,8 @@ namespace TNS.AdExpressI.Insertions.Russia
         #endregion
 
         #region SetRawLine
-        protected override void SetRawLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+        protected override void SetRawLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, 
+            List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
             TNS.AdExpress.Domain.Web.TextWrap textWrap = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].textWrap;
             int i = -1;
@@ -781,7 +785,8 @@ namespace TNS.AdExpressI.Insertions.Russia
         #endregion
 
         #region SetAggregLine
-        protected override void SetAggregLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+        protected override void SetAggregLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine,
+            List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
 
             CellInsertionInformation c;
@@ -824,7 +829,8 @@ namespace TNS.AdExpressI.Insertions.Russia
         #endregion
 
         #region SetCreativeLine
-        protected override void SetCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+        protected override void SetCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine,
+            List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
 
             CellCreativesInformation c;
