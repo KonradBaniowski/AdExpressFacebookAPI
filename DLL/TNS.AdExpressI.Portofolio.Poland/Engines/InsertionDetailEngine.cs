@@ -223,7 +223,7 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines
                                     break;
                                 case GenericColumnItemInformation.Columns.topDiffusion:
                                 case GenericColumnItemInformation.Columns.idTopDiffusion:
-                                    if (!_isDigitalTV)
+                                    if (_showTopDiffusion)
                                     {
                                         if (row[Column.DataBaseField].ToString().Length > 0)
                                             tab[iCurLine, iCurColumn++] =

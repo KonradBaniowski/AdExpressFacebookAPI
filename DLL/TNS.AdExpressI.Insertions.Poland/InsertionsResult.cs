@@ -190,47 +190,7 @@ namespace TNS.AdExpressI.Insertions.Poland
                     if (row[columnsName[i]] != DBNull.Value)
                     {
                         val = Convert.ToDouble(row[columnsName[i]]) / div;
-                    }
-                    switch (columns[i].Id)
-                    {
-                        case GenericColumnItemInformation.Columns.weight:
-                            if (!_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_POIDS_MARKETING_DIRECT))
-                            {
-                                val = 0;
-                            }
-                            break;
-                        case GenericColumnItemInformation.Columns.volume:
-                            if (!_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_VOLUME_MARKETING_DIRECT))
-                            {
-                                val = 0;
-                            }
-                            break;
-                        case GenericColumnItemInformation.Columns.topDiffusion:
-                            if (vehicle.Id == CstDBClassif.Vehicles.names.tv
-                                || vehicle.Id == CstDBClassif.Vehicles.names.tvGeneral
-                                || vehicle.Id == CstDBClassif.Vehicles.names.tvAnnounces
-                                || vehicle.Id == CstDBClassif.Vehicles.names.tvSponsorship
-                                || vehicle.Id == CstDBClassif.Vehicles.names.tvNonTerrestrials)
-                            {
-                                string idCat = "";
-                                try
-                                {
-                                    idCat = row[WebApplicationParameters.GenericColumnItemsInformation.
-                                        Get((long)GenericColumnItemInformation.Columns.idCategory).DataBaseField].ToString();
-                                }
-                                catch (Exception e)
-                                {
-                                    idCat = "";
-                                }
-                                if (Array.IndexOf(_topDiffCategory, idCat) >= 0)
-                                {
-                                    val = 0;
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+                    }                   
                     if (tab[cLine, j] == null)
                     {
                         tab[cLine, j] = ((CellUnit)cells[i]).Clone(val);

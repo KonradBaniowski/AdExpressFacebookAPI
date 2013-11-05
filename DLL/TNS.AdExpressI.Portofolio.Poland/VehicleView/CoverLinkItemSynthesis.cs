@@ -27,7 +27,7 @@ namespace TNS.AdExpressI.Portofolio.Poland.VehicleView
         /// <returns>Html code</returns>
         override public string Render(){
 
-            return string.Format("onclick=\"javascript:portofolioCreation2('{0}','{1}','{2}','{3}','{4}','{5}','{6}');\""
+            return string.Format("\"javascript:portofolioCreation2('{0}','{1}','{2}','{3}','{4}','{5}','{6}');\""
                 , _idSession, _mediaId, _dateMediaNum, _dateCoverNum, _media, _numberPageMedia, _subFolder);
         }
      

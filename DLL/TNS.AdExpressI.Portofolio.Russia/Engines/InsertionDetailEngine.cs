@@ -202,7 +202,7 @@ namespace TNS.AdExpressI.Portofolio.Russia.Engines {
                                     break;
                                 case GenericColumnItemInformation.Columns.topDiffusion:
                                 case GenericColumnItemInformation.Columns.idTopDiffusion:
-                                    if (!_isDigitalTV)
+                                    if (_showTopDiffusion)
                                     {
                                         if (row[Column.DataBaseField].ToString().Length > 0)
                                             tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));

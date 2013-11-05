@@ -115,28 +115,34 @@ namespace TNS.AdExpressI.Portofolio.Poland
         public override Dictionary<string, string> GetVisualList(string beginDate, string endDate)
         {
             var dic = new Dictionary<string, string>();
-            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-            var parameters = new object[5];
-            parameters[0] = _webSession;
-            parameters[1] = _vehicleInformation;
-            parameters[2] = _idMedia;
-            parameters[3] = beginDate;
-            parameters[4] = endDate;
-            string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-            var portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\"
-                + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-            var ds = portofolioDAL.GetListDate(true, _tableType);
 
-            foreach (DataRow dr in ds.Tables[0].Rows)
+            if (_webSession.CustomerLogin.ShowVehiclePages(_vehicleInformation.Id))
             {
-                if (dr["media"] != DBNull.Value)
+                if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+                var parameters = new object[5];
+                parameters[0] = _webSession;
+                parameters[1] = _vehicleInformation;
+                parameters[2] = _idMedia;
+                parameters[3] = beginDate;
+                parameters[4] = endDate;
+                string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+                var portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, _module.CountryDataAccessLayer.AssemblyName),
+                  _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                   | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+
+                var ds = portofolioDAL.GetListDate(true, _tableType);
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/{3}", CreationServerPathes.IMAGES, _idMedia,
-                        dr["date_media_num"].ToString(), COVERFILE_NAME));
+                    if (dr["media"] != DBNull.Value)
+                    {
+                        dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/{3}", CreationServerPathes.IMAGES, _idMedia,
+                                                                               dr["date_media_num"].ToString(), COVERFILE_NAME));
+                    }
+                    else
+                        dic.Add(dr["date_media_num"].ToString(), string.Format("/App_Themes/{0}/Images/Culture/Others/no_visuel.gif", themeName));
                 }
-                else
-                    dic.Add(dr["date_media_num"].ToString(), string.Format("/App_Themes/{0}/Images/Culture/Others/no_visuel.gif", themeName));
             }
             return dic;
         }
@@ -182,14 +188,16 @@ namespace TNS.AdExpressI.Portofolio.Poland
 
             #endregion
 
-            // Vérifie si le client a le droit aux créations
-            if (_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id))
+            if (_vehicleInformation.Id == Vehicles.names.press)
             {
 
-                if (_vehicleInformation.Id == Vehicles.names.press)
+
+                Hashtable htValue = null;
+                DataTable dtVisuel = null;
+                bool showVehiclePages = _webSession.CustomerLogin.ShowVehiclePages(_vehicleInformation.Id);
+
+                if (showVehiclePages || _resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA)
                 {
-
-
                     var parameters = new object[1];
                     parameters[0] = _webSession;
                     var portofolioResult =
@@ -200,94 +208,102 @@ namespace TNS.AdExpressI.Portofolio.Poland
                             BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters,
                             null, null);
 
-                    Hashtable htValue = null;
-                    DataTable dtVisuel = null;
                     portofolioResult.GetVehicleViewData(out dtVisuel, out htValue);
+                }
 
 
-                    var cultureInfo =
-                        new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+                var cultureInfo =
+                    new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
 
-                    if (dtVisuel != null)
+                if (dtVisuel != null)
+                {
+                    for (int i = 0; i < dtVisuel.Rows.Count; i++)
                     {
-                        for (int i = 0; i < dtVisuel.Rows.Count; i++)
-                        {
-                            //date_media_num
+                        var dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)),
+                             int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)),
+                             int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
 
-                            string pathWeb;
-                            if (dtVisuel.Rows[i]["media"] != DBNull.Value)
+                       
+                            coverItem = GetCoverItem(dtVisuel, i, themeName);
+
+
+                        if (htValue.Count > 0)
+                        {
+                            if (htValue.ContainsKey(dtVisuel.Rows[i]["date_media_num"]))
                             {
-                                pathWeb = string.Format("{0}/{1}/{2}/{3}", CreationServerPathes.IMAGES, _idMedia,
-                                dtVisuel.Rows[i]["date_media_num"].ToString(), COVERFILE_NAME);
+                                vehicleItem = new VehicleItem(dayDT,
+                                                              ((string[])
+                                                               htValue[dtVisuel.Rows[i]["date_media_num"]])[1],
+                                                              int.Parse(
+                                                                  ((string[])
+                                                                   htValue[dtVisuel.Rows[i]["date_media_num"]])[0])
+                                                                 .ToString("### ### ### ###"),
+                                                              _webSession.SiteLanguage, coverItem);
                             }
                             else
                             {
-                                pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+                                vehicleItem = new VehicleItem(dayDT, "0", "0", _webSession.SiteLanguage, coverItem);
+
                             }
-                            var dayDT =
-                                new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)),
-                                             int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)),
-                                             int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
-
-                            if (dtVisuel.Rows[i]["media"] != DBNull.Value)
-                            {
-
-                                if (_resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
-                                {
-                                    var coverLinkItemSynthesis = new CoverLinkItemSynthesis(dtVisuel.Rows[i]["media"].ToString(),
-                                                                                                               string.Empty,
-                                                                                                               _webSession.IdSession, _idMedia,
-                                                                                                               dtVisuel.Rows[i]["date_media_num"].ToString(),
-                                                                                                               dtVisuel.Rows[i]["date_media_num"].ToString(), MAGAZINE_FOLDER_NAME);
-                                    coverItem = new CoverItem(i + 1,
-                                                              GestionWeb.GetWebWord(1409, _webSession.SiteLanguage),
-                                                              pathWeb, coverLinkItemSynthesis);
-                                }
-                                else if (_resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA)
-                                {
-                                    var coverLinkItem = new CoverLinkItem(_webSession.IdSession, _idMedia,
-                                                                                    dtVisuel.Rows[i]["date_media_num"].ToString(), string.Empty);
-                                    coverItem = new CoverItem(i + 1, string.Empty, pathWeb, coverLinkItem);
-                                }
-                            }
-                            else if (_resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
-                                coverItem = new CoverItem(i + 1, GestionWeb.GetWebWord(1409, _webSession.SiteLanguage),
-                                                          pathWeb, null);
-                            else if (_resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA)
-                                coverItem = new CoverItem(i + 1, string.Empty, pathWeb, null);
-
-
-                            if (htValue.Count > 0)
-                            {
-                                if (htValue.ContainsKey(dtVisuel.Rows[i]["date_media_num"]))
-                                {
-                                    vehicleItem = new VehicleItem(dayDT,
-                                                                  ((string[])
-                                                                   htValue[dtVisuel.Rows[i]["date_media_num"]])[1],
-                                                                  int.Parse(
-                                                                      ((string[])
-                                                                       htValue[dtVisuel.Rows[i]["date_media_num"]])[0])
-                                                                     .ToString("### ### ### ###"),
-                                                                  _webSession.SiteLanguage, coverItem);
-                                }
-                                else
-                                {
-                                    vehicleItem = new VehicleItem(dayDT, "0", "0", _webSession.SiteLanguage, coverItem);
-
-                                }
-                            }
-
-                            itemsCollection.Add(vehicleItem);
-
+                            vehicleItem.ShowCover = showVehiclePages;
                         }
+
+                        itemsCollection.Add(vehicleItem);
+
                     }
-
-
                 }
+
 
             }
 
+
+
             return itemsCollection;
+        }
+
+        protected virtual CoverItem GetCoverItem(DataTable dtVisuel, int i, string themeName)
+        {
+            CoverItem coverItem = null;
+            string pathWeb;
+            if (dtVisuel.Rows[i]["media"] != DBNull.Value)
+            {
+                pathWeb = string.Format("{0}/{1}/{2}/{3}", CreationServerPathes.IMAGES, _idMedia,
+                                        dtVisuel.Rows[i]["date_media_num"].ToString(), COVERFILE_NAME);
+            }
+            else
+            {
+                pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+            }
+
+
+            if (dtVisuel.Rows[i]["media"] != DBNull.Value)
+            {
+                if (_resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
+                {
+                    var coverLinkItemSynthesis = new CoverLinkItemSynthesis(dtVisuel.Rows[i]["media"].ToString(),
+                                                                            string.Empty,
+                                                                            _webSession.IdSession, _idMedia,
+                                                                            dtVisuel.Rows[i]["date_media_num"].ToString(),
+                                                                            dtVisuel.Rows[i]["date_media_num"].ToString(),
+                                                                            MAGAZINE_FOLDER_NAME);
+                    coverItem = new CoverItem(i + 1,
+                                              GestionWeb.GetWebWord(1409, _webSession.SiteLanguage),
+                                              pathWeb, coverLinkItemSynthesis);
+                }
+                else if (_resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA)
+                {
+                    var coverLinkItem = new CoverLinkItem(_webSession.IdSession, _idMedia,
+                                                          dtVisuel.Rows[i]["date_media_num"].ToString(), string.Empty);
+                    coverItem = new CoverItem(i + 1, string.Empty, pathWeb, coverLinkItem);
+
+                }
+            }
+            else if (_resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
+                coverItem = new CoverItem(i + 1, GestionWeb.GetWebWord(1409, _webSession.SiteLanguage),
+                                          pathWeb, null);
+            else if (_resultType == AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA)
+                coverItem = new CoverItem(i + 1, string.Empty, pathWeb, null);
+            return coverItem;
         }
 
         #endregion
