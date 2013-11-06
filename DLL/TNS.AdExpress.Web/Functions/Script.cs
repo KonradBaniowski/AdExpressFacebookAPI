@@ -2217,6 +2217,114 @@ namespace TNS.AdExpress.Web.Functions{
         }
 		#endregion
 
+        #region script de sélection d'une date mensuelle
+        /// <summary>
+        /// script de sélection d'une date mensuelle
+        /// </summary>
+        /// <returns>script choix d'une période</returns>
+        public static string SelectMonthPeriod(string controlID, string dateWeekCtrId, string dateToDateCtrId) {
+            System.Text.StringBuilder script = new System.Text.StringBuilder(1000);
+
+            script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            script.Append("\n\t function SelectMonthPeriod(){");
+
+            script.Append("\n\t\t var monthCtr = document.getElementById('" + controlID + "');");
+            script.Append("\n\t\t var dateWeekCtr = document.getElementById('" + dateWeekCtrId + "');");
+            script.Append("\n\t\t var dateToDateCtr = document.getElementById('" + dateToDateCtrId + "');");
+
+            script.Append("\n\t\t if(monthCtr.options[0].selected == false){");
+            script.Append("\n\t\t\t dateWeekCtr.disabled=true;");
+            script.Append("\n\t\t\t dateWeekCtr.checked=false;");
+            script.Append("\n\t\t\t dateToDateCtr.checked=true;");
+            script.Append("\n\t\t }");
+            script.Append("\n\t\t else {");
+            script.Append("\n\t\t\t dateWeekCtr.disabled=false;");
+            script.Append("\n\t\t }");
+
+            script.Append("\n\t\t }");
+            script.Append("\n</script>");
+
+            return script.ToString();
+        }
+        #endregion
+
+        #region script de sélection d'une date hebdomadaire
+        /// <summary>
+        /// script de sélection d'une date hebdomadaire
+        /// </summary>
+        /// <returns>script choix d'une période</returns>
+        public static string SelectWeekPeriod(string controlID, string dateWeekCtrId, string dateToDateCtrId) {
+            System.Text.StringBuilder script = new System.Text.StringBuilder(1000);
+
+            script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            script.Append("\n\t function SelectWeekPeriod(){");
+
+            script.Append("\n\t\t var weekCtr = document.getElementById('" + controlID + "');");
+            script.Append("\n\t\t var dateWeekCtr = document.getElementById('" + dateWeekCtrId + "');");
+            script.Append("\n\t\t var dateToDateCtr = document.getElementById('" + dateToDateCtrId + "');");
+
+            script.Append("\n\t\t if(weekCtr.options[0].selected == false){");
+            script.Append("\n\t\t\t dateWeekCtr.disabled=false;");
+            script.Append("\n\t\t }");
+
+            script.Append("\n\t\t }");
+            script.Append("\n</script>");
+
+            return script.ToString();
+        }
+        #endregion
+
+        #region Enable comparative type
+        /// <summary>
+        /// Enable comparative type
+        /// </summary>
+        /// <returns>script choix d'une période</returns>
+        public static string EnableComparativeType(string dateWeekCtrId, string dateToDateCtrId) {
+            System.Text.StringBuilder script = new System.Text.StringBuilder(1000);
+
+            script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            script.Append("\n\t function EnableComparativeType(){");
+
+            script.Append("\n\t\t var dateWeekCtr = document.getElementById('" + dateWeekCtrId + "');");
+            script.Append("\n\t\t var dateToDateCtr = document.getElementById('" + dateToDateCtrId + "');");
+
+            script.Append("\n\t\t\t dateWeekCtr.disabled=false;");
+
+            script.Append("\n\t\t }");
+            script.Append("\n</script>");
+
+            return script.ToString();
+        }
+        #endregion
+
+        #region Comparative type init
+        /// <summary>
+        /// Comparative type init
+        /// </summary>
+        /// <returns>Comparative type init Script</returns>
+        public static string ComparativeTypeInit(string controlID, string dateWeekCtrId, string dateToDateCtrId) {
+            System.Text.StringBuilder script = new System.Text.StringBuilder(1000);
+
+            script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            script.Append("\n\t function ComparativeTypeInit(){");
+
+            script.Append("\n\t\t var monthCtr = document.getElementById('" + controlID + "');");
+            script.Append("\n\t\t var dateWeekCtr = document.getElementById('" + dateWeekCtrId + "');");
+            script.Append("\n\t\t var dateToDateCtr = document.getElementById('" + dateToDateCtrId + "');");
+
+            script.Append("\n\t\t if(monthCtr.options[0].selected == false){");
+            script.Append("\n\t\t\t dateWeekCtr.disabled=true;");
+            script.Append("\n\t\t\t dateWeekCtr.checked=false;");
+            script.Append("\n\t\t\t dateToDateCtr.checked=true;");
+            script.Append("\n\t\t }");
+
+            script.Append("\n\t\t }");
+            script.Append("\n</script>");
+
+            return script.ToString();
+        }
+        #endregion
+
 		#region Méthodes interne
 		/// <summary>
 		/// Génère un nombre à partir de la date

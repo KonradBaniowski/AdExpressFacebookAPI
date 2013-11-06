@@ -41,6 +41,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			string id;
 			long dataBaseId;
             bool useComparativeMediaSchedule = false;
+            bool useTendencyComparativeWeekType = false;
             bool useBannersFormatFilter = false;
             bool useRetailer = false;
             Dictionary<TableIds, MatchingTable> matchingTableList = new Dictionary<TableIds, MatchingTable>();
@@ -77,6 +78,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 break;
                             case "mediaSchedule":
                                 useComparativeMediaSchedule = bool.Parse(reader.GetAttribute("useComparative"));
+                                break;
+                            case "tendency":
+                                useTendencyComparativeWeekType = bool.Parse(reader.GetAttribute("useComparativeWeekType"));
                                 break;
                             case "bannersFormat":
                                 useBannersFormatFilter = bool.Parse(reader.GetAttribute("use"));
@@ -214,6 +218,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 }
                 WebApplicationParameters.InsetTypeCollection = insetTypeCollection;
                 WebApplicationParameters.UseComparativeMediaSchedule = useComparativeMediaSchedule;
+                WebApplicationParameters.UseTendencyComparativeWeekType = useTendencyComparativeWeekType;
                 WebApplicationParameters.UseRetailer = useRetailer;
                 WebApplicationParameters.MatchingRetailerTableList = matchingTableList;
                 WebApplicationParameters.VpConfigurationDetail = vpConfigurationDetail;

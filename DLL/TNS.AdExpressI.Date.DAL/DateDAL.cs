@@ -582,11 +582,12 @@ namespace TNS.AdExpressI.Date.DAL {
         /// Get Tendencies Last Available Date
         /// </summary>
         /// <returns>Last Available Date</returns>
-        public DateTime GetTendenciesLastAvailableDate() {
+        public virtual DateTime GetTendenciesLastAvailableDate() {
 
             DateTime date = new DateTime(1,1,1);
             StringBuilder sql = new StringBuilder();
-            Table tableName = WebApplicationParameters.GetDataTable(TableIds.tendencyWeek, false);
+            //Table tableName = WebApplicationParameters.GetDataTable(TableIds.tendencyWeek, false);
+            Table tableName = WebApplicationParameters.GetDataTable(TableIds.tendencyMonth, false);
             IDataSource dataSource = GetDataSource();
 
             sql.Append(" SELECT max(date_period) as lastAvailableDate ");

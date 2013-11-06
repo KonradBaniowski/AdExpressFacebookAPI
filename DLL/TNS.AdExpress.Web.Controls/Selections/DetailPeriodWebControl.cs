@@ -631,7 +631,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 dateBeginDT = new DateTime(DateTime.Now.AddYears(-1).Year, 1, 1);
                 startDate = WebFunctions.Dates.DateToString(dateBeginDT, _webSession.SiteLanguage);
 
-                if (_webSession.DateToDateComparativeWeek) {
+                if (_webSession.DateToDateComparativeWeek || !WebApplicationParameters.UseTendencyComparativeWeekType) {
                     dateEndDT = _tendenciesLastDate;
                     endDate = WebFunctions.Dates.DateToString(dateEndDT.AddYears(-1), _webSession.SiteLanguage);
                 }
@@ -757,10 +757,12 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 if(webSession.DetailPeriod == CstPeriodDetail.weekly)
                         return (GestionWeb.GetWebWord(2295, webSession.SiteLanguage));
                 else
-                    return "";
+                    return (GestionWeb.GetWebWord(2294, webSession.SiteLanguage));
             }
             else if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.TENDACES) {
-                if (_webSession.DateToDateComparativeWeek 
+                if(!WebApplicationParameters.UseTendencyComparativeWeekType)
+                    return (GestionWeb.GetWebWord(2294, webSession.SiteLanguage));
+                else if (_webSession.DateToDateComparativeWeek 
                     && (_webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.weekly
                     || _webSession.PeriodType == CustomerSessions.Period.Type.cumlDate))
                     return (GestionWeb.GetWebWord(2294, webSession.SiteLanguage));
@@ -768,7 +770,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                         || _webSession.PeriodType == CustomerSessions.Period.Type.cumlDate)
                     return (GestionWeb.GetWebWord(2295, webSession.SiteLanguage));
                 else
-                    return "";
+                    return (GestionWeb.GetWebWord(2294, webSession.SiteLanguage));
             }
             else if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                 comparativePeriodType = webSession.ComparativePeriodType;

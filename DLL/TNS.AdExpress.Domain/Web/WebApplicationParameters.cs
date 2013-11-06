@@ -109,6 +109,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         protected static bool _useComparativeMediaSchedule = false;
         /// <summary>
+        /// Use Tendency Comparative Week Type
+        /// </summary>
+        protected static bool _useTendencyComparativeWeekType = false;
+        /// <summary>
         /// Vehicles Format Information
         /// </summary>
         protected static VehiclesFormatInformation _vehiclesFormatInformation = new VehiclesFormatInformation(false, null);
@@ -369,6 +373,17 @@ namespace TNS.AdExpress.Domain.Web {
             }
             set {
                 _useComparativeMediaSchedule = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set Use Tendency Comparative Week Type
+        /// </summary>
+        public static bool UseTendencyComparativeWeekType {
+            get {
+                return _useTendencyComparativeWeekType;
+            }
+            set {
+                _useTendencyComparativeWeekType = value;
             }
         }
         /// <summary>

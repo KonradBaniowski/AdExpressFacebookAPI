@@ -68,8 +68,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			switch(detailPeriod){
 				case CustomerSessions.Period.DisplayLevel.monthly :				
 					//Dates de l'année N et N-1 mensuelles
-					FillMonthlyDate(DateTime.Now,1);					
-					this.Attributes["onchange"]="javascript:SelectPeriod('ResultsDateListWebControl1');";
+					FillMonthlyDate(DateTime.Now,1);
+                    this.Attributes["onchange"] = "javascript:SelectPeriod('ResultsDateListWebControl1');SelectMonthPeriod();";
 					break;
 				case CustomerSessions.Period.DisplayLevel.weekly :					
 					//Dates de l'année N et N-1 hebdomadaires
@@ -86,7 +86,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 							this.Items.FindByValue("0").Selected = true;				
 						}
 					}
-					this.Attributes["onchange"]="javascript:SelectPeriod('ResultsDateListWebControl2');";	
+                    this.Attributes["onchange"] = "javascript:SelectPeriod('ResultsDateListWebControl2');SelectWeekPeriod();";	
 					break;
 				default :
 					throw(new WebControlInitializationException("Il est impossible de définir une liste de dates à afficher."));

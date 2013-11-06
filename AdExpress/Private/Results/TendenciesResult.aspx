@@ -19,7 +19,7 @@
 		<meta http-equiv="pragma" content="no-cache" />
 		<meta name="Cache-control" content="no-cache" />
 	</head>
-	<body class="bodyStyle" onload="javascript:activateActiveX();">
+	<body class="bodyStyle" onload="javascript:activateActiveX();ComparativeTypeInit();">
 		<form id="Form2" method="post" runat="server">
 			<table style="height:600px" cellspacing="0" cellpadding="0" width="800" border="0">
 			    <!-- Gradient -->

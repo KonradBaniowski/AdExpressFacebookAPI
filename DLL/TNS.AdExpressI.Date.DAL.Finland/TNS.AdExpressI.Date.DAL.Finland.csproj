@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0F6194BA-5947-441C-81E8-0059D56EF67D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TNS.AdExpressI.Date.DAL.Finland</RootNamespace>
+    <AssemblyName>TNS.AdExpressI.Date.DAL.Finland</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\AdExpress\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork">
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Date">
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB">
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DateDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
+      <Project>{8889ED07-01CE-4F3A-A296-3A2C4B21989C}</Project>
+      <Name>TNS.AdExpressI.Date.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

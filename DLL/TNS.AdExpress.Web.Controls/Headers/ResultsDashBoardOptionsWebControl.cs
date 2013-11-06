@@ -620,7 +620,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			string listSector="";
 			string listInterestCenter="";
 
-            if (customerWebSession.CurrentModule==CstWeb.Module.Name.TENDACES && WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+            if (customerWebSession.CurrentModule==CstWeb.Module.Name.TENDACES && WebApplicationParameters.UseTendencyComparativeWeekType)
                 comparativeOption = true;
 
 			//string nameSector="";
@@ -998,8 +998,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				CumulPeriodCheckBox.ID="_cumulPeriodCheckBox";
 				CumulPeriodCheckBox.ToolTip = GestionWeb.GetWebWord(1528,customerWebSession.SiteLanguage);
                 CumulPeriodCheckBox.CssClass = "checkBoxOption";
-				CumulPeriodCheckBox.AutoPostBack=autoPostBackOption;				
-				CumulPeriodCheckBox.Attributes["onclick"]="javascript:SelectPeriod('_cumulPeriodCheckBox');";  				
+				CumulPeriodCheckBox.AutoPostBack=autoPostBackOption;
+                CumulPeriodCheckBox.Attributes["onclick"] = "javascript:SelectPeriod('_cumulPeriodCheckBox');EnableComparativeType();";  				
 				CumulPeriodCheckBox.Text=GestionWeb.GetWebWord(1527,customerWebSession.SiteLanguage);				
 				if(customerWebSession.DetailPeriod == Constantes.Web.CustomerSessions.Period.DisplayLevel.yearly)
 				isCumulPeriodChecked=true;			
@@ -1292,7 +1292,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				monthlyDate = new DropDownList();				
 				FillMonthlyDate(monthlyDate);
 				monthlyDate.ID = "monthlyDate_"+this.ID;
-				monthlyDate.AutoPostBack=autoPostBackOption;
+                monthlyDate.AutoPostBack=autoPostBackOption;
 				monthlyDate.CssClass = cssClass;				
 				Controls.Add(monthlyDate);
 			}

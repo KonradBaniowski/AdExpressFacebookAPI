@@ -36,7 +36,7 @@ namespace AdExpress.Private.Helps{
 		protected void Page_Load(object sender, System.EventArgs e){
 			//Modification de la langue pour les Textes AdExpress
 			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
-            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+            if (WebApplicationParameters.UseTendencyComparativeWeekType)
                 comparativeOption = true;
 		}
 		#endregion
