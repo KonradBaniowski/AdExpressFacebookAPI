@@ -27,6 +27,9 @@ namespace KMI.PromoPSA.Web.Core.Sessions
       private string _selectedDate = string.Empty;
       private string _selectedVehicle = string.Empty;
       private string _selectedActivation = string.Empty;
+      private string _selectedSegment = string.Empty;
+      private string _selectedProduct = string.Empty;
+      private string _selectedBrand = string.Empty;
 
       #region Constructeur
         /// <summary>
@@ -147,6 +150,33 @@ namespace KMI.PromoPSA.Web.Core.Sessions
             get { return (_selectedActivation); }
             set {
                 _selectedActivation = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set selected segment
+        /// </summary>
+        public string SelectedSegment {
+            get { return (_selectedSegment); }
+            set {
+                _selectedSegment = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set selected product
+        /// </summary>
+        public string SelectedProduct {
+            get { return (_selectedProduct); }
+            set {
+                _selectedProduct = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set selected brabd
+        /// </summary>
+        public string SelectedBrand {
+            get { return (_selectedBrand); }
+            set {
+                _selectedBrand = value;
             }
         }
         #endregion

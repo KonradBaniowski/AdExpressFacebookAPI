@@ -55,6 +55,12 @@ namespace KMI.PromoPSA.BusinessEntities
 
         public string TvBoard { get; set; }
 
+        public string Product { get; set; }
+
+        public string Segment { get; set; }
+
+        public string Brand { get; set; }
+
         public string VehicleName {
             get {
                 switch (IdVehicle) { 

@@ -32,6 +32,37 @@ namespace KMI.PromoPSA.DAL
             return query.ToList();
         }
 
+        public List<Advert> GetAdvertsDetails(DbManager db, long loadDate) {
+            var query = from a in db.GetTable<DataPromotion>()
+                        join p in db.GetTable<DataProduct>() on a.IdProduct equals p.IdProduct into pa
+                        from p in pa.DefaultIfEmpty()
+                        join s in db.GetTable<DataSegment>() on a.IdSegment equals s.IdSegment into sa
+                        from s in sa.DefaultIfEmpty()
+                        join b in db.GetTable<DataBrand>() on a.IdBrand equals b.IdBrand into ba
+                        from b in ba.DefaultIfEmpty()
+                        where a.LoadDate == loadDate
+                        && a.IdForm > 0
+                        && a.Activation != Constantes.Constantes.ACTIVATION_CODE_INACTIVE
+                        select new Advert {
+                            IdForm = a.IdForm,
+                            Activation = a.Activation,
+                            LoadDate = a.LoadDate,
+                            IdDataPromotion = a.IdDataPromotion,
+                            IdVehicle = a.IdVehicle,
+                            DateMediaNum = a.DateMediaNum,
+                            IdSegment = a.IdSegment,
+                            IdProduct = a.IdProduct,
+                            IdBrand = a.IdBrand,
+                            PromotionVisual = a.PromotionVisual,
+                            PromotionBrand = a.PromotionBrand,
+                            Product = p.Product,
+                            Segment = s.Segment,
+                            Brand = b.Brand
+                        };
+
+            return query.ToList();
+        }
+
         public int GetNbAdverts(DbManager db, long loadDate,long activationCode)
         {
             var query = from p in db.GetTable<DataPromotion>()
@@ -195,56 +226,85 @@ namespace KMI.PromoPSA.DAL
                 query.Append("BEGIN ");
                 query.AppendFormat(" UPDATE  {0}.DATA_PROMOTION SET ", Constantes.Db.PROMO_SCHEMA);
 
-                query.AppendFormat(" ID_SEGMENT = to_number('{0}') "
-                     , advert.IdSegment.ToString(cultureInfo));
+                if (advert.IdSegment > 0)
+                    query.AppendFormat(" ID_SEGMENT = to_number('{0}') "
+                         , advert.IdSegment.ToString(cultureInfo));
+                else
+                    query.AppendFormat(" ID_SEGMENT = NULL ");
 
-                query.AppendFormat(" ,ID_CATEGORY = to_number('{0}') "
-                   , advert.IdCategory.ToString(cultureInfo));
+                if (advert.IdCategory > 0)
+                    query.AppendFormat(" ,ID_CATEGORY = to_number('{0}') "
+                       , advert.IdCategory.ToString(cultureInfo));
+                else
+                    query.AppendFormat(" ,ID_CATEGORY = NULL ");
 
-                query.AppendFormat(" ,ID_CIRCUIT = to_number('{0}') "
-                  , advert.IdCircuit.ToString(cultureInfo));
+                if (advert.IdCircuit > 0)
+                    query.AppendFormat(" ,ID_CIRCUIT = to_number('{0}') "
+                      , advert.IdCircuit.ToString(cultureInfo));
+                else
+                    query.AppendFormat(" ,ID_CIRCUIT = NULL ");
 
-                query.AppendFormat(" ,ID_PRODUCT = to_number('{0}') "
-                    , advert.IdProduct.ToString(cultureInfo));
+                if (advert.IdProduct > 0)
+                    query.AppendFormat(" ,ID_PRODUCT = to_number('{0}') "
+                        , advert.IdProduct.ToString(cultureInfo));
+                else
+                    query.AppendFormat(" ,ID_PRODUCT = NULL ");
 
-                query.AppendFormat(" ,ID_BRAND = to_number('{0}') "
-                   , advert.IdBrand.ToString(cultureInfo));
+                if (advert.IdBrand > 0)
+                    query.AppendFormat(" ,ID_BRAND = to_number('{0}') "
+                       , advert.IdBrand.ToString(cultureInfo));
+                else
+                    query.AppendFormat(" ,ID_BRAND = NULL ");
 
-                query.AppendFormat(" ,DATE_BEGIN_NUM = to_number('{0}') "
-                  , advert.DateBeginNum.ToString(cultureInfo));
+                if (advert.DateBeginNum > 0)
+                    query.AppendFormat(" ,DATE_BEGIN_NUM = to_number('{0}') "
+                      , advert.DateBeginNum.ToString(cultureInfo));
+                else
+                    query.AppendFormat(" ,DATE_BEGIN_NUM = NULL ");
 
-                query.AppendFormat(" ,DATE_END_NUM = to_number('{0}') "
-                , advert.DateEndNum.ToString(cultureInfo));
+                if (advert.DateEndNum > 0)
+                    query.AppendFormat(" ,DATE_END_NUM = to_number('{0}') "
+                    , advert.DateEndNum.ToString(cultureInfo));
+                else
+                    query.AppendFormat(" ,DATE_END_NUM = NULL ");
 
                 query.AppendFormat(" ,EXCLU_WEB = to_number('{0}') "
-               , advert.ExcluWeb.ToString(cultureInfo));
+                , advert.ExcluWeb.ToString(cultureInfo));
 
                 query.AppendFormat(" ,ACTIVATION = to_number('{0}') "
-             , advert.Activation.ToString(cultureInfo));
+                , advert.Activation.ToString(cultureInfo));
 
                 query.AppendFormat(" ,NATIONAL = to_number('{0}') "
-               , advert.National.ToString(cultureInfo));
+                , advert.National.ToString(cultureInfo));
 
-                if (!string.IsNullOrEmpty(advert.PromotionBrand))
-                {
+                if (!string.IsNullOrEmpty(advert.PromotionBrand)) {
                     var promotionBrand = Regex.Replace(advert.PromotionBrand, "[']", "''");
                     query.AppendFormat(" ,PROMOTION_BRAND='{0}'", promotionBrand);
                 }
-                if (!string.IsNullOrEmpty(advert.PromotionContent))
-                {
+                else
+                    query.AppendFormat(" ,PROMOTION_BRAND=''");
+
+                if (!string.IsNullOrEmpty(advert.PromotionContent)) {
                     var promotionContent =  Regex.Replace(advert.PromotionContent, "[']", "''");
                     query.AppendFormat(" ,PROMOTION_CONTENT='{0}'", promotionContent);
                 }
-                if (!string.IsNullOrEmpty(advert.ConditionText))
-                {
+                else
+                    query.AppendFormat(" ,PROMOTION_CONTENT=''");
+
+                if (!string.IsNullOrEmpty(advert.ConditionText)) {
                     var conditionText = Regex.Replace(advert.ConditionText, "[']", "''");
                     query.AppendFormat(" ,CONDITION_TEXT='{0}'", conditionText);
                 }
-                if (!string.IsNullOrEmpty(advert.Script))
-                {
+                else
+                    query.AppendFormat(" ,CONDITION_TEXT=''");
+
+                if (!string.IsNullOrEmpty(advert.Script)) {
                     var script = Regex.Replace(advert.Script, "[']", "''");
                     query.AppendFormat(" ,SCRIPT='{0}'", script);
                 }
+                else
+                    query.AppendFormat(" ,SCRIPT=''");
+
                 query.AppendFormat(" WHERE ID_DATA_PROMOTION = to_number('{0}'); ", advert.IdDataPromotion);
                 query.Append(" END; ");
                 var dbCmd = db.SetCommand(query.ToString());

@@ -121,10 +121,16 @@ namespace KMI.PromoPSA.Rules {
             {
                 var dal = new PromoPsaDAL();
                 var dal2 = new ClassificationDAL();
-                long idCircuit = dal2.GetBrand(db, Constantes.Constantes.DEFAULT_LANGUAGE,
-                    advert.IdBrand).IdCircuit;
-                long idCategory = dal2.GetProduct(db, Constantes.Constantes.DEFAULT_LANGUAGE,
-                  advert.IdProduct).IdCategory;
+                long idCircuit = 0;
+                long idCategory = 0;
+
+                if (advert.IdBrand > 0)
+                    idCircuit = dal2.GetBrand(db, Constantes.Constantes.DEFAULT_LANGUAGE,
+                        advert.IdBrand).IdCircuit;
+                if (advert.IdProduct > 0)
+                    idCategory = dal2.GetProduct(db, Constantes.Constantes.DEFAULT_LANGUAGE,
+                      advert.IdProduct).IdCategory;
+
                 advert.IdCategory = idCategory;
                 advert.IdCircuit = idCircuit;
 
@@ -203,6 +209,23 @@ namespace KMI.PromoPSA.Rules {
         }
         #endregion
 
+        #region Get Adverts Details
+        /// <summary>
+        /// Get Adverts Details
+        /// </summary>
+        /// <param name="loadDate">Load Date</param>
+        /// <returns>Advert List</returns>
+        public List<Advert> GetAdvertsDetails(long loadDate) {
+            List<Advert> adverts;
+            using (var db = new DbManager(new GenericDataProvider(WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString)) {
+                var dal = new PromoPsaDAL();
+                adverts = dal.GetAdvertsDetails(db, loadDate);
+            }
+            return adverts;
+        }
+        #endregion
+
         #region Get Nb Adverts
         /// <summary>
         /// Get Nb Adverts
@@ -239,8 +262,61 @@ namespace KMI.PromoPSA.Rules {
 
             return loadDates;
         }
-
        #endregion
+
+        #region Get Segments
+        /// <summary>
+        /// Get Segments
+        /// </summary>
+        /// <returns>Segments</returns>
+        public List<Segment> GetSegments() {
+
+            List<Segment> segments;
+            using (var db = new DbManager(new GenericDataProvider(WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString)) {
+                var dal = new ClassificationDAL();
+                segments = dal.GetSegments(db, Constantes.Constantes.DEFAULT_LANGUAGE);
+            }
+
+            return segments;
+        }
+        #endregion
+
+        #region Get Products
+        /// <summary>
+        /// Get Products
+        /// </summary>
+        /// <returns>Products</returns>
+        public List<Product> GetProducts() {
+
+            List<Product> products;
+            using (var db = new DbManager(new GenericDataProvider(WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString)) {
+                var dal = new ClassificationDAL();
+                products = dal.GetProducts(db, Constantes.Constantes.DEFAULT_LANGUAGE);
+            }
+
+            return products;
+        }
+        #endregion
+
+        #region Get Brands
+        /// <summary>
+        /// Get Brands
+        /// </summary>
+        /// <returns>Products</returns>
+        public List<Brand> GetBrands() {
+
+            List<Brand> brands;
+            using (var db = new DbManager(new GenericDataProvider(WebApplicationParameters.DBConfig.ProviderDataAccess)
+                                          , WebApplicationParameters.DBConfig.ConnectionString)) {
+                var dal = new ClassificationDAL();
+                brands = dal.GetBrands(db, Constantes.Constantes.DEFAULT_LANGUAGE);
+            }
+
+            return brands;
+        }
+        #endregion
 
         #region GetCodification
 

@@ -6,6 +6,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KMI.PromoPSA.BusinessEntities;
+using KMI.PromoPSA.BusinessEntities.Classification;
 using KMI.PromoPSA.Constantes;
 using KMI.PromoPSA.Rules;
 using KMI.PromoPSA.Web.Core.Sessions;
@@ -34,10 +35,10 @@ public partial class Private_Home : PrivateWebPage {
             string scriptGlobalVariables;
 
             if (_webSession.SelectedDate.Length > 0 && _webSession.SelectedVehicle.Length > 0 && _webSession.SelectedActivation.Length > 0)
-                scriptGlobalVariables = string.Format("var currentMonth = '{0}'; \n var sessionId = '{1}';" + "\n var loginId = '{2}';" + "\n var selectedMonth = '{3}';" + "\n var selectedVehicle = '{4}';" + "\n var selectedActivation = '{5}';"
-                    , loadDate.Value, _webSession.IdSession, _webSession.CustomerLogin.IdLogin, _webSession.SelectedDate.Substring(3, 4) + _webSession.SelectedDate.Substring(0,2), _webSession.SelectedVehicle, _webSession.SelectedActivation);
+                scriptGlobalVariables = string.Format("var currentMonth = '{0}'; \n var sessionId = '{1}';" + "\n var loginId = '{2}';" + "\n var selectedMonth = '{3}';" + "\n var selectedVehicle = '{4}';" + "\n var selectedActivation = '{5}';" + "\n var selectedSegment = '{6}';" + "\n var selectedProduct = '{7}';" + "\n var selectedBrand = '{8}';"
+                    , loadDate.Value, _webSession.IdSession, _webSession.CustomerLogin.IdLogin, _webSession.SelectedDate.Substring(3, 4) + _webSession.SelectedDate.Substring(0, 2), _webSession.SelectedVehicle, _webSession.SelectedActivation, _webSession.SelectedSegment, _webSession.SelectedProduct, _webSession.SelectedBrand);
             else
-                scriptGlobalVariables = string.Format("var currentMonth = '{0}'; \n var sessionId = '{1}';" + "\n var loginId = '{2}';" + "\n var selectedMonth = '{0}';" + "\n var selectedVehicle = '-1';" + "\n var selectedActivation = '-1';"
+                scriptGlobalVariables = string.Format("var currentMonth = '{0}'; \n var sessionId = '{1}';" + "\n var loginId = '{2}';" + "\n var selectedMonth = '{0}';" + "\n var selectedVehicle = '-1';" + "\n var selectedActivation = '-1';" + "\n var selectedSegment = '-1';" + "\n var selectedProduct = '-1';" + "\n var selectedBrand = '-1';"
                 , loadDate.Value, _webSession.IdSession, _webSession.CustomerLogin.IdLogin);
 
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "globaVariables", scriptGlobalVariables, true);
@@ -68,8 +69,8 @@ public partial class Private_Home : PrivateWebPage {
 
             KMI.PromoPSA.Web.Core.Sessions.WebSession webSession = WebSessions.Get(Int64.Parse(loginId));
 
-            if (webSession.SelectedVehicle.Length > 0 && webSession.SelectedActivation.Length > 0 && webSession.SelectedDate.Length > 0)
-                return webSession.SelectedVehicle + ";" + webSession.SelectedActivation + ";" + webSession.SelectedDate.Substring(3, 4) + webSession.SelectedDate.Substring(0, 2);
+            if (webSession.SelectedVehicle.Length > 0 && webSession.SelectedActivation.Length > 0 && webSession.SelectedDate.Length > 0 && webSession.SelectedSegment.Length > 0 && webSession.SelectedProduct.Length > 0 && webSession.SelectedBrand.Length > 0)
+                return webSession.SelectedVehicle + ";" + webSession.SelectedActivation + ";" + webSession.SelectedDate.Substring(3, 4) + webSession.SelectedDate.Substring(0, 2) + ";" + webSession.SelectedSegment + ";" + webSession.SelectedProduct + ";" + webSession.SelectedBrand;
             else
                 return "";
         }
@@ -215,7 +216,7 @@ public partial class Private_Home : PrivateWebPage {
     /// <returns>Grid Data</returns>
     [WebMethod]
     public static string getGridData(int? numRows, int? page, string sortField, string sortOrder, bool isSearch,
-        string selectedDate, string selectedVehicle, string selectedActivation, string sessionId, string loginId, string filters) { //, string filters
+        string selectedDate, string selectedVehicle, string selectedActivation, string selectedSegment, string selectedProduct, string selectedBrand, string sessionId, string loginId, string filters) { //, string filters
 
         string result = null;
         Dictionary<string, string> searchFilters = new Dictionary<string, string>();
@@ -227,21 +228,37 @@ public partial class Private_Home : PrivateWebPage {
 
                 List<string> fields = new List<string>();
                 KMI.PromoPSA.Web.Core.Sessions.WebSession webSession = WebSessions.Get(Int64.Parse(loginId));
+                string value = string.Empty;
 
                 foreach (var rule in t.rules) {
                     switch ((string)rule.field.Value) {
                         case "LoadDate":
-                            webSession.SelectedDate = rule.data.Value; 
+                            webSession.SelectedDate = rule.data.Value;
+                            value = rule.data.Value;
                             break;
                         case "VehicleName":
-                            webSession.SelectedVehicle = rule.data.Value; 
+                            webSession.SelectedVehicle = rule.data.Value;
+                            value = rule.data.Value.Split('-')[1];
                             break;
                         case "ActivationName":
                             webSession.SelectedActivation = rule.data.Value;
+                            value = rule.data.Value.Split('-')[1];
+                            break;
+                        case "Segment":
+                            webSession.SelectedSegment = rule.data.Value;
+                            value = rule.data.Value.Split('-')[1];
+                            break;
+                        case "TypeDePiece":
+                            webSession.SelectedProduct = rule.data.Value;
+                            value = rule.data.Value.Split('-')[1];
+                            break;
+                        case "Enseigne":
+                            webSession.SelectedBrand = rule.data.Value;
+                            value = rule.data.Value.Split('-')[1];
                             break;
                     }
                     if (rule.data.Value != "-1")
-                        searchFilters.Add(rule.field.Value, rule.data.Value);
+                        searchFilters.Add(rule.field.Value, value);
                 }
             }
             else {
@@ -249,18 +266,41 @@ public partial class Private_Home : PrivateWebPage {
                     searchFilters.Add("LoadDate", selectedDate);
                 else
                     searchFilters.Add("LoadDate", selectedDate.Substring(4, 2) + "/" + selectedDate.Substring(0,4));
-                searchFilters.Add("VehicleName", selectedVehicle);
-                searchFilters.Add("ActivationName", selectedActivation);
+
+                if (selectedVehicle == "-1")
+                    searchFilters.Add("VehicleName", selectedVehicle);
+                else
+                    searchFilters.Add("VehicleName", selectedVehicle.Split('-')[1]);
+
+                if (selectedActivation == "-1")
+                    searchFilters.Add("ActivationName", selectedActivation);
+                else
+                    searchFilters.Add("ActivationName", selectedActivation.Split('-')[1]);
+
+                if (selectedSegment == "-1")
+                    searchFilters.Add("Segment", selectedSegment);
+                else
+                    searchFilters.Add("Segment", selectedSegment.Split('-')[1]);
+
+                if (selectedProduct == "-1")
+                    searchFilters.Add("TypeDePiece", selectedProduct);
+                else
+                    searchFilters.Add("TypeDePiece", selectedProduct.Split('-')[1]);
+
+                if (selectedBrand == "-1")
+                    searchFilters.Add("Enseigne", selectedBrand);
+                else
+                    searchFilters.Add("Enseigne", selectedBrand.Split('-')[1]);
             }
 
             IResults results = new Results();
             IEnumerable<Advert> list;
             if ((isSearch || searchFilters.Count > 0) && searchFilters.Keys.Contains("LoadDate")) {
                 string strDate = searchFilters["LoadDate"].Substring(3, 4) + searchFilters["LoadDate"].Substring(0, 2);
-                list = results.GetAdverts(Int64.Parse(strDate));
+                list = results.GetAdvertsDetails(Int64.Parse(strDate));
             }
             else {
-                list = results.GetAdverts(Int64.Parse(selectedDate));
+                list = results.GetAdvertsDetails(Int64.Parse(selectedDate));
             }
 
             if (isSearch || searchFilters.Count > 0) {
@@ -285,6 +325,18 @@ public partial class Private_Home : PrivateWebPage {
                         case "LoadDate":
                             list = list.Where(x => x.LoadDateFormated == searchFilters[searchField]);
                             break;
+                        case "Segment":
+                            if (Int64.Parse(searchFilters[searchField]) != -1)
+                                list = list.Where(x => x.IdSegment == Int64.Parse(searchFilters[searchField]));
+                            break;
+                        case "TypeDePiece":
+                            if (Int64.Parse(searchFilters[searchField]) != -1)
+                                list = list.Where(x => x.IdProduct == Int64.Parse(searchFilters[searchField]));
+                            break;
+                        case "Enseigne":
+                            if (Int64.Parse(searchFilters[searchField]) != -1)
+                                list = list.Where(x => x.IdBrand == Int64.Parse(searchFilters[searchField]));
+                            break;
                     }
 
                 }
@@ -304,6 +356,10 @@ public partial class Private_Home : PrivateWebPage {
                 case "VehicleName": orderedRecords = list.OrderBy(x => x.VehicleName); break;
                 case "DateMediaNum": orderedRecords = list.OrderBy(x => x.DateMediaNum); break;
                 case "ActivationName": orderedRecords = list.OrderBy(x => x.ActivationName); break;
+                case "Segment": orderedRecords = list.OrderBy(x => x.Segment); break;
+                case "TypeDePiece": orderedRecords = list.OrderBy(x => x.Product); break;
+                case "Enseigne": orderedRecords = list.OrderBy(x => x.Brand); break;
+                case "Marque": orderedRecords = list.OrderBy(x => x.PromotionBrand); break;
             }
 
             IEnumerable<Advert> sortedRecords = orderedRecords.ToList();
@@ -322,7 +378,7 @@ public partial class Private_Home : PrivateWebPage {
                     select new {
                         i = row.IdForm,
                         cell = new string[] {
-                            row.IdForm.ToString(), row.VehicleName, row.DateMediaNumFormated,
+                            row.IdForm.ToString(), row.VehicleName, row.Segment, row.Product, row.Brand, row.PromotionBrand, row.DateMediaNumFormated,
                             row.IdDataPromotion.ToString(), row.ActivationName, row.LoadDateFormated
                     }
                     }
@@ -363,6 +419,73 @@ public partial class Private_Home : PrivateWebPage {
                 string date = loadDate.LoadDate.ToString();
                 list.Add(date.Substring(4, 2) + "/" + date.Substring(0, 4));
                 i++;
+            }
+
+            var jsonData = list.ToArray();
+
+            result = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
+
+            return result;
+        }
+        catch (Exception e) {
+            string message = " Erreur lors de l'obtetion des dates de chargement.<br/>";
+            if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
+            Utils.SendErrorMail(message, e);
+            throw new Exception("Erreur lors de l'obtetion des dates de chargement", e);
+        }
+    }
+    #endregion
+
+    #region Get Classification
+    /// <summary>
+    /// Get Classification
+    /// </summary>
+    /// <returns>Classification Data</returns>
+    [WebMethod]
+    public static string getClassification() {
+        try {
+            string result = null;
+            IResults results = new Results();
+            List<Segment> segments = results.GetSegments();
+            List<Product> products = results.GetProducts();
+            List<Brand> brands = results.GetBrands();
+
+            //--- format json
+            var list = new List<Object>();
+            int listIndex = 0;
+            bool first = true;
+
+            foreach (Segment segment in segments) {
+                if (first) {
+                    list.Add(segment.Id + "_" + segment.Label);
+                    first = false;
+                }
+                else
+                    list[listIndex] += ";" + segment.Id + "_" + segment.Label;
+            }
+
+            first = true;
+            listIndex++;
+
+            foreach (Product product in products) {
+                if (first) {
+                    list.Add(product.Id + "_" + product.Label);
+                    first = false;
+                }
+                else
+                    list[listIndex] += ";" + product.Id + "_" + product.Label;
+            }
+
+            first = true;
+            listIndex++;
+
+            foreach (Brand brand in brands) {
+                if (first) {
+                    list.Add(brand.Id + "_" + brand.Label);
+                    first = false;
+                }
+                else
+                    list[listIndex] += ";" + brand.Id + "_" + brand.Label;
             }
 
             var jsonData = list.ToArray();

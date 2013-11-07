@@ -31,14 +31,38 @@ namespace KMI.PromoPSA.Rules {
         /// <returns></returns>
         List<Advert> GetAdverts(long loadDate);
         /// <summary>
+        /// Get Adverts Details
+        /// </summary>
+        /// <param name="loadDate">loaded Date</param>
+        /// <returns></returns>
+        List<Advert> GetAdvertsDetails(long loadDate);
+        /// <summary>
         /// Get Nb Adverts
         /// </summary>
         /// <param name="loadDate">loaded Date</param>
         /// <param name="activationCode">activation Code</param>
         /// <returns></returns>
         int GetNbAdverts(long loadDate, long activationCode);
-
+        /// <summary>
+        /// Get Load Dates
+        /// </summary>
+        /// <returns></returns>
         List<LoadDateBE> GetLoadDates();
+        /// <summary>
+        /// Get Segments
+        /// </summary>
+        /// <returns></returns>
+        List<Segment> GetSegments();
+        /// <summary>
+        /// Get Products
+        /// </summary>
+        /// <returns></returns>
+        List<Product> GetProducts();
+        /// <summary>
+        /// Get Brands
+        /// </summary>
+        /// <returns></returns>
+        List<Brand> GetBrands();
         /// <summary>
         /// Get codification
         /// </summary>

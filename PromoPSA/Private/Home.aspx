@@ -42,8 +42,8 @@
                 </tr>
             </table>
         </div>
-        <div id="chart1" style="height:220px; width:460px; margin-left: 450px;"></div>
-        <table style="margin-left:350px; margin-bottom: 20px;">
+        <div id="chart1" style="height:220px; width:460px; margin-left: 350px;"></div>
+        <table style="margin-left:250px; margin-bottom: 20px;">
             <tr>
                 <td>
                     <a href="#" class="validateMonth" onclick="javascript:VerifDialog();">Valider Mois</a>
@@ -53,7 +53,7 @@
                 </td>
             </tr>
         </table>
-        <div style=" margin-left:250px;">
+        <div style=" margin-left:20px;">
             <table id="grid" style="margin-right:auto; margin-left:auto;"></table>
             <div id="pager" style="height:24px;"></div>
 
@@ -74,6 +74,9 @@
             $('#gs_VehicleName').val(selectedVehicle);
             $('#gs_ActivationName').val(selectedActivation);
             $('#gs_LoadDate').val(selectedMonth);
+            $('#gs_Segment').val(selectedSegment);
+            $('#gs_TypeDePiece').val(selectedProduct);
+            $('#gs_Enseigne').val(selectedBrand);
             InitGridComponent(currentMonth);
             
         });
@@ -94,6 +97,9 @@
                         selectedVehicle = elements[0];
                         selectedActivation = elements[1];
                         selectedMonth = elements[2];
+                        selectedSegment = elements[3];
+                        selectedProduct = elements[4];
+                        selectedBrand = elements[5];
                     }
                 },
                 error: function () {
@@ -249,8 +255,11 @@
         function InitGridComponent(loadDate) {
 
             var grid = $("#grid");
-            var vehicleStr = { '-1': 'Tous', '1': 'Presse', '3': 'Tv', '7': 'Internet', '8': 'Publicité Extérieur', '2': 'Radio' };
-            var activationStr = { '-1': 'Toutes', '80': 'A Codifier', '60': 'Rejetée', '90': 'Codifiée', '70': 'Litige', '0': 'Validée' };
+            var vehicleStr = { '-1': 'Tous', '0-7': 'Internet', '1-1': 'Presse', '2-8': 'Publicité Extérieur', '3-2': 'Radio', '4-3': 'Tv' };
+            var activationStr = { '-1': 'Toutes', '0-80': 'A Codifier', '1-90': 'Codifiée', '2-70': 'Litige', '3-60': 'Rejetée', '4-0': 'Validée' };
+            var segmentStr = { '-1': 'Tous' };
+            var productStr = { '-1': 'Tous'};
+            var brandStr = { '-1': 'Toutes' };
             var loadDateStr = new Object();
             var loadDateList = new Array();
 
@@ -272,6 +281,41 @@
                     $("#dialog").dialog("open");
                 }
             });
+            
+            $.ajax({
+                url: 'Home.aspx/getClassification',
+                type: "POST",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, st) {
+                    list = JSON.parse(data.d);
+                    for (var i = 0; i < list.length; i++) {
+                        var level = list[i];
+                        var elements = level.split(';');
+                        for (var j = 0; j < elements.length; j++) {
+                            switch (i) {
+                                case 0:
+                                    var values = elements[j].split('_');
+                                    segmentStr['' + j + '-' + values[0] + ''] = values[1];
+                                    break;
+                                case 1:
+                                    var values = elements[j].split('_');
+                                    productStr['' + j + '-' + values[0] + ''] = values[1];
+                                    break;
+                                case 2:
+                                    var values = elements[j].split('_');
+                                    brandStr['' + j + '-' + values[0] + ''] = values[1];
+                                    break;
+                            }
+                        }
+                    }
+                },
+                error: function () {
+                    $("#dialog").html("Impossible d\'initilaiser la liste des fiches. Erreur lors du chargement des dates.");
+                    $("#dialog").dialog("open");
+                }
+            });
 
             $("#grid").jqGrid({
                 // setup custom parameter names to pass to server
@@ -284,7 +328,7 @@
                     order: "sortOrder"
                 },
                 // add by default to avoid webmethod parameter conflicts
-                postData: { selectedDate: selectedMonth, selectedVehicle: selectedVehicle, selectedActivation: selectedActivation, sessionId: sessionId, loginId: loginId, filters: '' },
+                postData: { selectedDate: selectedMonth, selectedVehicle: selectedVehicle, selectedActivation: selectedActivation, selectedSegment: selectedSegment, selectedProduct: selectedProduct, selectedBrand: selectedBrand, sessionId: sessionId, loginId: loginId, filters: '' },
                 // setup ajax call to webmethod
                 datatype: function (postdata) {
                     $(".loading").show(); // make sure we can see loader text
@@ -301,11 +345,14 @@
                                 var postFilters = jQuery("#grid").jqGrid('getGridParam', 'postData').filters;
                                 if (postFilters.length > 0) {
                                     var j = JSON.parse(postFilters);
-                                    if (j != null && j.rules != null && j.rules.length == 3) {
-                                        var loadDateFormatting = j.rules[2].data.substring(3, 7) + j.rules[2].data.substring(0, 2);
+                                    if (j != null && j.rules != null && j.rules.length == 6) {
+                                        var loadDateFormatting = j.rules[5].data.substring(3, 7) + j.rules[5].data.substring(0, 2);
                                         selectedMonth = loadDateFormatting;
-                                        selectedActivation = j.rules[1].data;
+                                        selectedActivation = j.rules[4].data;
                                         selectedVehicle = j.rules[0].data;
+                                        selectedSegment = j.rules[1].data;
+                                        selectedProduct = j.rules[2].data;
+                                        selectedBrand = j.rules[3].data;
                                     }
                                 }
                                 InitPromotionNb(selectedMonth);
@@ -329,14 +376,18 @@
                     userdata: "userdata",
                     repeatitems: true
                 },
-                colNames: ['Numero de fiche', 'Media', 'Date de parution', 'Edit', 'Activation', 'Date de chargement'],
+                colNames: ['N° de fiche', 'Media', 'Segment', 'Type de Pièce', 'Enseigne', 'Marque', 'Date de parution', 'Edit', 'Activation', 'Date de chargement'],
                 colModel: [
-                    { name: 'IdForm', index: 'IdForm', search: false },
-                    { name: 'VehicleName', index: 'VehicleName', stype: 'select', search: true, searchoptions: { value: vehicleStr, defaultValue: selectedVehicle } },
-                    { name: 'DateMediaNum', index: 'DateMediaNum', search: false },
-                    { name: 'Link', index: 'Link', formatter: linkFormat, search: false, sortable: false },
+                    { name: 'IdForm', index: 'IdForm', search: false, width: 130 },
+                    { name: 'VehicleName', index: 'VehicleName', stype: 'select', search: true, searchoptions: { value: vehicleStr, defaultValue: selectedVehicle }, width: 200 },
+                    { name: 'Segment', index: 'Segment', stype: 'select', search: true, searchoptions: { value: segmentStr, defaultValue: selectedSegment }, width: 260 },
+                    { name: 'TypeDePiece', index: 'TypeDePiece', stype: 'select', search: true, searchoptions: { value: productStr, defaultValue: selectedProduct }, width: 330 },
+                    { name: 'Enseigne', index: 'Enseigne', stype: 'select', search: true, searchoptions: { value: brandStr, defaultValue: selectedBrand }, width: 200 },
+                    { name: 'Marque', index: 'Marque', search: false, width: 370 },
+                    { name: 'DateMediaNum', index: 'DateMediaNum', search: false, width: 180 },
+                    { name: 'Link', index: 'Link', formatter: linkFormat, search: false, sortable: false, width: 100 },
                     { name: 'ActivationName', index: 'ActivationName', hidden: false, search: true, stype: 'select', searchoptions: { value: activationStr, defaultValue: selectedActivation } },
-                    { name: 'LoadDate', index: 'LoadDate', hidden: false, stype: 'select', search: true, searchoptions: { value: loadDateStr, defaultValue: selectedMonth.substring(4, 6) + "/" + selectedMonth.substring(0, 4) }, sortable: false }
+                    { name: 'LoadDate', index: 'LoadDate', hidden: false, stype: 'select', search: true, searchoptions: { value: loadDateStr, defaultValue: selectedMonth.substring(4, 6) + "/" + selectedMonth.substring(0, 4) }, sortable: false, width: 230 }
                 ],
                 rowNum: 20,
                 rowList: [10, 20, 30],
@@ -345,7 +396,7 @@
                 sortname: "IdForm",
                 sortorder: "asc",
                 viewrecords: true,
-                width: 900,
+                width: 1200,
                 height: "100%",
                 gridview: true,
                 rowattr: function (rd) {

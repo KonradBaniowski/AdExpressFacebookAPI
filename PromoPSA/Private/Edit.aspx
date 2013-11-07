@@ -219,6 +219,35 @@
 
         }, " La date de début doit être inférieure ou égale à la date de fin");
 
+        $.validator.addMethod("dateComparisonLitige", function (value, element) {
+
+            var result = false;
+            var sp = $("#startdatepicker").val();
+            var ep = $("#enddatepicker").val();
+
+            if ((IsNullOrEmpty(sp) && IsNullOrEmpty(ep))
+                || (IsNullOrEmpty(sp) && !IsNullOrEmpty(ep))
+                || (!IsNullOrEmpty(sp) && IsNullOrEmpty(ep)))
+                return true;
+
+            if (!IsNullOrEmpty(sp) && !IsNullOrEmpty(ep)) {
+                var dateArray = sp.split("/");
+                var startDateObj = dateArray[2] + '' + dateArray[1] + '' + dateArray[0];
+                var startDateVal = parseInt(startDateObj);
+
+                var endDateArray = ep.split("/");
+                var endDateObj = endDateArray[2] + '' + endDateArray[1] + '' + endDateArray[0];
+                var endDateVal = parseInt(endDateObj);
+
+                if (endDateVal >= startDateVal) {
+                    result = true;
+                }
+            }
+
+            return result;
+
+        }, " La date de début doit être inférieure ou égale à la date de fin");
+
         $.extend({
             getUrlVars: function () {
                 var vars = [], hash;
@@ -344,21 +373,68 @@
             }
         }
 
+        function GetAdvertData(activationCode) {
+            var action;
+            //debugger;
+            var promotionId = $.getUrlVar('promotionId');
+            var formId = $.getUrlVar('formId');
+            var loginId = $.getUrlVar('loginId');
+            var idProduct = ($("#product option:selected").val() == "") ? undefined : $("#product option:selected").val();
+            var idBrand = ($("#brand option:selected").val() == "") ? undefined : $("#brand option:selected").val();
+            var idSegment = ($("#segment option:selected").val() == "") ? undefined : $("#segment option:selected").val();
+            var startdates = $("#startdatepicker").val().split('/');
+            var dateBeginNum = undefined;
+            if (startdates[0] != "")
+                dateBeginNum = startdates[2] + startdates[1] + startdates[0];
+            var enddates = $("#enddatepicker").val().split('/');
+            var dateEndNum = undefined;
+            if (enddates[0] != "")
+                var dateEndNum = enddates[2] + enddates[1] + enddates[0];
+            var promotionContent = ($("#pcontent").val() == "") ? undefined : $("#pcontent").val();
+            var conditionText = ($("#conditiontext").val() == "") ? undefined : $("#conditiontext").val();
+            var script_ = ($("#script_").val() == "") ? undefined : $("#script_").val();
+            var excluWeb = $("input[name=excluweb]:checked").val();
+            var national = $("input[name=national]:checked").val();
+            var promotionBrand = ($("#pbrand").val() == "") ? undefined : $("#pbrand").val();
+            var advertData = {
+                'advert': {
+                    'IdDataPromotion': promotionId,
+                    'IdForm': formId,
+                    'Activation': String(activationCode),
+                    'IdProduct': idProduct,
+                    'IdBrand': idBrand,
+                    'DateBeginNum': dateBeginNum,
+                    'DateEndNum': dateEndNum,
+                    'IdSegment': idSegment,
+                    'PromotionBrand': promotionBrand,
+                    'PromotionContent': promotionContent,
+                    'ConditionText': conditionText,
+                    'Script': script_,
+                    'ExcluWeb': excluWeb,
+                    'National': national
+                },
+                'loginId': loginId
+            };
+
+            return advertData;
+        }
+
         function PendingFormEvent(selectorId, activationCode) {
             $(selectorId).off("click");
             $(selectorId).on("click", function () {
 
-                $('#loaderdiv').show();
-                var promotionId = $.getUrlVar('promotionId');
+                //$('#loaderdiv').show();
+                //var promotionId = $.getUrlVar('promotionId');
                 var loginId = $.getUrlVar('loginId');
 
                 if (fValidator) {
-
+                    var mokdata = JSON.stringify(GetAdvertData(activationCode));
                     $.ajax({
                         type: "POST",
                         async: false,
                         url: "Edit.aspx/PendingForm",
-                        data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                        //data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                        data: mokdata,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
@@ -394,13 +470,56 @@
                                 required: false
                             }
                         },
+                        errorContainer: $('#errorContainer'),
+                        errorLabelContainer: $('#errorContainer ul'),
+                        wrapper: 'li',
+                        messages: {
+                            startdatepicker: {
+                                required: 'Sélectionnez une date de début'
+                            },
+                            enddatepicker: {
+                                required: 'Sélectionnez une date de fin!'
+                            },
+                            segment: {
+                                required: ''
+                            },
+                            product: {
+                                required: ''
+                            },
+                            brand: {
+                                required: ''
+                            },
+                            pbrand: {
+                                required: ''
+                            },
+                            pcontent: {
+                                required: ''
+                            },
+                            conditiontext: {
+                                required: ''
+                            },
+                            script_: {
+                                required: ''
+                            }
+                        },
+                        invalidHandler: function (event, validator) {
+                            // 'this' refers to the form    
+                            var errors = validator.numberOfInvalids();
+                            if (errors) {
+                                var message = errors == 1 ?
+                                    'Vous avez oublié un 1 champ. Il a été surligné' : 'Vous avez oublié ' + errors + ' champs. Ils ont été surlignés';
+                                $("div.error span").html(message); $("div.error").show();
+                            } else { $("div.error").hide(); }
+                        },
                         submitHandler: function (form) {
-
+                            var mokdata = JSON.stringify(GetAdvertData(activationCode));
+                            $('#loaderdiv').show();
                             $.ajax({
                                 type: "POST",
                                 async: false,
                                 url: "Edit.aspx/PendingForm",
-                                data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                                //data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                                data: mokdata,
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function (msg) {
@@ -527,32 +646,32 @@
 
                     messages: {
                         startdatepicker: {
-                            required: 'Sélectionnez une date de début',
+                            required: 'Sélectionnez une date de début'
                         },
                         enddatepicker: {
-                            required: 'Sélectionnez une date de fin!',
+                            required: 'Sélectionnez une date de fin!'
                         },
                         segment: {
-                            required: 'Sélectionnez un segment',
+                            required: 'Sélectionnez un segment'
                         },
                         product: {
-                            required: 'Sélectionnez un type de pièce',
+                            required: 'Sélectionnez un type de pièce'
                         },
                         brand: {
-                            required: 'Sélectionnez une enseigne',
+                            required: 'Sélectionnez une enseigne'
                         },
                         pbrand: {
-                            required: '',
+                            required: ''
                         },
                         pcontent: {
-                            required: '',
+                            required: ''
                         },
                         conditiontext: {
-                            required: '',
+                            required: ''
                         },
                         script_: {
-                            required: '',
-                        },
+                            required: ''
+                        }
                     },
                     invalidHandler: function (event, validator) {
                         // 'this' refers to the form    

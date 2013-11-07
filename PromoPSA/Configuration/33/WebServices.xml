@@ -3,8 +3,8 @@
   <WebServices timeout="120000">
     <WebService name="rights" url="http://frmitch-ws001:2019/Rights.asmx"       />
     <!--<WebService name="dispacher" url="http://172.17.236.36:56081/Dispacher.asmx" />-->
-    <WebService name="dispacher" url="http://localhost:56081/Dispacher.asmx" />   
-    <!--<WebService name="dispacher" url="http://localhost:39012/Dispacher.asmx" />-->
+    <!--<WebService name="dispacher" url="http://localhost:56081/Dispacher.asmx" />   -->
+    <WebService name="dispacher" url="http://localhost:39012/Dispacher.asmx" />
     <!--<WebService name="dispacher" url="http://localhost:33802/Dispacher.asmx" />-->
    <!-- <WebService name="banner" url="http://localhost:1265/Banner.asmx"       timeout="300000"/>   -->
   </WebServices>
