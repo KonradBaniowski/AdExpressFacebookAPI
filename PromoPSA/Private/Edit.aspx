@@ -765,17 +765,27 @@
             if (!isZoom && idVehicle == 3)
                 vids = '<img class=\"lvid\" src=\"/App_Themes/PromoPSAFr/Images/zoom.png\" onclick=\"LoadVideo(\'' + creativeFile + '\',' + year + ',true,'+idVehicle+')\"><br/>';
             
-            vids += ' <object type=\"'+mimeType+'\" data=\"' + filePath + '\" width=\"100%\" ';
+            //vids += ' <object type=\"'+mimeType+'\" data=\"' + filePath + '\" width=\"100%\" ';
+            //vids += (isZoom) ? 'height=\"800\">' : 'height=\"500\">';
+            //vids += '  <param name=\"src\" value=\"' + filePath + '\" />';
+            //vids += '<param name=\"controller\" value=\"true\" />';
+            //vids += ' <param name=\"autoplay\" value=\"false\" />';
+            //vids += ' <param name=\"autoStart\" value=\"0\" />';
+            //vids += '<embed src=\"' + filePath + '\"  width=\"100%\"  ';
+            //vids += (isZoom) ? 'height=\"800\" ' : 'height=\"500\" ';
+            //vids += ' autoplay=\"false\" controller=\"true\" ';
+            //vids += ' pluginspage=\"http://www.apple.com/quicktime/download/\">';
+            //vids += '</object>';
+            
+            vids += ' <object id=\"video1\" type=\"application/x-oleobject\" classid=\"CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95\" width=\"100%\" codebase=\"http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715\" ';
             vids += (isZoom) ? 'height=\"800\">' : 'height=\"500\">';
-            vids += '  <param name=\"src\" value=\"' + filePath + '\" />';
-            vids += '<param name=\"controller\" value=\"true\" />';
-            vids += ' <param name=\"autoplay\" value=\"false\" />';
-            vids += ' <param name=\"autoStart\" value=\"0\" />';
-            vids += '<embed src=\"' + filePath + '\"  width=\"100%\"  ';
+            vids += '  <param name=\"FileName\" value=\"' + filePath + '\" />';
+            vids += ' <param name=\"AutoStart\" value=\"true\" />';
+            vids += '<embed type=\"application/x-mplayer2\" src=\"' + filePath + '\"  width=\"100%\"  ';
             vids += (isZoom) ? 'height=\"800\" ' : 'height=\"500\" ';
-            vids += ' autoplay=\"false\" controller=\"true\" ';
-            vids += ' pluginspage=\"http://www.apple.com/quicktime/download/\">';
-            vids += '</object>';//alt :
+            vids += ' AutoStart=\"true\" name=\"video1\"';
+            vids += ' pluginspage=\"http://www.microsoft.com/Windows/MediaPlayer/\"> </embed>';
+            vids += '</object>';
 
             if (isZoom) {
                 $('.modalBody').html(vids);
