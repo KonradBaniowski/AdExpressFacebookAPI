@@ -90,11 +90,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DLL\KMI.AdExpress.PSALoader.DAL\KMI.AdExpress.PSALoader.DAL.csproj">
+    <ProjectReference Include="..\..\DLL\KMI.AdExpress.PSALoader.DAL\KMI.AdExpress.PSALoader.DAL.csproj">
       <Project>{1C77434C-AFE7-4874-A5F5-A7917AE0C368}</Project>
       <Name>KMI.AdExpress.PSALoader.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DLL\KMI.AdExpress.PSALoader.Domain\KMI.AdExpress.PSALoader.Domain.csproj">
+    <ProjectReference Include="..\..\DLL\KMI.AdExpress.PSALoader.Domain\KMI.AdExpress.PSALoader.Domain.csproj">
       <Project>{C2C6367F-8248-42AF-93D2-6A9E4517D162}</Project>
       <Name>KMI.AdExpress.PSALoader.Domain</Name>
     </ProjectReference>
