@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dataBaseConfiguration>
+  <dataBase description="Veille Promo" user="PROMO03" password="waltari2" tns="ADEXPRESS_WEB_TEST.PIGE" pooling="false" timeout="120" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+  <!--<dataBase description="Veille Promo" user="PROMO03" password="waltari2" tns="adexpr03.pige" pooling="false" timeout="120" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
+</dataBaseConfiguration>

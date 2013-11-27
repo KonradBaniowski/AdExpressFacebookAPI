@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configurations>
+  <lsClientConfiguration directoryName="" familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30384" productName="PSA Service">
+    <moduleDescription description="PSA Service" moduleId="41"/>
+  </lsClientConfiguration>
+</configurations>

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<psaLoaderConfiguration>
+  <psaLoader serverName="frmitch-ws003" appPool="PsaDispacherWebService" userName="tnsad\adm.guillaume.facon" password="Sandie.1"/>
+</psaLoaderConfiguration>
+<!--userName="tnsad\svc.frmit.InvestPubWeb" password="invpubweb0504"-->

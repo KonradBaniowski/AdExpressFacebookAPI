@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<visualInformation>
+  <media name="PRESSE"                path="\\frmitch-fs03\quali_multimedia_perf\Adscope\FRANCE\IMAGES\MR\"/>
+  <media name="TELEVISION"            path="\\frmitch-fs03\quali_multimedia\VideoFrance\Video\"/>
+  <media name="PUBLICITE_EXTERIEURE"  path="\\frmitch-fs03\quali_multimedia_perf\Adscope\FRANCE\IMAGES\MR\"/>
+  <media name="COURRIER_CREATIONS"    path="\\frmitch-fs03\quali_multimedia_perf\Adscope\FRANCE\IMAGES\MR\"/>
+  <media name="EVALIANT_MOBILE"       path="\\frmitch-fs03\quali_multimedia_perf\Adscope\FRANCE\BANNIERES\"/>
+  <media name="INTERNET"              path="\\frmitch-fs03\quali_multimedia_perf\Adscope\FRANCE\BANNIERES\"/>
+  <media name="RADIO"                 path="\\frmitch-fs03\quali_multimedia\Radio\"/>
+</visualInformation>
