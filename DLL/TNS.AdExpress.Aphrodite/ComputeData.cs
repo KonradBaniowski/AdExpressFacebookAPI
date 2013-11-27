@@ -15,7 +15,7 @@ namespace KMI.AdExpress.Aphrodite {
     /// Compute Data for Trebds reports
     /// </summary>
     public class ComputeData {
-
+     
         #region Delegate
         /// <summary>
         /// The job has been started
@@ -131,7 +131,7 @@ namespace KMI.AdExpress.Aphrodite {
                     EventUI RemoveData=new EventUI(EventType.inProgress,"Remove data for "+ currentMediaType.VehicleId.ToString());
                     OnStartWork(RemoveData);
                     try {
-                        TrendsDAL.Remove(currentMediaType,source);
+                        //TrendsDAL.Remove(currentMediaType,source);
                     }
                     catch(System.Exception err) {
                         OnError(RemoveData,err);
@@ -146,7 +146,7 @@ namespace KMI.AdExpress.Aphrodite {
                             EventUI computeData=new EventUI(EventType.inProgress,"Compute Month: "+ currentMonth +" for Media type :"+currentMediaType.VehicleId.ToString());
                             OnStartWork(computeData);
                             try {
-                                InsertMonth(currentMonth,currentMediaType,source);
+                                //InsertMonth(currentMonth,currentMediaType,source);
                             }
                             catch(System.Exception err) {
                                 OnError(computeData,err);
@@ -163,7 +163,7 @@ namespace KMI.AdExpress.Aphrodite {
                             EventUI computeTotalData=new EventUI(EventType.inProgress,"Compute Subtotal - month: "+ currentMonth +" for Media type :"+currentMediaType.VehicleId.ToString());
                             OnStartWork(computeTotalData);
                             try {
-                                TrendsDAL.InsertSubTotal(currentMonth,source,currentMediaType,false,TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_FALSE,TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_SUBTOTAL);
+                                //TrendsDAL.InsertSubTotal(currentMonth,source,currentMediaType,false,TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_FALSE,TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_SUBTOTAL);
                             }
                             catch(System.Exception err) {
                                 OnError(computeTotalData,err);
@@ -180,7 +180,7 @@ namespace KMI.AdExpress.Aphrodite {
                             EventUI computeSubTotalData=new EventUI(EventType.inProgress,"Compute Subtotal - month: "+ currentMonth +" for Media type :"+currentMediaType.VehicleId.ToString());
                             OnStartWork(computeSubTotalData);
                             try {
-                                TrendsDAL.InsertSubTotal(currentMonth,source,currentMediaType,true,TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_FALSE,TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_TOTAL);
+                                //TrendsDAL.InsertSubTotal(currentMonth,source,currentMediaType,true,TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_FALSE,TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_TOTAL);
                             }
                             catch(System.Exception err) {
                                 OnError(computeSubTotalData,err);
@@ -195,9 +195,9 @@ namespace KMI.AdExpress.Aphrodite {
                     EventUI computeCumulData=new EventUI(EventType.inProgress,"Compute Cumul for Media type :"+currentMediaType.VehicleId.ToString());
                     OnStartWork(computeCumulData);
                     try {
-                        InsertCumul(currentMediaType,_currentDay,source);
-                        TrendsDAL.InsertSubTotal(TNS.AdExpress.Constantes.DB.Hathor.DATE_PERIOD_CUMULATIVE,source,currentMediaType,false,TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_TRUE,TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_SUBTOTAL);
-                        TrendsDAL.InsertSubTotal(TNS.AdExpress.Constantes.DB.Hathor.DATE_PERIOD_CUMULATIVE,source,currentMediaType,true,TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_TRUE,TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_TOTAL);
+                        //InsertCumul(currentMediaType,_currentDay,source);
+                        //TrendsDAL.InsertSubTotal(TNS.AdExpress.Constantes.DB.Hathor.DATE_PERIOD_CUMULATIVE,source,currentMediaType,false,TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_TRUE,TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_SUBTOTAL);
+                        //TrendsDAL.InsertSubTotal(TNS.AdExpress.Constantes.DB.Hathor.DATE_PERIOD_CUMULATIVE,source,currentMediaType,true,TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_TRUE,TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_TOTAL);
 
                     }
                     catch(System.Exception err) {
@@ -212,9 +212,9 @@ namespace KMI.AdExpress.Aphrodite {
                     OnStartWork(computePdmData);
                     try {
                         // Pdm 
-                        TrendsDAL.InsertPDM(currentMediaType,source,false);
+                        //TrendsDAL.InsertPDM(currentMediaType,source,false);
                         // Pdm total
-                        TrendsDAL.InsertPDM(currentMediaType,source,true);
+                        //TrendsDAL.InsertPDM(currentMediaType,source,true);
                     }
                     catch(System.Exception err) {
                         OnError(computePdmData,err);
@@ -276,7 +276,7 @@ namespace KMI.AdExpress.Aphrodite {
             periodEndingPrev=dtPrev.Year.ToString()+periodId+dtPrev.Day.ToString();
             #endregion	
 
-            TrendsDAL.InsertMonth(periodBeginning,periodEnding,periodBeginningPrev,periodEndingPrev,periodId,period,year,mediaTypeInformation,cumul,source);
+            //TrendsDAL.InsertMonth(periodBeginning,periodEnding,periodBeginningPrev,periodEndingPrev,periodId,period,year,mediaTypeInformation,cumul,source);
         }
 
 
@@ -317,8 +317,9 @@ namespace KMI.AdExpress.Aphrodite {
             if(dT.Month.ToString().Length<2)period+="0";
             period+=dT.Month.ToString();
 
-            TrendsDAL.InsertMonth(periodBeginning,periodEnding,periodBeginningPrev,periodEndingPrev,periodId,period,year,mediaTypeInformation,cumul,source);
+            //TrendsDAL.InsertMonth(periodBeginning,periodEnding,periodBeginningPrev,periodEndingPrev,periodId,period,year,mediaTypeInformation,cumul,source);
         }
         #endregion
+        
     }
 }

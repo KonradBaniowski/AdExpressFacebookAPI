@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using KMI.AdExpress.Aphrodite.Constantes;
 
 namespace KMI.AdExpress.Aphrodite.Domain {
 
@@ -67,8 +68,11 @@ namespace KMI.AdExpress.Aphrodite.Domain {
 		/// <summary>
 		/// Liste des media à traiter
 		/// </summary>
-		protected string _mediaList=String.Empty; 
-
+		protected string _mediaList=String.Empty;
+        /// <summary>
+        /// Treatment type list (week, month)
+        /// </summary>
+        protected List<Application.TreatmentType> _listTreatmentType = new List<Application.TreatmentType>();
 		#endregion
 
 		#region Constructeur
@@ -129,6 +133,14 @@ namespace KMI.AdExpress.Aphrodite.Domain {
 			get{return _listCurrentUnit;}
 			set{_listCurrentUnit=value;}
 		}
+
+        /// <summary>
+        /// SET/GET treatment type list
+        /// </summary>
+        public List<Application.TreatmentType> ListTreatmentType {
+            get { return _listTreatmentType; }
+            set { _listTreatmentType = value; }
+        }
 
         /// <summary>
         /// Get  Units list for current year select
@@ -311,13 +323,13 @@ namespace KMI.AdExpress.Aphrodite.Domain {
 		/// <summary>
 		/// Obtient la liste des media à traiter
 		/// </summary>
-        //public string MediaList{
-        //    get{
-        //        if(_mediaList==string.Empty)
-        //            _mediaList=TNS.Baal.ExtractList.BusinessFacade.ListesSystem.GetFromId(int.Parse (_mediaListId.ToString()),33).GetLevelIds(TNS.Baal.ExtractList.Constantes.Levels.media);
-        //        return(_mediaList);
-        //    }
-        //}
+        public string MediaList {
+            get {
+                if (_mediaList == string.Empty)
+                    _mediaList = TNS.Baal.ExtractList.BusinessFacade.ListesSystem.GetFromId(int.Parse(_mediaListId.ToString()), 33).GetLevelIds(TNS.Baal.ExtractList.Constantes.Levels.media);
+                return (_mediaList);
+            }
+        }
 		#endregion
 
 	}

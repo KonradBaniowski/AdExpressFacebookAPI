@@ -37,6 +37,22 @@ namespace KMI.AdExpress.Aphrodite.Domain.XmlLoaders {
                                     vehicleList.Add(vehicleId,new MediaTypeInformation());
                                     vehicleList[vehicleId].DatabaseId=Int64.Parse(Reader.GetAttribute("databaseId"));
                                     vehicleList[vehicleId].VehicleId=vehicleId;
+
+                                    if (Reader.GetAttribute("comparativeDateWeekTreatment") != null && Reader.GetAttribute("comparativeDateWeekTreatment").Length > 0) {
+                                        if (bool.Parse(Reader.GetAttribute("comparativeDateWeekTreatment")) == true)
+                                            vehicleList[vehicleId].ListTreatmentType.Add(Constantes.Application.TreatmentType.comparativeDateWeek);
+                                    }
+
+                                    if (Reader.GetAttribute("dateToDateWeekTreatment") != null && Reader.GetAttribute("dateToDateWeekTreatment").Length > 0) {
+                                        if (bool.Parse(Reader.GetAttribute("dateToDateWeekTreatment")) == true)
+                                            vehicleList[vehicleId].ListTreatmentType.Add(Constantes.Application.TreatmentType.dateToDateWeek);
+                                    }
+
+                                    if (Reader.GetAttribute("monthTreatment") != null && Reader.GetAttribute("monthTreatment").Length > 0) {
+                                        if (bool.Parse(Reader.GetAttribute("monthTreatment")) == true)
+                                            vehicleList[vehicleId].ListTreatmentType.Add(Constantes.Application.TreatmentType.month);
+                                    }
+
 								}
                                 else{
                                     throw(new XmlException("Vehicle description is invalid"));
