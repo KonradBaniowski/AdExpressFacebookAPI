@@ -93,6 +93,14 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// Pop Up
         /// </summary>
         protected Page _popUp;
+        /// <summary>
+        /// Video object Width
+        /// </summary>
+        private int _width = 0;
+        /// <summary>
+        /// Video object Height
+        /// </summary>
+        private int _height = 0;
         #endregion
 
         #region Constructor
@@ -132,12 +140,31 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
             GetCreativePathes(ref realFormatFound, ref windowsFormatFound);
 
-            var res = RenderCreative(realFormatFound, windowsFormatFound);
+            var res = RenderCreative(realFormatFound, windowsFormatFound, true);
 
             return res.ToString();
 
         }
+        /// <summary>
+        /// Get creative popup Html code
+        /// </summary>
+        /// <returns>Html code</returns>
+        public virtual string CreativePopUpRenderWithoutOptions(int width, int height) {
+            //Vérification de l'existence des fichiers et construction des chemins d'accès suivant la volonté de 
+            //lire ou de télécharger le fichier
+            bool realFormatFound = false;
+            bool windowsFormatFound = false;
 
+            _width = width;
+            _height = height;
+
+            GetCreativePathes(ref realFormatFound, ref windowsFormatFound);
+
+            var res = RenderCreative(realFormatFound, windowsFormatFound, false);
+
+            return res.ToString();
+
+        }
 
         #endregion
 
@@ -149,7 +176,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// <param name="realFormatFound">True if real Format Found</param>
         /// <param name="windowsFormatFound">True if windows Forma tFound</param>       
         /// <returns></returns>
-        protected virtual StringBuilder RenderCreative(bool realFormatFound, bool windowsFormatFound)
+        protected virtual StringBuilder RenderCreative(bool realFormatFound, bool windowsFormatFound, bool withOptions)
         {
             var res = new StringBuilder(2000);
 
@@ -164,9 +191,11 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                     res.Append(ManageCreationsDownloadWithCookies(_pathReadingRealFile, _pathReadingWindowsFile, true,
                                                                   realFormatFound, windowsFormatFound));
 
-                //Tableau des options
-                res.Append(GetCreationsOptionsRender(realFormatFound, windowsFormatFound, _pathDownloadingRealFile,
-                                                     _pathDownloadingWindowsFile, false, 2079));
+                if (withOptions) {
+                    //Tableau des options
+                    res.Append(GetCreationsOptionsRender(realFormatFound, windowsFormatFound, _pathDownloadingRealFile,
+                                                         _pathDownloadingWindowsFile, false, 2079));
+                }
             }
             else
             {
@@ -808,11 +837,14 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         {
 
             var res = new StringBuilder(2000);
+            string width = (_width > 0) ? _width.ToString() : "352";
+            string height = (_height > 0) ? _height.ToString() : "288";
+
             res.Append("<script language=\"JavaScript\" type=\"text/javascript\">");
             res.Append(" function GetObjectWindowsMediaPlayerRender(filepath){");
             res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD>');");
             //Lecture par Media player
-            res.Append(" document.write('<object id=\"video1\"  classid=\"CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95\" height=\"288\" width=\"352\" align=\"middle\"  codebase=\"http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715\"  standby=\"" 
+            res.Append(" document.write('<object id=\"video1\"  classid=\"CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95\" height=\""+height+"\" width=\""+width+"\" align=\"middle\"  codebase=\"http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715\"  standby=\"" 
                 + GestionWeb.GetWebWord(1911, siteLanguage) + "\" type=\"application/x-oleobject\">');");
             res.Append(" document.write('<param name=\"FileName\" value='+filepath+' >');");
             res.Append(" document.write('<param name=\"AutoStart\" value=\"true\">');");
