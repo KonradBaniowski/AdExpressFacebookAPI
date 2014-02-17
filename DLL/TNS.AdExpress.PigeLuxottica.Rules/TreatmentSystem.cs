@@ -131,7 +131,7 @@ namespace TNS.AdExpress.PigeLuxottica.Rules
 		/// <summary>
 		/// Generate the excel file for insertions and associated images
 		/// </summary>
-        private void ComputeTreatment()
+        public void ComputeTreatment()
         {
             try
             {
