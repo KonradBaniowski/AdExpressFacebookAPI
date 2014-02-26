@@ -13,22 +13,38 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
+        <style type="text/css" media="screen">
+            html {
+            height:100%; max-height:100%; padding:0; margin:0; border:0; background:#fff; 
+            /* hide overflow:hidden from IE5/Mac */ 
+            /* \*/ 
+            overflow: hidden; 
+            /* */ 
+            }
+            body {height:100%; max-height:100%; overflow:hidden; padding:0; margin:0; border:0;}
+        </style>
+        <script language="javascript" type="text/javascript">
+            function resizeWin() {
+                if (document.getElementById('contentDiv').scrollHeight > document.getElementById('popUpBody').offsetHeight) {
+                    document.getElementById('header').style.right = "16px";
+                    document.getElementById('headerTitle').style.paddingLeft = "16px";
+                    document.getElementById('footer').style.right = "16px";
+                }
+            }
+        </script>
 	</HEAD>
-	<body class="popUpbody" onload="javascript:activateActiveX();">
+	<body id="popUpBody" class="popUpbody" onload="javascript:activateActiveX();resizeWin();">
 		<form id="Form1" method="post" runat="server">
-		    <table cellSpacing="0" cellPadding="0" width="100%" height="100%" border="0">
 	            <!-- Header -->
-	            <tr>
-		            <td class="popUpHeaderBackground popUpTextHeader">&nbsp;
-		                <cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="852"></cc1:adexpresstext>&nbsp;
+	            <div id="header" class="popUpHead popUpHeaderBackground popUpTextHeader">
+		            <div id="headerTitle">
+                        &nbsp;<cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="852"></cc1:adexpresstext>&nbsp;
 						<asp:Label id="mySessionLabel" runat="server"></asp:Label>
-		            </td>
-	            </tr>
-
+		            </div>
+	            </div>
 	            <!-- Content -->
-	            <tr>
-		            <td style="height:100%;background-color:#FFF;padding:10;" valign="top">
-		            
+	            <div id="contentDiv" class="popUpContent">
+		            <div class="popUpPad2"></div>
 			            <TABLE id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
 				            <!--Choix de l'etude-->
 				            <TR>
@@ -118,7 +134,7 @@
 				            <TR>
 					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText4" runat="server" Code="845"></cc1:adexpresstext></TD>
 				            </TR>
-				            <TR height="20"><TD align="center" vAlign="top" class="txtViolet11 backGroundWhite"><%=mediaText%></TD>
+				            <TR height="20"><TD vAlign="top" class="txtViolet11 backGroundWhite"><%=mediaText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -198,7 +214,7 @@
 					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:AdExpressText language="33" id="productAdExpressText" runat="server" Code="0"></cc1:AdExpressText></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center" class="backGroundWhite"><%=productText%></TD>
+					            <TD vAlign="top" class="backGroundWhite"><%=productText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -209,7 +225,7 @@
 					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="professionAdExpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center"><%=professionText%></TD>
+					            <TD vAlign="top"><%=professionText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -220,7 +236,7 @@
 					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:AdExpressText language="33" id="advertisingAgencyAdExpressText" runat="server" Code="0"></cc1:AdExpressText></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center" class="backGroundWhite"><%=advertisingAgencyText%></TD>
+					            <TD vAlign="top" class="backGroundWhite"><%=advertisingAgencyText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -231,7 +247,7 @@
 					            <TD class="txtViolet11Bold backGroundWhite" style="HEIGHT: 18px">&nbsp;<cc1:adexpresstext language="33" id="advertiserAdexpresstext" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD align="center" vAlign="top" class="backGroundWhite"><%=advertiserText%></TD>
+					            <TD vAlign="top" class="backGroundWhite"><%=advertiserText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -241,7 +257,7 @@
 					            <TD class="txtViolet11Bold backGroundWhite" style="HEIGHT: 18px">&nbsp;<cc1:adexpresstext language="33" id="referenceAdvertiserAdexpresstext" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD align="center" vAlign="top" class="backGroundWhite"><%=referenceAdvertiserText%></TD>
+					            <TD vAlign="top" class="backGroundWhite"><%=referenceAdvertiserText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -250,7 +266,7 @@
 					            <TD class="txtViolet11Bold backGroundWhite" style="HEIGHT: 18px">&nbsp;<cc1:adexpresstext language="33" id="mediaSelectiondWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD align="center" vAlign="top" class="backGroundWhite"><%=mediaSelectiondText%></TD>
+					            <TD vAlign="top" class="backGroundWhite"><%=mediaSelectiondText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -259,15 +275,14 @@
 				            <%}%>
 				            <TR height="10"><TD></TD></TR>
 		                 </TABLE>
-
-		            </td>
-	            </tr>
-            	
+                    <div class="popUpPad2"></div>
+                </div>
 	            <!-- Footer -->
-	            <tr>
-		            <td class="popUpFooterBackground" align="right"><cc2:ImageButtonRollOverWebControl id="closeImageButtonRollOverWebControl" runat="server" onclick="closeImageButtonRollOverWebControl_Click" SkinID="fermerButton"></cc2:ImageButtonRollOverWebControl>&nbsp;&nbsp;</td>
-	            </tr>
-            </table>
+	            <div id="footer" class="popUpFoot popUpFooterBackground">
+                    <div style="padding-top:12px">
+		                <cc2:ImageButtonRollOverWebControl id="closeImageButtonRollOverWebControl" runat="server" onclick="closeImageButtonRollOverWebControl_Click" SkinID="fermerButton"></cc2:ImageButtonRollOverWebControl>&nbsp;&nbsp;
+	                </div>
+				</div>
 		</form>
 	</body>
 </HTML>

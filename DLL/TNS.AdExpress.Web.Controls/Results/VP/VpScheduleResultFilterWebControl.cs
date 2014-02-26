@@ -588,6 +588,11 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
 
             html.Append("</td>");
             html.Append("</tr>");
+            html.Append("<tr>");
+            html.Append("<td height=\"4px\">");
+            html.Append("</td>");
+            html.Append("</tr>");
+
 
             html.Append("</table>");
             return html.ToString();

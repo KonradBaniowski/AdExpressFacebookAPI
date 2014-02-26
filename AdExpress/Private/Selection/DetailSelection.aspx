@@ -3,7 +3,7 @@
 <%@ Page language="c#" Inherits="AdExpress.Private.Selection.DetailSelection" CodeFile="DetailSelection.aspx.cs" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head runat="server">
 		<title>AdExpress</title>
 		<META http-equiv="Content-Type" content="text/html;">
@@ -15,18 +15,38 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
+        <style type="text/css" media="screen">
+            html {
+            height:100%; max-height:100%; padding:0; margin:0; border:0; background:#fff; 
+            /* hide overflow:hidden from IE5/Mac */ 
+            /* \*/ 
+            overflow: hidden; 
+            /* */ 
+            }
+            body {height:100%; max-height:100%; overflow:hidden; padding:0; margin:0; border:0;}
+        </style>
+        <script language="javascript" type="text/javascript">
+            function resizeWin() {
+                if (document.getElementById('contentDiv').scrollHeight > document.getElementById('popUpBody').offsetHeight) {
+                    document.getElementById('header').style.right = "16px";
+                    document.getElementById('headerTitle').style.paddingLeft = "16px";
+                    document.getElementById('footer').style.right = "16px";
+                }
+            }
+        </script>
 	</head>
-	<body class="popUpbody" onload="javascript:activateActiveX();">
+	<body id="popUpBody" class="popUpbody" onload="javascript:activateActiveX();resizeWin();">
 		<form id="Form1" method="post" runat="server">
 		    <cc3:menuwebcontrol id="MenuWebControl2" runat="server"></cc3:menuwebcontrol>
-			<table cellspacing="0" cellpadding="0" border="0" style="width:100%;height:100%;">
 				<!-- Header -->
-				<tr>
-					<td class="popUpHeaderBackground popUpTextHeader">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText1" runat="server" Code="870"></cc1:adexpresstext></td>
-				</tr>
+				<div id="header" class="popUpHead popUpHeaderBackground popUpTextHeader">
+                    <div id="headerTitle">
+					    &nbsp;<cc1:adexpresstext language="33" id="AdExpressText1" runat="server" Code="870"></cc1:adexpresstext>
+                    </div>
+				</div>
 				<!-- Content -->
-				<tr>
-					<td style="height:100%;background-color:#FFF;padding:10;" valign="top">
+				<div id="contentDiv" class="popUpContent">
+		            <div class="popUpPad2"></div>
 				        <TABLE id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
 				            <!--Choix de l'etude-->
 				            <TR>
@@ -146,9 +166,9 @@
                             <%if(displayListOfVehicles){%>
 				            <TR height="5">					
 					         <TD class="txtViolet11" vAlign="top" align="center"><%=listOfVehicleText%></TD>
-				          </TR>
-				           <TR height="10"><TD></TD></TR>
-				          <%}%>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				            <%}%>
 				            <!--Reference média -->
 				            <%if(displayReferenceDetailMedia){%>
 				            <TR height="5">
@@ -228,22 +248,15 @@
                             <%} %>
 
                              <!--Campaign type-->
-                <%if (displayCampaignTypeSelection){ %>
-                <tr>                   
-                    <td class="txtViolet11Bold">
-                        &nbsp;
-                        <cc1:AdExpressText ID="AdExpressTextCampaintypeLabel" runat="server" Code="2671" Language="33" />
-                    </td>
-                </tr>   
-                <tr height="20">
-                    
-                    <td class="txtViolet11" valign="top">
-                        &nbsp;
-                        <cc1:AdExpressText ID="AdExpressTextCampaintypeValue" runat="server" Language="33" />
-                    </td>
-                </tr>
-                 <TR height="10"><TD></TD></TR>
-                <%} %>
+                            <%if (displayCampaignTypeSelection){ %>
+                            <tr>                   
+                                <td class="txtViolet11Bold">&nbsp;<cc1:AdExpressText ID="AdExpressTextCampaintypeLabel" runat="server" Code="2671" Language="33" /></td>
+                            </tr>   
+                            <tr height="20">
+                                <td class="txtViolet11" valign="top">&nbsp;<cc1:AdExpressText ID="AdExpressTextCampaintypeValue" runat="server" Language="33" /></td>
+                            </tr>
+                            <TR height="10"><TD></TD></TR>
+                            <%} %>
                             <!--Auto promo-->
                             <%if (displayAutoPromo){ %>
                             <tr>
@@ -270,7 +283,7 @@
 					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="advertisingAgencyAdExpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center"><%=advertisingAgencyText%></TD>
+					            <TD vAlign="top"><%=advertisingAgencyText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -280,7 +293,7 @@
 					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="productAdExpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center"><%=productText%></TD>
+					            <TD vAlign="top"><%=productText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -292,29 +305,28 @@
 					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="professionAdExpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center"><%=professionText%></TD>
+					            <TD vAlign="top"><%=professionText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
 
                             <!-- Sélection des médias (affiner dans les résultats) -->
-				<%if (displayMediaSelection) {%>
-				<TR>				
-					<TD class="txtViolet11Bold">&nbsp;
-						<cc1:adexpresstext language="33" id="mediaSelectiondWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
-				</TR>
-				<TR height="20">					
-					<TD vAlign="top" align="center" class="txtViolet11Bold"><%=mediaSelectiondText%></TD>
-				</TR>				
-				 <TR height="10"><TD></TD></TR>
-				<%}%>
+				            <%if (displayMediaSelection) {%>
+				            <TR>				
+					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="mediaSelectiondWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
+				            </TR>
+				            <TR height="20">					
+					            <TD vAlign="top" class="txtViolet11Bold"><%=mediaSelectiondText%></TD>
+				            </TR>				
+				            <TR height="10"><TD></TD></TR>
+				            <%}%>
 				            <!-- Personnalisation des supports (affiner dans les résultats) -->
 				            <%if(displayMediaPersonnalized){%>
 				            <TR>
 					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="mediaPersonnalizedWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center"><%=mediaPersonnalizedText%></TD>
+					            <TD vAlign="top"><%=mediaPersonnalizedText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -324,7 +336,7 @@
 					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="referenceProductAdExpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center"><%=referenceAdvertiserText%></TD>
+					            <TD vAlign="top"><%=referenceAdvertiserText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -334,7 +346,7 @@
 					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="advertiserAdexpresstext" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center"><%=advertiserText%></TD>
+					            <TD vAlign="top"><%=advertiserText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
@@ -344,25 +356,24 @@
 				            <%}%>
 <!--TODO: vérifier pour fusion dev trunk-->
                             	<!--Ad type-->
-				<%if(displayAdTypeSelection){%>
-				<TR>					
-					<TD class="txtViolet11Bold">&nbsp;
-						<cc1:adexpresstext language="33" id="AdTypeWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
-				</TR>
-				<TR height="20">					
-					<TD vAlign="top" align="center" class="txtViolet11Bold"><%=AdTypeText%></TD>
-				</TR>
-				<TR height="10"><TD></TD></TR>
-				<%}%>
+				            <%if(displayAdTypeSelection){%>
+				            <TR>					
+					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="AdTypeWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
+				            </TR>
+				            <TR height="20">					
+					            <TD vAlign="top" class="txtViolet11Bold"><%=AdTypeText%></TD>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				            <%}%>
 			            </TABLE>
-					</td>
-				</tr>
+					<div class="popUpPad2"></div>
+                </div>
 				<!-- Footer -->
-				<tr>
-					<td class="popUpFooterBackground" align="right"><A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
-				</tr>
-			</table>
-			
+				<div id="footer" class="popUpFoot popUpFooterBackground">
+                    <div style="padding-top:12px">
+					    <A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;
+				    </div>
+				</div>
 		</form>
 	</body>
 </html>

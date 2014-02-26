@@ -134,6 +134,18 @@
         </detailColumn>
       </detailColumns>
     </vehicle>
+    <vehicle id="20"   name="MMS">
+      <detailColumns>
+        <detailColumn id="25">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="present/absent" privilegecode="278"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
   </vehicleGroups>
 
 </configuration>

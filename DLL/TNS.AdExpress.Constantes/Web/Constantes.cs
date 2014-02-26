@@ -620,8 +620,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Square Press Clipping
             /// </summary>
-            squarePressClipping = 26
-
+            squarePressClipping = 26,
+            /// <summary>
+            /// MMS volume
+            /// </summary>
+            volumeMms = 27
 		}
 		#endregion
 

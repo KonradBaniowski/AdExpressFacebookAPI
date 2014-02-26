@@ -585,7 +585,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 				 nbColTab=tab.GetLength(1);
 				nbline=tab.GetLength(0);
 				t.Append(" <!-- Debut tableau plan media par version --->");
-				t.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0 align=left>\r\n\t<tr>");
+                t.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0 align=left style=\"text-align:left\">\r\n\t<tr>");
 				t.Append("\r\n\t\t<td rowspan=\"2\"   class=\""+supportCSS+"\" nowrap>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
 				t.Append("\r\n\t\t<td rowspan=\"2\" class=\""+supportCSS+"\" nowrap>"+GestionWeb.GetWebWord(1994,webSession.SiteLanguage)+"</td>");
 //				if(!isExported)t.Append("\r\n\t\t<td  rowspan=\"2\" class=\""+supportCSS+"\" nowrap>"+GestionWeb.GetWebWord(540,webSession.SiteLanguage)+"</td>");
@@ -763,7 +763,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 											case FrameWorkResultConstantes.MediaPlanAPPM.graphicItemType.present:
 												if(isNewVersionLine){
 													t.Append("<td class=\"pmX\" height=\"100%\" >");
-													t.Append("<table cellpadding=\"0\" cellspacing=\"0\" height=\"100%\">");
+													t.Append("<table cellpadding=\"0\" cellspacing=\"0\" height=\"15px\">");
 													t.Append("<tr width=\"100%\">");													
 													isNewVersionLine=false;
 												}
@@ -772,7 +772,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 											case FrameWorkResultConstantes.MediaPlanAPPM.graphicItemType.extended:
 												if(isNewVersionLine){
 													t.Append("<td class=\"pmX\" height=\"100%\" >");
-													t.Append("<table cellpadding=\"0\" cellspacing=\"0\" height=\"100%\">");
+													t.Append("<table cellpadding=\"0\" cellspacing=\"0\" height=\"15px\">");
 													t.Append("<tr width=\"100%\">");												
 													isNewVersionLine=false;
 												}
@@ -781,7 +781,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 											default:
 												if(isNewVersionLine){
 													t.Append("<td class=\"pmX\" height=\"100%\" >");
-													t.Append("<table cellpadding=\"0\" cellspacing=\"0\" height=\"100%\">");
+													t.Append("<table cellpadding=\"0\" cellspacing=\"0\" height=\"15px\">");
 													t.Append("<tr width=\"100%\">");													
 													isNewVersionLine=false;
 												}

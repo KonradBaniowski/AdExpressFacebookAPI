@@ -260,7 +260,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 tmp = this.BuildTable();
             }
             catch(NoDataException e){}
-            str.Append("<center>");
+            str.Append("<div style=\"text-align:left; margin-left:6px;\">");
             if (tmp != null && tmp.Length > 0)
             {
                 str.Append(tmp.ToString());
@@ -272,14 +272,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1239, _session.SiteLanguage));
                 str.Append("</td></tr></table>");
             }
-            str.Append("</center><br>");
+            str.Append("</div>");
+            str.Append("<br>");
 			if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
 				this._classifLevel = CstResult.MotherRecap.ElementType.product;
 				try {
 					tmp = this.BuildTable();
 				}
 				catch (NoDataException e1) { }
-				str.Append("<center>");
+                str.Append("<div style=\"text-align:left; margin-left:6px;\">");
 				if (tmp != null && tmp.Length > 0) {
 					str.Append(tmp.ToString());
 				}
@@ -289,7 +290,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 					str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
 					str.Append("</td></tr></table>");
 				}
-				str.Append("</center>");
+                str.Append("</div>");
 			}
             return str;
 
@@ -477,8 +478,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 #endregion
 
                 #region Legend
-                t.AppendFormat("<table align=\"left\"><tr><td nowrap class=pmcategorynb width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{0}</td></tr>", GestionWeb.GetWebWord(1225, _session.SiteLanguage));
-                t.AppendFormat("<tr><td nowrap class={0} width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{1}</td></tr></table><br/><br/>", cssColored, GestionWeb.GetWebWord(1226, _session.SiteLanguage));
+                t.AppendFormat("<table><tr><td nowrap class=pmcategorynb width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{0}</td></tr>", GestionWeb.GetWebWord(1225, _session.SiteLanguage));
+                t.AppendFormat("<tr><td nowrap class={0} width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{1}</td></tr></table><br/>", cssColored, GestionWeb.GetWebWord(1226, _session.SiteLanguage));
                 #endregion
 
                 #region Build graph
@@ -683,7 +684,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     tmp = this.BuildGraph();
                 }
                 catch (NoDataException) { }
-                str.Append("<center>");
+                str.Append("<div style=\"text-align:left; margin-left:6px;\">");
                 if (tmp != null && tmp.Length > 0)
                 {
                     str.Append(tmp.ToString());
@@ -695,14 +696,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1239, _session.SiteLanguage));
                     str.Append("</td></tr></table>");
                 }
-                str.Append("</center><br>");
+                str.Append("</div>");
+                str.Append("<br>");
 				if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
 					this._classifLevel = CstResult.MotherRecap.ElementType.product;
 					try {
 						tmp = this.BuildGraph();
 					}
 					catch (NoDataException) { }
-					str.Append("<center>");
+                    str.Append("<div style=\"text-align:left; margin-left:6px;\">");
 					if (tmp != null && tmp.Length > 0) {
 						str.Append(tmp.ToString());
 					}
@@ -712,7 +714,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 						str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
 						str.Append("</td></tr></table>");
 					}
-					str.Append("</center>");
+                    str.Append("</div>");
 				}
             }
             else

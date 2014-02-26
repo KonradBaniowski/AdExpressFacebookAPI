@@ -88,13 +88,13 @@
 									<table id="data" width="100%" height="100%" cellpadding="3" cellspacing="0" border="0">
 										<tr valign="top" align="right">
 											<td>
-												<table cellpadding="0" cellspacing="1" width="100%" class="violetBackGround">
+												<table cellpadding="0" cellspacing="1" width="100%" class="violetBackGround" style="text-align:left">
 													<tr class="backGroundWhite">
 														<td class="txtViolet11Bold">&nbsp;<cc1:AdExpressText language="33" id="titreAdexpresstext" runat="server" Code="1065"></cc1:AdExpressText></td>
 													</tr>
 													<tr>
 														<td>
-															<table id="centerTable" height="100%" cellspacing="0" cellpadding="0" width="100%" border="0" class="paleVioletBackGround">
+															<table id="centerTable" height="100%" cellspacing="0" cellpadding="0" width="100%" border="0" class="paleVioletBackGround" style="text-align:left">
 																<tr valign="top">
 																	<td>
 																		<cc3:OneVehicleSelectionWebControl id="OneVehicleSelectionWebControl1" runat="server"></cc3:OneVehicleSelectionWebControl></td>

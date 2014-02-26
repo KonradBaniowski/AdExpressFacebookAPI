@@ -512,7 +512,7 @@ namespace AdExpress.Private.Selection{
 
                                 // Render universe html code
                                 t.Append("<TR height=\"20\">");
-                                 t.Append("<TD align=\"center\" vAlign=\"top\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession)) + "</TD>");
+                                 t.Append("<TD vAlign=\"top\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession)) + "</TD>");
                                 t.Append("</TR>");
                                 t.Append("<TR height=\"10\"><TD></TD></TR>");
                             }

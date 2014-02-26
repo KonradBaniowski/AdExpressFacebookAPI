@@ -14,6 +14,16 @@
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>		
+        <style type="text/css" media="screen">
+            html {
+            height:100%; max-height:100%; padding:0; margin:0; border:0; background:#fff; 
+            /* hide overflow:hidden from IE5/Mac */ 
+            /* \*/ 
+            overflow: hidden; 
+            /* */ 
+            }
+            body {height:100%; max-height:100%; overflow:hidden; padding:0; margin:0; border:0;}
+        </style>
 	</HEAD>
 	<body id="contenu" class="popUpbody" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">

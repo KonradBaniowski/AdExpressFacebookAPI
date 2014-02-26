@@ -247,6 +247,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
                     return TableIds.dataInStoreAlert;
                 case DBClassificationConstantes.Vehicles.names.indoor:
                     return TableIds.dataInDoorAlert;
+                case DBClassificationConstantes.Vehicles.names.mms:
+                    return TableIds.dataMmsAlert;
 				default:
 					throw new Exceptions.MediaCreationDataAccessException("getTable(DBClassificationConstantes.Vehicles.value idMedia)-->Le cas de ce média n'est pas gérer. Pas de table correspondante.");
 			}			

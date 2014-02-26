@@ -112,7 +112,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
             html.Append("<label style=\"vertical-align: middle\" ");       
             html.Append("> ");
 
-            html.Append("<input  type=\"checkbox\" style=\"vertical-align: bottom\"  ");
+            html.Append("<input  type=\"checkbox\" style=\"vertical-align: middle\"  ");
             html.AppendFormat("id=\"excluWeb_{0}\" ", this.ID);
             html.AppendFormat(" onclick=\"javascript:setExcluWeb_{0}(this);\" ", this.ID);
             html.Append("class=\"" + CssClass + "\" ");

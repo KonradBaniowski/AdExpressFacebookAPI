@@ -13,21 +13,27 @@
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
+        <style type="text/css" media="screen">
+            html {
+            height:100%; max-height:100%; padding:0; margin:0; border:0; background:#fff; 
+            /* hide overflow:hidden from IE5/Mac */ 
+            /* \*/ 
+            overflow: hidden; 
+            /* */ 
+            }
+            body {height:100%; max-height:100%; overflow:hidden; padding:0; margin:0; border:0;}
+        </style>
                 <base target="_self">
 	</head>
 	<body class="popUpbody" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
-			<table cellSpacing="0" cellPadding="0" width="100%" height="100%" border="0">
 				<!-- Header -->
-				<tr>
-					<td class="popUpHeaderBackground popUpTextHeader">&nbsp;<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="2914"></cc2:adexpresstext>
-					</td>
-				</tr>
-
+				<div class="popUpHead popUpHeaderBackground popUpTextHeader">
+					&nbsp;<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="2914"></cc2:adexpresstext>
+				</div>
 				<!-- Content -->
-				<tr>
-					<td style="height:100%;background-color:#FFF;padding:10;" valign="top">
-					
+				<div class="popUpContent">
+		            <div class="popUpPad2"></div>
 					    <table id="SaveTable" cellspacing="0" cellpadding="0" width="100%" border="0">
 				            <tr>
 					            <td class="txtViolet11Bold backGroundWhite" height="20">
@@ -64,16 +70,14 @@
 						            <asp:textbox id="insertionLevelsSavedTextBox" runat="server" Width="200px" CssClass="txtNoir11"></asp:textbox></td>
 				            </tr>
 			            </table>
-			
-					</td>
-				</tr>
-				
+			        <div class="popUpPad2"></div>
+                </div>
 				<!-- Footer -->
-				<tr>
-					<td class="popUpFooterBackground" align="right"><cc1:imagebuttonrolloverwebcontrol id="oKImageButtonRollOverWebControl" runat="server" onclick="oKImageButtonRollOverWebControl_Click" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol>&nbsp;<cc1:imagebuttonrolloverwebcontrol id="cancelImageButtonRollOverWebControl" runat="server" onclick="cancelImageButtonRollOverWebControl_Click" SkinID="annulerButton"></cc1:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;</td>
-				</tr>
-			</table>
-
+				<div class="popUpFoot popUpFooterBackground">
+                    <div style="padding-top:12px">
+					    <cc1:imagebuttonrolloverwebcontrol id="oKImageButtonRollOverWebControl" runat="server" onclick="oKImageButtonRollOverWebControl_Click" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol>&nbsp;<cc1:imagebuttonrolloverwebcontrol id="cancelImageButtonRollOverWebControl" runat="server" onclick="cancelImageButtonRollOverWebControl_Click" SkinID="annulerButton"></cc1:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;
+				    </div>
+				</div>
 		</form>
 	</body>
 </html>

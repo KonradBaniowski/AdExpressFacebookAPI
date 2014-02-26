@@ -51,7 +51,7 @@ namespace TNS.AdExpress.Web.Functions{
 		public static string GetSelectionDetailJS(){
 			string script="<script language=\"JavaScript\"> ";
 			script+="function popupRecallOpen(page,width,height){";
-			script+="	window.open(page,'','width='+width+',height='+height+',toolbar=no,scrollbars=yes,resizable=no');";
+            script += "	window.open(page,'','width='+width+',height='+height+',menubar=no, status=no, scrollbars=yes, menubar=no');";
 			script+="}";
 			script+="</script>";
 			return script;

@@ -298,7 +298,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 					
 					#region Table Informations
 					output.Write("\n<td>");
-					output.Write("\n<table cellPadding=\"3\" cellSpacing=\"0\" border=\"0\" align=\"center\" width=\"100%\">");
+					output.Write("\n<table cellPadding=\"3\" cellSpacing=\"0\" border=\"0\" style=\"text-align:left\" width=\"100%\">");
 					
 					#region Visuel de la couverture du media + Nom du media + Date
 					// Chemin du répertoire virtuel de la couverture

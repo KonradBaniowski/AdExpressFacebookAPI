@@ -98,7 +98,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             writer.Write("\n\t\t <table width=\"" + this.Width + "\" border=\"0\" cellSpacing=\"0\">");
             writer.Write("\n\t\t\t <tr>");
             writer.Write("\n\t\t\t <td><table width=\"100%\" border=\"0\" cellPadding=\"0\" cellSpacing=\"0\"" +
-                " style=\"cursor: hand;\"" +
+                " style=\"cursor: pointer;\"" +
                 " onClick=\"javascript:ShowScrollerImageLS('" + this.ID + "');\">");
 
             writer.Write("\n\t\t\t\t <tr>");
@@ -138,8 +138,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
             #region Partie scrollable
             writer.WriteLine("\t\t\t <tr> ");
-            writer.WriteLine("\t\t\t <td><div id=\"scroller_" + this.ID + "\" style=\"display: none; width:100%; overflow: visible; background-color: " + bgColor + "; layer-background-color: " + bgColor + "; border: 1px none #000000; position: absolute;\">");
-            writer.WriteLine("\t\t\t <table width=\"100%\" border=\"0\" cellPadding=\"1\" cellSpacing=\"0\" style=\"border: " + borderWidth + "px solid " + borderColor + "; cursor: hand;\">");
+            writer.WriteLine("\t\t\t <td><div id=\"scroller_" + this.ID + "\" style=\"display: none; width:100%; overflow: visible; background-color: " + bgColor + "; layer-background-color: " + bgColor + "; border: 1px none #000000; cursor: pointer; \">");//position: absolute;
+            writer.WriteLine("\t\t\t <table width=\"100%\" border=\"0\" cellPadding=\"1\" cellSpacing=\"0\" style=\"border: " + borderWidth + "px solid " + borderColor + "; cursor: pointer;\">");
 
             //Les items
             for (i = 0; i <= textList.GetUpperBound(0); i++) {

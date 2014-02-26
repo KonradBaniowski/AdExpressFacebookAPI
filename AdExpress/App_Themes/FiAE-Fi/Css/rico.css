@@ -288,7 +288,8 @@ H2 {
 	FONT-WEIGHT: bold; FONT-SIZE: 0px
 }
 DIV.simpleDropPanel {
-	FONT-SIZE: 11px;BORDER-RIGHT: #5b5b5b 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #5b5b5b 1px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #5b5b5b 1px solid; WIDTH: 200px; PADDING-TOP: 2px; BORDER-BOTTOM: #5b5b5b 1px solid; min-height: 80px; height:auto !important; height:80px;
+	FONT-SIZE: 11px;BORDER-RIGHT: #5b5b5b 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #5b5b5b 1px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #5b5b5b 1px solid; WIDTH: 196px; PADDING-TOP: 2px; BORDER-BOTTOM: #5b5b5b 1px solid; min-height: 80px; height:auto !important; height:80px;
+    text-align:left;
 }
 DIV.simpleColumn {
 	WIDTH: 55px; HEIGHT: 25px;

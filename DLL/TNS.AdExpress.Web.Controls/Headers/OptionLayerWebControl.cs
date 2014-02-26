@@ -114,6 +114,24 @@ namespace TNS.AdExpress.Web.Controls.Headers{
         /// Booléen pour l'affichage de l'option "Unité"
         /// </summary>
         private bool _displayUnitOption = false;
+
+        /// <summary>
+        /// Table personnalisation width
+        /// </summary>
+        protected string _tablePersoWidth;
+
+        /// <summary>
+        /// Get /Set table personnalisation levels width
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        Description("Get /Set table personnalisation levels width"),
+        DefaultValue("200")
+        ]
+        public string TablePersoWidth {
+            get { return (_tablePersoWidth); }
+            set { _tablePersoWidth = value; }
+        }
         #endregion
 
 		#region Constructeur
@@ -410,6 +428,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					_genericMediaLevelDetailSelectionWebControl.RemoveASPXFilePath = _removeASPXFilePath;
 					_genericMediaLevelDetailSelectionWebControl.SaveASPXFilePath = _saveASPXFilePath;
 					_genericMediaLevelDetailSelectionWebControl.Width=this.Width;
+                    _genericMediaLevelDetailSelectionWebControl.TablePersoWidth = !string.IsNullOrEmpty(TablePersoWidth) ? TablePersoWidth : "200";
 					_genericMediaLevelDetailSelectionWebControl.BackGroundColor = _backgroundColor;
                     _genericMediaLevelDetailSelectionWebControl.SkinID = "genericmedialeveldetailselectionwebcontrol";
 					this.Controls.Add(_genericMediaLevelDetailSelectionWebControl);

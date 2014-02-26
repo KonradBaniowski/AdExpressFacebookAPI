@@ -383,7 +383,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                             idVehicleOld = idVehicle;
                             startVehicle = 0;
 
-                            t.Append("<Div class=\"" + classBorder + "\" style=\"width:100%;\">");
+                            t.Append("<Div class=\"" + classBorder + "\">");
                             t.Append("\n<table class=\"txtViolet11Bold backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
                             t.Append("<tr><td>");
 
@@ -406,7 +406,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                             t.Append("<tr><td>");
                             if (eventButton == constEvent.eventSelection.LOAD_EVENT)
                                 displayVh = "";
-                            t.Append("<Div class=\"violetBorderWithoutTop\" style=\"width:100%;display ='" + displayVh + "'\" id=\"vh" + idVehicle + "\">");
+                            t.Append("<Div class=\"violetBorderWithoutTop\" style=\"display ='" + displayVh + "'\" id=\"vh" + idVehicle + "\">");
                             t.Append("<TABLE class=\"violetBackGroundV3\" cellpadding=0 cellspacing=0 width=100% class=\"txtViolet11Bold violetBorderTop\">");
                             t.Append("<tr><td class=\"roll04\"><a href=\"javascript: SelectExclusiveAllChilds('vh_" + idVehicle + "','" + VehicleIds + "','vh_" + idVehicle + "','vh_','ic_')\" title=\"" + GestionWeb.GetWebWord(1540, webSession.SiteLanguage) + "\" class=\"roll04\">&nbsp;&nbsp;" + GestionWeb.GetWebWord(1540, webSession.SiteLanguage) + "</td></tr>");
                             t.Append("<TR><TD>");
@@ -702,6 +702,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                 case DBConstantesClassification.Vehicles.names.tvNonTerrestrials:
                 case DBConstantesClassification.Vehicles.names.others:
                 case DBConstantesClassification.Vehicles.names.adnettrack:
+                case DBConstantesClassification.Vehicles.names.mms:
                     return (true);
                 default:
                     return (false);

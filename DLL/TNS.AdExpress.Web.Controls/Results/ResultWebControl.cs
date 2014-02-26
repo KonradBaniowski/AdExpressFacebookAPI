@@ -975,7 +975,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			#region get_ResultWebControl_DetailSelection
 			js.Append("\r\nfunction get_"+this.ID+"_DetailSelection_callback(res){");
 			js.Append("\r\n\t if(detailSelectionHtml==null){");
-			js.Append("\r\n\tvar oN=document.getElementById('windowExpandMenu_"+this.ID+"');");			
+			js.Append("\r\n\tvar oN=document.getElementById('windowExpandMenu_"+this.ID+"');");		
+            js.Append("\r\n\toN.style.textAlign= 'left';");
 			js.Append("\r\n\toN.innerHTML=res.value;");
 			js.Append("\r\n\tdetailSelectionHtml=res.value;");
 			js.Append("\r\n\t }\r\n");

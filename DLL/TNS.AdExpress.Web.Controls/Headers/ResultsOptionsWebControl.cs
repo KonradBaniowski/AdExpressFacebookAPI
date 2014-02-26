@@ -2458,6 +2458,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         case ClassificationCst.DB.Vehicles.names.czinternet:
                         case ClassificationCst.DB.Vehicles.names.mobileTelephony:
                         case ClassificationCst.DB.Vehicles.names.emailing:
+                        case ClassificationCst.DB.Vehicles.names.mms:
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
                             break;
@@ -3419,6 +3420,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case ClassificationCst.DB.Vehicles.names.cinema:
                 case ClassificationCst.DB.Vehicles.names.adnettrack:
                 case ClassificationCst.DB.Vehicles.names.evaliantMobile:
+                case ClassificationCst.DB.Vehicles.names.mms:
                     return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO
                         || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
                 case ClassificationCst.DB.Vehicles.names.others:

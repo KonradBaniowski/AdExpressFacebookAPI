@@ -21,18 +21,26 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
+        <style type="text/css" media="screen">
+            html {
+            height:100%; max-height:100%; padding:0; margin:0; border:0; background:#fff; 
+            /* hide overflow:hidden from IE5/Mac */ 
+            /* \*/ 
+            overflow: hidden; 
+            /* */ 
+            }
+            body {height:100%; max-height:100%; overflow:hidden; padding:0; margin:0; border:0;}
+        </style>
 	</head>
 	<body class="popUpbody" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
-		    <table cellSpacing="0" cellPadding="0" width="100%" height="100%" border="0">
 		        <!-- Header -->
-		        <tr>
-			        <td class="popUpHeaderBackground popUpTextHeader">&nbsp;<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="769"></cc2:adexpresstext></td>
-		        </tr>
-
+		        <div class="popUpHead popUpHeaderBackground popUpTextHeader">
+			        &nbsp;<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="769"></cc2:adexpresstext>
+		        </div>
 		        <!-- Content -->
-		        <tr>
-			        <td style="height:100%;background-color:#FFF;padding:10;" valign="top">
+		        <div class="popUpContent">
+		            <div class="popUpPad2"></div>
 			            <table id="SaveTable" cellspacing="0" cellpadding="0" width="100%" border="0">
 				            <tr>
 					            <td class="txtViolet11Bold" height="20"><cc2:adexpresstext language="33" id="AdExpressText1" runat="server" Code="917"></cc2:adexpresstext></td>
@@ -55,15 +63,14 @@
 					            <td vAlign="top"><asp:TextBox id="universeTextBox" runat="server" CssClass="txtNoir11" Width="200px"></asp:TextBox></td>
 				            </tr>
 			            </table>
-			        </td>
-		        </tr>
-
+			        <div class="popUpPad2"></div>
+                </div>
 		        <!-- Footer -->
-		        <tr>
-			        <td class="popUpFooterBackground" align="right">
-			        <cc1:ImageButtonRollOverWebControl id="okButton" runat="server" onclick="okButton_Click" SkinID="validateButton"></cc1:ImageButtonRollOverWebControl>&nbsp;<a href="javascript:cancel();" onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif';"><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif" border="0" name="bouton"></a>&nbsp;&nbsp;</td>
-		        </tr>
-	        </table>
+		        <div class="popUpFoot popUpFooterBackground">
+                    <div style="padding-top:12px">
+			            <cc1:ImageButtonRollOverWebControl id="okButton" runat="server" onclick="okButton_Click" SkinID="validateButton"></cc1:ImageButtonRollOverWebControl>&nbsp;<a href="javascript:cancel();" onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif';"><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif" border="0" name="bouton"></a>&nbsp;&nbsp;</td>
+		            </div>
+				</div>
 		</form>
 	</body>
 </html>

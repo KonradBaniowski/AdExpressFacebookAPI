@@ -216,7 +216,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override void Render(HtmlTextWriter output) {
             output.Write(GetJavaScript());
 
-            output.Write("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "+(string.IsNullOrEmpty(CssClass)?string.Empty:"class=\""+CssClass+"\"")+" >");
+            output.Write("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "+(string.IsNullOrEmpty(CssClass)?string.Empty:"class=\""+CssClass+"\"")+" style=\"text-align:left\">");
             if (_vpScheduleSelectionBaseWebControlList.Count > 0) {
                 output.Write("<tr>");
                 output.Write("<td>");

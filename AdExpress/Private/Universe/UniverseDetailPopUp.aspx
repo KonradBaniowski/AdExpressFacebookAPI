@@ -13,20 +13,38 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
+        <style type="text/css" media="screen">
+            html {
+            height:100%; max-height:100%; padding:0; margin:0; border:0; background:#fff; 
+            /* hide overflow:hidden from IE5/Mac */ 
+            /* \*/ 
+            overflow: hidden; 
+            /* */ 
+            }
+            body {height:100%; max-height:100%; overflow:hidden; padding:0; margin:0; border:0;}
+        </style>
+        <script language="javascript" type="text/javascript">
+            function resizeWin() {
+                if (document.getElementById('contentDiv').scrollHeight > document.getElementById('popUpBody').offsetHeight) {
+                    document.getElementById('header').style.right = "16px";
+                    document.getElementById('headerTitle').style.paddingLeft = "16px";
+                    document.getElementById('footer').style.right = "16px";
+                }
+            }
+        </script>
 	</HEAD>
-	<body class="popUpbody" onload="javascript:activateActiveX();">
+	<body id="popUpBody" class="popUpbody" onload="javascript:activateActiveX();resizeWin();">
 		<form id="Form1" method="post" runat="server">
-		    <table cellSpacing="0" cellPadding="0" width="100%" height="100%" border="0">
 				<!-- Header -->
-				<tr>
-					<td class="popUpHeaderBackground popUpTextHeader">&nbsp;<cc1:adexpresstext language="33" id="detailUniversAdExpressText" runat="server" Code="960"></cc1:adexpresstext>&nbsp;
+				<div id="header" class="popUpHead popUpHeaderBackground popUpTextHeader">
+                    <div id="headerTitle">
+					    &nbsp;<cc1:adexpresstext language="33" id="detailUniversAdExpressText" runat="server" Code="960"></cc1:adexpresstext>&nbsp;
 						<asp:label id="universeLabel" runat="server"></asp:label>
-					</td>
-				</tr>
-
+					</div>
+				</div>
 				<!-- Content -->
-				<tr>
-					<td style="height:100%;background-color:#FFF;padding:10;" valign="top">
+				<div id="contentDiv" class="popUpContent">
+		            <div class="popUpPad2"></div>
 					    <TABLE id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
 				            <!--Annonceurs / Références ...-->
 				            <TR>
@@ -34,20 +52,20 @@
 						            <cc1:adexpresstext language="33" id="advertiserAdexpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
-					            <TD vAlign="top" align="center" class="backGroundWhite"><%=advertiserText%></TD>
+					            <TD vAlign="top" class="backGroundWhite"><%=advertiserText%></TD>
 				            </TR>
 				            <TR>
 					            <TD>&nbsp;</TD>
 				            </TR>
 			            </TABLE>
-					</td>
-				</tr>
-				
+					<div class="popUpPad2"></div>
+                </div>
 				<!-- Footer -->
-				<tr>
-					<td class="popUpFooterBackground" align="right"><cc2:imagebuttonrolloverwebcontrol id="closeImageButtonRollOverWebControl" runat="server" onclick="closeImageButtonRollOverWebControl_Click" SkinID="fermerButton" ></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;</td>
-				</tr>
-			</table>
+				<div id="footer" class="popUpFoot popUpFooterBackground">
+                    <div style="padding-top:12px">
+					    <cc2:imagebuttonrolloverwebcontrol id="closeImageButtonRollOverWebControl" runat="server" onclick="closeImageButtonRollOverWebControl_Click" SkinID="fermerButton" ></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;
+				</div>
+				</div>
 		</form>
 	</body>
 </HTML>

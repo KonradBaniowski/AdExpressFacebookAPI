@@ -401,7 +401,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms)
             {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInTracking);
                 DataTable dt = ds.Tables[0];
@@ -425,7 +426,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms)
             {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInVehicle);
                 DataTable dt = ds.Tables[0];
@@ -658,6 +660,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     data.Add(new CellLabel(GestionWeb.GetWebWord(2216, _webSession.SiteLanguage)));
                     CellVolume cV = new CellVolume(double.Parse(volume));
                     cV.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.volume).StringFormat;
+                    cV.CssClass = "left";
                     data.Add(cV);
                 }
             }
@@ -718,6 +721,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     data.Add(new CellLabel(GestionWeb.GetWebWord(2479, _webSession.SiteLanguage)));
                     CellNumber cN = new CellNumber(double.Parse(numberBanner.ToString()));
                     cN.StringFormat = UNIT_FORMAT;
+                    cN.CssClass = "left";
                     data.Add(cN);
                 }
             }
@@ -750,6 +754,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 if (!string.IsNullOrEmpty(numberBoard)) {
                     data = new List<ICell>(2) {new CellLabel(GestionWeb.GetWebWord(1604, _webSession.SiteLanguage))};
                     var cN1 = new CellNumber(double.Parse(numberBoard.ToString())) {StringFormat = UNIT_FORMAT};
+                    cN1.CssClass = "left";
                     data.Add(cN1);
                 }
             }
@@ -831,6 +836,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     data.Add(new CellLabel(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage)));
                     CellNumber cN2 = new CellNumber(double.Parse(pageNumber));
                     cN2.StringFormat = UNIT_FORMAT;
+                    cN2.CssClass = "left";
                     data.Add(cN2);
                 }
             }
@@ -865,6 +871,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     data.Add(new CellLabel(GestionWeb.GetWebWord(1386, _webSession.SiteLanguage)));
                     CellPage cP = new CellPage(double.Parse(adNumber));
                     cP.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat;
+                    cP.CssClass = "left";
                     data.Add(cP);
                 }
             }
@@ -893,7 +900,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     data = new List<ICell>(2);
                     if (pageNumber >= 0) {
                         data.Add(new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage)));
-                        data.Add(new CellPercent(((adNumber / pageNumber * 100) / (double)1000)));
+                        CellPercent cP = new CellPercent(((adNumber / pageNumber * 100) / (double)1000));
+                        cP.CssClass = "left";
+                        data.Add(cP);
                     }
                     else {
                         data.Add(new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage)));
@@ -935,6 +944,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         data.Add(new CellLabel(GestionWeb.GetWebWord(1388, _webSession.SiteLanguage)));
                         CellPage cP1 = new CellPage(double.Parse(adNumberExcludingInsets));
                         cP1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat;
+                        cP1.CssClass = "left";
                         data.Add(cP1);
                     }
                 }
@@ -974,6 +984,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         data.Add(new CellLabel(GestionWeb.GetWebWord(1389, _webSession.SiteLanguage)));
                         CellPage cP2 = new CellPage(double.Parse(adNumberIncludingInsets));
                         cP2.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat;
+                        cP2.CssClass = "left";
                         data.Add(cP2);
                     }
                 }
@@ -1022,6 +1033,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1404, _webSession.SiteLanguage)));
                 CellNumber cN3 = new CellNumber(double.Parse(nbrSpot));
                 cN3.StringFormat = UNIT_FORMAT;
+                cN3.CssClass = "left";
                 data.Add(cN3);
             }
             #endregion
@@ -1067,6 +1079,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     data.Add(new CellLabel(GestionWeb.GetWebWord(1412, _webSession.SiteLanguage)));
                     CellNumber cN4 = new CellNumber(double.Parse(nbrEcran));
                     cN4.StringFormat = UNIT_FORMAT;
+                    cN4.CssClass = "left";
                     data.Add(cN4);
                 }
             }
@@ -1111,6 +1124,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1413, _webSession.SiteLanguage)));
                 CellDuration cD = new CellDuration(double.Parse(totalDuration));
                 cD.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
+                cD.CssClass = "left";
                 data.Add(cD);
             }
             #endregion
@@ -1131,6 +1145,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             #region Compute data
             if (dataUnit!=null && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.radio
+                    && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms
                    && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
@@ -1159,6 +1174,40 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1398, _webSession.SiteLanguage)));
                 CellNumber cN5 = new CellNumber(double.Parse(nbrSpot));
                 cN5.StringFormat = UNIT_FORMAT;
+                cN5.CssClass = "left";
+                data.Add(cN5);
+            }
+            #endregion
+
+            return data;
+
+        }
+        #endregion
+
+        #region ComputeDataMmsInsertionNumber
+        protected virtual List<ICell> ComputeDataMmsInsertionNumber(DataUnit dataUnit) {
+
+            #region Variables
+            List<ICell> data = null;
+            string volume = string.Empty;
+            #endregion
+
+            #region Compute data
+            if (dataUnit != null && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms) {
+
+                #region Get Data
+                volume = dataUnit.GetMmsVolume();
+                #endregion
+
+                // Number of insertion (occurrences) Evaliant
+                if (volume.Length == 0) {
+                    volume = "0";
+                }
+                data = new List<ICell>(2);
+                data.Add(new CellLabel(GestionWeb.GetWebWord(2216, _webSession.SiteLanguage)));
+                CellNumber cN5 = new CellNumber(double.Parse(volume));
+                cN5.StringFormat = UNIT_FORMAT;
+                cN5.CssClass = "left";
                 data.Add(cN5);
             }
             #endregion
@@ -1199,6 +1248,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     defaultCurrency.GetUnitWebText(_webSession.SiteLanguage))));
                 CellEuro cE = new CellEuro(double.Parse(investment));
                 cE.StringFormat = UnitsInformation.Get(UnitsInformation.DefaultCurrency).StringFormat;
+                cE.CssClass = "left";
                 data.Add(cE);
             }
             #endregion
@@ -1227,6 +1277,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage)));
                 CellNumber cN6 = new CellNumber(double.Parse(numberProduct));
                 cN6.StringFormat = UNIT_FORMAT;
+                cN6.CssClass = "left";
                 data.Add(cN6);
             }
             #endregion
@@ -1254,7 +1305,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms)
                 && isAlertModule) {
 
                 #region Get Data
@@ -1266,6 +1318,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage)));
                 CellNumber cN7 = new CellNumber(double.Parse(numberNewProductInTracking));
                 cN7.StringFormat = UNIT_FORMAT;
+                cN7.CssClass = "left";
                 data.Add(cN7);
             }
             #endregion
@@ -1293,7 +1346,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms
+                )
                 && isAlertModule) {
 
                 #region Get Data
@@ -1305,6 +1360,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1395, _webSession.SiteLanguage)));
                 CellNumber cN8 = new CellNumber(double.Parse(numberNewProductInVehicle));
                 cN8.StringFormat = UNIT_FORMAT;
+                cN8.CssClass = "left";
                 data.Add(cN8);
             }
             #endregion
@@ -1333,6 +1389,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage)));
                 CellNumber cN9 = new CellNumber(double.Parse(numberAdvertiser));
                 cN9.StringFormat = UNIT_FORMAT;
+                cN9.CssClass = "left";
                 data.Add(cN9);
             }
             #endregion
@@ -1383,6 +1440,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1414, _webSession.SiteLanguage)));
                 CellDuration cD1 = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
                 cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
+                cD1.CssClass = "left";
                 data.Add(cD1);
 
             }
@@ -1579,6 +1637,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
+            #region Cas MMS
+            dataTemp = ComputeDataMmsInsertionNumber(dataUnit);
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
             #region Total investissements
             if (dataInvestisment != null) data.AddRange(dataInvestisment);
             #endregion
@@ -1701,6 +1764,19 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString());
             else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.occurence) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()))
                 return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()].ToString());
+            else
+                return string.Empty;
+        }
+        #endregion
+
+        #region GetMmsVolume
+        /// <summary>
+        /// Get Mms Volume
+        /// </summary>
+        public virtual string GetMmsVolume() {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.volumeMms) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volumeMms].Id.ToString())
+                && _dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volumeMms].Id.ToString()].ToString().Length > 0)
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volumeMms].Id.ToString()].ToString());
             else
                 return string.Empty;
         }

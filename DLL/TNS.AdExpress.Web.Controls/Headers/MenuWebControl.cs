@@ -53,11 +53,11 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// <summary>
         /// Selection Detail window width
         /// </summary>
-        protected const string SELECTION_PAGE_WIDTH = "750";
+        protected const string SELECTION_PAGE_WIDTH = "750px";
         /// <summary>
         /// Selection Detail window height
         /// </summary>
-        protected const string SELECTION_PAGE_HEIGHT = "700";
+        protected const string SELECTION_PAGE_HEIGHT = "700px";
         /// <summary>
         /// Excel menu name
         /// </summary>

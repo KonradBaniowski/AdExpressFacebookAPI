@@ -1138,6 +1138,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         recapInDoorSegment = 248,
         /// <summary>
+        /// MMS Data
+        /// </summary>
+        dataMms = 249,
+        /// <summary>
+        /// 4M MMS Data
+        /// </summary>
+        dataMmsAlert = 250,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

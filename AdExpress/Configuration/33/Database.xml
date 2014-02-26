@@ -277,6 +277,9 @@
 
     <table enumId="243" description="Data: VMC Valo FP" schemaEnumId="0" label="data_mail" prefix="wp"/>
     <table enumId="244" description="Data: VMC Valo FP" schemaEnumId="0" label="data_mail_4m" prefix="wp"/>
+
+    <table enumId="249" description="Data: MMS" schemaEnumId="0" label="data_mms" prefix="wp"/>
+    <table enumId="250" description="Data: MMS" schemaEnumId="0" label="data_mms_4M" prefix="wp"/>
     
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

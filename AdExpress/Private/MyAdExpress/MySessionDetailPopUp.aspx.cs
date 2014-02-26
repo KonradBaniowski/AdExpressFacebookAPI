@@ -677,7 +677,7 @@ namespace AdExpress.Private.MyAdExpress
 
                                 //Render universe html code
                                 t.Append("<TR height=\"20\">");
-                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" +
+                                t.Append("<TD vAlign=\"top\" class=\"backGroundWhite\">" +
                                          selectItemsInClassificationWebControl.ShowUniverse(
                                              webSessionSave.PrincipalProductUniverses[k], _webSession.DataLanguage,
                                              DBFunctions.GetDataSource(_webSession)) + "</TD>");
@@ -1189,7 +1189,7 @@ namespace AdExpress.Private.MyAdExpress
             //Render universe html code
             t.Append("<TR height=\"20\">");
             //t.Append("<TD>&nbsp;</TD>");
-            t.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], webSession.DataLanguage, DBFunctions.GetDataSource(webSession)) + "</TD>");
+            t.Append("<TD vAlign=\"top\" class=\"backGroundWhite\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], webSession.DataLanguage, DBFunctions.GetDataSource(webSession)) + "</TD>");
             t.Append("</TR>");
             t.Append("<TR height=\"5\">");
             t.Append("<TD class=\"backGroundWhite\"></TD>");

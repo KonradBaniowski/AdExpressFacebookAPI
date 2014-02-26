@@ -276,7 +276,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				
 				#region Début du tableau global
                 t.Append("<tr vAlign=\"top\"   align=\"center\" class=\"backGroundWhite\"><td><br><div width=\"100%\" vAlign=\"top\" id=\"sectors\">");
-                t.Append("<table width=\"100%\" class=\"violetBorder txtViolet11Bold lightPurple\" vAlign=\"top\" cellSpacing=\"0\">");
+                t.Append("<table width=\"100%\" class=\"violetBorder txtViolet11Bold lightPurple\" vAlign=\"top\" cellSpacing=\"0\" style=\"text-align:left\">");
                 t.Append("<tr ><td colspan=\"3\" class=\"txtViolet11Bold backGroundWhite violetBorderBottom\">" + title + "</td></tr>");
 				
 				t.Append("<tr><td colspan=\"3\"><a href=\"javascript: SelectAllChilds('sectors')\" title=\""+GestionWeb.GetWebWord(1533,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(1533,webSession.SiteLanguage)+"</a></td></tr>");
@@ -291,7 +291,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					try{
 						checkSc = checkBox = "";
 						
-						#region ancienne version										
+						#region ancienne version
 						////Vérification de l'état de la famille (sélectionnée ou non)
 						//if(webSession.CurrentUniversProduct.Nodes[(int)sectorsHashtable[idSector]].Checked){
 						//    checkSc = checkBox = " Checked ";

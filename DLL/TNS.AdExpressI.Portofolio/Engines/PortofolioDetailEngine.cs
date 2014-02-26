@@ -285,6 +285,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.czinternet:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo:
+                case DBClassificationConstantes.Vehicles.names.mms:
 
                     foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {
                         headers.Root.Add(new Header(true, 

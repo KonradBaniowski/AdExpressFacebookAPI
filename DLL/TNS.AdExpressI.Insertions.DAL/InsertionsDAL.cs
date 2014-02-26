@@ -2414,6 +2414,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 Contains(DetailLevelItemInformation.Levels.slogan)
                 && vehicleInformation.Id != CstDBClassif.Vehicles.names.internet
                  && vehicleInformation.Id != CstDBClassif.Vehicles.names.cinema
+                 && vehicleInformation.Id != CstDBClassif.Vehicles.names.mms
                  && vehicleInformation.Id != CstDBClassif.Vehicles.names.mailValo)
                 || _session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE));
         }

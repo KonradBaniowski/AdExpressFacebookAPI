@@ -5,7 +5,7 @@
 .gSepBackGround{
 	background:url(/I/gsep.gif);
 	width:5px; 
-	height:100%;
+	height:104%;
 }
 .checkboxBackGround{
 	background:url(/App_Themes/AE-Uk/Images/Common/checkbox.GIF);
@@ -3037,4 +3037,5 @@ td.jus
 	background-color:#E9E9E9;
 	padding-left:2px;
 	vertical-align:top;
+    width : 190px;
 }

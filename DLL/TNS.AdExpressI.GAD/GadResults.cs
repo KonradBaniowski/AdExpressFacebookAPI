@@ -125,17 +125,16 @@ namespace TNS.AdExpressI.GAD
                     GestionWeb.GetWebWord(2098, _session.SiteLanguage),_theme);
             }
 
-            html.Append(" <table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" height=\"100%\" border=\"0\">");
             //Header
             html.Append(" <!-- Header --> ");
-            html.Append(" <tr> ");
-            html.AppendFormat(" <td class=\"popUpHeaderBackground popUpTextHeader\">&nbsp;{0}&nbsp;:&nbsp;<span id=\"advertiserLabel\">{1}</span></td>", GestionWeb.GetWebWord(857, _session.SiteLanguage), _advertiser);
-            html.Append(" </tr>");
+            html.Append("  <div class=\"popUpHead popUpHeaderBackground popUpTextHeader\"> ");
+            html.AppendFormat(" &nbsp;{0}&nbsp;:&nbsp;<span id=\"advertiserLabel\">{1}</span>", GestionWeb.GetWebWord(857, _session.SiteLanguage), _advertiser);
+            html.Append(" </div>");
 
             //Content
             html.AppendLine(" <!-- Content --> ");
 
-            html.AppendLine("  <tr>  <td style=\"height:100%;background-color:#FFF;padding:10;\" valign=\"top\">");
+            html.AppendLine("  <div class=\"popUpContent\">  <div class=\"popUpPad2\"></div> ");
 
             html.AppendLine(" <table id=\"SaveTable\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
 
@@ -192,14 +191,16 @@ namespace TNS.AdExpressI.GAD
 
             html.AppendLine("  </table>");
 
-            html.AppendLine(" </td> </tr>");
+            html.AppendLine(" <div class=\"popUpPad2\"></div>");
+            html.AppendLine(" </div>");
 
             html.Append(" <!-- Footer  --> ");
-            html.AppendLine(" <tr >  <td class=\"popUpFooterBackground\" align=\"right\">");
+            html.AppendLine(" <div class=\"popUpFoot popUpFooterBackground\">");
+            html.AppendLine(" <div style=\"padding-top:12px\"> ");
             html.Append(_docMarketingTarget);
-            html.AppendLine(" &nbsp;&nbsp;</td> </tr>");
-
-            html.AppendLine("  </table>");
+            html.AppendLine(" &nbsp;&nbsp;");
+            html.AppendLine(" </div> ");
+            html.AppendLine(" </div> ");
 
 
 

@@ -72,7 +72,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 				#endregion
 
 				#region 1er et 2eme Ligne (libelés)
-				html.Append("<table  border=0 cellpadding=0 cellspacing=0 width=400 >");
+				html.Append("<table  border=0 cellpadding=0 cellspacing=0 width=400 style=\"text-align:left\">");
 				html.Append("\r\n\t<tr  height=\"20px\">");
 				if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 					html.Append("<td  class=\""+classCss1+"\" nowrap rowspan=2>"+GestionWeb.GetWebWord(1774,webSession.SiteLanguage)+ "</td>");

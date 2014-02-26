@@ -14,36 +14,35 @@
     <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
     <meta content="JavaScript" name="vs_defaultClientScript">
     <meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+    <style type="text/css" media="screen">
+            html {
+            height:100%; max-height:100%; padding:0; margin:0; border:0; background:#fff; 
+            /* hide overflow:hidden from IE5/Mac */ 
+            /* \*/ 
+            overflow: hidden; 
+            /* */ 
+            }
+            body {height:100%; max-height:100%; overflow:hidden; padding:0; margin:0; border:0;}
+    </style>
 </head>
 <body class="popUpbody" onload="javascript:activateActiveX();">
     <form id="Form2" method="post" runat="server">
-    <table cellspacing="0" cellpadding="0" width="100%" height="100%" border="0">
         <!-- Header -->
-        <tr>
-            <td class="popUpHeaderBackground popUpTextHeader">
-                &nbsp;<cc1:AdExpressText Language="33" ID="saveTitle" runat="server" Code="1747">
-                </cc1:AdExpressText>
-            </td>
-        </tr>
-        <cc3:AskRemoteExportWebControl ID="askremoteexportwebControl1" runat="server"></cc3:AskRemoteExportWebControl>
+        <div class="popUpHead popUpHeaderBackground popUpTextHeader">
+            &nbsp;<cc1:AdExpressText Language="33" ID="saveTitle" runat="server" Code="1747"></cc1:AdExpressText>
+        </div>
+        <!-- Content -->
+        <div class="popUpContent">
+		    <div class="popUpPad2"></div>
+                <cc3:AskRemoteExportWebControl ID="askremoteexportwebControl1" runat="server"></cc3:AskRemoteExportWebControl>
+            <div class="popUpPad2"></div>
+        </div>
         <!-- Footer -->
-        <tr>
-            <td class="popUpFooterBackground" align="right">
-                <table>
-                    <tr>
-                        <td>
-                            <div id="validationDiv">
-                            </div>
-                        </td>
-                        <td>
-                            <cc2:ImageButtonRollOverWebControl ID="closeRollOverWebControl" runat="server" OnClick="closeRollOverWebControl_Click"
-                                SkinID="fermerButton"></cc2:ImageButtonRollOverWebControl>&nbsp;
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+        <div class="popUpFoot popUpFooterBackground">
+            <div style="padding-top:12px">
+                <cc2:ImageButtonRollOverWebControl ID="closeRollOverWebControl" runat="server" OnClick="closeRollOverWebControl_Click" SkinID="fermerButton"></cc2:ImageButtonRollOverWebControl>&nbsp;
+            </div>
+		</div>
     </form>
 </body>
 </html>

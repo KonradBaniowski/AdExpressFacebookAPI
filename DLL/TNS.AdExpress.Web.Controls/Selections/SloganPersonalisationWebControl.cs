@@ -339,7 +339,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				output.Write("<a href=\"javascript: SelectAllChilds('selectAllSlogans");
 				output.Write("')\" class=\"roll04\" >"+GestionWeb.GetWebWord(816,webSession.SiteLanguage)+"</a>");								
 				output.Write("<tr><td vAlign=\"top\">");
-				output.Write("<DIV id=selectAllSlogans>");//Ouverture calque permettant de sélectionner tous les éléménts
+				output.Write("<DIV id=selectAllSlogans style=\"text-align:left\">");//Ouverture calque permettant de sélectionner tous les éléménts
 				#endregion
 
                 CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];

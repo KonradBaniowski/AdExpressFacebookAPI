@@ -542,7 +542,7 @@ namespace TNS.AdExpressI.VP
 
 
                 //Image export pdf
-                html.Append("<img align=\"right\" alt=\"" + GestionWeb.GetWebWord(2865, _session.SiteLanguage) + "\" ");
+                html.Append("<img align=\"right\" style=\"padding:4px; cursor:pointer;\" alt=\"" + GestionWeb.GetWebWord(2865, _session.SiteLanguage) + "\" ");
                 html.Append("id=\"promofile" + _resultControlId + "\" ");
                 html.AppendFormat("src=\"/App_Themes/{0}/Images/Common/export_pdf.gif\" ", _theme);
                 html.AppendFormat(

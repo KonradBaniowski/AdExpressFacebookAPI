@@ -458,7 +458,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		protected void BuildHtml(StringBuilder output){
 
 			if (this._versionsUIs != null){
-                output.Append("<table align=\"left\" border=\"0\" class=\"violetBackGroundV3 txtBlanc12Bold\">");
+                output.Append("<table align=\"left\" border=\"0\" class=\"violetBackGroundV3 txtBlanc12Bold\" style=\"text-align:left\">");
 				output.Append("<tr><td colSpan=\"" + _nb_column + "\">");
 				if (_title == string.Empty){
 					switch(this._vehicle){

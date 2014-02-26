@@ -733,14 +733,14 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
                     if (result.VersionsDetail.Count > 0) {
                         var versionsUI = new VersionsPluriMediaUI(webSession, period, _zoomDate);
-                        html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
+                        html.Append("\r\n\t<tr align=\"left\" class=\"violetBackGroundV3\">\r\n\t\t<td>");
                         html.Append(versionsUI.GetMSCreativesHtml());
                         html.Append("\r\n\t\t</td>\r\n\t</tr>");
                     }
 
-					html.Append("\r\n\t<tr height=\"1\">\r\n\t\t<td>");
+                    html.Append("\r\n\t<tr height=\"1\">\r\n\t\t<td>");
 					html.Append("\r\n\t\t</td>\r\n\t</tr>");
-					html.Append("\r\n\t<tr>\r\n\t\t<td>");
+                    html.Append("\r\n\t<tr align=\"left\">\r\n\t\t<td>");
 
 					html.Append(result.HTMLCode);
 					html.Append("\r\n\t\t</td>\r\n\t</tr>");

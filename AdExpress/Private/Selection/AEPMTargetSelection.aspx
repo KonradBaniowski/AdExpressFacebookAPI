@@ -90,7 +90,7 @@
 										<tr valign="top">
 											<td width="10">&nbsp;</td>
 											<td>
-												<table cellspacing="1" cellpadding="0" width="100%" class="violetBackGround">
+												<table cellspacing="1" cellpadding="0" width="100%" class="violetBackGround" style="text-align:left">
 													<cc3:targetselectionwebcontrol id="targetSelectionWebControl1" runat="server" CssClass="txtBlanc11Bold"></cc3:targetselectionwebcontrol>
 													<cc3:targetselectionwebcontrol id="targetSelectionWebControl2" runat="server" CssClass="txtBlanc11Bold"></cc3:targetselectionwebcontrol>
 												</table>

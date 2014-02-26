@@ -22,7 +22,7 @@
 <body style="margin:0px; background-attachment: fixed; background-repeat: repeat; " class="popupBackGround backGroundWhite" onload="javascript:activateActiveX();">
 
     <form id="form1" runat="server">
-        <div style="text-align:center;margin:0">
+        <div style="text-align:left;margin:0">
             <asp:HiddenField ID="zoomParam" runat="server" EnableViewState="true"/>
 
             <table height="300" width="100%" style="margin-top: 25px; margin-left: 0px; margin-right: 25px;" class="backGroundWhite" cellpadding="0" cellspacing="0" border="0">
