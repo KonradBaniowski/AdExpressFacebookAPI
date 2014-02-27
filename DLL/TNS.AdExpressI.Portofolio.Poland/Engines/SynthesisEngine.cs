@@ -77,6 +77,7 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
                 data.Add(new CellLabel(GestionWeb.GetWebWord(2787, _webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(_webSession.SiteLanguage) + ")"));
                 CellEuro cE = new CellEuro(double.Parse(investment));
                 cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pln).StringFormat;
+                cE.CssClass = "left";
                 data.Add(cE);
             }
             #endregion
