@@ -127,6 +127,10 @@
       <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
       <Name>TNS.Ares</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.XlsVp\TNS.Ares.AdExpress.XlsVp.csproj">
+      <Project>{1e6975dd-5792-4308-be99-c9cd455e0f22}</Project>
+      <Name>TNS.Ares.AdExpress.XlsVp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>
@@ -135,6 +139,7 @@
   <ItemGroup>
     <Content Include="Configuration\LinkServerParameters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\LsClientConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -152,37 +152,23 @@ namespace AdExpress.Private.Results{
 				#region Calcul du résultat
 				if(eventButton==9){
                     object[,] tab = null;
-                    MediaSchedulePeriod period = null;
-                    //MediaPlanResultData resultTmp = null;
+                    MediaSchedulePeriod period = null;                  
                     MediaScheduleData resultTmp = null;
 
 
                     period = new MediaSchedulePeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, _webSession.DetailPeriod);
-
-                    //tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
-
-                    //if (_webSession.IdSlogans != null && _webSession.IdSlogans.Count > 0 && tab.GetLength(0) == 0) {
-                    //    _webSession.IdSlogans = new ArrayList();
-                    //    tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
-                    //}
-
-                    //resultTmp = TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetHtml(tab, _webSession, period, true);
+                    
                     TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
                     if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
-                    object[] param = new object[2];
+                    var param = new object[2];
                     param[0] = _webSession;
                     param[1] = period;
-                    IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                    var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                        , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false,
+                        BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                     resultTmp = mediaScheduleResult.GetHtmlCreativeDivision();
 
-                    /* When we don't have a media schedule for a list of versions we show the message : 'no result for this selection'
-                     * in the old version we switched to the product media schedule
-                     * */
-                    //if (resultTmp.HTMLCode.Length <= 0)
-                    //{
-                    //    _webSession.IdSlogans = new ArrayList();
-                    //    resultTmp = mediaScheduleResult.GetHtmlCreativeDivision();
-                    //}
+                   
 
                     result += "<table align=\"center\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">";
                     result += "\r\n\t<tr height=\"1\">\r\n\t\t<td>";

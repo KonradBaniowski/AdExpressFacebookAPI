@@ -128,7 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Thoueris\TNS.AdExpress.Anubis.Thoueris.csproj">
-      <Project>{E19E4D4B-4910-4FAE-8A6E-2940278506B4}</Project>
+      <Project>{e19e4d4b-4910-4fae-8a6e-2940278506b4}</Project>
       <Name>TNS.AdExpress.Anubis.Thoueris</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">

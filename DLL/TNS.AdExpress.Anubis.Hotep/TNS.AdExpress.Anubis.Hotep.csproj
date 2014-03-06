@@ -180,6 +180,14 @@
       <Project>{8889ED07-01CE-4F3A-A296-3A2C4B21989C}</Project>
       <Name>TNS.AdExpressI.Date.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.ProductClassIndicators.DAL\TNS.AdExpressI.ProductClassIndicators.DAL.csproj">
+      <Project>{3ca92134-6c33-4a42-a3c9-1f7d3f36ac42}</Project>
+      <Name>TNS.AdExpressI.ProductClassIndicators.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.ProductClassIndicators\TNS.AdExpressI.ProductClassIndicators.csproj">
+      <Project>{f0e136b5-aa9d-468d-bae4-3599b11d854f}</Project>
+      <Name>TNS.AdExpressI.ProductClassIndicators</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
       <Name>TNS.AdExpress</Name>

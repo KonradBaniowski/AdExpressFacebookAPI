@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Domain.Results;
-using Aspose.Cells;
-using System.IO;
-using System.Globalization;
-using TNS.AdExpressI.VP.Loader.DAL.Exceptions;
-using TNS.AdExpress.VP.Loader.Domain.Classification;
-using TNS.AdExpress.Constantes.DB;
-using System.Data;
 
 namespace TNS.AdExpressI.VP.Loader.DAL {
     /// <summary>

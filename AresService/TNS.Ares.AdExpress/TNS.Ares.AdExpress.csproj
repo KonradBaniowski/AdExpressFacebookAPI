@@ -108,12 +108,16 @@
     <Content Include="Configuration\33\CampaignTypes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\CoreLayersConfiguration.xml" />
+    <Content Include="Configuration\33\CoreLayersConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\33\CreativesAccess.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\33\CreativesConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\33\CssConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -159,6 +163,7 @@
     </Content>
     <Content Include="Configuration\33\MSCreativesDetails.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\33\PluginAlerteConfiguration.xml" />
     <Content Include="Configuration\33\PluginConfiguration.xml">
@@ -180,7 +185,9 @@
     <Content Include="Configuration\33\Trends.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\Units.xml" />
+    <Content Include="Configuration\33\Units.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\33\UniverseBranches.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -195,6 +202,7 @@
     </Content>
     <Content Include="Configuration\33\WebLanguages.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Configuration\33\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -854,7 +862,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
-      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">

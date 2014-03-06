@@ -2254,7 +2254,7 @@ namespace TNS.AdExpress.Web.UI
                 //Unité
                 t.Append("<tr>");
                 t.Append("<td class=Arial7rouge>&nbsp;&nbsp;" + GestionWeb.GetWebWord(1795, webSession.SiteLanguage) + "</td>");
-                t.Append("<td colspan=2 class=Arial7gris>:&nbsp;Euro</td>");
+                t.AppendFormat("<td colspan=2 class=Arial7gris>:&nbsp;{0}</td>", GestionWeb.GetWebWord(webSession.GetSelectedUnit().WebTextId, webSession.SiteLanguage));
                 t.Append("</tr>");
                 t.Append("</table>");
                 t.Append("</td>");

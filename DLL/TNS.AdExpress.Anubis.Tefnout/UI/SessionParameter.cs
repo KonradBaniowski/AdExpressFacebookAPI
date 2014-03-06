@@ -5,29 +5,14 @@
 #endregion
 
 using System;
-using System.IO;
 using Aspose.Cells;
-using System.Drawing;
-using System.Data;
-using System.Collections;
-using System.Collections.Generic;
-
 using System.Windows.Forms;
 
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Constantes.DB;
-using TefnoutExceptions = TNS.AdExpress.Anubis.Tefnout.Exceptions;
-using WebFunctions = TNS.AdExpress.Web.Functions;
 using TefnoutFunctions = TNS.AdExpress.Anubis.Tefnout.Functions;
-using CsteCustomer = TNS.AdExpress.Constantes.Customer;
-using TNS.FrameWork;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.UI;
-using TNS.AdExpress.Web.DataAccess.Selections.Grp;
-using WebConstantes = TNS.AdExpress.Constantes.Web;
-using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
-using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;

@@ -7,7 +7,7 @@
 using System;
 using System.Data;
 using System.Text;
-
+using TNS.AdExpress.Constantes.Customer;
 using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
@@ -150,6 +150,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 
             #region Build Id List
             List<Int64> idVehicleList = new List<Int64>();
+            DataTable dtRetour = new DataTable();
 
             foreach (DataRow currentRow in dt.Rows) {
                 Int64 vehicleId = Int64.Parse(currentRow["id_vehicle"].ToString());
@@ -158,34 +159,38 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
             #endregion
 
             #region Get All label
-            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.classificationLevelList];
-            object[] parameter = new object[2];
-            parameter[0] = dataSourceClassification;
-            parameter[1] = language;
-            var classificationLevelListDALFactory = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain
-                .CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + "Bin\\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null);
 
-            ClassificationLevelListDAL classificationLevelListDAL = classificationLevelListDALFactory
-                .CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,
-                string.Join(",", (idVehicleList.ConvertAll(Convert.ToString)).ToArray()));
-            DataTable dtRetour = new DataTable();
+            if(dt!=null && dt.Rows.Count>0)
+            {
+                CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.classificationLevelList];
+                object[] parameter = new object[2];
+                parameter[0] = dataSourceClassification;
+                parameter[1] = language;
+                var classificationLevelListDALFactory = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain
+                                                                                                    .CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + "Bin\\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance
+                                                                                                                                                                                                                     | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null);
 
-            foreach (DataColumn currentColumn in dt.Columns) {
-                dtRetour.Columns.Add(currentColumn.ColumnName, currentColumn.DataType);
-            }
-            dtRetour.Columns.Add("vehicle", typeof(System.String));
+                ClassificationLevelListDAL classificationLevelListDAL = classificationLevelListDALFactory
+                    .CreateClassificationLevelListDAL(Right.type.vehicleAccess,
+                                                      string.Join(",", (idVehicleList.ConvertAll(Convert.ToString)).ToArray()));
+           
 
-            foreach (DataRow currentRow in dt.Rows) {
-                string labelVehicle = string.Empty;
-                DataRow[] dataRowArray = classificationLevelListDAL.GetDataTable.Select("id_vehicle = " + currentRow["id_vehicle"]);
-                if (dataRowArray != null && dataRowArray.Length != 1) throw new Exception("Invalid dataRowArray request count");
-                labelVehicle = dataRowArray[0]["vehicle"].ToString();
+                foreach (DataColumn currentColumn in dt.Columns) {
+                    dtRetour.Columns.Add(currentColumn.ColumnName, currentColumn.DataType);
+                }
+                dtRetour.Columns.Add("vehicle", typeof(String));
 
-                List<object> itemArrayList = new List<object>(dt.Columns.Count + 1);
-                itemArrayList.AddRange(currentRow.ItemArray);
-                itemArrayList.Add(labelVehicle);
-                dtRetour.Rows.Add(itemArrayList.ToArray());
+                foreach (DataRow currentRow in dt.Rows) {
+                    string labelVehicle = string.Empty;
+                    DataRow[] dataRowArray = classificationLevelListDAL.GetDataTable.Select("id_vehicle = " + currentRow["id_vehicle"]);
+                    if (dataRowArray != null && dataRowArray.Length != 1) throw new Exception("Invalid dataRowArray request count");
+                    labelVehicle = dataRowArray[0]["vehicle"].ToString();
+
+                    List<object> itemArrayList = new List<object>(dt.Columns.Count + 1);
+                    itemArrayList.AddRange(currentRow.ItemArray);
+                    itemArrayList.Add(labelVehicle);
+                    dtRetour.Rows.Add(itemArrayList.ToArray());
+                }
             }
             return dtRetour;
             #endregion

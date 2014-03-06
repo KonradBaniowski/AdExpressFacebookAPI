@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Results;
@@ -13,6 +14,7 @@ using TNS.AdExpress.Constantes.DB;
 using System.Data;
 using TNS.AdExpress.VP.Loader.Domain;
 using TNS.AdExpress.VP.Loader.Domain.Exceptions;
+using Table = TNS.AdExpress.Domain.DataBaseDescription.Table;
 
 namespace TNS.AdExpressI.VP.Loader.DAL.Data
 {
@@ -46,7 +48,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
         {
 
             #region Variables
-            List<DataPromotionDetail> dataPromotionDetailList = new List<DataPromotionDetail>();
+            var dataPromotionDetailList = new List<DataPromotionDetail>();
             Workbook excel = null;
             License license = null;
             DateTime dateFile = DateTime.Now;
@@ -63,6 +65,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             int columnBrandPromo = 7;
             int columnVisualsPromo = 8;
             int columnExcluWeb = 9;
+            int columnNational = 10;
 
 
             long idProduct;
@@ -79,6 +82,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             List<string> promotionVisual = null;
             int line = startLineData;
             long excluWeb = 0;
+            long isNational = 1;
+            long idVehicle = Vehicles.names.webPromotion.GetHashCode();
             #endregion
 
             try
@@ -91,7 +96,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                 #endregion
 
                 #region Load File
-                FileStream fileStream = (FileStream)source.GetSource();
+                var fileStream = (FileStream)source.GetSource();
                 try
                 {
                     dateFile = DateTime.ParseExact(Path.GetFileNameWithoutExtension(fileStream.Name).Replace("Renault_", ""), "yyyyMM", CultureInfo.InvariantCulture);
@@ -171,7 +176,9 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                         #region Get Visuals condition
 
-                        if (cells[line, columnVisualsCondition].Value != null && cells[line, columnVisualsCondition].Value is string && !string.IsNullOrWhiteSpace((string)cells[line, columnVisualsCondition].Value))
+                        if (cells[line, columnVisualsCondition].Value != null 
+                            && cells[line, columnVisualsCondition].Value is string && 
+                            !string.IsNullOrWhiteSpace((string)cells[line, columnVisualsCondition].Value))
                             conditionVisual =
                                 (new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(new[] { ';', ',' }))).
                                     ConvertAll<string>(
@@ -256,6 +263,11 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                         excluWeb = Convert.ToInt64(cells[line, columnExcluWeb].Value);
                         #endregion
 
+
+                        #region Get Natrional status
+                        isNational = cells[line, columnNational].Value != null ? Convert.ToInt64(cells[line, columnNational].Value) : 1;
+                        #endregion
+
                         dataPromotionDetailList.Add(new DataPromotionDetail(
                                                         idProduct,
                                                         idBrand,
@@ -268,7 +280,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                                                         conditionVisual,
                                                         conditionText,
                                                         promotionBrand,
-                                                        promotionVisual, excluWeb));
+                                                        promotionVisual, excluWeb,isNational,idVehicle));
 
                     }
                 }
@@ -287,15 +299,20 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                 excel = null;
             }
         }
+
+     
+
         #endregion
 
         #region Has Data
+
         /// <summary>
         /// Has data for the date traiment passed in parameter
         /// </summary>
         /// <param name="dateTraitment">Date Traitment</param>
+        /// <param name="idVehicle">id Vehicle</param>
         /// <returns>Has Data or not for the date traiment passed in parameter</returns>
-        public bool HasData(DateTime dateTraitmentBegin, DateTime dateTraitmentEnd)
+        public bool HasData(DateTime dateTraitmentBegin, DateTime dateTraitmentEnd, long idVehicle)
         {
 
             #region Variables
@@ -309,14 +326,16 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                 #region Construct global query
                 sql = new StringBuilder(200);
-                sql.AppendFormat("select count(*) nb from {0} WHERE LOAD_DATE>={1} AND LOAD_DATE<={2} ", tblData.Sql, dateTraitmentBegin.ToString("yyyyMM"), dateTraitmentEnd.ToString("yyyyMM"));
+                sql.AppendFormat("select count(*) nb from {0} WHERE LOAD_DATE>={1} AND LOAD_DATE<={2} AND ID_VEHICLE ={3}"
+                    , tblData.Sql, dateTraitmentBegin.ToString("yyyyMM"), dateTraitmentEnd.ToString("yyyyMM"),idVehicle);
                 #endregion
 
                 #region Execute Query
                 ds = _source.Fill(sql.ToString());
                 #endregion
 
-                return (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count == 1 && (Convert.ToInt64(ds.Tables[0].Rows[0]["nb"]) > 0));
+                return (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null &&
+                    ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count == 1 && (Convert.ToInt64(ds.Tables[0].Rows[0]["nb"]) > 0));
 
             }
             catch (System.Exception err)
@@ -343,7 +362,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             try
             {
 
-                Dictionary<string, PictureMatching> filePictureList = new Dictionary<string, PictureMatching>();
+                var filePictureList = new Dictionary<string, PictureMatching>();
 
                 if (fileList != null)
                 {
@@ -372,12 +391,14 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
         #endregion
 
         #region Delete Data
+
         /// <summary>
         /// Delete data between dateBegin parameter and dateEnd parameter
         /// </summary>
         /// <param name="dateBegin">Date Begin</param>
         /// <param name="dateEnd">Date End</param>
-        public void DeleteData(DateTime dateBeginTraitment, DateTime dateEndTraitment)
+        /// <param name="idVehicle">id vehicle</param>
+        public void DeleteData(DateTime dateBeginTraitment, DateTime dateEndTraitment,long idVehicle)
         {
 
             #region Variables
@@ -390,10 +411,10 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                 #region Construct global query
                 sql = new StringBuilder(200);
-                sql.AppendFormat("DELETE FROM {0} WHERE LOAD_DATE>={1} AND LOAD_DATE<={2} "
+                sql.AppendFormat("DELETE FROM {0} WHERE LOAD_DATE>={1} AND LOAD_DATE<={2} AND ID_VEHICLE ={3}"
                     , tblData.Sql
                     , dateBeginTraitment.ToString("yyyyMM")
-                    , dateEndTraitment.ToString("yyyyMM"));
+                    , dateEndTraitment.ToString("yyyyMM"), idVehicle);
                 #endregion
 
                 #region Execute Query
@@ -437,11 +458,11 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                 sql.AppendFormat("INSERT INTO {0} ", tblData.Sql);
 
-                sql.Append("(ID_DATA_PROMOTION, ID_LANGUAGE_DATA_I, ID_PRODUCT, ID_BRAND, DATE_BEGIN_NUM, DATE_END_NUM, ID_SEGMENT, ID_CATEGORY, ID_CIRCUIT, PROMOTION_CONTENT, CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, ACTIVATION, LOAD_DATE,EXCLU_WEB) ");
+                sql.Append("(ID_DATA_PROMOTION, ID_LANGUAGE_DATA_I, ID_PRODUCT, ID_BRAND, DATE_BEGIN_NUM, DATE_END_NUM, ID_SEGMENT, ID_CATEGORY, ID_CIRCUIT, PROMOTION_CONTENT, CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, ACTIVATION, LOAD_DATE,EXCLU_WEB,NATIONAL,ID_VEHICLE) ");
 
                 sql.Append("VALUES ");
 
-                sql.AppendFormat("({0}, 33, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14},{15}) ",
+                sql.AppendFormat("({0}, 33, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14},{15},{16},{17}) ",
                 "PROMO03.SEQ_DATA_PROMOTION.NEXTVAL",
                 dataPromotionDetail.IdProduct,
                 dataPromotionDetail.IdBrand,
@@ -457,7 +478,9 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                 promotionVisual,
                 ActivationValues.ACTIVATED,
                  Convert.ToInt64(dateTraitment.ToString("yyyyMM")),
-                 dataPromotionDetail.ExcluWeb);
+                 dataPromotionDetail.ExcluWeb,
+                 dataPromotionDetail.IsNational,
+                 dataPromotionDetail.IdVehicle);
 
                 #endregion
 

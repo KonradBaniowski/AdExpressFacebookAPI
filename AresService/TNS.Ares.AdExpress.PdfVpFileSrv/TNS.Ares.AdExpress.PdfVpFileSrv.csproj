@@ -128,8 +128,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Selket\TNS.AdExpress.Anubis.Selket.csproj">
-      <Project>{CD7353E9-AACD-41FF-B5CA-F61EFC694A69}</Project>
+      <Project>{cd7353e9-aacd-41ff-b5ca-f61efc694a69}</Project>
       <Name>TNS.AdExpress.Anubis.Selket</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
@@ -182,6 +186,10 @@
     <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
       <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfVpFile\TNS.Ares.AdExpress.PdfVpFile.csproj">
+      <Project>{6babfc9f-3f47-4257-8b6a-d57b797619ff}</Project>
+      <Name>TNS.Ares.AdExpress.PdfVpFile</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>

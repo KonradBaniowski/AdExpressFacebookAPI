@@ -345,6 +345,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 title2.BackImageMode = ChartImageWrapMode.Unscaled;
                 title2.Position.Height = 9;
                 title2.Position.Width = 100;
+                 title.Docking = Docking.Top;
                 this.Titles.Add(title2);
 
             }

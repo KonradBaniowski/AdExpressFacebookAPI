@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <smtp>
     <server adress="frmitch-msprod" port="25"/>
-    <message from="Iris@kantarmedia.com">			 
-	 	  <to>guillaume.facon@kantarmedia.com</to> 
+    <message from="renaultloader@kantarmedia.com">			 
+	 	  <!--<to>guillaume.facon@kantarmedia.com</to> 
 		  <to>benjamin.masson@kantarmedia.com</to>      
       <to>youssef.rkaina@kantarmedia.com</to>
-      <to>alexandre.rousseau@kantarmedia.com</to>
+      <to>alexandre.rousseau@kantarmedia.com</to>-->
       <to>dede.mussuma@kantarmedia.com</to>          
     </message>
 </smtp>

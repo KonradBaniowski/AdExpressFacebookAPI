@@ -47,6 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -111,7 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
-      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
@@ -123,7 +124,7 @@
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
-      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
+      <Project>{2370d3fd-15e0-4fa6-8535-2f16eb42fe93}</Project>
       <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.VP.DAL\TNS.AdExpressI.VP.DAL.csproj">

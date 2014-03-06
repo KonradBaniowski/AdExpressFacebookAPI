@@ -1304,7 +1304,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- Mail Valo -->
-  <vehicle id="mailValo" databaseId="19" showInsertions="false" showCreations="false">
+  <vehicle id="mailValo" databaseId="19" showInsertions="false" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -1369,5 +1369,8 @@
         <allowedColumnDetailLevelItem id="3" name="Support"/>
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
+  </vehicle>
+  <!-- Promotion web -->
+  <vehicle id="webPromotion" databaseId="9999" showInsertions="false" showCreations="false">
   </vehicle>
 </vehicles>

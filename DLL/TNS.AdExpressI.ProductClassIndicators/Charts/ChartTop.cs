@@ -101,8 +101,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             AdExpressCultureInfo fp = WebApplicationParameters.AllowedLanguages[_session.DataLanguage].CultureInfo;           
 
             #region Chart Design
-            this.Width = new Unit("750px");
-            this.Height = new Unit("750px");
+            this.Width = new Unit("750px");//750px
+            this.Height = new Unit("750px");//"750px
             this.ChartAreas[strChartArea].BackColor = (Color)_colorConverter.ConvertFrom(_chartAreasBackColor);
             this.DataManipulator.Sort(PointsSortOrder.Descending, series);
             #endregion
@@ -117,8 +117,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             {
                 title = new Title("" + GestionWeb.GetWebWord(1169, _session.SiteLanguage) + "");
             }
+          
             title.Font = new Font("Arial", (float)14);
-            this.Titles.Add(title);
+            title.Docking = Docking.Top;
+            Titles.Add(title);
+           
             #endregion
 
             #region Series

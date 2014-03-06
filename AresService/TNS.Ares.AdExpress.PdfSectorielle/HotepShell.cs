@@ -39,7 +39,9 @@ namespace TNS.Ares.AdExpress.PdfSectorielle
                         // Preparing treatment                                    
                         PluginInformation pInf = PluginConfiguration.GetPluginInformation(PluginType.Hotep);
                         if (pInf.AssemblyName == null) throw (new ArgumentNullException("AssemblyName layer is null for the Indicator result"));
-                     TreatementSystem t = (TreatementSystem)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pInf.AssemblyName), pInf.Class_, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                     TreatementSystem t = (TreatementSystem)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                         Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pInf.AssemblyName)
+                         , pInf.Class_, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
                      t.EvtStartWork += t_OnStartWork;
                         t.EvtError += t_OnError;
                         t.EvtStopWorkerJob += t_OnStopWorkerJob;

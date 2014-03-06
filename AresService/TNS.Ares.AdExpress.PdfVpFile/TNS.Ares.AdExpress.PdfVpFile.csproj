@@ -101,11 +101,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Selket\TNS.AdExpress.Anubis.Selket.csproj">
-      <Project>{CD7353E9-AACD-41FF-B5CA-F61EFC694A69}</Project>
+      <Project>{cd7353e9-aacd-41ff-b5ca-f61efc694a69}</Project>
       <Name>TNS.AdExpress.Anubis.Selket</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
-      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">

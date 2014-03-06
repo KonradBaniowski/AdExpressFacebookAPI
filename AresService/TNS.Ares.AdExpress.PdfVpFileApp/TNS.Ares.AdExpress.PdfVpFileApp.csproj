@@ -21,6 +21,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -33,10 +35,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -117,8 +117,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Selket\TNS.AdExpress.Anubis.Selket.csproj">
-      <Project>{CD7353E9-AACD-41FF-B5CA-F61EFC694A69}</Project>
+      <Project>{cd7353e9-aacd-41ff-b5ca-f61efc694a69}</Project>
       <Name>TNS.AdExpress.Anubis.Selket</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
@@ -148,6 +152,10 @@
       <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
       <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfVpFile\TNS.Ares.AdExpress.PdfVpFile.csproj">
+      <Project>{6babfc9f-3f47-4257-8b6a-d57b797619ff}</Project>
+      <Name>TNS.Ares.AdExpress.PdfVpFile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>
@@ -156,7 +164,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

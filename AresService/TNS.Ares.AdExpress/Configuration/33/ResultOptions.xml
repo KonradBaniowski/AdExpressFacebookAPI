@@ -27,6 +27,7 @@
       <selection name="Save Result"      id="SaveResultOption" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="SaveVpResultWebControl"         textId="1990" validationMethod="SaveResult();"/>
       <selection name="Export PDF Schedule"        id="ExportPdfSchedule"   assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="PdfSelectionWebControl"        textId="2865"    validationMethod="AskResultExportPDF('schedule');"/>
       <selection name="Export PDF All Promotion file "        id="ExportPdfAllPromoFile"   assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="PdfSelectionWebControl"        textId="2894"    validationMethod="AskResultExportPDF('promofiles');"/>
+      <selection name="Exclu Web Selection"         id="ExcluWebSelection"   assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionExcluWebControl"  skinId="ExcluWebSelectionWebControl"  validationMethod="RefreshVpScheduleResultWebControl('Result');"/>
     </selections>
     <results>
       <result name="layer of result control"        id="Result"       assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleResultWebControl"                            skinId="VpScheduleResultWebControl"       />

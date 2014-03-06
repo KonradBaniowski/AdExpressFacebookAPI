@@ -76,30 +76,20 @@ namespace AdExpress.Private.Results.Excel{
 
                 period = new MediaSchedulePeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, _webSession.DetailPeriod);
 
-                //tab = GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
+            
 
-                //if (_webSession.IdSlogans != null && _webSession.IdSlogans.Count > 0 && tab.GetLength(0) == 0) {
-                //    _webSession.IdSlogans = new ArrayList();
-                //    tab = GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
-                //}
-
-                //result = GenericMediaScheduleUI.GetExcel(tab, _webSession, period, "", false, (int)_webSession.DetailPeriod,true).HTMLCode;
+              
                 TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
-                object[] param = new object[2];
+                var param = new object[2];
                 param[0] = _webSession;
                 param[1] = period;
-                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false,
+                    BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 resultTmp = mediaScheduleResult.GetExcelHtmlCreativeDivision(false);
 
-                /* When we don't have a media schedule for a list of versions we show the message : 'no result for this selection'
-                 * in the old version we switched to the product media schedule
-                 * */
-                //if (resultTmp.HTMLCode.Length <= 0)
-                //{
-                //    _webSession.IdSlogans = new ArrayList();
-                //    resultTmp = mediaScheduleResult.GetExcelHtmlCreativeDivision(false);
-                //}
+             
                 result += resultTmp.HTMLCode;
                 #endregion
 

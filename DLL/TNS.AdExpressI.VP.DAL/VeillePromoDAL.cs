@@ -16,7 +16,8 @@ namespace TNS.AdExpressI.VP.DAL
     public abstract class VeillePromoDAL : IVeillePromoDAL
     {
         private const int PEUGEOT_DATA_HISTORY = 20131001;
-        private const Int64 PEUGEOT_ID_LOGIN = 17470;
+        private const Int64 PEUGEOT_ID_LOGIN = 17710;
+        private const Int64 TNS_ID_LOGIN = 17930;
 
         #region Variables
         /// <summary>
@@ -468,7 +469,8 @@ namespace TNS.AdExpressI.VP.DAL
             sql.Append(_session.GetVpMediaRights(dataTablePrefix, true));
 
             //Historic begin at 01/10/2012 for Peugeot login 
-            if (_session.CustomerLogin.IdLogin == PEUGEOT_ID_LOGIN)
+            if (_session.CustomerLogin.IdLogin == PEUGEOT_ID_LOGIN
+                || _session.CustomerLogin.IdLogin == TNS_ID_LOGIN)
             sql.AppendFormat("  and DATE_END_NUM >={0}   ", PEUGEOT_DATA_HISTORY);
             return sql.ToString();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Results;
 using System.IO;
 using Microsoft.Win32;
@@ -60,33 +61,15 @@ namespace RenaultLoader.ViewModel
         #region  Properties
         public RelayCommand OpenCommand
         {
-            get
-            {
-                if (this._openCommand == null)
-                    this._openCommand = new RelayCommand(() => ExecuteOpenFileDialog());
-
-                return this._openCommand;
-            }
+            get { return _openCommand ?? (_openCommand = new RelayCommand(ExecuteOpenFileDialog)); }
         }
         public RelayCommand SaveCommand
         {
-            get
-            {
-                if (this._saveCommand == null)
-                    this._saveCommand = new RelayCommand(()=>ExecuteSave());
-
-                return this._saveCommand;
-            }
+            get { return _saveCommand ?? (_saveCommand = new RelayCommand(ExecuteSave)); }
         }
         public RelayCommand DeleteCommand
         {
-            get
-            {
-                if (this._deleteCommand == null)
-                    this._deleteCommand = new RelayCommand(() => ExecuteDelete());
-
-                return this._deleteCommand;
-            }
+            get { return _deleteCommand ?? (_deleteCommand = new RelayCommand(ExecuteDelete)); }
         }
       
         /// <summary>
@@ -147,7 +130,7 @@ namespace RenaultLoader.ViewModel
         private void RaisePropertyChanged(string pstrPropertyName)
         {
             if (PropertyChanged != null)
-                PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(pstrPropertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(pstrPropertyName));
 
         }
         #endregion
@@ -174,7 +157,7 @@ namespace RenaultLoader.ViewModel
         /// </summary>
         private void ExecuteOpenFileDialog()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = false;
             openFileDialog.Filter = "Excel Files (.xls;*xlsx)|*.xls;*xlsx";
             openFileDialog.FilterIndex = 1;
@@ -201,20 +184,25 @@ namespace RenaultLoader.ViewModel
             {
                 IsIndeterminateLoading = true;
 
-                veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName
-                    , ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null,null);
+                veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + 
+                    ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName
+                    , ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null,
+                    new object[] { ApplicationParameters.DataBaseDescription }, null, null);
                 DataPromotionDetails dataPromotionDetails = veillePromo.GetDataPromotionDetailList(new FileDataSource(new FileStream(CurrentFile.FullName, FileMode.Open)));
 
                 veillePromo.BeginTransaction();
-                if (veillePromo.HasData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment))
+                if (veillePromo.HasData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment
+                    , Vehicles.names.webPromotion.GetHashCode()))
                 {
-                    MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", "", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", ""
+                        , MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (messageBoxResult == MessageBoxResult.Cancel)
                         return;
                     if (messageBoxResult == MessageBoxResult.Yes)
-                        veillePromo.DeleteData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment);
+                        veillePromo.DeleteData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment, Vehicles.names.webPromotion.GetHashCode());
                 }
-                
+
                 veillePromo.InsertDataPromotionDetails(dataPromotionDetails);
 
                 veillePromo.CommitTransaction();
@@ -240,17 +228,21 @@ namespace RenaultLoader.ViewModel
             try
             {
                 IsIndeterminateLoading = true;
-                IDataVeillePromo veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null, null);
+                var veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                    + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName,
+                    ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null);
 
-                if (veillePromo.HasData(_periodBeginningToDelete, _periodEndToDelete))
+                if (veillePromo.HasData(_periodBeginningToDelete, _periodEndToDelete,Vehicles.names.webPromotion.GetHashCode()))
                 {
-                    MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", "", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", ""
+                        , MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (messageBoxResult == MessageBoxResult.Cancel)
                         return;
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
 
-                        veillePromo.DeleteData(_periodBeginningToDelete, _periodEndToDelete);
+                        veillePromo.DeleteData(_periodBeginningToDelete, _periodEndToDelete, Vehicles.names.webPromotion.GetHashCode());
                         MessageBox.Show("Les données ont été supprimés", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
@@ -302,23 +294,28 @@ namespace RenaultLoader.ViewModel
             }
             if (e is VeillePromoExcelInvalidDateException)
             {
-                MessageBox.Show("Les dates sont invalides sur la cellule  [" + ((VeillePromoExcelInvalidDateException)e).CellExcel.LineId + "," + ((VeillePromoExcelInvalidDateException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Les dates sont invalides sur la cellule  [" + ((VeillePromoExcelInvalidDateException)e).CellExcel.LineId + ","
+                    + ((VeillePromoExcelInvalidDateException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is VeillePromoExcelCellException)
             {
-                MessageBox.Show("Une erreur est survenue sur la cellule  [" + ((VeillePromoExcelCellException)e).CellExcel.LineId + "," + ((VeillePromoExcelCellException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Une erreur est survenue sur la cellule  [" + ((VeillePromoExcelCellException)e).CellExcel.LineId + "," 
+                    + ((VeillePromoExcelCellException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is VeillePromoExcelException) {
-                MessageBox.Show("Le format du fichier est incorrect. Le format doit être du type 'Renault_yyyyMM'", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Le format du fichier est incorrect. Le format doit être du type 'Renault_yyyyMM'", "Erreur"
+                    , MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is VeillePromoExcelOpenFileException) {
                 MessageBox.Show("Impossible d'ouvrir le fichier", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is VeillePromoExcelVisualException) {
-                MessageBox.Show("Une erreur est survenue lors du chargement du fichier Excel: Impossible de retrouver un fichier visuel", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Une erreur est survenue lors du chargement du fichier Excel: Impossible de retrouver un fichier visuel", "Erreur"
+                    , MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is VeillePromoIncorrectPictureFileNameNumberException) {
-                MessageBox.Show("Impossible de retrouver le fichier image. Il existe plusieurs fichiers avec le meme nom, mais avec des extentions différentes", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Impossible de retrouver le fichier image. Il existe plusieurs fichiers avec le meme nom, mais avec des extentions différentes", "Erreur"
+                    , MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is VeillePromoIncorrectPictureFileNameException) {
                 MessageBox.Show("Impossible de retrouver le fichier image", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);

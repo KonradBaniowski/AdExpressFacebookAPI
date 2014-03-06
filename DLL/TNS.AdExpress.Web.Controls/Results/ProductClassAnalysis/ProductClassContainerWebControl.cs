@@ -124,7 +124,9 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                 Navigation.Module module = ModulesList.GetModule(CstWeb.Module.Name.INDICATEUR);
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
                 object[] param = new object[1] { _webSession };
-                IProductClassIndicators productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                var productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 productClassIndicator.ChartType = _chartType;
 				switch(_webSession.CurrentTab){
 					case MotherRecap.MEDIA_STRATEGY :
@@ -169,7 +171,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                 switch (_webSession.CurrentTab) {
                     case MotherRecap.MEDIA_STRATEGY:
                     case MotherRecap.SEASONALITY:
-                        ResultWebControl resultWebControl = new ResultWebControl();
+                        var resultWebControl = new ResultWebControl();
                         resultWebControl.AllowPaging = false;
                         resultWebControl.ShowContainer = false;
                         if(_excel) resultWebControl.OutputType = TNS.FrameWork.WebResultUI.RenderType.excel;
@@ -179,7 +181,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                         _resultTableWebControl = resultWebControl;
                         break;
                     default:
-                        ProductClassTableWebControl productClassTableWebControl = new ProductClassTableWebControl(_webSession);
+                        var productClassTableWebControl = new ProductClassTableWebControl(_webSession);
                         productClassTableWebControl.Excel = _excel;
                         productClassTableWebControl.AjaxProTimeOut = 240000;
                         _resultTableWebControl = productClassTableWebControl;

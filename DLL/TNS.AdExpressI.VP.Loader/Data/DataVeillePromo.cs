@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Results;
@@ -110,24 +111,28 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         #endregion
 
         #region Delete Data
+
         /// <summary>
         /// Delete data between dateBegin parameter and dateEnd parameter
         /// </summary>
         /// <param name="dateBegin">Date Begin</param>
         /// <param name="dateEnd">Date End</param>
-        public void DeleteData(DateTime dateBeginTraitment, DateTime dateEndTraitment) {
-            _veillePromoDAL.DeleteData(dateBeginTraitment, dateEndTraitment);
+        /// <param name="idVehicle">id Vehicle</param>
+        public void DeleteData(DateTime dateBeginTraitment, DateTime dateEndTraitment,long idVehicle) {
+            _veillePromoDAL.DeleteData(dateBeginTraitment, dateEndTraitment, idVehicle);
         }
         #endregion
 
         #region Has Data
+
         /// <summary>
         /// Has data for the date traiment passed in parameter
         /// </summary>
         /// <param name="dateTraitment">Date Traitment</param>
+        /// <param name="idVehicle">id Vehicle</param>
         /// <returns>Has Data or not for the date traiment passed in parameter</returns>
-        public bool HasData(DateTime dateTraitmentBegin, DateTime dateTraitmentEnd) {
-            return _veillePromoDAL.HasData(dateTraitmentBegin, dateTraitmentEnd);
+        public bool HasData(DateTime dateTraitmentBegin, DateTime dateTraitmentEnd,long idVehicle) {
+            return _veillePromoDAL.HasData(dateTraitmentBegin, dateTraitmentEnd, idVehicle);
         }
         #endregion
 
@@ -150,8 +155,8 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         public void InsertDataPromotionDetails(DataPromotionDetails dataPromotionDetails){
 
             #region Variables
-            List<PictureMatching> pictureMatchingPromVisuList = new List<PictureMatching>();
-            List<PictureMatching> pictureMatchingCondVisuList = new List<PictureMatching>();
+            var pictureMatchingPromVisuList = new List<PictureMatching>();
+            var pictureMatchingCondVisuList = new List<PictureMatching>();
             #endregion
 
             try {
@@ -159,13 +164,14 @@ namespace TNS.AdExpressI.VP.Loader.Data {
                 #region Traitment
 
                 #region Data Db Insertions
-                if (!_veillePromoDAL.HasData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment)) {
+                if (!_veillePromoDAL.HasData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment
+                    , Vehicles.names.webPromotion.GetHashCode())) {
                     foreach (DataPromotionDetail cDataPromotionDetail in dataPromotionDetails.DataPromotionDetailList) {
 
                         Dictionary<string, PictureMatching> pictureMatchingPromVisuListTemp = GetPictureFileName(cDataPromotionDetail.PromotionVisual);
                         Dictionary<string, PictureMatching> pictureMatchingCondVisuListTemp = GetPictureFileName(cDataPromotionDetail.ConditionVisual);
                        
-                        DataPromotionDetail dataPromotionDetailTemp = new DataPromotionDetail(
+                        var dataPromotionDetailTemp = new DataPromotionDetail(
                                                                             cDataPromotionDetail.IdProduct
                                                                             , cDataPromotionDetail.IdBrand
                                                                             , cDataPromotionDetail.DateBegin
@@ -174,11 +180,23 @@ namespace TNS.AdExpressI.VP.Loader.Data {
                                                                             , cDataPromotionDetail.IdCategory
                                                                             , cDataPromotionDetail.IdCircuit
                                                                             , cDataPromotionDetail.PromotionContent
-                                                                            , (from pictureMatching in pictureMatchingCondVisuListTemp.Values select pictureMatching.PathOut).ToList<string>()
+                                                                            , (pictureMatchingCondVisuListTemp.Values
+                                                                                                              .Select(
+                                                                                                                  pictureMatching
+                                                                                                                  =>
+                                                                                                                  pictureMatching
+                                                                                                                      .PathOut)).ToList()
                                                                             , cDataPromotionDetail.ConditionText
                                                                             , cDataPromotionDetail.PromotionBrand
-                                                                            , (from pictureMatching in pictureMatchingPromVisuListTemp.Values select pictureMatching.PathOut).ToList<string>()
+                                                                            , (pictureMatchingPromVisuListTemp.Values
+                                                                                                              .Select(
+                                                                                                                  pictureMatching
+                                                                                                                  =>
+                                                                                                                  pictureMatching
+                                                                                                                      .PathOut)).ToList()
                                                                             , cDataPromotionDetail.ExcluWeb
+                                                                            ,cDataPromotionDetail.IsNational
+                                                                            ,cDataPromotionDetail.IdVehicle
                                                                         );
 
 

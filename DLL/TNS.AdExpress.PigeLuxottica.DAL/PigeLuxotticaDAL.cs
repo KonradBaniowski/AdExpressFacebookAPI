@@ -88,7 +88,7 @@ namespace TNS.AdExpress.PigeLuxottica.DAL
             sql.AppendFormat(" and   wp.id_product in ({0}) ", _idProducts);
 
             //Filtering with media rights
-            sql.Append(GetCustomerMediaRight("wp", true));
+            //sql.Append(GetCustomerMediaRight("wp", true));
 
             //Filtering with Press identifier            
             sql.AppendFormat(" and wp.id_vehicle={0}   and ad.id_advertiser=wp.id_advertiser and ad.id_language={1} ", _idVehicle, _dataLanguage);
