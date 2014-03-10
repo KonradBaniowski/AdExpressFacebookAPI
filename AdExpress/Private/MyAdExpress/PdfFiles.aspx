@@ -284,7 +284,7 @@
 										</TR>
 										<TR>
 											<TD></TD>
-											<TD align="right">
+											<TD align="left">
 												<!--Liste des répertoires-->
 												<%=result%>
 												<input id="idMySession" type="hidden" name="nameMySession"> <input id="idPopup" type="hidden" name="namePopup">
