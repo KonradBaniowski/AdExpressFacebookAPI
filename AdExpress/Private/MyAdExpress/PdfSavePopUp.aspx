@@ -39,8 +39,11 @@
         </div>
         <!-- Footer -->
         <div class="popUpFoot popUpFooterBackground">
-            <div style="padding-top:12px">
-                <cc2:ImageButtonRollOverWebControl ID="closeRollOverWebControl" runat="server" OnClick="closeRollOverWebControl_Click" SkinID="fermerButton"></cc2:ImageButtonRollOverWebControl>&nbsp;
+            <div class="popUpFooterPaddingTop">
+                <div class="popUpFooterFloatRight">
+                    <cc2:ImageButtonRollOverWebControl ID="closeRollOverWebControl" runat="server" OnClick="closeRollOverWebControl_Click" SkinID="fermerButton"></cc2:ImageButtonRollOverWebControl>&nbsp;
+                </div>
+                <div id="validationDiv" class="popUpFooterFloatRight"></div>
             </div>
 		</div>
     </form>

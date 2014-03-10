@@ -3233,3 +3233,9 @@ td.jus
 .left{
     text-align:left;
 }
+.popUpFooterFloatRight {
+    float: right;
+}
+.popUpFooterPaddingTop {
+    padding-top:12px;
+}
