@@ -279,7 +279,8 @@ namespace AdExpress.Private
                         break;
                     case 8: newVehicle.Add(5);
                         break;
-                    case 9: newVehicle.Add(6);
+                    case 9: newVehicle.Add(6); break;
+                    case 20: newVehicle.Add(9);
                         break;
                     default: newVehicle.Add(p); break;
 
