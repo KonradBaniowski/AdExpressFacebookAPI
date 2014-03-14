@@ -578,7 +578,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
                     result.Append("</TD></TABLE></TD></TR>");
 
-                    result.Append("<TR height=100%><TD>&nbsp;</TD></TR>");
+                    result.Append("<TR><TD>&nbsp;</TD></TR>");
 
                     withDetail = true;
                 }
@@ -613,7 +613,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                             , _popUp.Theme, path1, GestionWeb.GetWebWord(2085, _webSession.SiteLanguage));
                         result.Append("</td></tr>");
                     }
-                    if (!withDetail) result.Append("<TR height=100%><TD>&nbsp;</TD></TR>");
+                    if (!withDetail) result.Append("<TR><TD>&nbsp;</TD></TR>");
                 }
 
                 result.Append("</TD></TR></TBODY></TABLE></TD>");
