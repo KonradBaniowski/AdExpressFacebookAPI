@@ -77,8 +77,10 @@ namespace KMI.AdExpress.Aphrodite {
             weekPrev.SubWeek(1);
 
             int iSemaine = week.Week;
-            string year = week.FirstDay.Year.ToString();
-            string yearPrev = (week.FirstDay.Year - 1).ToString();
+            //string year = week.FirstDay.Year.ToString();
+            //string yearPrev = (week.FirstDay.Year - 1).ToString();
+            string year = week.Year.ToString();
+            string yearPrev = (week.Year - 1).ToString();
             string date_lancement = year + iSemaine.ToString();
 
             int i;

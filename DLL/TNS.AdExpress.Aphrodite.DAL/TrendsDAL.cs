@@ -361,10 +361,12 @@ namespace KMI.AdExpress.Aphrodite.DAL {
             if (weekString.Length == 1) weekString = "0" + weekString;
             period = weekCurrent.Year.ToString() + weekString;
 
-            periodBeginning = weekCurrent.FirstDay.Year.ToString() + "0101";
+            //periodBeginning = weekCurrent.FirstDay.Year.ToString() + "0101";
+            periodBeginning = weekCurrent.Year.ToString() + "0101";
             periodEnding = weekCurrent.LastDay.ToString("yyyyMMdd");
 
-            periodBeginningPrev = weekCurrentPrec.FirstDay.Year.ToString() + "0101";
+            //periodBeginningPrev = weekCurrentPrec.FirstDay.Year.ToString() + "0101";
+            periodBeginningPrev = weekCurrentPrec.Year.ToString() + "0101";
 
             switch (treatmentType) {
                 case Application.TreatmentType.month:
