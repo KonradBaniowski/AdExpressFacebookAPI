@@ -269,15 +269,16 @@
         }
 
         function CancelForm(selectorId) {
+
             $(selectorId).off("click");
-            $(selectorId).on("click", function () {
+            $(selectorId).on("click", function (event) {
                
                 $('#loaderdiv').show();
                 var loginId = $.getUrlVar('loginId');
 
                 if (fValidator) {
                     fValidator.resetForm();
-
+                    event.preventDefault();
                     $.ajax({
                         type: "POST",
                         async: false,
@@ -315,7 +316,7 @@
                             }
                         },
                         submitHandler: function () {
-
+                            $("#codifify").off("click");
                             $.ajax({
                                 type: "POST",
                                 async: false,
@@ -421,13 +422,15 @@
 
         function PendingFormEvent(selectorId, activationCode) {
             $(selectorId).off("click");
-            $(selectorId).on("click", function () {
+            $(selectorId).on("click", function (event) {
 
                 //$('#loaderdiv').show();
                 //var promotionId = $.getUrlVar('promotionId');
                 var loginId = $.getUrlVar('loginId');
 
                 if (fValidator) {
+                    fValidator.resetForm();
+                    event.preventDefault();
                     var mokdata = JSON.stringify(GetAdvertData(activationCode));
                     $.ajax({
                         type: "POST",
@@ -544,19 +547,22 @@
 
         function RejectFormEvent(selectorId, activationCode) {
             $(selectorId).off("click");
-            $(selectorId).on("click", function () {
+            $(selectorId).on("click", function (event) {
                 
                 $('#loaderdiv').show();
-                var promotionId = $.getUrlVar('promotionId');
+                //var promotionId = $.getUrlVar('promotionId');
                 var loginId = $.getUrlVar('loginId');
 
                 if (fValidator) {
-
+                    fValidator.resetForm();
+                    event.preventDefault();
+                    var mokdata = JSON.stringify(GetAdvertData(activationCode));
                     $.ajax({
                         type: "POST",
                         async: false,
                         url: "Edit.aspx/RejectForm",
-                        data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                        //data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                        data: mokdata,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
@@ -593,12 +599,13 @@
                             }
                         },
                         submitHandler: function (form) {
-
+                            var mokdata = JSON.stringify(GetAdvertData(activationCode));
                             $.ajax({
                                 type: "POST",
                                 async: false,
                                 url: "Edit.aspx/RejectForm",
-                                data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                                //data: "{promotionId:" + promotionId + ",loginId:" + loginId + ",activationCode:" + activationCode + "}",
+                                data: mokdata,
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function (msg) {

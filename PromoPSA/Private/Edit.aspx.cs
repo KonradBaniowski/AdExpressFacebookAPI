@@ -49,20 +49,24 @@ public partial class Private_Edit : PrivateWebPage
    
 
     [WebMethod]
-    public static long RejectForm(long promotionId, string loginId, long activationCode)
+    //public static long RejectForm(long promotionId, string loginId, long activationCode)
+    public static long RejectForm(Advert advert, string loginId)
     {
         try
         {
             IResults results = new Results();
-            results.UpdateCodification(promotionId, activationCode);
-            results.ChangeAdvertStatus(promotionId, activationCode);
+            /*results.UpdateCodification(promotionId, activationCode);
+            results.ChangeAdvertStatus(promotionId, activationCode);*/
+            results.UpdateCodification(advert);
+            results.ChangeAdvertStatus(advert.IdDataPromotion, advert.Activation);
             return results.GetAvailablePromotionId(Convert.ToInt64(loginId));
         }
         catch (Exception e)
         {
             string message = " Erreur lors du rejet de la fiche.<br/>";
             if (!string.IsNullOrEmpty(e.Message)) message += string.Format("{0}<br/>", e.Message);
-            message += string.Format("Promotion numero : {0}<br/>", promotionId);
+            //message += string.Format("Promotion numero : {0}<br/>", promotionId);
+            message += string.Format("Promotion numero : {0}<br/>", advert.IdDataPromotion);
             if (!string.IsNullOrEmpty(loginId)) message += string.Format("Login Id : {0}", loginId);
             Utils.SendErrorMail(message, e);
             throw new Exception("Erreur de rejet de fiche", e);
