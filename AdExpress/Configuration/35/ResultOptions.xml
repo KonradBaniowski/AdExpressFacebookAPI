@@ -3,6 +3,7 @@
   <inset available="false" description="Specify if the option inset is available overall the website"/>
   <mediaSchedule useComparative="false"/>
   <bannersFormat use="false"/>
+  <tendency useComparativeWeekType="false"/>
   <retailer use="true">
     <matchingTables>
       <matchingTable defaultEnumId="153"  retailerEnumId="184" description="Data: Cinema Retailer" />
