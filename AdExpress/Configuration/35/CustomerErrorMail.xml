@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <smtp>
-    <server adress="tsespmgw001.tnsad.com" port="25"/>
-    <message from="tnsadexpress@tns-global.fi">
-		<to>guillaume.facon@tnsmi.fr</to>
-		<to>benjamin.masson@tnsmi.fr</to>		
-		<to>youssef.rkaina@tnsmi.fr</to>
-		<to>dede.mussuma@tnsmi.fr</to>
-    <to>alexandre.rousseau@tnsmi.fr</to>
-    </message>
+  <server adress="mailgw.tns-gallup.fi" port="25"/>
+  <message from="tnsadexpress@tns-global.fi">
+    <to>guillaume.facon@kantarmedia.com</to>
+    <to>benjamin.masson@kantarmedia.com</to>
+    <to>youssef.rkaina@kantarmedia.com</to>
+    <to>dede.mussuma@kantarmedia.com</to>
+  </message>
 </smtp>
