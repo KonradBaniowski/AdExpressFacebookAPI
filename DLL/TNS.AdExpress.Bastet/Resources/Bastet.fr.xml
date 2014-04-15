@@ -106,7 +106,8 @@
     <item mnemonic="w124" type="System.String">Du</item>
 
     <item mnemonic="w201" type="System.String">Tous</item>
-
+    <item mnemonic="w210" type="System.String">PLURIMEDIA</item>
+    
     <item mnemonic="w280" type="System.String">Durée</item>
     
     <item mnemonic="w776" type="System.String">Sélection de périodes calendaires</item>
