@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<smtp>
+  <server adress="frmitch-msprod" port="25"/>
+  <message from="AdVolumeChecker@kantarmedia.com">
+    <to>youssef.rkaina@kantarmedia.com</to>
+  </message>
+</smtp>

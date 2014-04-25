@@ -1,0 +1,55 @@
+﻿<Window x:Class="AdVolumeChecker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ctr="clr-namespace:AdVolumeChecker.Search"
+        xmlns:slc="clr-namespace:AdVolumeChecker.Selection"
+        xmlns:multiSelectionTree="clr-namespace:MultiSelectionTreeView;assembly=MultiSelectionTreeView"
+        FontSize="14"
+        Title="Ad Volume Checker" 
+        Width="900" Height="600" 
+        WindowStartupLocation="CenterScreen" Background="#FF828282"
+        Icon="Images\check.ico"
+        >
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Left" Margin="10,4,0,0" Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Background="#FFE7E7E7">
+            <TextBlock Text="Période" Margin="8,4,0,0" />
+            <ComboBox x:Name="periodList" HorizontalAlignment="Left" Margin="6,2,2,2" Width="220"/>
+            <TextBlock Text="Versions (ex : id1, id2, id3 ...)" Margin="16,4,0,0" />
+            <TextBox x:Name="versionList"  Margin="6,2,2,2" Width="390"/>
+        </StackPanel>
+        <TabControl Margin="8" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Background="#FFE7E7E7">
+            <TabItem Header="Recherche">
+                <ctr:SearchControl x:Name="searchControl"/>
+            </TabItem>
+        </TabControl>
+        <TabControl Margin="8" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Background="#FFE7E7E7">
+            <TabItem Header="Sélection">
+                <slc:SelectionControl x:Name="selectioncontrol"/>
+            </TabItem>
+        </TabControl>
+        <StackPanel Margin="0,0,0,4" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ProgressBar x:Name="progressBar" Grid.Column="1" HorizontalAlignment="Stretch" Height="26" Margin="0,0,0,0" VerticalAlignment="Top" MinWidth="696"/>
+                <Button x:Name="generateExcel" Grid.Column="0" Click="Generate_Excel_Click" Content="_Générer le fichier Excel" Padding="8,0" Margin="8,0,0,0" HorizontalAlignment="left"/>
+            </Grid>
+        </StackPanel>
+        
+    </Grid>
+</Window>
