@@ -366,6 +366,13 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 				cells["E"+cellRow].Style.ForegroundColor =  Color.FromArgb(128,128,192);
 				cells["E" + cellRow].Style.Pattern = BackgroundType.Solid;
+                if (!string.IsNullOrEmpty(parameters.Logins)) {
+                    cells["F" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                    cells["F" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                    cells["F" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                    cells["F" + cellRow].Style.ForegroundColor = Color.FromArgb(128, 128, 192);
+                    cells["F" + cellRow].Style.Pattern = BackgroundType.Solid;
+                }
 				cellRow++;		
 
 				//Expéditeur						
@@ -377,6 +384,10 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				cells["E"+cellRow].PutValue(dt.Rows[0]["FIRST_NAME"].ToString()+"  "+dt.Rows[0]["NAME"].ToString());
 				cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 				cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                if (!string.IsNullOrEmpty(parameters.Logins)) {
+                    cells["F" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                    cells["F" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                }
 				cellRow++;		
 
 				//Emails destinataires
@@ -386,7 +397,9 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 					cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
 					cells["D"+cellRow].Style.Font.IsBold = true;
 					cells["E"+cellRow].PutValue(parameters.EmailsRecipient[i].ToString());
-					cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;			
+					cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                    if (!string.IsNullOrEmpty(parameters.Logins))
+                        cells["F" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 					cellRow++;
 				}
 			
@@ -410,6 +423,11 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 				cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 				cells["E"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                if (!string.IsNullOrEmpty(parameters.Logins)) {
+                    cells["F" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                    cells["F" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                    cells["F" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                }
 				cellRow++;	
 
 				//Logins clients
@@ -425,8 +443,10 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 					for(int i=0; i<loginsArray.Length;i++){
                         dt = GetClientInstance(parameters).Name(loginsArray[i]);
 						if(dt!=null && dt.Rows.Count>0){
-							cells["E"+cellRow].PutValue(dt.Rows[0]["login"].ToString());
+                            cells["E" + cellRow].PutValue(dt.Rows[0]["login"].ToString());
 							cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["F" + cellRow].PutValue(dt.Rows[0]["first_name"].ToString() + " " + dt.Rows[0]["name"].ToString());
+                            cells["F" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 
@@ -436,17 +456,24 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 					cellRow--;
 					cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 					cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                    cells["F" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 				}else{
 					cells["E" + cellRow].PutValue(" " + GestionWeb.GetWebWord(201, _language) + " ");
 				
 					cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 					cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 				}
-			
-		
+
+                if (!string.IsNullOrEmpty(parameters.Logins)) {
+                    sheet.Cells.Merge(8, 4, 1, 2);
+                    sheet.Cells.Merge(9, 4, 1, 2);
+                    sheet.Cells.Merge(10, 4, 1, 2);
+                    sheet.Cells.Merge(11, 4, 1, 2);
+                }
 				sheet.AutoFitRow(4);		
 				sheet.AutoFitColumn(3);
 				sheet.AutoFitColumn(4);
+                sheet.AutoFitColumn(5);
 				sheet.AutoFitColumn(7);
 			}catch(Exception err){
 				throw (new  BastetExceptions.BastetExcelException(" CustomerSelelection : Impossible to get selection recall. " + debug, err));

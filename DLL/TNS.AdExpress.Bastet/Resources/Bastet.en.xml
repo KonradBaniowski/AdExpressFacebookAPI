@@ -110,7 +110,8 @@
     <item mnemonic="w210" type="System.String">MULTIMEDIA</item>
 
     <item mnemonic="w280" type="System.String">Duration</item>
-    
+
+    <item mnemonic="w763" type="System.String">Contact</item>
     <item mnemonic="w776" type="System.String">Search by Calendar Period</item>
     <item mnemonic="w777" type="System.String">Search by Rolling Period</item>
     

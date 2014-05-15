@@ -110,6 +110,7 @@
     
     <item mnemonic="w280" type="System.String">Durée</item>
     
+    <item mnemonic="w763" type="System.String">Contact</item>
     <item mnemonic="w776" type="System.String">Sélection de périodes calendaires</item>
     <item mnemonic="w777" type="System.String">Sélection de périodes glissantes</item>
     

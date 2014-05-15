@@ -106,14 +106,23 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 						cells["C"+startIndex].Style.ForegroundColor = Color.FromArgb(128,128,192);
 						cells["C" + startIndex].Style.Pattern = BackgroundType.Solid;
 
-						cells["D"+startIndex].PutValue(" "+GestionWeb.GetWebWord(2484, language)+" ");
-						cells["D"+startIndex].Style.Font.IsBold = true;
-						cells["D"+cellRow].Style.Font.Color = Color.White;
-						cells["D"+startIndex].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
-						cells["D"+startIndex].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
-						cells["D"+startIndex].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
-						cells["D"+startIndex].Style.ForegroundColor = Color.FromArgb(128,128,192);
-						cells["D" + startIndex].Style.Pattern = BackgroundType.Solid;
+                        cells["D" + startIndex].PutValue(" " + GestionWeb.GetWebWord(763, language) + " ");
+                        cells["D" + startIndex].Style.Font.IsBold = true;
+                        cells["D" + cellRow].Style.Font.Color = Color.White;
+                        cells["D" + startIndex].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                        cells["D" + startIndex].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                        cells["D" + startIndex].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                        cells["D" + startIndex].Style.ForegroundColor = Color.FromArgb(128, 128, 192);
+                        cells["D" + startIndex].Style.Pattern = BackgroundType.Solid;
+
+						cells["E"+startIndex].PutValue(" "+GestionWeb.GetWebWord(2484, language)+" ");
+						cells["E"+startIndex].Style.Font.IsBold = true;
+						cells["E"+cellRow].Style.Font.Color = Color.White;
+						cells["E"+startIndex].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+						cells["E"+startIndex].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+						cells["E"+startIndex].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+						cells["E"+startIndex].Style.ForegroundColor = Color.FromArgb(128,128,192);
+						cells["E" + startIndex].Style.Pattern = BackgroundType.Solid;
 						cellRow++;
 
 						//Pour chaque élément
@@ -126,17 +135,23 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							cells["B"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 						
 							//Logins
-							cells["C"+cellRow].PutValue(dt.Rows[i]["LOGIN"].ToString());
+                            cells["C" + cellRow].PutValue(dt.Rows[i]["LOGIN"].ToString());
 							cells["C"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;							
 							cells["C"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["C"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 
+                            //contact
+                            cells["D" + cellRow].PutValue(dt.Rows[i]["FIRST_NAME"].ToString() + " " + dt.Rows[i]["NAME"].ToString());
+                            cells["D" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["D" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                            cells["D" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+
 							//nombre d'utilisation
-							cells["D"+cellRow].PutValue(Int64.Parse(dt.Rows[i]["CONNECTION_NUMBER"].ToString()));
-							cells["D"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;						
-							cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
-							cells["D"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;	
-							cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
+							cells["E"+cellRow].PutValue(Int64.Parse(dt.Rows[i]["CONNECTION_NUMBER"].ToString()));
+							cells["E"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;						
+							cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+							cells["E"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;	
+							cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
 																
 							cellRow++;
 						}
@@ -154,13 +169,17 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 						cells["C"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 						cells["C"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 
-						cells["D"+cellRow].PutValue(Int64.Parse(dt.Compute("sum(CONNECTION_NUMBER)","").ToString()));
-						cells["D"+cellRow].Style.Font.Color = Color.Red;
-						cells["D"+cellRow].Style.Font.IsBold = true;
-						cells["D"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;							
-						cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
-						cells["D"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;	
-						cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
+                        cells["D" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                        cells["D" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                        cells["D" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+
+						cells["E"+cellRow].PutValue(Int64.Parse(dt.Compute("sum(CONNECTION_NUMBER)","").ToString()));
+						cells["E"+cellRow].Style.Font.Color = Color.Red;
+						cells["E"+cellRow].Style.Font.IsBold = true;
+						cells["E"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;							
+						cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+						cells["E"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;	
+						cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
 					
 						#endregion
 
@@ -190,6 +209,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					sheet.AutoFitColumn(1);	
 					sheet.AutoFitColumn(2);
 					sheet.AutoFitColumn(3);
+                    sheet.AutoFitColumn(4);
 
 				}
 			}catch(Exception err){

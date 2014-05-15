@@ -46,6 +46,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 
 				dtResult.Columns.Add("company",System.Type.GetType("System.String"));
 				dtResult.Columns.Add("login",System.Type.GetType("System.String"));
+                dtResult.Columns.Add("contact", System.Type.GetType("System.String"));
 				dtResult.Columns.Add("connection_number",System.Type.GetType("System.Double"));		
 				foreach(DataRow dr in dt.Rows){
 					if(oldDateConnection!=Int64.Parse(dr["date_connection"].ToString())){
@@ -62,9 +63,10 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 					if(!idLoginsArr.Contains(row["id_login"].ToString())){
 						resultRow=dtResult.NewRow();							
 						resultRow["company"] = row["company"].ToString();
-						resultRow["login"] = row["login"].ToString();
+                        resultRow["login"] = row["login"].ToString();
+                        resultRow["contact"] = row["first_name"].ToString() + " " + row["name"].ToString();
 						resultRow["connection_number"] = double.Parse(dt.Compute("sum(connection_number)","id_login="+row["id_login"].ToString()).ToString()); 
-						for(int i=3;i<dtResult.Columns.Count;i++){	
+						for(int i=4;i<dtResult.Columns.Count;i++){	
 							columnName=dtResult.Columns[i].ColumnName;
 							columnName = columnName.Substring(6,6);
 							tempValue = dt.Compute("sum(connection_number)","id_login="+row["id_login"].ToString()+" and date_connection="+columnName); 						
@@ -177,6 +179,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 
 				dtResult.Columns.Add("company",System.Type.GetType("System.String"));
 				dtResult.Columns.Add("login",System.Type.GetType("System.String"));
+                dtResult.Columns.Add("contact", System.Type.GetType("System.String"));
 				dtResult.Columns.Add("connection_number",System.Type.GetType("System.Double"));		
 				foreach(DataRow dr in dt.Rows){
 					if(oldDateConnection!=Int64.Parse(dr["date_connection"].ToString())){
@@ -194,9 +197,10 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 					if(!idLoginsArr.Contains(row["id_login"].ToString())){
 						resultRow=dtResult.NewRow();							
 						resultRow["company"] = row["company"].ToString();
-						resultRow["login"] = row["login"].ToString();
+                        resultRow["login"] = row["login"].ToString();
+                        resultRow["contact"] = row["first_name"].ToString() + " " + row["name"].ToString();
 						resultRow["connection_number"] = double.Parse(dt.Compute("sum(connection_number)","id_login="+row["id_login"].ToString()).ToString()); 
-						for(int i=3;i<dtResult.Columns.Count;i++){	
+						for(int i=4;i<dtResult.Columns.Count;i++){	
 							columnName=dtResult.Columns[i].ColumnName;
 							columnName = columnName.Substring(4,1);
 							tempValue = dt.Compute("sum(connection_number)","id_login="+row["id_login"].ToString()+" and date_connection="+columnName); 						

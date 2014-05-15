@@ -63,9 +63,9 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							
 					//libellés tranches horaires
 					if(parameters!=null && parameters.Logins.Length==0){
-						strArray = new string[] { GestionWeb.GetWebWord(1132, language), GestionWeb.GetWebWord(2485, language), "00h00-8h00", "8H00-12H00", "12H00-16h00", "16H00-20h00", "20h00-24h00", GestionWeb.GetWebWord(1401, language) }; 
-						range = cells.CreateRange("A"+startIndex,"H"+startIndex);
-						BastetFunctions.WorkSheet.CellsHeaderStyle(cells,null,3,0,7,true,Color.White);
+                        strArray = new string[] { GestionWeb.GetWebWord(1132, language), GestionWeb.GetWebWord(2485, language), GestionWeb.GetWebWord(763, language), "00h00-8h00", "8H00-12H00", "12H00-16h00", "16H00-20h00", "20h00-24h00", GestionWeb.GetWebWord(1401, language) }; 
+						range = cells.CreateRange("A"+startIndex,"I"+startIndex);
+						BastetFunctions.WorkSheet.CellsHeaderStyle(cells,null,3,0,8,true,Color.White);
 					}
 					else{
 						strArray = new string[] { "00h00-8h00", "8H00-12H00", "12H00-16h00", "16H00-20h00", "20h00-24h00", GestionWeb.GetWebWord(1401, language) }; 
@@ -91,7 +91,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 						foreach(DataRow dr in  dt.Rows){
 						
 							//Connexions par login
-							range = cells.CreateRange("C"+cellRow,"H"+cellRow);
+							range = cells.CreateRange("D"+cellRow,"I"+cellRow);
 							iArray = new int[]{int.Parse(dr["CONNECTION_NUMBER_24_8"].ToString()),int.Parse(dr["CONNECTION_NUMBER_8_12"].ToString()),int.Parse(dr["CONNECTION_NUMBER_12_16"].ToString()),int.Parse(dr["CONNECTION_NUMBER_16_20"].ToString()),
 												  int.Parse(dr["CONNECTION_NUMBER_20_24"].ToString()),int.Parse(dr["CONNECTION_NUMBER"].ToString())};
 							cells.ImportArray(iArray,range.FirstRow,range.FirstColumn,false);
@@ -105,17 +105,22 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							cells["A"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["A"+cellRow].Style.Font.IsBold = true;
 
-							cells["B"+cellRow].PutValue(dr["LOGIN"].ToString());
+                            cells["B" + cellRow].PutValue(dr["LOGIN"].ToString());
 							cells["B"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 							cells["B"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;					
 							cells["B"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+
+                            cells["C" + cellRow].PutValue(dr["FIRST_NAME"].ToString() + " " + dr["NAME"].ToString());
+                            cells["C" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["C" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["C" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							
-							cells["C"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 							cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
 							cells["F"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
 							cells["G"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;							
-							cells["H"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
+							cells["H"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["I" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 										
 							oldIdCompany = Int64.Parse(dr["ID_COMPANY"].ToString());
 							cellRow++;
@@ -125,13 +130,14 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 						
 						//Total
 						BastetFunctions.WorkSheet.PutCellValue(cells,GestionWeb.GetWebWord(1401, language), cellRow - 1, 0, true, Color.Red);
-						BastetFunctions.WorkSheet.PutCellValue(cells,"",cellRow-1,1,true,Color.Red);
-						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_24_8)","").ToString()),cellRow-1,2,true,Color.Red);						
-						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_8_12)","").ToString()),cellRow-1,3,true,Color.Red);
-						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_12_16)","").ToString()),cellRow-1,4,true,Color.Red);
-						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_16_20)","").ToString()),cellRow-1,5,true,Color.Red);
-						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_20_24)","").ToString()),cellRow-1,6,true,Color.Red);
-						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER)","").ToString()),cellRow-1,7,true,Color.Red);
+                        BastetFunctions.WorkSheet.PutCellValue(cells, "", cellRow - 1, 1, true, Color.Red);
+                        BastetFunctions.WorkSheet.PutCellValue(cells, "", cellRow - 1, 2, true, Color.Red);
+						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_24_8)","").ToString()),cellRow-1,3,true,Color.Red);						
+						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_8_12)","").ToString()),cellRow-1,4,true,Color.Red);
+						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_12_16)","").ToString()),cellRow-1,5,true,Color.Red);
+						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_16_20)","").ToString()),cellRow-1,6,true,Color.Red);
+						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_20_24)","").ToString()),cellRow-1,7,true,Color.Red);
+						BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER)","").ToString()),cellRow-1,8,true,Color.Red);
 	
 						#region Graphique
 
@@ -147,7 +153,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 						Chart chart=sheet.Charts[chartIndex];
 					
 						//Construit le graphique
-						BastetFunctions.BastetChart.Build(chart,"C"+lastRow+":G"+lastRow,"C"+startIndex+":G"+startIndex
+						BastetFunctions.BastetChart.Build(chart,"D"+lastRow+":H"+lastRow,"D"+startIndex+":H"+startIndex
 							, GestionWeb.GetWebWord(2486, language), GestionWeb.GetWebWord(2487, language), GestionWeb.GetWebWord(2488, language), GestionWeb.GetWebWord(2489, language));
 
 						#endregion
@@ -194,7 +200,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					vPageBreaks=cells[(cellRow-1+30),(minimunVPageBreaks)].Name;
 					BastetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2491, language), dt, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, language);
 					//Ajustement de la taile des cellules en fonction du contenu
-					for(int c=0;c<=7;c++){
+					for(int c=0;c<=8;c++){
 						sheet.AutoFitColumn(c);
 					}	
 					#endregion								
@@ -796,7 +802,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
                             cells["A" + cellRow].Style.Font.IsBold = true;
 
                             //Login
-                            cells["B" + cellRow].PutValue(dr["LOGIN"].ToString());
+                            cells["B" + cellRow].PutValue(dr["LOGIN"].ToString() + " (" + dr["FIRST_NAME"].ToString() + " " + dr["NAME"].ToString() + ") ");
                             cells["B" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
                             cells["B" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
                             cells["B" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;

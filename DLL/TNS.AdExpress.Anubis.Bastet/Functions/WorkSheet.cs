@@ -78,15 +78,20 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			string expression="";
 			string date="";
 			object totalConnectionByDate=0;
-			
+            int startIndex = 3;
 			
 			//Libellés des mois
 			PutCellValue(cells," "+GestionWeb.GetWebWord(1132,language)+" ",cellRow-1,0,true,Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,0,0,true,Color.White);	
 			PutCellValue(cells,sheetName,cellRow-1,1,true,Color.Black);
-			CellsHeaderStyle(cells,null,cellRow-1,1,1,true,Color.White);	
-															
-			for(i=3;i<dt.Columns.Count;i++){	
+			CellsHeaderStyle(cells,null,cellRow-1,1,1,true,Color.White);
+            if (clientParameter.Equals("login")) {
+                PutCellValue(cells, " " + GestionWeb.GetWebWord(763, language) + " ", cellRow - 1, 2, true, Color.Black);
+                CellsHeaderStyle(cells, null, cellRow - 1, 2, 2, true, Color.White);
+                startIndex++;
+            }
+
+            for (i = startIndex; i < dt.Columns.Count; i++) {	
 				switch(periodType){
 					case ConstantesTracking.Period.Type.monthly :
 						date = MonthString.GetCharacters(int.Parse(dt.Columns[i].ColumnName.Substring(10, 2)), WebApplicationParameters.AllowedLanguages[language].CultureInfo, 3)
@@ -109,10 +114,14 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			foreach(DataRow dr in  dt.Rows){
 				//Connexions par login et par mois
 				PutCellValue(cells,dr["company"].ToString(),cellRow-1,0,true,Color.Black);	
-				PutCellValue(cells,dr[clientParameter].ToString(),cellRow-1,1,false,Color.Black);						
-				for(j=3;j<dt.Columns.Count;j++){
-					PutCellValue(cells,dr[j],cellRow-1,j-1,false,Color.Black);							
-				}
+				PutCellValue(cells,dr[clientParameter].ToString(),cellRow-1,1,false,Color.Black);
+                if (clientParameter.Equals("login")) {
+                    PutCellValue(cells, dr["contact"].ToString(), cellRow - 1, 2, false, Color.Black);
+                }
+
+                for (j = startIndex; j < dt.Columns.Count; j++) {
+                    PutCellValue(cells, dr[j], cellRow - 1, j - 1, false, Color.Black);
+                }
 						
 				//total colonne						
 				PutCellValue(cells,dr["connection_number"],cellRow-1,j-1,false,Color.Black);												
@@ -123,16 +132,20 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			//Total lignes
 			PutCellValue(cells, GestionWeb.GetWebWord(1401,language), cellRow - 1, 0, true, Color.Red);
 			PutCellValue(cells,"",cellRow-1,1,true,Color.Black);
-					
-					
-			for(j=3;j<dt.Columns.Count;j++){
+            PutCellValue(cells, "", cellRow - 1, 2, true, Color.Black);
+
+
+            for (j = startIndex; j < dt.Columns.Count; j++) {
 				expression = "sum("+dt.Columns[j].ColumnName+")";
 				totalConnectionByDate = dt.Compute(expression,"");
 				if(totalConnectionByDate!=System.DBNull.Value && !totalConnectionByDate.Equals(""))
 					PutCellValue(cells,totalConnectionByDate,cellRow-1,j-1,true,Color.Red);
 				else PutCellValue(cells,0,cellRow-1,j-1,true,Color.Red);
 			}
-			serial="C"+cellRow+":"+cells[(cellRow-1),(j-2)].Name;
+            if (clientParameter.Equals("login"))
+                serial = "D" + cellRow + ":" + cells[(cellRow - 1), (j - 2)].Name;
+            else
+                serial = "C" + cellRow + ":" + cells[(cellRow - 1), (j - 2)].Name;
 
 			totalConnectionByDate = dt.Compute("sum(connection_number)","");
 			if(totalConnectionByDate!=System.DBNull.Value && !totalConnectionByDate.Equals(""))	
@@ -381,8 +394,10 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			CellsHeaderStyle(cells,null,cellRow-1,0,0,true,Color.White);	
 			PutCellValue(cells,sheetName,cellRow-1,1,true,Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,1,1,true,Color.White);
-			PutCellValue(cells,GestionWeb.GetWebWord(2532,language),cellRow-1,2,true,Color.Black);
-			CellsHeaderStyle(cells,null,cellRow-1,2,2,true,Color.White);
+            PutCellValue(cells, GestionWeb.GetWebWord(763, language), cellRow - 1, 2, true, Color.Black);
+            CellsHeaderStyle(cells, null, cellRow - 1, 2, 2, true, Color.White);
+			PutCellValue(cells,GestionWeb.GetWebWord(2532,language),cellRow-1,3,true,Color.Black);
+			CellsHeaderStyle(cells,null,cellRow-1,3,3,true,Color.White);
 															
 
 			cellRow++;
@@ -394,9 +409,10 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 				}else{
 					cells[cellRow-1,0].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
 				}
-										
-				PutCellValue(cells,dr["login"].ToString(),cellRow-1,1,false,Color.Black);				
-				PutCellValue(cells,dr["IP_ADDRESS"],cellRow-1,2,false,Color.Black);	
+
+                PutCellValue(cells, dr["login"].ToString(), cellRow - 1, 1, false, Color.Black);
+                PutCellValue(cells, dr["first_name"].ToString() + " " + dr["name"].ToString(), cellRow - 1, 2, false, Color.Black);
+				PutCellValue(cells,dr["IP_ADDRESS"],cellRow-1,3,false,Color.Black);	
 																												
 				cellRow++;
 				oldIdLogin=Int64.Parse(dr["id_login"].ToString());
@@ -404,7 +420,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			}								
 			cells[cellRow-2,0].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 			//Ajustement de la taile des cellules en fonction du contenu
-			for(int c=0;c<4;c++)
+			for(int c=0;c<5;c++)
 				sheet.AutoFitColumn(c);
 		}
 		#endregion

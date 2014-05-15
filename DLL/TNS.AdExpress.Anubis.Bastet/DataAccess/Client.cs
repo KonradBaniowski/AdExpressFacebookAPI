@@ -67,7 +67,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" select sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_8_12) as CONNECTION_NUMBER_8_12");
 				sql.Append(",sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_12_16) as CONNECTION_NUMBER_12_16,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_16_20) as CONNECTION_NUMBER_16_20");
 				sql.Append(",sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_20_24) as CONNECTION_NUMBER_20_24,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_24_8) as CONNECTION_NUMBER_24_8");
-				sql.Append(","+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
+                sql.Append("," + companyTable.Prefix + ".id_company ," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login," + contactTable.Prefix + ".first_name," + contactTable.Prefix + ".name ");
 				//From
 				sql.Append(" from " + connectionByLoginTable.SqlWithPrefix);
 				sql.Append(" ," + companyTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
@@ -81,7 +81,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
 				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 				//Gourp by
-				sql.Append(" group by  "+companyTable.Prefix+".id_company,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
+                sql.Append(" group by  " + companyTable.Prefix + ".id_company," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login," + contactTable.Prefix + ".first_name," + contactTable.Prefix + ".name ");
 				//Order by
 				sql.Append(" order by  CONNECTION_NUMBER  desc,"+loginTable.Prefix+".login ");
 				#endregion
@@ -170,9 +170,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
 				
 				//select	
-				sql.Append(" select id_company,company,id_login ,login,DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER from ( ");
+                sql.Append(" select id_company,company,id_login ,login, first_name, name, DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER from ( ");
 
-				sql.Append(" select "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login ,"+loginTable.Prefix+".login");
+                sql.Append(" select " + companyTable.Prefix + ".id_company ," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login ," + loginTable.Prefix + ".login, " + contactTable.Prefix + ".first_name, " + contactTable.Prefix + ".name ");
 				sql.Append(",TO_NUMBER(SUBSTR(TO_CHAR(DATE_CONNECTION),1,6)) AS DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER");
 				
 				//From
@@ -190,9 +190,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 							
 				//Gourp by
-				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,login,date_connection,connection_number");
+				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,login, " + contactTable.Prefix + ".first_name, " + contactTable.Prefix + ".name,date_connection,connection_number");
 
-				sql.Append(" ) group by date_connection,id_company,company,id_login,login ");
+                sql.Append(" ) group by date_connection,id_company,company,id_login,login, first_name, name ");
                 //Order by
                 sql.Append(" order by  date_connection, login, id_login ");
 				#endregion
@@ -286,9 +286,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
 				
 				//select	
-				sql.Append(" select id_company,company,id_login ,login,DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER from ( ");
+                sql.Append(" select id_company,company,id_login ,login, first_name, name, DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER from ( ");
 
-				sql.Append(" select "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login ,"+loginTable.Prefix+".login");
+                sql.Append(" select " + companyTable.Prefix + ".id_company ," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login ," + loginTable.Prefix + ".login, " + contactTable.Prefix + ".first_name, " + contactTable.Prefix + ".name ");
 				sql.Append(",TO_NUMBER(TO_CHAR(TO_DATE(DATE_CONNECTION,'YYYY-MM-DD'),'D')) AS DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER");
 				
 				//From
@@ -307,9 +307,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 							
 				//Gourp by
-				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,login,date_connection,connection_number");
+				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login, " + contactTable.Prefix + ".first_name, " + contactTable.Prefix + ".name,login,date_connection,connection_number");
 
-				sql.Append(" ) group by date_connection,id_company,company,id_login,login ");
+                sql.Append(" ) group by date_connection,id_company,company,id_login,login, first_name, name ");
                 //Order by
                 sql.Append(" order by  date_connection, login, id_login");
 				#endregion
@@ -404,8 +404,8 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				Table ipLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingLoginIp);
 				
 				//select
-				sql.Append(" select ");				
-				sql.Append(companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+ipLoginTable.Prefix+".id_login,"+loginTable.Prefix+".login,IP_ADDRESS ");
+				sql.Append(" select ");
+                sql.Append(companyTable.Prefix + ".id_company ," + companyTable.Prefix + ".company," + ipLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login, " + contactTable.Prefix + ".first_name, " + contactTable.Prefix + ".name " + ",IP_ADDRESS ");
 				//From
 				sql.Append(" from " + ipLoginTable.SqlWithPrefix);
 				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
@@ -419,7 +419,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
 				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 				//Gourp by
-				sql.Append(" group by  "+companyTable.Prefix+".id_company,"+companyTable.Prefix+".company,"+ipLoginTable.Prefix+".id_login,"+loginTable.Prefix+".login,IP_ADDRESS");
+                sql.Append(" group by  " + companyTable.Prefix + ".id_company," + companyTable.Prefix + ".company," + ipLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login, " + contactTable.Prefix + ".first_name, " + contactTable.Prefix + ".name" + ",IP_ADDRESS ");
 				//Order by
 				sql.Append(" order by  "+companyTable.Prefix+".company,"+loginTable.Prefix+".login ");
 				#endregion
@@ -500,7 +500,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 
                 //select				
                 sql.Append(" select ");
-                sql.Append(" " + companyTable.Prefix + ".id_company ," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login ");
+                sql.Append(" " + companyTable.Prefix + ".id_company ," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login, " + contactTable.Prefix + ".first_name, " + contactTable.Prefix + ".name ");
                 sql.Append(" ,IP_ADDRESS," + connectionByLoginTable.Prefix + ".date_connection ,sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_24_3) as CONNECTION_NUMBER_24_3 ");
                 sql.Append(",sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_3_6) as CONNECTION_NUMBER_3_6,sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_6_9) as CONNECTION_NUMBER_6_9 ");
                 sql.Append(",sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_9_12) as CONNECTION_NUMBER_9_12,sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_12_15) as CONNECTION_NUMBER_12_15");
@@ -520,7 +520,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
                 sql.Append(" and " + contactTable.Prefix + ".id_address = " + addressTable.Prefix + ".id_address ");
                 sql.Append(" and " + addressTable.Prefix + ".id_company=" + companyTable.Prefix + ".id_company ");
                 //Gourp by
-                sql.Append(" group by  " + companyTable.Prefix + ".id_company," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login , IP_ADDRESS, "+ connectionByLoginTable.Prefix + ".date_connection  ");
+                sql.Append(" group by  " + companyTable.Prefix + ".id_company," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login, "+contactTable.Prefix+".FIRST_NAME, "+contactTable.Prefix+".NAME" + ", IP_ADDRESS, "+ connectionByLoginTable.Prefix + ".date_connection  ");
                 //Order by
                 sql.Append(" order by  " + companyTable.Prefix + ".company  asc," + loginTable.Prefix + ".login asc,IP_ADDRESS, " + connectionByLoginTable.Prefix + ".date_connection ");
                 #endregion
