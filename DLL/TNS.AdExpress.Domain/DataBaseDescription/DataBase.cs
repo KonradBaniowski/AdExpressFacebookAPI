@@ -1146,6 +1146,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         dataMmsAlert = 250,
         /// <summary>
+        /// Media Group
+        /// </summary>
+        mediaGroup = 251,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

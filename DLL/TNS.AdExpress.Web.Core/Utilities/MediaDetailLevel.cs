@@ -901,6 +901,11 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                         #endregion
 
+                        #region Media group
+                        case DetailLevelItemInformation.Levels.mediaGroup:
+                            return _customerWebSession.CustomerLogin.CustormerFlagAccess(Constantes.DB.Flags.ID_MEDIA_GROUP);
+                        #endregion
+
                         default:
                             return (true);
                     }

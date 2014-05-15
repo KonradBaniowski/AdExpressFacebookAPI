@@ -1061,6 +1061,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				case DetailLevelItemInformation.Levels.agency:
                     List<Int64> vehicleList = GetVehicles();
                     return (_customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList));
+                case DetailLevelItemInformation.Levels.mediaGroup:
+                    return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_GROUP);
 				default:
 					return(true);
 			}

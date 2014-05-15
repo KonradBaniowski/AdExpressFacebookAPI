@@ -325,7 +325,11 @@ namespace TNS.AdExpress.Domain.Level{
             /// <summary>
             /// Location
             /// </summary>
-            location = 76
+            location = 76,
+            /// <summary>
+            /// Media Group
+            /// </summary>
+            mediaGroup = 77
 
         }
 		#endregion

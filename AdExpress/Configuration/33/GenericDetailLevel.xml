@@ -80,6 +80,7 @@
     <level id="75" name="Wave"      webTextId="1762" dbId="id_wave"  dbLabel="wave"   dbTable="wave"   dbTablePrefixe="wv"/>
 
     <level id="76" name="Location"      webTextId="1732" dbId="id_location"  dbLabel="location"   dbTable="location"   dbTablePrefixe="lc"/>
+    <level id="77" name="MediaGroup"    webTextId="3004" dbId="id_media_group" dbLabel="media_group" dbTable="media_group" dbTablePrefixe="meg"/>
   </detaillevelItems>
 
 	<detailLevels>

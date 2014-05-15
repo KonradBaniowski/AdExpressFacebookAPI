@@ -1813,6 +1813,11 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Press Vehicle pages access  flag 
         /// </summary>
         public const Int64 ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG = 339;
+
+        /// <summary>
+        /// Identifiant du flag Marque Media
+        /// </summary>
+        public const Int64 ID_MEDIA_GROUP = 343;
     }
 	#endregion
 

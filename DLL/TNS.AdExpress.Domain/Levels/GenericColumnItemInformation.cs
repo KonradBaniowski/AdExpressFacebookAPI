@@ -731,7 +731,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Banner Id
             /// </summary>
-            bannerId =177
+            bannerId =177,
+            /// <summary>
+            /// Media Group
+            /// </summary>
+            mediaGroup = 178
         }
         #endregion
 

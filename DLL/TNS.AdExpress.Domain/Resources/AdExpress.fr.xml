@@ -2249,5 +2249,7 @@
     <item mnemonic="w3002" type="System.String">Type</item>
     <!--Add Text for AVI in Slovakia-->
     <item mnemonic="w3003" type="System.String">Format AVI</item>
+    <!--Add Text for Media group in France-->
+    <item mnemonic="w3004" type="System.String">Marque Media</item>
   </items>
 </localization>

@@ -227,6 +227,7 @@
     <column id="166" name="Ad break" webTextId="1575"  dbLabel="screencode" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="167" name="Banner width" webTextId="2776" dbLabel="banner_width" dbTable="banner_width" dbTablePrefixe="bwd" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="168" name="Banner height" webTextId="2776" dbLabel="banner_height" dbTable="banner_height" dbTablePrefixe="bht" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="178" name="Media Group" webTextId="3004" dbId="id_media_group" dbLabel="media_group" dbTable="media_group" dbTablePrefixe="meg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <!--End New columns for Russia-->
   </columnItems>
 
