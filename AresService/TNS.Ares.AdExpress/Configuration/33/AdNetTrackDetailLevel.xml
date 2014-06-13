@@ -12,6 +12,7 @@
 		<allowedAdNetTrackLevelItem id="2" name="Categorie"/>
 		<allowedAdNetTrackLevelItem id="3" name="Support"/>
 		<allowedAdNetTrackLevelItem id="4" name="Centre d'interet"/>
+    <allowedAdNetTrackLevelItem id="77" name="Media Group"/>
 		<allowedAdNetTrackLevelItem id="5" name="Régie"/>
 		<allowedAdNetTrackLevelItem id="8" name="Annonceur"/>
 		<allowedAdNetTrackLevelItem id="9" name="Marque"/>	 

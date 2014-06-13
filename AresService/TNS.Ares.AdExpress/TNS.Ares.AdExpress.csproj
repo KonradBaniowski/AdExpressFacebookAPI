@@ -125,7 +125,9 @@
     <Content Include="Configuration\33\CustomerErrorMail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\Database.xml" />
+    <Content Include="Configuration\33\Database.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\33\DataHistory.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -166,6 +168,7 @@
     <Content Include="Configuration\33\PluginAlerteConfiguration.xml" />
     <Content Include="Configuration\33\PluginConfiguration.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Configuration\33\PortofolioDetailMediaConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -182,7 +185,9 @@
     <Content Include="Configuration\33\Trends.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\Units.xml" />
+    <Content Include="Configuration\33\Units.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\33\UniverseBranches.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -197,6 +202,7 @@
     </Content>
     <Content Include="Configuration\33\WebLanguages.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Configuration\33\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

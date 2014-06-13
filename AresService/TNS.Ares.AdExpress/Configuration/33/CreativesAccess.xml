@@ -15,10 +15,11 @@
     <VirtualPath id="IMAGES_VP" name="Répertoire virtuel des créations presse" value="/ImagesVP"/>
     <VirtualPath id="IMAGES_ROLEX" name="Répertoire virtuel des créations presse" value="/ImagesRolex"/>
 
-    <VirtualPath id="IMAGES_PSA" name="Répertoire virtuel des créations psa" value="/ImagesPsa"/>
-    <VirtualPath id="IMAGES_PSA_MR" name="Répertoire virtuel des créations moyenne resolution psa" value="/ImagesPsaMR"/>
-    <VirtualPath id="VIDEOS_PSA" name="Répertoire virtuel des créations vidéos psa" value="/VideoPsa"/>
-    <VirtualPath id="BANNERS_PSA" name="Répertoire virtuel des bannières psa" value="/BannersPsa"/>
+  <VirtualPath id="IMAGES_PSA" name="Répertoire virtuel des créations psa" value="/ImagesPsa"/>
+   <VirtualPath id="IMAGES_PSA_MR" name="Répertoire virtuel des créations moyenne resolution psa" value="/ImagesPsaMR"/>
+  <VirtualPath id="VIDEOS_PSA" name="Répertoire virtuel des créations vidéos psa" value="/VideoPsa"/>
+  <VirtualPath id="BANNERS_PSA" name="Répertoire virtuel des bannières psa" value="/BannersPsa"/>
+   <VirtualPath id="RADIOS_PSA" name="Répertoire virtuel des créations radio psa" value="/RadioPsa"/>
   </VirtualPaths>
   <Streamings>
     <Streaming id="READ_REAL_RADIO_SERVER" name="Serveur Real en streaming en radio" value="rtsp://streamrl.secodip.com/radiostream"/>

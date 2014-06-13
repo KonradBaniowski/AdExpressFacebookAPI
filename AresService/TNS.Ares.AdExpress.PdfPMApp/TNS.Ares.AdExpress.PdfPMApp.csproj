@@ -57,6 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -233,6 +234,7 @@ copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Default.dll" "$(TargetDir)Bin\TNS
 copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Russia.dll" /Y
 copy "$(TargetDir)TNS.AdExpress.Web.Core.Default.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpress.Web.Core.Russia.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpress.Web.Core.France.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.France.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Russia.dll" /Y</PostBuildEvent>
   </PropertyGroup>

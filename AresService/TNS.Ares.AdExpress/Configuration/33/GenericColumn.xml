@@ -227,6 +227,7 @@
     <column id="166" name="Ad break" webTextId="1575"  dbLabel="screencode" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="167" name="Banner width" webTextId="2776" dbLabel="banner_width" dbTable="banner_width" dbTablePrefixe="bwd" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="168" name="Banner height" webTextId="2776" dbLabel="banner_height" dbTable="banner_height" dbTablePrefixe="bht" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="178" name="Media Group" webTextId="3004" dbId="id_media_group" dbLabel="media_group" dbTable="media_group" dbTablePrefixe="meg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <!--End New columns for Russia-->
   </columnItems>
 
@@ -676,6 +677,22 @@
       <columnItem id="84" name="Dimension banner" visible="false"/>
       <columnItem id="80" name="url" visible="false"/>
     </detailColumn>
-
+    <!-- Créations VMC via le COURRIER-->
+    <detailColumn id="36" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="slogan" isKey="true"/>
+      <columnItem id="3" name="Support"/>
+      <columnItem id="62" name="Poid"/>
+      <columnItem id="63" name="Item"/>
+      <columnItem id="11" name="Format"/>
+      <columnItem id="64" name="Format enveloppe"/>
+      <columnItem id="66" name="Format enveloppe"/>
+      <columnItem id="60" name="Type de doc"/>
+      <columnItem id="59" name="rapidity"/>
+      <columnItem id="65" name="Contenu"/>
+      <columnItem id="41" name="Visuel"/>
+    </detailColumn>
   </detailColumns>
 </genericColumn>

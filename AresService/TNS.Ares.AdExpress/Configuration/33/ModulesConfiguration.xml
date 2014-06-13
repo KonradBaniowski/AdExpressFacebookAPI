@@ -34,6 +34,7 @@
             <allowedMediaLevelItem id="2" name="Categorie"/>
             <allowedMediaLevelItem id="3" name="Support"/>
             <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+            <allowedMediaLevelItem id="77" name="Media Group"/>
             <allowedMediaLevelItem id="5" name="Régie"/>
             <allowedMediaLevelItem id="6" name="Version"/>
             <allowedMediaLevelItem id="7" name="holding_company"/>
@@ -183,6 +184,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -212,6 +214,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -241,6 +244,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -270,6 +274,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -299,6 +304,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -328,6 +334,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -382,6 +389,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -476,6 +484,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -508,6 +517,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -540,6 +550,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -572,6 +583,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -604,6 +616,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -636,6 +649,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -668,6 +682,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -802,6 +817,7 @@
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>occurence</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -825,6 +841,7 @@
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
