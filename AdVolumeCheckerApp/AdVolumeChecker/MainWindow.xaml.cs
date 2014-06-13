@@ -90,7 +90,7 @@ namespace AdVolumeChecker {
             startDate = DateTime.Now.AddDays(-7).StartOfWeek(DayOfWeek.Monday);
             endDate = startDate.AddDays(6);
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 7; i++) {
                 periodList.Items.Add("Du " + startDate.ToString("dd/MM/yyyy") + " au " + endDate.ToString("dd/MM/yyyy"));
                 startDate = startDate.AddDays(-7);
                 endDate = startDate.AddDays(6);
