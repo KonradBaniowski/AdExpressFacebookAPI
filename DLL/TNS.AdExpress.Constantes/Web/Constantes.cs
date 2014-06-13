@@ -313,7 +313,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Exclu web
             /// </summary>
-            excluWeb =72
+            excluWeb =72,
+            /// <summary>
+            /// Auto Promo
+            /// </summary>
+            autoPromo = 73
           
 		}
 	
@@ -643,7 +647,10 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// Codes de traduction des encarts
 		/// </summary>
 		public static Hashtable InsertsTraductionCodes;
-
+        /// <summary>
+        /// Auto Promo Traduction Codes
+        /// </summary>
+        public static Hashtable AutoPromoTraductionCodes;
 		#endregion
 
 		#region Tri
@@ -1392,11 +1399,36 @@ namespace TNS.AdExpress.Constantes.Web{
 			InsertsTraductionCodes.Add(Insert.total,1401);
 			InsertsTraductionCodes.Add(Insert.insert,1402);
 			InsertsTraductionCodes.Add(Insert.withOutInsert,1403);
+
+            AutoPromoTraductionCodes = new Hashtable();
+            AutoPromoTraductionCodes.Add(AutoPromo.total, 1401);
+            AutoPromoTraductionCodes.Add(AutoPromo.exceptAutoPromoAdvertiser, 3005);
+            AutoPromoTraductionCodes.Add(AutoPromo.exceptAutoPromoHoldingCompany, 3006);
 		}
 		#endregion
 
-		#region Encarts
-		/// <summary>
+        #region Auto Promo
+        /// <summary>
+        /// Critère pour les encarts
+        /// </summary>
+        public enum AutoPromo {
+            /// <summary>
+            /// Total
+            /// </summary>
+            total,
+            /// <summary>
+            /// Except Auto Promo Advertiser
+            /// </summary>
+            exceptAutoPromoAdvertiser,
+            /// <summary>
+            /// Except Auto Promo Holding Company
+            /// </summary>
+            exceptAutoPromoHoldingCompany
+        }
+        #endregion
+
+        #region Encarts
+        /// <summary>
 		/// Critère pour les encarts
 		/// </summary>
 		public enum Insert

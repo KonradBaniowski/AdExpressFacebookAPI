@@ -1150,6 +1150,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         mediaGroup = 251,
         /// <summary>
+        /// Auto Promo
+        /// </summary>
+        autoPromo = 252,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,
@@ -1160,7 +1164,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Static Nav Session
         /// </summary>
-        staticNav = 400,
+        staticNav = 400
     }
     #endregion
 

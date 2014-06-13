@@ -283,6 +283,8 @@
     
     <table enumId="251" description="Classif: Media Group" schemaEnumId="0" label="media_group" prefix="meg"/>
     
+    <table enumId="252" description="Data: Auto Promo" schemaEnumId="0" label="auto_promo" prefix="ap"/>
+    
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>

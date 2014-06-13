@@ -361,6 +361,7 @@ namespace AdExpress.Private.Results
                 {
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mms:
                         //ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
                         ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
                         break;

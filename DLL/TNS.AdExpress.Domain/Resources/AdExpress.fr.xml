@@ -2251,5 +2251,9 @@
     <item mnemonic="w3003" type="System.String">Format AVI</item>
     <!--Add Text for Media group in France-->
     <item mnemonic="w3004" type="System.String">Marque Media</item>
+    <!--Add Text for Auto promo-->
+    <item mnemonic="w3005" type="System.String">Hors auto-promo Annonceur</item>
+    <item mnemonic="w3006" type="System.String">Hors auto-promo Groupe d'annonceurs</item>
+    <item mnemonic="w3007" type="System.String">Auto Promo :</item>
   </items>
 </localization>

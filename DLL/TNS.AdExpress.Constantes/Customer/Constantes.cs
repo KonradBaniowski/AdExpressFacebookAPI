@@ -281,7 +281,10 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// Evaliant Internet
             /// </summary>
             FormatEvaliantInternet,
-
+            /// <summary>
+            /// None
+            /// </summary>
+            None
         }
         #endregion
     }

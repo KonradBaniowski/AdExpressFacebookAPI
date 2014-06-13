@@ -38,4 +38,5 @@
   <flag id="323" description="Accès nouvelles création application mobile"/>
   <flag id="328" description="Accès export des créations Internet Evaliant"/>
   <flag id="343" description="Accès Marque Media"/>
+  <flag id="348" description="Accès Agences Media DISPLAY"/>
 </flags>

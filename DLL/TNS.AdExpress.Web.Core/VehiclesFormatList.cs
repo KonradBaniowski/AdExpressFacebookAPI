@@ -49,6 +49,7 @@ namespace TNS.AdExpress.Web.Core {
                                         , GetFormatBannerList(vehicleFormatInformation.DataTableName
                                                               , vehicleFormatInformation.FormatTableName
                                                               , defaultDataLanguage
+                                                              ,vehicleFormatInformation.ExcludedFormats
                                               )
                                         )
                             );
@@ -124,11 +125,16 @@ namespace TNS.AdExpress.Web.Core {
         /// <param name="formatTable">Format Table</param>
         /// <param name="dataLanguageId">Data Language Identifier</param>
         /// <param name="dataTable">Data Table</param>
+        /// <param name="excludedFormats">Excluded Formats</param>
         /// <returns>Format Banner List</returns>
-        private static Dictionary<Int64, FilterItem> GetFormatBannerList(TableIds dataTable, TableIds formatTable, int dataLanguageId)
+        private static Dictionary<Int64, FilterItem> GetFormatBannerList(TableIds dataTable, TableIds formatTable, int dataLanguageId, string excludedFormats)
         {
             var filterItemsList = new Dictionary<Int64, FilterItem>();
-            var ds = VehicleFormatListDataAccess.GetActiveData(dataTable, formatTable, dataLanguageId);
+            DataSet ds;
+            if (dataTable == TableIds.groupFormatBanners)
+                ds = VehicleFormatListDataAccess.GetAllData(formatTable, dataLanguageId, excludedFormats);
+            else
+                ds = VehicleFormatListDataAccess.GetActiveData(dataTable, formatTable, dataLanguageId);
 
             if (ds != null && ds.Tables.Count > 0) {
                 foreach (DataRow row in ds.Tables[0].Rows) {

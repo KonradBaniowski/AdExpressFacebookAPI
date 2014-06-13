@@ -1113,16 +1113,17 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <returns>HTML</returns>
         private string GetAutoPromo(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module m)
         {
-            bool isEvaliant = false;
+            bool isAutoPromo = false;
             if (m.Id != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
             {
                 VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
                 ClassificationCst.DB.Vehicles.names vehicleType = vehicleInformation.Id;
                 if ((vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack 
-                    || vehicleType == ClassificationCst.DB.Vehicles.names.evaliantMobile) 
+                    || vehicleType == ClassificationCst.DB.Vehicles.names.evaliantMobile
+                    || vehicleType == ClassificationCst.DB.Vehicles.names.mms) 
                     && vehicleInformation.Autopromo)
                 {
-                    isEvaliant = true;
+                    isAutoPromo = true;
                 }
             }
             else
@@ -1134,18 +1135,29 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.adnettrack).Autopromo)
                     || (VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.evaliantMobile)
                     && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.evaliantMobile).ToString()) >= 0
-                    && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.evaliantMobile).Autopromo)))
+                    && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.evaliantMobile).Autopromo)
+                    || (VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.mms)
+                    && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.mms).ToString()) >= 0
+                    && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.mms).Autopromo)))
                 {
-                    isEvaliant = true;
+                    isAutoPromo = true;
                 }
             }
-			if(isEvaliant){
+            if (isAutoPromo) {
                 int code = 2551;
-                if (webSession.AutopromoEvaliant)
+                switch (_webSession.AutoPromo) {
+                    case WebConstantes.CustomerSessions.AutoPromo.total:
+                        code = 1401; break;
+                    case WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser:
+                        code = 3005; break;
+                    case WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany:
+                        code = 3006; break;
+                }
+                /*if (webSession.AutopromoEvaliant)
                 {
                     code = 2476;
-                }
-                return ("<tr><td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2552, webSession.SiteLanguage) + "</font> " + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + "</td></tr>");
+                }*/
+                return ("<tr><td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2552, webSession.SiteLanguage) + "</font> : " + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + "</td></tr>");
 			}
 			return("");
 		}

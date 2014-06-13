@@ -112,6 +112,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// </summary>
         public DropDownList listInsert;
         /// <summary>
+        /// Auto Promo List
+        /// </summary>
+        public DropDownList listAutoPromo;
+        /// <summary>
         /// Choix du type de tableau afficher dans les recap
         /// </summary>
         protected ImageDropDownListWebControl tblChoice;
@@ -1441,7 +1445,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         customerWebSession.PersonalizedElementsOnly = false;
                     }
                 }
-                if (autopromoEvaliantOption)
+                /*if (autopromoEvaliantOption)
                 {
                     try
                     {
@@ -1450,6 +1454,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     catch (System.Exception)
                     {
                         customerWebSession.AutopromoEvaliant = false;
+                    }
+                }*/
+
+                if (autopromoEvaliantOption) {
+                    try {
+                        int autoPromoId = Convert.ToInt32(Page.Request.Form.GetValues("_autoPromo")[0]);
+                        customerWebSession.AutoPromo = (WebConstantes.CustomerSessions.AutoPromo)autoPromoId;
+                    }
+                    catch (SystemException) {
                     }
                 }
 
@@ -2247,14 +2260,25 @@ namespace TNS.AdExpress.Web.Controls.Headers
             #region Autopromo
             if (autopromoEvaliantOption)
             {
-                AutopromoEvaliantCheckBox = new System.Web.UI.WebControls.CheckBox();
+                //Auto Promo list creation
+                listAutoPromo = new DropDownList();
+                listAutoPromo.ID = "_autopromo";
+                listAutoPromo.CssClass = cssClass;
+                listAutoPromo.AutoPostBack = autoPostBackOption;
+                ArrayList autoPromoItems = new ArrayList();
+                listAutoPromo.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.AutoPromoTraductionCodes[SessionCst.AutoPromo.total], customerWebSession.SiteLanguage), "0"));
+                listAutoPromo.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.AutoPromoTraductionCodes[SessionCst.AutoPromo.exceptAutoPromoAdvertiser], customerWebSession.SiteLanguage), "1"));
+                listAutoPromo.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.AutoPromoTraductionCodes[SessionCst.AutoPromo.exceptAutoPromoHoldingCompany], customerWebSession.SiteLanguage), "2"));
+                listAutoPromo.Items.FindByValue(((int)customerWebSession.AutoPromo).ToString()).Selected = true;
+                Controls.Add(listAutoPromo);
+                /*AutopromoEvaliantCheckBox = new System.Web.UI.WebControls.CheckBox();
                 AutopromoEvaliantCheckBox.ID = this.ID + "_autopromoEvaliant";
                 AutopromoEvaliantCheckBox.ToolTip = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
                 AutopromoEvaliantCheckBox.CssClass = "txtBlanc11Bold";
                 AutopromoEvaliantCheckBox.AutoPostBack = autoPostBackOption;
                 AutopromoEvaliantCheckBox.Text = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
                 AutopromoEvaliantCheckBox.Checked = customerWebSession.AutopromoEvaliant;
-                Controls.Add(AutopromoEvaliantCheckBox);
+                Controls.Add(AutopromoEvaliantCheckBox);*/
             }
             #endregion
 
@@ -2919,6 +2943,24 @@ namespace TNS.AdExpress.Web.Controls.Headers
             }
             #endregion
 
+            #region Option auto-promo
+            if (autopromoEvaliantOption) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
+                output.Write(GestionWeb.GetWebWord(3007, customerWebSession.SiteLanguage));
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                listAutoPromo.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
             #region Option Sector Selection
             if (SectorSelectionOptions)
             {
@@ -3189,7 +3231,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             #endregion
 
             #region Option auto-promo Evaliant
-            if (autopromoEvaliantOption)
+            /*if (autopromoEvaliantOption)
             {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
@@ -3199,7 +3241,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 output.Write("\n<TR>");
                 output.Write("\n<TD height=\"5\"></TD>");
                 output.Write("\n</TR>");
-            }
+            }*/
             #endregion
 
             #region Eléments personnalisés

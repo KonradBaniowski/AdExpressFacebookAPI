@@ -92,12 +92,16 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                         if (subReader.NodeType == XmlNodeType.Element) {
                                             switch (subReader.LocalName) {
                                                 case "allowVehicle":
+                                                    string excludedFormats = string.Empty;
+                                                    if (subReader.GetAttribute("excludedFormats") != null && subReader.GetAttribute("excludedFormats").Length > 0)
+                                                        excludedFormats = reader.GetAttribute("excludedFormats").ToString();
                                                     vehicleFormatInformationList.Add(VehiclesInformation.Get(Int64.Parse(subReader.GetAttribute("id"))).DatabaseId
                                                     , new VehicleFormatInformation(
                                                         VehiclesInformation.Get(Int64.Parse(subReader.GetAttribute("id"))).DatabaseId,
                                                             (Constantes.Customer.RightBanners.Type)Enum.Parse(typeof(Constantes.Customer.RightBanners.Type), subReader.GetAttribute("rightBannersType")),
                                                             (TableIds)Enum.Parse(typeof(TableIds), subReader.GetAttribute("dataTableName")),
-                                                            (TableIds)Enum.Parse(typeof(TableIds), subReader.GetAttribute("formatTableName"))
+                                                            (TableIds)Enum.Parse(typeof(TableIds), subReader.GetAttribute("formatTableName")),
+                                                            excludedFormats
                                                         )
                                                     );
                                                     break;

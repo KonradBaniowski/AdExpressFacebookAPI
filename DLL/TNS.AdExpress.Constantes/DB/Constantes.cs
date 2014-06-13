@@ -1818,6 +1818,11 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Identifiant du flag Marque Media
         /// </summary>
         public const Int64 ID_MEDIA_GROUP = 343;
+
+        /// <summary>
+        /// Identifier of DISPLAY's media agency flag
+        /// </summary>
+        public const Int64 ID_DISPLAY_MEDIA_AGENCY_FLAG = 348;
     }
 	#endregion
 

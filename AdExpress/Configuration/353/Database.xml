@@ -5,7 +5,7 @@
     <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="ADEXWEBIRL01.TEST" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </customerConnections>
   <defaultConnections>
-    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="mou01_session_1" password="sessionmolle1"     dataSource="ADEXWEBIRL01.TEST" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="DBA_ADEXPRIRL01" password="Djindobri59"       dataSource="ADEXWEBIRL01.TEST" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="ADEXWEBIRL01.TEST" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="ADEXWEBIRL01.TEST" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--<defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="adexpr04.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="false"/>-->
@@ -23,7 +23,7 @@
   </defaultConnections>
   <schemas>
     
-    <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
+    <schema enumId="0" description="AdExpress Data (adexprirl01)" label="adexprirl01b"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>
     <schema enumId="3" description="Mou" label="mou01"/>

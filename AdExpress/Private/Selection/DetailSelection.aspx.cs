@@ -920,7 +920,9 @@ namespace AdExpress.Private.Selection{
                     if (_webSession.CurrentModule != CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && _webSession.SelectionUniversMedia.FirstNode != null)
                     {
                         CstClassif.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                        if (vehicleType == CstClassif.DB.Vehicles.names.adnettrack || vehicleType == CstClassif.DB.Vehicles.names.evaliantMobile)
+                        if ((vehicleType == CstClassif.DB.Vehicles.names.adnettrack && VehiclesInformation.Get(CstClassif.DB.Vehicles.names.adnettrack).Autopromo)
+                            || (vehicleType == CstClassif.DB.Vehicles.names.evaliantMobile && VehiclesInformation.Get(CstClassif.DB.Vehicles.names.evaliantMobile).Autopromo)
+                            || (vehicleType == CstClassif.DB.Vehicles.names.mms && VehiclesInformation.Get(CstClassif.DB.Vehicles.names.mms).Autopromo)) 
                         {
                             displayAutoPromo = true;
                         }
@@ -929,10 +931,19 @@ namespace AdExpress.Private.Selection{
                     {
                         string[] listVehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
                         if (listVehicles != null && listVehicles.Length > 0 
-                            && VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.adnettrack) 
+                            && 
+                            (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.adnettrack) 
                             && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.adnettrack).ToString()) >= 0
-                            && VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.evaliantMobile)
-                            && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.evaliantMobile).ToString()) >= 0)
+                            && VehiclesInformation.Get(CstClassif.DB.Vehicles.names.adnettrack).Autopromo)
+                            ||
+                            (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.evaliantMobile)
+                            && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.evaliantMobile).ToString()) >= 0
+                            && VehiclesInformation.Get(CstClassif.DB.Vehicles.names.evaliantMobile).Autopromo)
+                            ||
+                            (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.mms)
+                            && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.mms).ToString()) >= 0
+                            && VehiclesInformation.Get(CstClassif.DB.Vehicles.names.mms).Autopromo)
+                            )
                         {
                             displayAutoPromo = true;
                         }
@@ -940,9 +951,17 @@ namespace AdExpress.Private.Selection{
                     if (displayAutoPromo)
                     {
                         AdExpressText21.Code = 2551;
-                        if (_webSession.AutopromoEvaliant)
+                        /*if (_webSession.AutopromoEvaliant)
                         {
                             AdExpressText21.Code = 2476;
+                        }*/
+                        switch (_webSession.AutoPromo) { 
+                            case CstCustomerSession.AutoPromo.total:
+                                AdExpressText21.Code = 1401; break;
+                            case CstCustomerSession.AutoPromo.exceptAutoPromoAdvertiser:
+                                AdExpressText21.Code = 3005; break;
+                            case CstCustomerSession.AutoPromo.exceptAutoPromoHoldingCompany:
+                                AdExpressText21.Code = 3006; break;
                         }
                     }
                 }

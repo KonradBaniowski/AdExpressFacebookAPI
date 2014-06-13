@@ -1150,9 +1150,28 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             string productsRights = FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches);
 			sql.AppendFormat(" {0}", productsRights);
 
-			// Autopromo Evaliant
-			if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.AutopromoEvaliant) {
-				sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+			// Autopromo
+            string idMediaLabel = string.Empty;
+
+            if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile)
+                idMediaLabel = "id_media_evaliant";
+            else if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.mms)
+                idMediaLabel = "id_media_mms";
+
+			if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack 
+                || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile
+                || _vehicleInformation.Id == CstDBClassif.Vehicles.names.mms)) {
+                
+                    Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
+
+                    if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
+                        sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    else if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany) {
+                        sql.AppendFormat(" and ({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        sql.AppendFormat(" select distinct {0}, id_holding_company ", idMediaLabel);
+                        sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                        sql.AppendFormat(" ) ");
+                    }
 			}
 
 			return sql.ToString();

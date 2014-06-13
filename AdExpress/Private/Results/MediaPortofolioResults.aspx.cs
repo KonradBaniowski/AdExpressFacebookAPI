@@ -362,7 +362,9 @@ namespace AdExpress.Private.Results{
             // Option autopromo (Evaliant)
             string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
             DBClassificationConstantes.Vehicles.names vehicleName = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(vehicleSelection));
-            if (vehicleName == DBClassificationConstantes.Vehicles.names.adnettrack || vehicleName == DBClassificationConstantes.Vehicles.names.evaliantMobile)
+            if (vehicleName == DBClassificationConstantes.Vehicles.names.adnettrack 
+                || vehicleName == DBClassificationConstantes.Vehicles.names.evaliantMobile
+                || vehicleName == DBClassificationConstantes.Vehicles.names.mms)
 				ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(vehicleName).Autopromo; 
             else
                 ResultsOptionsWebControl1.AutopromoEvaliantOption = false;

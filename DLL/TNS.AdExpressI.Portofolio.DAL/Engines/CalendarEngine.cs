@@ -130,10 +130,28 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql += " where " + DBConstantes.Fields.DATE_MEDIA_NUM +" >=" + _beginingDate;
 			sql += " and " + DBConstantes.Fields.DATE_MEDIA_NUM + " <=" + _endDate;
 
-            // Autopromo Evaliant
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) {
-                if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
+            // Autopromo
+            string idMediaLabel = string.Empty;
+
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)
+                idMediaLabel = "id_media_evaliant";
+            else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms)
+                idMediaLabel = "id_media_mms";
+
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms)) {
+
+                Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
+
+                if (_webSession.AutoPromo == WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
                     sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".auto_promotion = 0 ";
+                else if (_webSession.AutoPromo == WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany) {
+                    sql += " and (" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_holding_company) not in ( ";
+                    sql += " select distinct " + idMediaLabel + ", id_holding_company ";
+                    sql += " from " + tblAutoPromo.Sql + " ";
+                    sql += " ) ";
+                }
             }
 
             sql += GetFormatClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);

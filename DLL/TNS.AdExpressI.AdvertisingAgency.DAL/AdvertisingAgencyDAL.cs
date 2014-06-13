@@ -371,11 +371,31 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             }
 
-            // Autopromo Evaliant
-            if (VehiclesInformation.Contains(vehicleId) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile))
-            {
-                if (_session.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
-                    sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            // Autopromo
+            if (VehiclesInformation.Contains(vehicleId)) {
+
+                string idMediaLabel = string.Empty;
+
+                if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile)
+                    idMediaLabel = "id_media_evaliant";
+                else if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.mms)
+                    idMediaLabel = "id_media_mms";
+
+                if ((VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
+                    || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile
+                    || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.mms)) {
+
+                    Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
+
+                    if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
+                        sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    else if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany) {
+                        sql.AppendFormat(" and ({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        sql.AppendFormat(" select distinct {0}, id_holding_company ", idMediaLabel);
+                        sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                        sql.AppendFormat(" ) ");
+                    }
+                }
             }
 
             // Additional conditions            
@@ -623,9 +643,19 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 sql.Append(")) ");
             }
 
-            // Autopromo Evaliant			
-            if (_session.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
+            // Autopromo			
+            if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser) // Hors autopromo (checkbox = checked)
                 sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            else if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany) {
+
+                Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
+
+                sql.AppendFormat(" and ({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                sql.AppendFormat(" select distinct id_media_evaliant, id_holding_company ");
+                sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                sql.AppendFormat(" ) ");
+            }
+
 
             // Additional conditions            
             if (additionalConditions.Length > 0)

@@ -460,6 +460,11 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// </summary>
         protected TNS.AdExpress.Constantes.Web.CustomerSessions.Insert insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
         /// <summary>
+        /// Auto Promo (Total, Except Auto promo Advertiser, Except Auto Promo Holding Company)
+        /// </summary>
+        [System.NonSerialized]
+        protected TNS.AdExpress.Constantes.Web.CustomerSessions.AutoPromo _autoPromo = TNS.AdExpress.Constantes.Web.CustomerSessions.AutoPromo.total;
+        /// <summary>
         /// Nouveau produit
         /// </summary>
         protected TNS.AdExpress.Constantes.Web.CustomerSessions.NewProduct newProduct = TNS.AdExpress.Constantes.Web.CustomerSessions.NewProduct.support;
@@ -2146,6 +2151,24 @@ namespace TNS.AdExpress.Web.Core.Sessions
                     insert = value;
                     modificationDate = DateTime.Now;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Get \Set Auto Promo 
+        /// </summary>
+        public TNS.AdExpress.Constantes.Web.CustomerSessions.AutoPromo AutoPromo {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.autoPromo)) {
+                    _autoPromo = (WebConstantes.CustomerSessions.AutoPromo)userParameters[CoreConstantes.SessionParamters.autoPromo];
+                }
+
+                return (_autoPromo);
+            }
+            set {
+                _autoPromo = value;
+                userParameters[CoreConstantes.SessionParamters.autoPromo] = value;
+                modificationDate = DateTime.Now;
             }
         }
 
@@ -4461,8 +4484,11 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 var activeBannersFormatList = new Dictionary<Int64, FilterItem>();
                 if (WebApplicationParameters.VehiclesFormatInformation.Use)
                 {
-
-                    var formatIdList = CustomerLogin.GetBannersFormatAssignement(WebApplicationParameters.VehiclesFormatInformation.GetRightBannersTypeList(vehicleInformationList));
+                    List<long> formatIdList = null;
+                    
+                    if(vehicleInformationList.ContainsKey(Vehicles.names.adnettrack.GetHashCode()))
+                        formatIdList = CustomerLogin.GetBannersFormatAssignement(WebApplicationParameters.VehiclesFormatInformation.GetRightBannersTypeList(vehicleInformationList));
+                    
                     List<Int64> vehicleIdList = new List<VehicleInformation>(vehicleInformationList.Values).ConvertAll(p => p.DatabaseId);
                     if (formatIdList == null || formatIdList.Count == 0)
                     {

@@ -30,6 +30,10 @@ namespace TNS.AdExpress.Domain.Classification {
         /// Right Banners Type
         /// </summary>
         private Constantes.Customer.RightBanners.Type _rightBannersType;
+        /// <summary>
+        /// Excluded formats
+        /// </summary>
+        private string _excludedFormats = string.Empty;
         #endregion
 
         #region Constructor
@@ -40,13 +44,15 @@ namespace TNS.AdExpress.Domain.Classification {
         /// <param name="dataTableName">Data table name</param>
         /// <param name="formatTableName">Format Table Name</param>
         /// <param name="rightBannersType">Right Banners Type</param>
-        public VehicleFormatInformation(Int64 vehicleId, Constantes.Customer.RightBanners.Type rightBannersType, TableIds dataTableName, TableIds formatTableName)
+        /// <param name="excludedFormats">Excluded Formats</param>
+        public VehicleFormatInformation(Int64 vehicleId, Constantes.Customer.RightBanners.Type rightBannersType, TableIds dataTableName, TableIds formatTableName, string excludedFormats)
         {
 
             _vehicleId = vehicleId;
             _dataTableName = dataTableName;
             _formatTableName = formatTableName;
             _rightBannersType = rightBannersType;
+            _excludedFormats = excludedFormats;
 
         }
         #endregion
@@ -75,6 +81,12 @@ namespace TNS.AdExpress.Domain.Classification {
         /// </summary>
         public TableIds FormatTableName {
             get { return _formatTableName; }
+        }
+        /// <summary>
+        /// Get Excluded Formats
+        /// </summary>
+        public string ExcludedFormats {
+            get { return _excludedFormats; }
         }
         #endregion
 

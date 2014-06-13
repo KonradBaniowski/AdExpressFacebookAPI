@@ -1151,30 +1151,52 @@ namespace TNS.AdExpress.Web.UI
         /// <returns>HTML</returns>
         private static string GetAutoPromo(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module m)
         {
-            bool isEvaliant = false;
+            bool isAutoPromo = false;
             if (m.Id != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
             {
                 ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
+                if ((vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.adnettrack).Autopromo)
+                    || (vehicleType == ClassificationCst.DB.Vehicles.names.evaliantMobile && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.evaliantMobile).Autopromo)
+                    || (vehicleType == ClassificationCst.DB.Vehicles.names.mms && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.mms).Autopromo))
                 {
-                    isEvaliant = true;
+                    isAutoPromo = true;
                 }
             }
             else
             {
                 string[] listVehicles = webSession.GetSelection(webSession.SelectionUniversMedia, Constantes.Customer.Right.type.vehicleAccess).Split(new char[] { ',' });
-                if (listVehicles != null && listVehicles.Length > 0 && VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.adnettrack) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.adnettrack).ToString()) >= 0)
+                if (listVehicles != null && listVehicles.Length > 0 && 
+                    (VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.adnettrack) 
+                    && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.adnettrack).ToString()) >= 0
+                    && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.adnettrack).Autopromo)
+                    ||
+                    (VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.evaliantMobile)
+                    && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.evaliantMobile).ToString()) >= 0
+                    && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.evaliantMobile).Autopromo)
+                    ||
+                    (VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.mms)
+                    && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.mms).ToString()) >= 0
+                    && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.mms).Autopromo)
+                    )
                 {
-                    isEvaliant = true;
+                    isAutoPromo = true;
                 }
             }
-            if (isEvaliant)
+            if (isAutoPromo)
             {
                 int code = 2551;
-                if (webSession.AutopromoEvaliant)
+                switch (webSession.AutoPromo) {
+                    case WebConstantes.CustomerSessions.AutoPromo.total:
+                        code = 1401; break;
+                    case WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser:
+                        code = 3005; break;
+                    case WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany:
+                        code = 3006; break;
+                }
+                /*if (webSession.AutopromoEvaliant)
                 {
                     code = 2476;
-                }
+                }*/
                 return ("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2552, webSession.SiteLanguage) + " : </font> " + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + "</td></tr>");
             }
             return ("");
@@ -1868,10 +1890,18 @@ namespace TNS.AdExpress.Web.UI
 					}
 				}
                 int code = 2551;
-                if (webSession.AutopromoEvaliant)
+                switch (webSession.AutoPromo) {
+                    case WebConstantes.CustomerSessions.AutoPromo.total:
+                        code = 1401; break;
+                    case WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser:
+                        code = 3005; break;
+                    case WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany:
+                        code = 3006; break;
+                }
+                /*if (webSession.AutopromoEvaliant)
                 {
                     code = 2476;
-                }
+                }*/
                 t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2552, webSession.SiteLanguage) + " :</font> " + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + "</TD></TR>");
 
                 if (WebApplicationParameters.VehiclesFormatInformation.Use) {
