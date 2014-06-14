@@ -7,7 +7,6 @@
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
-      <allowedUnit>spot</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -102,7 +101,6 @@
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
-      <allowedUnit>spot</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaLevelItems>
@@ -442,7 +440,7 @@
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
   </vehicle>
-  <!-- MAGAZINE -->
+  <!-- Magazine -->
   <vehicle id="magazine" databaseId="98" showInsertions="true" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits defaultUnit="pages">
@@ -498,16 +496,16 @@
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="2">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+        <defaultMediaSelectionDetailLevel id="36" name="media\support" />
         <defaultMediaSelectionDetailLevel id="26" name="basic media\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="1"/>
+        <!-- Media -->
         <allowedMediaSelectionLevelItem id="3"/>
         <!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/>
         <!-- Centre d 'interet -->
-        <allowedMediaSelectionLevelItem id="2"/>
-        <!-- Catégorie -->
         <allowedMediaSelectionLevelItem id="27"/>
         <!-- Basic Media -->
         <allowedMediaSelectionLevelItem id="17"/>
@@ -542,8 +540,17 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
-  <!-- NEWSPAPER -->
+  <!-- NewsPaper -->
   <vehicle id="newspaper" databaseId="99" showInsertions="true" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits defaultUnit="pages">
@@ -599,16 +606,16 @@
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="2">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+        <defaultMediaSelectionDetailLevel id="36" name="media\support" />
         <defaultMediaSelectionDetailLevel id="26" name="basic media\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="1"/>
+        <!-- Media -->
         <allowedMediaSelectionLevelItem id="3"/>
         <!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/>
         <!-- Centre d 'interet -->
-        <allowedMediaSelectionLevelItem id="2"/>
-        <!-- Catégorie -->
         <allowedMediaSelectionLevelItem id="27"/>
         <!-- Basic Media -->
         <allowedMediaSelectionLevelItem id="17"/>
@@ -643,6 +650,15 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
@@ -667,6 +683,15 @@
       <allowedUniverseLevel id="4" name="segment"/>
       <allowedUniverseLevel id="6" name="advertiser"/>
     </allowedUniverseLevels>
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
 </vehicles>
 

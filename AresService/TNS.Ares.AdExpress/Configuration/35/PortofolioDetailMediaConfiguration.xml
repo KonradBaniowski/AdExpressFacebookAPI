@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <vehicleGroups>
-    <vehicle id="2" name="presse">
+    <vehicle id="98" name="magazine">
+      <detailColumn id="6"/>
+    </vehicle>
+    <vehicle id="99" name="newspaper">
       <detailColumn id="6"/>
     </vehicle>
   </vehicleGroups>
-</configuration> 
+</configuration>

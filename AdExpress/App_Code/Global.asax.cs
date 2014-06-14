@@ -103,6 +103,9 @@ namespace AdExpress
 
                 //Campaign  types
                 CampaignTypesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.CAMPAIGN_TYPES_CONFIGURATION_FILENAME));
+
+                if (WebApplicationParameters.VehiclesFormatInformation != null && WebApplicationParameters.VehiclesFormatInformation.Use)
+                    VehiclesFormatList.Init(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList, WebApplicationParameters.DefaultDataLanguage);
             }
             catch (System.Exception error)
             {
@@ -138,8 +141,7 @@ namespace AdExpress
         /// <param name="e"></param>
         protected void Session_Start(Object sender, EventArgs e)
         {
-                if (WebApplicationParameters.VehiclesFormatInformation!=null && WebApplicationParameters.VehiclesFormatInformation.Use)
-                    VehiclesFormatList.Init(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList, WebApplicationParameters.DefaultDataLanguage);
+             
 
         }
         /// <summary>

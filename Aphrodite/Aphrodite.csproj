@@ -82,7 +82,7 @@
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\11.2g\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />

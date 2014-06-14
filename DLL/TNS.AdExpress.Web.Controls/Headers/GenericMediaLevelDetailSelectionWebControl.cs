@@ -35,7 +35,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 	/// Description résumée de GenericMediaLevelDetailSelectionWebControl.
 	/// </summary>
 	[ToolboxData("<{0}:GenericMediaLevelDetailSelectionWebControl runat=server></{0}:GenericMediaLevelDetailSelectionWebControl>")]
-	public class GenericMediaLevelDetailSelectionWebControl : System.Web.UI.WebControls.WebControl{
+	public class GenericMediaLevelDetailSelectionWebControl : WebControl{
 
 		#region Variables
 		/// <summary>
@@ -847,8 +847,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
             switch (_componentProfile) { 
                 case WebConstantes.GenericDetailLevel.ComponentProfile.adnettrack:
                     return GetModuleAllowedDetailLevelItems();
-                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
                 default:
 
                     vehicleAllowedDetailLevelList = GetVehicleAllowedDetailLevelItems();
@@ -964,12 +962,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			dropDownList.Items.Add(new ListItem("-------","-1"));
 			ArrayList AllowedDetailLevelItems=GetAllowedDetailLevelItems();
 
-            TNS.AdExpress.Domain.Layers.CoreLayer clMediaU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.mediaDetailLevelUtilities];
+            Domain.Layers.CoreLayer clMediaU = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.mediaDetailLevelUtilities];
             if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
             object[] param = new object[2];
             param[0] = _customerWebSession;
             param[1] = _componentProfile;
-            TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);           
+            Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (Core.Utilities.MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);           
                       
 			foreach(DetailLevelItemInformation currentDetailLevelItem in AllowedDetailLevelItems){
                 if (mediaDetailLevelUtilities.CanAddDetailLevelItem(currentDetailLevelItem, _customerWebSession.CurrentModule))
@@ -1010,7 +1009,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
            object[] param = new object[2];
             param[0] = _customerWebSession;
             param[1] = _componentProfile;
-            TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null,param, null, null, null);
+            Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (Core.Utilities.MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null,param, null, null);
            
 			foreach(DetailLevelItemInformation currentDetailLevelItem in currentDetailLevel.Levels){
 				if( !AllowedDetailLevelItems.Contains(currentDetailLevelItem))return(false);
@@ -1039,7 +1039,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
         {
             List<Int64> vehicleList = new List<Int64>();
             string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-            if (listStr != null && listStr.Length > 0)
+            if (!string.IsNullOrEmpty(listStr))
             {
                 string[] list = listStr.Split(',');
                 for (int i = 0; i < list.Length; i++)

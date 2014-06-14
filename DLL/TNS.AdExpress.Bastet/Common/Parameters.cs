@@ -204,7 +204,7 @@ namespace TNS.AdExpress.Bastet.Common{
 
             object[] parameters = new object[1];
             parameters[0] = dataSource;
-            IStaticNavSessionDAL staticNavSessionDAL = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + dataAccessLayer.AssemblyName, dataAccessLayer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, parameters, null, null, null);
+            IStaticNavSessionDAL staticNavSessionDAL = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + dataAccessLayer.AssemblyName, dataAccessLayer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, parameters, null, null);
             return staticNavSessionDAL.LoadData(idStaticNavSession);
 
         }

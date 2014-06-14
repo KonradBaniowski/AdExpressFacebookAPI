@@ -195,6 +195,7 @@
     <table enumId="179" description="Recap Data: Instore Segment" schemaEnumId="4" label="recap_instore_segment" prefix="rcp"/>
     <table enumId="180" description="Data: Instore" schemaEnumId="0" label="data_instore" prefix="wp"/>
     <table enumId="181" description="Data: Instore 4M" schemaEnumId="0" label="data_instore_4M" prefix="wp"/>
+    <table enumId="182" description="Classif: slogan" schemaEnumId="0" label="slogan" prefix="slo"/>
 
     <table enumId="184" description="Data: Cinema Retailer"             schemaEnumId="0" label="data_cinema_retailer" prefix="wp"/>
     <table enumId="185" description="Data: Cinema Retailer 4M"          schemaEnumId="0" label="data_cinema_retailer_4M" prefix="wp"/>
@@ -243,6 +244,11 @@
 
     <table enumId="227" description="Dash Board Data: Pluri Month Retailer"   schemaEnumId="0" label="TABLEAU_BORD_PLURI_MONTH_RET" prefix="dshb"/>
     <table enumId="228" description="Dash Board Data: Pluri Week Retailer"    schemaEnumId="0" label="TABLEAU_BORD_PLURI_WEEK_RET" prefix="dshb"/>
+
+    <table enumId="245" description="Data: Indoor"            schemaEnumId="0" label="data_indoor" prefix="wp"/>
+    <table enumId="246" description="Data: Indoor 4M"         schemaEnumId="0" label="data_indoor_4M" prefix="wp"/>
+    <table enumId="247" description="Recap Data: Indoor" schemaEnumId="4" label="recap_indoor" prefix="rcp"/>
+    <table enumId="248" description="Recap Data: Indoor Segment" schemaEnumId="4" label="recap_indoor_segment" prefix="rcp"/>
 
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

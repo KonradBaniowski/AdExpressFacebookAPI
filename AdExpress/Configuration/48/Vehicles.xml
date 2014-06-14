@@ -3,7 +3,7 @@
   <!-- PRESS -->
   <vehicle id="press" databaseId="3" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits defaultUnit="pages">
+    <allowedUnits defaultUnit="pln">
       <allowedUnit>pln</allowedUnit>
       <allowedUnit>kpln</allowedUnit>
       <allowedUnit>insertion</allowedUnit>

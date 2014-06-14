@@ -2,19 +2,22 @@
 <infoNews>
   <RulesLayer name="Default Info news rules layers" assemblyName="TNS.AdExpressI.InfosNews.Default.dll" class="TNS.AdExpressI.InfosNews.Default.InfoNewsResult"/>
   <directories>
-    <directory id="advertisingExpenditureCategory" description="Mainonta toimialoittain " webTextId="2593" virtualPath="/InfoNews/AdvertisingExpenditureByCategory/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\AdvertisingExpenditureByCategory"/>
-    <directory id="top150BrandAdvertisers" description="TOP 150 merkkimainostajaa" webTextId="2594" virtualPath="/InfoNews/TOP150BrandAdvertisers/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\TOP150BrandAdvertisers"/>
-    <directory id="top20Retailers" description="TOP 20 kaupan ketjua" webTextId="2595" virtualPath="/InfoNews/TOP20Retailers/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\TOP20Retailers"/>
-    <directory id="monthlyAdvertisingExpenditureTrends" description="Mainonnan kehitys kuukausittain " webTextId="2596" virtualPath="/InfoNews/MonthlyAdvertisingExpenditureTrends/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\MonthlyAdvertisingExpenditureTrends"/>
-    <directory id="advertisingYearEventMaterials" description="Mainosvuosi-tilaisuuksien materiaalit" webTextId="2597" virtualPath="/InfoNews/AdvertisingYearEventMaterials/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\AdvertisingYearEventMaterials"/>
-    <directory id="Metholodology" description="Metodologia" webTextId="2598" virtualPath="/InfoNews/Metholodology/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\Metholodology"/>
-    <directory id="moduleDescriptions" description="Moduulikuvaukset" webTextId="2599" virtualPath="/InfoNews/ModuleDescriptions/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\ModuleDescriptions"/>
-    <directory id="archive" description="Arkisto" webTextId="2622" virtualPath="/InfoNews/Archive/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\Archive"/>
-    <directory id="instructions" description="Ohjeet" webTextId="2623" virtualPath="/InfoNews/Instructions/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\Instructions"/>
-    <directory id="otherInfo" description="Ajankohtaista" webTextId="2624" virtualPath="/InfoNews/OtherInfo/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\OtherInfo"/>    
-    <directory id="backData2007" description="2007 tiedot" webTextId="2676" virtualPath="/InfoNews/BackData2007/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackData2007"/>
-    <directory id="backData2006" description="2006 tiedot" webTextId="2677" virtualPath="/InfoNews/BackData2006/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackData2006"/>
-    <directory id="dealerVsBrandAdvertising" description="jälleenmyyjä vs. merkkimainonta" webTextId="2678" virtualPath="/InfoNews/DealerBrandAdvertising/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\DealerBrandAdvertising"/>
+    <directory id="advertisingExpenditureCategory" description="Mainonta toimialoittain " webTextId="2593" virtualPath="/InfoNews/AdvertisingExpenditureByCategory/" physicalPath="\\TSESPWBE010\GenericInfoNews\AdvertisingExpenditureByCategory"/>
+    <directory id="top150BrandAdvertisers" description="TOP 150 merkkimainostajaa" webTextId="2594" virtualPath="/InfoNews/TOP150BrandAdvertisers/" physicalPath="\\TSESPWBE010\GenericInfoNews\TOP150BrandAdvertisers"/>
+    <directory id="top20Retailers" description="TOP 20 kaupan ketjua" webTextId="2595" virtualPath="/InfoNews/TOP20Retailers/" physicalPath="\\TSESPWBE010\GenericInfoNews\TOP20Retailers"/>
+    <directory id="monthlyAdvertisingExpenditureTrends" description="Mainonnan kehitys kuukausittain " webTextId="2596" virtualPath="/InfoNews/MonthlyAdvertisingExpenditureTrends/" physicalPath="\\TSESPWBE010\GenericInfoNews\MonthlyAdvertisingExpenditureTrends"/>
+    <directory id="advertisingYearEventMaterials" description="Mainosvuosi-tilaisuuksien materiaalit" webTextId="2597" virtualPath="/InfoNews/AdvertisingYearEventMaterials/" physicalPath="\\TSESPWBE010\GenericInfoNews\AdvertisingYearEventMaterials"/>
+    <directory id="Metholodology" description="Metodologia" webTextId="2598" virtualPath="/InfoNews/Metholodology/" physicalPath="\\TSESPWBE010\GenericInfoNews\Metholodology"/>
+    <directory id="moduleDescriptions" description="Moduulikuvaukset" webTextId="2599" virtualPath="/InfoNews/ModuleDescriptions/" physicalPath="\\TSESPWBE010\GenericInfoNews\ModuleDescriptions"/>
+    <directory id="archive" description="Arkisto" webTextId="2622" virtualPath="/InfoNews/Archive/" physicalPath="\\TSESPWBE010\GenericInfoNews\Archive"/>
+    <directory id="instructions" description="Ohjeet" webTextId="2623" virtualPath="/InfoNews/Instructions/" physicalPath="\\TSESPWBE010\GenericInfoNews\Instructions"/>
+    <directory id="otherInfo" description="Ajankohtaista" webTextId="2624" virtualPath="/InfoNews/OtherInfo/" physicalPath="\\TSESPWBE010\GenericInfoNews\OtherInfo"/>
+    <directory id="backDataN1" description="Back data N-1" webTextId="2729" virtualPath="/InfoNews/BackDataN-1/" physicalPath="\\TSESPWBE010\GenericInfoNews\BackDataN-1"/>
+    <directory id="backDataN2" description="Back data N-2" webTextId="2730" virtualPath="/InfoNews/BackDataN-2/" physicalPath="\\TSESPWBE010\GenericInfoNews\BackDataN-2"/>
+    <directory id="backData2007" description="Back data N-3" webTextId="2676" virtualPath="/InfoNews/BackDataN-3/" physicalPath="\\TSESPWBE010\GenericInfoNews\BackDataN-3"/>
+    <directory id="backData2006" description="Back data N-4" webTextId="2677" virtualPath="/InfoNews/BackDataN-4/" physicalPath="\\TSESPWBE010\GenericInfoNews\BackDataN-4"/>
+    <directory id="dealerVsBrandAdvertising" description="jälleenmyyjä vs. merkkimainonta" webTextId="2678" virtualPath="/InfoNews/DealerBrandAdvertising/" physicalPath="\\TSESPWBE010\GenericInfoNews\DealerBrandAdvertising"/>
+    <directory id="archiveCurrentYear" description="Archive current year" webTextId="2727" virtualPath="/InfoNews/ArchiveCurrentYear/" physicalPath="\\TSESPWBE010\GenericInfoNews\ArchiveCurrentYear"/>
+    <directory id="internationaTrends" description="International trends" webTextId="2728" virtualPath="/InfoNews/InternationalTrends/" physicalPath="\\TSESPWBE010\GenericInfoNews\InternationalTrends"/>
   </directories>
 </infoNews>
-

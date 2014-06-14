@@ -63,7 +63,7 @@
           <allowedMediaLevelItem id="3" name="Support"/>
           <allowedMediaLevelItem id="4" name="Centre d'interet"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
-          <!--<allowedMediaLevelItem id="6" name="Version"/>-->
+          <allowedMediaLevelItem id="6" name="Version"/>
           <!--<allowedMediaLevelItem id="7" name="Groupe de société"/>-->
           <allowedMediaLevelItem id="8" name="Annonceur"/>
           <allowedMediaLevelItem id="9" name="Marque"/>
@@ -139,7 +139,41 @@
           <allowedMediaLevelItem id="4" name="Centre d'interet"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
           <allowedMediaLevelItem id="6" name="Version"/>
-          <!-- <allowedMediaLevelItem id="7" name="Groupe de société"/>-->
+          <allowedMediaLevelItem id="8" name="Annonceur"/>
+          <allowedMediaLevelItem id="9" name="Marque"/>
+          <allowedMediaLevelItem id="10" name="Produit"/>
+          <allowedMediaLevelItem id="11" name="Famille"/>
+          <allowedMediaLevelItem id="12" name="Classe"/>
+          <allowedMediaLevelItem id="13" name="Groupe"/>
+          <allowedMediaLevelItem id="14" name="Variété"/>
+          <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="22" name="Format"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>
+    <vehicle id="9"   name="Indoor" >
+      <detailColumns>
+        <detailColumn id="4">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
+          </allowedModules>
+          <allowedModules>
+            <allowedModule name="present/absent" privilegecode="278"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>
+          <allowedMediaLevelItem id="2" name="Categorie"/>
+          <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+          <allowedMediaLevelItem id="5" name="Régie"/>
+          <allowedMediaLevelItem id="6" name="Version"/>
           <allowedMediaLevelItem id="8" name="Annonceur"/>
           <allowedMediaLevelItem id="9" name="Marque"/>
           <allowedMediaLevelItem id="10" name="Produit"/>

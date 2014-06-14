@@ -195,7 +195,7 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
             if (_excel != null && !string.IsNullOrEmpty(_excelFilePath))
             {
 				//Sauvegarde du fichier excel
-                if (!Directory.Exists(_excelFilePath)) {
+                if (!Directory.Exists(Path.GetDirectoryName(_excelFilePath))) {
                     try { Directory.CreateDirectory(Path.GetDirectoryName(_excelFilePath)); }
                     catch {
                         _excelFilePath = Path.Combine(Path.GetTempPath(), Path.GetFileName(_excelFilePath));
@@ -262,7 +262,7 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 			try{
 				string shortFName = "";
                 string fName = GetFileName(_rqDetails, ref shortFName);
-                _excelFilePath = AppDomain.CurrentDomain.BaseDirectory + fName;
+                _excelFilePath = fName; //AppDomain.CurrentDomain.BaseDirectory +
 		
 				return shortFName;
 				
