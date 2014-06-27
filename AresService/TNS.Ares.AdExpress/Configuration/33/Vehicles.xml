@@ -1097,7 +1097,7 @@
   <vehicle id="webPromotion" databaseId="9999" showInsertions="false" showCreations="false">    
   </vehicle>
   <!-- MMS -->
-  <vehicle id="mms" databaseId="20" showInsertions="false" showCreations="false" autopromo="true">
+  <vehicle id="mms" databaseId="20" showInsertions="false" showCreations="false" autopromo="true" mediaAgencyFlag="348">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -1120,6 +1120,10 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>            <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>          <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem> <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>           <!-- Agence -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>            <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>          <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -1136,6 +1140,13 @@
         <allowedMediaSelectionLevelItem id="4"/>        <!-- Centre d 'interet -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>        <!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>       <!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
     <!--Allowed universe levels-->
     <allowedUniverseLevels>
       <allowedUniverseLevel id="1" name="sector"/>
