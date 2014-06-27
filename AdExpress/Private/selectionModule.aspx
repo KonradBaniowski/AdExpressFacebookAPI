@@ -50,6 +50,7 @@
 				</tr>
 			</table>
 		    <cc1:MenuWebControl ID="MenuWebControl1" runat="server" />
+            <cc1:NewsWebControl ID="NewsWebControl1" runat="server" />
 		</form>
 	</body>
 </html>

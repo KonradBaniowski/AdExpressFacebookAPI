@@ -1140,6 +1140,13 @@
         <allowedMediaSelectionLevelItem id="4"/>        <!-- Centre d 'interet -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>        <!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>       <!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
     <!--Allowed universe levels-->
     <allowedUniverseLevels>
       <allowedUniverseLevel id="1" name="sector"/>

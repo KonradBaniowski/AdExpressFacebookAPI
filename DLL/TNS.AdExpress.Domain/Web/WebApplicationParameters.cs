@@ -199,6 +199,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Rolex Date Configuration List
         /// </summary>
         protected static DateConfigurations _rolexDateConfigurations = null;
+        /// <summary>
+        /// Display News
+        /// </summary>
+        protected static bool _displayNews = false;
         #endregion
         
         #region Contructeur
@@ -516,7 +520,17 @@ namespace TNS.AdExpress.Domain.Web {
             get { return _rolexDateConfigurations; }
             set { _rolexDateConfigurations = value; }
         }
-
+        /// <summary>
+        /// Get / Set Display News flag
+        /// </summary>
+        public static bool DisplayNews {
+            get {
+                return _displayNews;
+            }
+            set {
+                _displayNews = value;
+            }
+        }
         #endregion
 
         #region Get Table

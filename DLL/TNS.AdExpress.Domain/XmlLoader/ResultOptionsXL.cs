@@ -56,6 +56,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool useTypeLostWon = true;
             bool isAllPeriodIsRestrictTo4Month = true;
             bool canSaveLevels = false;
+            bool displayNews = false;
             #endregion
 
             try {
@@ -215,7 +216,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                             case "insertionReport":
                                 isAllPeriodIsRestrictTo4Month = bool.Parse(reader.GetAttribute("isAllPeriodIsRestrictTo4Month"));
                                 canSaveLevels = bool.Parse(reader.GetAttribute("canSaveLevels"));
-                               
+                                break;
+                            case "news":
+                                displayNews = bool.Parse(reader.GetAttribute("displayNews"));
                                 break;
                         }
                     }
@@ -233,8 +236,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 WebApplicationParameters.UseDiponibilityOptionPeriodLostWon = useDiponibilityLostWon;
                 WebApplicationParameters.UseTypeOptionPeriodLostWon = useTypeLostWon;
                 //WebApplicationParameters.IsAllPeriodIsRestrictTo4MonthInInsertionReport = isAllPeriodIsRestrictTo4Month;
-                WebApplicationParameters.InsertionOptions = new InsertionOptions(isAllPeriodIsRestrictTo4Month, canSaveLevels); 
-              
+                WebApplicationParameters.InsertionOptions = new InsertionOptions(isAllPeriodIsRestrictTo4Month, canSaveLevels);
+                WebApplicationParameters.DisplayNews = displayNews;
             }
 
             #region Error Management

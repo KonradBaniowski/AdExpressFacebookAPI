@@ -1193,7 +1193,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (dataUnit != null && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms) {
+            if (dataUnit != null && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms &&
+                _webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_DISPLAY)) {
 
                 #region Get Data
                 volume = dataUnit.GetMmsVolume();

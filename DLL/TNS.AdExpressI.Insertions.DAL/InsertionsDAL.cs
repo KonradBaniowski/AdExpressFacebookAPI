@@ -1446,7 +1446,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             else if (vehicle.Id == CstDBClassif.Vehicles.names.mms)
                 idMediaLabel = "id_media_mms";
 
-            if ((vehicle.Id == CstDBClassif.Vehicles.names.adnettrack
+            if (vehicle.Autopromo && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack
                 || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile
                 || vehicle.Id == CstDBClassif.Vehicles.names.mms)) {
 

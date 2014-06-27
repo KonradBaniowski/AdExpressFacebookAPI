@@ -395,7 +395,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         : WebApplicationParameters.GetDataTable(TableIds.recapEmailingSegment, _session.IsSelectRetailerDisplay);
 				case CstDBClassif.Vehicles.names.directMarketing:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketing, _session.IsSelectRetailerDisplay) 
-                        : WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketingSegment, _session.IsSelectRetailerDisplay);             
+                        : WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketingSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.mms:
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapMms, _session.IsSelectRetailerDisplay)
+                        : WebApplicationParameters.GetDataTable(TableIds.recapMmsSegment, _session.IsSelectRetailerDisplay);             
                 default:
                     throw new ProductClassReportsDALException(string.Format("Vehicle n° {0} is not allowed.", _vehicle.GetHashCode()));
             }

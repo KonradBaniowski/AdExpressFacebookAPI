@@ -256,7 +256,7 @@ namespace TNS.AdExpress.Web.Core.France.Utilities
                         #region Annonceur
                         case DetailLevelItemInformation.Levels.advertiser:
                             vehicleList = GetVehicles();
-                          if(vehicleList.Count == 1 &&
+                          if(vehicleList.Count == 1 && VehiclesInformation.Contains(Vehicles.names.mailValo) &&
                                                VehiclesInformation.Get(Vehicles.names.mailValo).DatabaseId ==
                                                vehicleList[0])  return (true);
 

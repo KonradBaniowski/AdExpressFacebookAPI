@@ -39,4 +39,5 @@
   <flag id="328" description="Accès export des créations Internet Evaliant"/>
   <flag id="343" description="Accès Marque Media"/>
   <flag id="348" description="Accès Agences Media DISPLAY"/>
+  <flag id="353" description="Accès aux volumes du Media Display"/>
 </flags>

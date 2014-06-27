@@ -4363,10 +4363,18 @@ namespace TNS.AdExpress.Web.Core.Sessions
                     switch (units[i].Id)
                     {
                         case TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.volume:
-                            if (!this.CustomerLogin.CustormerFlagAccess(Flags.ID_VOLUME_MARKETING_DIRECT))
-                            {
+                            if (!this.CustomerLogin.CustormerFlagAccess(Flags.ID_VOLUME_MARKETING_DIRECT)) {
                                 units.RemoveAt(i);
                             }
+                            break;
+                        case WebConstantes.CustomerSessions.Unit.volumeMms:
+                            if (!this.CustomerLogin.CustormerFlagAccess(Flags.ID_VOLUME_DISPLAY)) {
+                                units.RemoveAt(i);
+                            }
+                            break;
+                        case WebConstantes.CustomerSessions.Unit.insertion:
+                            if (vehicleList.Contains(Vehicles.names.mms) && !this.CustomerLogin.CustormerFlagAccess(Flags.ID_VOLUME_DISPLAY))
+                                units.RemoveAt(i);
                             break;
                         default:
                             break;

@@ -241,7 +241,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms)
                 idMediaLabel = "id_media_mms";
 
-            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
+            if (_vehicleInformation.Autopromo && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms)) {
 
@@ -374,7 +374,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms)
                 idMediaLabel = "id_media_mms";
 
-            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
+            if (_vehicleInformation.Autopromo && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms)) {
 
@@ -1526,7 +1526,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms)
                 idMediaLabel = "id_media_mms";
 
-            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
+            if (_vehicleInformation.Autopromo && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mms)) {
 

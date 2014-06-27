@@ -293,6 +293,7 @@
     <Compile Include="Headers\ModuleTitleWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Headers\NewsWebControl.cs" />
     <Compile Include="Headers\OptionLayerWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

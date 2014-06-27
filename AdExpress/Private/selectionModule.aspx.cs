@@ -304,6 +304,8 @@ namespace AdExpress{
 					ModuleSelection2WebControl1.CustomerSession = _webSession;
 					LoginInformationWebControl1.CustomerSession = _webSession;
 					ActualitiesWebControl1.LanguageId = _webSession.SiteLanguage;
+                    NewsWebControl1.CustomerWebSession = _webSession;
+                    NewsWebControl1.Display = WebApplicationParameters.DisplayNews;
 				}
 
                 MenuWebControl1.CustomerWebSession = _webSession;

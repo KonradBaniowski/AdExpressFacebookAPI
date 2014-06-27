@@ -1967,3 +1967,9 @@ CheckActiveVehicle="False"
                             CssBackgroundColor="dpTable"
                             SkinID="detailPeriodWebControl" 
 />
+<ctrHeader:NewsWebControl
+                            runat="server" 
+                            TitleFont="txtViolet12Bold"
+                            TitleStyle="newsTitle"
+                            ContentFont="txtViolet11"
+/>

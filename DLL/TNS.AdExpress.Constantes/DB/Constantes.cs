@@ -1823,6 +1823,11 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Identifier of DISPLAY's media agency flag
         /// </summary>
         public const Int64 ID_DISPLAY_MEDIA_AGENCY_FLAG = 348;
+
+        /// <summary>
+        /// Identifiant du flag Accès Volumes (DISPLAY)
+        /// </summary>
+        public const Int64 ID_VOLUME_DISPLAY = 353;
     }
 	#endregion
 

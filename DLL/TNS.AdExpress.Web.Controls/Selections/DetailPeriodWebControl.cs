@@ -22,6 +22,9 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Date.DAL;
 using System.Reflection;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
+using CstRight = TNS.AdExpress.Constantes.Customer.Right;
+using TNS.AdExpress.Domain.Classification;
+using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpress.Web.Controls.Selections {
     /// <summary>
@@ -238,8 +241,18 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 else
                     currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 
-                if ((currentModule.Id == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE && _webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)) return "";
-                
+                if ((currentModule.Id == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE && _webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)) {
+
+                    if (_webSession.SiteLanguage == TNS.AdExpress.Constantes.DB.Language.FRENCH) {
+                        t = new System.Text.StringBuilder();
+                        t.Append("<div>");
+                        t.Append(GetDisplayLink(_webSession, currentModule));
+                        t.Append("</div><br>");
+                        return Convertion.ToHtmlString(t.ToString());
+                    }
+                    //return "";
+                }
+                    
                 if (_webSession.isDatesSelected()) {
                     tmpHTML = GetDateSelected(_webSession, currentModule, _dateFormatText, _periodBeginning, _periodEnd);
                     if (tmpHTML.Length > 0)
@@ -286,13 +299,21 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
                 t.Append("</tr>");
 
-                t.Append("</table></div><br>");
+                t.Append("</table>");
+
+                if (_webSession.SiteLanguage == TNS.AdExpress.Constantes.DB.Language.FRENCH
+                    && (currentModule.Id == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE || currentModule.Id == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                      || currentModule.Id == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE || currentModule.Id == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+                      || currentModule.Id == WebConstantes.Module.Name.INDICATEUR || currentModule.Id == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE))
+                    t.Append(GetDisplayLink(_webSession, currentModule));
+
+                t.Append("</div><br>");
                 #endregion
 
                 return Convertion.ToHtmlString(t.ToString());
             }
             catch (System.Exception err) {
-                throw (new WebExceptions.ExcelWebPageException("Impossible de construire le rappel des paramètres dans le fichier Excel", err));
+                throw (new WebExceptions.ExcelWebPageException("Impossible de construire le rappel des paramètres dans DetailPeriodWebControl", err));
             }
         }
         #endregion
@@ -826,6 +847,64 @@ namespace TNS.AdExpress.Web.Controls.Selections {
         /// <returns>vraie si la periode est sélectionnée et faux sinon</returns>
         private bool IsDetailPeriod(WebSession webSession) {
             return !(webSession.DetailPeriodBeginningDate.Equals("") || webSession.DetailPeriodBeginningDate.Equals("0"));
+        }
+        #endregion
+
+        #region Get Display Link
+        /// <summary>
+        /// Get Display Link
+        /// </summary>
+        /// <param name="webSession">webSession</param>
+        /// <returns>HTML</returns>
+        private string GetDisplayLink(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule) {
+            
+            StringBuilder html = new StringBuilder();
+
+            if (IsDisplaySelected(webSession, currentModule)) {
+
+                html.Append("<table class=\"" + CssBackgroundColor + "\" cellpadding=2 cellspacing=0 style=\"margin-top:8px;\">");
+                string linkFile = WebApplicationParameters.InfoNewsInformations.InfoNewsItems[ModuleInfosNews.Directories.novelties].VirtualPath;
+                html.Append("<td colspan=4>" + "<a href=\"" + linkFile + "Kantar Media Mesure Multi Sources - Périmètre et clés de lecture Juin 2014.pdf\" target=\"_blank\" class=\"roll01\">" + GestionWeb.GetWebWord(3010, webSession.SiteLanguage) + "</a>" + " ");
+                html.Append("</table>");
+
+                return html.ToString();
+            }
+
+            return "";
+
+        }
+        #endregion
+
+        #region Is Display selected
+        /// <summary>
+        /// Is Media Display selected
+        /// </summary>
+        /// <param name="webSession">WebSession</param>
+        /// <returns>True or False</returns>
+        private bool IsDisplaySelected(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule) {
+
+            try {
+                string[] listVehicles = webSession.GetSelection(webSession.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
+
+                VehicleInformation display = VehiclesInformation.Get(Constantes.Classification.DB.Vehicles.names.mms);
+
+                foreach (string vehicle in listVehicles)
+                    if (vehicle.Length > 0 && display.DatabaseId == Int64.Parse(vehicle))
+                        return true;
+
+                if (currentModule.Id == WebConstantes.Module.Name.INDICATEUR || currentModule.Id == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE) {
+
+                    CstDBClassif.Vehicles.names vehicleId = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.CurrentUniversMedia.FirstNode.Tag).ID);
+
+                    if (vehicleId == display.Id)
+                        return true;
+                }
+            }
+            catch (System.Exception err) {
+                throw (new WebExceptions.ExcelWebPageException("Impossible de construire le lien vers le document du media Display dans DetailPeriodWebControl", err));
+            }
+
+            return false;
         }
         #endregion
 

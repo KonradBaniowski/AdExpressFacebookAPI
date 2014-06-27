@@ -965,7 +965,6 @@
         <ProductRights branches="product|advertiser"/>
         <ExcludedVehicles list="10"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
-      
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>         

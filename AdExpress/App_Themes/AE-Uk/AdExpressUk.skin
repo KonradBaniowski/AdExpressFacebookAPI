@@ -1590,3 +1590,9 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             CssBackgroundColor="dpTable"
                             SkinID="detailPeriodWebControl" 
 />
+<ctrHeader:NewsWebControl
+                            runat="server" 
+                            TitleFont="txtViolet12Bold"
+                            TitleStyle="newsTitle"
+                            ContentFont="txtViolet11"
+/>

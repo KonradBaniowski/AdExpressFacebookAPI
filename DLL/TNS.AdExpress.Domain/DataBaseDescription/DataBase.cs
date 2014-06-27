@@ -1154,6 +1154,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         autoPromo = 252,
         /// <summary>
+        /// Recap MMS
+        /// </summary>
+        recapMms = 253,
+        /// <summary>
+        /// Recap MMS Segment
+        /// </summary>
+        recapMmsSegment = 254,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

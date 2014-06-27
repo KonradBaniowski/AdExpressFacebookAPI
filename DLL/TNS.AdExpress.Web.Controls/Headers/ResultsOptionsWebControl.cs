@@ -1283,7 +1283,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
             #endregion
 
             if (WebApplicationParameters.VehiclesFormatInformation != null
-                && WebApplicationParameters.VehiclesFormatInformation.Use)
+                && WebApplicationParameters.VehiclesFormatInformation.Use
+                && customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+                && customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
             {
                 bannersFormatOption = true;
             }
@@ -2025,14 +2027,21 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
                 foreach (UnitInformation currentUnit in units)
                 {
-                    if (currentUnit.Id != SessionCst.Unit.volume || customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
-                        list.Items.Add(new ListItem(GestionWeb.GetWebWord(currentUnit.WebTextId, customerWebSession.SiteLanguage), currentUnit.Id.GetHashCode().ToString()));
+                    if (currentUnit.Id != SessionCst.Unit.volume || customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT)) {
+                        if (currentUnit.Id != SessionCst.Unit.volumeMms || customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_DISPLAY))
+                            list.Items.Add(new ListItem(GestionWeb.GetWebWord(currentUnit.WebTextId, customerWebSession.SiteLanguage), currentUnit.Id.GetHashCode().ToString()));
+                        else if (customerWebSession.Unit == SessionCst.Unit.volumeMms)
+                            customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                    }
                     else if (customerWebSession.Unit == SessionCst.Unit.volume)
                         customerWebSession.Unit = UnitsInformation.DefaultCurrency;
                 }
                 if (!units.Contains(UnitsInformation.Get(customerWebSession.Unit)))
                 {
-                    customerWebSession.Unit = units[0].Id;
+                    if (ContainsDefaultCurrency(units))
+                        customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                    else
+                        customerWebSession.Unit = units[0].Id;
                 }
                 customerWebSession.Save();
                 list.Items.FindByValue(customerWebSession.Unit.GetHashCode().ToString()).Selected = true;
@@ -2409,6 +2418,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                             case ClassificationCst.DB.Vehicles.names.emailing:
                             case ClassificationCst.DB.Vehicles.names.plurimedia:
                             case ClassificationCst.DB.Vehicles.names.directMarketing:
+                            case ClassificationCst.DB.Vehicles.names.mms:
                                 mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                                 if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))
                                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
@@ -3580,6 +3590,20 @@ namespace TNS.AdExpress.Web.Controls.Headers
             
             }
             return hasMediaLevel;
+        }
+
+        /// <summary>
+        /// Contains Default Currency
+        /// </summary>
+        /// <param name="units">units</param>
+        /// <returns></returns>
+        private bool ContainsDefaultCurrency(List<UnitInformation> units) {
+
+            foreach (UnitInformation currentUnit in units)
+                if (currentUnit.Id == UnitsInformation.DefaultCurrency)
+                    return true;
+
+            return false;
         }
     }
 }

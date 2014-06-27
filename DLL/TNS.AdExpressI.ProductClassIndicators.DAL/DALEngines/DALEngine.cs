@@ -245,7 +245,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                         : WebApplicationParameters.GetDataTable(TableIds.recapEmailingSegment, _session.IsSelectRetailerDisplay);
 				case CstDBClassif.Vehicles.names.directMarketing:
 					return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketing, _session.IsSelectRetailerDisplay) 
-                        : WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketingSegment, _session.IsSelectRetailerDisplay);                
+                        : WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketingSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.mms:
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapMms, _session.IsSelectRetailerDisplay)
+                        : WebApplicationParameters.GetDataTable(TableIds.recapMmsSegment, _session.IsSelectRetailerDisplay);   
                 default:
                     throw new ProductClassIndicatorsDALException(string.Format("Vehicle \"{0}\" is unknown. Unable to find a matching table.", _vehicle.GetHashCode()));
             }

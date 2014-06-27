@@ -2945,6 +2945,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.recapEmailing, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.directMarketing:
                     return WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketing, isRetailerSelected).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.mms:
+                    return WebApplicationParameters.GetDataTable(TableIds.recapMms, isRetailerSelected).Sql;
 				default:
 					throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
             }
@@ -2990,6 +2992,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.recapEmailingSegment, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.directMarketing:
                     return WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketingSegment, isRetailerSelected).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.mms:
+                    return WebApplicationParameters.GetDataTable(TableIds.recapMmsSegment, isRetailerSelected).Sql;
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
             }

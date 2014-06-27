@@ -381,7 +381,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 else if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.mms)
                     idMediaLabel = "id_media_mms";
 
-                if ((VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
+                if (VehiclesInformation.Get(vehicleId).Autopromo && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
                     || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile
                     || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.mms)) {
 

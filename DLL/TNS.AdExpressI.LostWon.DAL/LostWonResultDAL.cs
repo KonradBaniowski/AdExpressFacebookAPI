@@ -830,7 +830,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             else if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.mms)
                 idMediaLabel = "id_media_mms";
 
-            if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack
+            if (_vehicleInformation.Autopromo && (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack
                 || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile
                 || _vehicleInformation.Id == CstDBClassif.Vehicles.names.mms)) {
 
