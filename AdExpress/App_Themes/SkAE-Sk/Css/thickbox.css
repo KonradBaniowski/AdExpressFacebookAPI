@@ -32,7 +32,8 @@
 	FILTER: alpha(opacity=40); BACKGROUND-COLOR: #9479AD; moz-opacity: 0.40; opacity: 0.40
 }
  HTML #TB_overlay {
-	POSITION: absolute; ; HEIGHT: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px')
+	/*POSITION: absolute;*/ 
+    HEIGHT: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
 }
 #TB_window {
 	BORDER-RIGHT: #7B797B 4px solid; BORDER-TOP: #7B797B 4px solid; DISPLAY: none; Z-INDEX: 102; BACKGROUND: #ffffff; LEFT: 50%; BORDER-LEFT: #7B797B 4px solid; COLOR: #000000; BORDER-BOTTOM: #7B797B 4px solid; POSITION: fixed; TOP: 50%; TEXT-ALIGN: left
