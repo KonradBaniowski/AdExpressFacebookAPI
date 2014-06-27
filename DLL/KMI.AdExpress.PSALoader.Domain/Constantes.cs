@@ -34,6 +34,15 @@ namespace KMI.AdExpress.PSALoader.Domain {
         }
         #endregion
 
+        #region Internet new label
+        public class VehicleMapping {
+            /// <summary>
+            /// Internet ancienne version
+            /// </summary>
+            public const string INTERNET_NEW_LABEL = "INTERNET_ANCIENNE_VERSION";
+        }
+        #endregion
+
         #region Vehicles
         /// <summary>
         /// Media type List

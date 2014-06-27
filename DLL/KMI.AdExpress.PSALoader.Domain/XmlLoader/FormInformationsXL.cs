@@ -68,7 +68,11 @@ namespace KMI.AdExpress.PSALoader.Domain.XmlLoader {
                                 break;
                             case "MEDIA":
                                 if (reader.IsEmptyElement) throw (new InvalidXmlValueException("Invalid MEDIA parameter"));
-                                vehicle = (Constantes.Vehicles.names)Enum.Parse(typeof(Constantes.Vehicles.names), reader.ReadElementString().Replace(" ", "_"), true);
+                                string media = reader.ReadElementString().Replace(" ", "_");
+                                if (media == Constantes.VehicleMapping.INTERNET_NEW_LABEL)
+                                    vehicle = Constantes.Vehicles.names.INTERNET;
+                                else
+                                    vehicle = (Constantes.Vehicles.names)Enum.Parse(typeof(Constantes.Vehicles.names), media, true);
                                 needToRead = false;
                                 break;
                             case "EXTENSION":
