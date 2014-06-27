@@ -26,17 +26,17 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+    <MediaSelectionParents DefaultMediaSelectionParent="category">
+      <MediaSelectionParent>category</MediaSelectionParent>      <!-- Catégorie -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
-        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="25">
+        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/>        <!-- Support -->
-        <allowedMediaSelectionLevelItem id="4"/>        <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="2"/>        <!-- Catégorie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Allowed universe levels-->
@@ -59,9 +59,6 @@
       <allowedColumnDetailLevelItems>
         <allowedColumnDetailLevelItem id="2" name="Categorie"/>
         <allowedColumnDetailLevelItem id="3" name="Support"/>
-        <allowedColumnDetailLevelItem id="5" name="Régie"/>
-        <allowedColumnDetailLevelItem id="17" name="Titre"/>
-        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
     <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>

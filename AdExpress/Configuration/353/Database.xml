@@ -23,7 +23,7 @@
   </defaultConnections>
   <schemas>
     
-    <schema enumId="0" description="AdExpress Data (adexprirl01)" label="adexprirl01b"/>
+    <schema enumId="0" description="AdExpress Data (adexprirl01)" label="adexprirl01"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>
     <schema enumId="3" description="Mou" label="mou01"/>
