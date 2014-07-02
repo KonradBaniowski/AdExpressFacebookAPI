@@ -86,7 +86,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 if (!this.Page.ClientScript.IsClientScriptIncludeRegistered("jquery"))
                     this.Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "jquery", this.Page.ResolveClientUrl("~/scripts/jquery.js"));
                 if (!this.Page.ClientScript.IsClientScriptIncludeRegistered("thickbox"))
-                    this.Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "thickbox", this.Page.ResolveClientUrl("~/scripts/thickbox.js"));
+                    this.Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "thickbox", this.Page.ResolveClientUrl("~/scripts/thickboxNoConflict.js"));
 
                 #region Script
                 StringBuilder js = new StringBuilder();
@@ -102,7 +102,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 js.Append("\r\n     return \"\"; ");
                 js.Append("\r\n } ");
 
-                js.Append("\r\n $(document).ready(function(){ ");
+                js.Append("\r\n //no conflict jquery ");
+                js.Append("\r\n jQuery.noConflict(); ");
+
+                js.Append("\r\n jQuery(document).ready(function(){ ");
                 js.Append("\r\n     var checkCookie = getCookieContent('NewsOverlay'); ");
                 js.Append("\r\n     if(checkCookie == \"\") {");
                 js.Append("\r\n         document.cookie = \"NewsOverlay=yes\"; ");
@@ -114,6 +117,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
                 if (!Page.ClientScript.IsClientScriptBlockRegistered("ThickBoxCall")) Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ThickBoxCall", js.ToString());
                 #endregion
+
             }
 
             base.OnPreRender(e);
