@@ -8,7 +8,9 @@ using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+using TNS.AdExpress.Web.Core.Sessions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 
 public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.Web.UI.BaseResultWebPage
 {
@@ -164,6 +166,18 @@ public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.We
             _webSession.Evolution = false;
         }
         ResultsOptionsWebControl1.MutualExclusion = true;
+
+        string vehicleListId = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+        string[] vehicles = vehicleListId.Split(',');
+        foreach (string cVehicle in vehicles) {
+            switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle))) {
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mms:
+                    ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
+                    break;
+            }
+        }
 
         ForbidMediaRefinePage();
 

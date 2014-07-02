@@ -422,7 +422,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             #region Construction de la requête
             try {
                 // Get the name of the data table
-                if (_isAdNetTrackMediaSchedule && vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                if (_isAdNetTrackMediaSchedule && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet) && vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
                 {
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataInternetVersion, _session.IsSelectRetailerDisplay).SqlWithPrefix;
                     unitFieldName = string.Format("OCCURRENCE");
@@ -721,7 +721,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             if (vehicleInfo != null)
             {
                 VehicleInformation cVehicleInfo;
-                if (_isAdNetTrackMediaSchedule && vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                if (_isAdNetTrackMediaSchedule && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet) && vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
                     cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
                 else
                     cVehicleInfo = vehicleInfo;
@@ -745,7 +745,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                     foreach (var cVehicleInformation in vehicleInfoList.Values)
                     {
                         VehicleInformation cVehicleInfo;
-                        if (_isAdNetTrackMediaSchedule && cVehicleInformation.DatabaseId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                        if (_isAdNetTrackMediaSchedule && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet) && cVehicleInformation.DatabaseId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
                             cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
                         else
                             cVehicleInfo = cVehicleInformation;
@@ -1023,7 +1023,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 foreach (var cVehicleInformation in vehicleInfoList.Values)
                 {
                     VehicleInformation cVehicleInfo;
-                    if (_isAdNetTrackMediaSchedule && cVehicleInformation.DatabaseId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                    if (_isAdNetTrackMediaSchedule && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet) && cVehicleInformation.DatabaseId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
                         cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
                     else
                         cVehicleInfo = cVehicleInformation;

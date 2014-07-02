@@ -1377,6 +1377,8 @@
               <detailSelection id="31" name="Advertising Agency Selected"/>
               <detailSelection id="4" name="Unit"/>
               <detailSelection id="7" name="Media Level Detail"/>
+              <detailSelection id="30" name="Auto promo"/>
+              <detailSelection id="36" name="Format Banners Selected"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="29" name="Media Personnalized"/>
             </detailSelections>

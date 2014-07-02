@@ -397,6 +397,45 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                     }
                 }
             }
+            else if (periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data
+                && periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data_4m) {
+
+                string listVehicles = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
+                string autoPromoVehicles = string.Empty;
+
+                if (listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack).ToString())
+                    || listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile).ToString())) {
+
+                    Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
+                    autoPromoVehicles = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack).ToString() + "," + VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile).ToString();
+
+                    if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
+                        sql.AppendFormat(" and (({0}.id_vehicle not in ({1})) or ({0}.id_vehicle in ({1}) and {0}.auto_promotion = 0 )) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, autoPromoVehicles);
+                    else if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany) {
+                        sql.AppendFormat(" and (({0}.id_vehicle not in ({1})) or ({0}.id_vehicle in ({1}) and (({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, autoPromoVehicles);
+                        sql.AppendFormat(" select distinct id_media_evaliant, id_holding_company ");
+                        sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                        sql.AppendFormat(" )))) ");
+                    }
+
+                }
+                else if (listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.mms).ToString())) {
+
+                    Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
+                    autoPromoVehicles = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.mms).ToString();
+
+                    if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
+                        sql.AppendFormat(" and (({0}.id_vehicle not in ({1})) or ({0}.id_vehicle in ({1}) and {0}.auto_promotion = 0 )) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, autoPromoVehicles);
+                    else if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany) {
+                        sql.AppendFormat(" and (({0}.id_vehicle not in ({1})) or ({0}.id_vehicle in ({1}) and (({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, autoPromoVehicles);
+                        sql.AppendFormat(" select distinct id_media_mms, id_holding_company ");
+                        sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                        sql.AppendFormat(" )))) ");
+                    }
+
+                }
+
+            }
 
             // Additional conditions            
             if (additionalConditions.Length > 0)
@@ -472,6 +511,64 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
             //Universe media
             sql.Append(GetMediaUniverse(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
+            #endregion
+
+            #region Banners Format Filter
+            if (vehicleInfo != null) {
+                VehicleInformation cVehicleInfo;
+                /*if (vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                    cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
+                else*/
+                cVehicleInfo = vehicleInfo;
+                List<Int64> formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
+                if (formatIdList.Count > 0)
+                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_" +
+                               WebApplicationParameters.DataBaseDescription.GetTable(
+                                   WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[
+                                       cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" +
+                               string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+            }
+            else {
+                if (list.Length > 0) {
+                    var sqlFormatSelectedClause = new StringBuilder();
+                    sqlFormatSelectedClause.Append(" and (");
+                    var vehicleInfoList = _session.GetVehiclesSelected();
+                    bool firstVehicle = true;
+                    bool hasValidFormat = false;
+                    foreach (var cVehicleInformation in vehicleInfoList.Values) {
+                        VehicleInformation cVehicleInfo;
+                        /*if (cVehicleInformation.DatabaseId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                            cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
+                        else*/
+                        cVehicleInfo = cVehicleInformation;
+
+                        if (firstVehicle) firstVehicle = false;
+                        else sqlFormatSelectedClause.Append(" OR ");
+                        sqlFormatSelectedClause.Append(" (");
+                        var formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
+                        if (formatIdList.Count > 0) {
+                            sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ",
+                                             WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                                             cVehicleInfo.DatabaseId);
+                            sqlFormatSelectedClause.Append("and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix
+                                + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.
+                                VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label
+                                + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+                            hasValidFormat = true;
+                        }
+                        else {
+                            sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ",
+                                             WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                                             cVehicleInfo.DatabaseId);
+                        }
+                        sqlFormatSelectedClause.Append(") ");
+                    }
+                    sqlFormatSelectedClause.Append(" ) ");
+                    if (hasValidFormat)
+                        sql.Append(sqlFormatSelectedClause.ToString());
+                }
+            }
 
             #endregion
 
@@ -656,7 +753,6 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 sql.AppendFormat(" ) ");
             }
 
-
             // Additional conditions            
             if (additionalConditions.Length > 0)
             {
@@ -728,6 +824,39 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             //Universe media
             sql.Append(GetMediaUniverse(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
+            #endregion
+
+            #region Banners Format Filter
+            if (list.Length > 0) {
+                var sqlFormatSelectedClause = new StringBuilder();
+                sqlFormatSelectedClause.Append(" and (");
+                var vehicleInfoList = _session.GetVehiclesSelected();
+                bool firstVehicle = true;
+                bool hasValidFormat = false;
+                foreach (var cVehicleInformation in vehicleInfoList.Values) {
+                    VehicleInformation cVehicleInfo;
+                    /*if (cVehicleInformation.DatabaseId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                        cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
+                    else*/
+                    cVehicleInfo = cVehicleInformation;
+                    if (firstVehicle) firstVehicle = false;
+                    else sqlFormatSelectedClause.Append(" OR ");
+                    sqlFormatSelectedClause.Append(" (");
+                    var formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
+                    if (formatIdList.Count > 0) {
+                        sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, cVehicleInfo.DatabaseId);
+                        sqlFormatSelectedClause.Append("and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+                        hasValidFormat = true;
+                    }
+                    else {
+                        sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, cVehicleInfo.DatabaseId);
+                    }
+                    sqlFormatSelectedClause.Append(") ");
+                }
+                sqlFormatSelectedClause.Append(" ) ");
+                if (hasValidFormat)
+                    sql.Append(sqlFormatSelectedClause.ToString());
+            }
             #endregion
 
             // Order
