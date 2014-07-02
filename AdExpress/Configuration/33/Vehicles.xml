@@ -1097,7 +1097,7 @@
   <vehicle id="webPromotion" databaseId="9999" showInsertions="false" showCreations="false">    
   </vehicle>
   <!-- MMS -->
-  <vehicle id="mms" databaseId="20" showInsertions="false" showCreations="false" autopromo="true" mediaAgencyFlag="348">
+  <vehicle id="mms" databaseId="20" showInsertions="false" showCreations="false" showActiveMedia="true" autopromo="true" mediaAgencyFlag="348">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -1129,15 +1129,18 @@
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>         <!-- Régie -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/>        <!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/>        <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/>        <!-- Régie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
