@@ -5,12 +5,9 @@
 #endregion
 
 using System;
-using System.Data;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using TNS.AdExpress.Constantes.Classification.DB;
-
+using System.Data;
+using System.Linq;
 using TNS.AdExpress.Web.Core.DataAccess;
 using TNS.AdExpress.Domain.Classification;
 
@@ -24,11 +21,8 @@ namespace TNS.AdExpress.Web.Core{
         /// <summary>
         /// Hashtable contenat pour chaque vehicle la liste des supports actifs qui lui correspond
         /// </summary>
-        private static Hashtable _htActiveMedia;
-        /// <summary>
-        /// Liste des vehicles
-        /// </summary>
-        private static List<Vehicles.names> _vehicleList = new List<Vehicles.names>();//= new Vehicles.names[1] { Vehicles.names.internet };
+        private static Dictionary<long, string> _htActiveMedia;
+
         #endregion
 
         #region Constructeur
@@ -36,7 +30,7 @@ namespace TNS.AdExpress.Web.Core{
 		/// Constructeur
 		/// </summary>
 		static ActiveMediaList(){
-            _htActiveMedia = new Hashtable();
+            _htActiveMedia = new Dictionary<long,string>();
 		}
 		#endregion
 
@@ -46,28 +40,27 @@ namespace TNS.AdExpress.Web.Core{
         /// </summary>
         public static void Init(int siteLanguage){
 
-            ArrayList activeMediaList=new ArrayList();
-            DataSet ds;
-            string[] vehicleIdsList = VehiclesInformation.GetDatabaseIds().Split(',');
-            VehicleInformation vehicle;
+           
+            var vehicleIdsList = VehiclesInformation.GetDatabaseIds().Split(',');
 
-            foreach (string currentVehicle in vehicleIdsList) {
-                vehicle = VehiclesInformation.Get(Int64.Parse(currentVehicle));
+            foreach (string currentVehicle in vehicleIdsList)
+            {
+                var vehicle = VehiclesInformation.Get(Int64.Parse(currentVehicle));
                 if (vehicle.ShowActiveMedia)
-                    _vehicleList.Add(vehicle.Id);
-            }
+                {
+                    long vehicleDatabaseId = VehiclesInformation.EnumToDatabaseId(vehicle.Id);
+                    var ds = ActiveMediaListDataAccess.GetActiveMediaData(vehicleDatabaseId, siteLanguage);
 
-			foreach (Vehicles.names str in _vehicleList) {
+                    if (ds != null && ds.Tables[0].Rows.Count > 0)
+                    {
+                        _htActiveMedia.Add(vehicleDatabaseId,
+                     string.Join(",", ds.Tables[0].Rows.Cast<DataRow>().Select(row => Convert.ToString(row["id_media"]))));
 
-                ds = ActiveMediaListDataAccess.GetActiveMediaData(VehiclesInformation.EnumToDatabaseId(str), siteLanguage);
-
-                foreach (DataRow row in ds.Tables[0].Rows) { 
-                    activeMediaList.Add(row["id_media"]);
+                    }
                 }
-
-				_htActiveMedia.Add(VehiclesInformation.EnumToDatabaseId(str), activeMediaList);
-
             }
+
+          
             
         }
         #endregion
@@ -81,15 +74,9 @@ namespace TNS.AdExpress.Web.Core{
 
             string sql = string.Empty;
 
-            if (_htActiveMedia != null && _htActiveMedia[vehicleId] != null) {
-
-                foreach (Int64 mediaId in (ArrayList)_htActiveMedia[vehicleId]) {
-                    sql += mediaId + ",";
-                }
-
-                if (sql.Length > 1) {
-                    sql = sql.Substring(0, sql.Length - 1);
-                }
+            if (_htActiveMedia != null && _htActiveMedia.ContainsKey(vehicleId))
+            {
+                return _htActiveMedia[vehicleId];
             }
 
             return sql;

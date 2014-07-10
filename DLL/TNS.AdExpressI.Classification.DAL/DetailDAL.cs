@@ -257,17 +257,11 @@ namespace TNS.AdExpressI.Classification.DAL {
                  Remark : Used in Russia
                  */
                 string idSubMedia = _session.CustomerDataFilters.SelectedMediaCategory;
-                if(idSubMedia !=null && idSubMedia.Length>0)
+                if(!string.IsNullOrEmpty(idSubMedia))
                 sql.AppendFormat(" and id_category ={0}", idSubMedia);
 
                 //This section is specifical to the media Internet. obtains the list of active vehicle for Internet.
-				if (VehiclesInformation.Contains(VehicleClassificationCst.internet) && ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
-					activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
-					string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_media", activeMediaList);
-					if (inClauseSQLCode.Length > 0) {
-						sql.AppendFormat(" and {0} ", inClauseSQLCode);
-					}
-				}
+				GetInternetActiveVehicles(sql);
 
 			    //Search vehicles by key word 
 				int j = 0;
@@ -453,30 +447,37 @@ namespace TNS.AdExpressI.Classification.DAL {
 
         protected virtual void GetInternetActiveVehicles(StringBuilder sql)
         {
-            if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP 
-                && VehiclesInformation.Contains(VehicleClassificationCst.internet)
-                   && _session.SelectionUniversMedia != null && _session.SelectionUniversMedia.FirstNode != null &&
-                   ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID 
-                   == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet))
+            if (ContainsVehicle(VehicleClassificationCst.internet) || ContainsVehicle(VehicleClassificationCst.mms))
             {
-                string activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.
+                string activeMediaList = AdExpress.Web.Core.ActiveMediaList.
                     GetActiveMediaList(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
-                string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.
+
+                string inClauseSqlCode = AdExpress.Web.Core.Utilities.
                     SQLGenerator.GetInClauseMagicMethod("id_media", activeMediaList);
-                if (inClauseSQLCode.Length > 0)
+
+                if (!string.IsNullOrEmpty(inClauseSqlCode))
                 {
-                    sql.AppendFormat(" and {0} ", inClauseSQLCode);
+                    sql.AppendFormat(" and {0} ", inClauseSqlCode);
                 }
             }
+        }
+
+        protected virtual bool ContainsVehicle(VehicleClassificationCst vehicleName)
+        {
+            return _session.CurrentModule != AdExpress.Constantes.Web.Module.Name.VP
+                   && VehiclesInformation.Contains(vehicleName)
+                   && _session.SelectionUniversMedia != null && _session.SelectionUniversMedia.FirstNode != null &&
+                   ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID
+                   == VehiclesInformation.EnumToDatabaseId(vehicleName);
         }
 
         protected virtual void FilterWithSubMedia(StringBuilder sql)
         {
             string idSubMedia = null;
-            if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP
+            if (_session.CurrentModule != AdExpress.Constantes.Web.Module.Name.VP
                 && _session.CustomerDataFilters != null)
                 idSubMedia = _session.CustomerDataFilters.SelectedMediaCategory;
-            if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP
+            if (_session.CurrentModule != AdExpress.Constantes.Web.Module.Name.VP
                 && !string.IsNullOrEmpty(idSubMedia))
                 sql.AppendFormat(" and id_category ={0}", idSubMedia);
         }

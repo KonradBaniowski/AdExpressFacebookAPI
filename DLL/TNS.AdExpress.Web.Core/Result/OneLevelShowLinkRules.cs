@@ -19,22 +19,22 @@ namespace TNS.AdExpress.Web.Core.Result {
         }
         #endregion
 
-        /// <summary>
-        /// Obtient la hierarchie de la nomenclature sur 4 niveaux
-        /// </summary>
-        /// <remarks>
-        /// La valeur long.MinValue correspond à un niveau dont il ne faut pas tenir compte
-        /// </remarks>
-        /// <example>
-        /// hierarchie: "1,235,366665,long.MinValue" ou "long.MinValue,long.MinValue,3336,long.MinValue"
-        /// </example>
-        /// <returns>Chaîne représentant la hierarchie</returns>
-        public override string GetHierarchy() {
-            //string[] IdList =  { "-1","-1","-1","-1" };
-            string[] IdList = { long.MinValue.ToString(), long.MinValue.ToString(), long.MinValue.ToString(), long.MinValue.ToString() };
-            string sep=",";
-            IdList[_cellLevel.Level-1]=_cellLevel.Id.ToString();
-            return (String.Join(sep,IdList));
-        }
+        ///// <summary>
+        ///// Obtient la hierarchie de la nomenclature sur 4 niveaux
+        ///// </summary>
+        ///// <remarks>
+        ///// La valeur long.MinValue correspond à un niveau dont il ne faut pas tenir compte
+        ///// </remarks>
+        ///// <example>
+        ///// hierarchie: "1,235,366665,long.MinValue" ou "long.MinValue,long.MinValue,3336,long.MinValue"
+        ///// </example>
+        ///// <returns>Chaîne représentant la hierarchie</returns>
+        //public override string GetHierarchy() {
+        //    //string[] IdList =  { "-1","-1","-1","-1" };
+        //    string[] IdList = { long.MinValue.ToString(), long.MinValue.ToString(), long.MinValue.ToString(), long.MinValue.ToString() };
+        //    string sep=",";
+        //    IdList[_cellLevel.Level-1]=_cellLevel.Id.ToString();
+        //    return (String.Join(sep,IdList));
+        //}
     }
 }
