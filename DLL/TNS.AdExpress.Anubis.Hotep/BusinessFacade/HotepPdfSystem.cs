@@ -163,6 +163,11 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 			try{
 
+                bool evolution = true;
+                VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia)
+                    evolution = false;
+
 				#region Session Parameters
 				SessionParameter();
 				#endregion
@@ -188,11 +193,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
                 #endregion
 
                 #region IndicatorEvolution (advertiserChart)
-                IndicatorEvolution(CstResult.EvolutionRecap.ElementType.advertiser);
+                if (evolution)
+                    IndicatorEvolution(CstResult.EvolutionRecap.ElementType.advertiser);
                 #endregion
 
                 #region IndicatorEvolution (referenceChart)
-                IndicatorEvolution(CstResult.EvolutionRecap.ElementType.product);
+                if (evolution)
+                    IndicatorEvolution(CstResult.EvolutionRecap.ElementType.product);
                 #endregion
 
                 #region Indicator Novelty
