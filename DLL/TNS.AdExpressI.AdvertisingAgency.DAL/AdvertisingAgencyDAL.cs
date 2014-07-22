@@ -393,6 +393,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                         sql.AppendFormat(" and ({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                         sql.AppendFormat(" select distinct {0}, id_holding_company ", idMediaLabel);
                         sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                        sql.AppendFormat(" where {0} is not null ", idMediaLabel);
                         sql.AppendFormat(" ) ");
                     }
                 }
@@ -415,6 +416,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                         sql.AppendFormat(" and (({0}.id_vehicle not in ({1})) or ({0}.id_vehicle in ({1}) and (({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, autoPromoVehicles);
                         sql.AppendFormat(" select distinct id_media_evaliant, id_holding_company ");
                         sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                        sql.AppendFormat(" where id_media_evaliant is not null ");
                         sql.AppendFormat(" )))) ");
                     }
 
@@ -430,6 +432,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                         sql.AppendFormat(" and (({0}.id_vehicle not in ({1})) or ({0}.id_vehicle in ({1}) and (({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, autoPromoVehicles);
                         sql.AppendFormat(" select distinct id_media_mms, id_holding_company ");
                         sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                        sql.AppendFormat(" where id_media_mms is not null ");
                         sql.AppendFormat(" )))) ");
                     }
 
@@ -750,6 +753,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 sql.AppendFormat(" and ({0}.id_media, {0}.id_holding_company) not in ( ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 sql.AppendFormat(" select distinct id_media_evaliant, id_holding_company ");
                 sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                sql.AppendFormat(" where id_media_evaliant is not null ");
                 sql.AppendFormat(" ) ");
             }
 

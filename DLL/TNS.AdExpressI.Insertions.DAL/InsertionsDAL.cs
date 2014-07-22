@@ -1458,6 +1458,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                     sql.AppendFormat(" and ({0}.id_media, {0}.id_holding_company) not in ( ", tData.Prefix);
                     sql.AppendFormat(" select distinct {0}, id_holding_company ", idMediaLabel);
                     sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
+                    sql.AppendFormat(" where {0} is not null ", idMediaLabel);
                     sql.AppendFormat(" ) ");
                 }
             }

@@ -150,6 +150,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     sql += " and (" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_holding_company) not in ( ";
                     sql += " select distinct " + idMediaLabel + ", id_holding_company ";
                     sql += " from " + tblAutoPromo.Sql + " ";
+                    sql += " where " + idMediaLabel + " is not null ";
                     sql += " ) ";
                 }
             }

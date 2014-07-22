@@ -253,6 +253,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     sql.Append(" and (id_media, id_holding_company) not in ( ");
                     sql.Append(" select distinct " + idMediaLabel + ", id_holding_company ");
                     sql.Append(" from " + tblAutoPromo.Sql + " ");
+                    sql.Append(" where " + idMediaLabel + " is not null ");
                     sql.Append(" ) ");
                 }
             }     
@@ -386,6 +387,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     sql += " and (id_media, id_holding_company) not in ( ";
                     sql += " select distinct " + idMediaLabel + ", id_holding_company ";
                     sql += " from " + tblAutoPromo.Sql + " ";
+                    sql += " where " + idMediaLabel + " is not null ";
                     sql += " ) ";
                 }
             }
@@ -1538,6 +1540,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     sql.Append(" and (id_media, id_holding_company) not in ( ");
                     sql.Append(" select distinct " + idMediaLabel + ", id_holding_company ");
                     sql.Append(" from " + tblAutoPromo.Sql + " ");
+                    sql.Append(" where " + idMediaLabel + " is not null ");
                     sql.Append(" ) ");
                 }
             }

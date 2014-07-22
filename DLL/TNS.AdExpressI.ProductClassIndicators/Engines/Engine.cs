@@ -30,6 +30,7 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Date.DAL;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 
 
@@ -50,6 +51,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Type of output
         /// </summary>
         protected bool _excel = false;
+        /// <summary>
+        /// Evolution
+        /// </summary>
+        protected bool _evolution = true;
         /// <summary>
         /// Type of output
         /// </summary>
@@ -124,6 +129,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             get { return _pdf; }
             set { _pdf = value; }
         }
+        /// <summary>
+        /// Get / Set Evolution
+        /// </summary>
+        public bool Evolution {
+            get { return _evolution; }
+            set { _evolution = value; }
+        }
         #endregion
 
         #region Constructor
@@ -167,6 +179,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			_iYearN1ID = (_iYearID == 1) ? 2 : 1;
 			if (_iYearN1ID > 0)
 				_strYearN1ID = _iYearN1ID.ToString();
+            #endregion
+
+            #region Evolution
+            VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
+            if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia)
+                _evolution = false;
             #endregion
         }
         #endregion

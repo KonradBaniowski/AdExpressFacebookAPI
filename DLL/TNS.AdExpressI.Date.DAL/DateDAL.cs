@@ -555,6 +555,8 @@ namespace TNS.AdExpressI.Date.DAL {
         {
 
             string absoluteEndPeriod = "0";
+            VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
+            
 
             //If selected year is lower or equal to data loadin year, then get last loaded month of the last complete trimester
             if (_session.LastAvailableRecapMonth != null && _session.LastAvailableRecapMonth.Length >= 6
@@ -573,8 +575,10 @@ namespace TNS.AdExpressI.Date.DAL {
                     }
                 }
             }
-            else
-            {
+            else if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet) {
+                return EndPeriod;
+            }
+            else {
                 EndPeriod = EndPeriod.Substring(0, 4) + "00";
             }
 

@@ -271,7 +271,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			#region headers
             str.AppendFormat("<tr ><td colspan=2 class=\"p2\"></td><td nowrap class=\"p2\">{0} {1}</td>", selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + " (" + GestionWeb.GetWebWord(2782, _session.SiteLanguage) + ")", _periodBegin.Year);
 			//Evol (optionnelle)
-			if(_session.ComparativeStudy){
+			if(_session.ComparativeStudy && _evolution){
                 str.AppendFormat("<td nowrap class=\"p2\">{0} {1}/{2}</td>", GestionWeb.GetWebWord(1168,_session.SiteLanguage), _periodBegin.Year, _periodBegin.AddYears(-1).Year);
             }
 			str.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1152,_session.SiteLanguage));
@@ -531,7 +531,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
 
 			//Evol (optionnelle)
-			if(_session.ComparativeStudy){
+			if(_session.ComparativeStudy && _evolution){
                 indexColheader++;
                 currentHeader = new Header(GestionWeb.GetWebWord(1168, _session.SiteLanguage) + " " + _periodBegin.Year + "/" + _periodBegin.AddYears(-1).Year, indexColheader);
                 headers.Root.Add(currentHeader);
@@ -1003,9 +1003,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             //Calcul des investissements de chaque mois sélectionné sur l'année N -1												
                             if (FctUtilities.CheckedText.IsNotEmpty(currentComparMonth))
                                 tab[i, COMPAR_INVESTMENT_COLUMN_INDEX] = currentComparMonthInvest = Decimal.Parse(dt.Compute("sum(" + currentComparMonth + ")", " id_advertiser=" + currentRow["id_advertiser"].ToString()).ToString());
-                            //Calcul de l'evolution anneé N par rapport N-1	= ((N-(N-1))*100)/N-1 																					
-                            tab[i, EVOLUTION_COLUMN_INDEX] = (tab[i, INVESTMENT_COLUMN_INDEX] != null && tab[i, COMPAR_INVESTMENT_COLUMN_INDEX] != null &&
-                                Decimal.Parse(tab[i, COMPAR_INVESTMENT_COLUMN_INDEX].ToString()) != (Decimal)0.0) ? (((Decimal.Parse(tab[i, INVESTMENT_COLUMN_INDEX].ToString()) - Decimal.Parse(tab[i, COMPAR_INVESTMENT_COLUMN_INDEX].ToString())) * (Decimal)100.0) / Decimal.Parse(tab[i, COMPAR_INVESTMENT_COLUMN_INDEX].ToString())) : (Decimal)0.0;
+                            //Calcul de l'evolution anneé N par rapport N-1	= ((N-(N-1))*100)/N-1 	
+                            if (_evolution) {
+                                tab[i, EVOLUTION_COLUMN_INDEX] = (tab[i, INVESTMENT_COLUMN_INDEX] != null && tab[i, COMPAR_INVESTMENT_COLUMN_INDEX] != null &&
+                                    Decimal.Parse(tab[i, COMPAR_INVESTMENT_COLUMN_INDEX].ToString()) != (Decimal)0.0) ? (((Decimal.Parse(tab[i, INVESTMENT_COLUMN_INDEX].ToString()) - Decimal.Parse(tab[i, COMPAR_INVESTMENT_COLUMN_INDEX].ToString())) * (Decimal)100.0) / Decimal.Parse(tab[i, COMPAR_INVESTMENT_COLUMN_INDEX].ToString())) : (Decimal)0.0;
+                            }
                         }
                         n++;
                     }
@@ -1487,8 +1489,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     TotalComparativeInvestByMonth = TotalInvestmentByMonth(s, FctUtilities.Dates.yearID(_periodBegin.AddYears(-1), _session), dt);
                     tab[TotStartIndex, COMPAR_INVESTMENT_COLUMN_INDEX] = TotalComparativeInvestByMonth;
                     //Calcul de l'evolution anneé N par rapport N-1	= ((N-(N-1))*100)/N-1 
-                    Evolution = (TotalComparativeInvestByMonth > (Decimal)0.0) ? ((TotalInvestByMonth - TotalComparativeInvestByMonth) * (Decimal)100.0) / TotalComparativeInvestByMonth : (Decimal)0.0;
-                    tab[TotStartIndex, EVOLUTION_COLUMN_INDEX] = Evolution;
+                    if (_evolution) {
+                        Evolution = (TotalComparativeInvestByMonth > (Decimal)0.0) ? ((TotalInvestByMonth - TotalComparativeInvestByMonth) * (Decimal)100.0) / TotalComparativeInvestByMonth : (Decimal)0.0;
+                        tab[TotStartIndex, EVOLUTION_COLUMN_INDEX] = Evolution;
+                    }
                 }
                 TotStartIndex++;
                 t++;
@@ -1590,7 +1594,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 str.AppendFormat("<td nowrap  class=\"{0}{2}\">-</td>", (_excel ? "" : "violetBackGroundV3 "), cssNb);
             }
-            if (_session.ComparativeStudy)
+            if (_session.ComparativeStudy && _evolution)
             {
 
                 if (evol != null)
@@ -1739,7 +1743,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             #region Evol
-            if (_session.ComparativeStudy) {
+            if (_session.ComparativeStudy && _evolution) {
                 indexCol++;
                 if (oEvol != null && oEvol != System.DBNull.Value)
                 {

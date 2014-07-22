@@ -301,9 +301,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 //N-1
                 t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssHeader, tab[0, TOTAL_N1_COLUMN_INDEX]);
                 //Evolution
-                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssHeader, tab[0, EVOLUTION_COLUMN_INDEX]);
-                //Ecart
-                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssHeader, tab[0, ECART_COLUMN_INDEX]);
+                if (_evolution) {
+                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssHeader, tab[0, EVOLUTION_COLUMN_INDEX]);
+                    //Ecart
+                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssHeader, tab[0, ECART_COLUMN_INDEX]);
+                }
 
             }
             t.Append("</tr>");
@@ -332,9 +334,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         if (_session.ComparativeStudy)
                         {
                             t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit, fp));
-                            AppendEvol(t, tab, cssNb, i, fp);
-                            //Difference
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], _session.Unit, fp));
+                            if (_evolution) {
+                                AppendEvol(t, tab, cssNb, i, fp);
+                                //Difference
+                                t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], _session.Unit, fp));
+                            }
                         }
                         break;
                     case NB_ADVERTISER_LINE_INDEX:
@@ -346,9 +350,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         if (_session.ComparativeStudy)
                         {
                             t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N1_COLUMN_INDEX], UnitsInformation.DefaultCurrency, fp));
-                            AppendEvol(t, tab, cssNb, i, fp);
-                            //Difference
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], UnitsInformation.DefaultCurrency, fp));
+                            if (_evolution) {
+                                AppendEvol(t, tab, cssNb, i, fp);
+                                //Difference
+                                t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], UnitsInformation.DefaultCurrency, fp));
+                            }
                         }
                         break;
                     case PDV_UNIV_TOTAL_MARKET_LINE_INDEX:
@@ -359,8 +365,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         if (_session.ComparativeStudy)
                         {
                             t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1} %</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit, true, fp));
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
+                            if (_evolution) {
+                                t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
+                                t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
+                            }
                         }
                         break;
                 }

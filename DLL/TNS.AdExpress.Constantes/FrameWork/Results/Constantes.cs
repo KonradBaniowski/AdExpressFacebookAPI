@@ -2838,5 +2838,37 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
     }
     #endregion
 
+    #region Product Class Analysis
+    /// <summary>
+	/// Constante Product Class Analysis
+	/// </summary>
+    public class ProductClassAnalysis {
+        /// <summary>
+        /// Seasonality
+        /// </summary>
+        public const int SEASONALITY = 0;
+        /// <summary>
+        /// Palmares
+        /// </summary>
+        public const int PALMARES = 1;
+        /// <summary>
+        /// Novelty
+        /// </summary>
+        public const int NOVELTY = 2;
+        /// <summary>
+        /// Evolution
+        /// </summary>
+        public const int EVOLUTION = 3;
+        /// <summary>
+        /// Media Strategy
+        /// </summary>
+        public const int MEDIA_STRATEGY = 4;
+        /// <summary>
+        /// Summary
+        /// </summary>
+        public const int SUMMARY = 5;
+    }
+    #endregion
+
 }
 

@@ -3440,12 +3440,29 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                     return CanShowPortofolioResult(webSession, current);
+                case WebConstantes.Module.Name.INDICATEUR:
+                    return CanShowProductClassAnalysisResult(webSession, current);
                 case WebConstantes.Module.Name.BILAN_CAMPAGNE:
                     if ((webSession.CurrentModule == WebConstantes.Module.Name.BILAN_CAMPAGNE)
                    && current.Id == FrameWorkResults.APPM.mediaPlanByVersion && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)) return false;
                     else return true;
                 default: return true;
             }
+        }
+        /// <summary>
+        /// Check if a result can be shown
+        /// </summary>
+        /// <param name="webSession">Customer session</param>
+        /// <param name="current">Current result</param>
+        /// <returns>True or False</returns>
+        protected bool CanShowProductClassAnalysisResult(WebSession webSession, ResultPageInformation current) {
+
+            VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION) {
+                return false;
+            }
+
+            return true;
         }
         /// <summary>
         /// Determine si un résultat doit être montré.
@@ -3538,6 +3555,16 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     {
                         customerWebSession.CurrentTab = FrameWorkResults.Portofolio.SYNTHESIS;
                         resultsPages.Items.FindByValue(FrameWorkResults.Portofolio.SYNTHESIS.ToString()).Selected = true;
+                        customerWebSession.Save();
+                    }
+                    break;
+                case WebConstantes.Module.Name.INDICATEUR:
+                    if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab)) {
+                        resultsPages.Items.FindByValue(customerWebSession.CurrentTab.ToString()).Selected = true;
+                    }
+                    else {
+                        customerWebSession.CurrentTab = FrameWorkResults.ProductClassAnalysis.SUMMARY;
+                        resultsPages.Items.FindByValue(FrameWorkResults.ProductClassAnalysis.SUMMARY.ToString()).Selected = true;
                         customerWebSession.Save();
                     }
                     break;

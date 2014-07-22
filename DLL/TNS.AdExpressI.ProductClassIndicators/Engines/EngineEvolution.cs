@@ -209,6 +209,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             string periodLabel = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(_periodBegin.Date, _session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date, _session.SiteLanguage));
             object[,] tab = this.GetData(classifLevel);
+            bool containsDataRise = ContainsDataRise(tab);
+            bool containsDataDecrease = ContainsDataDecrease(tab);
 
             #region No Data
             if (tab == null || tab.GetLongLength(0) == 0)
@@ -217,7 +219,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
                 if (classifLevel == CstResult.MotherRecap.ElementType.advertiser)
                 {
-                    t.AppendFormat("{0}<br>{1} {2}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(2474, _session.SiteLanguage), periodLabel);
+                    t.AppendFormat("{0}", GestionWeb.GetWebWord(177, _session.SiteLanguage));
                 }
                 t.Append("</td></tr></table>");
                 return t;
@@ -235,33 +237,55 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             t.Append("\r\n\t<tr height=\"30px\" >");
 
             #region Rise
-            if (classifLevel == CstResult.MotherRecap.ElementType.product)
-            {
-                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1315, _session.SiteLanguage), periodLabel);
+            if (containsDataRise) {
+                if (classifLevel == CstResult.MotherRecap.ElementType.product) {
+                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1315, _session.SiteLanguage), periodLabel);
+                }
+                else {
+                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1210, _session.SiteLanguage), periodLabel);
+                }
+                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
+                if (_evolution) {
+                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1212, _session.SiteLanguage));
+                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1213, _session.SiteLanguage));
+                }
             }
-            else
-            {
-                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1210, _session.SiteLanguage), periodLabel);
+            else {
+                t.Append("<td rowspan=\"11\" style=\"width:200px; vertical-align:top;\"><table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\"><tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+                if (classifLevel == CstResult.MotherRecap.ElementType.advertiser) {
+                    t.AppendFormat("{0}", GestionWeb.GetWebWord(177, _session.SiteLanguage));
+                }
+                else
+                    t.Append("&nbsp;");
+                t.Append("</td></tr></table></td>");
             }
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1212, _session.SiteLanguage));
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1213, _session.SiteLanguage));
             #endregion
 
             t.Append("<td>&nbsp;</td>");
 
             #region Decrease
-            if (classifLevel == CstResult.MotherRecap.ElementType.product)
-            {
-                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1209, _session.SiteLanguage), periodLabel);
+            if (containsDataDecrease) {
+                if (classifLevel == CstResult.MotherRecap.ElementType.product) {
+                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1209, _session.SiteLanguage), periodLabel);
+                }
+                else {
+                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1211, _session.SiteLanguage), periodLabel);
+                }
+                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
+                if (_evolution) {
+                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1212, _session.SiteLanguage));
+                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1213, _session.SiteLanguage));
+                }
             }
-            else
-            {
-                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1211, _session.SiteLanguage), periodLabel);
+            else {
+                t.Append("<td rowspan=\"11\" style=\"width:200px; vertical-align:top;\"><table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\"><tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+                if (classifLevel == CstResult.MotherRecap.ElementType.advertiser) {
+                    t.AppendFormat("{0}", GestionWeb.GetWebWord(177, _session.SiteLanguage));
+                }
+                else
+                    t.Append("&nbsp;");
+                t.Append("</td></tr></table></td>");
             }
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1212, _session.SiteLanguage));
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1213, _session.SiteLanguage));
             #endregion
 
             t.Append("</tr>");
@@ -303,34 +327,33 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.Append("\r\n\t<tr>");
 
                 #region Rise
-                ecart = ConvertToDouble(tab[i, ECART]);
-                if (ecart > 0)
-                {
-                    evol = ConvertToDouble(tab[i, EVOLUTION]);
-                    total = ConvertToDouble(tab[i, TOTAL_N]);
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[i, PRODUCT]);
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit, fp));
-                    if (!Double.IsInfinity(evol))
-                    {
-                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true, fp));
-                    }
-                    else
-                    {
-                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, GestionWeb.GetWebWord(1214, _session.SiteLanguage));
-                    }
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit, fp));
-                }
-                else
-                {
-                    if (i != 10)
-                    {
-                        t.AppendFormat("<td class=\"{0} whiteRightBorder\" colspan=4></td>", cssNoData);
-                    }
-                    else
-                    {
-                        t.AppendFormat("<td class=\"{0} whiteRightBottomBorder\" colspan=4></td>", cssNoData);
-                    }
+                if (containsDataRise) {
+                    ecart = ConvertToDouble(tab[i, ECART]);
+                    if (ecart > 0) {
+                        evol = ConvertToDouble(tab[i, EVOLUTION]);
+                        total = ConvertToDouble(tab[i, TOTAL_N]);
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[i, PRODUCT]);
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit, fp));
+                        if (_evolution) {
+                            if (!Double.IsInfinity(evol)) {
+                                t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true, fp));
+                            }
+                            else {
+                                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, GestionWeb.GetWebWord(1214, _session.SiteLanguage));
+                            }
 
+                            t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit, fp));
+                        }
+                    }
+                    else {
+                        if (i != 10) {
+                            t.AppendFormat("<td class=\"{0} whiteRightBorder\" colspan=4></td>", cssNoData);
+                        }
+                        else {
+                            t.AppendFormat("<td class=\"{0} whiteRightBottomBorder\" colspan=4></td>", cssNoData);
+                        }
+
+                    }
                 }
                 #endregion
 
@@ -360,34 +383,33 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 #endregion
 
                 #region Decrease
-                ecart = ConvertToDouble(tab[last, ECART]);
-                if (ecart < 0)
-                {
-                    evol = ConvertToDouble(tab[last, EVOLUTION]);
-                    total = ConvertToDouble(tab[last, TOTAL_N]);
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[last, PRODUCT]);
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit, fp));
-                    if (!Double.IsInfinity(evol))
-                    {
-                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true, fp));
-                    }
-                    else
-                    {
-                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, GestionWeb.GetWebWord(1214, _session.SiteLanguage));
-                    }
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit, fp));
-                }
-                else
-                {
-                    if (i != 10)
-                    {
-                        t.AppendFormat("<td class=\"{0} whiteRightBorder\" colspan=4></td>", cssNoData);
-                    }
-                    else
-                    {
-                        t.AppendFormat("<td class=\"{0} whiteRightBottomBorder\" colspan=4></td>", cssNoData);
-                    }
+                if (containsDataDecrease) {
+                    ecart = ConvertToDouble(tab[last, ECART]);
+                    if (ecart < 0) {
+                        evol = ConvertToDouble(tab[last, EVOLUTION]);
+                        total = ConvertToDouble(tab[last, TOTAL_N]);
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[last, PRODUCT]);
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit, fp));
+                        if (_evolution) {
+                            if (!Double.IsInfinity(evol)) {
+                                t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true, fp));
+                            }
+                            else {
+                                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, GestionWeb.GetWebWord(1214, _session.SiteLanguage));
+                            }
 
+                            t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit, fp));
+                        }
+                    }
+                    else {
+                        if (i != 10) {
+                            t.AppendFormat("<td class=\"{0} whiteRightBorder\" colspan=4></td>", cssNoData);
+                        }
+                        else {
+                            t.AppendFormat("<td class=\"{0} whiteRightBottomBorder\" colspan=4></td>", cssNoData);
+                        }
+
+                    }
                 }
                 #endregion
 
@@ -605,6 +627,40 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         protected virtual double ConvertToDouble(object o) {
 
             return Convert.ToDouble(o);
+        }
+        #endregion
+
+        #region Contains Data Rise
+        /// <summary>
+        /// Contains Data Rise
+        /// </summary>
+        /// <param name="tab">Tab</param>
+        /// <returns>True if contains data</returns>
+        private bool ContainsDataRise(object[,] tab) {
+
+            for (int i = 0; i < tab.GetLongLength(0) && i < 10; i++)
+                if (ConvertToDouble(tab[i, ECART]) > 0)
+                    return true;
+
+            return false;
+        }
+        #endregion
+
+        #region Contains Data Decrease
+        /// <summary>
+        /// Contains Data Decrease
+        /// </summary>
+        /// <param name="tab">Tab</param>
+        /// <returns>True if contains data</returns>
+        private bool ContainsDataDecrease(object[,] tab) {
+
+            int last = Convert.ToInt32(tab.GetLongLength(0) - 1);
+
+            for (int i = last; i > last-10 && i >=0 ; i--)
+                if (ConvertToDouble(tab[i, ECART]) < 0)
+                    return true;
+
+            return false;
         }
         #endregion
 

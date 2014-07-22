@@ -276,7 +276,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //Advertiser or product total
             t.AppendFormat("<td nowrap class=\"{0}\" >{1}</td>", cssHeader, GestionWeb.GetWebWord(806, _session.SiteLanguage));
             //Evol
-            if (_session.ComparativeStudy)
+            if (_session.ComparativeStudy && _evolution)
             {
                 t.AppendFormat("<td nowrap class=\"{0}\">{1} {2}/{3}</td>", cssHeader, GestionWeb.GetWebWord(1168, _session.SiteLanguage), _periodEnd.Year, (_periodEnd.Year - 1));
             }
@@ -602,7 +602,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
             }
             //Evol
-            if (_session.ComparativeStudy)
+            if (_session.ComparativeStudy && _evolution)
             {
                 if (oEvol != null)
                 {
@@ -754,7 +754,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             headers.Root.Add(currentHeader);
 
             //Header Evol
-            if (_session.ComparativeStudy) {
+            if (_session.ComparativeStudy && _evolution) {
                 indexCol++;
                 currentHeader = new Header(GestionWeb.GetWebWord(1168, _session.SiteLanguage) + " " + _periodEnd.Year + "/" + (_periodEnd.Year - 1), indexCol);
                 headers.Root.Add(currentHeader);
@@ -1106,7 +1106,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             #region Evol
-            if (_session.ComparativeStudy) {
+            if (_session.ComparativeStudy && _evolution) {
                 indexCol++;
                 if (oEvol != null && oEvol != System.DBNull.Value)
                 {
@@ -3000,7 +3000,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //PDM 
             if (FctUtilities.CheckedText.IsNotEmpty(PDM.Trim())) tab[indexTabRow, PDM_COLUMN_INDEX] = PDM;
             //EVOLUTION période N/N-1
-            if (FctUtilities.CheckedText.IsNotEmpty(Evolution.Trim())) tab[indexTabRow, EVOL_COLUMN_INDEX] = Evolution;
+            if (_evolution)
+                if (FctUtilities.CheckedText.IsNotEmpty(Evolution.Trim())) tab[indexTabRow, EVOL_COLUMN_INDEX] = Evolution;
 
             if (investmentType == CstResult.MediaStrategy.InvestmentType.total)
             {

@@ -135,6 +135,14 @@ namespace AdExpress.Private.Results
                     _webSession.Save();
                 }
 
+                if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia) {
+                    ResultsOptionsWebControl1.EvolutionOption = false;
+                    _webSession.Evolution = false;
+                }
+                else {
+                    ResultsOptionsWebControl1.EvolutionOption = true;
+                }
+
                 #region Url Suivante
                 //				_nextUrl=this.recallWebControl.NextUrl;
                 if (_nextUrl.Length != 0)
