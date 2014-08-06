@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <vehicleGroups>
-    <vehicle id="6"   name="AdNetTrack">
+    <vehicle id="2"   name="AdNetTrack">
       <detailColumns>
         <detailColumn id="17">
           <allowedModules>

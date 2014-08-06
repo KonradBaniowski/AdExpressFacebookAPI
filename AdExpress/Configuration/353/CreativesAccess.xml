@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <CreativesAccess>
   <VirtualPaths>
+    <VirtualPath id="CREA_ADNETTRACK" name="Répertoire virtuel des créations d evaliant" value="/adnettrackCreatives"/>
   </VirtualPaths>
   <Streamings>
   </Streamings>
