@@ -1828,6 +1828,11 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Identifiant du flag Accès Volumes (DISPLAY)
         /// </summary>
         public const Int64 ID_VOLUME_DISPLAY = 353;
+
+        /// <summary>
+        /// Identifier of SEARCH's media agency flag
+        /// </summary>
+        public const Int64 ID_SEARCH_MEDIA_AGENCY_FLAG = 358;
     }
 	#endregion
 

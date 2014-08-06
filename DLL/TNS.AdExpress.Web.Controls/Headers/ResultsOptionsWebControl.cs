@@ -2419,6 +2419,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                             case ClassificationCst.DB.Vehicles.names.plurimedia:
                             case ClassificationCst.DB.Vehicles.names.directMarketing:
                             case ClassificationCst.DB.Vehicles.names.mms:
+                            case ClassificationCst.DB.Vehicles.names.search:
                                 mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                                 if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))
                                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
@@ -2493,6 +2494,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         case ClassificationCst.DB.Vehicles.names.mobileTelephony:
                         case ClassificationCst.DB.Vehicles.names.emailing:
                         case ClassificationCst.DB.Vehicles.names.mms:
+                        case ClassificationCst.DB.Vehicles.names.search:
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
                             break;
@@ -3440,6 +3442,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                     return CanShowPortofolioResult(webSession, current);
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    return CanShowSynthesisResult(webSession, current);
                 case WebConstantes.Module.Name.INDICATEUR:
                     return CanShowProductClassAnalysisResult(webSession, current);
                 case WebConstantes.Module.Name.BILAN_CAMPAGNE:
@@ -3461,6 +3465,20 @@ namespace TNS.AdExpress.Web.Controls.Headers
             if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION) {
                 return false;
             }
+
+            return true;
+        }
+        /// <summary>
+        /// Can Show Synthesis Result
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+        /// <param name="current">Current Page</param>
+        protected bool CanShowSynthesisResult(WebSession webSession, ResultPageInformation current) {
+
+            VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+
+            if (vehicleInformation.Id == ClassificationCst.DB.Vehicles.names.search && current.Id == FrameWorkResults.DynamicAnalysis.SYNTHESIS)
+                return false;
 
             return true;
         }
@@ -3490,6 +3508,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case ClassificationCst.DB.Vehicles.names.adnettrack:
                 case ClassificationCst.DB.Vehicles.names.evaliantMobile:
                 case ClassificationCst.DB.Vehicles.names.mms:
+                case ClassificationCst.DB.Vehicles.names.search:
                     return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO
                         || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
                 case ClassificationCst.DB.Vehicles.names.others:
@@ -3555,6 +3574,16 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     {
                         customerWebSession.CurrentTab = FrameWorkResults.Portofolio.SYNTHESIS;
                         resultsPages.Items.FindByValue(FrameWorkResults.Portofolio.SYNTHESIS.ToString()).Selected = true;
+                        customerWebSession.Save();
+                    }
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab)) {
+                        resultsPages.Items.FindByValue(customerWebSession.CurrentTab.ToString()).Selected = true;
+                    }
+                    else {
+                        customerWebSession.CurrentTab = FrameWorkResults.DynamicAnalysis.PORTEFEUILLE;
+                        resultsPages.Items.FindByValue(FrameWorkResults.DynamicAnalysis.PORTEFEUILLE.ToString()).Selected = true;
                         customerWebSession.Save();
                     }
                     break;

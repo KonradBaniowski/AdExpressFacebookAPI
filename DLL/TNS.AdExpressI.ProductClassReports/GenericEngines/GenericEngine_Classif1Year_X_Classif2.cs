@@ -221,6 +221,9 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 case CstDBClassif.Vehicles.names.mms:
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
+                case CstDBClassif.Vehicles.names.search:
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    break;
             }
             //Go threw data to extract media levels
             string sortStr = "";

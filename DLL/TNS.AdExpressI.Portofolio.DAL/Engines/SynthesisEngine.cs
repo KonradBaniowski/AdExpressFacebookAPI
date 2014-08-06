@@ -808,6 +808,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataEvaliantMobileAlert : TableIds.dataEvaliantMobile, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.mms:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataMmsAlert : TableIds.dataMms, _webSession.IsSelectRetailerDisplay).Label;
+                case DBClassificationConstantes.Vehicles.names.search:
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataSearchAlert : TableIds.dataSearch, _webSession.IsSelectRetailerDisplay).Label;
                 default:
 					throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
 			}

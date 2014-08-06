@@ -703,6 +703,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                 case DBConstantesClassification.Vehicles.names.others:
                 case DBConstantesClassification.Vehicles.names.adnettrack:
                 case DBConstantesClassification.Vehicles.names.mms:
+                case DBConstantesClassification.Vehicles.names.search:
                     return (true);
                 default:
                     return (false);

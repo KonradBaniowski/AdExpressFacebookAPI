@@ -190,6 +190,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.mms:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataMms, webSession.IsSelectRetailerDisplay).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.search:
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataSearch, webSession.IsSelectRetailerDisplay).Sql;
+                    break;
 
             }
 
@@ -222,6 +225,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.mms:
+                case DBClassificationConstantes.Vehicles.names.search:
                     sql += " select min(last_date) as last_date ";
                     sql += " from (";
 

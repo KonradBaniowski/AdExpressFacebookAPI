@@ -10,7 +10,7 @@
   <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="applicationMobile"                  listIds ="231"/>
   <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="productClassAnalysisSponsorShipTv"  listIds ="68,44"/>
   <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="excludeDigitalSponsorship"          listIds ="44"/>
-  <list group="media"         keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaInSelectAll"                   listIds ="1,2,3,4,5,7,8,9,11,19,20"/>
+  <list group="media"         keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaInSelectAll"                   listIds ="1,2,3,4,5,7,8,9,11,19,20,18"/>
   <list group="media"         keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="forceVmcRightsInRecap"              listIds ="10"/>
   <list group="agency"        keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="advertisingAgency"                  listIds ="9999,999"/>
   <list group="agency"        keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="groupAdvertisingAgency"             listIds ="9999,999,2990"/>

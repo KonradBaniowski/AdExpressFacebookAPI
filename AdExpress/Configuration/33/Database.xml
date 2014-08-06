@@ -282,11 +282,16 @@
     <table enumId="250" description="Data: MMS" schemaEnumId="0" label="data_mms_4M" prefix="wp"/>
     
     <table enumId="251" description="Classif: Media Group" schemaEnumId="0" label="media_group" prefix="meg"/>
-    
     <table enumId="252" description="Data: Auto Promo" schemaEnumId="0" label="auto_promo" prefix="ap"/>
 
     <table enumId="253" description="Recap Data: MMS" schemaEnumId="4" label="recap_mms" prefix="rcp"/>
     <table enumId="254" description="Recap Data: MMS Segment" schemaEnumId="4" label="recap_mms_segment" prefix="rcp"/>
+
+    <table enumId="255" description="Data: Search" schemaEnumId="0" label="data_search" prefix="wp"/>
+    <table enumId="256" description="Data: Search" schemaEnumId="0" label="data_search_4M" prefix="wp"/>
+    
+    <table enumId="257" description="Recap Data: Search" schemaEnumId="4" label="recap_search" prefix="rcp"/>
+    <table enumId="258" description="Recap Data: Search Segment" schemaEnumId="4" label="recap_search_segment" prefix="rcp"/>
     
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

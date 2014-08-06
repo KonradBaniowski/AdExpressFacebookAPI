@@ -229,6 +229,10 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// </summary>
             mms = 33,
             /// <summary>
+            /// Search
+            /// </summary>
+            search = 34,
+            /// <summary>
             /// Web Promotion
             /// </summary>
             webPromotion =9999

@@ -1162,6 +1162,22 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         recapMmsSegment = 254,
         /// <summary>
+        /// Search Data
+        /// </summary>
+        dataSearch = 255,
+        /// <summary>
+        /// 4M Search Data
+        /// </summary>
+        dataSearchAlert = 256,
+        /// <summary>
+        /// Recap Search
+        /// </summary>
+        recapSearch = 257,
+        /// <summary>
+        /// Recap Search Segment
+        /// </summary>
+        recapSearchSegment = 258,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,
