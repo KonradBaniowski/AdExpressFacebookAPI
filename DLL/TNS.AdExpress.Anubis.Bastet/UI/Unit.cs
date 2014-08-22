@@ -116,8 +116,11 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 				
 					//top éléments
 				
-					for(int i=0; i<dt.Rows.Count;i++){
-                        cells["B" + cellRow].PutValue(GestionWeb.GetWebWord(UnitsInformation.Get(Int64.Parse(dt.Rows[i]["id_unit"].ToString())).WebTextId, language));
+					for(int i=0; i<dt.Rows.Count;i++)
+					{
+					    var unitInfo = UnitsInformation.Get(Int64.Parse(dt.Rows[i]["id_unit"].ToString()));
+					    var word = GestionWeb.GetWebWord(unitInfo.WebTextId, language);
+                        cells["B" + cellRow].PutValue(word);
 						cells["B"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 						cells["B"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
 						cells["B"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
