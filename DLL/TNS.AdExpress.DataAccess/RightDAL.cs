@@ -500,7 +500,7 @@ namespace TNS.AdExpress.DataAccess {
             // Vehicle
             if(rights.ContainsKey(CustomerCst.Right.type.vehicleAccess) && rights[CustomerCst.Right.type.vehicleAccess].Length>0) {
                 if(beginByAnd) sql.Append(" and");
-                sql.Append(" (("+vehicleTable.Prefix+".id_vehicle in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.vehicleAccess])+") ");
+                sql.Append(" ((" + GetInClauseMagicMethod(vehicleTable.Prefix + ".id_vehicle", ConvertIdTableToString(rights[CustomerCst.Right.type.vehicleAccess]), true) + " ");
                 premier=false;
             }
             // Category
@@ -510,7 +510,7 @@ namespace TNS.AdExpress.DataAccess {
                     if(beginByAnd) sql.Append(" and");
                     sql.Append(" ((");
                 }
-                sql.Append(" "+categoryTable.Prefix+".id_category in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.categoryAccess])+") ");
+                sql.Append(" " + GetInClauseMagicMethod(categoryTable.Prefix + ".id_category", ConvertIdTableToString(rights[CustomerCst.Right.type.categoryAccess]), true) + " ");
                 premier=false;
             }
             // Media
@@ -520,7 +520,7 @@ namespace TNS.AdExpress.DataAccess {
                     if(beginByAnd) sql.Append(" and");
                     sql.Append(" ((");
                 }
-                sql.Append(" "+mediaTable.Prefix+".id_media in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.mediaAccess])+") ");
+                sql.Append(" " + GetInClauseMagicMethod(mediaTable.Prefix + ".id_media", ConvertIdTableToString(rights[CustomerCst.Right.type.mediaAccess]), true) + " ");
                 premier=false;
             }
             if(!premier) sql.Append(" )");
@@ -533,7 +533,7 @@ namespace TNS.AdExpress.DataAccess {
                     if(beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.Append(" "+vehicleTable.Prefix+".id_vehicle not in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.vehicleException])+") ");
+                sql.Append(" " + GetInClauseMagicMethod(vehicleTable.Prefix + ".id_vehicle", ConvertIdTableToString(rights[CustomerCst.Right.type.vehicleException]), false) + " ");
                 premier=false;
             }
             // Category
@@ -543,7 +543,7 @@ namespace TNS.AdExpress.DataAccess {
                     if(beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.Append(" "+categoryTable.Prefix+".id_category not in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.categoryException])+") ");
+                sql.Append(" " + GetInClauseMagicMethod(categoryTable.Prefix + ".id_category", ConvertIdTableToString(rights[CustomerCst.Right.type.categoryException]), false) + " ");
                 premier=false;
             }
             // Media
@@ -553,7 +553,7 @@ namespace TNS.AdExpress.DataAccess {
                     if(beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.Append(" "+mediaTable.Prefix+".id_media not in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.mediaException])+") ");
+                sql.Append(" " + GetInClauseMagicMethod(mediaTable.Prefix + ".id_media", ConvertIdTableToString(rights[CustomerCst.Right.type.mediaException]), false) + " ");
                 premier=false;
             }
             if(!premier) sql.Append(" )");
@@ -825,6 +825,36 @@ namespace TNS.AdExpress.DataAccess {
             }
             if(list.Length>0) list=list.Substring(0,list.Length-1);
             return (list);
+        }
+        /// <summary>
+        /// In Clause Method
+        /// </summary>
+        /// <param name="label">Field</param>
+        /// <param name="inClauseItems">Items
+        /// <example>"3,9,6"</example>
+        /// </param>
+        /// <param name="include">True if elements are included (in), false either (not in)</param>
+        /// <returns>In clause SQL code</returns>
+        public static string GetInClauseMagicMethod(string label, string inClauseItems, bool include) {
+
+            string str = string.Empty;
+            if (inClauseItems.Length > 0) {
+                StringBuilder sb = new StringBuilder();
+                string[] strs = inClauseItems.Split(',');
+                int i = 0;
+                sb.Append("(");
+                while (i < strs.Length) {
+                    if (i > 0) {
+                        sb.Append((include) ? " or " : " and ");
+                    }
+                    sb.AppendFormat(" {1} {2} ({0}) ", String.Join(",", strs, i, Math.Min(strs.Length - i, 500)), label, (include) ? " in " : " not in ");
+                    i += 500;
+                }
+                sb.Append(")");
+                return sb.ToString();
+            }
+
+            return str;
         }
         #endregion
 

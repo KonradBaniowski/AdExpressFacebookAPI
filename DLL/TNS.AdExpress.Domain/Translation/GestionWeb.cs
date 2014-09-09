@@ -29,8 +29,14 @@ namespace TNS.AdExpress.Domain.Translation{
 		/// <returns></returns>
 		public static string GetWebWord(Int64 code,int langue){
 			try{
-                Global.CurrentCultureInfo = WebApplicationParameters.AllowedLanguages[langue].CultureInfo;
-                return Global.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.POLAND) {
+                    Poland.CurrentCultureInfo = WebApplicationParameters.AllowedLanguages[langue].CultureInfo;
+                    return Poland.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
+                }
+                else {
+                    Global.CurrentCultureInfo = WebApplicationParameters.AllowedLanguages[langue].CultureInfo;
+                    return Global.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
+                }
 				//return _list[langue].GetWebWord(code);
 
 			}

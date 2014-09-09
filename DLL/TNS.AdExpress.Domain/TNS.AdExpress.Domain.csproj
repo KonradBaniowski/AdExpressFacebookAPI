@@ -262,11 +262,21 @@
     <None Include="DataBaseDescription\DataBaseConfiguration.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\AdExpress.en-ru.xml" />
-    <Content Include="Resources\AdExpress.en.xml" />
+    <Content Include="Resources\AdExpress.en-ie.xml" />
+    <Content Include="Resources\AdExpress.en-pln.xml" />
+    <Content Include="Resources\AdExpress.en-ru.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\AdExpress.en.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resources\AdExpress.fi.xml" />
-    <Content Include="Resources\AdExpress.fr.xml" />
-    <Content Include="Resources\AdExpress.Project.xml" />
+    <Content Include="Resources\AdExpress.fr.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\AdExpress.Project.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resources\AdExpress.ru.xml" />
     <Content Include="Resources\AdExpress.sk.xml" />
     <Content Include="Resources\AdExpress.cz.xml" />

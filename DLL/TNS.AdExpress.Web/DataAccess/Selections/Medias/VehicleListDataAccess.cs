@@ -26,6 +26,8 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using WebNavigation=TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using DBClassification=TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Web.Core.Utilities;
+
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 	/// <summary>
 	/// Charge la liste des Vehicles que peut sélectionner un client
@@ -152,7 +154,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length>0)
 			{
 				if(beginByAnd) sql.Append(" and");
-				sql.Append(" (("+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess]+") ");
+                sql.Append(" ((" + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess], true) + " ");
 				premier=false;
 			}
 			// Category
@@ -164,7 +166,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append("((");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess], true) + " ");
 				premier=false;
 			}
 			// Media
@@ -176,7 +178,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" ((");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.MEDIA_PREFIXE + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess], true) + " ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -193,7 +195,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					sql.Append(" (");
 				}
 				sql.Append(" ");
-				sql.Append(DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle not in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleException]+") ");
+                sql.Append(SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleException], false) + " ");
 				premier=false;
 			}
 			// Category
@@ -205,7 +207,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category not in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryException]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryException], false) + " ");
 				premier=false;
 			}
 			// Media
@@ -217,7 +219,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media not in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaException]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.MEDIA_PREFIXE + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaException], false) + " ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -313,7 +315,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length>0)
 			{
 				if(beginByAnd) sql.Append(" and");
-				sql.Append(" (("+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess]+") ");
+                sql.Append(" ((" + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess], true) + " ");
 				premier=false;
 			}
 			// Category
@@ -331,7 +333,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append("((");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess], true) + " ");
 				premier=false;
 			}
 			// Media
@@ -343,7 +345,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" ((");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.MEDIA_PREFIXE + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess], true) + " ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -359,7 +361,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					sql.Append(" (");
 				}
 				sql.Append(" ");
-				sql.Append(DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle not in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleException]+") ");
+                sql.Append(SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleException], false) + " ");
 				premier=false;
 			}
 			// Category
@@ -371,7 +373,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category not in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryException]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryException], false) + " ");
 				premier=false;
 			}
 			// Media
@@ -383,7 +385,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media not in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaException]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.MEDIA_PREFIXE + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaException], false) + " ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -468,7 +470,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length>0)
 			{
 				if(beginByAnd) sql.Append(" and");
-				sql.Append(" (("+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess]+") ");
+                sql.Append(" ((" + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess], true) + " ");
 				premier=false;
 			}
 			// Category
@@ -480,7 +482,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append("((");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess], true) + " ");
 				premier=false;
 			}
 			//			// Category
@@ -496,7 +498,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" ((");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.MEDIA_PREFIXE + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess], true) + " ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -511,7 +513,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					sql.Append(" (");
 				}
 				sql.Append(" ");
-				sql.Append(DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle not in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleException]+") ");
+                sql.Append(SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleException], false) + " ");
 				premier=false;
 			}
 			// Category
@@ -521,7 +523,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category not in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryException]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryException], false) + " ");
 				premier=false;
 			}
 			// Media
@@ -531,7 +533,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media not in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaException]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.MEDIA_PREFIXE + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaException], false) + " ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -624,7 +626,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length>0)
 			{
 				if(beginByAnd) sql.Append(" and");
-				sql.Append(" (("+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess]+") ");
+                sql.Append(" ((" + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess], true) + " ");
 				premier=false;
 			}
 			// Category
@@ -636,7 +638,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append("((");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess], true) + " ");
 				premier=false;
 			}
 // Category
@@ -652,7 +654,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" ((");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.MEDIA_PREFIXE + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess], true) + " ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -668,7 +670,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					sql.Append(" (");
 				}
 				sql.Append(" ");
-				sql.Append(DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle not in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleException]+") ");
+                sql.Append(SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleException], false) + " ");
 				premier=false;
 			}
 			// Category
@@ -678,7 +680,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category not in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryException]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryException], false) + " ");
 				premier=false;
 			}
 			// Media
@@ -688,7 +690,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media not in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaException]+") ");
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(DBConstantes.Tables.MEDIA_PREFIXE + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaException], false) + " ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -998,7 +1000,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			// Vehicle
 			if (webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length > 0) {
 				if (beginByAnd) sql += " and";
-				sql += " ((" + vehicleTable.Prefix + ".id_vehicle in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess] + ") ";
+                sql += " ((" + SQLGenerator.GetInClauseMagicMethod(vehicleTable.Prefix + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess], true) + " ";
 				premier = false;
 			}
 			// Category
@@ -1008,7 +1010,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + categoryTable.Prefix + ".id_category in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(categoryTable.Prefix + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess], true) + " ";
 				premier = false;
 			}
 			// Media
@@ -1018,7 +1020,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + mediaTable.Prefix + ".id_media in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(mediaTable.Prefix + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess], true) + " ";
 				premier = false;
 			}
 			if (!premier) sql += " )";
@@ -1031,7 +1033,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + vehicleTable.Prefix + ".id_vehicle not in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleException] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(vehicleTable.Prefix + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleException], false) + " ";
 				premier = false;
 			}
 			// Category
@@ -1041,7 +1043,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + categoryTable.Prefix + ".id_category not in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryException] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(categoryTable.Prefix + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryException], false) + " ";
 				premier = false;
 			}
 			// Media
@@ -1051,7 +1053,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + mediaTable.Prefix + ".id_media not in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaException] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(mediaTable.Prefix + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaException], false) + " ";
 				premier = false;
 			}
 			if (!premier) sql += " )";

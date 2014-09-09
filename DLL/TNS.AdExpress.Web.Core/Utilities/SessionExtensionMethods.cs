@@ -22,15 +22,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             var sql = new StringBuilder();
             bool fisrt = true;
+            string prefix = string.Empty;
 
             // Get the circuit authorized for the current customer
             if (session.CustomerLogin[CustomerRightConstante.type.circuitAccess].Length > 0)
             {
 
                 if (beginByAnd) sql.Append(" and");
-                sql.AppendFormat(" (({0}id_circuit in ({1}) ",
-                    !string.IsNullOrEmpty(circuitPrefix) ? string.Format("{0}.",circuitPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.circuitAccess]);
+                prefix = !string.IsNullOrEmpty(circuitPrefix) ? string.Format("{0}.", circuitPrefix) : string.Empty;
+                sql.AppendFormat(" ((" + SQLGenerator.GetInClauseMagicMethod(prefix + "id_circuit", session.CustomerLogin[CustomerRightConstante.type.circuitAccess], true) + " ");
                 fisrt = false;
             }
             // Get the brands authorized for the current customer
@@ -42,9 +42,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" ((");
                 }
-                sql.AppendFormat(" {0}id_brand in ({1}) ",
-                     !string.IsNullOrEmpty(brandPrefix) ? string.Format("{0}.", brandPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpBrandAccess]);
+                prefix = !string.IsNullOrEmpty(brandPrefix) ? string.Format("{0}.", brandPrefix) : string.Empty;
+                sql.AppendFormat(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_brand", session.CustomerLogin[CustomerRightConstante.type.vpBrandAccess], true) + " ");
                 fisrt = false;
             }
             if (!fisrt) sql.Append(" )");
@@ -58,9 +57,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.AppendFormat(" {0}id_circuit not in ({1}) ",
-                     !string.IsNullOrEmpty(circuitPrefix) ? string.Format("{0}.", circuitPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.circuitException]);
+                prefix = !string.IsNullOrEmpty(circuitPrefix) ? string.Format("{0}.", circuitPrefix) : string.Empty;
+                sql.AppendFormat(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_circuit", session.CustomerLogin[CustomerRightConstante.type.circuitException], false) + " ");
                 fisrt = false;
             }
             // Get the brands not authorized for the current customer
@@ -72,9 +70,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.AppendFormat(" {0}id_brand not in ({1}) ",
-                     !string.IsNullOrEmpty(brandPrefix) ? string.Format("{0}.", brandPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpBrandException]);
+                prefix = !string.IsNullOrEmpty(brandPrefix) ? string.Format("{0}.", brandPrefix) : string.Empty;
+                sql.AppendFormat(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_brand", session.CustomerLogin[CustomerRightConstante.type.vpBrandException], false) + " ");
                 fisrt = false;
             }
             if (!fisrt) sql.Append(" )");
@@ -92,15 +89,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             var sql = new StringBuilder();
             bool fisrt = true;
+            string prefix = string.Empty;
 
             // Get the segments authorized for the current customer
             if (session.CustomerLogin[CustomerRightConstante.type.vpSegmentAccess].Length > 0)
             {
 
                 if (beginByAnd) sql.Append(" and");
-                sql.AppendFormat(" (({0}id_segment in ({1}) ",
-                      !string.IsNullOrEmpty(segmentPrefix) ? string.Format("{0}.", segmentPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpSegmentAccess]);
+                prefix = !string.IsNullOrEmpty(segmentPrefix) ? string.Format("{0}.", segmentPrefix) : string.Empty;
+                sql.AppendFormat(" (("+SQLGenerator.GetInClauseMagicMethod(prefix + "id_segment", session.CustomerLogin[CustomerRightConstante.type.vpSegmentAccess], true) + " ");
                 fisrt = false;
             }
             // Get the sub segments authorized for the current customer
@@ -112,9 +109,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" ((");
                 }
-                sql.AppendFormat(" {0}id_category in ({1}) ",
-                    !string.IsNullOrEmpty(subSegmentPrefix) ? string.Format("{0}.", subSegmentPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpSubSegmentAccess]);
+                prefix = !string.IsNullOrEmpty(subSegmentPrefix) ? string.Format("{0}.", subSegmentPrefix) : string.Empty;
+                sql.AppendFormat(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_category", session.CustomerLogin[CustomerRightConstante.type.vpSubSegmentAccess], true) + " ");
                 fisrt = false;
             }
             // Get the products authorized for the current customer
@@ -126,9 +122,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" ((");
                 }
-                sql.AppendFormat(" {0}id_product in ({1}) ",
-                       !string.IsNullOrEmpty(productPrefix) ? string.Format("{0}.", productPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpProductAccess]);
+                prefix = !string.IsNullOrEmpty(productPrefix) ? string.Format("{0}.", productPrefix) : string.Empty;
+                sql.AppendFormat(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_product", session.CustomerLogin[CustomerRightConstante.type.vpProductAccess], true) + " ");
                 fisrt = false;
             }
             if (!fisrt) sql.Append(" )");
@@ -142,9 +137,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.AppendFormat(" {0}id_segment not in ({1}) ",
-                    !string.IsNullOrEmpty(segmentPrefix) ? string.Format("{0}.", segmentPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpSegmentException]);
+                prefix = !string.IsNullOrEmpty(segmentPrefix) ? string.Format("{0}.", segmentPrefix) : string.Empty;
+                sql.AppendFormat(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_segment", session.CustomerLogin[CustomerRightConstante.type.vpSegmentException], false) + " ");
                 fisrt = false;
             }
             // Get the brands not authorized for the current customer
@@ -156,9 +150,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.AppendFormat(" {0}id_category not in ({1}) ",
-                     !string.IsNullOrEmpty(subSegmentPrefix) ? string.Format("{0}.", subSegmentPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpSubSegmentException]);
+                prefix = !string.IsNullOrEmpty(subSegmentPrefix) ? string.Format("{0}.", subSegmentPrefix) : string.Empty;
+                sql.AppendFormat(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_category", session.CustomerLogin[CustomerRightConstante.type.vpSubSegmentException], false) + " ");
                 fisrt = false;
             }
             // Get the product not authorized for the current customer
@@ -170,9 +163,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.AppendFormat(" {0}id_product not in ({1}) ",
-                        !string.IsNullOrEmpty(productPrefix) ? string.Format("{0}.", productPrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpProductException]);
+                prefix = !string.IsNullOrEmpty(productPrefix) ? string.Format("{0}.", productPrefix) : string.Empty;
+                sql.AppendFormat(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_product", session.CustomerLogin[CustomerRightConstante.type.vpProductException], false) + " ");
                 fisrt = false;
             }
             if (!fisrt) sql.Append(" )");
@@ -186,15 +178,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             var sql = new StringBuilder();
             bool fisrt = true;
+            string prefix = string.Empty;
 
             // Get the Media type authorized for the current customer
             if (session.CustomerLogin[CustomerRightConstante.type.vpVehicleAccess].Length > 0)
             {
 
                 if (beginByAnd) sql.Append(" and");
-                sql.AppendFormat(" (({0}id_vehicle in ({1}) ",
-                     !string.IsNullOrEmpty(vehiclePrefix) ? string.Format("{0}.", vehiclePrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpVehicleAccess]);
+                prefix = !string.IsNullOrEmpty(vehiclePrefix) ? string.Format("{0}.", vehiclePrefix) : string.Empty;
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_vehicle", session.CustomerLogin[CustomerRightConstante.type.vpVehicleAccess], true) + " ");
                 fisrt = false;
             }
          
@@ -209,9 +201,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (beginByAnd) sql.Append(" and");
                     sql.Append(" (");
                 }
-                sql.AppendFormat(" {0}id_vehicle not in ({1}) ",
-                     !string.IsNullOrEmpty(vehiclePrefix) ? string.Format("{0}.", vehiclePrefix) : string.Empty,
-                    session.CustomerLogin[CustomerRightConstante.type.vpVehicleException]);
+                prefix = !string.IsNullOrEmpty(vehiclePrefix) ? string.Format("{0}.", vehiclePrefix) : string.Empty;
+                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_vehicle", session.CustomerLogin[CustomerRightConstante.type.vpVehicleException], false) + " ");
                 fisrt = false;
             }
            

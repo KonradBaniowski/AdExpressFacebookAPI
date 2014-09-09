@@ -13,6 +13,13 @@
         <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
         <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
         <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.sk.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ie.xml</file>
+      </files>
+    </project>
+    <project id="Poland">
+      <files>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-pln.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
       </files>
     </project>
   </projects>

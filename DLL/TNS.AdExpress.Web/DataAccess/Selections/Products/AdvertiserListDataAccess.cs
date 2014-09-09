@@ -5,6 +5,7 @@ using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using System.Collections;
 using System.Data;
 using TNS.AdExpress;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 	/// <summary>
@@ -116,23 +117,24 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 				sql+="( ";}
 					
 					
-			if(right[CustomerCst.Right.type.sectorAccess].Length>0)sql+="  sc.id_sector in ("+right[CustomerCst.Right.type.sectorAccess]+")";
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0)
+                sql += " " + SQLGenerator.GetInClauseMagicMethod("sc.id_sector", right[CustomerCst.Right.type.sectorAccess], true) + " ";
 					
 			if(right[CustomerCst.Right.type.subSectorAccess].Length>0 && right[CustomerCst.Right.type.sectorAccess].Length>0)
-				sql+=" or sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorAccess], true) + " ";
 			else if(right[CustomerCst.Right.type.subSectorAccess].Length>0 )
-				sql+=" sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorAccess], true) + " ";
 
 			if(right[CustomerCst.Right.type.groupAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0))
-				sql+=" or gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupAccess], true) + " ";
 			else if (right[CustomerCst.Right.type.groupAccess].Length>0)
-				sql+="  gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupAccess], true) + " ";
 
 					
 			if(right[CustomerCst.Right.type.segmentAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0 || right[CustomerCst.Right.type.groupAccess].Length>0 ))
-				sql+=" or sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentAccess], true) + " ";
 			else if (right[CustomerCst.Right.type.segmentAccess].Length>0)
-				sql+="  sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentAccess], true) + " ";
 
 
 			if(right[CustomerCst.Right.type.sectorAccess].Length>0 
@@ -142,10 +144,14 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 				){
 				sql+=" ) ";}
 
-			if(right[CustomerCst.Right.type.sectorException].Length>0)sql+=" and sc.id_sector not in ("+right[CustomerCst.Right.type.sectorException]+")";
-			if(right[CustomerCst.Right.type.subSectorException].Length>0)sql+=" and sc.id_subsector not in ("+right[CustomerCst.Right.type.subSectorException]+")";
-			if(right[CustomerCst.Right.type.groupException].Length>0)sql+=" and gr.id_group_ not in ("+right[CustomerCst.Right.type.groupException]+")";
-			if(right[CustomerCst.Right.type.segmentException].Length>0)sql+=" and sg.id_segment not in ("+right[CustomerCst.Right.type.segmentException]+")";
+			if(right[CustomerCst.Right.type.sectorException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sc.id_sector", right[CustomerCst.Right.type.sectorException], false) + " ";
+			if(right[CustomerCst.Right.type.subSectorException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorException], false) + " ";
+			if(right[CustomerCst.Right.type.groupException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupException], false) + " ";
+			if(right[CustomerCst.Right.type.segmentException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentException], false) + " ";
 					
 
 			if(right[CustomerCst.Right.type.sectorAccess].Length==0
@@ -184,18 +190,20 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 
 					
 			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0)
-				sql+="  hc.id_holding_company in ("+right[CustomerCst.Right.type.holdingCompanyAccess]+")";
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("hc.id_holding_company", right[CustomerCst.Right.type.holdingCompanyAccess], true) + " ";
 
 			if(right[CustomerCst.Right.type.advertiserAccess].Length>0 && right[CustomerCst.Right.type.holdingCompanyAccess].Length>0)
-				sql+=" or ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("ad.id_advertiser", right[CustomerCst.Right.type.advertiserAccess], true) + " ";
 			else if (right[CustomerCst.Right.type.advertiserAccess].Length>0)
-				sql+=" ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess]+")";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod("ad.id_advertiser", right[CustomerCst.Right.type.advertiserAccess], true) + " ";
 			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
 				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
 				){
 				sql+=" ) ";}
-			if(right[CustomerCst.Right.type.holdingCompanyException].Length>0)sql+=" and hc.id_holding_company not in ("+right[CustomerCst.Right.type.holdingCompanyException]+")";
-			if(right[CustomerCst.Right.type.advertiserException].Length>0)sql+=" and ad.id_advertiser not in ("+right[CustomerCst.Right.type.advertiserException]+")";
+			if(right[CustomerCst.Right.type.holdingCompanyException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("hc.id_holding_company", right[CustomerCst.Right.type.holdingCompanyException], false) + " ";
+			if(right[CustomerCst.Right.type.advertiserException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("ad.id_advertiser", right[CustomerCst.Right.type.advertiserException], false) + " ";
 					
 			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length==0 
 				&& right[CustomerCst.Right.type.advertiserAccess].Length==0) {
@@ -406,23 +414,24 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 				sql+="( ";}
 					
 					
-			if(right[CustomerCst.Right.type.sectorAccess].Length>0)sql+="  sc.id_sector in ("+right[CustomerCst.Right.type.sectorAccess]+")";
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0)
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("sc.id_sector", right[CustomerCst.Right.type.sectorAccess], true) + " ";
 					
 			if(right[CustomerCst.Right.type.subSectorAccess].Length>0 && right[CustomerCst.Right.type.sectorAccess].Length>0)
-				sql+=" or sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorAccess], true) + " ";
 			else if(right[CustomerCst.Right.type.subSectorAccess].Length>0 )
-				sql+=" sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorAccess], true) + " ";
 
 			if(right[CustomerCst.Right.type.groupAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0))
-				sql+=" or gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupAccess], true) + " ";
 			else if (right[CustomerCst.Right.type.groupAccess].Length>0)
-				sql+="  gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupAccess], true) + " ";
 
 					
 			if(right[CustomerCst.Right.type.segmentAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0 || right[CustomerCst.Right.type.groupAccess].Length>0 ))
-				sql+=" or sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentAccess], true) + " ";
 			else if (right[CustomerCst.Right.type.segmentAccess].Length>0)
-				sql+="  sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentAccess], true) + " ";
 
 
 			if(right[CustomerCst.Right.type.sectorAccess].Length>0 
@@ -432,10 +441,14 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 				){
 				sql+=" ) ";}
 
-			if(right[CustomerCst.Right.type.sectorException].Length>0)sql+=" and sc.id_sector not in ("+right[CustomerCst.Right.type.sectorException]+")";
-			if(right[CustomerCst.Right.type.subSectorException].Length>0)sql+=" and sc.id_subsector not in ("+right[CustomerCst.Right.type.subSectorException]+")";
-			if(right[CustomerCst.Right.type.groupException].Length>0)sql+=" and gr.id_group_ not in ("+right[CustomerCst.Right.type.groupException]+")";
-			if(right[CustomerCst.Right.type.segmentException].Length>0)sql+=" and sg.id_segment not in ("+right[CustomerCst.Right.type.segmentException]+")";
+			if(right[CustomerCst.Right.type.sectorException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sc.id_sector", right[CustomerCst.Right.type.sectorException], false) + " ";
+			if(right[CustomerCst.Right.type.subSectorException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorException], false) + " ";
+			if(right[CustomerCst.Right.type.groupException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupException], false) + " ";
+			if(right[CustomerCst.Right.type.segmentException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentException], false) + " ";
 					
 
 			if(right[CustomerCst.Right.type.sectorAccess].Length==0
@@ -681,23 +694,24 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 				sql+="( ";}
 
 
-                if(right[CustomerCst.Right.type.sectorAccess].Length>0) sql+="  sc.id_sector in ("+right[CustomerCst.Right.type.sectorAccess]+")";
+                if(right[CustomerCst.Right.type.sectorAccess].Length>0)
+                    sql += "  " + SQLGenerator.GetInClauseMagicMethod("sc.id_sector", right[CustomerCst.Right.type.sectorAccess], true) + " ";
 
                 if(right[CustomerCst.Right.type.subSectorAccess].Length>0 && right[CustomerCst.Right.type.sectorAccess].Length>0)
-                    sql+=" or sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+                    sql += " or " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorAccess], true) + " ";
                 else if(right[CustomerCst.Right.type.subSectorAccess].Length>0)
-                    sql+=" sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+                    sql += " " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorAccess], true) + " ";
 
 			if(right[CustomerCst.Right.type.groupAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0))
-				sql+=" or gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupAccess], true) + " ";
 			else if (right[CustomerCst.Right.type.groupAccess].Length>0)
-                sql+="  gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupAccess], true) + " ";
 
 
             if(right[CustomerCst.Right.type.segmentAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0 || right[CustomerCst.Right.type.groupAccess].Length>0))
-                sql+=" or sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentAccess], true) + " ";
             else if(right[CustomerCst.Right.type.segmentAccess].Length>0)
-                sql+="  sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentAccess], true) + " ";
 
 
 			if(right[CustomerCst.Right.type.sectorAccess].Length>0 
@@ -708,10 +722,14 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			{
 				sql+=" ) ";}
 
-			if(right[CustomerCst.Right.type.sectorException].Length>0)sql+=" and sc.id_sector not in ("+right[CustomerCst.Right.type.sectorException]+")";
-			if(right[CustomerCst.Right.type.subSectorException].Length>0)sql+=" and sc.id_subsector not in ("+right[CustomerCst.Right.type.subSectorException]+")";
-			if(right[CustomerCst.Right.type.groupException].Length>0)sql+=" and gr.id_group_ not in ("+right[CustomerCst.Right.type.groupException]+")";
-			if(right[CustomerCst.Right.type.segmentException].Length>0)sql+=" and sg.id_segment not in ("+right[CustomerCst.Right.type.segmentException]+")";
+			if(right[CustomerCst.Right.type.sectorException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sc.id_sector", right[CustomerCst.Right.type.sectorException], false) + " ";
+			if(right[CustomerCst.Right.type.subSectorException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sc.id_subsector", right[CustomerCst.Right.type.subSectorException], false) + " ";
+			if(right[CustomerCst.Right.type.groupException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("gr.id_group_", right[CustomerCst.Right.type.groupException], false) + " ";
+			if(right[CustomerCst.Right.type.segmentException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("sg.id_segment", right[CustomerCst.Right.type.segmentException], false) + " ";
 					
 
 			if(right[CustomerCst.Right.type.sectorAccess].Length==0
@@ -755,19 +773,21 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 
 					
 			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0)
-				sql+="  hc.id_holding_company in ("+right[CustomerCst.Right.type.holdingCompanyAccess]+")";
+                sql += "  " + SQLGenerator.GetInClauseMagicMethod("hc.id_holding_company", right[CustomerCst.Right.type.holdingCompanyAccess], true) + " ";
 
 			if(right[CustomerCst.Right.type.advertiserAccess].Length>0 && right[CustomerCst.Right.type.holdingCompanyAccess].Length>0)
-				sql+=" or ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess]+")";
+                sql += " or " + SQLGenerator.GetInClauseMagicMethod("ad.id_advertiser", right[CustomerCst.Right.type.advertiserAccess], true) + " ";
 			else if (right[CustomerCst.Right.type.advertiserAccess].Length>0)
-				sql+=" ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess]+")";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod("ad.id_advertiser", right[CustomerCst.Right.type.advertiserAccess], true) + " ";
 			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
 				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
 				)
 			{
 				sql+=" ) ";}
-			if(right[CustomerCst.Right.type.holdingCompanyException].Length>0)sql+=" and hc.id_holding_company not in ("+right[CustomerCst.Right.type.holdingCompanyException]+")";
-			if(right[CustomerCst.Right.type.advertiserException].Length>0)sql+=" and ad.id_advertiser not in ("+right[CustomerCst.Right.type.advertiserException]+")";
+			if(right[CustomerCst.Right.type.holdingCompanyException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("hc.id_holding_company", right[CustomerCst.Right.type.holdingCompanyException], false) + " ";
+			if(right[CustomerCst.Right.type.advertiserException].Length>0)
+                sql += " and " + SQLGenerator.GetInClauseMagicMethod("ad.id_advertiser", right[CustomerCst.Right.type.advertiserException], false) + " ";
 					
 			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length==0 
 				&& right[CustomerCst.Right.type.advertiserAccess].Length==0) 

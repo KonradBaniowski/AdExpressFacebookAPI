@@ -24,6 +24,7 @@ using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpressI.Classification.DAL
 {
@@ -307,7 +308,7 @@ namespace TNS.AdExpressI.Classification.DAL
                 if (rights.ContainsKey(CustomerRightConstante.type.vehicleAccess) && rights[CustomerRightConstante.type.vehicleAccess].Length > 0)
                 {
                     if (beginByAnd) sql += " and";
-                    sql += " ((" + (!string.IsNullOrEmpty(vehicleTablePrefix) ? vehicleTablePrefix + "." : "") + " id_vehicle in (" + rights[CustomerRightConstante.type.vehicleAccess] + ") ";
+                    sql += " ((" + SQLGenerator.GetInClauseMagicMethod((!string.IsNullOrEmpty(vehicleTablePrefix) ? vehicleTablePrefix + "." : "") + "id_vehicle", rights[CustomerRightConstante.type.vehicleAccess], true) + " ";
                     fisrt = false;
                 }
                 // Get the sub medias authorized for the current customer
@@ -319,7 +320,7 @@ namespace TNS.AdExpressI.Classification.DAL
                         if (beginByAnd) sql += " and";
                         sql += " ((";
                     }
-                    sql += " " + (!string.IsNullOrEmpty(categoryTablePrefix) ? categoryTablePrefix + "." : "") + " id_category in (" + rights[CustomerRightConstante.type.categoryAccess] + ") ";
+                    sql += " " + SQLGenerator.GetInClauseMagicMethod((!string.IsNullOrEmpty(categoryTablePrefix) ? categoryTablePrefix + "." : "") + "id_category", rights[CustomerRightConstante.type.categoryAccess], true) + " ";
                     fisrt = false;
                 }
                 // Get the vehicles authorized for the current customer                
@@ -331,7 +332,7 @@ namespace TNS.AdExpressI.Classification.DAL
                         if (beginByAnd) sql += " and";
                         sql += " ((";
                     }
-                    sql += " " + (!string.IsNullOrEmpty(mediaTablePrefix) ? mediaTablePrefix + "." : "") + " id_media in (" + rights[CustomerRightConstante.type.mediaAccess] + ") ";
+                    sql += " " + SQLGenerator.GetInClauseMagicMethod((!string.IsNullOrEmpty(mediaTablePrefix) ? mediaTablePrefix + "." : "") + "id_media", rights[CustomerRightConstante.type.mediaAccess], true) + " ";
                     fisrt = false;
                 }
                 if (!fisrt) sql += " )";
@@ -345,7 +346,7 @@ namespace TNS.AdExpressI.Classification.DAL
                         if (beginByAnd) sql += " and";
                         sql += " (";
                     }
-                    sql += " " + (!string.IsNullOrEmpty(vehicleTablePrefix) ? vehicleTablePrefix + "." : "") + " id_vehicle not in (" + rights[CustomerRightConstante.type.vehicleException] + ") ";
+                    sql += " " + SQLGenerator.GetInClauseMagicMethod((!string.IsNullOrEmpty(vehicleTablePrefix) ? vehicleTablePrefix + "." : "") + "id_vehicle", rights[CustomerRightConstante.type.vehicleException], false) + " ";
                     fisrt = false;
                 }
                 // Get the sub medias not authorized for the current customer
@@ -357,7 +358,7 @@ namespace TNS.AdExpressI.Classification.DAL
                         if (beginByAnd) sql += " and";
                         sql += " (";
                     }
-                    sql += " " + (!string.IsNullOrEmpty(categoryTablePrefix) ? categoryTablePrefix + "." : "") + " id_category not in (" + rights[CustomerRightConstante.type.categoryException] + ") ";
+                    sql += " " + SQLGenerator.GetInClauseMagicMethod((!string.IsNullOrEmpty(categoryTablePrefix) ? categoryTablePrefix + "." : "") + "id_category", rights[CustomerRightConstante.type.categoryException], false) + " ";
                     fisrt = false;
                 }
                 // Get the vehicles not authorized for the current customer
@@ -369,7 +370,7 @@ namespace TNS.AdExpressI.Classification.DAL
                         if (beginByAnd) sql += " and";
                         sql += " (";
                     }
-                    sql += " " + (!string.IsNullOrEmpty(mediaTablePrefix) ? mediaTablePrefix + "." : "") + " id_media not in (" + rights[CustomerRightConstante.type.mediaException] + ") ";
+                    sql += " " + SQLGenerator.GetInClauseMagicMethod((!string.IsNullOrEmpty(mediaTablePrefix) ? mediaTablePrefix + "." : "") + "id_media", rights[CustomerRightConstante.type.mediaException], false) + " ";
                     fisrt = false;
                 }
                 if (!fisrt) sql += " )";

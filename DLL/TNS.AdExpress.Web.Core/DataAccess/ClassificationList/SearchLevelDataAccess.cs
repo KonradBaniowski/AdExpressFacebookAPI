@@ -15,6 +15,7 @@ using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 	/// <summary>
@@ -292,7 +293,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
             // vehicle (media)
             if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length > 0) {
                 if(beginByAnd) sql += " and";
-                sql += " ((" + vehiclePrefixe + ".id_vehicle in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess] + ") ";
+                sql += " ((" + SQLGenerator.GetInClauseMagicMethod(vehiclePrefixe + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess], true) + " ";
                 premier = false;
             }
             // category (Categorie)
@@ -302,7 +303,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
                     if(beginByAnd) sql += " and";
                     sql += " ((";
                 }
-                sql += " " + categoryPrefixe + ".id_category in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(categoryPrefixe + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess], true) + " ";
                 premier = false;
             }
             // media (support)
@@ -312,7 +313,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
                     if(beginByAnd) sql += " and";
                     sql += " ((";
                 }
-                sql += " " + mediaPrefixe + ".id_media in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(mediaPrefixe + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess], true) + " ";
                 premier = false;
             }
 
@@ -325,7 +326,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
                     if(beginByAnd) sql += " and";
                     sql += " (";
                 }
-                sql += " " + vehiclePrefixe + ".id_vehicle not in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleException] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(vehiclePrefixe + ".id_vehicle", webSession.CustomerLogin[CustomerRightConstante.type.vehicleException], false) + " ";
                 premier = false;
             }
             // category (Categorie)
@@ -335,7 +336,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
                     if(beginByAnd) sql += " and";
                     sql += " (";
                 }
-                sql += " " + categoryPrefixe + ".id_category not in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryException] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(categoryPrefixe + ".id_category", webSession.CustomerLogin[CustomerRightConstante.type.categoryException], false) + " ";
                 premier = false;
             }
             // media (support)
@@ -345,7 +346,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
                     if(beginByAnd) sql += " and";
                     sql += " (";
                 }
-                sql += " " + mediaPrefixe + ".id_media  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaException] + ") ";
+                sql += " " + SQLGenerator.GetInClauseMagicMethod(mediaPrefixe + ".id_media", webSession.CustomerLogin[CustomerRightConstante.type.mediaException], false) + " ";
                 premier = false;
             }
 
