@@ -253,7 +253,6 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             try {
                
                 return _session.Source.Fill(sql.ToString());
-
                
             }
             catch(System.Exception err) {
@@ -553,14 +552,16 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
                 string idMediaLabel = string.Empty;
 
-                if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile)
+                if ((VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) 
+                    || (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile) &&  VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile))
                     idMediaLabel = "id_media_evaliant";
-                else if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.mms)
+                else if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.mms) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.mms)
                     idMediaLabel = "id_media_mms";
 
-                if (VehiclesInformation.Get(vehicleId).Autopromo && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
-                    || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile
-                    || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.mms)) {
+                if (VehiclesInformation.Get(vehicleId).Autopromo 
+                    && ((VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
+                    || (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile)
+                    || (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.mms) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.mms))) {
 
                     Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
 
@@ -580,12 +581,33 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
                 string listVehicles = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
                 string autoPromoVehicles = string.Empty;
+                bool comma = false;
             
-                if(listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack).ToString())
-                    || listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile).ToString())) {
+                if((
+                    VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack) 
+                    && listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack).ToString())
+                    && VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).Autopromo
+                    )
+                    || 
+                    (
+                    VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile) 
+                    && listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile).ToString())
+                    && VehiclesInformation.Get(CstDBClassif.Vehicles.names.evaliantMobile).Autopromo
+                    )) {
 
                     Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
-                    autoPromoVehicles = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack).ToString() + "," + VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile).ToString();
+
+                    if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack)) {
+                        autoPromoVehicles = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack).ToString();
+                        comma = true;
+                    }
+
+                    if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile)) {
+                        if (comma)
+                            autoPromoVehicles += ",";
+
+                        autoPromoVehicles += VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile).ToString();
+                    }
 
                     if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
                         sql.AppendFormat(" and (({0}.id_vehicle not in ({1})) or ({0}.id_vehicle in ({1}) and {0}.auto_promotion = 0 )) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, autoPromoVehicles);
@@ -598,7 +620,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                     }
                 
                 }
-                else if (listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.mms).ToString())) {
+                else if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.mms) && listVehicles.Contains(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.mms).ToString())) {
                 
                     Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
                     autoPromoVehicles = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.mms).ToString();
