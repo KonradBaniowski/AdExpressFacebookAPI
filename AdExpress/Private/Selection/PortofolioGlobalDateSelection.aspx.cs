@@ -304,6 +304,14 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
                 case 3:
                     selectedValue = int.Parse(dayDateList.SelectedValue);
                     break;
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    break;
+                default:
+                    throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
             }
 
             date.SetDate(ref _webSession, GlobalCalendarWebControl1.FirstDayNotEnable, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedIndex, selectedValue);
