@@ -280,6 +280,8 @@
 
     <table enumId="249" description="Data: MMS" schemaEnumId="0" label="data_mms" prefix="wp"/>
     <table enumId="250" description="Data: MMS" schemaEnumId="0" label="data_mms_4M" prefix="wp"/>
+
+    <table enumId="252" description="Data: Auto Promo" schemaEnumId="0" label="auto_promo" prefix="ap"/>
     
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
