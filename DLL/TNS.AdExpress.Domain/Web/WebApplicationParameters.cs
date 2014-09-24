@@ -203,6 +203,14 @@ namespace TNS.AdExpress.Domain.Web {
         /// Display News
         /// </summary>
         protected static bool _displayNews = false;
+        /// <summary>
+        /// Apply Evaliant Country Access
+        /// </summary>
+        protected static bool _applyEvaliantCountryAccess = false;
+        /// <summary>
+        /// Hide Plurimedia Evol
+        /// </summary>
+        protected static bool _hidePlurimediaEvol = false;
         #endregion
         
         #region Contructeur
@@ -529,6 +537,28 @@ namespace TNS.AdExpress.Domain.Web {
             }
             set {
                 _displayNews = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set Apply Evaliant Country Access
+        /// </summary>
+        public static bool ApplyEvaliantCountryAccess {
+            get {
+                return _applyEvaliantCountryAccess;
+            }
+            set {
+                _applyEvaliantCountryAccess = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set Hide Plurimedia Evol
+        /// </summary>
+        public static bool HidePlurimediaEvol {
+            get {
+                return _hidePlurimediaEvol;
+            }
+            set {
+                _hidePlurimediaEvol = value;
             }
         }
         #endregion

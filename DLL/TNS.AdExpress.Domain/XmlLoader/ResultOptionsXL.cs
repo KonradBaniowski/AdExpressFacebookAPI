@@ -57,6 +57,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool isAllPeriodIsRestrictTo4Month = true;
             bool canSaveLevels = false;
             bool displayNews = false;
+            bool applyEvaliantCountryAccess = false;
+            bool hidePlurimediaEvol = false;
             #endregion
 
             try {
@@ -220,6 +222,16 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                             case "news":
                                 displayNews = bool.Parse(reader.GetAttribute("displayNews"));
                                 break;
+                            case "evaliantCountryAccess":
+                                if (reader.GetAttribute("applyEvaliantCountryAccess") != null && reader.GetAttribute("applyEvaliantCountryAccess").Length > 0) {
+                                    applyEvaliantCountryAccess = bool.Parse(reader.GetAttribute("applyEvaliantCountryAccess"));
+                                }
+                                break;
+                            case "plurimediaEvol":
+                                if (reader.GetAttribute("hidePlurimediaEvol") != null && reader.GetAttribute("hidePlurimediaEvol").Length > 0) {
+                                    hidePlurimediaEvol = bool.Parse(reader.GetAttribute("hidePlurimediaEvol"));
+                                }
+                                break;
                         }
                     }
                 }
@@ -238,6 +250,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 //WebApplicationParameters.IsAllPeriodIsRestrictTo4MonthInInsertionReport = isAllPeriodIsRestrictTo4Month;
                 WebApplicationParameters.InsertionOptions = new InsertionOptions(isAllPeriodIsRestrictTo4Month, canSaveLevels);
                 WebApplicationParameters.DisplayNews = displayNews;
+                WebApplicationParameters.ApplyEvaliantCountryAccess = applyEvaliantCountryAccess;
+                WebApplicationParameters.HidePlurimediaEvol = hidePlurimediaEvol;
             }
 
             #region Error Management

@@ -38,6 +38,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress;
 using ProductClassReports = TNS.AdExpressI.ProductClassReports;
+using TNS.AdExpress.Domain.Web;
 
 #endregion
 
@@ -135,7 +136,7 @@ namespace AdExpress.Private.Results
                     _webSession.Save();
                 }
 
-                if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia) {
+                if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia && WebApplicationParameters.HidePlurimediaEvol) {
                     ResultsOptionsWebControl1.EvolutionOption = false;
                     _webSession.Evolution = false;
                 }

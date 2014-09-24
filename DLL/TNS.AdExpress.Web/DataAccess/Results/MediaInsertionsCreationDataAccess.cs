@@ -764,7 +764,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql.Append(" Where ");	
 			sql.Append("  "+DbTables.SLOGAN_PREFIXE+".id_slogan= "+idSlogan);
 			sql.Append("  and "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append("  and "+DbTables.SLOGAN_PREFIXE+".id_language= "+webSession.DataLanguage.ToString());
 			sql.Append("  and "+DbTables.VEHICLE_PREFIXE+".id_vehicle ="+DbTables.SLOGAN_PREFIXE+".id_vehicle");
 			sql.Append(" and "+DbTables.VEHICLE_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);			
 			sql.Append("  and  "+DbTables.SLOGAN_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);	

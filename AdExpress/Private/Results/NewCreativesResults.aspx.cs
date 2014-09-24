@@ -42,6 +42,8 @@ using System.Reflection;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
 using NewCreatives = TNS.AdExpressI.NewCreatives;
+using TNS.AdExpress.DataAccess;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -105,8 +107,17 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion			
 
-				#region Url Suivante
-				if(_nextUrl.Length!=0){
+                #region Avaliant Country Access List
+                string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new Exception("Uncorrect Media Selection"));
+                VehicleInformation vehicleInformation = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
+                if (WebApplicationParameters.ApplyEvaliantCountryAccess && vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack 
+                    && (_webSession.EvaliantCountryAccessList == null || _webSession.EvaliantCountryAccessList.Length == 0))
+                    _webSession.EvaliantCountryAccessList = RightDAL.GetEvaliantCountryRights(_webSession.Source, _webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess], _webSession.CustomerLogin[CustomerRightConstante.type.mediaException], _webSession.DataLanguage);
+                #endregion
+
+                #region Url Suivante
+                if (_nextUrl.Length!=0){
 					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 				}

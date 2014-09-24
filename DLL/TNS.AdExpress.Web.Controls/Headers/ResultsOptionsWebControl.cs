@@ -3462,7 +3462,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
         protected bool CanShowProductClassAnalysisResult(WebSession webSession, ResultPageInformation current) {
 
             VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-            if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION) {
+            if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia 
+                && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION && WebApplicationParameters.HidePlurimediaEvol) {
                 return false;
             }
 

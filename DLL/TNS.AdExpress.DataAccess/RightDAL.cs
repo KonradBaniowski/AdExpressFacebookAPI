@@ -7,6 +7,7 @@ using TNS.AdExpress.DataAccess.Exceptions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using DbCst=TNS.AdExpress.Constantes.DB;
+using CstClassif=TNS.AdExpress.Constantes.Classification;
 using CustomerCst=TNS.AdExpress.Constantes.Customer;
 
 namespace TNS.AdExpress.DataAccess {
@@ -806,6 +807,64 @@ namespace TNS.AdExpress.DataAccess {
             }
             #endregion
 
+        }
+        #endregion
+
+        #region Evaliant Country Rights
+        /// <summary>
+        /// Get Evaliant Country Rights
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="rights">Customer Rights</param>
+        /// <returns>SQL code</returns>
+        public static string GetEvaliantCountryRights(IDataSource source, string accessRights, string exceptionRights, int dataLanguage ) {
+
+            #region Tables initilization
+            View mediaView;
+            try {
+                mediaView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
+            }
+            catch (System.Exception err) {
+                throw (new RightDALException("Impossible to init view object for Evaliant Country Rights", err));
+            }
+            #endregion
+
+            #region Request
+            bool first = true;
+            string countryList = string.Empty;
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" select distinct id_country");
+            sql.Append(" from " + mediaView.Sql + dataLanguage.ToString() + " ");
+            sql.Append(" where id_vehicle = " + CstClassif.DB.Vehicles.names.adnettrack.GetHashCode());
+            // Media
+            if (accessRights.Length > 0) {
+                sql.Append(" and " + GetInClauseMagicMethod("id_media", accessRights, true) + " ");
+                first = false;
+            }
+            // Media
+            if (exceptionRights.Length > 0) {
+                if (!first) sql.Append(" and ");
+                sql.Append(" " + GetInClauseMagicMethod("id_media", exceptionRights, false) + " ");
+            }
+            #endregion
+
+            #region Execute request
+            try {
+                DataSet ds=source.Fill(sql.ToString());
+
+                if (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count > 0) {
+                    foreach (DataRow currentRow in ds.Tables[0].Rows)
+                        countryList += currentRow[0].ToString() + ",";
+
+                    if (countryList.Length > 0)
+                        countryList = countryList.Substring(0, countryList.Length - 1);
+                }
+                return (countryList);
+            }
+            catch (System.Exception err) {
+                throw (new RightDALException("Impossible to retreive rights", err));
+            }
+            #endregion
         }
         #endregion
 

@@ -317,8 +317,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Auto Promo
             /// </summary>
-            autoPromo = 73
-          
+            autoPromo = 73,
+            /// <summary>
+            /// Evaliant Country Access List
+            /// </summary>
+            evaliantCountryAccessList = 74
 		}
 	
 	}

@@ -173,7 +173,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			 query.Append ("  FROM "+Constantes.DB.Schema.ADEXPRESS_SCHEMA+".slogan  sl, "+Constantes.DB.Schema.ADEXPRESS_SCHEMA+".ALL_PRODUCT ap , "+Constantes.DB.Schema.ADEXPRESS_SCHEMA+".ALL_PRODUCT_ADVERTISER  apa ");				
 			 query.Append ("  WHERE sl.id_slogan="+idVersion);  
 			 query.Append ("  and sl.id_product = ap.id_product and apa.id_product = sl.id_product ");
-			 query.Append ("  and sl.id_language="+siteLanguage+" and ap.id_language="+siteLanguage);
+			 query.Append ("  and ap.id_language="+siteLanguage);
 			try {
 				return dataSource.Fill(query.ToString());
 			}

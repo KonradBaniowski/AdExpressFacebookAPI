@@ -1178,6 +1178,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         recapSearchSegment = 258,
         /// <summary>
+        /// Banners Country
+        /// </summary>
+        bannersCountry = 259,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

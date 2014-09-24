@@ -1001,7 +1001,6 @@ namespace TNS.AdExpressI.Insertions.DAL
                 //WHERE
                 sql.AppendFormat("  WHERE {1}.id_slogan={0}", idVersion, sloganTable.Prefix);//Filtering with version ID
                 sql.AppendFormat("  and {0}.id_product = {1}.id_product ", sloganTable.Prefix, oView.Prefix);//Joins
-                sql.AppendFormat("  and {0}.id_language={1}", sloganTable.Prefix, _session.DataLanguage);//Filtering with data language
 
                 return _session.Source.Fill(sql.ToString());
             }

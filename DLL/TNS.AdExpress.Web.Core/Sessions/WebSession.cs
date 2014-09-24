@@ -389,6 +389,12 @@ namespace TNS.AdExpress.Web.Core.Sessions
         protected string _selectedBannersForamtList = string.Empty;
 
         /// <summary>
+        /// Evaliant Country Access List
+        /// </summary>
+        [System.NonSerialized]
+        protected string _evaliantCountryAccessList = string.Empty;
+
+        /// <summary>
         /// Index décrivant un identifiant ou un numéroe de colonne à trier.
         /// </summary>
         [Obsolete("Utiliser au maximum l'attribut _sortKey dans userparameters")]
@@ -1928,6 +1934,24 @@ namespace TNS.AdExpress.Web.Core.Sessions
             {
                 _periodSelectionType = value;
                 userParameters[CoreConstantes.SessionParamters.periodSelectiontype] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set Evaliant Country Access List
+        /// </summary>
+        public string EvaliantCountryAccessList {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.evaliantCountryAccessList)) {
+                    _evaliantCountryAccessList = userParameters[CoreConstantes.SessionParamters.evaliantCountryAccessList].ToString();
+                }
+
+                return (_evaliantCountryAccessList);
+            }
+            set {
+                _evaliantCountryAccessList = value;
+                userParameters[CoreConstantes.SessionParamters.evaliantCountryAccessList] = value;
                 modificationDate = DateTime.Now;
             }
         }

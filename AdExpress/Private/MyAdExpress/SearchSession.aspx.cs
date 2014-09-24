@@ -987,6 +987,7 @@ namespace AdExpress.Private.MyAdExpress{
                     _webSession.SelectedPresenceTypes = webSessionSave.SelectedPresenceTypes;
 
 				    _webSession.IsExcluWeb = webSessionSave.IsExcluWeb;
+                    _webSession.EvaliantCountryAccessList = string.Empty;
 
 					if(notValidPeriod){
 						//Erreur : période non disponible

@@ -120,9 +120,10 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
             string dataTableNameForGad = "";
             string dataFieldsForGad = "";
             string dataJointForGad = "";
-            Table table = null, tableDataMobile = null;
+            Table table = null, tableDataMobile = null, bannersCountry = null;
             Schema schAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
             bool useTableDataMobile = false;
+            bool applyCountryRights = false;
             const string prefixDataMobile = "dt";
             #endregion
 
@@ -138,8 +139,11 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 table = GetTable(_vehicleInformation, _session.IsSelectRetailerDisplay);
                 useTableDataMobile = (_vehicleInformation.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile
                     && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_APPLICATION_MOBILE_CREATIVE_FLAG));
+                if (_session.EvaliantCountryAccessList != null)
+                    applyCountryRights = (_session.EvaliantCountryAccessList.Length > 0) ? true : false;
 
                  if(useTableDataMobile) tableDataMobile = WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobile, _session.IsSelectRetailerDisplay);
+                 if (applyCountryRights) bannersCountry = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.bannersCountry);
 
                 if(_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
                     try {
@@ -174,6 +178,8 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 sql.Append(dataTableNameForGad + " ");
                 if (useTableDataMobile)
                     sql.Append("," + tableDataMobile.Sql + " " + prefixDataMobile);
+                if(applyCountryRights)
+                    sql.Append("," + bannersCountry.SqlWithPrefix);
 
                 // where
 				string maxHour ="23:59:59";
@@ -198,6 +204,13 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 List<Int64> formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{_vehicleInformation}));
                 if (formatIdList.Count > 0)
                     sql.Append(" and " + table.Prefix + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[_vehicleInformation.DatabaseId].FormatTableName).Label + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+                #endregion
+
+                #region Banners Country rights
+                if (applyCountryRights) {
+                    sql.AppendFormat(" and {0}.hashcode = {1}.hashcode ", bannersCountry.Prefix, table.Prefix);
+                    sql.AppendFormat(" and {0}.id_country in ({1})", bannersCountry.Prefix, _session.EvaliantCountryAccessList);
+                }
                 #endregion
 
                 // group by
