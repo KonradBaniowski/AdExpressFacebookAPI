@@ -320,6 +320,16 @@ namespace TNS.AdExpress.Web.UI
                 t.Append(GetBlankLine());
                 t.Append("</table><br>");
 
+                #region Search Legend
+                string vehicleSelection = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
+                if (vehicleSelection.Length > 0 && VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.search) 
+                    && vehicleSelection.Contains(VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.search).DatabaseId.ToString())) {
+                    t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0 width=100% >");
+                    t.Append("<tr><td \"excelDataItalic\" colspan=\"4\">" + GestionWeb.GetWebWord(3012, webSession.SiteLanguage) + "</td></tr>");
+                    t.Append("</table><br>");
+                }
+                #endregion
+
                 // On libère htmodule pour pouvoir le sauvegarder dans les tendances
                 //webSession.CustomerLogin.HtModulesList.Clear();
 

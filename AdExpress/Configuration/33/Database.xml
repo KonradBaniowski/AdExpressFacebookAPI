@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <database>
   <customerConnections>
-   
+
     <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </customerConnections>
   <defaultConnections>
@@ -22,7 +22,7 @@
     <defaultConnection enumId="14" description="Rolex" dataBaseEnumId="2" login="ROLEX03" password="40ans"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
-    
+
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>
@@ -45,7 +45,7 @@
     <table enumId="7" description="Classif: Segment" schemaEnumId="0" label="segment" prefix="sg"/>
     <table enumId="8" description="Classif: Product" schemaEnumId="0" label="product" prefix="pr"/>
     <table enumId="10" description="Classif: advertiser" schemaEnumId="0" label="advertiser" prefix="ad"/>
-    
+
     <table enumId="12" description="Right: Template" schemaEnumId="2" label="template" prefix="t"/>
     <table enumId="13" description="Right: Template assignment" schemaEnumId="2" label="template_assignment" prefix="ta"/>
     <table enumId="14" description="Right: Media type" schemaEnumId="2" label="type_media" prefix="tm"/>
@@ -61,7 +61,7 @@
     <table enumId="24" description="Right: Media order template" schemaEnumId="2" label="order_template_media" prefix="otm"/>
     <table enumId="25" description="Right: Product order template" schemaEnumId="2" label="order_template_product" prefix="otp"/>
     <table enumId="26" description="Data: Gad" schemaEnumId="0" label="gad" prefix="gd"/>
-   
+
     <table enumId="29" description="Customer Session: navigation session" schemaEnumId="5" label="nav_session" prefix="nvs"/>
     <table enumId="30" description="Customer Session: customer saved session" schemaEnumId="5" label="my_session" prefix="mys"/>
     <table enumId="31" description="Customer Session: customer saved session backup" schemaEnumId="5" label="my_session_backup" prefix="mysb"/>
@@ -114,7 +114,7 @@
     <table enumId="83" description="Recap Data: Internet Segment" schemaEnumId="4" label="recap_internet_segment" prefix="rcp"/>
     <table enumId="84" description="Recap Data: Cinema Segment" schemaEnumId="4" label="recap_cinema_segment" prefix="rcp"/>
     <table enumId="85" description="Recap Data: Tactic Segment" schemaEnumId="4" label="recap_tactic_segment" prefix="rcp"/>
-    
+
     <table enumId="86" description="Classif: Periodicity" schemaEnumId="0" label="periodicity" prefix="pe"/>
     <table enumId="89" description="Classif: Target Media Assignment" schemaEnumId="1" label="target_media_assignment" prefix="tma"/>
     <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
@@ -280,7 +280,7 @@
 
     <table enumId="249" description="Data: MMS" schemaEnumId="0" label="data_mms" prefix="wp"/>
     <table enumId="250" description="Data: MMS" schemaEnumId="0" label="data_mms_4M" prefix="wp"/>
-    
+
     <table enumId="251" description="Classif: Media Group" schemaEnumId="0" label="media_group" prefix="meg"/>
     <table enumId="252" description="Data: Auto Promo" schemaEnumId="0" label="auto_promo" prefix="ap"/>
 
@@ -289,16 +289,16 @@
 
     <table enumId="255" description="Data: Search" schemaEnumId="0" label="data_search" prefix="wp"/>
     <table enumId="256" description="Data: Search" schemaEnumId="0" label="data_search_4M" prefix="wp"/>
-    
+
     <table enumId="257" description="Recap Data: Search" schemaEnumId="4" label="recap_search" prefix="rcp"/>
     <table enumId="258" description="Recap Data: Search Segment" schemaEnumId="4" label="recap_search_segment" prefix="rcp"/>
-    
+
     <table enumId="259" description="Mapping: Banners Country" schemaEnumId="0" label="banners_country" prefix="bc"/>
-    
+
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
-    <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>    
+    <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>
@@ -307,7 +307,7 @@
     <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
     <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>
     <view enumId="5" description="Classif: all Promo brand" schemaEnumId="11" label="all_brand" prefix="allpb"/>
-    <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>    
-  </views>  
+    <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>
+  </views>
 </database>
 

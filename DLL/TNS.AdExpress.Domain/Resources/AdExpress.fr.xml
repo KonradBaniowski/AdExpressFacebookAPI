@@ -2259,5 +2259,9 @@
     <item mnemonic="w3008" type="System.String">Note d’information: Une nouvelle mesure pour les campagnes display</item>
     <item mnemonic="w3009" type="System.String">Avec la publication des résultats de mai 2014, Kantar Media intègre les données issues de la nouvelle Mesure Multi Sources des campagnes display dans ses outils cross media. Avec un élargissement significatif de sa couverture et une méthodologie innovante, cette nouvelle mesure reflète avec plus de représentativité et de fiabilité l’activité publicitaire sur le display et la vidéo.&lt;br&gt;&lt;br&gt;L’évolution importante de la nouvelle mesure a pour principale conséquence de ne pas être rétro active ce qui empêche toute comparaison des évolutions du display en 2014 avec les années antérieures. Les résultats de la Mesure Multi Sources sont disponibles sous l’intitulé média « Internet Display ». Ceux de l’ancienne méthodologie sont toujours accessibles sur 2013 et les années antérieures sous l‘intitulé media « Internet Ancienne version ».&lt;br&gt;&lt;br&gt;Votre interlocuteur habituel se tient à votre disposition pour tout complément d’information.&lt;br&gt;&lt;br&gt;Equipe Kantar Media Ad Intelligence</item>
     <item mnemonic="w3010" type="System.String">Recommandation: découvrez le périmètre média et les clés de lecture</item>
+    <item mnemonic="w3011" type="System.String">il n'est pas possible de faire une étude plurimédia si vous sélectionnez le média Search, veuillez changer votre sélection</item>
+    <item mnemonic="w3012" type="System.String">A retenir pour le calcul de vos parts de voix : Paid Search : pression publicitaire en net</item>
+    <item mnemonic="w3013" type="System.String">TV Nat.&lt;br&gt;TV TNT (réelle)&lt;br&gt;(+ Parrainage)</item>
+    <item mnemonic="w3014" type="System.String">TV TNT déclaratives&lt;br&gt;TV Thématiques</item>
   </items>
 </localization>

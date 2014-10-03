@@ -12,7 +12,7 @@
     <column id="9" name="Produit" webTextId="858" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="10" name="Spot" webTextId="869"  dbLabel="associated_file"/>
     <column id="11" name="Format" webTextId="1420" dbId="id_format" dbLabel="format" dbTable="format" dbTablePrefixe="fo"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="12" name="Surface page" webTextId="469"  dbLabel="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>  
+    <column id="12" name="Surface page" webTextId="469"  dbLabel="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
     <column id="13" name="Couleur" webTextId="1438" dbId="id_color" dbLabel="color" dbTable="color" dbTablePrefixe="cl"   dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="14" name="Prix" webTextId="1936" dbLabel="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="15" name="Descriptif" webTextId="1769" dbId="id_location" dbLabel="location" dbTable="location" dbTablePrefixe="lo" dbRelatedTablePrefixe="dl" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel">
@@ -115,7 +115,7 @@
       <constraints>
         <dbConstraints>
           <dbJoinConstraints>
-            <dbJoinConstraint id="1" name="Jointure slogan" dbField="id_slogan" dbTablePrefixe="dmc" dbRelatedField="id_slogan" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>           
+            <dbJoinConstraint id="1" name="Jointure slogan" dbField="id_slogan" dbTablePrefixe="dmc" dbRelatedField="id_slogan" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
           </dbJoinConstraints>
           <dbTableConstraints>
             <!--<dbTableConstraint id="1" name="data mail content" dbTable="data_mail_content2" dbTablePrefixe="dmc" dbSchema="adexpr03"/>-->
@@ -198,7 +198,7 @@
     <column id="137" name="Volume (m2)" webTextId="2709" dbLabel="vol" dbTable="vol" dbTablePrefixe="vl" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
     <column id="138" name="Clip expected duration" webTextId="2710" dbLabel="ad_dur" dbTable="ad_dur" dbTablePrefixe="adu" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
     <column id="139" name="Budget USD" webTextId="2711" dbLabel="budget" dbTable="budget" dbTablePrefixe="bgd" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
-    <column id="140" name="Budget RUB" webTextId="2712" dbLabel="budget_rub" dbTable="budget_rub" dbTablePrefixe="bgdr" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>        
+    <column id="140" name="Budget RUB" webTextId="2712" dbLabel="budget_rub" dbTable="budget_rub" dbTablePrefixe="bgdr" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="141" name="Press - PagesA2" webTextId="2717" dbLabel="press_pagesa2" dbTable="press_pagesa2" dbTablePrefixe="pp" CellType="TNS.FrameWork.WebResultUI.CellPagesA2" format="pages"/>
     <column id="142" name="Outdoor - Square" webTextId="2718" dbLabel="outdoor_square" dbTable="outdoor_square" dbTablePrefixe="osq" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
     <column id="143" name="Price USD" webTextId="2758" dbLabel="budget" dbTable="budget" dbTablePrefixe="bgd" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>

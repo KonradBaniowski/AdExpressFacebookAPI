@@ -28,6 +28,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using System.Collections.Generic;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 
 namespace AdExpress.Private.Selection
 {
@@ -209,6 +210,7 @@ namespace AdExpress.Private.Selection
                 _webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
                 List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
                 System.Windows.Forms.TreeNode tmpNode;
+                bool containsSearch = false;
 
                 // On recherche les éléments sélectionnés
                 foreach (ListItem currentItem in VehicleSelectionWebControl2.Items)
@@ -219,11 +221,16 @@ namespace AdExpress.Private.Selection
                         tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, long.Parse(currentItem.Value), currentItem.Text);
                         tmpNode.Checked = true;
                         levelsSelected.Add(tmpNode);
+                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.search) 
+                            && currentItem.Value == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.search).DatabaseId.ToString())
+                            containsSearch = true;
                     }
                 }
-                if (levelsSelected.Count == 0)
-                {                
+                if (levelsSelected.Count == 0) {                
                     Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)));
+                }
+                else if (containsSearch && levelsSelected.Count > 1) {
+                    Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(3011, _webSession.SiteLanguage)));
                 }
                 else {
 

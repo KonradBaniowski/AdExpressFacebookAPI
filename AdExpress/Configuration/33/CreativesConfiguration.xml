@@ -129,7 +129,7 @@
       <detailColumns>
         <detailColumn id="36">
           <allowedModules>
-            <allowedModule name="Analyse Plan Média" privilegecode="196"/>           
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
           </allowedModules>
         </detailColumn>
       </detailColumns>

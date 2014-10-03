@@ -38,6 +38,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
 using TNS.AdExpress.Domain.CampaignTypes;
+using CstCustomer = TNS.AdExpress.Constantes.Customer;
 
 #endregion
 
@@ -612,6 +613,21 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				}
 				t.Append(GetBlankLine());
 				t.Append("</table><br>");
+
+                #region Search Legend
+                switch (OutputType) {
+                    case RenderType.excel:
+                    case RenderType.rawExcel:
+                        string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
+                        if (vehicleSelection.Length > 0 && VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.search) 
+                            && vehicleSelection.Contains(VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.search).DatabaseId.ToString())) {
+                            t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0 width=100% >");
+                            t.Append("<tr><td " + cssTitleGlobal + " colspan=\"4\" >" + GestionWeb.GetWebWord(3012, _webSession.SiteLanguage) + "</td></tr>");
+                            t.Append("</table><br>");
+                        }
+                        break;
+                }
+                #endregion
 
 				// On libère htmodule pour pouvoir le sauvegarder dans les tendances
 				//_webSession.CustomerLogin.HtModulesList.Clear();

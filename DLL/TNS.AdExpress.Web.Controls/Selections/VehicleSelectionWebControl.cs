@@ -21,6 +21,9 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using System.Text;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -67,6 +70,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// </summary>
 		/// <param name="e">Arguments</param>
 		protected override void OnPreRender(EventArgs e) {
+
+            bool containsSearch = false;
+            int searchIndex = -1;
+            int vehicleIndex = 0;
+            string tmp2 = "";
+            Object tmp = this.Parent;
+
 			if(_webSession!=null){
                 CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[Layers.Id.classification];
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
@@ -77,10 +87,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance
                     | BindingFlags.Public, null, param, null, null);
 
-              
-
                 DataTable dt = FilteringWithMediaAgencyFlag(classficationDAL.GetMediaType().Tables[0]);
-
              
 			    this.DataSource = dt;
                 this.DataTextField = "mediaType";
@@ -105,6 +112,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     {
                         if (!_activeMediaTypes.Contains(Convert.ToInt64(item.Value)))
                             item.Enabled = false;
+                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.search) 
+                            && item.Value == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.search).DatabaseId.ToString()) {
+                            item.Attributes.Add("onclick", "selectSearch(this);");
+                            containsSearch = true;
+                            searchIndex = vehicleIndex;
+                        }
+                        vehicleIndex++;
                     }
                 }
               
@@ -115,14 +129,32 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			//Edition du javascript permettant la selection de tous les vehicules
 			if (!Page.ClientScript.IsClientScriptBlockRegistered("selectAllVehicles")){
 				string script = "\n<script language=\"JavaScript\">";
+
+                while (tmp != null && tmp.GetType() != typeof(System.Web.UI.HtmlControls.HtmlForm))
+                    tmp = ((Control)tmp).Parent;
+                if (tmp != null)
+                    tmp2 = ((System.Web.UI.HtmlControls.HtmlForm)tmp).ID;
+                else tmp2 = "Form2";
+
+                if (containsSearch) {
+
+                    script += "\n\t var searchSelected = false;";
+                    script += "\n\t function initAllVehicles() {";
+                    script += "\n\t\t searchSelected = false; ";
+                    for (int i = 0; i < this.Items.Count; i++) {
+                            script += "\n\t\t\t " + " document." + tmp2 + "." + this.ID + "_" + i + ".checked = false;";
+                            script += "\n\t\t\t " + " document." + tmp2 + "." + this.ID + "_" + i + ".disabled = false;";
+                    }
+                    script += "\n\t } \n ";
+                }
+
 				script += "\n\tfunction selectAllVehicles(){";
-				string tmp2="";
-				Object tmp = this.Parent;
-				while (tmp!= null && tmp.GetType() != typeof(System.Web.UI.HtmlControls.HtmlForm))
-					tmp = ((Control) tmp).Parent;
-				if (tmp != null)
-					tmp2 =((System.Web.UI.HtmlControls.HtmlForm) tmp).ID;
-				else tmp2 = "Form2";
+
+                if (containsSearch) {
+                    script += "\n\t\t if(searchSelected) \n";
+                    script += "\n\t\t\t initAllVehicles(); \n";
+                }
+				
 				script += "\n\tm=";
 
                 string[] idMedias = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll)
@@ -149,6 +181,33 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				script += "\n\t}\n</script>";
 				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"selectAllVehicles",script);
 			}
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("selectSearch")) {
+                if (containsSearch) {
+
+                    StringBuilder searchScript = new StringBuilder();
+
+                    searchScript.Append("\n <script language=\"JavaScript\"> ");
+                    searchScript.Append("\n\t function selectSearch(obj){ ");
+                    searchScript.Append("\n\t\t if(obj.checked == true) { ");
+                    searchScript.Append("\n\t\t\t searchSelected = true; ");
+                    for (int i = 0; i < this.Items.Count; i++) {
+                        if (i != searchIndex) {
+                            searchScript.Append("\n\t\t\t " + " document." + tmp2 + "." + this.ID + "_" + i + ".checked = false;");
+                            searchScript.Append("\n\t\t\t " + " document." + tmp2 + "." + this.ID + "_" + i + ".disabled = true;");
+                        }
+                    }
+                    searchScript.Append("\n\t\t } ");
+                    searchScript.Append("\n\t\t else { ");
+                    for (int i = 0; i < this.Items.Count; i++) {
+                        searchScript.Append("\n\t\t\t searchSelected = false; ");
+                        if (i != searchIndex)
+                            searchScript.Append("\n\t\t\t " + " document." + tmp2 + "." + this.ID + "_" + i + ".disabled = false;");
+                    }
+                    searchScript.Append("\n\t\t } ");
+                    searchScript.Append("\n\t } \n</script> ");
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "selectSearch", searchScript.ToString());
+                }
+            }
 			base.OnLoad (e);
 		}
 		#endregion
