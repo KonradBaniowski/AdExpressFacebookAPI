@@ -41,6 +41,8 @@ using TNS.Ares.Pdf;
 using TNS.FrameWork.WebTheme;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.CampaignTypes;
+using CstCustomer = TNS.AdExpress.Constantes.Customer;
+using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
@@ -575,6 +577,22 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                     html.Append("</TD>");
                     html.Append("</TR>");
                 }
+            }
+            #endregion
+
+            #region Search Legend
+            string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
+            if (vehicleSelection.Length > 0 && VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.search)
+                            && vehicleSelection.Contains(VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.search).DatabaseId.ToString())) {
+                html.Append("<TR height=\"7\">");
+                html.Append("<TD></TD>");
+                html.Append("</TR>");
+                html.Append("<TR height=\"1\" class=\"lightPurple\">");
+                html.Append("<TD></TD>");
+                html.Append("</TR>");
+                html.Append("<TR>");
+                html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + ConvertionToHtmlString(GestionWeb.GetWebWord(3012, _webSession.SiteLanguage)) + "</TD>");
+                html.Append("</TR>");
             }
             #endregion
 
