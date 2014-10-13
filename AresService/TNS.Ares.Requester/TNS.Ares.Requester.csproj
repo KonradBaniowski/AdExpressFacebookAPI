@@ -121,6 +121,16 @@
     <Content Include="Configuration\AdExpress\33\PluginConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\AdExpress\353\Database.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\AdExpress\353\PluginAlerteConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\AdExpress\353\PluginConfiguration.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\AdExpress\420\Database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -11,6 +11,14 @@
       <moduleDescription description="AdExpress Ares Garbage For Alertes" moduleId="11"/>
     </lsClientConfiguration>
   </aresConfigurations>
+  <!-- Config IR (353)-->
+  <!--<aresConfigurations>
+    <lsClientConfiguration name="AdExpress" directoryName="AdExpress\353" familyId="161" familyName="AdExpress IR Requester Treatment service" monitorPort="50239" productName="AdExpress Request treatment service">
+      <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
+      <moduleDescription description="Task AdExpress Ares Requester in error" moduleId="2"/>
+      <moduleDescription description="AdExpress Ares Garbage For StaticNavSession" moduleId="10"/>
+    </lsClientConfiguration>
+  </aresConfigurations>-->
     <!--<lsClientConfiguration name="EasyMusic" directoryName="EasyMusic\33" familyId="124" familyName="Kantarmusic FR Requester Treatment service" monitorPort="30241" productName="EasyMusic Request treatment service">
       <moduleDescription description="EasyMusic Ares Requester" moduleId="0"/>
       <moduleDescription description="Task EasyMusic Ares Requester in error" moduleId="2"/>
