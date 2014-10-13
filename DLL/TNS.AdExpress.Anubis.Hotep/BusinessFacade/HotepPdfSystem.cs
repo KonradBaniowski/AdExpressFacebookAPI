@@ -61,6 +61,7 @@ using TNS.FrameWork.WebTheme;
 using System.Net.Mail;
 using TNS.AdExpressI.Date.DAL;
 using TNS.AdExpress.Domain.Units;
+using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
@@ -165,7 +166,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
                 bool evolution = true;
                 VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia)
+                if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia && WebApplicationParameters.HidePlurimediaEvol)
                     evolution = false;
 
 				#region Session Parameters
@@ -604,6 +605,21 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				}
 				#endregion
 
+                #region Search Legend
+                string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                if (vehicleSelection.Length > 0 && VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.search)
+                                && vehicleSelection.Contains(VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.search).DatabaseId.ToString())) {
+                    html.Append("<TR height=\"7\">");
+                    html.Append("<TD></TD>");
+                    html.Append("</TR>");
+                    html.Append("<TR height=\"1\" class=\"lightPurple\">");
+                    html.Append("<TD></TD>");
+                    html.Append("</TR>");
+                    html.Append("<TR>");
+                    html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(3012, _webSession.SiteLanguage)) + "</TD>");
+                    html.Append("</TR>");
+                }
+                #endregion
 
 				html.Append("</TABLE>");
 

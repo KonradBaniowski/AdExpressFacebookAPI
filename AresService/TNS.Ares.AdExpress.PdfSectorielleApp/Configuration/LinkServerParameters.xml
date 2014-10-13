@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<servers selectedServerId="3">
+<servers selectedServerId="1">
   <smtp host="frmitch-msprod" from="tnsadexpress@tnsmi.fr" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>
   <!--Finland-->
   <!--<smtp host="tsespmgw001.tnsad.com" from="tnsadexpress@tnsmi.fr" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>-->
