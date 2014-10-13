@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Constantes.cs" />
     <Compile Include="DataBaseInformation.cs" />
+    <Compile Include="DataLoader\UnencryptedSlotsDL.cs" />
     <Compile Include="DataModel\ClassificationLevel.cs" />
     <Compile Include="DataModel\ClassificationLevelItem.cs" />
     <Compile Include="FilterInformation.cs" />
@@ -60,10 +61,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TopDiffusionInformation.cs" />
     <Compile Include="TopDiffusionManagement.cs" />
+    <Compile Include="UnencryptedSlot.cs" />
     <Compile Include="XmlLoader\DataBaseInformationXL.cs" />
     <Compile Include="XmlLoader\FilterInformationsXL.cs" />
     <Compile Include="XmlLoader\MediaInformationsXL.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

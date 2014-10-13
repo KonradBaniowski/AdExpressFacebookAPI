@@ -75,7 +75,8 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
                 foreach (MediaInformation mediaInformation in mediaInformations) {
                     //mediaInformation.SetTopDiffusionByDays(AdVolumeCheckerDAL.GetData(connectionString, mediaInformation.Id, startDate, endDate, versionList, advertiserList, productList, isIn));
                     mediaInformation.SetTopDiffusionDetailByDays(AdVolumeCheckerDAL.GetDataByTopDiffusion(connectionString, mediaInformation.Id, startDate, endDate, versionList, advertiserList, productList, isIn),
-                                                                 AdVolumeCheckerDAL.GetPreviousLastTopDiffusionData(connectionString, mediaInformation.Id, startDate, endDate, versionList, advertiserList, productList, isIn));
+                                                                 AdVolumeCheckerDAL.GetPreviousLastTopDiffusionData(connectionString, mediaInformation.Id, startDate, endDate, versionList, advertiserList, productList, isIn)
+                                                                 , startDate, endDate);
                     lineIndex = AddWorkSheet(mediaInformation, worksheet, lineIndex, startDate, endDate);
                     lineIndex += 4;
                 }
@@ -89,7 +90,7 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
 
                 foreach (MediaInformation mediaInformation in mediaInformations) {
                     foreach (string daySlot in mediaInformation.SpotDetails) {
-                        AddDetailWorkSheet(connectionString, mediaInformation.Id, mediaInformation.Label, daySlot, startDate, workbook, versionList, advertiserList, productList, isIn);
+                        AddDetailWorkSheet(connectionString, mediaInformation, mediaInformation.Id, mediaInformation.Label, daySlot, startDate, workbook, versionList, advertiserList, productList, isIn);
                         index++;
                         percentComplete = ((index) / total) * 100;
                         OnMessage(Convert.ToInt16(percentComplete));
@@ -169,6 +170,8 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
                 //int lineIndex = 0;
                 int columnIndex = 0;
                 DateTime date = startDate;
+                bool completeSlot = false;
+                bool uncommpleteSlot = false;
 
                 #region Set Styles
                 //Set Header Style
@@ -377,8 +380,14 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
                     foreach (string day in daysOfWeek) {
 
                         int totalSeconds = (int)mediaInformation.TopDiffusionByDays[day][slot];
-                        if (slot == "MOYENNE")
-                            totalSeconds = totalSeconds / 24;
+                        if (slot == "MOYENNE") {
+                            if (!mediaInformation.EncryptedMedia)
+                                totalSeconds = totalSeconds / 24;
+                            else if (day == "SEMAINE")
+                                totalSeconds = Convert.ToInt32(totalSeconds / GetAverageTotalUnencryptedTime(mediaInformation));
+                            else
+                                totalSeconds = Convert.ToInt32(totalSeconds / GetTotalUnencryptedTime(mediaInformation, day));
+                        }
                         int seconds = totalSeconds % 60;
                         int minutes = totalSeconds / 60;
                         string time = minutes + " min " + seconds + " sec";
@@ -421,6 +430,24 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
                             else
                                 cells[lineIndex, columnIndex].SetStyle(rowStyle2);
                         }
+
+                        if (mediaInformation.EncryptedMedia && slot != "TOTAL" && slot != "MOYENNE" && day != "SEMAINE") {
+                            int verif = CheckCompleteSlot(day, slot, mediaInformation, ref completeSlot, ref uncommpleteSlot);
+
+                            Style style = cells[lineIndex, columnIndex].GetStyle();
+
+                            if (completeSlot) {
+                                style.ForegroundColor = Color.FromArgb(196, 215, 155);
+                                cells[lineIndex, columnIndex].SetStyle(style);
+                            }
+                            else if (uncommpleteSlot) {
+                                style.ForegroundColor = Color.FromArgb(227, 236, 208);
+                                cells[lineIndex, columnIndex].SetStyle(style);
+                            }
+
+                            completeSlot = false; uncommpleteSlot = false;
+                        }
+
                         columnIndex++;
                     }
 
@@ -442,7 +469,7 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
         #endregion
 
         #region Add Detail Work Sheet
-        private static void AddDetailWorkSheet(string connectionString, Int64 mediaId, string mediaLabel, string daySlot, DateTime date, Workbook workbook, string versionList, string advertiserList, string productList, bool isIn) {
+        private static void AddDetailWorkSheet(string connectionString, MediaInformation mediaInformations, Int64 mediaId, string mediaLabel, string daySlot, DateTime date, Workbook workbook, string versionList, string advertiserList, string productList, bool isIn) {
 
             try {
                 string worksheetName = mediaLabel.Replace(" ", string.Empty).Replace("+", string.Empty) + "_" + daySlot.Replace(" ", string.Empty).Replace("-", "_");
@@ -580,109 +607,117 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
                 #region Init Rows
                 foreach (DataRow row in ds.Tables[0].Rows) {
 
-                    columnIndex = 0;
+                    TopDiffusionManagement topDiffusion = new TopDiffusionManagement(int.Parse(row["TOP_DIFFUSION"].ToString()), int.Parse(row["duration"].ToString()), day, slot);
+                    int duration = Convert.ToInt32(row["duration"].ToString());
 
-                    cells[lineIndex, columnIndex].PutValue(GetTopDiffuionFormat(row["top_diffusion"].ToString()));
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                    //if (!mediaInformations.EncryptedMedia || (mediaInformations.EncryptedMedia && mediaInformations.CheckTopDiffusionInUnencryptedSlot(day, topDiffusion.TopDiffusionTimeSpan, ref duration))) {
 
-                    cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["associated_file"].ToString()));
-                    worksheet.Hyperlinks.Add(lineIndex, columnIndex, 1, 1, "http://www.tnsadexpress.com/Public/CreativeView.aspx?creation=" + row["associated_file"].ToString());
+                        columnIndex = 0;
 
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(GetTopDiffuionFormat(row["top_diffusion"].ToString()));
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(GetDateFormat(row["date_media_num"].ToString()));
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["associated_file"].ToString()));
+                        worksheet.Hyperlinks.Add(lineIndex, columnIndex, 1, 1, "http://www.tnsadexpress.com/Public/CreativeView.aspx?creation=" + row["associated_file"].ToString());
 
-                    cells[lineIndex, columnIndex].PutValue(row["advertiser"].ToString());
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(row["advertising_agency"].ToString());
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(GetDateFormat(row["date_media_num"].ToString()));
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(row["media"].ToString());
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(row["advertiser"].ToString());
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(row["product"].ToString());
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(row["advertising_agency"].ToString());
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(row["sector"].ToString());
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(row["media"].ToString());
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(row["group_"].ToString());
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(row["product"].ToString());
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(GetDurationFormat(row["duration"].ToString()));
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(row["sector"].ToString());
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["id_commercial_break"].ToString()));
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(row["group_"].ToString());
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["id_rank"].ToString()));
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        //cells[lineIndex, columnIndex].PutValue(GetDurationFormat(duration.ToString()));
+                        cells[lineIndex, columnIndex].PutValue(GetDurationFormat(row["duration"].ToString()));
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(GetDurationFormat(row["duration_commercial_break"].ToString()));
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["id_commercial_break"].ToString()));
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["number_message_commercial_brea"].ToString()));
-                    if (lineIndex % 2 == 0)
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle1);
-                    else
-                        cells[lineIndex, columnIndex].SetStyle(rowStyle2);
-                    columnIndex++;
+                        cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["id_rank"].ToString()));
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
 
-                    lineIndex++;
+                        cells[lineIndex, columnIndex].PutValue(GetDurationFormat(row["duration_commercial_break"].ToString()));
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
+
+                        cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["number_message_commercial_brea"].ToString()));
+                        if (lineIndex % 2 == 0)
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle1);
+                        else
+                            cells[lineIndex, columnIndex].SetStyle(rowStyle2);
+                        columnIndex++;
+
+                        lineIndex++;
+
+                    //}
 
                 }
 
@@ -903,6 +938,131 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
             }
 
             return ds;
+        }
+        #endregion
+
+        #region Get Total Unencrypted Time
+        /// <summary>
+        /// Get Total Unencrypted Time
+        /// </summary>
+        /// <param name="mediaInformation">Media Information</param>
+        /// <param name="day">Day</param>
+        /// <returns>Total Unencrypted Time</returns>
+        private static double GetTotalUnencryptedTime(MediaInformation mediaInformation, string day) {
+
+            double totalTime = 0;
+
+            foreach (UnencryptedSlot slot in mediaInformation.UnencryptedSlots[day]) {
+
+                TimeSpan start = new TimeSpan(slot.SlotStart.Hour, slot.SlotStart.Minute, slot.SlotStart.Second);
+                TimeSpan end = new TimeSpan(slot.SlotEnd.Hour, slot.SlotEnd.Minute, slot.SlotEnd.Second);
+                
+                totalTime += (end - start).TotalHours;
+
+            }
+
+            return totalTime;
+
+        }
+        #endregion
+
+        #region Get Average Total Unencrypted Time
+        /// <summary>
+        /// Get Average Total Unencrypted Time
+        /// </summary>
+        /// <param name="mediaInformation">Media Information</param>
+        /// <param name="day">Day</param>
+        /// <returns>Total Unencrypted Time</returns>
+        private static double GetAverageTotalUnencryptedTime(MediaInformation mediaInformation) {
+
+            double totalTime = 0;
+            List<string> daysOfWeek = new List<string>(new string[] { "LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI", "DIMANCHE" });
+
+            foreach (string day in daysOfWeek) {
+                foreach (UnencryptedSlot slot in mediaInformation.UnencryptedSlots[day]) {
+
+                    TimeSpan start = new TimeSpan(slot.SlotStart.Hour, slot.SlotStart.Minute, slot.SlotStart.Second);
+                    TimeSpan end = new TimeSpan(slot.SlotEnd.Hour, slot.SlotEnd.Minute, slot.SlotEnd.Second);
+
+                    totalTime += (end - start).TotalHours;
+
+                }
+            }
+
+            return totalTime / 7;
+
+        }
+        #endregion
+
+        #region Check Complete Slot
+        private static int CheckCompleteSlot(string day, string slot, MediaInformation mediaInformation, ref bool completeSlot, ref bool uncommpleteSlot) {
+
+            TimeSpan slotStart = GetTopDiffusionTimeSpan(slot);
+            TimeSpan slotDuration = new TimeSpan(0, 59, 59);
+            TimeSpan slotEnd = slotStart + slotDuration;
+
+
+            foreach (UnencryptedSlot unencryptedSlot in mediaInformation.UnencryptedSlots[day]) {
+
+                TimeSpan start = new TimeSpan(unencryptedSlot.SlotStart.Hour, unencryptedSlot.SlotStart.Minute, unencryptedSlot.SlotStart.Second);
+                TimeSpan end = new TimeSpan(unencryptedSlot.SlotEnd.Hour, unencryptedSlot.SlotEnd.Minute, unencryptedSlot.SlotEnd.Second);
+
+                if (slotStart >= start && slotEnd <= end) {
+                    completeSlot = true;
+                    uncommpleteSlot = false;
+                    return 1;
+                }
+                else if ((start > slotStart && start < slotEnd) || (end > slotStart && end < slotEnd)) {
+                    completeSlot = false;
+                    uncommpleteSlot = true;
+                    return 1;
+                }
+
+            }
+
+            completeSlot = false;
+            uncommpleteSlot = false;
+
+            return 0;
+        }
+        #endregion
+
+        #region Get Top Diffusion Time Span
+        /// <summary>
+        /// Get Top Diffusion Time Span
+        /// </summary>
+        /// <param name="slot">Slot</param>
+        /// <returns>Top Diffusion time Span</returns>
+        private static TimeSpan GetTopDiffusionTimeSpan(string slot) {
+
+            switch (slot) {
+                case "03H - 04H": return new TimeSpan(3, 0, 0);
+                case "04H - 05H": return new TimeSpan(4, 0, 0);
+                case "05H - 06H": return new TimeSpan(5, 0, 0);
+                case "06H - 07H": return new TimeSpan(6, 0, 0);
+                case "07H - 08H": return new TimeSpan(7, 0, 0);
+                case "08H - 09H": return new TimeSpan(8, 0, 0);
+                case "09H - 10H": return new TimeSpan(9, 0, 0);
+                case "10H - 11H": return new TimeSpan(10, 0, 0);
+                case "11H - 12H": return new TimeSpan(11, 0, 0);
+                case "12H - 13H": return new TimeSpan(12, 0, 0);
+                case "13H - 14H": return new TimeSpan(13, 0, 0);
+                case "14H - 15H": return new TimeSpan(14, 0, 0);
+                case "15H - 16H": return new TimeSpan(15, 0, 0);
+                case "16H - 17H": return new TimeSpan(16, 0, 0);
+                case "17H - 18H": return new TimeSpan(17, 0, 0);
+                case "18H - 19H": return new TimeSpan(18, 0, 0);
+                case "19H - 20H": return new TimeSpan(19, 0, 0);
+                case "20H - 21H": return new TimeSpan(20, 0, 0);
+                case "21H - 22H": return new TimeSpan(21, 0, 0);
+                case "22H - 23H": return new TimeSpan(22, 0, 0);
+                case "23H - 24H": return new TimeSpan(23, 0, 0);
+                case "24H - 01H": return new TimeSpan(24, 0, 0);
+                case "01H - 02H": return new TimeSpan(1, 0, 0);
+                case "02H - 03H": return new TimeSpan(2, 0, 0);
+                default: return new TimeSpan(0, 0, 0);
+            }
+
         }
         #endregion
 

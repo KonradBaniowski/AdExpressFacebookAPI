@@ -63,6 +63,9 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
         public bool Exceeding {
             get { return (_exceeding); }
         }
+        public TimeSpan TopDiffusionTimeSpan {
+            get { return new TimeSpan(_hours, _minutes, _seconds); }
+        }
         #endregion
 
         #region Contructor
@@ -107,7 +110,7 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
 
             if (!_midnightCase && result > _upperBound) {
                 _exceeding = true;
-                return (_upperBound - topDiffusionTime).Seconds;
+                return Convert.ToInt32((_upperBound - topDiffusionTime).TotalSeconds);
             }
             else
                 return _duration;
@@ -129,7 +132,7 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
             TimeSpan durationTime = new TimeSpan(0, minutes, seconds);
             TimeSpan result = topdiffusionTime + durationTime;
             
-            _exceedingDuration = (result - _upperBound).Seconds;
+            _exceedingDuration = Convert.ToInt32((result - _upperBound).TotalSeconds);
 
             return _exceedingDuration;
         }

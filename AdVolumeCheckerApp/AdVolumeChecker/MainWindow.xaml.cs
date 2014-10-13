@@ -72,6 +72,7 @@ namespace AdVolumeChecker {
 
             DateTime startDate;
             DateTime endDate;
+            DateTime startPeriodDate = new DateTime(2013, 12, 30);
             string configurationPathDirecory = AppDomain.CurrentDomain.BaseDirectory + Constantes.Application.APPLICATION_CONFIGURATION_DIRECTORY + @"\";
             DataBaseInformation.Init((new XmlReaderDataSource(configurationPathDirecory + Constantes.Application.DATABASE_CONFIGURATION_FILE)));
             FilterInformations.Init((new XmlReaderDataSource(configurationPathDirecory + Constantes.Application.FILTER_CONFIGURATION_FILE)));
@@ -90,7 +91,8 @@ namespace AdVolumeChecker {
             startDate = DateTime.Now.AddDays(-7).StartOfWeek(DayOfWeek.Monday);
             endDate = startDate.AddDays(6);
 
-            for (int i = 0; i < 7; i++) {
+            //for (int i = 0; i < 7; i++) {
+            while (startDate >= startPeriodDate) {
                 periodList.Items.Add("Du " + startDate.ToString("dd/MM/yyyy") + " au " + endDate.ToString("dd/MM/yyyy"));
                 startDate = startDate.AddDays(-7);
                 endDate = startDate.AddDays(6);

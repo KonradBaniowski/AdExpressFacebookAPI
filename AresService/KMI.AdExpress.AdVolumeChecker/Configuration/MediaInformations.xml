@@ -3,7 +3,7 @@
   <media id="3110"  name="TF1"      durationLimit="720" averageDurationLimit="540"/>
   <media id="3120"  name="FRANCE 2" durationLimit="480" averageDurationLimit="360"/>
   <media id="3130"  name="FRANCE 3" durationLimit="480" averageDurationLimit="360"/>
-  <media id="3140"  name="CANAL +"  durationLimit="720" averageDurationLimit="540"/>
+  <media id="3140"  name="CANAL +"  durationLimit="720" averageDurationLimit="540" encryptedMedia="true" unencryptedSlotsFilePath="\\frmitch-fs04\Donnees\CanalCSA"/>
   <media id="3190"  name="FRANCE 5" durationLimit="480" averageDurationLimit="360"/>
   <media id="3161"  name="M6"       durationLimit="720" averageDurationLimit="540"/>
   <media id="3129"  name="FRANCE 4" durationLimit="480" averageDurationLimit="360"/>

@@ -452,7 +452,7 @@ namespace KMI.AdExpress.AdVolumeChecker.DAL {
                 sql.Append("            WHEN TOP_DIFFUSION  between 010000 AND 015959   THEN '01H - 02H'  ");
                 sql.Append("            WHEN TOP_DIFFUSION  between 020000 AND 025959   THEN '02H - 03H'  ");
                 sql.Append("            END) TRANCHE_HORAIRE, to_char( to_date(date_media_num,'yyyymmdd'),'DAY') JOUR ");
-                sql.Append(" from adexpr03.data_tv_4M wp, adexpr03.advertising_agency adva, adexpr03.advertiser ad, adexpr03.media md, adexpr03.product pr, adexpr03.sector sc, adexpr03.group_ gr ");
+                sql.Append(" from adexpr03.data_tv wp, adexpr03.advertising_agency adva, adexpr03.advertiser ad, adexpr03.media md, adexpr03.product pr, adexpr03.sector sc, adexpr03.group_ gr ");
                 sql.AppendFormat(" Where  wp.id_media={0}  ", mediaId);
                 if (slot.Equals("03H - 04H") || slot.Equals("04H - 05H") || slot.Equals("05H - 06H"))
                     sql.AppendFormat(" and wp.date_media_num={0} ", date.AddDays(-1).ToString("yyyyMMdd"));

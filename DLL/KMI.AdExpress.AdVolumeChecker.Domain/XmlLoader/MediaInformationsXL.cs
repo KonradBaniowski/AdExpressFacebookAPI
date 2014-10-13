@@ -25,6 +25,8 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain.XmlLoader {
             string label = string.Empty;
             Int64 durationLimit = -1;
             Int64 averageDurationLimit = -1;
+            bool encryptedMedia = false;
+            string unencryptedSlotsFilePath = string.Empty;
             #endregion
 
             XmlTextReader reader = (XmlTextReader)source.GetSource();
@@ -33,6 +35,8 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain.XmlLoader {
                     if (reader.NodeType == XmlNodeType.Element) {
                         switch (reader.LocalName) {
                             case "media":
+                                encryptedMedia = false;
+                                unencryptedSlotsFilePath = string.Empty;
                                 if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid media id parameter"));
                                 id = Int64.Parse(reader.GetAttribute("id"));
                                 if (reader.GetAttribute("name") == null || reader.GetAttribute("name").Length == 0) throw (new InvalidXmlValueException("Invalid media name parameter"));
@@ -41,7 +45,11 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain.XmlLoader {
                                 durationLimit = Int64.Parse(reader.GetAttribute("durationLimit"));
                                 if (reader.GetAttribute("averageDurationLimit") == null || reader.GetAttribute("averageDurationLimit").Length == 0) throw (new InvalidXmlValueException("Invalid average duration Limit parameter"));
                                 averageDurationLimit = Int64.Parse(reader.GetAttribute("averageDurationLimit"));
-                                mediaInformationList.Add(new MediaInformation(id, label, durationLimit, averageDurationLimit));
+                                if (reader.GetAttribute("encryptedMedia") != null && reader.GetAttribute("encryptedMedia").Length > 0)
+                                    encryptedMedia = Convert.ToBoolean(reader.GetAttribute("encryptedMedia"));
+                                if (reader.GetAttribute("unencryptedSlotsFilePath") != null && reader.GetAttribute("unencryptedSlotsFilePath").Length > 0)
+                                    unencryptedSlotsFilePath = reader.GetAttribute("unencryptedSlotsFilePath");
+                                mediaInformationList.Add(new MediaInformation(id, label, durationLimit, averageDurationLimit, encryptedMedia, unencryptedSlotsFilePath));
                                 break;
                         }
                     }

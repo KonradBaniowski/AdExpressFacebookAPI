@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using KMI.AdExpress.AdVolumeChecker.Domain.DataLoader;
 
 namespace KMI.AdExpress.AdVolumeChecker.Domain {
     /// <summary>
@@ -35,6 +36,18 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
         /// Average Duration Limit
         /// </summary>
         private Int64 _averageDurationLimit;
+        /// <summary>
+        /// Encrypted Media
+        /// </summary>
+        private bool _encryptedMedia = false;
+        /// <summary>
+        /// Unencrypted Slots File Path
+        /// </summary>
+        private string _unencryptedSlotsFilePath = string.Empty;
+        /// <summary>
+        /// Unencrypted Slots
+        /// </summary>
+        private Dictionary<string, List<UnencryptedSlot>> _unencryptedSlots = null;
         #endregion
 
         #region Constructor
@@ -43,11 +56,17 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
         /// </summary>
         /// <param name="id">Media id</param>
         /// <param name="label">Media label</param>
-        public MediaInformation(Int64 id, string label, Int64 durationLimit, Int64 averageDurationLimit) {
+        /// <param name="durationLimit">Duration Limit</param>
+        /// <param name="averageDurationLimit">Average Duration Limit</param>
+        /// <param name="encryptedMedia">Encrypted Media</param>
+        /// <param name="unencryptedSlotsFilePath">Unencrypted Slots File Path</param>
+        public MediaInformation(Int64 id, string label, Int64 durationLimit, Int64 averageDurationLimit, bool encryptedMedia, string unencryptedSlotsFilePath) {
             _id = id;
             _label = label;
             _durationLimit = durationLimit;
             _averageDurationLimit = averageDurationLimit;
+            _encryptedMedia = encryptedMedia;
+            _unencryptedSlotsFilePath = unencryptedSlotsFilePath;
             InitTopDiffusionByDays();
         }
         #endregion
@@ -88,6 +107,22 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
         /// </summary>
         public List<string> SpotDetails {
             get { return (_spotDetails); }
+        }
+        /// <summary>
+        /// Get Unencrypted Slots
+        /// </summary>
+        public Dictionary<string, List<UnencryptedSlot>> UnencryptedSlots {
+            get { return (_unencryptedSlots); }
+        }
+        /// <summary>
+        /// Get Encrypted Media
+        /// </summary>
+        public bool EncryptedMedia {
+            get {
+                if (_unencryptedSlots == null)
+                    return false;
+                return (_encryptedMedia); 
+            }
         }
         #endregion
 
@@ -151,11 +186,14 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
         /// Set Top Diffusion Detail By Days
         /// </summary>
         /// <param name="ds">DataSet</param>
-        public void SetTopDiffusionDetailByDays(DataSet ds, DataSet dsPreviousLastTopDiffusion) {
+        public void SetTopDiffusionDetailByDays(DataSet ds, DataSet dsPreviousLastTopDiffusion, DateTime startDate, DateTime endDate) {
 
             string day = string.Empty;
             string slot = string.Empty;
-            Int64 duration;
+            int duration;
+
+            if (_encryptedMedia)
+                _unencryptedSlots = UnencryptedSlotsDL.Load(_unencryptedSlotsFilePath, startDate, endDate);
 
             if (dsPreviousLastTopDiffusion != null && dsPreviousLastTopDiffusion.Tables.Count > 0 && dsPreviousLastTopDiffusion.Tables[0] != null && dsPreviousLastTopDiffusion.Tables[0].Rows.Count > 0) {
 
@@ -170,7 +208,7 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
                     day = "LUNDI";
                     slot = "03H - 04H";
                     duration = topDiffusion.GetExceedingDuration();
-                    SetTopDiffusionByDays(day, slot, duration);
+                    SetTopDiffusionByDays(day, slot, duration, GetTopDiffusionTimeSpan(slot));
                 }
             }
 
@@ -184,7 +222,7 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
 
                     duration = topDiffusion.GetDuration();
 
-                    SetTopDiffusionByDays(day, slot, duration);
+                    SetTopDiffusionByDays(day, slot, duration, topDiffusion.TopDiffusionTimeSpan);
 
                     if (topDiffusion.Exceeding) {
 
@@ -195,7 +233,7 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
 
                             duration = topDiffusion.GetExceedingDuration();
 
-                            SetTopDiffusionByDays(day, slot, duration);
+                            SetTopDiffusionByDays(day, slot, duration, GetTopDiffusionTimeSpan(slot));
                         }
 
                     }
@@ -212,19 +250,101 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
         /// <param name="day">Day</param>
         /// <param name="slot">Slot</param>
         /// <param name="duration">Duration</param>
-        private void SetTopDiffusionByDays(string day, string slot, Int64 duration) {
+        private void SetTopDiffusionByDays(string day, string slot, int duration, TimeSpan topDiffusion) {
 
-            _topDiffusionByDays[day][slot] += duration;
-            _topDiffusionByDays["SEMAINE"][slot] += duration;
-            _topDiffusionByDays[day]["TOTAL"] += duration;
-            _topDiffusionByDays["SEMAINE"]["TOTAL"] += duration;
-            _topDiffusionByDays[day]["MOYENNE"] += duration;
-            _topDiffusionByDays["SEMAINE"]["MOYENNE"] += duration;
+            //if (!EncryptedMedia || (EncryptedMedia && CheckTopDiffusionInUnencryptedSlot(day, topDiffusion, ref duration))) {
+                _topDiffusionByDays[day][slot] += duration;
+                _topDiffusionByDays["SEMAINE"][slot] += duration;
+                _topDiffusionByDays[day]["TOTAL"] += duration;
+                _topDiffusionByDays["SEMAINE"]["TOTAL"] += duration;
+                _topDiffusionByDays[day]["MOYENNE"] += duration;
+                _topDiffusionByDays["SEMAINE"]["MOYENNE"] += duration;
 
-            if (_topDiffusionByDays[day][slot] > _durationLimit)
-                if (!_spotDetails.Contains(day + "_" + slot))
-                    _spotDetails.Add(day + "_" + slot);
-        
+                if (_topDiffusionByDays[day][slot] > _durationLimit)
+                    if (!_spotDetails.Contains(day + "_" + slot))
+                        _spotDetails.Add(day + "_" + slot);
+            //}
+
+        }
+        #endregion
+
+        #region Get Top Diffusion Time Span
+        /// <summary>
+        /// Get Top Diffusion Time Span
+        /// </summary>
+        /// <param name="slot">Slot</param>
+        /// <returns>Top Diffusion time Span</returns>
+        private TimeSpan GetTopDiffusionTimeSpan(string slot) {
+
+            switch (slot) {
+                case "03H - 04H": return new TimeSpan(3, 0, 0);
+                case "04H - 05H": return new TimeSpan(4, 0, 0);
+                case "05H - 06H": return new TimeSpan(5, 0, 0);
+                case "06H - 07H": return new TimeSpan(6, 0, 0);
+                case "07H - 08H": return new TimeSpan(7, 0, 0);
+                case "08H - 09H": return new TimeSpan(8, 0, 0);
+                case "09H - 10H": return new TimeSpan(9, 0, 0);
+                case "10H - 11H": return new TimeSpan(10, 0, 0);
+                case "11H - 12H": return new TimeSpan(11, 0, 0);
+                case "12H - 13H": return new TimeSpan(12, 0, 0);
+                case "13H - 14H": return new TimeSpan(13, 0, 0);
+                case "14H - 15H": return new TimeSpan(14, 0, 0);
+                case "15H - 16H": return new TimeSpan(15, 0, 0);
+                case "16H - 17H": return new TimeSpan(16, 0, 0);
+                case "17H - 18H": return new TimeSpan(17, 0, 0);
+                case "18H - 19H": return new TimeSpan(18, 0, 0);
+                case "19H - 20H": return new TimeSpan(19, 0, 0);
+                case "20H - 21H": return new TimeSpan(20, 0, 0);
+                case "21H - 22H": return new TimeSpan(21, 0, 0);
+                case "22H - 23H": return new TimeSpan(22, 0, 0);
+                case "23H - 24H": return new TimeSpan(23, 0, 0);
+                case "24H - 01H": return new TimeSpan(24, 0, 0);
+                case "01H - 02H": return new TimeSpan(1, 0, 0);
+                case "02H - 03H": return new TimeSpan(2, 0, 0);
+                default: return new TimeSpan(0, 0, 0);
+            }
+
+        }
+        #endregion
+
+        #region Check Top diffusion in Unencrypted Slot
+        /// <summary>
+        /// Check Top diffusion in Unencrypted Slot
+        /// </summary>
+        /// <param name="day">Day</param>
+        /// <param name="topDiffusion">Top Diffusion</param>
+        /// <returns></returns>
+        public bool CheckTopDiffusionInUnencryptedSlot(string day, TimeSpan topDiffusion, ref int duration) {
+
+            foreach (UnencryptedSlot slot in _unencryptedSlots[day]) {
+
+                TimeSpan start = new TimeSpan(slot.SlotStart.Hour, slot.SlotStart.Minute, slot.SlotStart.Second);
+                TimeSpan end = new TimeSpan(slot.SlotEnd.Hour, slot.SlotEnd.Minute, slot.SlotEnd.Second);
+                int totalSeconds = duration;
+                int seconds = totalSeconds % 60;
+                int minutes = totalSeconds / 60;
+                TimeSpan durationTime = new TimeSpan(0, minutes, seconds);
+                TimeSpan topDiffusionAfterDuration = topDiffusion + durationTime;
+
+                if (topDiffusion >= start && topDiffusion <= end && topDiffusionAfterDuration >= start && topDiffusionAfterDuration <= end) {
+                    return true;
+                }
+                else if (topDiffusion < start && topDiffusionAfterDuration > start && topDiffusionAfterDuration <= end) {
+                    duration = (topDiffusionAfterDuration - start).Seconds;
+                    return true;
+                }
+                else if (topDiffusion >= start && topDiffusion <= end && topDiffusionAfterDuration > end) {
+                    duration = (end - topDiffusion).Seconds;
+                    return true;
+                }
+                else if (topDiffusion < start && topDiffusionAfterDuration > end) {
+                    duration = (end - start).Seconds;
+                    return true;
+                }
+
+            }
+
+            return false;
         }
         #endregion
 
