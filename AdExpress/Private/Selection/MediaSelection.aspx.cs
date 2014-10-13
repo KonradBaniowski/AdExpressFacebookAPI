@@ -7,30 +7,15 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
 using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Windows.Forms;
-using Oracle.DataAccess.Client;
-using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Controls.Selections;
 using TNS.AdExpress.Web.Core.Sessions;
 using constEvent = TNS.AdExpress.Constantes.FrameWork.Selection;
-using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
-using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
-using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 
@@ -160,7 +145,14 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try {
-
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
                 #region VehicleInformation
                 VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
                 #endregion

@@ -294,6 +294,16 @@ namespace AdExpress.Private.Selection{
 		protected void Page_Load(object sender, System.EventArgs e){
 		
 			try{
+
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
+
                 TNS.FrameWork.DB.Common.IDataSource dataSource = _webSession.CustomerDataFilters.DataSource;
 
 				#region Variables

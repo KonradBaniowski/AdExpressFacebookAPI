@@ -4,30 +4,11 @@
 // Date de modification: 
 #endregion
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using Oracle.DataAccess.Client;
-using System.Globalization;
-
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Constantes.Customer;
-using AdExpressWebControles=TNS.AdExpress.Web.Controls;
 using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
-using TNS.AdExpress.Domain.Web.Navigation;
 using DateDll = TNS.FrameWork.Date;
 using AdExpressException=AdExpress.Exceptions;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.Selection
@@ -137,18 +118,23 @@ namespace AdExpress.Private.Selection
 		{
 			try{
 
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
+
 				#region Option de période sélectionnée
 				if(Request.Form.GetValues("selectedItemIndex")!=null)selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
 				#endregion															
 
 				#region Textes et langage du site
-				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
+				
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
-				//InformationWebControl1.Language = _webSession.SiteLanguage;
-				//validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				//validateButton1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
-				//validateButton2.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				//validateButton2.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+			
 				previousMonth = GestionWeb.GetWebWord(788,_webSession.SiteLanguage);
 				previousWeek = GestionWeb.GetWebWord(789,_webSession.SiteLanguage);
 				previousYear = GestionWeb.GetWebWord(787,_webSession.SiteLanguage);
@@ -156,9 +142,7 @@ namespace AdExpress.Private.Selection
 				// Gestion des Calendrier
 				this.dayCalendarBeginWebControl.Language=_webSession.SiteLanguage;
 				this.dayCalendarEndWebControl.Language=_webSession.SiteLanguage;
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
+               
 
 
 				#endregion				

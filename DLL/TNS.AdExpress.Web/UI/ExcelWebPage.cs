@@ -1662,7 +1662,7 @@ namespace TNS.AdExpress.Web.UI
             
             TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
-            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, null, null, null, null);
+            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, null, null, null);
 
             if (creativesUtilities.IsSloganZoom(webSession.SloganIdZoom))
             {
@@ -2038,7 +2038,7 @@ namespace TNS.AdExpress.Web.UI
                 object[] param = new object[2];
                 param[0] = webSession.CustomerDataFilters.DataSource;
                 param[1] = webSession.DataLanguage;
-                TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, idVehicle.ToString());
 
 				//AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(),webSession.DataLanguage,webSession.CustomerDataFilters.DataSource);

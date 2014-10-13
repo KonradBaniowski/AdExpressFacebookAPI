@@ -98,6 +98,15 @@ namespace AdExpress.Private.Selection
         {
             try
             {
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
+
                 _displayButtonComparative = WebApplicationParameters.UseComparativeLostWon
                     && !string.IsNullOrEmpty(this._currentModule.GetSubSectionURL(COMPARAISON_CALENDAR_FORM_ID, Page.Request.Url.AbsolutePath, true));
 

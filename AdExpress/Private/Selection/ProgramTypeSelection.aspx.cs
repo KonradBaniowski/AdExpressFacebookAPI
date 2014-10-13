@@ -16,6 +16,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Translation;
@@ -153,6 +154,15 @@ namespace AdExpress.Private.Selection
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try {
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
+
 				sessionId=_webSession.IdSession;
 				
 				#region Flash pour patienter

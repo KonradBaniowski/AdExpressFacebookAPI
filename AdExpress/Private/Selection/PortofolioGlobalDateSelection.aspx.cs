@@ -5,36 +5,14 @@
 #endregion
 
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
 using System.Collections.Generic;
-
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using Oracle.DataAccess.Client;
-using System.Globalization;
 using System.Reflection;
 
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Constantes.Customer;
-using AdExpressWebControles = TNS.AdExpress.Web.Controls;
-using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
-using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.AdExpress.Domain.Web.Navigation;
-using DateDll = TNS.FrameWork.Date;
 using AdExpressException = AdExpress.Exceptions;
-using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
-using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
-using TNS.FrameWork.Date;
-
 using Portofolio = TNS.AdExpressI.Portofolio;
 using Domain = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
@@ -84,6 +62,14 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 	/// <param name="e">Argument</param>
 	protected void Page_Load(object sender, System.EventArgs e) {
 		try {
+            #region Test Cedexis
+            //Test Cedexis
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+            !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+            }
+            #endregion
 
 			#region Option de période sélectionnée
 			if (Request.Form.GetValues("selectedItemIndex") != null) selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);

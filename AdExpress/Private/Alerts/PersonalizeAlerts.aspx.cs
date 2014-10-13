@@ -11,35 +11,14 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.DataAccess;
-using Oracle.DataAccess.Client;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
-using TNS.AdExpress.Web.DataAccess.MyAdExpress;
 using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
-using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Utilities;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using WebModule=TNS.AdExpress.Constantes.Web.Module;
-using WebRules=TNS.AdExpress.Web.Rules;
-using WebFunctions=TNS.AdExpress.Web.Functions;
-using DBConstantes=TNS.AdExpress.Constantes.DB;
-using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
-using TNS.Ares.Alerts;
 using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using System.Reflection;
@@ -163,6 +142,15 @@ namespace AdExpress.Private.Alerts{
 		protected void Page_Load(object sender, System.EventArgs e){		
 			
 			try{
+
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
                 _theme = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 				//Modification de la langue pour les Textes AdExpress                
 			

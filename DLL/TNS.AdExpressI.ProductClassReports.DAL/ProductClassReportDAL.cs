@@ -654,7 +654,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
             object[] param = new object[1];
             param[0] = _session;
-            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
 
             if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
@@ -1202,7 +1202,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                 object[] param = new object[1];
                 param[0] = _session;
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
 
 				if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))

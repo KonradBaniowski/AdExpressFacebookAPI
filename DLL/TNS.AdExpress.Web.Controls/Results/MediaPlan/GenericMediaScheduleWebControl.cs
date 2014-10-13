@@ -414,11 +414,13 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
                 LoadParams(o);
 
-                html=GetHTML(this.CustomerWebSession);
-
+               
+                html= (WebApplicationParameters.CountryCode == Constantes.Web.CountryCode.FRANCE)
+                   ? string.Format("{0}{1}", GetHTML(CustomerWebSession),Web.Functions.Script.CedexisScript()) : GetHTML(CustomerWebSession);
+               
 			}
-			catch(System.Exception err){
-                return (OnAjaxMethodError(err, this.CustomerWebSession));
+			catch(Exception err){
+                return (OnAjaxMethodError(err, CustomerWebSession));
 			}
 			return(html);
         }
@@ -441,7 +443,11 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
                 this.CustomerWebSession.SloganIdZoom = Int64.Parse(versionId);
 
-                html = GetHTML(this.CustomerWebSession);
+                
+                html= (WebApplicationParameters.CountryCode == Constantes.Web.CountryCode.FRANCE)
+                 ? string.Format("{0}{1}", GetHTML(CustomerWebSession), Web.Functions.Script.CedexisScript()) : GetHTML(CustomerWebSession);
+
+                html =  GetHTML(CustomerWebSession);
 
                 this.CustomerWebSession.Save();
 
@@ -471,7 +477,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
                 this.CustomerWebSession.SloganIdZoom = long.MinValue;
 
-                html = GetHTML(this.CustomerWebSession);
+                html = (WebApplicationParameters.CountryCode == Constantes.Web.CountryCode.FRANCE)
+                 ? string.Format("{0}{1}", GetHTML(CustomerWebSession), Web.Functions.Script.CedexisScript()) : GetHTML(CustomerWebSession);
+
 				
                 this.CustomerWebSession.Save();
 			}
@@ -535,6 +543,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// <param name="e">Arguments</param>
         protected override void OnLoad(EventArgs e)
         {
+          
             this.Page.ClientScript.RegisterClientScriptInclude("AjaxScript1","/ajaxpro/prototype.ashx");
             this.Page.ClientScript.RegisterClientScriptInclude("AjaxScript2", "/ajaxpro/core.ashx");
             this.Page.ClientScript.RegisterClientScriptInclude("AjaxScript3", "/ajaxpro/converter.ashx");

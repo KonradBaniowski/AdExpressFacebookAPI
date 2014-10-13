@@ -123,7 +123,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
             if (m.CountryDataAccessLayer == null) throw (new NullReferenceException("Data Access layer is null for the Product Class result"));
             object[] param = new object[1];
             param[0] = webSession;
-            IProductClassReportsDAL productClassLayer = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + m.CountryDataAccessLayer.AssemblyName, m.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            IProductClassReportsDAL productClassLayer = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + m.CountryDataAccessLayer.AssemblyName, m.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             dsListAdvertiser = productClassLayer.GetUniversAdvertisers(ExceptionsList);
 
 

@@ -11,28 +11,11 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Windows.Forms;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web.Navigation;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using WebFunctions = TNS.AdExpress.Web.Functions;
-using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
-using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Controls.Selections;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
-using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
-using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using DALClassif = TNS.AdExpress.DataAccess.Classification;
@@ -120,6 +103,14 @@ namespace AdExpress.Private.Selection{
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
 
                 VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 

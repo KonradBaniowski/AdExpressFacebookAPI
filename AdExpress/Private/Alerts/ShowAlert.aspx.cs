@@ -36,6 +36,15 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
     protected void Page_Init(object sender, EventArgs e)
     {
         try {
+
+            #region Test Cedexis
+            //Test Cedexis
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+            !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+            }
+            #endregion
             int idOccurrence = -1;
             int idAlert = -1;
             string stringIdOccurrence = Request.QueryString["idOcc"];

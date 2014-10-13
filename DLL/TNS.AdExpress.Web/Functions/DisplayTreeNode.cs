@@ -297,7 +297,7 @@ namespace TNS.AdExpress.Web.Functions{
                 object[] param = new object[2];
                 param[0] = source;
                 param[1] = dataLanguage;
-                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 
                 foreach(KeyValuePair<TNS.AdExpress.Constantes.Customer.Right.type,List<long>> kpv in dic){
                     string[] intArrayStr = Array.ConvertAll<long, string>(kpv.Value.ToArray(), new Converter<long, string>(Convert.ToString));
@@ -592,7 +592,7 @@ namespace TNS.AdExpress.Web.Functions{
                 object[] param = new object[2];
                 param[0] = source;
                 param[1] = dataLanguage;
-                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
                 foreach (KeyValuePair<TNS.AdExpress.Constantes.Customer.Right.type, List<long>> kpv in dic)
                 {
@@ -1027,7 +1027,7 @@ namespace TNS.AdExpress.Web.Functions{
                 object[] param = new object[2];
                 param[0] = source;
                 param[1] = dataLanguage;
-                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
                 foreach (KeyValuePair<TNS.AdExpress.Constantes.Customer.Right.type, List<long>> kpv in dic)
                 {

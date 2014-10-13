@@ -18,7 +18,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
-
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -92,6 +92,14 @@ namespace AdExpress.Private.Selection{
 		protected void Page_Load(object sender, System.EventArgs e){	
               try
         {
+            #region Test Cedexis
+            //Test Cedexis
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+            !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+            }
+            #endregion
 			#region Textes et langage du site
 			//Modification de la langue pour les Textes AdExpress
 			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);			

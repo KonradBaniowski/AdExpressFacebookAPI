@@ -37,7 +37,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Products{
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
                 object[] param = new object[1];
                 param[0] = webSession;
-                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 DataSet ds = classficationDAL.GetSectors();
 
 				StringBuilder html = new StringBuilder(2000);
@@ -92,7 +92,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Products{
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
                 object[] param = new object[1];
                 param[0] = webSession;
-                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 DataSet ds = classficationDAL.GetSectors();
 
 				StringBuilder html = new StringBuilder(2000);
@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Products{
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
                 object[] param = new object[1];
                 param[0] = webSession;
-                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 DataSet ds = classficationDAL.GetSectors();
 
                 StringBuilder html = new StringBuilder(2000);

@@ -129,7 +129,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines {
             object[] param = new object[1];
 
             param[0] = _session;
-            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             string periodEnd = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
 			
             int yearN = Convert.ToInt32(_session.PeriodBeginningDate.Substring(0, 4));

@@ -162,7 +162,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
             IVisual visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
                 + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, 
                 WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
 
 
 
@@ -175,7 +175,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
                 visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\"
                     + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, 
                     WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, 
-                    BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                    BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
                 t.Append("<img src='" + visual.GetVirtualPath(_isBlur) + "' border=\"0\" width=470 height=627>");
             }
 

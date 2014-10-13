@@ -93,7 +93,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
             object[] parameters = new object[2];
             parameters[0] = _session;
             parameters[1] = _period;
-            IAdvertisingAgencyDAL advertisingAgencyDAL = (IAdvertisingAgencyDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+            IAdvertisingAgencyDAL advertisingAgencyDAL = (IAdvertisingAgencyDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
             DataSet ds = advertisingAgencyDAL.GetData();
             DataTable dtData = ds.Tables[0];
             if (dtData.Rows.Count <= 0) return null;

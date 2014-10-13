@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Web;
+using System.Web.UI;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
@@ -65,6 +66,14 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
     {
         try
         {
+            #region Test Cedexis
+            //Test Cedexis
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+            !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+            }
+            #endregion
 
             ModuleTitleWebControl1.CustomerWebSession = _webSession;
             InformationWebControl1.Language = _webSession.SiteLanguage;
@@ -77,13 +86,14 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
             //Gestion de la sélection d'un radiobutton dans la liste des univers
             if (!Page.ClientScript.IsClientScriptBlockRegistered("InsertIdMySession4"))
             {
-                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "InsertIdMySession4", TNS.AdExpress.Web.Functions.Script.InsertIdMySession4());
+                Page.ClientScript.RegisterClientScriptBlock(GetType(), "InsertIdMySession4", TNS.AdExpress.Web.Functions.Script.InsertIdMySession4());
             }
             // Ouverture/fermeture des fenêtres pères
             if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent"))
             {
-                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "showHideContent", TNS.AdExpress.Web.Functions.Script.ShowHideContent());
+                Page.ClientScript.RegisterClientScriptBlock(GetType(), "showHideContent", TNS.AdExpress.Web.Functions.Script.ShowHideContent());
             }
+           
             #endregion
 
             #region Evènemment

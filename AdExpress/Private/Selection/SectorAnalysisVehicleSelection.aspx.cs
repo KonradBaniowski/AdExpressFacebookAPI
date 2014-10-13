@@ -90,6 +90,15 @@ namespace AdExpress.Private.Selection
         {
             try
             {
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
+
                 #region Textes et langage du site
                 //Modification de la langue pour les Textes AdExpress
                 ModuleTitleWebControl1.CustomerWebSession = _webSession;

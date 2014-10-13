@@ -331,7 +331,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			parameters[4] = _periodEnd;
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
                 + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
 			return portofolioDAL.GetData();			
 		}
 		#endregion

@@ -41,7 +41,7 @@ namespace TNS.AdExpress.Web.Functions{
             object[] param = new object[2];
             param[0] = webSession.CustomerDataFilters.DataSource;
             param[1] = webSession.DataLanguage;
-            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levels = null;
 
             switch ((DetailLevelItemInformation.Levels)webSession.GenericProductDetailLevel.GetDetailLevelItemInformation(level))

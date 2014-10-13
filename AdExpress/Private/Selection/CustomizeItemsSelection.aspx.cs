@@ -67,6 +67,14 @@ public partial class Private_Selection_CustomizeItemsSelection : TNS.AdExpress.W
     /// <param name="e">Arguments</param>
     protected void Page_Load(object sender, EventArgs e)
     {
+        #region Test Cedexis
+        //Test Cedexis
+        if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+        !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+        {
+            Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+        }
+        #endregion
 
         ModuleTitleWebControl1.CustomerWebSession = _webSession;
         InformationWebControl1.Language = _webSession.SiteLanguage;

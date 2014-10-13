@@ -18,6 +18,7 @@ using System.Web.UI.HtmlControls;
 using Oracle.DataAccess.Client;
 using System.Globalization;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.Customer;
 using AdExpressWebControles=TNS.AdExpress.Web.Controls;
@@ -121,8 +122,15 @@ namespace AdExpress.Private.Selection{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Argument</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			try{							
-			
+			try{
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
 				#region Option de période sélectionnée
 				if(Request.Form.GetValues("selectedItemIndex")!=null)selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
 				#endregion

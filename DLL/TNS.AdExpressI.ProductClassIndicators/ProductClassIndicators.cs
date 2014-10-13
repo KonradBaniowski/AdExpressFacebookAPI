@@ -108,7 +108,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
             if (module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the product class indicators."));
             object[] parameters = new object[1];
             parameters[0] = _webSession;
-            _dalLayer = (IProductClassIndicatorsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+            _dalLayer = (IProductClassIndicatorsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
 
         }
         #endregion

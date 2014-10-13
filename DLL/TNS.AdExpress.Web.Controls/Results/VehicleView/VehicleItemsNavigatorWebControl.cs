@@ -213,7 +213,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
                 param[1] = _customerWebSession.DataLanguage;
                 TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
-                TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.mediaAccess, _idMedia.ToString());
                 _media = levels[_idMedia];
                 _vehicleInformation = GetVehicleInformation();

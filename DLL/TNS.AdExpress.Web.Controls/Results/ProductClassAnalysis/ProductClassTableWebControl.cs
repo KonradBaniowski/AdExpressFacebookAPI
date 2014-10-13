@@ -11,7 +11,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using AjaxPro;
-
+using TNS.AdExpress.Domain.Web;
 using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 
@@ -103,12 +103,12 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
             }
             else
             {
-                StringBuilder t = new StringBuilder();
+                var t = new StringBuilder();
                 //header
                 t.AppendLine(ExcelWebPage.GetLogo(_customerWebSession));
                 t.AppendLine(ExcelWebPage.GetExcelHeader(_customerWebSession, false, true, false, GestionWeb.GetWebWord(1310, _customerWebSession.SiteLanguage)));
                 //result
-                t.AppendLine(this.GetHTML(_customerWebSession));
+                t.AppendLine(GetHTML(_customerWebSession));
                 //footer
                 t.AppendLine(ExcelWebPage.GetFooter(_customerWebSession));
 
@@ -127,41 +127,37 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
 		/// <returns>Code HTMl</returns>
 		private string GetHTML(WebSession session){
 
-            StringBuilder html=new StringBuilder(10000);
+            var html=new StringBuilder(10000);
 			try{
 
                 Navigation.Module module = ModulesList.GetModule(CstWeb.Module.Name.INDICATEUR);
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
-                object[] param = new object[1] { _customerWebSession };
-                IProductClassIndicators productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                var param = new object[1] { _customerWebSession };
+                var productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName
+                    , module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 productClassIndicator.Excel = _excel;
 
+             
                 switch (_customerWebSession.CurrentTab)
                 {
                     case MotherRecap.MEDIA_STRATEGY:
-                        return productClassIndicator.GetMediaStrategyTable();
+                         html.Append(productClassIndicator.GetMediaStrategyTable());
                         break;
                     case MotherRecap.PALMARES:
-                        return productClassIndicator.GetTopsTable();
+                         html.Append( productClassIndicator.GetTopsTable());
                         break;
                     case MotherRecap.SEASONALITY:
-                        return productClassIndicator.GetSeasonalityTable();
+                         html.Append( productClassIndicator.GetSeasonalityTable());
                         break;
                     case EvolutionRecap.EVOLUTION:
-                        return productClassIndicator.GetEvolutionTable();
+                         html.Append( productClassIndicator.GetEvolutionTable());
                         break;
                     case MotherRecap.NOVELTY:
-                        if (_customerWebSession.Graphics)
-                        {
-                            return productClassIndicator.GetNoveltyChart();
-                        }
-                        else
-                        {
-                            return productClassIndicator.GetNoveltyTable();
-                        }
+                        html.Append(_customerWebSession.Graphics ? productClassIndicator.GetNoveltyChart() 
+                            : productClassIndicator.GetNoveltyTable());
                         break;
                     default:
-                        return productClassIndicator.GetSummary();
+                         html.Append( productClassIndicator.GetSummary());
                         break;
                 }
 
@@ -169,6 +165,10 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
 			catch(System.Exception err){
 				return(OnAjaxMethodError(err,session));
 			}
+
+            if (WebApplicationParameters.CountryCode == Constantes.Web.CountryCode.FRANCE)
+                html.Append(Web.Functions.Script.CedexisScript());
+
 			return html.ToString();
 		}
 		#endregion

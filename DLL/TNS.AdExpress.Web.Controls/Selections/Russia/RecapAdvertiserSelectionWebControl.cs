@@ -251,12 +251,12 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 
             if (_eventButton == constEvent.eventSelection.OK_EVENT)
             {
-                IProductClassReportsDAL productClassLayer = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + m.CountryDataAccessLayer.AssemblyName, m.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IProductClassReportsDAL productClassLayer = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + m.CountryDataAccessLayer.AssemblyName, m.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                return productClassLayer.GetUniversAdvertisers(ExceptionsList,_keyWord);
             }
             else
             {
-                IProductClassReportsDAL productClassLayer = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + m.CountryDataAccessLayer.AssemblyName, m.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IProductClassReportsDAL productClassLayer = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + m.CountryDataAccessLayer.AssemblyName, m.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 return productClassLayer.GetUniversAdvertisers(ExceptionsList);
             }
         }

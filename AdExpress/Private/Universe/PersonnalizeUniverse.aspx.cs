@@ -7,25 +7,11 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using Oracle.DataAccess.Client;
-using TNS.AdExpress.Web.Core.Sessions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using DataAccess=TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Translation;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using TNS.AdExpress.Domain.Classification;
-using TNS.Ares.Domain.LS;
-using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.Web;
 
@@ -234,6 +220,15 @@ namespace AdExpress.Private.Universe{
 		protected void Page_Load(object sender, System.EventArgs e){			
 			
 			try{
+
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
 						
 				//Modification de la langue pour les Textes AdExpress
 				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);

@@ -158,7 +158,7 @@ namespace TNS.AdExpress.Web.Functions {
                 object[] param = new object[2];
                 param[0] = source;
                 param[1] = dataLanguage;
-                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
         			
 				for (int i = 0; i < groups.Count; i++) {
 					List<long> levelIdsList = groups[i].GetLevelIdsList();
@@ -257,7 +257,7 @@ namespace TNS.AdExpress.Web.Functions {
                 object[] param = new object[2];
                 param[0] = source;
                 param[1] = dataLanguage;
-                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 				for (int i = 0; i < groups.Count; i++) {
 					List<long> levelIdsList = groups[i].GetLevelIdsList();
 					displayBorder = true;

@@ -69,6 +69,16 @@ namespace AdExpress{
 		
 			
 			try{
+
+                #region Test Cedexis
+                //Test Cedexis
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE &&
+                !Page.ClientScript.IsClientScriptBlockRegistered("CedexisScript"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "CedexisScript", TNS.AdExpress.Web.Functions.Script.CedexisScript());
+                }
+                #endregion
+
 				if (Page.Request.QueryString.Get("m")!=null){
 					Int64 tmp = _webSession.CurrentModule = Int64.Parse(Page.Request.QueryString.Get("m").ToString());
 					// Forcer le tracking à enregistrer l'option

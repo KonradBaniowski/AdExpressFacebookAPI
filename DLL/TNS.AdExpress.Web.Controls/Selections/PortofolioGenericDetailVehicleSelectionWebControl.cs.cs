@@ -106,7 +106,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             param[0] = _webSession;
             param[1] = _webSession.GenericMediaSelectionDetailLevel;
             param[2] = "";
-            classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
             _dsListMedia = classficationDAL.GetDetailMedia(_keyWord);
 			//_dsListMedia = TNS.AdExpress.Web.Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(_webSession, _keyWord, "", _webSession.GenericMediaSelectionDetailLevel);

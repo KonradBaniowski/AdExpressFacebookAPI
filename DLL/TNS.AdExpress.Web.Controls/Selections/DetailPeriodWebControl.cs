@@ -474,7 +474,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
                 object[] param = new object[1];
                 param[0] = _webSession;
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
                 _tendenciesLastDate = dateDAL.GetTendenciesLastAvailableDate();
                 

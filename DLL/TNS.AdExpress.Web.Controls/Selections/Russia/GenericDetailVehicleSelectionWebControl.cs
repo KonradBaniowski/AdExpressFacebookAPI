@@ -661,7 +661,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 				param[1] = _webSession.GenericMediaSelectionDetailLevel;
 				param[2] = listAccessMedia;
 				//param[3] = keyWord;
-				classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+				classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 				return classficationDAL.GetDetailMedia(keyWord);
 
 			}
@@ -677,7 +677,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 				param[1] = _webSession.GenericMediaSelectionDetailLevel;
 				param[2] = "";
 			}
-			classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+			classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 			return classficationDAL.GetDetailMedia();
 		
 		}

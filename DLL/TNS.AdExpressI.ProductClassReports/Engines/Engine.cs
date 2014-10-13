@@ -172,7 +172,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
             if (module.CountryRulesLayer == null) throw (new NullReferenceException("DataAccess layer is null for the Product Class Analysis"));
             object[] param = new object[1];
             param[0] = _session;
-            IProductClassReportsDAL productClassReportDAL = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            IProductClassReportsDAL productClassReportDAL = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             return productClassReportDAL.GetData();
         }
         /// <summary>

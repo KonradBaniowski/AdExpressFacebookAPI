@@ -9,7 +9,6 @@
 
 using System;
 using System.Text;
-using TNS.AdExpress.Web.UI;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebCst = TNS.AdExpress.Constantes.Web;
@@ -2729,6 +2728,28 @@ namespace TNS.AdExpress.Web.Functions{
             return res.ToString();
 
         }
+        #endregion
+
+        #region Cedexis Script
+        /// <summary>
+        /// Script Cedexis de monitoring AdExpress
+        /// </summary>
+        /// <returns>Code Javascript</returns>
+        public static string CedexisScript()
+        {
+            var js = new StringBuilder(3000);
+            js.Append("\r\n<SCRIPT language=javascript>\r\n<!--");
+            js.Append("\r\n (function(w, d) { var a = function() { var b = d.createElement('script'); b.type = 'text/javascript';");
+            js.Append("\r\n   if (undefined !== b.setAttribute) { b.setAttribute('async', 'async'); }");
+            js.Append("\r\n   b.src = '//' + ((w.location.protocol === 'https:') ? 's3.amazonaws.com/cdx-radar/' :");
+            js.Append("\r\n  'radar.cedexis.com/') + '01-14652-radar10.min.js'; d.body.appendChild(b); };");
+            js.Append("\r\n    if (w.addEventListener) { w.addEventListener('load', a, false); }");
+            js.Append("\r\n     else if (w.attachEvent) { w.attachEvent('onload', a); }");
+            js.Append("\r\n  }(window, document));");
+            js.Append("\r\n-->\r\n</SCRIPT>");
+            return (js.ToString());
+        }
+
         #endregion
 
     }
