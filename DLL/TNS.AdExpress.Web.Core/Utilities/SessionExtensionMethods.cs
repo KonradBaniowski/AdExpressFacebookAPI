@@ -186,7 +186,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
                 if (beginByAnd) sql.Append(" and");
                 prefix = !string.IsNullOrEmpty(vehiclePrefix) ? string.Format("{0}.", vehiclePrefix) : string.Empty;
-                sql.Append(" " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_vehicle", session.CustomerLogin[CustomerRightConstante.type.vpVehicleAccess], true) + " ");
+                sql.Append(" (( " + SQLGenerator.GetInClauseMagicMethod(prefix + "id_vehicle", session.CustomerLogin[CustomerRightConstante.type.vpVehicleAccess], true) + " ");
                 fisrt = false;
             }
          
