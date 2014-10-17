@@ -129,7 +129,7 @@
                                         </tr>
                                         <tr>
 											<!-- Tableau de Résultat -->
-											<td><cc5:genericmediaschedulewebcontrol id="GenericMediaScheduleWebControl1" runat="server" AjaxProTimeOut="240" ShowVersion="True"></cc5:genericmediaschedulewebcontrol></td>
+											<td><cc5:genericmediaschedulewebcontrol id="GenericMediaScheduleWebControl1" runat="server" AjaxProTimeOut="300" ShowVersion="True"></cc5:genericmediaschedulewebcontrol></td>
 										</tr>
 										<tr>
 											<td><cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>
