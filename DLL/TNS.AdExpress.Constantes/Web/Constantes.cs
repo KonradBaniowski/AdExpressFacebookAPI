@@ -1923,6 +1923,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Country Code For Russia
         /// </summary>
         public const string RUSSIA = "7";
+        /// <summary>
+        /// Country Code For Ireland
+        /// </summary>
+        public const string IRELAND = "353";
 
     }
     #endregion

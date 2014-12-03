@@ -93,7 +93,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 			XmlTextReader Reader;
             List <GenericDetailLevel> defaultMediaDetailLevelList = null;
             List<DetailLevelItemInformation> allowedMediaLevelItemList = null;
-			Int64 id=0;
+            Int64 id = Int64.MinValue;
 			Int64 idDetailColumn=0;
 			Dictionary<Int64, Int64> idModuleIdDetailColumnTable=null;
 					
@@ -105,11 +105,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 					if(Reader.NodeType==XmlNodeType.Element){
 						switch(Reader.LocalName){
 							case "vehicle":
-								if(id!=0){
+                                if (id != Int64.MinValue) {
 									defaultMediaDetailLevels.Add(id,defaultMediaDetailLevelList);
 									allowedMediaLevelItems.Add(id,allowedMediaLevelItemList);
 								}
-								id=0;
+                                id = Int64.MinValue;
 									
 								if(Reader.GetAttribute("id")!=null ) {
                                     defaultMediaDetailLevelList = new List<GenericDetailLevel>();
@@ -143,8 +143,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 						}					
 					}				
 				}
-				if(id!=0 && defaultMediaDetailLevelList!=null && defaultMediaDetailLevelList.Count>0)defaultMediaDetailLevels.Add(id,defaultMediaDetailLevelList);
-				if(id!=0 && allowedMediaLevelItemList!=null && allowedMediaLevelItemList.Count>0)allowedMediaLevelItems.Add(id,allowedMediaLevelItemList);
+                if (id != Int64.MinValue && defaultMediaDetailLevelList != null && defaultMediaDetailLevelList.Count > 0) defaultMediaDetailLevels.Add(id, defaultMediaDetailLevelList);
+                if (id != Int64.MinValue && allowedMediaLevelItemList != null && allowedMediaLevelItemList.Count > 0) allowedMediaLevelItems.Add(id, allowedMediaLevelItemList);
 		
 				}
 		
