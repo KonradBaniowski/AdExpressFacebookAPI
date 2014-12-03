@@ -406,20 +406,24 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>          <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>              <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>            <!-- Variété -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>            <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>country</MediaSelectionParent>             <!-- Pays -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="27" name="pays\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/>        <!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/>        <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="26"/>       <!-- Pays -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Allowed universe levels-->
