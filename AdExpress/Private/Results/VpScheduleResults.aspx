@@ -45,7 +45,7 @@
                                 <td style="border-bottom: 1px dotted #000000;font-size:1px;">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td valign="top" align="center">
+                                <td valign="top" align="left">
 								    <cc5:VpScheduleContainerWebControl ID="VpScheduleContainerWebControl1" runat="server" SkinID="VpScheduleContainerWebControl"/>
                                 </td>
                             </tr>

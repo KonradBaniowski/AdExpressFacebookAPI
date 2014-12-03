@@ -164,8 +164,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Products{
                     DataTable sectors = ds.Tables[0];
                     Boolean flag = false;
                     html.Append("<br>");
-                    html.Append("<div class=\"txtViolet11Bold\" align=\"left\" >" + "&nbsp;&nbsp;" + GestionWeb.GetWebWord(1601, webSession.SiteLanguage) + "</div>");
-                    html.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 >");
+                    html.Append("<div class=\"txtViolet11Bold\" width=\"100%\" align=\"left\" >" + "&nbsp;&nbsp;" + GestionWeb.GetWebWord(1601, webSession.SiteLanguage) + "</div>");
+                    html.Append("<table width=\"100%\" style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 >");
                     foreach (DataRow dr in sectors.Rows)
                     {
                         html.Append("<tr>");

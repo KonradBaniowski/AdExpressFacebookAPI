@@ -192,7 +192,7 @@ namespace TNS.AdExpress.Web.Functions {
 										
 										//Current item label
 										lineClosed = false;
-										html.Append("<td class=" + GetLevelCss(level,"") + " colspan=" + colSpan + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</td>");
+										html.Append("<td class=" + GetLevelCss(level,"") + " colspan=" + colSpan + " style=\"white-space:nowrap;\">" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</td>");
 										if (k > 0 && ((k+1) % (baseColSpan-1)) == 0) {
 											lineClosed = true;
                                             html.Append("<td class=" + GetLevelCss(level, "RightBorder") + ">&nbsp;</td></tr>");//Items are showed on three columns

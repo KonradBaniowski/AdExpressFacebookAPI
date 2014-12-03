@@ -122,7 +122,7 @@
 							</tr>
 							<!-- Centre -->
 							<tr>
-								<td style="WIDTH: 773px">
+								<td style="WIDTH: 100%">
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr>
 											<td colspan="5" style="padding-left:5px;">
@@ -134,7 +134,7 @@
 											<td colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
-											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="6"></td>
+											<td style="WIDTH: 100%" width="100%" class="imageBackGround" colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
 											<td colspan="6"></td>
@@ -156,22 +156,22 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px"><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
+								<td style="WIDTH: 100%"><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px"><asp:Image runat="server" height="15" SkinID="pixel" width="1" /> <input id="idHoldingCompanyAccess" type="hidden" name="nameHoldingAccess_">
+								<td style="WIDTH: 100%"><asp:Image runat="server" height="15" SkinID="pixel" width="1" /> <input id="idHoldingCompanyAccess" type="hidden" name="nameHoldingAccess_">
 									<input id="idProductAutomatic" type="hidden" name="nameProductAutomatic_"> <input id="idHoldingCompanyException" type="hidden" name="nameHoldingException_">
 									<input id="idAdvertiserAccess" type="hidden" name="nameAdvertiserAccess_"> <input id="idAdvertiserException" type="hidden" name="nameAdvertiserException_">
 									<input id="idProductAccess" type="hidden" name="nameProductAccess_"> <input id="idProductException" type="hidden" name="nameProductException_">
 									<cc4:SponsorshipFormSelectionWebControl id="AdvertiserSelectionWebControl1" runat="server"></cc4:SponsorshipFormSelectionWebControl></td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px">
-									<table cellspacing="0" cellpadding="0" border="0">
+								<td style="WIDTH: 100%">
+									<table cellspacing="0" cellpadding="0" border="0" width="100%">
 										<tr>
-											<td align="right" width="649">&nbsp;
+											<td align="right" width="100%">&nbsp;
 												<cc2:imagebuttonrolloverwebcontrol id="saveUniverseImageButtonRollOverWebControl" SkinID="saveButton" runat="server" onclick="saveUniverseImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;<cc2:imagebuttonrolloverwebcontrol id="programTypeImageButtonRollOverWebControl" SkinID="EmissionButton" runat="server" onclick="programTypeImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;<cc2:imagebuttonrolloverwebcontrol id="validateButton" SkinID="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol></td>
-											<td width="1%"></td>
+											<!--<td width="1%"></td>-->
 										</tr>
 									</table>
 								</td>

@@ -287,7 +287,7 @@
 							<!-- Centre -->
 							<tr>
 								<td style="padding-left:5px;">
-									<TABLE id="Table1" cellSpacing="0" cellPadding="0" width="727" border="0">
+									<TABLE id="Table1" cellSpacing="0" cellPadding="0" width="100%" border="0">
 										<TBODY>
 											<tr>
 												<td class="txtGris11Bold" colSpan="3"><cc1:adexpresstext language="33" id="mainDescAdexpresstext" runat="server" Code="905"></cc1:adexpresstext></td>

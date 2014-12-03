@@ -170,7 +170,7 @@ namespace AdExpress.Private.MyAdExpress{
 				#endregion
 
 				//Charge la liste des répertoires
-				TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI myAdexpress=new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(_webSession,TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession,500);
+				TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI myAdexpress=new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(_webSession,TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession,WebApplicationParameters.CustomStyles.MySessionsWidth);
 			
 				listRepertories= myAdexpress.GetSelectionTableHtmlUI(4,"");
 			

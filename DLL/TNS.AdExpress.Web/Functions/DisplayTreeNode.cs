@@ -49,7 +49,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="div">Afficher les div true si c'est le cas</param>
 		/// <returns>tableau correspondant à l'arbre</returns>
 		public static string ToHtml(TreeNode root,bool write,bool displayArrow,bool displayCheckbox,int witdhTable,bool displayBorderTable,bool allSelection,int SiteLanguage,int typetree,int showHideContent,bool div, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source){
-			return(ToHtml(root,write,displayArrow,displayCheckbox,witdhTable,displayBorderTable,allSelection,SiteLanguage,typetree,showHideContent,div,false,dataLanguage,source));
+			return(ToHtml(root,write,displayArrow,displayCheckbox,witdhTable,displayBorderTable,allSelection,SiteLanguage,typetree,showHideContent,div,true,dataLanguage,source));
 		}
         /// <summary>
         ///  Affichage d'un arbre au format HTML
@@ -314,11 +314,11 @@ namespace TNS.AdExpress.Web.Functions{
 
 			foreach(TreeNode currentNode in root.Nodes){				
 				if(start==0){
-                    t.Append("<table class=\"detailSelectionH\" cellpadding=0 cellspacing=0 >");
+                    t.Append("<table class=\"detailSelectionH\" cellpadding=0 cellspacing=0 width=\"100%\">");
 					start=1;
 				}
 				else{
-                    t.Append("<table class=\"detailSelectionH\" cellpadding=0 cellspacing=0 >");
+                    t.Append("<table class=\"detailSelectionH\" cellpadding=0 cellspacing=0 width=\"100%\">");
 				}
 				t.Append("<tr>");
 				t.Append("<td align=\"left\" height=\"10\"  valign=\"middle\" nowrap>");
@@ -351,7 +351,7 @@ namespace TNS.AdExpress.Web.Functions{
 					t.Append("</tr>");
 					t.Append("</table>");
 
-                    t.Append("<table class=\"detailSelection\" width=100%>");
+                    t.Append("<table class=\"detailSelection\" width=\"100%\">");
 				}
 				
 				colonne=0;

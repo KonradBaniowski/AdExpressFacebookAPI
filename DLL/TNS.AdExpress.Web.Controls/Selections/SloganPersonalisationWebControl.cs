@@ -334,7 +334,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				#endregion
 
 				#region Debut Tableau global 
-                output.Write("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td class=\"backGroundWhite\"><table  vAlign=\"top\">");		
+                output.Write("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td class=\"backGroundWhite\"><table vAlign=\"top\" width=\"100%\">");		
 				
 				output.Write("<a href=\"javascript: SelectAllChilds('selectAllSlogans");
 				output.Write("')\" class=\"roll04\" >"+GestionWeb.GetWebWord(816,webSession.SiteLanguage)+"</a>");								
@@ -397,8 +397,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 						#region Nouvel annonceur
 						if (idAdvertiser!= idAdvertiserOld) {
 							//bordure du haut de tableau
-							if (idAdvertiserOld == -1)output.Write("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_"+idAdvertiser+"');\" style=\"cursor : pointer\">");
-                            else output.Write("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_" + idAdvertiser + "');\" style=\"cursor : pointer\">");
+							if (idAdvertiserOld == -1)output.Write("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad_"+idAdvertiser+"');\" style=\"cursor : pointer\">");
+                            else output.Write("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad_" + idAdvertiser + "');\" style=\"cursor : pointer\">");
                             //idAdvertiserOld=idAdvertiser;
 							startAdvertiser=0;
 							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">&nbsp;&nbsp;&nbsp;"+currentRow["advertiser"].ToString());
@@ -437,7 +437,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0) ) {
 							numColumn = 0;
 							//bordure du haut de tableau#
-                            output.Write("<tr><td ><table class=\"mediumPurple1 whiteTopBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"643\"><tr width=100%>");
+                            output.Write("<tr><td ><table class=\"mediumPurple1 whiteTopBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr width=100%>");
 							idVehicleOld=idVehicle;
 							startVehicle=0;
 							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" nowrap>");

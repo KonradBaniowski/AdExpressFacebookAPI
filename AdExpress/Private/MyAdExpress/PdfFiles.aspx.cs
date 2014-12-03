@@ -88,7 +88,7 @@ namespace AdExpress.Private.MyAdExpress{
                 #endregion
 
                 #region Résultat
-                MySessionsUI myAdexpress = new MySessionsUI(_webSession, MySessionsUI.type.mySession, 500);
+                MySessionsUI myAdexpress = new MySessionsUI(_webSession, MySessionsUI.type.mySession, WebApplicationParameters.CustomStyles.MySessionsWidth);
                 result = TNS.AdExpress.Web.BusinessFacade.Results.PdfFilesSystem.GetHtml(Page, _webSession, _dataSource);
                 #endregion
              

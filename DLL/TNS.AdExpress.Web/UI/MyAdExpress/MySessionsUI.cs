@@ -307,7 +307,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
                     //Premier
                     if (idParent != idParentOld && start != 0){
 
-                        t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=" + _width + ">");
+                        t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=\"100%\">");
 
                         t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" class=\"cursorHand\">");
                         t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
@@ -319,7 +319,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
                         t.Append("</tr>");
                         t.Append("</table>");
                         t.Append("<div id=\"" + idParent + "Content" + valueTable + "\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
-                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=\"100%\">");
                       			
 
 
@@ -332,7 +332,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
                     else if (idParent != idParentOld){
                         t.Append("</table>");
                         t.Append("</div>");
-                        t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + _width + ">");
+                        t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">");
                         t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" class=\"cursorHand\">");
                         t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
                         t.Append("<label ID=\"" + currentRow[0] + valueTable + "\">&nbsp;");
@@ -343,7 +343,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
                         t.Append("</tr>");
                         t.Append("</table>");
                         t.Append("<div id=\"" + idParent + "Content" + valueTable + "\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
-                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=\"100%\">");
                      
 
                         idParentOld = idParent;
@@ -422,7 +422,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 					//Premier
 					if (idParent != idParentOld && start != 0) {
 
-                        t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=" + _width + ">");
+                        t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=\"100%\">");
 
                         t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" class=\"cursorHand\">");
 						t.Append("<td align=\"left\" height=\"10\"  valign=\"middle\">");
@@ -434,7 +434,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 						t.Append("</tr>");
 						t.Append("</table>");
 						t.Append("<div id=\"" + idParent + "Content" + valueTable + "\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
-                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");						
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=\"100%\">");						
 
 						idParentOld = idParent;
 						textParentOld = textParent;
@@ -445,7 +445,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 					else if (idParent != idParentOld) {
 						t.Append("</table>");
 						t.Append("</div>");
-                        t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + _width + ">");
+                        t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">");
                         t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" class=\"cursorHand\">");
 						t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
 						t.Append("<label ID=\"" + currentRow[0] + valueTable + "\">&nbsp;");
@@ -456,7 +456,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 						t.Append("</tr>");
 						t.Append("</table>");
 						t.Append("<div id=\"" + idParent + "Content" + valueTable + "\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
-                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");						
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=\"100%\">");						
 
 
 						idParentOld = idParent;

@@ -84,7 +84,7 @@ tr.insertionInfo td
 }
 tr.insertionInfo td table tr td
 {
-	width:0;
+	width:0px;
 	border:0;
 	vertical-align:top;
 
@@ -99,7 +99,7 @@ tr.insertionInfo table tr td table
 	border:0;
 	padding:0;
 	border-spacing:0;
-
+    width:100%;
 }
 tr.insertionInfo td table tr>td:first-child
 {
@@ -1144,6 +1144,7 @@ td.dsTitleData{
 	white-space:nowrap;
 	text-decoration : none;
 	background-color:#A0A1A7;
+    padding-right : 8px;
 }
 .dsLv2{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1153,6 +1154,7 @@ td.dsTitleData{
 	white-space:nowrap;
 	text-decoration : none;
 	background-color:#C3C7D0;
+    padding-right : 8px;
 }
 .dsLv3{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1162,6 +1164,7 @@ td.dsTitleData{
 	white-space:nowrap;
 	text-decoration : none;
 	background-color:#D9E0CE;
+    padding-right : 8px;
 }
 .dsRightBorderLv1{
 	font-family: Arial, Helvetica, sans-serif;

@@ -496,6 +496,7 @@ namespace AdExpress.Private.Selection{
                     selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
                     selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
                     selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.TreeViewWidth = WebApplicationParameters.CustomStyles.TreeViewWidth + "px";
                     selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
                     for(int k = 0; k < _webSession.PrincipalProductUniverses.Count; k++) {
                         if(_webSession.PrincipalProductUniverses.Count > 1) {
@@ -569,6 +570,7 @@ namespace AdExpress.Private.Selection{
 					selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
 					selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
 					selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.TreeViewWidth = WebApplicationParameters.CustomStyles.TreeViewWidth + "px";
 					selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 					
 					if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR

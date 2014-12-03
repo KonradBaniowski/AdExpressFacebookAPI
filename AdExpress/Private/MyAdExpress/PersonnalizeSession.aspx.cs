@@ -99,7 +99,7 @@ namespace AdExpress.Private.MyAdExpress{
 				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);
 
 				//Liste des répertoires dans déplacer un univers
-				TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI myAdexpress=new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(_webSession,TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession,500);
+				TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI myAdexpress=new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(_webSession,TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession,WebApplicationParameters.CustomStyles.MySessionsWidth);
 				listRepertories= myAdexpress.GetSelectionTableHtmlUI(4,"");
 				//script=myAdexpress.Script;
 

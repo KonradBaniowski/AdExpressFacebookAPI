@@ -6,6 +6,7 @@
 using System.Web.UI;
 using System.Collections;
 using WebCommon = TNS.AdExpress.Web.Common;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -40,7 +41,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				
 					if (currentName!=null){
 						if (start==1){
-                            t.Append("\n<table class=\"txtViolet11Bold violetBorder backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                            t.Append("\n<table class=\"txtViolet11Bold violetBorder backGroundWhite\"  cellpadding=0 cellspacing=0 width=\""+WebApplicationParameters.CustomStyles.FileItemWidth+"\">");
 							t.Append("\n<tr onClick=\"javascript : showHideContent('"+currentName.Name+"');\" style=\"cursor : hand\">");
 							t.Append("\n<td>&nbsp;"+ currentName.Name + "</td>");
                             t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
@@ -48,7 +49,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							start=0;
 						}
 						else if (start==0){
-                            t.Append("\n<table class=\"txtViolet11Bold violetBorderWithoutTop backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                            t.Append("\n<table class=\"txtViolet11Bold violetBorderWithoutTop backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"" + WebApplicationParameters.CustomStyles.FileItemWidth + "\">");
 							t.Append("\n<tr onClick=\"javascript : showHideContent('"+currentName.Name+"');\" style=\"cursor : hand\">");
 							t.Append("\n<td>&nbsp;"+ currentName.Name + "</td>");
                             t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
@@ -56,7 +57,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						}
 
                         t.Append("<div id=\"" + currentName.Name + "Content\" style=\"MARGIN-LEFT: 0px; DISPLAY: none;\" class=\"BlancNoBorderColor\" >");
-                        t.Append("\n<table id=\"" + currentName.Name + "\" class=\"txtViolet10 lightPurple violetBorderWithoutTop\" width=\"650\">");
+                        t.Append("\n<table id=\"" + currentName.Name + "\" class=\"txtViolet10 lightPurple violetBorderWithoutTop\" width=\"" + WebApplicationParameters.CustomStyles.FileItemWidth + "\">");
 						compteur=0;
 						for(int i=0; i<currentName.List.GetLength(1) && currentName.List[0,i]!=null; i++){
 							if(compteur==0){ 

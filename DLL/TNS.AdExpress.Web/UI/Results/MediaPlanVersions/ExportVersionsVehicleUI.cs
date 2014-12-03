@@ -41,6 +41,8 @@ using TNS.AdExpressI.Insertions.Cells;
 using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork.WebTheme;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Layers;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 {
@@ -262,7 +264,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             paramMSCraetives[0] = _webSession;
             paramMSCraetives[1] = _webSession.CurrentModule;
             ResultTable resultTable = null;
-            IInsertionsResult resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default.dll", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null);
+            CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
+            IInsertionsResult resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null);
             string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CustomerCst.Right.type.vehicleAccess).Split(',');
             string filters = string.Empty;
             int fromDate = Convert.ToInt32(_period.Begin.ToString("yyyyMMdd"));

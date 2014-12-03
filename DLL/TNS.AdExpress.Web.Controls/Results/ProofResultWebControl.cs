@@ -333,15 +333,15 @@ namespace TNS.AdExpress.Web.Controls.Results
 					output.Write("\n</tr>");
 					output.Write("\n<tr valign=\"top\">");
 					output.Write("\n<td align=\"left\" class=\"txtViolet12Bold\" width=\"50%\">&nbsp;"+ GestionWeb.GetWebWord(857, _customerWebSession.SiteLanguage) +"</td>");
-					output.Write("\n<td class=\"txtViolet11\">"+ row["advertiser"] +"</td>");
+					output.Write("\n<td class=\"txtViolet11\" style=\"white-space:nowrap;\">"+ row["advertiser"] +"</td>");
 					output.Write("\n</tr>");
 					output.Write("\n<tr valign=\"top\">");
 					output.Write("\n<td align=\"left\" class=\"txtViolet12Bold\">&nbsp;"+ GestionWeb.GetWebWord(858, _customerWebSession.SiteLanguage) +"</td>");
-					output.Write("\n<td class=\"txtViolet11\">"+ row["product"] +"</td>");
+                    output.Write("\n<td class=\"txtViolet11\" style=\"white-space:nowrap;\">" + row["product"] + "</td>");
 					output.Write("\n</tr>");
 					output.Write("\n<tr valign=\"top\">");
 					output.Write("\n<td align=\"left\" class=\"txtViolet12Bold\">&nbsp;"+ GestionWeb.GetWebWord(859, _customerWebSession.SiteLanguage) +"</td>");
-					output.Write("\n<td class=\"txtViolet11\">"+ row["group_"] +"</td>");					
+                    output.Write("\n<td class=\"txtViolet11\" style=\"white-space:nowrap;\">" + row["group_"] + "</td>");					
 					output.Write("\n<tr valign=\"top\">");
 					output.Write("\n<td align=\"left\" class=\"txtViolet12Bold\">&nbsp;"+ GestionWeb.GetWebWord(1767, _customerWebSession.SiteLanguage) +"</td>");
 					output.Write("\n<td class=\"txtViolet11\">"+ row["area_page"] +"</td>");

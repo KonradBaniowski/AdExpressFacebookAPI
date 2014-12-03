@@ -1077,6 +1077,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Select items in classification web control : used to select Items in Classification --%>
 <ctrSelections:SelectItemsInClassificationWebControl  
                            runat="server" 
+                           TreeViewWidth = "350px"
                            ChildNodeExcludeCss="txtChildNodeExcludeCss" 
                            ChildNodeIncludeCss="txtChildNodeIncludeCss" 
                            CustomSelectCss="customSelectCss" 
@@ -1112,6 +1113,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Select items in classification web control : used to select Items in Classification --%>
 <ctrSelections:SelectRecapItemsInClassificationWebControl  
                            runat="server" 
+                           TreeViewWidth = "350px"
                            ChildNodeExcludeCss="txtChildNodeExcludeCss" 
                            ChildNodeIncludeCss="txtChildNodeIncludeCss" 
                            CustomSelectCss="customSelectCss" 

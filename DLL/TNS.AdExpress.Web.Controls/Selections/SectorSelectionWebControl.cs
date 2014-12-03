@@ -326,7 +326,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					
 					if(excludeSector==null || (excludeSector!=null && excludeSector.Count>0 && !excludeSector.Contains(currentRow["id_sector"].ToString()))){	
 						if ((i%3)<1)t.Append("<tr>");
-						t.Append("<td width=\"33%\" ><input type=\"checkBox\" "+checkBox+" ");					 
+						t.Append("<td width=\"33%\" style=\"white-space:nowrap;\"><input type=\"checkBox\" "+checkBox+" ");					 
 						t.Append(" id=\"SectorSelectionWebControl_"+i+"\" name=\"SectorSelectionWebControl$"+i+"\"/  value=\""+currentRow["id_sector"]+"\" >"+ currentRow["sector"].ToString()+"</td>");
 						if ((i%3)>1)t.Append("</tr>");
 						i++;

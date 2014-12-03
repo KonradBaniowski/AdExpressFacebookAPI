@@ -425,7 +425,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 _oldColumnSetId = Convert.ToInt64(this.Page.Request.Form.GetValues(columnSetContainer)[0]);
             }
  
-			if ( (!_idVehicleFromTab.Equals(null)) && (_idVehicleFromTab>0)){
+			//if ( (!_idVehicleFromTab.Equals(null)) && (_idVehicleFromTab>0)){
+            if ((!_idVehicleFromTab.Equals(null)) && (_idVehicleFromTab > -1)) {
                 
                 _columnSetId = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(_idVehicleFromTab, _customerWebSession.CurrentModule);
 

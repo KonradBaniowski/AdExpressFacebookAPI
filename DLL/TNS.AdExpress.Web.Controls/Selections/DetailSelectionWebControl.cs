@@ -1688,10 +1688,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
                 
                     //html.Append("<td " + GetLevelCss(level) + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + ((LevelInformation)root.Tag).Text + "</td>");
-                    html.Append("<td " + GetLevelCss(level) + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;");
-                    if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)root.Tag).Type) && dicClassif[((LevelInformation)root.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)root.Tag).ID))                
+                html.Append("<td " + GetLevelCss(level) + " nowrap>" + img + "&nbsp;&nbsp;&nbsp;&nbsp;");
+                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)root.Tag).Type) && dicClassif[((LevelInformation)root.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)root.Tag).ID))
                     html.Append(dicClassif[((LevelInformation)root.Tag).Type][((LevelInformation)root.Tag).ID]);
-                    html.Append( "</td>");	
+                html.Append("</td>");
                 
 				
 			}
@@ -1700,7 +1700,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				if(level!=0)
                 {
                     //html.Append("<tr \""+cssBorderLevel+"\"><td colspan=4 "+GetLevelCss(level)+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;")+((LevelInformation)root.Tag).Text+"</td></tr>");
-                    html.Append("<tr \""+cssBorderLevel+"\"><td colspan=4 "+GetLevelCss(level)+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;");
+                    html.Append("<tr \"" + cssBorderLevel + "\"><td colspan=4 " + GetLevelCss(level) + " nowrap>" + img + "&nbsp;&nbsp;&nbsp;&nbsp;");
                     if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)root.Tag).Type) && dicClassif[((LevelInformation)root.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)root.Tag).ID))
                         html.Append(dicClassif[((LevelInformation)root.Tag).Type][((LevelInformation)root.Tag).ID]);
                     html.Append("</td></tr>");
@@ -1885,7 +1885,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 					html.Append(GetBlankLine());
 					if (i > 0 && accessType == AccessType.includes) code = 2368;
-					html.Append("<tr class=\"excelData\"><td colspan=" + baseColSpan + "  ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(code, language) + "&nbsp; : </font></td></tr>");
+					html.Append("<tr class=\"excelData\"><td colspan=" + baseColSpan + " nowrap><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(code, language) + "&nbsp; : </font></td></tr>");
 
 					//For each group's level
 					if (levelIdsList != null) {
@@ -1894,8 +1894,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 							//Level label
 							level = 1;
-							
-							html.Append("<tr class=\"BorderLevel\"><td colspan=" + baseColSpan + "  " + GetLevelCss(level) + " >" + GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language) + " </td></tr>");
+
+                            html.Append("<tr class=\"BorderLevel\"><td colspan=" + baseColSpan + "  " + GetLevelCss(level) + " nowrap>" + GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language) + " </td></tr>");
 
 							//Show items of the current level
 							level = 2;
@@ -1912,7 +1912,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 										//Current item label
 										lineClosed = false;
-										html.Append("<td  " + GetLevelCss(level) + " colspan=" + colSpan + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</td>");
+                                        html.Append("<td  " + GetLevelCss(level) + " colspan=" + colSpan + " nowrap>" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</td>");
 										if (k > 0 && ((k + 1) % (baseColSpan - 1)) == 0) {
 											lineClosed = true;
 											html.Append("<td  " + GetRightBorderLevelCss(level) + ">&nbsp;</td></tr>");//Items are showed on three columns

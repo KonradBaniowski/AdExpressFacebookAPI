@@ -215,8 +215,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				if (vehicleInfo != null) {
 					//Top table border
 					t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\" >");
-					if (idVehicleOld == -1) t.Append("\n<table class=\"backGroundWhite violetBorderWithoutBottom txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
-					else t.Append("\n<table class=\"backGroundWhite violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
+					if (idVehicleOld == -1) t.Append("\n<table class=\"backGroundWhite violetBorderWithoutBottom txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">\n<tr>");
+                    else t.Append("\n<table class=\"backGroundWhite violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">\n<tr>");
 					t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" width=100%>");
 					t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\" name=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" onClick=\"CheckAllChilds('vh_" + vehicleInfo.DatabaseId.ToString() + "','" + VehicleIds + "','vh_" + vehicleInfo.DatabaseId.ToString() + "')\" value=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\">" + GestionWeb.GetWebWord(210, webSession.SiteLanguage) + "");
 					t.Append("\n</td>\n</tr>");
@@ -261,8 +261,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					if (idVehicle != idVehicleOld) {
 						//Border top table						
 						t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_" + idVehicle + "\" >");
-						if (idVehicleOld == -1) t.Append("\n<table class=\"backGroundWhite violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
-						else t.Append("\n<table class=\"backGroundWhite violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+                        if (idVehicleOld == -1) t.Append("\n<table class=\"backGroundWhite violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
+                        else t.Append("\n<table class=\"backGroundWhite violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
 
 						//Cursor on  line
 						if (OpenVehicleDiv(idVehicle))

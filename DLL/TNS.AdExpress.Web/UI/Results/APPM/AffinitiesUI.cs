@@ -78,7 +78,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 						else
 							classCss2="insertionHeader";
 						html.Append("\r\n\t<tr height=\"20px\">");
-						html.Append("<td align= \"left\" class=\""+classCss2+"\" nowrap>"+row["target"]+"</td>");
+                        html.Append("<td align= \"left\" class=\"" + classCss2 + "\" nowrap>" + row["target"] + "</td>");
 						if(!excel)
                             html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
                         html.Append("<td class=\"" + classCss2 + "\" nowrap >" + WebFunctions.Units.ConvertUnitValueAndPdmToString(row["totalGRP"], WebConstantes.CustomerSessions.Unit.grp, false, fp) + "</td>");

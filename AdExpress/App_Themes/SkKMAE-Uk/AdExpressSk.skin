@@ -1114,6 +1114,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Select items in classification web control : used to select Items in Classification --%>
 <ctrSelections:SelectItemsInClassificationWebControl  
                            runat="server" 
+                           TreeViewWidth = "350px"
                            ChildNodeExcludeCss="txtChildNodeExcludeCss" 
                            ChildNodeIncludeCss="txtChildNodeIncludeCss" 
                            CustomSelectCss="customSelectCss" 
@@ -1145,11 +1146,12 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            InitializeUpImage = "/App_Themes/SkKMAE-Uk/Images/Common/button/initialize_up.gif"
                            InitializeDownImage = "/App_Themes/SkKMAE-Uk/Images/Common/button/initialize_down.gif"
                            WaitLoadingImage = "/App_Themes/SkKMAE-Uk/Images/Common/waitAjax.gif"
- IsCheckUniverseLevels="False"
+                           IsCheckUniverseLevels="False"
 />
 <%-- Select items in classification web control : used to select Items in Classification --%>
 <ctrSelections:SelectRecapItemsInClassificationWebControl  
                            runat="server" 
+                           TreeViewWidth = "350px"
                            ChildNodeExcludeCss="txtChildNodeExcludeCss" 
                            ChildNodeIncludeCss="txtChildNodeIncludeCss" 
                            CustomSelectCss="customSelectCss" 

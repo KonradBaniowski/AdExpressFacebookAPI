@@ -403,7 +403,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				//Start Global Table
 				//t.Append(" <table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\">");
 				#region Debut Tableau global
-				t.Append("<tr ><td  vAlign=\"top\"><table  vAlign=\"top\">");
+				t.Append("<tr ><td  vAlign=\"top\"><table vAlign=\"top\" width=\"100%\">");
 				t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 				insertIndex = t.Length;
 				t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;" + textOpenclose + "</a>");
@@ -487,8 +487,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 						#region New Level 1
 						if (idL1 > -1 && idL1 != oldIdL1) {
 							//border top table
-							if (oldIdL1 == -1) t.Append("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "');\" style=\"cursor : pointer\">");
-							else t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "');\" style=\"cursor : pointer\">");
+							if (oldIdL1 == -1) t.Append("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "');\" style=\"cursor : pointer\">");
+							else t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "');\" style=\"cursor : pointer\">");
 							oldIdL1 = idL1;
 							startL1 = 0;
 							t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">&nbsp;&nbsp;&nbsp;" + labelL1);

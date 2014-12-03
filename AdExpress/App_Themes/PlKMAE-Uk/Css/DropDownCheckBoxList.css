@@ -39,11 +39,15 @@
 	
 }
 
+.multidropdown td
+{
+	white-space:nowrap;
+}
 
 .listContainer
 {
 	overflow: auto;
-	width: 210px;	
+	/*width: 210px;	*/
 	border: 1px solid Gray;
 	display: none;
 	z-index: 1000;

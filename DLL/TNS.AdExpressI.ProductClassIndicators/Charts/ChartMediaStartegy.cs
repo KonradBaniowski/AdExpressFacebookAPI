@@ -104,8 +104,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #endregion
 
             #region Chart Design
-            this.Width = new Unit("850px");
-            this.Height = new Unit("850px");
+            this.Width = new Unit(""+WebApplicationParameters.CustomStyles.ChartMediaStrategyWidth+"px");
+            this.Height = new Unit("" + WebApplicationParameters.CustomStyles.ChartMediaStrategyHeight + "px");
             this.Legend.Enabled = false;
             #endregion
 

@@ -142,6 +142,7 @@
     <Compile Include="Units\DefaultUnit.cs" />
     <Compile Include="Units\DefaultUnitList.cs" />
     <Compile Include="Web\CompanyNameTexts.cs" />
+    <Compile Include="Web\CustomStyles.cs" />
     <Compile Include="Web\TextWrap.cs" />
     <Compile Include="Web\Navigation\ModuleAssignment.cs" />
     <Compile Include="Web\Navigation\RightMenuLinks.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Web\Rss.cs" />
     <Compile Include="XmlLoader\CampaignTypesDescriptionXL.cs" />
     <Compile Include="XmlLoader\CoreLayersXL.cs" />
+    <Compile Include="XmlLoader\CustomStylesXL.cs" />
     <Compile Include="XmlLoader\DataHistoryXL.cs" />
     <Compile Include="XmlLoader\DundasConfigurationXL.cs" />
     <Compile Include="XmlLoader\InfoNewsXL.cs" />

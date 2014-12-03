@@ -105,7 +105,7 @@
 											</TD>
 										</tr>
 										<tr height="100%" valign="top">
-											<td align="right">
+											<td align="right" class="sectorSelectionButtonsMenu">
 												<cc4:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>
 											</td>
 										</tr>

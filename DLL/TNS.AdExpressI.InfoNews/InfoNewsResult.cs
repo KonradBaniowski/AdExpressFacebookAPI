@@ -59,7 +59,7 @@ namespace TNS.AdExpressI.InfoNews {
 						Array.Sort(files, Comparer.Default);
 
 						if (start == 1) {
-                            t.Append("\n<table class=\"violetBorder txtViolet11Bold backGroundWhite\" cellpadding=0 cellspacing=0 width=\"650\">");
+                            t.Append("\n<table class=\"violetBorder txtViolet11Bold backGroundWhite\" cellpadding=0 cellspacing=0 width=\"100%\">");
 							t.Append("\n<tr onClick=\"javascript : showHideContent('info_" + sortedInfoNewsItems[i].Id.GetHashCode().ToString() + "');\" style=\"cursor : hand\">");
 							t.Append("\n<td>&nbsp;" + GestionWeb.GetWebWord(sortedInfoNewsItems[i].WebTextId, _session.SiteLanguage) + "</td>");
 							t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + _themeName + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
@@ -67,7 +67,7 @@ namespace TNS.AdExpressI.InfoNews {
 							start = 0;
 						}
 						else if (start == 0) {
-                            t.Append("\n<table class=\"violetBorderWithoutTop txtViolet11Bold backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                            t.Append("\n<table class=\"violetBorderWithoutTop txtViolet11Bold backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"100%\">");
 							t.Append("\n<tr onClick=\"javascript : showHideContent('info_" + sortedInfoNewsItems[i].Id.GetHashCode().ToString() + "');\" style=\"cursor : hand\">");
 							t.Append("\n<td>&nbsp;" + GestionWeb.GetWebWord(sortedInfoNewsItems[i].WebTextId, _session.SiteLanguage) + "</td>");
 							t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + _themeName + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
@@ -75,7 +75,7 @@ namespace TNS.AdExpressI.InfoNews {
 						}
 
 						t.Append("<div id=\"info_" + sortedInfoNewsItems[i].Id.GetHashCode().ToString() + "Content\" style=\"MARGIN-LEFT: 0px; DISPLAY: none;\" >");
-						t.Append("\n<table id=\"info_" + sortedInfoNewsItems[i].Id.GetHashCode().ToString() + "\" class=\"violetBorderWithoutTop txtViolet10 paleVioletBackGround\" width=\"650\">");
+                        t.Append("\n<table id=\"info_" + sortedInfoNewsItems[i].Id.GetHashCode().ToString() + "\" class=\"violetBorderWithoutTop txtViolet10 paleVioletBackGround\" width=\"100%\">");
 						compteur = 0;
 
 						//Show all directoy's files						

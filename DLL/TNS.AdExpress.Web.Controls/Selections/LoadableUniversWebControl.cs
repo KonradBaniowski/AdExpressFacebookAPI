@@ -253,7 +253,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			
 
 
-		output.Write("<table class=\"violetBorder\" cellSpacing=\"0\" cellPadding=\"0\" width=\"200\" border=\"0\">");
+		output.Write("<table class=\"violetBorder\" cellSpacing=\"0\" cellPadding=\"0\" width=\"20%\" border=\"0\">");
         output.Write("<tr class=\"cursorHand\" onclick=\"showHideContent6('listAdvertiser');\">");
 		output.Write("<td class=\"txtViolet11Bold\" >&nbsp;"+GestionWeb.GetWebWord(893,webSession.SiteLanguage)+"&nbsp;</td>");
 		output.Write("<td align=\"right\" class=\"arrowBackGround\">");
@@ -263,11 +263,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 
 
-        output.Write("<div id=\"listAdvertiserContent6\" class=\"violetBorderWithoutTop\" style=\"DISPLAY: none; WIDTH: 620px;\">");
+        output.Write("<div id=\"listAdvertiserContent6\" class=\"violetBorderWithoutTop\" style=\"DISPLAY: none; WIDTH: 90%;\">");
         output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" align=\"center\" class=\"backGroundWhite\" border=\"0\">");
 		output.Write("<tr>");
-		output.Write("<td width=\"199\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
-        output.Write("<td class=\"violetBorderTop\" width=\"421\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+		output.Write("<td width=\"22%\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+        output.Write("<td class=\"violetBorderTop\" width=\"78%\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
 		output.Write("</tr>");
 		output.Write("<tr>");
 		output.Write("<td class=\"txtGris11Bold\" style=\"PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 2px; PADDING-TOP: 0px\" colSpan=\"2\">&nbsp;</td>");

@@ -425,7 +425,8 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// execution or building of the query</exception>
         public virtual DataSet GetItems(long levelId , string wordToSearch)
         {
-           string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
+           //string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
+            string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
             //Calling the engine which compute data
             if (_dBSchema == null || _dBSchema.Length == 0)
                 throw (new ArgumentException("Invalid dBSchema parameter"));//Excepted for france data base, can be null for other country         

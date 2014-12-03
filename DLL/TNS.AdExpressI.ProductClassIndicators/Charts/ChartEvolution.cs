@@ -87,8 +87,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #endregion
 
             #region Chart Design
-            this.Width = new Unit("850px");
-            this.Height = new Unit("500px");
+            this.Width = new Unit(""+WebApplicationParameters.CustomStyles.ChartEvolutionWidth+"px");
+            this.Height = new Unit("" + WebApplicationParameters.CustomStyles.ChartEvolutionHeight + "px");
             this.ChartAreas[strChartArea].BackColor = (Color)_colorConverter.ConvertFrom(_chartAreasBackColor);
             #endregion
 

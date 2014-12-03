@@ -15,7 +15,7 @@
 	</HEAD>
 	<body bottomMargin="0" leftMargin="0" topMargin="0" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
-			<table id="Table1" cellSpacing="0" cellPadding="0" width="800" border="0">
+			<table id="Table1" cellSpacing="0" cellPadding="0" border="0">
 			    <!-- Gradient -->
 				<tr>
 					<td colspan="7" height="3" class="gradientBar"></td>
@@ -58,7 +58,7 @@
 					
 					<!-- Right column -->
 					<td vAlign="top">
-						<table cellSpacing="0" cellPadding="0" border="0">
+						<table cellSpacing="0" cellPadding="0" border="0" class="errorPageWidth">
 						  <!-- Menu haut -->
 							<tr>
 								<td style="background-color:Black;">

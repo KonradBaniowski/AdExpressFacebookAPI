@@ -12,6 +12,7 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Insertions.DAL;
 using System.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpressI.Insertions.CreativeResult
 {
@@ -547,7 +548,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
             if ((ds != null && ds.Tables[0].Rows.Count > 0) || (_hasCreationDownloadRights))
             {
 
-                result.Append("<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"394\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD vAlign=\"top\">");
+                result.Append("<TD><TABLE height=\"326\" cellPadding=\"5\" width=\""+WebApplicationParameters.CustomStyles.CreativePopUpWidth+"\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD vAlign=\"top\">");
                 //Détail version
 
                 if (ds != null && ds.Tables[0].Rows.Count > 0)

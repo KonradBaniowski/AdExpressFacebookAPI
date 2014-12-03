@@ -1031,7 +1031,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					
 									t.Append("</table>");
 									t.Append("</div>");
-									t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=645>");
+                                    t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">");
 									t.Append("<tr>");
 									t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
                                     t.Append("<input type=\"checkbox\" " + checkBox + " onclick=\"integration('" + idParent + "'," + i + ",event)\" id=\"AdvertiserSelectionWebControl1_" + i + "\" name=\"AdvertiserSelectionWebControl1$" + i + "\">");
@@ -1043,7 +1043,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 									t.Append("</tr>");
 									t.Append("</table>");
 									t.Append("<div id=\""+idParent+"Content\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
-									t.Append("<table id="+idParent+" style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=645>");
+                                    t.Append("<table id=" + idParent + " style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=\"100%\">");
 									t.Append("<tr><td colspan=\"3\"><a href=# style=\"TEXT-DECORATION: none\" class=\"roll04\" onclick=\"allSelection('"+idParent+"',"+i+")\" ID=\""+currentRow[0]+"\">");
 									if(holdingCompanyBool){
 										t.Append(GestionWeb.GetWebWord(816,webSession.SiteLanguage));
@@ -1073,8 +1073,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 									}else{
 										automatic=0;
 									}
-						
-									t.Append("<table style=\"border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; border-bottom :#644883 1px solid; \" class=\"txtViolet11Bold\" cellpadding=0 cellspacing=0   width=645>");
+
+                                    t.Append("<table style=\"border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; border-bottom :#644883 1px solid; \" class=\"txtViolet11Bold\" cellpadding=0 cellspacing=0   width=\"100%\">");
 									t.Append("<tr>");
 									t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
                                     t.Append("<input type=\"checkbox\" " + checkBox + " onclick=\"integration('" + idParent + "'," + i + ",event)\" ID=\"AdvertiserSelectionWebControl1_" + i + "\" name=\"AdvertiserSelectionWebControl1$" + i + "\">");
@@ -1086,7 +1086,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 									t.Append("</tr>");
 									t.Append("</table>");
 									t.Append("<div id=\""+idParent+"Content\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
-									t.Append("<table id="+idParent+" style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=645>");
+                                    t.Append("<table id=" + idParent + " style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=\"100%\">");
 									t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" style=\"TEXT-DECORATION: none\" onclick=\"allSelection('"+idParent+"',"+i+")\" ID=\""+currentRow[0]+"\">");
 									if(holdingCompanyBool){
 										t.Append(GestionWeb.GetWebWord(816,webSession.SiteLanguage));
@@ -1285,7 +1285,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					if (productBool || segmentBool) {
 						if(dsListAdvertiser!=null){
 							if(dsListAdvertiser.Tables[0].Rows.Count!=0){
-								t.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=645>");
+                                t.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=\"100%\">");
 								t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" onclick=\"allSelectionRef()\" style=\"TEXT-DECORATION: none\"  ID=\"tab1\">");
 								if(productBool){
 									t.Append(GestionWeb.GetWebWord(817,webSession.SiteLanguage));}
@@ -1458,10 +1458,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				// Affichage des annonceur à partir de SelectionUniversAdvertiser où CurrentUniversAdvertiser
 				//if(buttonTarget==4 || buttonTarget==6 || buttonTarget==8){
 				if(buttonTarget==4 || buttonTarget==3 || buttonTarget==8){
-                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.SelectionUniversAdvertiser, true, true, true, 645, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
+                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.SelectionUniversAdvertiser, true, true, true, 100, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 				}
 				else{
-                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.CurrentUniversAdvertiser, true, true, true, 645, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
+                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.CurrentUniversAdvertiser, true, true, true, 100, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 				}
 				t.Append("</td></tr></table></td></tr>");				
 				output.Write(t.ToString());	

@@ -129,7 +129,7 @@
 					
 					<!-- Right column -->
 					<td vAlign="top">
-						<table cellSpacing="0" cellPadding="0" border="0">
+						<table cellSpacing="0" cellPadding="0" border="0" width="100%">
 						  <!-- Menu haut -->
 							<tr>
 								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl2" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>

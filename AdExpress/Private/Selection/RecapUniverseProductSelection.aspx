@@ -124,7 +124,7 @@
 							</tr>
 							<!-- Centre -->
 							<tr>
-								<td style="WIDTH: 773px">
+								<td style="WIDTH: 100%">
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr>
 											<td style="padding-left:5px;">
@@ -136,7 +136,7 @@
 											<td></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
-											<td style="WIDTH: 478px; height: 10px;" width="478" class="imageBackGround"></td>
+											<td style="height: 10px;" class="imageBackGround"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
 											<td></td>
@@ -154,7 +154,7 @@
 								            <td><cc4:SelectRecapItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" DefaultBranchId="1" NbMaxIncludeTree="2"></cc4:SelectRecapItemsInClassificationWebControl></td>
 								        </tr>
 								        <tr>
-								            <td style="padding-left:188px;">
+								            <td class="productSelectionButtonsMenu">
 								                &nbsp;<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" ><asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
 												&nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
 								            </td>

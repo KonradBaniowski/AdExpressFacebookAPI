@@ -123,9 +123,9 @@
 							</tr>
 							<!-- Centre -->
 							<tr>
-								<td style="WIDTH: 773px">
+								<td style="WIDTH: 100%">
 									
-									<table cellSpacing="0" cellPadding="0" width="645" border="0">
+									<table cellSpacing="0" cellPadding="0" width="100%" border="0">
 										<tr>
 											<td colspan="2" style="padding-left:5px;">
 												<!--Chargement mes univers-->
@@ -135,38 +135,37 @@
 											<td colspan="2"></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
-											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="2"></td>
+											<td style="WIDTH: 100%" width="100%" class="imageBackGround" colspan="2"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
 											<td colspan="2"></td>
 										</tr>
 										<tr style="height: 5px;">
-											<td class="txtViolet11Bold" style="width: 83px;">&nbsp;&nbsp;
+											<td class="txtViolet11Bold" style="width: 8%;">&nbsp;&nbsp;
 												<cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="972"></cc1:adexpresstext>&nbsp;:
 											</td>
-											<td><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okLoupeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeAllButton" runat="server" SkinID="initializeAllButton" ></cc4:imagebuttonrolloverwebcontrol></td>
+											<td style="width: 92%"><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okLoupeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeAllButton" runat="server" SkinID="initializeAllButton" ></cc4:imagebuttonrolloverwebcontrol></td>
 										</tr>
 									</table>
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px"><asp:Image runat="server" height="5" src="images/pixel.gif" width="1"/></td>
+								<td style="WIDTH: 100%"><asp:Image runat="server" height="5" src="images/pixel.gif" width="1"/></td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px; HEIGHT: 27px">&nbsp;&nbsp; <A id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
+								<td style="WIDTH: 100%; HEIGHT: 27px">&nbsp;&nbsp; <A id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
 										onclick="javascript:createLists();" onmouseout="MM_swapImgRestore()" href="javascript:__doPostBack('ok','')" runat="server">
 									</A>
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px; HEIGHT: 18px"><cc3:detailvehicleselectionwebcontrol id="AdvertiserSelectionWebControl1" runat="server"></cc3:detailvehicleselectionwebcontrol></td>
+								<td style="WIDTH: 100%; HEIGHT: 18px"><cc3:detailvehicleselectionwebcontrol id="AdvertiserSelectionWebControl1" runat="server"></cc3:detailvehicleselectionwebcontrol></td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px">
-									<table cellSpacing="0" cellPadding="0" border="0">
+								<td style="WIDTH: 100%">
+									<table cellSpacing="0" cellPadding="0" border="0" width="100%">
 										<tr>
-											<td align="right" width="649"><cc4:imagebuttonrolloverwebcontrol id="saveImageButtonRollOverWebControl" SkinID="saveButton" runat="server" Visible="False" onclick="saveImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" SkinID="validateButton"  runat="server" Visible="False" onclick="validImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;&nbsp;</td>
-											<td width="1%"></td>
+											<td align="right" width="100%"><cc4:imagebuttonrolloverwebcontrol id="saveImageButtonRollOverWebControl" SkinID="saveButton" runat="server" Visible="False" onclick="saveImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" SkinID="validateButton"  runat="server" Visible="False" onclick="validImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;&nbsp;</td>
 										</tr>
 									</table>
 								</td>

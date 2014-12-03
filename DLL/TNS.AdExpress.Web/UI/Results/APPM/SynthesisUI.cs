@@ -85,7 +85,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			try{
 				if(synthesisData!=null&&synthesisData.Count>0){
 					t=new StringBuilder(3500);
-					t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=600 style=\"text-align:left\">");
+					t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=\""+WebApplicationParameters.CustomStyles.SynthesisWidth+"px\" style=\"text-align:left\">");
 					//titre
 					//t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 16px\">"+GestionWeb.GetWebWord(1666,webSession.SiteLanguage)+"</td></tr>");
                     t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"portofolioSynthesisBorderHeader\" align=\"center\">" + GestionWeb.GetWebWord(1666, webSession.SiteLanguage) + "</td></tr>");

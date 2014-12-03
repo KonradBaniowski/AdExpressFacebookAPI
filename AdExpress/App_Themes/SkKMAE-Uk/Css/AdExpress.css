@@ -126,6 +126,9 @@ hr {
 }
 .bandeauTitreBackGround{
 	background:url(/App_Themes/SkKMAE-Uk/Images/Common/bandeau_titre.gif);
+    background-position-x : right;
+    background-repeat : repeat-y;
+    background-color : #454343;
 }
 .blockdupliBackGround{
 	background:url(/App_Themes/SkKMAE-Uk/Images/Common/block_dupli.gif);
@@ -3208,4 +3211,16 @@ td.jus{
 }
 .newsTitle {
     padding:16px;
+}
+.productSelectionButtonsMenu {
+    padding-left:378px;
+}
+.sectorSelectionButtonsMenu {
+    padding-right : 56px;
+}
+.thumbnailDimension {
+    
+}
+.errorPageWidth{
+    width : 1071px;
 }

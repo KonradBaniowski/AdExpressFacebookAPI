@@ -588,7 +588,7 @@ namespace TNS.AdExpress.Web.Functions{
 			script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
 			script.Append("\n\tfunction openDownload(file,idSession, idVehicle){");
 //			script.Append("\n\t\twindow.open(\"/Private/Results/AccessDownloadCreationsPopUp.aspx?idSession=\"+idSession+\"&idVehicle=\"+idVehicle+\"&creation=\"+file, '', \"toolbar=0, directories=0, status=0, menubar=0, width=440, height=300, scrollbars=0, location=0, resizable=0\");");
-			script.Append("\n\t\twindow.open(\"/Private/Results/DownloadCreationsPopUp.aspx?idSession=\"+idSession+\"&idVehicle=\"+idVehicle+\"&creation=\"+file, '', \"top=\"+(screen.height-420)/2+\", left=\"+(screen.width-830)/2+\",toolbar=0, directories=0, status=0, menubar=0, width=830, height=420, scrollbars=0, location=0, resizable=0\");");
+            script.Append("\n\t\twindow.open(\"/Private/Results/DownloadCreationsPopUp.aspx?idSession=\"+idSession+\"&idVehicle=\"+idVehicle+\"&creation=\"+file, '', \"top=\"+(screen.height-420)/2+\", left=\"+(screen.width-830)/2+\",toolbar=0, directories=0, status=0, menubar=0, width=" + WebApplicationParameters.CustomStyles.CreationPopUpWidth + ", height=420, scrollbars=0, location=0, resizable=0\");");
 			script.Append("\n\t}");
 			script.Append("\n</script>");
 			return script.ToString();

@@ -774,7 +774,7 @@ namespace TNS.AdExpress.Web.UI
             if (webSession.PrincipalProductUniverses.Count == 1)
             {
                 productSelection += GetBlankLine();
-                productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                productSelection += "<TR><TD colspan=4 class=\"excelData\" style=\"white-space:nowrap;\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                 adExpressUniverse = webSession.PrincipalProductUniverses[0];
 
                 productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
@@ -796,8 +796,8 @@ namespace TNS.AdExpress.Web.UI
                             universeCodeTitle = 2302;
                         }
 
-                        productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
-                        productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>";
+                        productSelection += "<TR><TD colspan=4 class=\"excelData\" style=\"white-space:nowrap;\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                        productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" style=\"white-space:nowrap;\">" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>";
                         adExpressUniverse = webSession.PrincipalProductUniverses[k];
                         productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
 
@@ -839,7 +839,7 @@ namespace TNS.AdExpress.Web.UI
                 {
                     productSelection += GetBlankLine();
                 }
-                productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                productSelection += "<TR><TD colspan=4 class=\"excelData\" style=\"white-space:nowrap;\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                 productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage,webSession.CustomerDataFilters.DataSource, webSession.DomainName);
             }
             else if (webSession.SecondaryProductUniverses.Count > 1)
@@ -865,8 +865,8 @@ namespace TNS.AdExpress.Web.UI
                                 universeCodeTitle = (webSession.SecondaryProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes)) ? 1203 : 1195;
                             else universeCodeTitle = 2302;
                         }
-                        productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
-                        productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.SecondaryProductUniverses[k].Label + " </TD></TR>";
+                        productSelection += "<TR><TD colspan=4 class=\"excelData\" style=\"white-space:nowrap;\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                        productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" style=\"white-space:nowrap;\">" + webSession.SecondaryProductUniverses[k].Label + " </TD></TR>";
 						adExpressUniverse = webSession.SecondaryProductUniverses[k];
 						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage,webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
 					}
@@ -881,7 +881,7 @@ namespace TNS.AdExpress.Web.UI
 
 			if (webSession.isReferenceMediaSelected()) {
 				t.Append(GetBlankLine());
-				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + " :</font></TD></TR>");
+                t.Append("<TR><TD colspan=4 class=\"excelData\" style=\"white-space:nowrap;\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + " :</font></TD></TR>");
 				t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ReferenceUniversMedia, webSession.SiteLanguage, webSession.DomainName));
 			}
 			#endregion

@@ -275,7 +275,7 @@
 							<!-- Centre -->
 							<tr>
 								<td style="padding-left:5px;">
-									<table id="Table1" cellspacing="0" cellpadding="0" width="727" border="0">
+									<table id="Table1" cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr class="violetBackGround" height="14">
 											<td width="14"><asp:Image ID="Image25" runat="server" SkinID="fleche_1" /></td>
 											<td class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;

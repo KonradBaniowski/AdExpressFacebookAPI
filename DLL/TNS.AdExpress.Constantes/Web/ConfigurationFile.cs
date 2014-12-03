@@ -142,12 +142,10 @@ namespace TNS.AdExpress.Constantes.Web {
         /// WebService Right Configuration file
         /// </summary>
         public const string WEB_SERVICE_RIGHT_CONFIGURATION = @"WebServiceRightConfiguration.xml";
-
         /// <summary>
         /// Trends configuration file
         /// </summary>
         public const string TRENDS_FILENAME = @"Trends.xml";
-
         /// <summary>
         /// Campaign Types configuration file
         /// </summary>
@@ -156,12 +154,13 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Data history configuration file
         /// </summary>
         public const string DATA_HISTORY_CONFIGURATION_FILENAME = @"DataHistory.xml";
-
-
-
         /// <summary>
         /// Right Menu Links configuration file
         /// </summary>
         public const string RIGHT_MENU_LINKS_FILENAME = @"RightMenuLinks.xml";
+        /// <summary>
+        /// Cusyom Styles configuration file
+        /// </summary>
+        public const string CUSTOM_STYLES_FILENAME = @"CustomStyles.xml";
     }
 }

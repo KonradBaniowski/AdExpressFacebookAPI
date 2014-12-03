@@ -84,7 +84,7 @@ tr.insertionInfo td
 }
 tr.insertionInfo td table tr td
 {
-	width:0;
+	width:0px;
 	border:0;
 	vertical-align:top;
 
@@ -99,7 +99,7 @@ tr.insertionInfo table tr td table
 	border:0;
 	padding:0;
 	border-spacing:0;
-
+    width:100%;
 }
 tr.insertionInfo td table tr>td:first-child
 {
@@ -436,8 +436,8 @@ td.exlv1 {
 	color : #000000;
 	font-weight:bold;
 	background-color:#969696;	
-	height:20px;	
-	white-space:nowrap;
+	height:20px;
+    white-space:nowrap;
 	text-decoration : none;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -449,7 +449,7 @@ td.exlv1 {
 	border-right-style:solid;
 	padding-left:4px;
 	padding-right:4px;
-	
+
 }
 tr.lv2 td{
 	font-family: Arial, Helvetica, sans-serif;
@@ -499,7 +499,7 @@ td.exlv2 {
 	color : #000000;
 	background-color:#9999FF;	
 	height:20px;	
-	white-space:nowrap;
+    white-space:nowrap;
 	text-decoration : none;
 	border-left-width:0px;
 	border-top-color:#FFFFFF;
@@ -512,7 +512,7 @@ td.exlv2 {
 	border-right-width: 1px; 
 	border-right-style:solid;
 	padding-left:4px;
-	padding-right:4px;			
+	padding-right:4px;		
 }
 tr.lv3 td{
 	font-family: Arial, Helvetica, sans-serif;
@@ -595,7 +595,7 @@ td.exlv3{
 	color : #000000;	
 	background-color:#CCCCFF;
 	height:20px;	
-	white-space:nowrap;
+    white-space:nowrap;
 	text-decoration : none;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -606,7 +606,7 @@ td.exlv3{
 	border-right-width: 1px; 
 	border-right-style:solid;
 	padding-left:4px;
-	padding-right:4px;			
+	padding-right:4px;
 }
 td.exlv4{
 	font-family: Arial, Helvetica, sans-serif;
@@ -614,7 +614,7 @@ td.exlv4{
 	color : #000000;	
 	background-color:#C0C0C0;
 	height:20px;	
-	white-space:nowrap;
+    white-space:nowrap;
 	text-decoration : none;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -625,7 +625,7 @@ td.exlv4{
 	border-right-width: 1px; 
 	border-right-style:solid;
 	padding-left:4px;
-	padding-right:4px;			
+	padding-right:4px;	
 }
 tr.lvNbParution td{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1144,6 +1144,7 @@ td.dsTitleData{
 	white-space:nowrap;
 	text-decoration : none;
 	background-color:#A0A1A7;
+    padding-right : 8px;
 }
 .dsLv2{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1153,6 +1154,7 @@ td.dsTitleData{
 	white-space:nowrap;
 	text-decoration : none;
 	background-color:#C3C7D0;
+    padding-right : 8px;
 }
 .dsLv3{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1162,6 +1164,7 @@ td.dsTitleData{
 	white-space:nowrap;
 	text-decoration : none;
 	background-color:#D9E0CE;
+    padding-right : 8px;
 }
 .dsRightBorderLv1{
 	font-family: Arial, Helvetica, sans-serif;

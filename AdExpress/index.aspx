@@ -104,7 +104,7 @@
 							</tr>
 							<!-- Flash Homepage -->
 							<tr>
-								<td>
+								<td style="background-color:#000000;">
 								    <cc3:FlashWebControl ID="flashWebControl1" runat="server" Width="733" Height="484"></cc3:FlashWebControl>
 								</td>
 							</tr>

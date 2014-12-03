@@ -123,10 +123,10 @@
 							</tr>
 							<!-- Centre -->
 							<tr>
-								<td style="WIDTH: 773px">
+								<td >
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr style="HEIGHT: 5px">
-											<td style="WIDTH: 478px" colspan="5"></td>
+											<td colspan="5"></td>
 										</tr>
 										<!--emplacement du chargement des univers-->
 										<tr>
@@ -157,7 +157,7 @@
 								            <td><cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" DefaultBranchId="7" NbMaxIncludeTree="2" Dimension_="media"></cc4:SelectItemsInClassificationWebControl></td>
 								        </tr>
 								        <tr>
-								            <td style="padding-left:188px;">
+								            <td class="productSelectionButtonsMenu">
 								                &nbsp;<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" ><asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
 												&nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
 								            </td>

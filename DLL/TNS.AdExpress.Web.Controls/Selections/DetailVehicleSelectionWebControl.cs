@@ -406,7 +406,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+textOpenclose+"</a>");	
 				}
 
-                t.Append("<tr class=\"backGroundWhite\"><td  vAlign=\"top\"><table >");
+                t.Append("<tr class=\"backGroundWhite\"><td  vAlign=\"top\"><table width=\"100%\">");
                 t.Append("<tr><td vAlign=\"top\" class=\"backGroundWhite\">");
 
 				if(dsListMedia!=null && !isEmptyList && IsMediaFound(keyWord,eventButton,isEmptyList)){
@@ -434,7 +434,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                             }
                             t.Append("</table>");
                             t.Append("</div>");
-                            t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=645>");
+                            t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">");
                             t.Append("<tr onClick=\"DivDisplayer('" + idParent + "Ct" + "');\" class=\"cursorHand\">");
                             t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
                             //t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
@@ -448,7 +448,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                             t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY:");
                             displayIndex = t.Length;
                             t.Append("; WIDTH: 100%\">");
-                            t.Append("<table id=" + idParent + " class=\"violetBorderWithoutTop paleVioletBackGround\" width=645>");
+                            t.Append("<table id=" + idParent + " class=\"violetBorderWithoutTop paleVioletBackGround\" width=\"100%\">");
                             t.Append("<tr><td colspan=\"3\"><a href=# style=\"TEXT-DECORATION: none\" class=\"roll04\" onclick=\"allSelection('" + idParent + "'," + i + ")\" ID=\"" + currentRow[0] + "\">");
                             t.Append(GestionWeb.GetWebWord(1066, webSession.SiteLanguage));
                             t.Append("</a></td></tr>");
@@ -459,7 +459,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
                         //Premier	
                         if(idParentOld != idParent && start != 0) {
-                            t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=645>");
+                            t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=\"100%\">");
                             t.Append("<tr onClick=\"DivDisplayer('" + idParent + "Ct" + "');\" class=\"cursorHand\" >");
                             //t.Append("<tr onClick=\"showHideContent('"+idParent+"');\" style=\"cursor : hand\" >");
                             t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
@@ -474,7 +474,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                             t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: ");
                             displayIndex = t.Length;
                             t.Append("; WIDTH: 100%\" >");
-                            t.Append("<table id=" + idParent + " class =\"violetBorderWithoutTop paleVioletBackGround\" width=645>");
+                            t.Append("<table id=" + idParent + " class =\"violetBorderWithoutTop paleVioletBackGround\" width=\"100%\">");
                             t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" style=\"TEXT-DECORATION: none\" onclick=\"allSelection('" + idParent + "'," + i + ")\" ID=\"" + currentRow[0] + "\">");
                             t.Append(GestionWeb.GetWebWord(1066, webSession.SiteLanguage));
                             t.Append("</a></td></tr>");
@@ -630,11 +630,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
                     t.Append("<tr height=5px class=\"backGroundWhite\"><td></td></tr>");
                     t.Append("<tr><td class=\"backGroundWhite\" vAlign=\"top\">");
-                    t.Append("<table class=\"backGroundWhite\">");				
+                    t.Append("<table class=\"backGroundWhite\" width=\"100%\">");				
 					t.Append("<tr><td>");	
 					// Affichage des annonceur à partir de SelectionUniversAdvertiser où CurrentUniversAdvertiser
 
-                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.CurrentUniversMedia, true, true, true, 645, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
+                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.CurrentUniversMedia, true, true, true, 100, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 				
 					t.Append("</td></tr></table></td></tr>");
 					output.Write(t.ToString());	

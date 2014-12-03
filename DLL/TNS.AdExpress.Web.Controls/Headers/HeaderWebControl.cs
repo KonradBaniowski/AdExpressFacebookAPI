@@ -168,7 +168,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("\n<td colspan=\"2\" class=\"backGroundBlack\" >");
 
             #region Flash
-            output.Write("\n<table  class=\"header\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
+            output.Write("\n<table  class=\"header\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" width=\"" + WebApplicationParameters.CustomStyles.HeaderWidth + "\">");
 			output.Write("\n<td width=\"1%\">");
             output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
 			output.Write("\nif(hasRightFlashVersion==true){");

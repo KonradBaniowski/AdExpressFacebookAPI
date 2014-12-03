@@ -121,7 +121,7 @@
 
 					<!-- droite-->
 					<td valign="top" >
-						<table cellspacing="0" cellpadding="0" border="0">
+						<table cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
 								<!-- Menu du haut-->
 								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl2" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>

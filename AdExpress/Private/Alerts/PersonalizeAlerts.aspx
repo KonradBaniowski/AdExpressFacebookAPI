@@ -279,7 +279,7 @@
 							<!-- Centre -->
 							<tr>
 								<td style="padding-left:5px;">
-									<TABLE id="Table1" cellSpacing="0" cellPadding="0" width="727" border="0">
+									<TABLE id="Table1" cellSpacing="0" cellPadding="0" width="100%" border="0">
 										<TR class="violetBackGround" height="14">
 											<td width="14"><asp:Image ID="Image25" runat="server" SkinID="fleche_1" /></td>
 											<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText5" runat="server" Code="2611"></cc1:adexpresstext></TD>

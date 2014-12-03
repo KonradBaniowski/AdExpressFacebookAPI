@@ -109,13 +109,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #region Chart Size
             if (!_bigFormat)
             {
-                this.Width = new Unit("850px");
-                this.Height = new Unit("500px");
+                this.Width = new Unit("" + WebApplicationParameters.CustomStyles.ChartSeasonalityWidth + "px");
+                this.Height = new Unit("" + WebApplicationParameters.CustomStyles.ChartSeasonalityHeight + "px");
             }
             else
             {
-                this.Width = new Unit("1150px");
-                this.Height = new Unit("700px");
+                this.Width = new Unit("" + WebApplicationParameters.CustomStyles.ChartSeasonalityBigWidth + "px");
+                this.Height = new Unit("" + WebApplicationParameters.CustomStyles.ChartSeasonalityBigHeight + "px");
             }
             this.ChartAreas[strChartArea].BackColor = (Color)_colorConverter.ConvertFrom(_chartAreasBackColor);
             #endregion

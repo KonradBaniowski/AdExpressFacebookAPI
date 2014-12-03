@@ -332,19 +332,19 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				#endregion
 			
 				//Tableau global
-				t.Append("<tr><td class=\"backGroundWhite\" valign=\"top\"><table>");		
+				t.Append("<tr><td class=\"backGroundWhite\" valign=\"top\"><table width=\"100%\">");		
 	            t.Append("<tr><td vAlign=\"top\">");
 
 				#region 1 niveaux
 				
 				if(dsListSponsorshipForm!=null) {
 					if(dsListSponsorshipForm.Tables[0].Rows.Count!=0) {
-                        t.Append("<table class=\"violetBorderWithoutBottom backGroundWhite\" width=645>");
+                        t.Append("<table class=\"violetBorderWithoutBottom backGroundWhite\" width=\"100%\">");
 						t.Append("<tr><td class=\"txtViolet11Bold\" align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
 						t.Append("<label for=\"Formes de parrainages\">" + GestionWeb.GetWebWord(2052,webSession.SiteLanguage) + "");
 						t.Append("</label>");
 						t.Append("</td></tr></table>");
-                        t.Append("<table class=\"violetBorder paleVioletBackGround\" width=645>");
+                        t.Append("<table class=\"violetBorder paleVioletBackGround\" width=\"100%\">");
 						t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" onclick=\"allSelectionRef()\" style=\"TEXT-DECORATION: none\"  ID=\"tab1\">");
 						t.Append(GestionWeb.GetWebWord(2056,webSession.SiteLanguage));
 						t.Append("</a></td></tr>");	
@@ -459,7 +459,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				
 				t.Append("<tr height=5px class=\"backGroundWhite\"><td></td></tr>");				
 				t.Append("<tr><td class=\"backGroundWhite\" vAlign=\"top\">");
-				t.Append("<table class=\"backGroundWhite\">");				
+				t.Append("<table class=\"backGroundWhite\" width=\"100%\">");				
 				t.Append("<tr> ");
 				t.Append("</td></tr><tr><td>");	
 
@@ -468,12 +468,12 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 					//if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT || eventButton==8) {
 					
 					#region 1 niveaux
-                    t.Append("<table class=\"backGroundWhite violetBorderWithoutBottom\" width=645>");
+                    t.Append("<table class=\"backGroundWhite violetBorderWithoutBottom\" width=\"100%\">");
 					t.Append("<tr><td class=\"txtViolet11Bold\" align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
 					t.Append("<label for=\"Formes de parrainages\">" + GestionWeb.GetWebWord(2052,webSession.SiteLanguage) + "");
 					t.Append("</label>");
 					t.Append("</td></tr></table>");
-                    t.Append("<table class=\"violetBorder paleVioletBackGround\" width=645>");
+                    t.Append("<table class=\"violetBorder paleVioletBackGround\" width=\"100%\">");
 					t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" onclick=\"allSelectionRef()\" style=\"TEXT-DECORATION: none\"  ID=\"tab1\">");
 					t.Append(GestionWeb.GetWebWord(817,webSession.SiteLanguage));
 					t.Append("</a></td></tr>");	

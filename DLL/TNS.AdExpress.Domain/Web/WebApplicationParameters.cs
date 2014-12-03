@@ -211,6 +211,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Hide Plurimedia Evol
         /// </summary>
         protected static bool _hidePlurimediaEvol = false;
+        /// <summary>
+        /// Custom Styles
+        /// </summary>
+        protected static CustomStyles _customStyles = null;
         #endregion
         
         #region Contructeur
@@ -250,7 +254,8 @@ namespace TNS.AdExpress.Domain.Web {
 
             _RightMenuLinks = new RightMenuLinks(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.RIGHT_MENU_LINKS_FILENAME));      
             _useRightDefaultConnection = RightOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.RIGHT_OPTIONS_CONFIGURATION_FILENAME));
-           
+
+            _customStyles = CustomStylesXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.CUSTOM_STYLES_FILENAME));
 
         }
         #endregion
@@ -560,6 +565,12 @@ namespace TNS.AdExpress.Domain.Web {
             set {
                 _hidePlurimediaEvol = value;
             }
+        }
+        /// <summary>
+        /// Get Custom Styles
+        /// </summary>
+        public static CustomStyles CustomStyles {
+            get { return _customStyles; }
         }
         #endregion
 

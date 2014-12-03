@@ -332,7 +332,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                             if (idVehicleOld == -1) classBorder = "violetBorder";
                             else classBorder = "violetBorderWithoutTop";
 
-                            t.Append("\n<table class=\"txtViolet11Bold backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+                            t.Append("\n<table class=\"txtViolet11Bold backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
 
                             //Curseur sur toute la ligne
                             t.Append("\n<tr  style=\"cursor : hand\"><td>");

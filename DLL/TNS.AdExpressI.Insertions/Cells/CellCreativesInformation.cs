@@ -284,7 +284,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             foreach (string s in _visuals) {
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp) {
-                    str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img src=\"{0}\"/></a>", st, pathes);
+                    str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img class=\"thumbnailDimension\" src=\"{0}\"/></a>", st, pathes);
                     hasVisual = true;
                 }
             }

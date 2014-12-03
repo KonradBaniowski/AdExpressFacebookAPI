@@ -160,7 +160,7 @@
 								            <td class="txtViolet11Bold">&nbsp;&nbsp;<cc3:adexpresstext language="33" id="universAdExpressText" runat="server" Code="855"></cc3:adexpresstext>&nbsp;&nbsp;<asp:textbox id="idUnivers" runat="server"></asp:textbox></td>
 								        </tr>
 								        <tr>
-								            <td style="padding-left:188px;">
+								            <td class="productSelectionButtonsMenu">
 								                &nbsp;<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" ><asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
 											    &nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="nextButton" id="NextImageButtonRollOverWebControl" runat="server" onclick="NextImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>
 												&nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
