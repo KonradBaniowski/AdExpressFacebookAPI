@@ -184,9 +184,11 @@
   <ItemGroup>
     <Content Include="Configuration\LinkServerParameters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\LsClientConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -223,8 +225,10 @@ mkdir "$(TargetDir)Bin\"
 copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Ireland.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Ireland.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Insertions.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Insertions.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.Ireland.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Ireland.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Appm.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Default.dll" /Y

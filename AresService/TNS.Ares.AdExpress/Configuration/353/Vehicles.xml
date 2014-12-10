@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <vehicles>
-  <!-- Evaliant -->
-  <vehicle id="adnettrack" databaseId="2" showInsertions="false" showCreations="true" autopromo="false">
+  <!-- PRESS -->
+  <vehicle id="press" databaseId="0" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits defaultUnit="versionNb">
-      <allowedUnit>occurence</allowedUnit>
-      <allowedUnit>versionNb</allowedUnit>
+    <allowedUnits defaultUnit="euro">
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>insertion</allowedUnit>
+      <allowedUnit>mmPerCol</allowedUnit>
+      <!--<allowedUnit>pages</allowedUnit>-->
     </allowedUnits>
-    <!-- Media detail level in results-->
+    <!-- Media detail level in results -->
     <allowedMediaDetailLevels>
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>          <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>         <!-- Categorie -->
         <allowedMediaLevelItem>media</allowedMediaLevelItem>            <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>   <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>      <!-- Régie -->
         <allowedMediaLevelItem>slogan</allowedMediaLevelItem>           <!-- Version -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>   <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>       <!-- Annonceur -->
@@ -23,6 +27,7 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>            <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>          <!-- Variété -->
+        <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->     <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -39,6 +44,15 @@
         <allowedMediaSelectionLevelItem id="2"/>        <!-- Catégorie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="6"/>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>        <!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>       <!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
     <!--Allowed universe levels-->
     <allowedUniverseLevels>
       <allowedUniverseLevel id="1" name="sector"/>
@@ -54,13 +68,13 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
-    <!--Allowed column broken down-->
+    <!--Media Agency Flag-->
     <ColumnDetailLevel>
       <allowedColumnDetailLevelItems>
         <allowedColumnDetailLevelItem id="2" name="Categorie"/>
         <allowedColumnDetailLevelItem id="3" name="Support"/>
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
-    <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>
   </vehicle>
+
 </vehicles>

@@ -125,6 +125,10 @@
     <Content Include="Configuration\33\CustomerErrorMail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\33\CustomStyles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configuration\33\Database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -235,6 +239,11 @@
     </Content>
     <Content Include="Configuration\353\CustomerErrorMail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\353\CustomStyles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\353\Database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -274,6 +283,7 @@
     </Content>
     <Content Include="Configuration\353\MSCreativesDetails.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\353\PluginAlerteConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -283,6 +293,7 @@
     </Content>
     <Content Include="Configuration\353\PortofolioDetailMediaConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\353\ResultOptions.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -296,9 +307,7 @@
     <Content Include="Configuration\353\Trends.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\353\Units.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Configuration\353\Units.xml" />
     <Content Include="Configuration\353\UniverseBranches.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -310,10 +319,9 @@
     </Content>
     <Content Include="Configuration\353\Vehicles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configuration\353\WebLanguages.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Configuration\353\WebLanguages.xml" />
     <Content Include="Configuration\353\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -771,6 +779,9 @@
     <Content Include="Configuration\48\CustomerErrorMail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\48\CustomStyles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\48\Database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -965,6 +976,7 @@
     </Content>
     <Content Include="Configuration\WebParameters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

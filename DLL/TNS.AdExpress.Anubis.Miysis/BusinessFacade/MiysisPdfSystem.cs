@@ -1287,8 +1287,16 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 }
                 else
                 {
-                    imgG = Image.FromFile(_config.PressScanPath + path);
-                    imgI = this.AddImageFromFilename(_config.PressScanPath + path, TxImageCompressionType.itcFlate);
+                    if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.IRELAND) {
+                        imgG = Bitmap.FromStream((System.Net.WebRequest.Create(string.Format(path)).GetResponse().GetResponseStream()));
+                        imgG.Save(AppDomain.CurrentDomain.BaseDirectory + @"/tmp/" + i + ".jpg");
+                        imgI = this.AddImageFromFilename(AppDomain.CurrentDomain.BaseDirectory + @"/tmp/" + i + ".jpg", TxImageCompressionType.itcFlate);
+                        File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"/tmp/" + i + ".jpg");
+                    }
+                    else {
+                        imgG = Image.FromFile(_config.PressScanPath + path);
+                        imgI = this.AddImageFromFilename(_config.PressScanPath + path, TxImageCompressionType.itcFlate);
+                    }
                 }
 
                 double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin) / (double)imgG.Width;
