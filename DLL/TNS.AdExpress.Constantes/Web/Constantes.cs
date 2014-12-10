@@ -1927,7 +1927,35 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Country Code For Ireland
         /// </summary>
         public const string IRELAND = "353";
+        /// <summary>
+        /// Country Code For Italy
+        /// </summary>
+        public const string ITALY = "39";
+        /// <summary>
+        /// Country Code For UK
+        /// </summary>
+        public const string UK = "44";
 
+    }
+    #endregion
+
+    #region Country Acronym
+    /// <summary>
+    /// Constantes concerning country acronym
+    /// </summary>
+    public class CountryAcronym {
+        /// <summary>
+        /// Country Acronym For France
+        /// </summary>
+        public const string FRANCE = "FR";
+        /// <summary>
+        /// Country Acronym For Italy
+        /// </summary>
+        public const string ITALY = "IT";
+        /// <summary>
+        /// Country Acronym For UK
+        /// </summary>
+        public const string UK = "UK";
     }
     #endregion
 

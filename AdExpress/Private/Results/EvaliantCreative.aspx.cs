@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 namespace AdExpress.Private.Results
 {
 
-    public partial class EvaliantCreative : TNS.AdExpress.Web.UI.WebPage
+    public partial class EvaliantCreative : TNS.AdExpress.Web.UI.WebPage 
     {
 
         #region Variables
@@ -45,6 +45,7 @@ namespace AdExpress.Private.Results
             result = "<TABLE class=\"whiteBackGround\" cellPadding=\"0\" cellSpacing=\"5\" align=\"center\" valign=\"center\" border=\"0\"><tr><td>";
 
             Regex f = new Regex(@"\.swf");
+            Regex flv = new Regex(@"\.flv");
             if(f.IsMatch(file)){
 
                 // Flash banner
@@ -61,7 +62,23 @@ namespace AdExpress.Private.Results
                 result += string.Format("\n </OBJECT>");
 
             }
-            else{
+            else if (flv.IsMatch(file)) {
+                result +="<object id=\"video\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"400\" height=\"315\">";
+                result +="<param name=\"movie\" value=\"/Player/playerflv.swf\" />";
+                result +="<param name=\"allowfullscreen\" value=\"true\" />";
+                result +="<param name=\"allowscriptaccess\" value=\"always\" />";
+                result += "<param name=\"flashvars\" value=\"file=" + file + "\" />";
+                result +="<embed type=\"application/x-shockwave-flash\"";
+                result +="src=\"/Player/playerflv.swf\" ";
+                result +="width=\"400\" ";
+                result +="height=\"315\"";
+                result +="allowscriptaccess=\"always\" ";
+                result +="allowfullscreen=\"false\"";
+                result += "flashvars=\"file=" + file + "\" ";
+                result +="/>";
+                result += "</object>";
+            }
+            else {
 
                 result += string.Format("<img src=\"{0}\">", file);
 
