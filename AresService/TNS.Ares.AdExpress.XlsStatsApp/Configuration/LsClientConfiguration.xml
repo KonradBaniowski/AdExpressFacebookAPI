@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configurations>
-  <!-- config FR --> 
-<lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30239" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="33\Plugins\Bastet.xml">
-  <moduleDescription description="Ares Service treatment - Excel Statistic (Bastet)" moduleId="2"/>
-</lsClientConfiguration>
+  <!-- config FR -->
+  <lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30239" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="33\Plugins\Bastet.xml">
+    <moduleDescription description="Ares Service treatment - Excel Statistic (Bastet)" moduleId="2"/>
+  </lsClientConfiguration>
+
+  <!-- config IR -->
+  <!--<lsClientConfiguration familyId="161" familyName="AdExpress IR Treatment service" monitorPort="50241" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="353\Plugins\Bastet.xml">
+    <moduleDescription description="Ares Service treatment - Excel Statistic (Bastet)" moduleId="2"/>
+  </lsClientConfiguration>-->
 
   <!-- config FI -->
   <!--<lsClientConfiguration familyId="132" familyName="AdExpress FI Treatment service" monitorPort="30265" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="35\Plugins\Bastet.xml">

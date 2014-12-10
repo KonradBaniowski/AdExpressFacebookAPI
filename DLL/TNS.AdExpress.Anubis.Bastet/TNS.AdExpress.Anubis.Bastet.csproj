@@ -327,6 +327,9 @@
     <Content Include="Configuration\33\Plugins\bastet.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\353\Plugins\bastet.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\35\Plugins\bastet.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
