@@ -3625,7 +3625,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.instore:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrackAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).SqlWithPrefix);
@@ -3774,7 +3774,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.instore:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrackAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).Label);
@@ -4481,8 +4481,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 switch (moduleType)
                 {
-                    case WebConstantes.Module.Type.analysis:
+                    case WebConstantes.Module.Type.alert:
                         return GetAlertTable(v, isRetailerSelected);
+                    case WebConstantes.Module.Type.analysis:
+                        return GetAnalysisTable(v, isRetailerSelected);
                     case WebConstantes.Module.Type.tvSponsorship:
                         return WebApplicationParameters.GetDataTable(TableIds.dataSponsorship, isRetailerSelected);
 
@@ -4500,7 +4502,54 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="v">Vehicle</param>
         /// <returns>Object Table</returns>
-        internal static Table GetAlertTable(VehicleInformation v, bool isRetailerSelected)
+        internal static Table GetAlertTable(VehicleInformation v, bool isRetailerSelected) {
+            switch (v.Id) {
+                case DBClassificationConstantes.Vehicles.names.press:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataPressInterAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.indoor:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataInDoorAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrackAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.czinternet:
+                case DBClassificationConstantes.Vehicles.names.internet:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.directMarketing:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMailAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.cinema:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataCinemaAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.evaliantMobile:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobileAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.mms:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMmsAlert, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.search:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataSearchAlert, isRetailerSelected);
+                default:
+                    throw new SQLGeneratorException("Unknown vehicle.");
+            }
+        }
+        /// <summary>
+        /// Get Analysis Table
+        /// </summary>
+        /// <param name="v">Vehicle</param>
+        /// <returns>Object Table</returns>
+        internal static Table GetAnalysisTable(VehicleInformation v, bool isRetailerSelected)
         {
             switch (v.Id)
             {

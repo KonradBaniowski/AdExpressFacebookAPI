@@ -196,7 +196,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
                 // Tables // TODO ADNETTRACK ??
                 sql.Append(" from ");
-                sql.Append(GetTables(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, webSession.PreformatedMediaDetail, webSession));
+                sql.Append(GetTables(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, webSession.PreformatedMediaDetail, webSession, dateBegin, dateEnd));
 
                 // Conditions de jointure
                 sql.Append(" Where ");
@@ -342,7 +342,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				GetSqlFields(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), sql, webSession, ref hasDetailLevelSelect, detailLevelList);			
 
 				//Tables
-				GetSqlTables(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), webSession, sql, detailLevelList);
+                GetSqlTables(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), webSession, sql, detailLevelList, dateBegin, dateEnd);
 			
 				// Conditions de jointure
 				sql.Append(" Where ");
@@ -1102,13 +1102,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="webSession">Session du client</param>
 		/// <param name="sql">Chaine sql</param>
 		/// <param name="detailLevelList">Liste des niveaux de détail</param>
-		private static void GetSqlTables(DBClassificationConstantes.Vehicles.names idVehicle, WebSession webSession, StringBuilder sql, ArrayList detailLevelList) {
+        private static void GetSqlTables(DBClassificationConstantes.Vehicles.names idVehicle, WebSession webSession, StringBuilder sql, ArrayList detailLevelList, int dateBegin, int dateEnd) {
 			
 			string tableName = "";
 			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
-			if (WebFunctions.Modules.IsSponsorShipTVModule(webSession))
-				tableName = DBConstantes.Tables.DATA_SPONSORSHIP;
-			else tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
+            if (WebFunctions.Modules.IsSponsorShipTVModule(webSession))
+                tableName = DBConstantes.Tables.DATA_SPONSORSHIP;
+            else {
+                if (Dates.Is4M(dateBegin))
+                    tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, WebConstantes.Module.Type.alert, webSession.IsSelectRetailerDisplay);
+                else
+                    tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, WebConstantes.Module.Type.analysis, webSession.IsSelectRetailerDisplay);
+            }
 
 			sql.Append(" from ");
 			sql.Append(" " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + tableName + " " + DbTables.WEB_PLAN_PREFIXE);
@@ -1129,11 +1134,16 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="preformatedMediaDetail">Niveau de détail média</param>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Chaîne contenant les tables</returns>
-        private static string GetTables(DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails preformatedMediaDetail, WebSession webSession){
+        private static string GetTables(DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails preformatedMediaDetail, WebSession webSession, int dateBegin, int dateEnd) {
 			string sql="";
 			string tableName="";
 			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
-			tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle,currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
+            if(currentModuleDescription.ModuleType == WebConstantes.Module.Type.tvSponsorship)
+                tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, WebConstantes.Module.Type.tvSponsorship, webSession.IsSelectRetailerDisplay);
+            else if (Dates.Is4M(dateBegin))
+                tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, WebConstantes.Module.Type.alert, webSession.IsSelectRetailerDisplay);
+            else
+                tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, WebConstantes.Module.Type.analysis, webSession.IsSelectRetailerDisplay);
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
 			

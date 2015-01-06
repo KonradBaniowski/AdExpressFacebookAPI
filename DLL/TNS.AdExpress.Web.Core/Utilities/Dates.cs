@@ -669,7 +669,34 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
         }
         #endregion
-      
+
+        #region Is 4M
+        /// <summary>
+        /// Is 4M
+        /// </summary>
+        /// <param name="startDate">Start date</param>
+        /// <returns>true if 4M</returns>
+        public static bool Is4M(int startDate) {
+
+            return Is4M(startDate.ToString());
+
+        }
+        /// <summary>
+        /// Is 4M
+        /// </summary>
+        /// <param name="startDate">Start date</param>
+        /// <returns>true if 4M</returns>
+        public static bool Is4M(string startDate) {
+
+            int month4M = DateTime.Now.AddMonths(-3).Year * 100 + DateTime.Now.AddMonths(-3).Month;
+            int date = Convert.ToInt32(startDate.Substring(0, 6));
+
+            if (date >= month4M) return true;
+
+            return false;
+
+        }
+        #endregion
 
     }
 }

@@ -144,8 +144,12 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
                 #region Récupération des noms de tables et de champs suivant le média(vehcile)
                 TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
                 string tablePrefixe = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-                tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
-
+                if(currentModuleDescription.ModuleType == Constantes.Web.Module.Type.tvSponsorship)
+                    tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, Constantes.Web.Module.Type.tvSponsorship, webSession.IsSelectRetailerDisplay);
+                else if (Dates.Is4M(beginingDate))
+                    tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, Constantes.Web.Module.Type.alert, webSession.IsSelectRetailerDisplay);
+                else
+                    tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, Constantes.Web.Module.Type.analysis, webSession.IsSelectRetailerDisplay);
                 #endregion
 
                 #region Construction de la requête

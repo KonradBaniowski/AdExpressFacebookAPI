@@ -267,7 +267,12 @@ namespace TNS.AdExpressI.Insertions.DAL
 
                     /* Get table for the current media type and according to the current module
                      * */
-                    dataTable = GetDataTable(v, module.ModuleType);
+                    if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                        dataTable = GetDataTable(v, CstWeb.Module.Type.tvSponsorship);
+                    else if(Dates.Is4M(fromDate))
+                        dataTable = GetDataTable(v, CstWeb.Module.Type.alert);
+                    else
+                        dataTable = GetDataTable(v, CstWeb.Module.Type.analysis);
 
                     if (!first)
                         sql.Append(" UNION ");
@@ -337,7 +342,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 /* Get the data table description object according to the media type (vehicle) and the module type (moduleType)
                  * */
-                return SQLGenerator.GetDataTable(vehicle, _module.ModuleType, _session.IsSelectRetailerDisplay);
+                return SQLGenerator.GetDataTable(vehicle, moduleType, _session.IsSelectRetailerDisplay);
             }
             else
             {
@@ -711,7 +716,13 @@ namespace TNS.AdExpressI.Insertions.DAL
             /* Get the table name for a specific vehicle and depending on the module type
              * Example : data_press, data_tv, data_radio ...
              * */
-            Table tData = GetDataTable(vehicle, _module.ModuleType);
+            Table tData;
+            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
+            else if(Dates.Is4M(fromDate))
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
+            else
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
             /* Get the data base shema
              * */
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
@@ -800,7 +811,13 @@ namespace TNS.AdExpressI.Insertions.DAL
             /* Get the table name for a specific vehicle and depending on the module type
              * Example : data_press, data_tv, data_radio ...
              * */
-            Table tData = GetDataTable(vehicle, _module.ModuleType);
+            Table tData;
+            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
+            else if(Dates.Is4M(fromDate))
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
+            else
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
             /* Get the data base shema
              * */
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
@@ -888,7 +905,13 @@ namespace TNS.AdExpressI.Insertions.DAL
             /* Get the table name for a specific vehicle and depending on the module type
              * Example : data_press, data_tv, data_radio ...
              * */
-            Table tData = GetDataTable(vehicle, _module.ModuleType);
+            Table tData;
+            if(_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
+            else if(Dates.Is4M(fromDate))
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
+            else
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
             /* Get the data base shema
              * */
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
@@ -2171,7 +2194,14 @@ namespace TNS.AdExpressI.Insertions.DAL
             Table TblFormat = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format);
 
             //Ge table name
-            string tableName = GetTableName(vehicleInformation, _module);
+            string tableName = string.Empty;
+
+            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.tvSponsorship);
+            else if(Dates.Is4M(beginingDate))
+                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.alert);
+            else
+                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.analysis);
 
             //Ge table prefix
             string tablePrefixe = GetTablePrefix();
@@ -2448,7 +2478,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="currentModuleDescription">current Module Description</param>
         /// <returns>table name</returns>
         protected virtual string GetTableName(VehicleInformation vehicleInformation,
-            TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription)
+            CstWeb.Module.Type moduleType)
         {
             string tableName = string.Empty;;
 
@@ -2462,7 +2492,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 tableName = FctWeb.SQLGenerator.
                     GetVehicleTableNameForDetailResult(vehicleInformation.Id,
-                    currentModuleDescription.ModuleType, _session.IsSelectRetailerDisplay);
+                    moduleType, _session.IsSelectRetailerDisplay);
             }
             return tableName;
         }

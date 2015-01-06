@@ -92,7 +92,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			try{
 				//tableName = GetTable((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()),webSession.CurrentModule);
-                tableName = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
+                if(currentModuleDescription.ModuleType == WebConstantes.Module.Type.tvSponsorship)
+                    tableName = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), WebConstantes.Module.Type.tvSponsorship, webSession.IsSelectRetailerDisplay);
+                else if (Dates.Is4M(dateBegin))
+                    tableName = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), WebConstantes.Module.Type.alert, webSession.IsSelectRetailerDisplay);
+                else
+                    tableName = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), WebConstantes.Module.Type.analysis, webSession.IsSelectRetailerDisplay);
 				fields = GetFields(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())));
 				element=GetIdElement(webSession,idElement,level,idVehicle);
 			}

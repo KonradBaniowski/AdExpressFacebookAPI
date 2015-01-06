@@ -72,7 +72,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 //			bool premier = true;
 
 			StringBuilder sql= new StringBuilder(5000);
-
 			#endregion
 
 			#region Construction de la requête
@@ -84,8 +83,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 					// Tables TODO ADNETTRACK
 					sql.Append(" from ");
-					sql.Append(GetTables(VehiclesInformation.DatabaseIdToEnum(idVehicle)));
-
+                    if (Dates.Is4M(dateBegin))
+                        sql.Append(GetTables(VehiclesInformation.DatabaseIdToEnum(idVehicle), WebConstantes.Module.Type.alert));
+                    else
+                        sql.Append(GetTables(VehiclesInformation.DatabaseIdToEnum(idVehicle), WebConstantes.Module.Type.analysis));
 					// Conditions de jointure
 					sql.Append(" Where ");
 					GetJoinConditions(sql, VehiclesInformation.DatabaseIdToEnum(idVehicle), DbTables.WEB_PLAN_PREFIXE, false, siteLanguage);
@@ -390,13 +391,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <summary>
 		///Obtient les tables correspondants au détail media demandée par le client. 
 		/// </summary>
-		/// <param name="idVehicle">Identifiant du média (vehicle)</param>			
+		/// <param name="idVehicle">Identifiant du média (vehicle)</param>		
+        /// <param name="moduleType">Module Type</param>
 		/// <returns>Chaîne contenant les tables</returns>
-		private static string GetTables(DBClassificationConstantes.Vehicles.names idVehicle){
+		private static string GetTables(DBClassificationConstantes.Vehicles.names idVehicle, TNS.AdExpress.Constantes.Web.Module.Type moduleType){
 			string sql="";
 			string tableName="";
-			
-			tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle,TNS.AdExpress.Constantes.Web.Module.Type.analysis, false);
+
+            tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, moduleType, false);
 
 			sql+=GetMediaTables();		
 			sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GROUP_+ "  "+DbTables.GROUP_PREFIXE;

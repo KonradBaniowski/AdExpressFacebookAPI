@@ -37,6 +37,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
 using System.Reflection;
 using System.Collections;
+using TNS.AdExpress.Web.Core.Utilities;
 
 #endregion
 
@@ -902,8 +903,10 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
                
 				//Get data table name
-                dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
-				
+                if (Dates.Is4M(customerPeriod.StartDate))
+                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert, _session.IsSelectRetailerDisplay);
+                else
+                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
 				//Get date field label
 				dateField = CstDB.Fields.DATE_MEDIA_NUM;
 

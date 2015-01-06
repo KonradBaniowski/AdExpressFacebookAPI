@@ -35,6 +35,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.Rules.Results{
 	/// <summary>
@@ -1224,8 +1225,13 @@ namespace TNS.AdExpress.Web.Rules.Results{
 								if(idSelectedVehicle[i] != null && idSelectedVehicle[i].ToString().Length>0 && int.Parse(idSelectedVehicle[i].ToString()) == VehiclesInformation.EnumToDatabaseId(CstClassification.DB.Vehicles.names.internet)){
 									//Remplacer média Internet par Adnettrack
 									idSelectedVehicle[i] =  CstClassification.DB.Vehicles.names.adnettrack.GetHashCode().ToString();
-								}								
-								tableName =  WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())),currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
+								}
+                                if(currentModuleDescription.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                                    tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())), CstWeb.Module.Type.tvSponsorship, webSession.IsSelectRetailerDisplay);
+                                else if (Dates.Is4M(dateBegin))
+                                    tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())), CstWeb.Module.Type.alert, webSession.IsSelectRetailerDisplay);
+                                else
+                                    tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())), CstWeb.Module.Type.analysis, webSession.IsSelectRetailerDisplay);
 							}
 							if(tableName.Length>0) {								
 								ds = MediaCreationDataAccess.GetIdsVehicle(webSession,0,tableName,dateBegin,dateEnd,idSelectedVehicle[i].ToString());
@@ -1250,8 +1256,13 @@ namespace TNS.AdExpress.Web.Rules.Results{
 							if(idSelectedVehicle[i] != null && idSelectedVehicle[i].ToString().Length>0 && int.Parse(idSelectedVehicle[i].ToString()) == CstClassification.DB.Vehicles.names.internet.GetHashCode()){
 								//Remplacer média Internet par Adnettrack
 								idSelectedVehicle[i] =  VehiclesInformation.EnumToDatabaseId(CstClassification.DB.Vehicles.names.adnettrack).ToString();
-							}							
-							tableName =  WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())),currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
+							}
+                            if(currentModuleDescription.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                                tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())), CstWeb.Module.Type.tvSponsorship, webSession.IsSelectRetailerDisplay);
+                            else if (Dates.Is4M(dateBegin))
+                                tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())), CstWeb.Module.Type.alert, webSession.IsSelectRetailerDisplay);
+                            else
+                                tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())), CstWeb.Module.Type.analysis, webSession.IsSelectRetailerDisplay);
 						}
 						if(tableName.Length>0) {							 
 							ds = MediaCreationDataAccess.GetIdsVehicle(webSession,mediaImpactedList,tableName,dateBegin,dateEnd,idSelectedVehicle[i].ToString());

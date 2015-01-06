@@ -123,10 +123,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
                 Module module = ModulesList.GetModule(session.CurrentModule);
                 if(vehicle != DBClassifCst.Vehicles.names.internet) {
-                    dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, module.ModuleType, session.IsSelectRetailerDisplay);
+                    if(module.ModuleType == WebCst.Module.Type.tvSponsorship)
+                        dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, WebCst.Module.Type.tvSponsorship, session.IsSelectRetailerDisplay);
+                    else if (Dates.Is4M(fromDate))
+                        dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, WebCst.Module.Type.alert, session.IsSelectRetailerDisplay);
+                    else
+                        dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, WebCst.Module.Type.analysis, session.IsSelectRetailerDisplay);
                 }
                 else {
-                    dataTable = GetInternetTable(session, module.ModuleType);
+                    if (Dates.Is4M(fromDate))
+                        dataTable = GetInternetTable(session, WebCst.Module.Type.alert);
+                    else
+                        dataTable = GetInternetTable(session, WebCst.Module.Type.analysis);
                 }
                 sql.Append("select ");
                 GetFields(sql, vehicle,showProduct);
@@ -183,10 +191,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 string dataTable;
                 foreach (int i in vehicles) {
                     if(DBClassifCst.Vehicles.names.internet != VehiclesInformation.DatabaseIdToEnum(i)) {
-						dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(i), module.ModuleType, session.IsSelectRetailerDisplay);
+                        if(module.ModuleType == WebCst.Module.Type.tvSponsorship)
+                            dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(i), WebCst.Module.Type.tvSponsorship, session.IsSelectRetailerDisplay);
+                        else if (Dates.Is4M(fromDate))
+                            dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(i), WebCst.Module.Type.alert, session.IsSelectRetailerDisplay);
+                        else
+                            dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(i), WebCst.Module.Type.analysis, session.IsSelectRetailerDisplay);
                     }
                     else {
-                        dataTable = GetInternetTable(session, module.ModuleType);
+                        if (Dates.Is4M(fromDate))
+                            dataTable = GetInternetTable(session, WebCst.Module.Type.alert);
+                        else
+                            dataTable = GetInternetTable(session, WebCst.Module.Type.analysis);
                     }
 
                     if (session.CurrentModule == WebCst.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE
