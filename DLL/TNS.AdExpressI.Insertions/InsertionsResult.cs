@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TNS.AdExpress.Domain;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CsCustomer = TNS.AdExpress.Constantes.Customer;
@@ -1053,6 +1054,10 @@ namespace TNS.AdExpressI.Insertions
                     case Vehicles.names.directMarketing:
                         tab[cLine, 1] = c = new CellInsertionVMCInformation(_session, columns, columnsName, cells);
                         break;
+                    case Vehicles.names.press:
+                        c = new CellInsertionInformation(_session, columns, columnsName, cells) { HasCopyright = HasPressCopyright(row) };
+                        tab[cLine, 1] = c;
+                        break;
                     default:
                         tab[cLine, 1] = c = new CellInsertionInformation(_session, columns, columnsName, cells);
                         break;
@@ -1107,6 +1112,9 @@ namespace TNS.AdExpressI.Insertions
                         break;
                     case CstDBClassif.Vehicles.names.evaliantMobile:
                         tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
+                        break;
+                    case CstDBClassif.Vehicles.names.press:
+                        tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module){HasCopyright = HasPressCopyright(row)};
                         break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
@@ -1167,6 +1175,9 @@ namespace TNS.AdExpressI.Insertions
                     case Vehicles.names.evaliantMobile:
                         tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle,
                             columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
+                        break;
+                      case Vehicles.names.press:
+                        tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet){HasCopyright = HasPressCopyright(row)};
                         break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
@@ -1658,6 +1669,18 @@ namespace TNS.AdExpressI.Insertions
             return (disponibility <= 10 && activation <= 100 && idMedia > 0 && dateCoverNum > 0);
         }
 
+        protected virtual bool HasPressCopyright(DataRow row)
+        {
+         
+            if (row.Table.Columns.Contains("id_media") && row["id_media"] != DBNull.Value)
+            {
+               long idMedia = Convert.ToInt64(row["id_media"]);
+               string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
+               var notAllowedMediaIds = ids.Split(',').Select( p => Convert.ToInt64(p)).ToList();
+                return !notAllowedMediaIds.Contains(idMedia);
+            }
+            return true;
+        }
         #endregion
 
         #region GetCreativePathPress

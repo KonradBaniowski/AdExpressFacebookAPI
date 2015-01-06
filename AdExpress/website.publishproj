@@ -152,10 +152,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
       <Project>{AFC56975-EB58-416A-84A9-564F2537D4BA}</Project>
       <Name>TNS.AdExpressI.Portofolio.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DLL\TNS.AdExpressI.Portofolio.Default\TNS.AdExpressI.Portofolio.Default.csproj">
-      <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>
-      <Name>TNS.AdExpressI.Portofolio.Default</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DLL\TNS.AdExpressI.Portofolio\TNS.AdExpressI.Portofolio.csproj">
       <Project>{7E85C26D-A9C8-40CD-B98D-AD04E96D340B}</Project>
       <Name>TNS.AdExpressI.Portofolio</Name>

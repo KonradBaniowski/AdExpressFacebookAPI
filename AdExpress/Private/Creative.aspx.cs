@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -121,7 +122,12 @@ namespace AdExpress.Private
                     // On Met à jour la session avec les paramètres
                     webSession.CurrentModule = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
                     webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
-                    webSession.Unit = UnitsInformation.DefaultCurrency;
+
+                    if (vehicleListId.Count == 1 && VehiclesInformation.Get(vehicleListId[0]).Id == Vehicles.names.adnettrack)
+                    {                       
+                          webSession.Unit = WebConstantes.CustomerSessions.Unit.occurence;
+                    }
+                    else  webSession.Unit = UnitsInformation.DefaultCurrency;
 
                     webSession.LastReachedResultUrl = string.Empty;
 
@@ -219,12 +225,16 @@ namespace AdExpress.Private
                     #region Niveau de détail générique
                     var levels = new ArrayList { 1, 2, 3 };
                     webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                    webSession.GenericAdNetTrackDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
                     #endregion
 
                     webSession.SiteLanguage = _siteLanguage;
                     //Sauvegarder la session
                     webSession.Save();
-                    Response.Redirect("/Private/Results/CreativeMediaPlanResults.aspx?idSession=" + webSession.IdSession);
+                    //if (vehicleListId.Count==1)
+                    //    Response.Redirect("/Private/Results/CreativeMediaPlanResults.aspx?idSession=" + webSession.IdSession + "&idvehicle=" + vehicleListId[0]);
+                    //else
+                        Response.Redirect("/Private/Results/CreativeMediaPlanResults.aspx?idSession=" + webSession.IdSession);
                     Response.Flush();
 
                 }
@@ -280,8 +290,8 @@ namespace AdExpress.Private
                     case 8: newVehicle.Add(5);
                         break;
                     case 9: newVehicle.Add(6); break;
-                    case 20: newVehicle.Add(9);
-                        break;
+                    case 20: newVehicle.Add(9); break;   
+                    case 6: newVehicle.Add(8);break;                       
                     default: newVehicle.Add(p); break;
 
                 }

@@ -85,6 +85,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Column Indexes
         /// </summary>
         protected Dictionary<GenericColumnItemInformation.Columns, Int32> _columnIndex = new Dictionary<GenericColumnItemInformation.Columns, Int32>();
+
+       
         #endregion
 
         #region Accessors
@@ -279,20 +281,33 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             #region visuals
             bool hasVisual = false;
-            str.Append("<tr><th valign=\"top\">");
-            string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
-            foreach (string s in _visuals) {
-                string[] tmp = s.Split(',');
-                foreach (string st in tmp) {
-                    str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img class=\"thumbnailDimension\" src=\"{0}\"/></a>", st, pathes);
-                    hasVisual = true;
+        
+            if (_hasCopyright)
+            {
+                str.Append("<tr><th valign=\"top\">");
+                string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
+                foreach (string s in _visuals)
+                {
+                    string[] tmp = s.Split(',');
+                    foreach (string st in tmp)
+                    {
+                        str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img class=\"thumbnailDimension\" src=\"{0}\"/></a>", st, pathes);
+                        hasVisual = true;
+                    }
                 }
+                if (!hasVisual)
+                {
+                    str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
+                }
+                str.Append("</th></tr>");
             }
-            if (!hasVisual) {
-                str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
+            else
+            {
+                str.Append("<tr ><th valign=\"top\" class=\"restrictedCreativeInfo\">");
+                str.AppendFormat("<span >{0}</span>", GestionWeb.GetWebWord(3015, _session.SiteLanguage));
+                str.Append("</th></tr>");
             }
-
-            str.Append("</th></tr>");
+           
             #endregion
 
             #region Info

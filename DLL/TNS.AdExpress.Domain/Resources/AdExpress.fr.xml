@@ -2263,5 +2263,7 @@
     <item mnemonic="w3012" type="System.String">A retenir pour le calcul de vos parts de voix : Paid Search : pression publicitaire en net</item>
     <item mnemonic="w3013" type="System.String">TV Nat.&lt;br&gt;TV TNT (réelle)&lt;br&gt;(+ Parrainage)</item>
     <item mnemonic="w3014" type="System.String">TV TNT déclaratives&lt;br&gt;TV Thématiques</item>
+    <!-- Add Text for copyright-->
+    <item mnemonic="w3015" type="System.String">L'accès à ce magazine n’est pas autorisé par l'éditeur.&lt;br&gt; Kantar Media met tout en œuvre pour obtenir &lt;br&gt;un rétablissement de l'accès à la copie digitale de ce support.</item>
   </items>
 </localization>

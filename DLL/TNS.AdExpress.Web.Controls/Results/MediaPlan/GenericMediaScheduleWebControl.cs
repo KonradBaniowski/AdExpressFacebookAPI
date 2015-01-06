@@ -40,7 +40,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// <summary>
         /// Timeout des scripts utilisés par AjaxPro
         /// </summary>
-        protected int _ajaxProTimeOut = 60;
+        protected int _ajaxProTimeOut = 300;
         /// <summary>
         /// Session du client
         /// </summary>
@@ -89,7 +89,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         [Bindable(true),
         Category("Ajax"),
         Description("Timeout des scripts utilisés par AjaxPro"),
-        DefaultValue("60")]
+        DefaultValue("300")]
         public int AjaxProTimeOut
         {
             get { return _ajaxProTimeOut; }

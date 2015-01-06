@@ -63,14 +63,21 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Vehicle
         /// </summary>
         protected VehicleInformation _vehicle = null;
+
+        /// <summary>
+        /// if has creative copyright
+        /// </summary>
+        protected bool _hasCopyright = true;
         #endregion
 
         #region Properties
         /// <summary>
         /// Get Number Visuals
         /// </summary>
-        public Int64 NbVisuals {
-            get {
+        public Int64 NbVisuals
+        {
+            get
+            {
                 if (_visuals != null)
                     return _visuals.Count;
                 else
@@ -80,8 +87,17 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// <summary>
         /// Get Visuals
         /// </summary>
-        public List<string> Visuals {
-            get {return _visuals;}
+        public List<string> Visuals
+        {
+            get { return _visuals; }
+        }
+        /// <summary>
+        /// Get / Set if has creative copyright
+        /// </summary>
+        public bool HasCopyright
+        {
+            get { return _hasCopyright; }
+            set { _hasCopyright = value; }
         }
         #endregion
 
@@ -92,7 +108,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// <param name="label">Texte</param>
         public CellInsertionInformation(WebSession session, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells)
         {
-            InitCellsValue(session,columns,columnNames,cells);
+            InitCellsValue(session, columns, columnNames, cells);
         }
         #endregion
 
@@ -168,24 +184,32 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             //visuals
             bool hasVisual = false;
-            str.Append("<td valign=\"top\">");
-            string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette",string.Empty);
-            foreach (string s in _visuals)
+            if (_hasCopyright)
             {
-                string[] tmp = s.Split(',');
-                foreach (string st in tmp)
+                str.Append("<td valign=\"top\">");
+                string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
+                foreach (string s in _visuals)
                 {
-                    str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img class=\"thumbnailDimension\" src=\"{0}\"/></a>", st, pathes);
-                    hasVisual = true;
+                    string[] tmp = s.Split(',');
+                    foreach (string st in tmp)
+                    {
+                        str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img class=\"thumbnailDimension\" src=\"{0}\"/></a>", st, pathes);
+                        hasVisual = true;
+                    }
                 }
+                if (!hasVisual)
+                {
+                    str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
+                }
+
+                str.Append("</td>");
             }
-            if (!hasVisual)
+            else
             {
-                str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
+                str.Append("<td valign=\"top\">");
+                str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(3015, _session.SiteLanguage));
+                str.Append("</td>");
             }
-
-            str.Append("</td>");
-
 
             //Informations
             str.Append("<td><table>");
@@ -284,7 +308,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 if (cCell is CellUnit)
                 {
                     if (g.Id == GenericColumnItemInformation.Columns.numberBoard &&
-                        (cValue == null || cValue.Length == 0)) ((CellUnit)cCell).SetCellValue(null);                      
+                        (cValue == null || cValue.Length == 0)) ((CellUnit)cCell).SetCellValue(null);
                     else ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
                 }
                 else
