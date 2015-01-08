@@ -502,7 +502,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                 case GenericColumnItemInformation.Columns.visual://Visual press
                                     if (_showCreative)
                                     {
-                                        if (row[Column.DataBaseField].ToString().Length > 0)
+                                        if (  row[Column.DataBaseField].ToString().Length > 0 && HasPressCopyright(_idMedia))
                                         {
                                             // Creation
                                             files = row[Column.DataBaseField].ToString().Split(',');
@@ -662,6 +662,12 @@ namespace TNS.AdExpressI.Portofolio.Engines
         }
         #endregion
 
+        protected static bool HasPressCopyright(long idMedia)
+        {
+            string ids = Lists.GetIdList(WebCst.GroupList.ID.media, WebCst.GroupList.Type.mediaExcludedForCopyright);
+            var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+            return !notAllowedMediaIds.Contains(idMedia);
 
+        }
     }
 }

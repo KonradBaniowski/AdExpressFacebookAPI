@@ -5,34 +5,27 @@
 #endregion
 
 using System;
-using System.IO;
 using System.Data;
 using System.Collections;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Web.UI;
 using System.Reflection;
+using TNS.AdExpress.Domain;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
-using FrameWorkConstantes = TNS.AdExpress.Constantes.FrameWork;
-using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;
 using CustomerConstantes=TNS.AdExpress.Constantes.Customer;
 using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web.Navigation;
 using WebCst=TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Web.Core.Result;
-using WebFunctions = TNS.AdExpress.Web.Functions;
-
 using TNS.AdExpress.Domain.Level;
 using DBCst=TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
-
-using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpressI.Portofolio.VehicleView;
@@ -367,39 +360,43 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <returns>Dates parution</returns>
 		public virtual Dictionary<string, string> GetVisualList(string beginDate, string endDate) {
 			var dic = new Dictionary<string, string>();
-			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-			var parameters = new object[5];
-			parameters[0] = _webSession;
-			parameters[1] = _vehicleInformation;
-			parameters[2] = _idMedia;
-			parameters[3] = beginDate;
-			parameters[4] = endDate;
-			string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-			var portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
-                + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-			var ds = portofolioDAL.GetListDate(true, _tableType);
 
-			if (_mediaList == null) {
-				try {
-					string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
-					if(mediaList!=null && mediaList.Length>0)
-						_mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, Convert.ToInt64));					
-				}
-				catch { }
-			}
-			dic.Clear();
-			foreach (DataRow dr in ds.Tables[0].Rows) {
-				if (dr["disponibility_visual"] != System.DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10) {
-					if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-						dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_media_num"].ToString()
-                            + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
-					else dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_cover_num"].ToString() 
-                        + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
-				}
-				else
-					dic.Add(dr["date_media_num"].ToString(), "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif");
-			}
+            if(HasPressCopyright(_idMedia))
+            {
+                if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+                var parameters = new object[5];
+                parameters[0] = _webSession;
+                parameters[1] = _vehicleInformation;
+                parameters[2] = _idMedia;
+                parameters[3] = beginDate;
+                parameters[4] = endDate;
+                string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+                var portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
+                                                                                                        + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                                                                                                                                                                                                    | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+                var ds = portofolioDAL.GetListDate(true, _tableType);
+
+                if (_mediaList == null) {
+                    try {
+                        string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
+                        if(mediaList!=null && mediaList.Length>0)
+                            _mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, Convert.ToInt64));					
+                    }
+                    catch { }
+                }
+                dic.Clear();
+                foreach (DataRow dr in ds.Tables[0].Rows) {
+                    if (dr["disponibility_visual"] != DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10) {
+                        if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+                            dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_media_num"].ToString()
+                                                                     + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+                        else dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_cover_num"].ToString() 
+                                                                      + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+                    }
+                    else
+                        dic.Add(dr["date_media_num"].ToString(), "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif");
+                }
+            }
 			return dic;
 		}
 		#endregion
@@ -458,6 +455,9 @@ namespace TNS.AdExpressI.Portofolio {
 
                     if (dtVisuel!=null)
                     {
+                        bool hasCopyright = true;
+                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press) hasCopyright = HasPressCopyright(_idMedia);
+
                         for (int i = 0; i < dtVisuel.Rows.Count; i++)
                         {
                             //date_media_num
@@ -533,6 +533,7 @@ namespace TNS.AdExpressI.Portofolio {
                                                                        htValue[dtVisuel.Rows[i]["date_cover_num"]])[0])
                                                                      .ToString("### ### ### ###"),
                                                                   _webSession.SiteLanguage, coverItem);
+                                    vehicleItem.HasCopyright = hasCopyright;
                                 }
                                 else
                                 {
@@ -719,6 +720,14 @@ namespace TNS.AdExpressI.Portofolio {
 		}
 		#endregion
 
-		
+        protected virtual bool HasPressCopyright(long idMedia)
+        {
+
+                         
+                string ids = Lists.GetIdList(WebCst.GroupList.ID.media, WebCst.GroupList.Type.mediaExcludedForCopyright);
+                var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+                return !notAllowedMediaIds.Contains(idMedia);
+                      
+        }
 	}
 }

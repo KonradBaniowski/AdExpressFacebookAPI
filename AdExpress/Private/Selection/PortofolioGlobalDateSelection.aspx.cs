@@ -99,7 +99,7 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
             CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
             object[] param = new object[1];
             param[0] = _webSession;
-            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
 			if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) {
 
@@ -389,7 +389,7 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 		object[] parameters = new object[2];
 		parameters[0] = _webSession;
 		parameters[1] = TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle;
-		Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+		Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
         int nbYears = WebApplicationParameters.DataNumberOfYear-1;
         return portofolioResult.GetVisualList(DateTime.Now.AddYears(-nbYears).ToString("yyyy0101"), DateTime.Now.ToString("yyyyMMdd"));
 		//return null;
