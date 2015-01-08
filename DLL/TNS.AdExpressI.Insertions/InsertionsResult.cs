@@ -430,10 +430,9 @@ namespace TNS.AdExpressI.Insertions
             }
             else {
                 sloganDetail += "\n<tr><td class=\"sloganVioletBackGround\" >";
-                sloganDetail += "\n<img border=0 "
-                    + " width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
-                    + " alt=\"" + GestionWeb.GetWebWord(3015, _session.SiteLanguage) + "\">";
-                sloganDetail += "\n</a>";
+                sloganDetail += "\n<img title=\"" + GestionWeb.GetWebWord(3015, _session.SiteLanguage).Replace("<br>", "") + "\" "
+                    + "  border=0 width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
+                    + " />";
                 sloganDetail += "\n</td></tr>";
             }
             sloganDetail += "\n<tr><td  nowrap align=\"center\">";

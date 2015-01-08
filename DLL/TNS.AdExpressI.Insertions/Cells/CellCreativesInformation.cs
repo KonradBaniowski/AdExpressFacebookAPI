@@ -372,10 +372,9 @@ namespace TNS.AdExpressI.Insertions.Cells
             }
             else {
                 str.Append("<td class=\"sloganVioletBackGround\" >");
-                str.Append("<a class=\"Tips1\" href =\"\" title=\"" + GestionWeb.GetWebWord(3015, _session.SiteLanguage).Replace("<br>","") + "\"><img border=0 "
-                    + " width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
-                    + ">");
-                str.Append("</a>");
+                str.Append("<img title=\"" + GestionWeb.GetWebWord(3015, _session.SiteLanguage).Replace("<br>", "") + "\" "
+                    + " border=0 width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
+                    + "/>");
                 str.Append("</span></td>");
             }
 

@@ -87,10 +87,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions {
             }
             else {
                 output.Append("<td class=\"sloganVioletBackGround\" >");
-                output.Append("<img border=0 "
-                    + " width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
-                    + " alt=\"" + GestionWeb.GetWebWord(3015, this._webSession.SiteLanguage) + "\">");
-                output.Append("</a>");
+                output.Append("<img title=\"" + GestionWeb.GetWebWord(3015, this._webSession.SiteLanguage).Replace("<br>", "") + "\" "
+                    + " border=0 width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
+                    + " />");
                 output.Append("</td>");
             }
 			output.Append("</tr></table>");			
