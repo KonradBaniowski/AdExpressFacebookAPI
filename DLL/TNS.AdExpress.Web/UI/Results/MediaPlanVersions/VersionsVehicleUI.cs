@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
+using System.Linq;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
@@ -30,6 +31,8 @@ using TNS.FrameWork.WebResultUI;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.Insertions.Cells;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain;
+using TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 {
@@ -351,11 +354,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								}
 								if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE){
                                     if (row["dateKiosque"] != System.DBNull.Value) item.Parution = row["dateKiosque"].ToString();
-									else item.Parution=""; 
-									versionUi = new VersionPressAPPMUI(this._webSession, item);
+									else item.Parution="";
+                                    versionUi = new VersionPressAPPMUI(this._webSession, item) { HasCopyright = HasPressCopyright(row) };
 								}
 								else{
-									versionUi = new VersionPressUI(this._webSession, item);
+                                    versionUi = new VersionPressUI(this._webSession, item) { HasCopyright = HasPressCopyright(row) };
 								}
 								break;
 
@@ -363,7 +366,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								if (path.Length>0){
 									item.Path = path.Substring(0, path.Length - 1);
 								}
-								versionUi = new VersionPressUI(this._webSession, item);
+                                versionUi = new VersionPressUI(this._webSession, item) { HasCopyright = HasPressCopyright(row) };
 								break;
 
                             case DBCst.Vehicles.names.directMarketing:
@@ -667,6 +670,16 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             string dir3 = idSlogan.Substring(idSlogan.Length - 3, 1);
             path = string.Format(@"{0}/{1}/imagette", path, dir3);
             return path;
+        }
+        protected bool HasPressCopyright(DataRow row) {
+
+            if (row.Table.Columns.Contains("idmedia") && row["idmedia"] != DBNull.Value) {
+                long idMedia = Convert.ToInt64(row["idmedia"]);
+                string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
+                var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+                return !notAllowedMediaIds.Contains(idMedia);
+            }
+            return true;
         }
 		#endregion
 

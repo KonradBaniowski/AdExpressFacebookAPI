@@ -69,7 +69,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
         /// Media Type ID
         /// </summary>
         protected long _vehicleId;
-
+        /// <summary>
+        /// if has creative copyright
+        /// </summary>
+        protected bool _hasCopyright = true;
 		#endregion
 
 		#region Accessors
@@ -143,6 +146,13 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
             set {
                 _exportInStoreVersion = value;
             }
+        }
+        /// <summary>
+        /// Get / Set if has creative copyright
+        /// </summary>
+        public bool HasCopyright {
+            get { return _hasCopyright; }
+            set { _hasCopyright = value; }
         }
 		#endregion
 	

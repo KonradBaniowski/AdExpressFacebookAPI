@@ -421,10 +421,19 @@ namespace TNS.AdExpressI.Insertions
             }
 
             string sloganDetail = "\n<table border=\"0\" width=\"50\" height=\"64\" class=\"txtViolet10\">";
-            if (vignettes.Length > 0)
-            {
-                sloganDetail += "\n<tr><td   nowrap align=\"center\">";
-                sloganDetail += vignettes;
+            if (HasPressCopyright(currentRow)) {
+                if (vignettes.Length > 0) {
+                    sloganDetail += "\n<tr><td   nowrap align=\"center\">";
+                    sloganDetail += vignettes;
+                    sloganDetail += "\n</td></tr>";
+                }
+            }
+            else {
+                sloganDetail += "\n<tr><td class=\"sloganVioletBackGround\" >";
+                sloganDetail += "\n<img border=0 "
+                    + " width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
+                    + " alt=\"" + GestionWeb.GetWebWord(3015, _session.SiteLanguage) + "\">";
+                sloganDetail += "\n</a>";
                 sloganDetail += "\n</td></tr>";
             }
             sloganDetail += "\n<tr><td  nowrap align=\"center\">";
@@ -1065,6 +1074,8 @@ namespace TNS.AdExpressI.Insertions
             }
             else
             {
+                if (!((CellCreativesInformation)tab[cLine, 1]).HasCopyright)
+                    ((CellCreativesInformation)tab[cLine, 1]).HasCopyright = HasPressCopyright(row);
                 c = (CellInsertionInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
@@ -1123,6 +1134,8 @@ namespace TNS.AdExpressI.Insertions
             }
             else
             {
+                if (!((CellCreativesInformation)tab[cLine, 1]).HasCopyright)
+                    ((CellCreativesInformation)tab[cLine, 1]).HasCopyright = HasPressCopyright(row);
                 c = (CellCreativesInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
@@ -1186,6 +1199,8 @@ namespace TNS.AdExpressI.Insertions
             }
             else
             {
+                if (!((CellCreativesInformation)tab[cLine, 1]).HasCopyright)
+                    ((CellCreativesInformation)tab[cLine, 1]).HasCopyright = HasPressCopyright(row);
                 c = (CellCreativesInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)

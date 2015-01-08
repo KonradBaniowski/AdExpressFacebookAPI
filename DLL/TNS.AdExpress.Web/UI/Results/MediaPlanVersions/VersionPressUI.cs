@@ -14,6 +14,7 @@ using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions {
 
@@ -72,16 +73,26 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions {
             string themeName = WebApplicationParameters.Themes[this._webSession.SiteLanguage].Name;
             output.Append("<tr ><td align=\"left\" class=\"sloganVioletBackGround\" >");
 			output.Append("<table align=\"left\" border=0 cellpadding=0  cellspacing=0><tr >");
-			foreach(string path in pathes){
+            if (_hasCopyright) {
+                foreach (string path in pathes) {
+                    output.Append("<td class=\"sloganVioletBackGround\" >");
+                    output.Append("<a href=\"javascript:openPressCreation('" + this._version.Path.Replace("/imagette", "") + "');\">");
+                    output.Append("<img border=0 "
+                        + ((path.Length > 0) ? " width=\"70px\" height=\"90px\" src=\"" + path + "\"" : "src=\"/App_Themes/" + themeName + "/images/common/detailSpot_down.gif\"")
+                        + ">");
+                    output.Append("</a>");
+                    output.Append("</td>");
+
+                }
+            }
+            else {
                 output.Append("<td class=\"sloganVioletBackGround\" >");
-				output.Append("<a href=\"javascript:openPressCreation('" + this._version.Path.Replace("/imagette", "") + "');\">");
-				output.Append("<img border=0 "
-					+ ((path.Length>0)?" width=\"70px\" height=\"90px\" src=\"" + path + "\"" :"src=\"/App_Themes/"+themeName+"/images/common/detailSpot_down.gif\"")
-					+ ">");
-				output.Append("</a>");
-				output.Append("</td>");	
-				
-			}
+                output.Append("<img border=0 "
+                    + " width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
+                    + " alt=\"" + GestionWeb.GetWebWord(3015, this._webSession.SiteLanguage) + "\">");
+                output.Append("</a>");
+                output.Append("</td>");
+            }
 			output.Append("</tr></table>");			
 			output.Append("</td></tr>");
 		} 

@@ -355,18 +355,28 @@ namespace TNS.AdExpressI.Insertions.Cells
             str.Append("<tr ><td align=\"left\" class=\"sloganVioletBackGround\" >");
             str.Append("<table align=\"left\" border=0 cellpadding=0  cellspacing=0><tr >");
 
-            string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
-            foreach (string s in _visuals) {
-                string[] tmp = s.Split(',');
-                foreach (string st in tmp) {
-                    str.Append("<td class=\"sloganVioletBackGround\" >");
-                    str.Append("<a href=\"javascript:openPressCreation('" + pathes + "');\">");
-                    str.Append("<img border=0 "
-                        + ((st.Length > 0) ? " width=\"70px\" height=\"90px\" src=\"" + st + "\"" : "src=\"/App_Themes/" + themeName + "/images/common/detailSpot_down.gif\"")
-                        + ">");
-                    str.Append("</a>");
-                    str.Append("</td>");
+            if (_hasCopyright) {
+                string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
+                foreach (string s in _visuals) {
+                    string[] tmp = s.Split(',');
+                    foreach (string st in tmp) {
+                        str.Append("<td class=\"sloganVioletBackGround\" >");
+                        str.Append("<a href=\"javascript:openPressCreation('" + pathes + "');\">");
+                        str.Append("<img border=0 "
+                            + ((st.Length > 0) ? " width=\"70px\" height=\"90px\" src=\"" + st + "\"" : "src=\"/App_Themes/" + themeName + "/images/common/detailSpot_down.gif\"")
+                            + ">");
+                        str.Append("</a>");
+                        str.Append("</td>");
+                    }
                 }
+            }
+            else {
+                str.Append("<td class=\"sloganVioletBackGround\" >");
+                str.Append("<a class=\"Tips1\" href =\"\" title=\"" + GestionWeb.GetWebWord(3015, _session.SiteLanguage).Replace("<br>","") + "\"><img border=0 "
+                    + " width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
+                    + ">");
+                str.Append("</a>");
+                str.Append("</span></td>");
             }
 
             str.Append("</tr></table>");
