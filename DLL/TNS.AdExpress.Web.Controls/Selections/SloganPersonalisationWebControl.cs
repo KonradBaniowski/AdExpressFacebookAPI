@@ -10,6 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Controls.Exceptions;
@@ -31,6 +32,9 @@ using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpressI.Insertions.DAL;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Insertions;
+using System.Collections.Generic;
+using TNS.AdExpress.Domain;
+using TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.Controls.Selections {
 	/// <summary>
@@ -70,6 +74,11 @@ namespace TNS.AdExpress.Web.Controls.Selections {
         /// Data Access Layer
         /// </summary>
         protected IInsertionsDAL _dalLayer;
+
+        /// <summary>
+        /// Medias By Version Id
+        /// </summary>
+        private Dictionary<Int64, List<Int64>> _mediasByVersionId;
 		#endregion
 	
 		#region Accesseurs
@@ -164,6 +173,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                             System.Reflection.BindingFlags.CreateInstance |
                             System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
                         dsSloganList = _dalLayer.GetVersions(periodBeginning, periodEnd);
+                        _mediasByVersionId = GetMediasByVersionId(dsSloganList);
                     }
 				}
 				else throw (new WebControlInitializationException("Impossible d'initialiser le composant, la session n'est pas définie"));
@@ -463,7 +473,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 							string pathWeb = string.Empty;
 
                             //Get creative links
-                            sloganDetail = _rulesLayer.GetCreativeLinks(idVehicle, currentRow);
+                            if (VehiclesInformation.DatabaseIdToEnum(idVehicle) != VhCstes.press || (VehiclesInformation.DatabaseIdToEnum(idVehicle) == VhCstes.press && HasPressCopyright(currentRow, _mediasByVersionId)))
+                                sloganDetail = _rulesLayer.GetCreativeLinks(idVehicle, currentRow);
+                            else
+                                sloganDetail = GetNoVisualHTML(currentRow);
 
 							if(numColumn==0) {								
 								output.Write("<tr>");
@@ -531,6 +544,100 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
 		#endregion
 
+        #region GetMediasByVersionId
+        /// <summary>
+        /// Get Medias By Version Id
+        /// </summary>
+        /// <param name="ds">DataSet</param>
+        /// <returns>Media list by version Id</returns>
+        private Dictionary<Int64, List<Int64>> GetMediasByVersionId(DataSet ds) {
 
-	}
+            Dictionary<Int64, List<Int64>> mediasByVersionId = new Dictionary<Int64, List<Int64>>();
+            List<Int64> medias = new List<Int64>();
+            Int64 idSloganOld = -1;
+            Int64 idSlogan = -1;
+            Int64 idVehicle = -1;
+
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0) {
+                foreach (DataRow currentRow in ds.Tables[0].Rows) {
+                    if (currentRow["id_slogan"] != null && currentRow["id_slogan"] != System.DBNull.Value && Int64.Parse(currentRow["id_slogan"].ToString()) != 0) {
+                        
+                        idSlogan = Int64.Parse(currentRow["id_slogan"].ToString());
+                        idVehicle = Int64.Parse(currentRow["id_vehicle"].ToString());
+
+                        if (VehiclesInformation.DatabaseIdToEnum(idVehicle) == VhCstes.press) {
+                            if (idSlogan != idSloganOld) {
+                                medias = new List<Int64>();
+                                medias.Add(Int64.Parse(currentRow["id_media"].ToString()));
+                                mediasByVersionId.Add(idSlogan, medias);
+                            }
+                            else {
+                                mediasByVersionId[idSlogan].Add(Int64.Parse(currentRow["id_media"].ToString()));
+                            }
+
+                            idSloganOld = idSlogan;
+                        }
+                    
+                    }
+                }
+            }
+
+            return mediasByVersionId;
+        }
+        #endregion
+
+        #region HasPressCopyright
+        /// <summary>
+        /// Has Press Copyright
+        /// </summary>
+        /// <param name="row">Row</param>
+        /// <param name="mediasByVersionId">Medias By Version Id</param>
+        /// <returns>True if has copyright press</returns>
+        protected bool HasPressCopyright(DataRow row, Dictionary<Int64, List<Int64>> mediasByVersionId) {
+
+            if (row.Table.Columns.Contains("id_slogan") && row["id_slogan"] != DBNull.Value) {
+                long idSlogan = Convert.ToInt64(row["id_slogan"]);
+                string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
+                var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+                foreach (Int64 idMedia in mediasByVersionId[idSlogan]) {
+                    if (!notAllowedMediaIds.Contains(idMedia))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+        #endregion
+
+        #region Get No Visual HTML
+        /// <summary>
+        /// Get No Visual HTML
+        /// </summary>
+        /// <param name="currentRow">currentRow</param>
+        /// <returns>HTML</returns>
+        private string GetNoVisualHTML(DataRow currentRow) {
+
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+            string sloganDetail = "\n<table border=\"0\" width=\"50\" height=\"64\" class=\"txtViolet10\">";
+            
+            sloganDetail += "\n<tr><td class=\"sloganVioletBackGround\" >";
+            sloganDetail += "\n<img title=\"" + GestionWeb.GetWebWord(3015, webSession.SiteLanguage).Replace("<br>", "") + "\" "
+                 + "  border=0 width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
+                 + " />";
+            sloganDetail += "\n</td></tr>";
+            sloganDetail += "\n<tr><td  nowrap align=\"center\">";
+            sloganDetail += currentRow["id_slogan"].ToString();
+            
+            if (currentRow["advertDimension"] != DBNull.Value && currentRow["advertDimension"] != DBNull.Value) {
+                sloganDetail += string.Format(" - {0}", currentRow["advertDimension"].ToString());
+            }
+            sloganDetail += "\n</td></tr>";
+            sloganDetail += "\n</table>";
+
+            return sloganDetail;
+
+        }
+        #endregion
+
+    }
 }

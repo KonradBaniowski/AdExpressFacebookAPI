@@ -223,13 +223,19 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			#region Get Data from persistent layer
 			//TODO Get Data from database
 			DataSet dtSet = null;
+            DataSet dtVersionAllMedia = null;
+            Dictionary<Int64, List<Int64>> mediasByVersionId = null;
 			switch(this._vehicle){
 				case DBCst.Vehicles.names.press:
 					if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE){
 						dtSet = VersionDataAccess.GetAPPMVersions(_versions.Keys, _webSession);
+                        dtVersionAllMedia = VersionDataAccess.GetAPPMVersionsAllMedia(_versions.Keys, _webSession);
+                        mediasByVersionId = GetMediasByVersionId(dtVersionAllMedia);
 					}
 					else{
 						dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession,DBCst.Vehicles.names.press,_period);
+                        dtVersionAllMedia = VersionDataAccess.GetVersionsAllMedia(_versions.Keys, _webSession, DBCst.Vehicles.names.press, _period);
+                        mediasByVersionId = GetMediasByVersionId(dtVersionAllMedia);
 					}
 					break;
 
@@ -355,10 +361,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE){
                                     if (row["dateKiosque"] != System.DBNull.Value) item.Parution = row["dateKiosque"].ToString();
 									else item.Parution="";
-                                    versionUi = new VersionPressAPPMUI(this._webSession, item) { HasCopyright = HasPressCopyright(row) };
+                                    versionUi = new VersionPressAPPMUI(this._webSession, item) { HasCopyright = HasPressCopyright(row, mediasByVersionId) };
 								}
 								else{
-                                    versionUi = new VersionPressUI(this._webSession, item) { HasCopyright = HasPressCopyright(row) };
+                                    versionUi = new VersionPressUI(this._webSession, item) { HasCopyright = HasPressCopyright(row, mediasByVersionId) };
 								}
 								break;
 
@@ -366,7 +372,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								if (path.Length>0){
 									item.Path = path.Substring(0, path.Length - 1);
 								}
-                                versionUi = new VersionPressUI(this._webSession, item) { HasCopyright = HasPressCopyright(row) };
+                                versionUi = new VersionPressUI(this._webSession, item) { };
 								break;
 
                             case DBCst.Vehicles.names.directMarketing:
@@ -671,17 +677,69 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             path = string.Format(@"{0}/{1}/imagette", path, dir3);
             return path;
         }
-        protected bool HasPressCopyright(DataRow row) {
 
-            if (row.Table.Columns.Contains("idmedia") && row["idmedia"] != DBNull.Value) {
-                long idMedia = Convert.ToInt64(row["idmedia"]);
+        #region HasPressCopyright
+        /// <summary>
+        /// Has Press Copyright
+        /// </summary>
+        /// <param name="row">Row</param>
+        /// <param name="mediasByVersionId">Medias By Version Id</param>
+        /// <returns>True if has copyright press</returns>
+        protected bool HasPressCopyright(DataRow row, Dictionary<Int64, List<Int64>> mediasByVersionId) {
+
+            if (row.Table.Columns.Contains("id") && row["id"] != DBNull.Value) {
+                long idSlogan = Convert.ToInt64(row["id"]);
                 string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
                 var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
-                return !notAllowedMediaIds.Contains(idMedia);
+                foreach (Int64 idMedia in mediasByVersionId[idSlogan]) {
+                    if (!notAllowedMediaIds.Contains(idMedia))
+                        return true;
+                }
             }
-            return true;
+
+            return false;
         }
-		#endregion
+        #endregion
+        
+        #region GetMediasByVersionId
+        /// <summary>
+        /// Get Medias By Version Id
+        /// </summary>
+        /// <param name="ds">DataSet</param>
+        /// <returns>Media list by version Id</returns>
+        private Dictionary<Int64, List<Int64>> GetMediasByVersionId(DataSet ds) {
+
+            Dictionary<Int64, List<Int64>> mediasByVersionId = new Dictionary<Int64, List<Int64>>();
+            List<Int64> medias = new List<Int64>();
+            Int64 idSloganOld = -1;
+            Int64 idSlogan = -1;
+
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0) {
+                foreach (DataRow currentRow in ds.Tables[0].Rows) {
+                    if (currentRow["id_slogan"] != null && currentRow["id_slogan"] != System.DBNull.Value && Int64.Parse(currentRow["id_slogan"].ToString()) != 0) {
+
+                        idSlogan = Int64.Parse(currentRow["id_slogan"].ToString());
+
+                        if (idSlogan != idSloganOld) {
+                            medias = new List<Int64>();
+                            medias.Add(Int64.Parse(currentRow["id_media"].ToString()));
+                            mediasByVersionId.Add(idSlogan, medias);
+                        }
+                        else {
+                            mediasByVersionId[idSlogan].Add(Int64.Parse(currentRow["id_media"].ToString()));
+                        }
+
+                        idSloganOld = idSlogan;
+
+                    }
+                }
+            }
+
+            return mediasByVersionId;
+        }
+        #endregion
+		
+        #endregion
 
 	}
 }

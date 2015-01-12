@@ -421,20 +421,13 @@ namespace TNS.AdExpressI.Insertions
             }
 
             string sloganDetail = "\n<table border=\"0\" width=\"50\" height=\"64\" class=\"txtViolet10\">";
-            if (HasPressCopyright(currentRow)) {
-                if (vignettes.Length > 0) {
-                    sloganDetail += "\n<tr><td   nowrap align=\"center\">";
-                    sloganDetail += vignettes;
-                    sloganDetail += "\n</td></tr>";
-                }
-            }
-            else {
-                sloganDetail += "\n<tr><td class=\"sloganVioletBackGround\" >";
-                sloganDetail += "\n<img title=\"" + GestionWeb.GetWebWord(3015, _session.SiteLanguage).Replace("<br>", "") + "\" "
-                    + "  border=0 width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
-                    + " />";
+
+            if (vignettes.Length > 0) {
+                sloganDetail += "\n<tr><td   nowrap align=\"center\">";
+                sloganDetail += vignettes;
                 sloganDetail += "\n</td></tr>";
             }
+            
             sloganDetail += "\n<tr><td  nowrap align=\"center\">";
             sloganDetail += currentRow["id_slogan"].ToString();
             if (currentRow["advertDimension"] != DBNull.Value && currentRow["advertDimension"] != DBNull.Value)
