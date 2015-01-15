@@ -36,7 +36,7 @@ namespace TNS.AdExpress.Web.Functions {
         /// <param name="webpath">Specify access mode (web or local network)</param>
         /// <param name="smallSize">Specify if imagetes are required</param>
         /// <returns>Entire File Path, or root path if file name is not specified</returns>
-        public static string GetCreativePath(Int64 mediaId, Int64 dateKiosque, Int64 dateCover, string filename, bool webpath, bool smallSize) {
+        public static string GetCreativePath(Int64 mediaId, Int64 dateKiosque, Int64 dateCover, string filename, bool webpath, bool smallSize,bool hasCopyRight) {
             string path = CreationServerPathes.LOCAL_PATH_IMAGE;
             char separator = '\\';
             if (webpath) {
@@ -55,16 +55,15 @@ namespace TNS.AdExpress.Web.Functions {
                 }
             }
             if (Array.IndexOf(_mediaList, mediaId.ToString()) > -1) {
-                return string.Format("{0}{1}{2}{1}{3}{1}{4}{5}", path, separator, mediaId, dateKiosque
+                return string.Format("{0}{1}{2}{1}{3}{1}{4}{5}{6}", path, separator, mediaId, dateKiosque
                     , (smallSize) ? string.Format("imagette{0}", separator) : string.Empty
+                     , (hasCopyRight) ? string.Format("blur{0}", separator) : string.Empty
                     , filename);
             }
-            else {
-                return string.Format("{0}{1}{2}{1}{3}{1}{4}{5}", path, separator, mediaId, dateCover
-                    , (smallSize) ? string.Format("imagette{0}", separator) : string.Empty
-                    , filename);
-            }
-
+            return string.Format("{0}{1}{2}{1}{3}{1}{4}{5}{6}", path, separator, mediaId, dateCover
+                                 , (smallSize) ? string.Format("imagette{0}", separator) : string.Empty
+                                 , (!hasCopyRight) ? string.Format("blur{0}", separator) : string.Empty
+                                 , filename);
         }
     }
 }

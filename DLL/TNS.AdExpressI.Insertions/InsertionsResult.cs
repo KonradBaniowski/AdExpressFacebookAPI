@@ -147,6 +147,21 @@ namespace TNS.AdExpressI.Insertions
 
         #endregion
 
+        #region UseBlurImageForPress
+
+        protected bool _useBlurImageForPress = false;
+
+        /// <summary>
+        ///Use Blur Image For Press
+        /// </summary>
+        public bool UseBlurImageForPress
+        {
+            get { return _useBlurImageForPress; }
+            set { _useBlurImageForPress = value; }
+        }
+
+        #endregion
+
         #region Constructor
         /// <summary>
         /// DEfault constructor
@@ -363,6 +378,9 @@ namespace TNS.AdExpressI.Insertions
         #endregion
 
         #region GetCreativeLinks
+
+       
+
         /// <summary>
         /// Get creative Links
         /// </summary>
@@ -508,10 +526,12 @@ namespace TNS.AdExpressI.Insertions
 
             if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE) dateField = "date_cover_num";
 
-            string pathWebImagette = string.Format("{0}/{1}/{2}/imagette/", CreationServerPathes.IMAGES, currentRow["id_media"].ToString()
-                , currentRow[dateField].ToString());
-            string pathWeb = string.Format("{0}/{1}/{2}/", CreationServerPathes.IMAGES, currentRow["id_media"].ToString()
-                , currentRow[dateField].ToString());
+            string blurDirectory = UseBlurImageForPress ? "blur/" : string.Empty;
+
+            string pathWebImagette = string.Format("{0}/{1}/{2}/imagette/{3}", CreationServerPathes.IMAGES, currentRow["id_media"].ToString()
+                , currentRow[dateField].ToString(),blurDirectory);
+            string pathWeb = string.Format("{0}/{1}/{2}/{3}", CreationServerPathes.IMAGES, currentRow["id_media"].ToString()
+                , currentRow[dateField].ToString(),blurDirectory);
 
             foreach (string file in fileList)
             {
@@ -1056,7 +1076,7 @@ namespace TNS.AdExpressI.Insertions
                         tab[cLine, 1] = c = new CellInsertionVMCInformation(_session, columns, columnsName, cells);
                         break;
                     case Vehicles.names.press:
-                        c = new CellInsertionInformation(_session, columns, columnsName, cells) { HasCopyright = HasPressCopyright(row) };
+                        c = new CellInsertionInformation(_session, columns, columnsName, cells);
                         tab[cLine, 1] = c;
                         break;
                     default:
@@ -1065,9 +1085,7 @@ namespace TNS.AdExpressI.Insertions
                 }
             }
             else
-            {
-                if (!((CellCreativesInformation)tab[cLine, 1]).HasCopyright)
-                    ((CellCreativesInformation)tab[cLine, 1]).HasCopyright = HasPressCopyright(row);
+            {                
                 c = (CellInsertionInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
@@ -1115,19 +1133,14 @@ namespace TNS.AdExpressI.Insertions
                         break;
                     case CstDBClassif.Vehicles.names.evaliantMobile:
                         tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
-                        break;
-                    case CstDBClassif.Vehicles.names.press:
-                        tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module){HasCopyright = HasPressCopyright(row)};
-                        break;
+                        break;                   
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
                 }
             }
             else
-            {
-                if (!((CellCreativesInformation)tab[cLine, 1]).HasCopyright)
-                    ((CellCreativesInformation)tab[cLine, 1]).HasCopyright = HasPressCopyright(row);
+            {                
                 c = (CellCreativesInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
@@ -1180,19 +1193,14 @@ namespace TNS.AdExpressI.Insertions
                     case Vehicles.names.evaliantMobile:
                         tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle,
                             columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
-                        break;
-                      case Vehicles.names.press:
-                        tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet){HasCopyright = HasPressCopyright(row)};
-                        break;
+                        break;                      
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
                         break;
                 }
             }
             else
-            {
-                if (!((CellCreativesInformation)tab[cLine, 1]).HasCopyright)
-                    ((CellCreativesInformation)tab[cLine, 1]).HasCopyright = HasPressCopyright(row);
+            {               
                 c = (CellCreativesInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
@@ -1688,6 +1696,17 @@ namespace TNS.AdExpressI.Insertions
             }
             return true;
         }
+
+        protected virtual bool HasPressCopyright(long idMedia)
+        {
+            string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
+            if(!string.IsNullOrEmpty(ids))
+            {
+                var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+                return !notAllowedMediaIds.Contains(idMedia);                      
+            }
+            return true;
+        }
         #endregion
 
         #region GetCreativePathPress
@@ -1704,6 +1723,7 @@ namespace TNS.AdExpressI.Insertions
         protected virtual string GetCreativePathPress(string file, Int64 idMedia, Int64 dateCoverNum, bool bigSize, Int64 dateMediaNum)
         {
             string imagette = (bigSize) ? string.Empty : "/Imagette";
+            string blurDirectory = (HasPressCopyright(idMedia)) ? string.Empty : "/blur";
 
             lock (_mutex)
             {
@@ -1719,9 +1739,9 @@ namespace TNS.AdExpressI.Insertions
             }
             if (_mediaList != null && Array.IndexOf(_mediaList, idMedia.ToString()) > -1)
             {
-                return string.Format("{0}/{1}/{2}{3}/{4}", CreationServerPathes.IMAGES, idMedia, dateMediaNum, imagette, file);
+                return string.Format("{0}/{1}/{2}{3}{4}/{5}", CreationServerPathes.IMAGES, idMedia, dateMediaNum, imagette,blurDirectory, file);
             }
-            return string.Format("{0}/{1}/{2}{3}/{4}", CreationServerPathes.IMAGES, idMedia, dateCoverNum, imagette, file);
+            return string.Format("{0}/{1}/{2}{3}{4}/{5}", CreationServerPathes.IMAGES, idMedia, dateCoverNum, imagette,blurDirectory, file);
         }
         #endregion
 

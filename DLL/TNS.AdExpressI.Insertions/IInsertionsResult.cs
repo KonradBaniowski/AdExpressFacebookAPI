@@ -33,6 +33,15 @@ namespace TNS.AdExpressI.Insertions
             set;
         }
 
+
+        /// <summary>
+        ///Use Blur Image For Press
+        /// </summary>
+        bool UseBlurImageForPress
+        {
+            get;
+            set;
+        }
         #endregion
 
         ResultTable GetInsertions(VehicleInformation vehicle, int fromDate,

@@ -64,10 +64,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         protected VehicleInformation _vehicle = null;
 
-        /// <summary>
-        /// if has creative copyright
-        /// </summary>
-        protected bool _hasCopyright = true;
+      
         #endregion
 
         #region Properties
@@ -91,14 +88,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         {
             get { return _visuals; }
         }
-        /// <summary>
-        /// Get / Set if has creative copyright
-        /// </summary>
-        public bool HasCopyright
-        {
-            get { return _hasCopyright; }
-            set { _hasCopyright = value; }
-        }
+     
         #endregion
 
         #region Constructeur
@@ -184,8 +174,7 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             //visuals
             bool hasVisual = false;
-            if (_hasCopyright)
-            {
+          
                 str.Append("<td valign=\"top\">");
                 string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
                 foreach (string s in _visuals)
@@ -203,14 +192,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
 
                 str.Append("</td>");
-            }
-            else
-            {
-                str.Append("<td valign=\"top\">");
-                str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(3015, _session.SiteLanguage));
-                str.Append("</td>");
-            }
-
+            
             //Informations
             str.Append("<td><table>");
             bool hasData = false;

@@ -141,19 +141,29 @@ namespace TNS.AdExpress.Web.Controls.Results {
 		#endregion
 
 		protected override void Render(HtmlTextWriter output) {
-            string pathWeb1 = string.Format("{0}/{1}/{2}/{3}", _idMedia, _dateCover, SubFolder, _fileName1);
-            string pathWeb2 = string.Format("{0}/{1}/{2}/{3}", _idMedia, _dateCover, SubFolder, _fileName2);
 
-			StringBuilder t = new StringBuilder(3000);
+           
             Int64 vehicleId = 0;
+		    string blurDirectory = string.Empty;
             if (VehiclesInformation.Contains(Vehicles.names.press))
+            {
                 vehicleId = VehiclesInformation.Get(Vehicles.names.press).DatabaseId;
+                 if(!Web.Functions.Rights.HasPressCopyright(_idMedia)) blurDirectory =  "blur/";
+            }             
             else if (VehiclesInformation.Contains(Vehicles.names.internationalPress))
                 vehicleId = VehiclesInformation.Get(Vehicles.names.internationalPress).DatabaseId;
             else if (VehiclesInformation.Contains(Vehicles.names.magazine))
                 vehicleId = VehiclesInformation.Get(Vehicles.names.magazine).DatabaseId;
             else if (VehiclesInformation.Contains(Vehicles.names.newspaper))
                 vehicleId = VehiclesInformation.Get(Vehicles.names.newspaper).DatabaseId;
+
+           
+
+            string pathWeb1 = string.Format("{0}/{1}/{2}/{3}{4}", _idMedia, _dateCover, SubFolder, blurDirectory, _fileName1);
+            string pathWeb2 = string.Format("{0}/{1}/{2}/{3}{4}", _idMedia, _dateCover, SubFolder, blurDirectory,_fileName2);
+
+			StringBuilder t = new StringBuilder(3000);
+        
 
             object[] parameters = new object[2];
             parameters[0] = vehicleId;

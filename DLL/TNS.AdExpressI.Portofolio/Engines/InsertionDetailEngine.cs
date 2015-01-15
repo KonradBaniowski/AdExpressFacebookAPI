@@ -462,6 +462,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
                     }
                     catch { }
                 }
+
+               
+                string blur = TNS.AdExpress.Web.Functions.Rights.HasPressCopyright(_idMedia) ? string.Empty : "blur/";
                 foreach (DataRow row in dt.Rows)
                 {
 
@@ -502,15 +505,15 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                 case GenericColumnItemInformation.Columns.visual://Visual press
                                     if (_showCreative)
                                     {
-                                        if (  row[Column.DataBaseField].ToString().Length > 0 && HasPressCopyright(_idMedia))
+                                        if (  row[Column.DataBaseField].ToString().Length > 0 )
                                         {
                                             // Creation
                                             files = row[Column.DataBaseField].ToString().Split(',');
                                             foreach (string str in files)
                                             {
                                                 if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                                    listVisual += string.Format("/ImagesPresse/{0}/{1}/{2},", _idMedia, row["date_media_num"], str);
-                                                else listVisual += string.Format("/ImagesPresse/{0}/{1}/{2},", _idMedia, row["date_cover_num"], str);
+                                                    listVisual += string.Format("/ImagesPresse/{0}/{1}/{2}{3},", _idMedia, row["date_media_num"],blur, str);
+                                                else listVisual += string.Format("/ImagesPresse/{0}/{1}/{2}{3},", _idMedia, row["date_cover_num"],blur, str);
                                             }
                                             if (listVisual.Length > 0)
                                             {
@@ -662,12 +665,6 @@ namespace TNS.AdExpressI.Portofolio.Engines
         }
         #endregion
 
-        protected static bool HasPressCopyright(long idMedia)
-        {
-            string ids = Lists.GetIdList(WebCst.GroupList.ID.media, WebCst.GroupList.Type.mediaExcludedForCopyright);
-            var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
-            return !notAllowedMediaIds.Contains(idMedia);
-
-        }
+       
     }
 }

@@ -56,7 +56,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// <summary>
         /// Media Id
         /// </summary>
-        protected string _idMedia = string.Empty;        
+        protected string _idMedia = string.Empty;
         /// <summary>
         /// List of columns visibility
         /// </summary>
@@ -86,14 +86,15 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         protected Dictionary<GenericColumnItemInformation.Columns, Int32> _columnIndex = new Dictionary<GenericColumnItemInformation.Columns, Int32>();
 
-       
+
         #endregion
 
         #region Accessors
         /// <summary>
         /// Get Vehicle
         /// </summary>
-        public VehicleInformation Vehicle {
+        public VehicleInformation Vehicle
+        {
             get { return _vehicle; }
         }
         /// <summary>
@@ -101,7 +102,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         /// <param name="c">Column</param>
         /// <returns>value as a string</returns>
-        public string GetValue(GenericColumnItemInformation c){
+        public string GetValue(GenericColumnItemInformation c)
+        {
             return _values[_columnIndex[c.Id]].ToString();
         }
         #endregion
@@ -111,7 +113,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellCreativesInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module) : base(session, columns, columnNames, cells)
+        public CellCreativesInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module)
+            : base(session, columns, columnNames, cells)
         {
             _vehicle = vehicle;
             _module = module;
@@ -130,11 +133,14 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellCreativesInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, Int64 idColumnsSet) : base(session, columns, columnNames, cells) {
+        public CellCreativesInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, Int64 idColumnsSet)
+            : base(session, columns, columnNames, cells)
+        {
             _vehicle = vehicle;
             _module = module;
             int i = -1;
-            foreach (GenericColumnItemInformation g in columns) {
+            foreach (GenericColumnItemInformation g in columns)
+            {
                 i++;
                 _visibility.Add(WebApplicationParameters.GenericColumnsInformation.IsVisible(idColumnsSet, g.Id));
                 _isFilter.Add(WebApplicationParameters.GenericColumnsInformation.IsFilter(idColumnsSet, g.Id));
@@ -171,8 +177,10 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     _idVersion = Convert.ToInt64(row[g.DataBaseIdField]);
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.firstDateParution) {
-                    if (_previousValues[i] == null || _previousValues[i].Length == 0 || Convert.ToInt64(_previousValues[i]) > Convert.ToInt64(cValue)) {
+                if (g.Id == GenericColumnItemInformation.Columns.firstDateParution)
+                {
+                    if (_previousValues[i] == null || _previousValues[i].Length == 0 || Convert.ToInt64(_previousValues[i]) > Convert.ToInt64(cValue))
+                    {
                         ((CellDate)cCell).Date = Dates.getPeriodBeginningDate(cValue, CstWeb.CustomerSessions.Period.Type.dateToDate);
                     }
                 }
@@ -212,7 +220,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         /// <param name="cssClass">Css class</param>
         /// <returns>HTML code</returns>
-        public override string Render(string cssClass) {
+        public override string Render(string cssClass)
+        {
             StringBuilder str = new StringBuilder();
 
             if (_newGroup)
@@ -226,22 +235,28 @@ namespace TNS.AdExpressI.Insertions.Cells
             List<string> cols = new List<string>();
 
             bool hasData = false;
-            foreach (GenericColumnItemInformation g in _columns) {
+            foreach (GenericColumnItemInformation g in _columns)
+            {
                 i++;
                 _values[i].Parent = this.Parent;
                 value = _values[i].ToString();
 
-                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax) {
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                {
 
                     StringBuilder tmpStr = new StringBuilder();
                     tmpStr.AppendFormat("<td width=\"1%\"><span>{0}<span></td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
                     tmpStr.Append("<td>: ");
                     hasData = false;
-                    if (_values[i] != null) {
-                        if (!(_values[i] is CellUnit)) {
+                    if (_values[i] != null)
+                    {
+                        if (!(_values[i] is CellUnit))
+                        {
                             values = value.Split(',');
-                            foreach (string s in values) {
-                                if (hasData) {
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
                                     tmpStr.Append("<br/>");
                                 }
                                 hasData = true;
@@ -267,7 +282,8 @@ namespace TNS.AdExpressI.Insertions.Cells
                                 }
                             }
                         }
-                        else {
+                        else
+                        {
                             tmpStr.AppendFormat("{0}", value);
                         }
                     }
@@ -281,46 +297,42 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             #region visuals
             bool hasVisual = false;
-        
-            if (_hasCopyright)
+
+
+            str.Append("<tr><th valign=\"top\">");
+            string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
+            foreach (string s in _visuals)
             {
-                str.Append("<tr><th valign=\"top\">");
-                string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
-                foreach (string s in _visuals)
+                string[] tmp = s.Split(',');
+                foreach (string st in tmp)
                 {
-                    string[] tmp = s.Split(',');
-                    foreach (string st in tmp)
-                    {
-                        str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img class=\"thumbnailDimension\" src=\"{0}\"/></a>", st, pathes);
-                        hasVisual = true;
-                    }
+                    str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img class=\"thumbnailDimension\" src=\"{0}\"/></a>", st, pathes);
+                    hasVisual = true;
                 }
-                if (!hasVisual)
-                {
-                    str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
-                }
-                str.Append("</th></tr>");
             }
-            else
+            if (!hasVisual)
             {
-                str.Append("<tr ><th valign=\"top\" class=\"restrictedCreativeInfo\">");
-                str.AppendFormat("<span >{0}</span>", GestionWeb.GetWebWord(3015, _session.SiteLanguage));
-                str.Append("</th></tr>");
+                str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
             }
-           
+            str.Append("</th></tr>");
+
+
             #endregion
 
             #region Info
             str.Append("<tr><td><p><table>");
             int nbLine = (int)Math.Ceiling(((double)cols.Count) / 2.0);
-            for (int l = 0; l < nbLine; l++) {
+            for (int l = 0; l < nbLine; l++)
+            {
                 str.Append("<tr>");
                 str.Append(cols[l]);
                 str.Append("<td>&nbsp;</td>");
-                if (l + nbLine < cols.Count) {
+                if (l + nbLine < cols.Count)
+                {
                     str.Append(cols[l + nbLine]);
                 }
-                else {
+                else
+                {
                     str.Append("<td></td><td></td>");
                 }
                 str.Append("<td width=\"100%\"></td></tr>");
@@ -340,8 +352,9 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Render
         /// </summary>
         /// <returns>HTML Code</returns>
-        public virtual string RenderThumbnails() {
-            
+        public virtual string RenderThumbnails()
+        {
+
             string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
             StringBuilder str = new StringBuilder();
 
@@ -355,28 +368,23 @@ namespace TNS.AdExpressI.Insertions.Cells
             str.Append("<tr ><td align=\"left\" class=\"sloganVioletBackGround\" >");
             str.Append("<table align=\"left\" border=0 cellpadding=0  cellspacing=0><tr >");
 
-            if (_hasCopyright) {
-                string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
-                foreach (string s in _visuals) {
-                    string[] tmp = s.Split(',');
-                    foreach (string st in tmp) {
-                        str.Append("<td class=\"sloganVioletBackGround\" >");
-                        str.Append("<a href=\"javascript:openPressCreation('" + pathes + "');\">");
-                        str.Append("<img border=0 "
-                            + ((st.Length > 0) ? " width=\"70px\" height=\"90px\" src=\"" + st + "\"" : "src=\"/App_Themes/" + themeName + "/images/common/detailSpot_down.gif\"")
-                            + ">");
-                        str.Append("</a>");
-                        str.Append("</td>");
-                    }
+
+            string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
+            foreach (string s in _visuals)
+            {
+                string[] tmp = s.Split(',');
+                foreach (string st in tmp)
+                {
+                    str.Append("<td class=\"sloganVioletBackGround\" >");
+                    str.Append("<a href=\"javascript:openPressCreation('" + pathes + "');\">");
+                    str.Append("<img border=0 "
+                        + ((st.Length > 0) ? " width=\"70px\" height=\"90px\" src=\"" + st + "\"" : "src=\"/App_Themes/" + themeName + "/images/common/detailSpot_down.gif\"")
+                        + ">");
+                    str.Append("</a>");
+                    str.Append("</td>");
                 }
             }
-            else {
-                str.Append("<td class=\"sloganVioletBackGround\" >");
-                str.Append("<img title=\"" + GestionWeb.GetWebWord(3015, _session.SiteLanguage).Replace("<br>", "") + "\" "
-                    + " border=0 width=\"70px\" height=\"90px\" src=\"/App_Themes/" + themeName + "/images/Culture/Others/no_visuel.gif\""
-                    + "/>");
-                str.Append("</span></td>");
-            }
+
 
             str.Append("</tr></table>");
             str.Append("</td></tr>");
@@ -385,10 +393,10 @@ namespace TNS.AdExpressI.Insertions.Cells
             str.Append("</td></tr>");
 
             //Render version nb cell
-            str.Append("<tr align=\"left\"><td align=\"left\" nowrap=\"nowrap\" " + 
-                ((_session.SloganColors[_idVersion].ToString().Length>0) ? "class=\""+_session.SloganColors[_idVersion]+"\">" : "class=\"sloganVioletBackGround\">"));
+            str.Append("<tr align=\"left\"><td align=\"left\" nowrap=\"nowrap\" " +
+                ((_session.SloganColors[_idVersion].ToString().Length > 0) ? "class=\"" + _session.SloganColors[_idVersion] + "\">" : "class=\"sloganVioletBackGround\">"));
 
-            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
             var creativesUtilities = (Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
@@ -419,7 +427,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// <param name="withDetail">Width detail</param>
         /// <param name="index">Index</param>
         /// <returns>HTML Code</returns>
-        public virtual string RenderPDF(bool withDetail, Int64 index) {
+        public virtual string RenderPDF(bool withDetail, Int64 index)
+        {
 
             string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
             StringBuilder str = new StringBuilder();
@@ -441,29 +450,36 @@ namespace TNS.AdExpressI.Insertions.Cells
             str.Append("</td>");
 
 
-            foreach (GenericColumnItemInformation g in _columns) {
+            foreach (GenericColumnItemInformation g in _columns)
+            {
                 i++;
                 _values[i].Parent = this.Parent;
                 value = _values[i].ToString();
 
-                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax) {
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                {
 
                     StringBuilder tmpStr = new StringBuilder();
                     tmpStr.AppendFormat("<td nowrap>&nbsp;{0}</td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
                     tmpStr.Append("<td>: ");
                     hasData = false;
-                    if (_values[i] != null) {
-                        if (!(_values[i] is CellUnit)) {
+                    if (_values[i] != null)
+                    {
+                        if (!(_values[i] is CellUnit))
+                        {
                             values = value.Split(',');
-                            foreach (string s in values) {
-                                if (hasData) {
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
                                     tmpStr.Append("<br/>");
                                 }
                                 hasData = true;
                                 tmpStr.AppendFormat("{0}", s);
                             }
                         }
-                        else {
+                        else
+                        {
                             tmpStr.AppendFormat("{0}", value);
                         }
                     }
@@ -472,10 +488,12 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
             }
 
-            if (withDetail) {
-                
+            if (withDetail)
+            {
+
                 str.Append("<td valign=\"top\"><TABLE width=\"300\" cellSpacing=\"0\" border=\"0\" class=\"txtViolet11Bold\" valign=\"top\">");
-                for (int l = 0; l < cols.Count; l++) {
+                for (int l = 0; l < cols.Count; l++)
+                {
                     str.Append("<tr valign=\"top\">" + cols[l] + "</tr>");
                 }
                 str.Append("</TABLE></td>");
@@ -486,7 +504,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             str.Append("<tr><td nowrap " +
                 ((_session.SloganColors[_idVersion].ToString().Length > 0) ? "class=\"" + _session.SloganColors[_idVersion].ToString().Replace("c", "m") + "\">" : "\">"));
             str.Append("<font size=1>");
-            str.Append("&nbsp;" +_idVersion);
+            str.Append("&nbsp;" + _idVersion);
             str.Append("</font></td>");
             str.Append("</tr>");
 
@@ -501,7 +519,7 @@ namespace TNS.AdExpressI.Insertions.Cells
 
         }
 
-         /// <summary>
+        /// <summary>
         /// Render
         /// </summary>
         /// <param name="withDetail">Width detail</param>
@@ -519,7 +537,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         /// <param name="output">Output</param>
         /// <param name="index">Index</param>
-        internal void RenderImage(StringBuilder output, Int64 index) {
+        internal void RenderImage(StringBuilder output, Int64 index)
+        {
 
             Int64 lastIndex = index + 5;
             Int64 end = 0;
@@ -530,14 +549,18 @@ namespace TNS.AdExpressI.Insertions.Cells
             else
                 end = lastIndex;
 
-            if ((nbVisuals % 5) == 0) {
-                if (nbVisuals > lastIndex) {
+            if ((nbVisuals % 5) == 0)
+            {
+                if (nbVisuals > lastIndex)
+                {
                     end = lastIndex;
                 }
-                else if (nbVisuals == lastIndex) {
+                else if (nbVisuals == lastIndex)
+                {
                     end = lastIndex - 1;
                 }
-                else {
+                else
+                {
                     end = nbVisuals;
                     index--;
                 }
@@ -546,7 +569,8 @@ namespace TNS.AdExpressI.Insertions.Cells
             output.Append("<table cellpadding=0 cellspacing=0 border=\"0\" class=\"backGroundWhite\">");
             output.Append("<tr>");
 
-            for (Int64 i = index; i < end; i++) {
+            for (Int64 i = index; i < end; i++)
+            {
                 if ((end - index) == 1)
                     output.Append("<td width=\"221px\" height=\"300px\" style=\" BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid; BORDER-RIGHT: white 1px solid; BORDER-LEFT: white 1px solid; \">&nbsp;");
                 else
@@ -556,7 +580,7 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             output.Append("</tr>");
             output.Append("</table>");
-        } 
+        }
         #endregion
 
     }

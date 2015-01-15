@@ -595,8 +595,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 						pathes = row["visual"].ToString().Split(',');
 						i=pathes.Length;
 						path = string.Empty;
+                          bool hasCopyright = WebFunctions.Rights.HasPressCopyright(Int64.Parse(row["idMedia"].ToString()));
                         foreach (string str in pathes) {
-                            path += Functions.Creatives.GetCreativePath(Int64.Parse(row["idMedia"].ToString()), Int64.Parse(row["dateKiosque"].ToString()), Int64.Parse(row["dateCover"].ToString()), str, true, true) + ",";
+                            path += Functions.Creatives.GetCreativePath(Int64.Parse(row["idMedia"].ToString()), Int64.Parse(row["dateKiosque"].ToString()), Int64.Parse(row["dateCover"].ToString()), str, true, true, hasCopyright) + ",";
                         }
 
 						//fill version path
@@ -739,8 +740,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 						pathes = row["visual"].ToString().Split(',');
 						i=pathes.Length;
 						path = string.Empty;
+                        bool hasCopyright = WebFunctions.Rights.HasPressCopyright(Int64.Parse(row["idMedia"].ToString()));
                         foreach (string str in pathes) {
-                            path += Functions.Creatives.GetCreativePath(Int64.Parse(row["idMedia"].ToString()), Int64.Parse(row["dateKiosque"].ToString()), Int64.Parse(row["dateCover"].ToString()), str, true, true) + ",";
+                            path += Functions.Creatives.GetCreativePath(Int64.Parse(row["idMedia"].ToString()), Int64.Parse(row["dateKiosque"].ToString()), Int64.Parse(row["dateCover"].ToString()), str, true, true, hasCopyright) + ",";
                         }
 
 						//fill version path

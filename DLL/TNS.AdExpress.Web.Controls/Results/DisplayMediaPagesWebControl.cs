@@ -5,11 +5,9 @@
 #endregion
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -210,15 +208,18 @@ namespace TNS.AdExpress.Web.Controls.Results {
 
 			#region Variables
 
-		 
-            string pathWeb = string.Format("{0}/{1}/{2}/{3}/",
-                WebCst.CreationServerPathes.IMAGES, _idMedia, _dateCover, 
-                (string.IsNullOrEmpty(SubFolder)) ?  "imagette" : SubFolder);
-            string path = string.Format("{0}{1}\\{2}\\{3}", 
-                WebCst.CreationServerPathes.LOCAL_PATH_IMAGE, _idMedia, _dateCover, 
-                (string.IsNullOrEmpty(SubFolder)) ?  "imagette" : SubFolder);
+		    bool hasPressCopyright = Web.Functions.Rights.HasPressCopyright(_idMedia);
 
+            string pathWeb = string.Format("{0}/{1}/{2}/{3}/{4}",
+                WebCst.CreationServerPathes.IMAGES, _idMedia, _dateCover,
+                (string.IsNullOrEmpty(SubFolder)) ? "imagette" : SubFolder,
+                hasPressCopyright ? string.Empty : "blur/");
+            string path = string.Format("{0}{1}\\{2}\\{3}{4}",
+                WebCst.CreationServerPathes.LOCAL_PATH_IMAGE, _idMedia, _dateCover,
+                (string.IsNullOrEmpty(SubFolder)) ? "imagette" : SubFolder,
+                 hasPressCopyright ? string.Empty : "\\blur");
 
+           
 			string[] files = Directory.GetFiles(path, "*.jpg");
             Array.Sort(files);
 
@@ -240,6 +241,13 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			t.AppendFormat("<td align=right class=\"portofolio1\" style=\"BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">{0} : {1}</td>"
                 , GestionWeb.GetWebWord(1385, _webSession.SiteLanguage), _nbrePages);
 			t.Append("</tr></table>");
+
+            t.Append("<table border=1 class=\"violetBorder paleVioletBackGroundV2\" cellpadding=2 cellspacing=2 width=100% ><tr>");
+
+            t.AppendFormat("<td align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none;\">{0}</td>"
+                , GestionWeb.GetWebWord(3015, _webSession.SiteLanguage));
+            
+            t.Append("</tr></table>");
 
 			t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100% class=\"paleVioletBackGroundV2\">");
 			foreach (string name in files) {

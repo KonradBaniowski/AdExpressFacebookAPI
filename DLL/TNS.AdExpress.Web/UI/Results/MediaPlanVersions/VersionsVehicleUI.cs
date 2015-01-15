@@ -304,8 +304,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 							case DBCst.Vehicles.names.internationalPress:
 								pathes = row["visual"].ToString().Split(',');
 								path = string.Empty;
+						        bool hasCopyright = HasPressCopyright(row, mediasByVersionId);
                                 foreach (string str in pathes) {
-                                    path += Functions.Creatives.GetCreativePath(Int64.Parse(row["idMedia"].ToString()), Int64.Parse(row["dateKiosque"].ToString()), Int64.Parse(row["dateCover"].ToString()), str, true, true) + ",";
+                                    path += Functions.Creatives.GetCreativePath(Int64.Parse(row["idMedia"].ToString()), Int64.Parse(row["dateKiosque"].ToString()), Int64.Parse(row["dateCover"].ToString()), str, true, true, hasCopyright) + ",";
                                 }
 								break;
 
@@ -361,10 +362,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE){
                                     if (row["dateKiosque"] != System.DBNull.Value) item.Parution = row["dateKiosque"].ToString();
 									else item.Parution="";
-                                    versionUi = new VersionPressAPPMUI(this._webSession, item) { HasCopyright = HasPressCopyright(row, mediasByVersionId) };
+                                    versionUi = new VersionPressAPPMUI(_webSession, item);
 								}
 								else{
-                                    versionUi = new VersionPressUI(this._webSession, item) { HasCopyright = HasPressCopyright(row, mediasByVersionId) };
+                                    versionUi = new VersionPressUI(_webSession, item);
 								}
 								break;
 
@@ -687,17 +688,22 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
         /// <returns>True if has copyright press</returns>
         protected bool HasPressCopyright(DataRow row, Dictionary<Int64, List<Int64>> mediasByVersionId) {
 
-            if (row.Table.Columns.Contains("id") && row["id"] != DBNull.Value) {
-                long idSlogan = Convert.ToInt64(row["id"]);
-                string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
-                var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
-                foreach (Int64 idMedia in mediasByVersionId[idSlogan]) {
-                    if (!notAllowedMediaIds.Contains(idMedia))
-                        return true;
+            string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
+            if (!string.IsNullOrEmpty(ids))
+            {
+                if (row.Table.Columns.Contains("id") && row["id"] != DBNull.Value) {
+                    long idSlogan = Convert.ToInt64(row["id"]);
+              
+                    var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+                    foreach (Int64 idMedia in mediasByVersionId[idSlogan]) {
+                        if (!notAllowedMediaIds.Contains(idMedia))
+                            return true;
+                    }
                 }
-            }
 
-            return false;
+                return false;
+            }
+            return true;
         }
         #endregion
         

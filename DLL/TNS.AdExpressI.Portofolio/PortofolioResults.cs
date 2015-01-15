@@ -9,10 +9,8 @@ using System.Data;
 using System.Collections;
 using System.Globalization;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Reflection;
-using TNS.AdExpress.Domain;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Web.Functions;
@@ -361,8 +359,7 @@ namespace TNS.AdExpressI.Portofolio {
 		public virtual Dictionary<string, string> GetVisualList(string beginDate, string endDate) {
 			var dic = new Dictionary<string, string>();
 
-            if(HasPressCopyright(_idMedia))
-            {
+           
                 if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
                 var parameters = new object[5];
                 parameters[0] = _webSession;
@@ -385,18 +382,19 @@ namespace TNS.AdExpressI.Portofolio {
                     catch { }
                 }
                 dic.Clear();
+                string blurDirectory = Rights.HasPressCopyright(_idMedia) ? string.Empty : "blur/";
                 foreach (DataRow dr in ds.Tables[0].Rows) {
                     if (dr["disponibility_visual"] != DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10) {
                         if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                            dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_media_num"].ToString()
-                                                                     + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
-                        else dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_cover_num"].ToString() 
-                                                                      + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+                            dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
+                                , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_media_num"].ToString(), blurDirectory,WebCst.CreationServerPathes.COUVERTURE));
+                        else dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
+                            , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_cover_num"].ToString(),blurDirectory, WebCst.CreationServerPathes.COUVERTURE));
                     }
                     else
                         dic.Add(dr["date_media_num"].ToString(), "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif");
                 }
-            }
+           
 			return dic;
 		}
 		#endregion
@@ -456,8 +454,8 @@ namespace TNS.AdExpressI.Portofolio {
                     if (dtVisuel!=null)
                     {
                         bool hasCopyright = true;
-                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press) hasCopyright = HasPressCopyright(_idMedia);
-
+                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press) hasCopyright = Rights.HasPressCopyright(_idMedia);
+                        string blurDirectory = (hasCopyright) ? string.Empty : "blur/" ;
                         for (int i = 0; i < dtVisuel.Rows.Count; i++)
                         {
                             //date_media_num
@@ -466,13 +464,13 @@ namespace TNS.AdExpressI.Portofolio {
                                 int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
                             {
                                 if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                    pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" +
-                                              dtVisuel.Rows[i]["date_media_num"].ToString() + "/Imagette/" +
-                                              WebCst.CreationServerPathes.COUVERTURE + "";
+                                    pathWeb = string.Format("{0}/{1}/{2}/Imagette/{3}{4}",
+                                        WebCst.CreationServerPathes.IMAGES, _idMedia.ToString(),
+                                        dtVisuel.Rows[i]["date_media_num"].ToString(), blurDirectory, WebCst.CreationServerPathes.COUVERTURE);
                                 else
-                                    pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" +
-                                              dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" +
-                                              WebCst.CreationServerPathes.COUVERTURE + "";
+                                    pathWeb = string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
+                                        , WebCst.CreationServerPathes.IMAGES, _idMedia.ToString(),
+                                        dtVisuel.Rows[i]["date_cover_num"].ToString(), blurDirectory, WebCst.CreationServerPathes.COUVERTURE);
                             }
                             else
                             {
@@ -532,8 +530,7 @@ namespace TNS.AdExpressI.Portofolio {
                                                                       ((string[])
                                                                        htValue[dtVisuel.Rows[i]["date_cover_num"]])[0])
                                                                      .ToString("### ### ### ###"),
-                                                                  _webSession.SiteLanguage, coverItem);
-                                    vehicleItem.HasCopyright = hasCopyright;
+                                                                  _webSession.SiteLanguage, coverItem);                                   
                                 }
                                 else
                                 {
@@ -673,7 +670,7 @@ namespace TNS.AdExpressI.Portofolio {
 		/// </summary>
 		/// <returns>ventilation type list</returns>
 		protected virtual List<FrameWorkResultConstantes.PortofolioStructure.Ventilation> GetVentilationTypeList() {
-			List<FrameWorkResultConstantes.PortofolioStructure.Ventilation> ventilationTypeList = new List<TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation>();
+			var ventilationTypeList = new List<TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation>();
 			ventilationTypeList.Add(FrameWorkResultConstantes.PortofolioStructure.Ventilation.format);
 			ventilationTypeList.Add(FrameWorkResultConstantes.PortofolioStructure.Ventilation.color);
 			ventilationTypeList.Add(FrameWorkResultConstantes.PortofolioStructure.Ventilation.location);
@@ -720,14 +717,6 @@ namespace TNS.AdExpressI.Portofolio {
 		}
 		#endregion
 
-        protected virtual bool HasPressCopyright(long idMedia)
-        {
-
-                         
-                string ids = Lists.GetIdList(WebCst.GroupList.ID.media, WebCst.GroupList.Type.mediaExcludedForCopyright);
-                var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
-                return !notAllowedMediaIds.Contains(idMedia);
-                      
-        }
+       
 	}
 }

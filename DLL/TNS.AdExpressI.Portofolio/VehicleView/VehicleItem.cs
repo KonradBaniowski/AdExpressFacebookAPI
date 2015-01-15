@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Domain.Web;
 using System.Globalization;
@@ -38,10 +37,7 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// </summary>
         protected bool _showCover = true;
 
-        /// <summary>
-        /// if has creative copyright
-        /// </summary>
-        protected bool _hasCopyright = true;
+       
         #endregion
 
         #region Accesssors
@@ -94,14 +90,7 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
             set { _showCover = value; }
         }
 
-        /// <summary>
-        /// Get / Set if has creative copyright
-        /// </summary>
-        public bool HasCopyright
-        {
-            get { return _hasCopyright; }
-            set { _hasCopyright = value; }
-        }
+     
         #endregion
 
         #region Constructor
@@ -139,25 +128,19 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
                 DateString.dateTimeToDD_MM_YYYY(_parutionDate, _siteLanguage));
 
             sb.Append("<table cellpadding=0 cellspacing=0 width=100% border=0 >");
-            if ( HasCopyright && _coverItem != null && _coverItem.CoverLinkItem != null && !string.IsNullOrEmpty(_coverItem.CoverLinkItem.Render()))
+            if (  _coverItem != null && _coverItem.CoverLinkItem != null && !string.IsNullOrEmpty(_coverItem.CoverLinkItem.Render()))
                 sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=center ><a class=\"portofolioSynthesis\" href={1}>{0}</a></td><tr>"
                     , day, _coverItem.CoverLinkItem.Render());
             else sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=center >{0}</td><tr>", day);
             sb.Append("<tr><td align=\"center\" class=\"portofolioSynthesis\" >");
 
             if (_showCover)
-            {
-                if (HasCopyright)
-                    sb.Append(_coverItem.Render());
-                else
-                {
-                    sb.AppendFormat("<div style=\" width: 180px; height: 218px; vertical-align: middle; \"><br><br>{0}</div>"
-                        , GestionWeb.GetWebWord(3015, _siteLanguage));
-                }
+            {               
+                    sb.Append(_coverItem.Render());               
             }
 
             sb.Append("</td></tr>");
-            if (HasCopyright && _coverItem != null && _coverItem.CoverLinkItem != null && !string.IsNullOrEmpty(_coverItem.CoverLinkItem.Render()))
+            if (  _coverItem != null && _coverItem.CoverLinkItem != null && !string.IsNullOrEmpty(_coverItem.CoverLinkItem.Render()))
             {
                 sb.AppendFormat("<tr><td class=\"portofolioSynthesis\" align=\"center\"><a class=\"portofolioSynthesis\" href={0}>{1} : {2}</a></td><tr>"
                     , _coverItem.CoverLinkItem.Render(), GestionWeb.GetWebWord(1398, _siteLanguage), _insertionNumber);
