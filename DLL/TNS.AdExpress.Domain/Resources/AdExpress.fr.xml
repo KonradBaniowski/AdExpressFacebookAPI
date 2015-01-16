@@ -2265,5 +2265,7 @@
     <item mnemonic="w3014" type="System.String">TV TNT déclaratives&lt;br&gt;TV Thématiques</item>
     <!-- Add Text for copyright-->
     <item mnemonic="w3015" type="System.String">L'accès à ce magazine n’est pas autorisé par l'éditeur.&lt;br&gt; Kantar Media met tout en œuvre pour obtenir &lt;br&gt;un rétablissement de l'accès à la copie digitale de ce support.</item>
+    <item mnemonic="w3016" type="System.String">Mode de vente</item>
+    <item mnemonic="w3017" type="System.String">Modes de vente</item>
   </items>
 </localization>
