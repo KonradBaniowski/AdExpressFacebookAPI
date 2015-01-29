@@ -22,6 +22,8 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Date.DAL;
 using System.Reflection;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Web.Core;
 
 namespace AdExpress{
 	/// <summary>
@@ -243,6 +245,10 @@ namespace AdExpress{
                     _webSession.SortKey = string.Empty;
 
                     _webSession.SelectedBannersFormatList = string.Empty;
+                    if (WebApplicationParameters.UsePurchaseMode) {
+                        var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                        _webSession.SelectedPurchaseModeList = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                    }
 
                     _webSession.ComparativeStudy = false;
                     if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES) {

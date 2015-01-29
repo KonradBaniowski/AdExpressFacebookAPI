@@ -30,6 +30,7 @@ using TNS.AdExpress.Web.Controls.Selections;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Domain.CampaignTypes;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 #endregion
 
@@ -223,7 +224,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// Banners Format Filter WebControl
         /// </summary>
         protected GenericFilterWebControl _bannersFormatWebControl;
-
+        /// <summary>
+        /// Purchase Mode Filter WebControl
+        /// </summary>
+        protected GenericFilterWebControl _purchaseModeWebControl;
         /// <summary>
         /// Multipe sector selection webcontrol
         /// </summary>
@@ -301,6 +305,17 @@ namespace TNS.AdExpress.Web.Controls.Headers
         public bool BannersFormatOption
         {
             get { return bannersFormatOption; }
+        }
+
+        /// <summary>
+        /// Purchase Mode Filter Option
+        /// </summary>
+        [Bindable(true),
+        Description("Purchase Mode Filter Option")]
+        protected bool purchaseModeOption = false;
+        /// <summary>Option d'unité</summary>
+        public bool PurchaseModeOption {
+            get { return purchaseModeOption; }
         }
 
         /// <summary>
@@ -1289,6 +1304,13 @@ namespace TNS.AdExpress.Web.Controls.Headers
             {
                 bannersFormatOption = true;
             }
+
+            if (WebApplicationParameters.UsePurchaseMode
+                && customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+                && customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE) {
+                purchaseModeOption = true;
+            }
+
             _campaignTypeOption = customerWebSession.CurrentModule !=Constantes.Web.Module.Name.CELEBRITIES && WebApplicationParameters.AllowCampaignTypeOption;
 
             #region IsPostBack
@@ -1312,7 +1334,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 {
                     try
                     {
-                        var strGenericFilter = Page.Request.Form.GetValues("_genericFilter");
+                        var strGenericFilter = Page.Request.Form.GetValues("_genericFilter__bannersFormatWebControl");
                         if (strGenericFilter != null && strGenericFilter[0] != null && !string.IsNullOrEmpty(strGenericFilter[0]))
                         {
                             List<Int64> filtreBannerIds = (new List<string>(strGenericFilter[0].Split(','))).ConvertAll<Int64>(Int64.Parse);
@@ -1350,6 +1372,33 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         else
                         {
                             customerWebSession.SelectedBannersFormatList = string.Empty;
+                        }
+                    }
+                    catch (SystemException) { }
+                }
+
+                if (purchaseModeOption) {
+                    try {
+                        var strPurchaseModeFilter = Page.Request.Form.GetValues("_genericFilter__purchaseModeWebControl");
+                        if (strPurchaseModeFilter != null && strPurchaseModeFilter[0] != null && !string.IsNullOrEmpty(strPurchaseModeFilter[0])) {
+                            List<Int64> filtrePurchaseModeIds = (new List<string>(strPurchaseModeFilter[0].Split(','))).ConvertAll<Int64>(Int64.Parse);
+                            if (filtrePurchaseModeIds.Count > 0) {
+                                var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                                if (purchaseModeList.Count > 0) {
+                                    customerWebSession.SelectedPurchaseModeList = strPurchaseModeFilter[0];
+                                }
+                                else {
+                                    customerWebSession.SelectedPurchaseModeList = string.Empty;
+                                }
+
+                            }
+                            else {
+                                customerWebSession.SelectedPurchaseModeList = string.Empty;
+                            }
+
+                        }
+                        else {
+                            customerWebSession.SelectedPurchaseModeList = string.Empty;
                         }
                     }
                     catch (SystemException) { }
@@ -2086,11 +2135,41 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     else _bannersFormatWebControl.SelectedFilterItems = customerWebSession.SelectedBannersFormatList;
                     _bannersFormatWebControl.Width = 194;
                     _bannersFormatWebControl.NbElemByColumn = 1;
+                    _bannersFormatWebControl.TextLabelId = 2155;
                     Controls.Add(_bannersFormatWebControl);
                 }
                 else
                 {
                     bannersFormatOption = false;
+                }
+            }
+            #endregion
+
+            #region Purchase Mode Filter
+            if (purchaseModeOption) {
+
+                Dictionary<Int64, VehicleInformation> VehicleInformationList = customerWebSession.GetVehiclesSelected();
+                if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)) {
+                    var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                    if (purchaseModeList.Count > 0) {
+                        _purchaseModeWebControl = new GenericFilterWebControl();
+                        _purchaseModeWebControl.ID = "_purchaseModeWebControl";
+                        _purchaseModeWebControl.CustomerWebSession = customerWebSession;
+                        _purchaseModeWebControl.FilterItems = purchaseModeList;
+                        if (string.IsNullOrEmpty(customerWebSession.SelectedPurchaseModeList))
+                            _purchaseModeWebControl.SelectedFilterItems = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                        else _purchaseModeWebControl.SelectedFilterItems = customerWebSession.SelectedPurchaseModeList;
+                        _purchaseModeWebControl.Width = 194;
+                        _purchaseModeWebControl.NbElemByColumn = 1;
+                        _purchaseModeWebControl.TextLabelId = 3016;
+                        Controls.Add(_purchaseModeWebControl);
+                    }
+                    else {
+                        purchaseModeOption = false;
+                    }
+                }
+                else {
+                    purchaseModeOption = false;
                 }
             }
             #endregion
@@ -3020,6 +3099,17 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td><hr class=\"hrSpacer\" />");
                 _bannersFormatWebControl.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+
+            if (purchaseModeOption) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td><hr class=\"hrSpacer\" />");
+                _purchaseModeWebControl.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");

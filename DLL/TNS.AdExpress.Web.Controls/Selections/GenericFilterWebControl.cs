@@ -44,6 +44,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
         /// Nb Element by Column
         /// </summary>
         protected int _nbElemByColumn = 2;
+        /// <summary>
+        /// Test Label Id
+        /// </summary>
+        protected int _textLabelId;
         #endregion
 
         #region Accessors
@@ -108,6 +112,13 @@ namespace TNS.AdExpress.Web.Controls.Selections {
         public int NbElemByColumn {
             set { _nbElemByColumn = value; }
         }
+        /// <summary>
+        /// Set Text Label Id
+        /// </summary>
+        [Bindable(false)]
+        public int TextLabelId {
+            set { _textLabelId = value; }
+        }
         #endregion
 
         #region Constructor
@@ -147,17 +158,17 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                  
             // table de personnalisation
             sb.Append("<table class=\"backgroundGenericFilterWebControl genericFilterWebControlBorder\" cellSpacing=\"0\" cellPadding=\"0\" width=\"" + this.Width + "\" border=\"0\">");
-            sb.Append("<tr onclick=\"DivDisplayer('genericFilterContent');\" class=\"cursorHand\">");
+            sb.Append("<tr onclick=\"DivDisplayer('genericFilterContent_"+this.ID+"');\" class=\"cursorHand\">");
             //Titre de la section
-            sb.Append("<td class=\"" + _cssCustomSectionTitle + "\">&nbsp;" + GestionWeb.GetWebWord(2155, _customerWebSession.SiteLanguage) + "&nbsp;</td>");
+            sb.Append("<td class=\"" + _cssCustomSectionTitle + "\">&nbsp;" + GestionWeb.GetWebWord(_textLabelId, _customerWebSession.SiteLanguage) + "&nbsp;</td>");
             // Image d'ouverture de la section
             sb.Append("<td align=\"right\" class=\"arrowBackGroundGenericFilterWebControl\"></td>");
             sb.Append("</tr>");
             sb.Append("</table>");
 
             // Section
-            sb.Append("\r\n<div id=\"genericFilterContent\" class=\"GenericFilterWebControlSelectionSection\" style=\"DISPLAY: none; WIDTH: " + this.Width + "px;\">");
-            sb.Append("\r\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"Section\">");
+            sb.Append("\r\n<div id=\"genericFilterContent_"+this.ID+"\" class=\"GenericFilterWebControlSelectionSection\" style=\"DISPLAY: none; WIDTH: " + this.Width + "px;\">");
+            sb.Append("\r\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"Section_"+this.ID+"\">");
 
             // Filter items list
             foreach (FilterItem filterItem in _filterItems) {
@@ -167,7 +178,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 else checkedText = "";
                 if (!filterItem.IsEnable) disabledText = "disabled=\"disabled\"";
                 else disabledText = string.Empty;
-                sb.AppendFormat("<input id=\"checkbox_{0}_{1}\" type=\"checkbox\" " + checkedText + " " + disabledText + " onclick=\"if(this.checked){{AddFilter_{0}({1});}}else {{RemoveFilter_{0}({1});}};\" ><label for=\"checkbox_{0}_{1}\" class=\"txtViolet11Bold\" style=\"display:inline-block;white-space:nowrap;\">{2}</label>", this.ID, filterItem.Id, filterItem.Label);
+                sb.AppendFormat("<input id=\"checkbox_{0}_{1}\" type=\"checkbox\" " + checkedText + " " + disabledText + " onclick=\"if(this.checked){{AddFilter_{0}({1});}}else {{RemoveFilter_{0}({1});}};\" ><label for=\"checkbox_{0}_{1}\" class=\"txtViolet11Bold\" style=\"display:inline-block;white-space:nowrap;\">{2}</label>", this.ID, filterItem.Id, filterItem.Label.ToUpper());
                 sb.Append("</td>");
                 count++;
                 if (count == _nbElemByColumn) {
@@ -179,7 +190,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             if (count > 0) sb.Append("</tr>");
 
             sb.Append("</table>");
-            sb.Append("<input id=\"idGenericFilter\" type=\"hidden\" name=\"_genericFilter\" value=\""+_selectedFilterItems+"\">");
+            sb.Append("<input id=\"idGenericFilter_"+this.ID+"\" type=\"hidden\" name=\"_genericFilter_"+this.ID+"\" value=\""+_selectedFilterItems+"\">");
 
             return sb.ToString();
 
@@ -203,7 +214,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             
             output.WriteLine("\r\n  <SCRIPT language=javascript>\r\n<!--                                      ");
 
-            output.WriteLine("\r\n  var activeBannersFormatList = new Array();                                ");
+            output.WriteLine("\r\n  var filterList_"+this.ID+" = new Array();                                ");
 
             string[] selectedFilterItems = null;
             int index = 0;
@@ -213,12 +224,12 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 selectedFilterItems = _selectedFilterItems.Split(',');
 
                 foreach (string s in selectedFilterItems) {
-                    output.WriteLine("\r\n  activeBannersFormatList[" + (index++) + "] = " + s + ";           ");
+                    output.WriteLine("\r\n  filterList_"+this.ID+"[" + (index++) + "] = " + s + ";           ");
                 }
             }
 
             #region Find Filter
-            output.WriteLine("\r\n\tfunction FindValue(tab, value){                                           ");
+            output.WriteLine("\r\n\tfunction FindValue_"+this.ID+"(tab, value){                                           ");
             output.WriteLine("\r\n\t\t var i = -1;                                                            ");
             output.WriteLine("\r\n\t\t for (var j=0;j<tab.length;j=j+1){                                      ");
             output.WriteLine("\r\n\t\t\t if(tab[j] == value){                                                 ");
@@ -231,28 +242,28 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
             #region AddFilter
             output.WriteLine("\r\n  function AddFilter_" + this.ID + "(filterValue){                          ");
-            output.WriteLine("\r\n    activeBannersFormatList.push(filterValue);                              ");
-            output.WriteLine("\r\n    initHiddenGenericFilter()                                               ");
+            output.WriteLine("\r\n    filterList_"+this.ID+".push(filterValue);                              ");
+            output.WriteLine("\r\n    initHiddenGenericFilter_"+this.ID+"()                                               ");
             output.WriteLine("\r\n  }                                                                         ");
             #endregion
 
             #region RemoveFilter
             output.WriteLine("\r\n  function RemoveFilter_" + this.ID + "(filterValue){                       ");
-            output.WriteLine("\r\n      var fIndex = FindValue(activeBannersFormatList, filterValue);         ");
+            output.WriteLine("\r\n      var fIndex = FindValue_"+this.ID+"(filterList_"+this.ID+", filterValue);         ");
             output.WriteLine("\r\n      if (fIndex > -1){                                                     ");
-            output.WriteLine("\r\n          activeBannersFormatList.splice(fIndex,1);                         ");
+            output.WriteLine("\r\n          filterList_"+this.ID+".splice(fIndex,1);                         ");
             output.WriteLine("\r\n      }                                                                     ");
-            output.WriteLine("\r\n    initHiddenGenericFilter()                                               ");
+            output.WriteLine("\r\n    initHiddenGenericFilter_"+this.ID+"()                                               ");
             output.WriteLine("\r\n  }                                                                         ");
             #endregion
 
             #region initHiddenGenericFilter
-            output.WriteLine("\r\n  function initHiddenGenericFilter(){                                       ");
-            output.WriteLine("\r\n    var hiddenObj = document.getElementById('idGenericFilter');             ");
-            output.WriteLine("\r\n    if(activeBannersFormatList.length ==0 ) hiddenObj.value='';             ");
-            output.WriteLine("\r\n    for(var i = 0; i < activeBannersFormatList.length; i++)                 ");
-            output.WriteLine("\r\n        if (i == 0) hiddenObj.value =  activeBannersFormatList[i];          ");
-            output.WriteLine("\r\n        else        hiddenObj.value +=  ',' + activeBannersFormatList[i];   ");
+            output.WriteLine("\r\n  function initHiddenGenericFilter_"+this.ID+"(){                                       ");
+            output.WriteLine("\r\n    var hiddenObj = document.getElementById('idGenericFilter_"+this.ID+"');             ");
+            output.WriteLine("\r\n    if(filterList_"+this.ID+".length ==0 ) hiddenObj.value='';             ");
+            output.WriteLine("\r\n    for(var i = 0; i < filterList_"+this.ID+".length; i++)                 ");
+            output.WriteLine("\r\n        if (i == 0) hiddenObj.value =  filterList_"+this.ID+"[i];          ");
+            output.WriteLine("\r\n        else        hiddenObj.value +=  ',' + filterList_"+this.ID+"[i];   ");
             output.WriteLine("\r\n  }                                                                         ");
             #endregion
 

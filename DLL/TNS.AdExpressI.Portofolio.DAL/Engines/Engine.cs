@@ -29,6 +29,7 @@ using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
@@ -173,5 +174,28 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         }
         #endregion
 
-	}
+        #region Get Purchase Mode Clause
+        /// <summary>
+        /// Get Purchase Mode Clause
+        /// </summary>
+        /// <param name="prefix">Prefix</param>
+        /// <returns>Sql Purchase Mode selected Clause</returns>
+        protected virtual string GetPurchaseModeClause(string prefix) {
+            var sql = new StringBuilder();
+            if (WebApplicationParameters.UsePurchaseMode) {
+                var vehicleInfoList = _webSession.GetVehiclesSelected();
+                if (vehicleInfoList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)) {
+                    string purchaseModeIdList = _webSession.SelectedPurchaseModeList;
+                    if (purchaseModeIdList.Length > 0)
+                        sql.AppendFormat(" and {0}ID_{1} in ({2}) "
+                            , ((!string.IsNullOrEmpty(prefix)) ? prefix + "." : string.Empty)
+                                   , WebApplicationParameters.DataBaseDescription.GetTable(TableIds.purchaseModeMMS).Label
+                                   , purchaseModeIdList);
+                }
+            }
+            return sql.ToString();
+        }
+        #endregion
+
+    }
 }

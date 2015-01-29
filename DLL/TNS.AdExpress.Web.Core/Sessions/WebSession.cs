@@ -389,6 +389,12 @@ namespace TNS.AdExpress.Web.Core.Sessions
         protected string _selectedBannersForamtList = string.Empty;
 
         /// <summary>
+        /// Selected Purchase Mode List
+        /// </summary>
+        [System.NonSerialized]
+        protected string _selectedPurchaseModeList = string.Empty;
+
+        /// <summary>
         /// Evaliant Country Access List
         /// </summary>
         [System.NonSerialized]
@@ -1974,6 +1980,30 @@ namespace TNS.AdExpress.Web.Core.Sessions
             {
                 _selectedBannersForamtList = value;
                 userParameters[CoreConstantes.SessionParamters.selectedBannersFormatList] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set Selected Purchase Mode List
+        /// </summary>
+        public string SelectedPurchaseModeList {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.selectedPurchaseModeList)) {
+                    _selectedPurchaseModeList = userParameters[CoreConstantes.SessionParamters.selectedPurchaseModeList].ToString();
+                }
+
+                return (_selectedPurchaseModeList);
+            }
+            set {
+                _selectedPurchaseModeList = value;
+
+                if (_selectedPurchaseModeList.Length == 0) {
+                    var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                    _selectedPurchaseModeList = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                }
+
+                userParameters[CoreConstantes.SessionParamters.selectedPurchaseModeList] = _selectedPurchaseModeList;
                 modificationDate = DateTime.Now;
             }
         }

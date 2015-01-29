@@ -55,6 +55,7 @@ using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.CampaignTypes;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 #endregion
 
@@ -1933,8 +1934,27 @@ namespace TNS.AdExpress.Web.UI
                             t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2928, webSession.SiteLanguage) + " :</font> " + bannersFormatText + "</TD></TR>");
                         }
                     }
+                }
 
+                if (WebApplicationParameters.UsePurchaseMode) {
+                    Dictionary<Int64, VehicleInformation> VehicleInformationList = webSession.GetVehiclesSelected();
+                    if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)) {
+                        List<Int64> selectedPurchaseModeIdList = (new List<string>(webSession.SelectedPurchaseModeList.Split(','))).ConvertAll<Int64>(Int64.Parse);
+                        if (selectedPurchaseModeIdList.Count > 0) {
+                            var strFormatList = new List<string>();
+                            var purchaseModeIdList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                            foreach (var cFilterItem in purchaseModeIdList) {
+                                if (selectedPurchaseModeIdList.Contains(cFilterItem.Id)) {
+                                    strFormatList.Add(cFilterItem.Label.ToUpper());
+                                }
+                            }
 
+                            string purchaseModeText = string.Join(", ", strFormatList.ToArray());
+                            if (!string.IsNullOrEmpty(purchaseModeText)) {
+                                t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(3017, webSession.SiteLanguage) + " :</font> " + purchaseModeText + "</TD></TR>");
+                            }
+                        }
+                    }
                 }
 
                 t.Append(GetBlankLine());

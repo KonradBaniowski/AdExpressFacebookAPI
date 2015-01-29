@@ -321,7 +321,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Evaliant Country Access List
             /// </summary>
-            evaliantCountryAccessList = 74
+            evaliantCountryAccessList = 74,
+            /// <summary>
+            /// Selected Purchase Mode List
+            /// </summary>
+            selectedPurchaseModeList = 75
 		}
 	
 	}
@@ -2123,7 +2127,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Selected Presence Types
             /// </summary>
-            selectedPresenceType = 39
+            selectedPresenceType = 39,
+            /// <summary>
+            /// Selected Purchase Mode
+            /// </summary>
+            purchaseModeSelected = 40
 		}
 	}
 

@@ -595,7 +595,39 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                         sql.Append(sqlFormatSelectedClause.ToString());
                 }
             }
+            #endregion
 
+            #region Purchase Mode Filter
+            if (WebApplicationParameters.UsePurchaseMode) {
+                if (vehicleInfo != null) {
+                    if (vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId && WebApplicationParameters.UsePurchaseMode) {
+                        string purchaseModeIdList = _session.SelectedPurchaseModeList;
+                        if (purchaseModeIdList.Length > 0)
+                            sql.AppendFormat(" and {0}ID_{1} in ({2}) "
+                                       , WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "."
+                                       , WebApplicationParameters.DataBaseDescription.GetTable(TableIds.purchaseModeMMS).Label
+                                       , purchaseModeIdList);
+                    }
+                }
+                else {
+                    if (list.Length > 0) {
+                        var sqlPurchaseModeSelectedClause = new StringBuilder();
+                        var vehicleInfoList = _session.GetVehiclesSelected();
+                        if (vehicleInfoList.ContainsKey(VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId)) {
+                            foreach (var cVehicleInformation in vehicleInfoList.Values) {
+
+                                if (cVehicleInformation.Id == CstDBClassif.Vehicles.names.mms && WebApplicationParameters.UsePurchaseMode) {
+                                    string purchaseModeIdList = _session.SelectedPurchaseModeList;
+                                    string mmsId = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.mms).ToString();
+                                    if (purchaseModeIdList.Length > 0)
+                                        sqlPurchaseModeSelectedClause.AppendFormat(" and (({0}.id_vehicle not in ({1})) or ({0}.id_vehicle in ({1}) and {0}.id_purchase_mode_mms in ({2}) )) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, mmsId, purchaseModeIdList);
+                                }
+                            }
+                            sql.Append(sqlPurchaseModeSelectedClause.ToString());
+                        }
+                    }
+                }
+            }
             #endregion
 
             // Order

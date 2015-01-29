@@ -722,6 +722,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             sql.AppendFormat(" {0}", mediaAgencyJoins);
             sql.AppendFormat(" {0}", joinOptional);
             sql.Append(GetFormatClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            sql.Append(GetPurchaseModeClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
             //Jointures encart
             if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id 
@@ -981,6 +982,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             sql.Append(joinOptional);
 
             sql.Append(GetFormatClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            sql.Append(GetPurchaseModeClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             
 
             // Group by			
@@ -1185,6 +1187,26 @@ namespace TNS.AdExpressI.LostWon.DAL
                     , ((!string.IsNullOrEmpty(prefix)) ? prefix + "." : string.Empty)
                            , WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[_vehicleInformation.DatabaseId].FormatTableName).Label
                            , string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()));
+            return sql.ToString();
+        }
+        /// <summary>
+        /// Get Purchase Mode Clause
+        /// </summary>
+        /// <param name="prefix">Prefix</param>
+        /// <returns>Sql Purchase Mode selected Clause</returns>
+        protected virtual string GetPurchaseModeClause(string prefix) {
+            var sql = new StringBuilder();
+            if (WebApplicationParameters.UsePurchaseMode) {
+                var vehicleInfoList = _session.GetVehiclesSelected();
+                if (vehicleInfoList.ContainsKey(VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId)) {
+                    string purchaseModeIdList = _session.SelectedPurchaseModeList;
+                    if (purchaseModeIdList.Length > 0)
+                        sql.AppendFormat(" and {0}ID_{1} in ({2}) "
+                            , ((!string.IsNullOrEmpty(prefix)) ? prefix + "." : string.Empty)
+                                   , WebApplicationParameters.DataBaseDescription.GetTable(TableIds.purchaseModeMMS).Label
+                                   , purchaseModeIdList);
+                }
+            }
             return sql.ToString();
         }
         #endregion

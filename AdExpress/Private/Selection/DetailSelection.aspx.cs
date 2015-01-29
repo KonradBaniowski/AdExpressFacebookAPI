@@ -44,6 +44,7 @@ using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Selection;
 using System.Reflection;
 using TNS.AdExpress.Domain.CampaignTypes;
+using TNS.AdExpress.Constantes.Classification.DB;
 #endregion
 
 namespace AdExpress.Private.Selection{
@@ -255,9 +256,17 @@ namespace AdExpress.Private.Selection{
         /// </summary>
         protected string _bannersFormatText = string.Empty;
         /// <summary>
+        /// Purchase Mode Text
+        /// </summary>
+        protected string _purchaseModeText = string.Empty;
+        /// <summary>
         /// Display Banners Format
         /// </summary>
 	    protected bool _displayBannersFormat = false;
+        /// <summary>
+        /// Display Purchase Mode
+        /// </summary>
+        protected bool _displayPurchaseMode = false;
 
         public bool displayMediaSelection = false;
 
@@ -1005,6 +1014,29 @@ namespace AdExpress.Private.Selection{
                 }
 
 			    #endregion
+
+                #region Purchase Mode Selected
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.purchaseModeSelected.GetHashCode())) {
+                    if (WebApplicationParameters.UsePurchaseMode) {
+                        var vehicleInfoList = _webSession.GetVehiclesSelected();
+                        if (vehicleInfoList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)) {
+                            List<Int64> selectedPurchaseModeIdList = (new List<string>(_webSession.SelectedPurchaseModeList.Split(','))).ConvertAll<Int64>(Int64.Parse);
+                            if (selectedPurchaseModeIdList.Count > 0) {
+                                var strFormatList = new List<string>();
+                                var purchaseModeIdList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                                foreach (var cFilterItem in purchaseModeIdList) {
+                                    if (selectedPurchaseModeIdList.Contains(cFilterItem.Id)) {
+                                        strFormatList.Add(cFilterItem.Label.ToUpper());
+                                    }
+                                }
+                                _purchaseModeText = string.Join(", ", strFormatList.ToArray());
+                                if (!string.IsNullOrEmpty(_purchaseModeText)) _displayPurchaseMode = true;
+                            }
+                        }
+                    }
+                }
+
+                #endregion
 
                 #region Advertisement Type
                 if (detailSelections.Contains(CstWeb.DetailSelection.Type.advertisementType.GetHashCode())

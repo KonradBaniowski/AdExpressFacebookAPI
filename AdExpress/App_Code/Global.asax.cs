@@ -106,6 +106,10 @@ namespace AdExpress
 
                 if (WebApplicationParameters.VehiclesFormatInformation != null && WebApplicationParameters.VehiclesFormatInformation.Use)
                     VehiclesFormatList.Init(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList, WebApplicationParameters.DefaultDataLanguage);
+
+                if (WebApplicationParameters.UsePurchaseMode)
+                    PurchaseModeList.Init();
+
             }
             catch (System.Exception error)
             {

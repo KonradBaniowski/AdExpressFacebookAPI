@@ -277,6 +277,16 @@
                             </tr>
                             <TR height="10"><TD></TD></TR>
                             <%} %>
+                            <!--Purchase Mode-->
+                            <%if (_displayPurchaseMode){ %>
+                            <tr>
+                                <td class="txtViolet11Bold">&nbsp;<cc1:AdExpressText ID="AdExpressText23" runat="server" Code="3017" Language="33" /> :</td>
+                            </tr>
+                            <tr height="20">
+                                <td class="txtViolet11" valign="top"><%=_purchaseModeText%></td>
+                            </tr>
+                            <TR height="10"><TD></TD></TR>
+                            <%} %>
                             <!--Advertising Agnecy-->
 				            <%if(displayAdvertisingAgency){%>
 				            <TR>

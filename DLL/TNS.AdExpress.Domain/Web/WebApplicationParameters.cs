@@ -215,6 +215,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Custom Styles
         /// </summary>
         protected static CustomStyles _customStyles = null;
+        /// <summary>
+        /// Use Purchase Mode
+        /// </summary>
+        protected static bool _usePurchaseMode = false;
         #endregion
         
         #region Contructeur
@@ -553,6 +557,17 @@ namespace TNS.AdExpress.Domain.Web {
             }
             set {
                 _applyEvaliantCountryAccess = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set Use Purchase Mode
+        /// </summary>
+        public static bool UsePurchaseMode {
+            get {
+                return _usePurchaseMode;
+            }
+            set {
+                _usePurchaseMode = value;
             }
         }
         /// <summary>

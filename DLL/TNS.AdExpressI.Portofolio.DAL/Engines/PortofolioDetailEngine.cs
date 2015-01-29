@@ -308,6 +308,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 }
 
                 sql += GetFormatClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                sql += GetPurchaseModeClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
 				// Joints Products
 				sql += " " + detailProductJoints;

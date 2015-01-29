@@ -1182,6 +1182,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         bannersCountry = 259,
         /// <summary>
+        /// Purchase Mode MMS
+        /// </summary>
+        purchaseModeMMS = 260,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

@@ -259,6 +259,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }     
 
             sql.Append(GetFormatClause(null));
+            sql.Append(GetPurchaseModeClause(null));
 
 			// Period
 			switch (type) {
@@ -393,6 +394,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
 
             sql += GetFormatClause(null);
+            sql += GetPurchaseModeClause(null);
 
 			// Period
 			switch (type) {
@@ -1548,6 +1550,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
 
             sql.Append(GetFormatClause(null));
+            sql.Append(GetPurchaseModeClause(null));
 
             // Period
             switch(type) {

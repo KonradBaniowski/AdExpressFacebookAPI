@@ -39,6 +39,8 @@ using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
 using TNS.AdExpress.Domain.CampaignTypes;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 #endregion
 
@@ -601,6 +603,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                         case WebConstantes.DetailSelection.Type.bannersFormatSelected :
 							t.Append(GetBannersFormatSelected(_webSession));
 					        break;
+                        case WebConstantes.DetailSelection.Type.purchaseModeSelected:
+                            t.Append(GetPurchaseModeSelected(_webSession));
+                            break;
                         case WebConstantes.DetailSelection.Type.campaignType :
                             t.Append(GetCampaignType(_webSession,currentModule));
                             break;
@@ -1474,6 +1479,44 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         }
 
 	    #endregion
+
+        #region Purchase Mode Selected
+        /// <summary>
+        /// Purchase Mode Selected
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <returns>HTML</returns>
+        private string GetPurchaseModeSelected(WebSession webSession) {
+            var html = new StringBuilder();
+            if (WebApplicationParameters.UsePurchaseMode) {
+                if (VehiclesInformation.Contains(Constantes.Classification.DB.Vehicles.names.mms)) {
+
+                    Dictionary<Int64, VehicleInformation> VehicleInformationList = webSession.GetVehiclesSelected();
+                    if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)) {
+                        List<Int64> selectedPurchaseModeIdList = (new List<string>(webSession.SelectedPurchaseModeList.Split(','))).ConvertAll<Int64>(Int64.Parse);
+                        if (selectedPurchaseModeIdList.Count > 0) {
+                            var strFormatList = new List<string>();
+                            var purchaseModeIdList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                            foreach (var cFilterItem in purchaseModeIdList) {
+                                if (selectedPurchaseModeIdList.Contains(cFilterItem.Id)) {
+                                    strFormatList.Add(cFilterItem.Label.ToUpper());
+                                }
+                            }
+
+                            html.Append("<tr><td colspan=4 " + cssTitleData + "><font " + cssTitle +
+                                        ">" +
+                                        GestionWeb.GetWebWord(3017, webSession.SiteLanguage) +
+                                        " :</font> " + string.Join(", ", strFormatList.ToArray()) +
+                                        "</td></tr>");
+                        }
+                    }
+                }
+
+            }
+            return html.ToString();
+        }
+
+        #endregion
 
 		#endregion
 

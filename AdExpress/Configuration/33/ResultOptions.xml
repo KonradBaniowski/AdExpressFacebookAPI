@@ -14,6 +14,7 @@
   <news displayNews="true"/>
   <evaliantCountryAccess applyEvaliantCountryAccess="true"/>
   <plurimediaEvol hidePlurimediaEvol="true"/>
+  <purchaseMode use="false"/>
   <bannersFormat use="true">
     <allowVehicle id="6" description="Evaliant" rightBannersType="FormatEvaliantInternet" dataTableName="banners"               formatTableName="groupFormatBanners"/>
     <allowVehicle id="20" description="mms"     rightBannersType="None"                   dataTableName="groupFormatBanners"    formatTableName="groupFormatBanners" excludedFormats="0"/>
