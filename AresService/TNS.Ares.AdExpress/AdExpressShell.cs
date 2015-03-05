@@ -49,14 +49,18 @@ namespace TNS.Ares.AdExpress
         /// <summary>
         /// Initialize
         /// </summary>
-        protected override void InitializeShell(string pathConfiguration) { 
-            try {
+        protected override void InitializeShell(string pathConfiguration)
+        {
+            try
+            {
 
                 #region WebApplicationParameters
-                try {
+                try
+                {
                     new WebApplicationParameters();
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load WebApplicationParameters", e);
                 }
                 #endregion
@@ -64,99 +68,128 @@ namespace TNS.Ares.AdExpress
                 //Initialisation des chemins d'accès aux créations
                 CreativeConfigDataAccess.LoadPathes(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.CREATIVES_PATH_CONFIGURATION));
 
+                //Lists
+                try
+                {
+                    TNS.AdExpress.Domain.Lists.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.LISTS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e)
+                {
+                    throw new ShellInitializationException("Impossible to  Baal Lists", e);
+                }
                 #region Product Baal List
-                try {
+                try
+                {
                     Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load Product Baal List", e);
                 }
                 #endregion
 
                 #region Media Baal List
-                try {
+                try
+                {
                     Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load Media Baal List", e);
                 }
                 #endregion
 
                 #region UnitsInformation
-                try {
+                try
+                {
                     // Units
                     UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load UnitsInformation", e);
                 }
                 #endregion
 
                 #region VehiclesInformation
-                try {
+                try
+                {
                     // Vehicles
                     VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load VehiclesInformation", e);
                 }
                 #endregion
 
                 #region UniverseLevels
-                try {
+                try
+                {
                     // Universes
                     UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load UniverseLevels", e);
                 }
                 #endregion
 
                 #region UniverseLevelsCustomStyles
-                try {
+                try
+                {
                     // Charge les styles personnalisés des niveaux d'univers
                     UniverseLevelsCustomStyles.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load UniverseLevelsCustomStyles", e);
                 }
                 #endregion
 
                 #region UniverseBranches
-                try {
+                try
+                {
                     // Charge la hierachie de niveau d'univers
                     UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load UniverseBranches", e);
                 }
                 #endregion
 
                 #region UniverseLevels
-                try {
+                try
+                {
                     // Charge les niveaux d'univers
                     UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load UniverseLevels", e);
                 }
                 #endregion
 
                 #region AllowedFlags
-                try {
+                try
+                {
                     //Load flag list
                     TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load AllowedFlags", e);
                 }
                 #endregion
 
                 #region ModulesList
-                try {
+                try
+                {
                     new ModulesList();
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to load ModulesList", e);
                 }
                 #endregion
@@ -168,29 +201,35 @@ namespace TNS.Ares.AdExpress
 
 
                 #region Get Source
-                try {
+                try
+                {
                     _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to Get dataSource", e);
                 }
                 #endregion
 
                 #region Ares DataBaseConfiguration
-                try {
+                try
+                {
                     // Loading DataBase configuration
                     DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to Load DataBaseConfiguration", e);
                 }
                 #endregion
 
                 #region Ares PluginConfiguration
-                try {
+                try
+                {
                     PluginConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new ShellInitializationException("Impossible to Load Ares PluginConfiguration", e);
                 }
                 #endregion
@@ -202,7 +241,8 @@ namespace TNS.Ares.AdExpress
 
                 base.InitializeShell(pathConfiguration);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 sendEmailError("Initialization Error in Shell in Initialize(string directoryName)", e);
                 throw new ShellException("Initialization Error in Shell in Initialize(string directoryName)", e);
             }

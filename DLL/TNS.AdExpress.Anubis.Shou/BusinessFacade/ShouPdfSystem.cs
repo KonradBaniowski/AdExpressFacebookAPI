@@ -5,9 +5,11 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -15,7 +17,7 @@ using System.Windows.Forms;
 
 using TNS.AdExpress.Anubis.Shou.Common;
 using TNS.AdExpress.Anubis.Shou.Exceptions;
-
+using TNS.AdExpress.Domain;
 using TNS.AdExpress.Web.UI;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
@@ -61,6 +63,8 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 		/// Parametres d'une fiche justificative
 		/// </summary>
 		private ProofDetail _proofDetail = null;
+
+        //private List<long> _mediaExcludedForCopyright = new List<long> { 15940, 9178, 9480, 1596, 7011, 24328, 1320, 4171, 4172, 15869, 1576, 1509, 5156, 7906, 8143, 9992, 1648, 1465, 6340, 1994, 9364, 9710, 1374, 5832, 9658, 6780, 9103, 6337, 9109, 7472, 6918, 9497, 5225, 7230, 9709, 7532, 1825, 1838, 5678, 5510, 1365, 4205, 1906, 7935, 1748, 6236, 1363, 6077, 6561, 1845, 4458, 5262, 9892, 4560, 24377, 6682, 24379, 9260, 8628, 18189, 7606, 5193, 7973, 2702, 1300, 7006, 8902, 8901, 5911, 13057, 1387, 8452, 7938, 1592, 1768, 1390, 1395, 9570, 5258, 9173 };
 
 		#endregion
 
@@ -166,6 +170,13 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 		#region Méthodes Internes
 
+     
+
+       
+      
+
+       
+
 		#region File IO management
 
 		#region GetFileName
@@ -237,7 +248,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 			string str = null;
 			#endregion
 
-			if (fileList != null && fileList.Length > 0 && _proofDetail != null) {
+			if (!string.IsNullOrEmpty(fileList) && _proofDetail != null) {
 
 				visualList = fileList.ToString().Split(',');
 
@@ -250,8 +261,9 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 					this.SetCurrentPage((int)indexPage);	
 
 
-					//Environnement rédactionnel 										
-                    allMediaFiles = Directory.GetFiles(_config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette", "*.jpg");
+					//Environnement rédactionnel 
+                    string blurDirectory = (!WebFunctions.Rights.HasPressCopyright(Convert.ToInt64(_proofDetail.IdMedia)) && !WebFunctions.Rights.ParutionDateBefore2015(_proofDetail.DateCover)) ? @"\blur" : string.Empty;
+                    allMediaFiles = Directory.GetFiles(_config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + blurDirectory, "*.jpg");
 
 					#region Insertion uniquement des visuels
 					//Insertion uniquement des visuels				
@@ -319,8 +331,8 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 			ArrayList environmentPages = null;
 			string imgPath = null;
 			int nbMaxPagesByLine = 5;
-
-            imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + referenceVisual;
+            string blurDirectory = (!WebFunctions.Rights.HasPressCopyright(Convert.ToInt64(_proofDetail.IdMedia)) && !WebFunctions.Rights.ParutionDateBefore2015(_proofDetail.DateCover)) ? @"\blur" : string.Empty;
+            imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + blurDirectory + @"\" + referenceVisual;
 
 		
 			for (int j=0; j<allMediaFiles.Length;j++) {
@@ -385,6 +397,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 			#region Insertion de chaque visuel
 
 			//Insertion de chaque visuel
+            string blurDirectory = (!WebFunctions.Rights.HasPressCopyright(Convert.ToInt64(_proofDetail.IdMedia)) && !WebFunctions.Rights.ParutionDateBefore2015(_proofDetail.DateCover)) ? @"\blur" : string.Empty;
 			for (int i = 0; i < nbVisuals; i++) {
 
 				//Nouvelle ligne
@@ -401,7 +414,10 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 
 				if (environmentPages) imgPath = visualList[i].ToString();
-                else imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + visualList[i].ToString();
+				else
+				{                   
+                    imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + blurDirectory + @"\" + visualList[i].ToString();
+				}
 
 
 
@@ -619,8 +635,8 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
                     0);
 
                 #region Insertion Couverture
-
-                string imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + TNS.AdExpress.Constantes.Web.CreationServerPathes.COUVERTURE;
+                string blurDirectory = (!WebFunctions.Rights.HasPressCopyright(Convert.ToInt64(_proofDetail.IdMedia)) && !WebFunctions.Rights.ParutionDateBefore2015(_proofDetail.DateCover)) ? @"\blur" : string.Empty;
+                string imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + blurDirectory +@"\" + CreationServerPathes.COUVERTURE;
                 if (File.Exists(imgPath)) {
                     Image imgG = Image.FromFile(imgPath);
                     double zoomValue = 0.6;

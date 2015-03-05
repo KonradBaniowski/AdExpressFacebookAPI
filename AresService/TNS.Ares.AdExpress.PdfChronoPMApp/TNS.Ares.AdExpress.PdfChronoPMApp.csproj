@@ -131,6 +131,10 @@
       <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
       <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfChronoPM\TNS.Ares.AdExpress.PdfChronoPM.csproj">
+      <Project>{c11eb1e8-c3e3-479d-93d3-9ac059093d36}</Project>
+      <Name>TNS.Ares.AdExpress.PdfChronoPM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>

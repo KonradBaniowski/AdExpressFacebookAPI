@@ -188,10 +188,6 @@
       <Project>{8368962F-842E-481B-9C86-5E5609ABCCC9}</Project>
       <Name>TNS.AdExpressI.MediaSchedule.DAL.Default</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Finland\TNS.AdExpressI.MediaSchedule.DAL.Finland.csproj">
-      <Project>{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}</Project>
-      <Name>TNS.AdExpressI.MediaSchedule.DAL.Finland</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL\TNS.AdExpressI.MediaSchedule.DAL.csproj">
       <Project>{39325692-D25F-400C-8E46-080BCB3B3524}</Project>
       <Name>TNS.AdExpressI.MediaSchedule.DAL</Name>

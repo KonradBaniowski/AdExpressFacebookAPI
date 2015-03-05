@@ -6,6 +6,7 @@
 
 #region Namespaces
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Aspose.Cells;
 using System.Drawing;
@@ -115,6 +116,9 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
         /// <param name="config">Configuration de Geb</param>
         protected void DetailMediaResult(IDataSource source,GebAlertRequest alertParametersBlob,GebConfiguration.Alert alertParameters,TNS.AdExpress.Anubis.Geb.Common.GebConfig config) {
 			try{
+                //Media Ids to exclude because of copyright issue
+                List<long> mediaIds = new List<long> { 15940, 9178, 9480, 1596, 7011, 24328, 1320, 4171, 4172, 15869, 1576, 1509, 5156, 7906, 8143, 9992, 1648, 1465, 6340, 1994, 9364, 9710, 1374, 5832, 9658, 6780, 9103, 6337, 9109, 7472, 6918, 9497, 5225, 7230, 9709, 7532, 1825, 1838, 5678, 5510, 1365, 4205, 1906, 7935, 1748, 6236, 1363, 6077, 6561, 1845, 4458, 5262, 9892, 4560, 24377, 6682, 24379, 9260, 8628, 18189, 7606, 5193, 7973, 2702, 1300, 7006, 8902, 8901, 5911, 13057, 1387, 8452, 7938, 1592, 1768, 1390, 1395, 9570, 5258, 9173 };
+
 				// GetData
 				DataTable dt = DataAccess.GebExcelDataAccess.GetDetailMedia(source,alertParametersBlob,alertParameters).Tables[0];
 
@@ -151,8 +155,9 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
                         couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParameters.MediaId + @"\" + dt.Rows[0]["date_media_num"].ToString() + @"\imagette\coe001.jpg";
                     else
                         couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParameters.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
-                    
-					if(File.Exists(couvPath)){
+
+                    if (File.Exists(couvPath) && !mediaIds.Contains(alertParameters.MediaId))
+                    {
 						// Lien du chemin de Fer
 						cells.Merge(INDEX_START_LINE-1,INDEX_START_COLUMN+6,1,2);
 
@@ -241,7 +246,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 						idLine=(long)dr["id_advertisement"];
 						if(idLine!=idOldLine){
 							location="";
-							if(dr["visual"]!=null && dr["visual"]!=System.DBNull.Value){
+							if(dr["visual"]!=null && dr["visual"]!=System.DBNull.Value && !mediaIds.Contains(alertParameters.MediaId)){
 								// Construction du lien
 								visuals = dr["visual"].ToString().Split(',');
                                 for(int i=0;i < visuals.GetLength(0);i++) {

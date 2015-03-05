@@ -734,7 +734,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 param[0] = _webSession;
                 param[1] = period;
 
-                var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 mediaScheduleResult.Module = module;
                 var result = mediaScheduleResult.GetPDFHtml();
                 var creativeCells = new SortedDictionary<Int64, List<CellCreativesInformation>>();

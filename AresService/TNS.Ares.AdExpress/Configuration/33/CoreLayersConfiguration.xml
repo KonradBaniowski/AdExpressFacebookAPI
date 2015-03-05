@@ -7,8 +7,8 @@
     <layer id="dateDAL" name="layer of date DataAccess" assemblyName="TNS.AdExpressI.Date.DAL.Default.dll" class="TNS.AdExpressI.Date.DAL.Default.DateDAL"/>
     <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Default.dll" class="TNS.AdExpressI.Classification.DAL.Default.ClassificationLevelListDALFactory"/>
     <layer id="sourceProvider" name="layer of classification" assemblyName="TNS.AdExpress.Web.Core.France.dll" class="TNS.AdExpress.Web.Core.France.SourceProvider"/>
-    <layer id="insertions" name="insertions layer" assemblyName="TNS.AdExpressI.Insertions.Default.dll" class="TNS.AdExpressI.Insertions.Default.InsertionsResult"/>
-    <layer id="insertionsDAL" name="insertions DAL layer" assemblyName="TNS.AdExpressI.Insertions.DAL.Default.dll" class="TNS.AdExpressI.Insertions.DAL.Default.InsertionsDAL"/>
+    <layer id="insertions" name="insertions layer" assemblyName="TNS.AdExpressI.Insertions.France.dll" class="TNS.AdExpressI.Insertions.France.InsertionsResult"/>
+    <layer id="insertionsDAL" name="insertions DAL layer" assemblyName="TNS.AdExpressI.Insertions.DAL.France.dll" class="TNS.AdExpressI.Insertions.DAL.France.InsertionsDAL"/>
     <layer id="creativesUtilities" name="layer of creatives Utilities" assemblyName="TNS.AdExpress.Web.Core.France.dll" class="TNS.AdExpress.Web.Core.France.Utilities.Creatives"/>
     <layer id="creativePopUp" name="layer of creative Pop Up" assemblyName="TNS.AdExpressI.Insertions.Default.dll" class="TNS.AdExpressI.Insertions.Default.CreativeResult.CreativePopUp"/>
     <layer id="mediaDetailLevelUtilities" name="layer of media Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.France.dll" class="TNS.AdExpress.Web.Core.France.Utilities.MediaDetailLevel"/>

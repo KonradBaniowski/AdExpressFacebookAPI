@@ -7,6 +7,7 @@
 #region Namespaces
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TNS.FrameWork.DB.Common;
 using TNS.Baal.Common;
 using TNS.Baal.ExtractList;
@@ -108,6 +109,11 @@ namespace TNS.AdExpress.Anubis.Geb.Common {
         public string MediaItemsList {
             get { return _mediaItemsList; }
             set { _mediaItemsList = value; }
+        }
+        /// <summary>
+        /// Not CopyrightMedia Ids
+        /// </summary>
+        public List<long> NotCopyrightMediaIds { get {return new List<long> { 15940, 9178, 9480, 1596, 7011, 24328, 1320, 4171, 4172, 15869, 1576, 1509, 5156, 7906, 8143, 9992, 1648, 1465, 6340, 1994, 9364, 9710, 1374, 5832, 9658, 6780, 9103, 6337, 9109, 7472, 6918, 9497, 5225, 7230, 9709, 7532, 1825, 1838, 5678, 5510, 1365, 4205, 1906, 7935, 1748, 6236, 1363, 6077, 6561, 1845, 4458, 5262, 9892, 4560, 24377, 6682, 24379, 9260, 8628, 18189, 7606, 5193, 7973, 2702, 1300, 7006, 8902, 8901, 5911, 13057, 1387, 8452, 7938, 1592, 1768, 1390, 1395, 9570, 5258, 9173 }; } 
         }
         #endregion
 
