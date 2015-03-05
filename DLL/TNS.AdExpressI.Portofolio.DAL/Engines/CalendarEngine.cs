@@ -6,8 +6,6 @@
 
 using System;
 using System.Data;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -23,12 +21,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 
 using TNS.AdExpress.Domain.Units;
-
-using TNS.AdExpress.Web.Exceptions;
 using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
-using CstProject = TNS.AdExpress.Constantes.Project;
-using TNS.AdExpress.Constantes.FrameWork.Results;
-using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
@@ -85,40 +78,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			#endregion
             
 			#region Construction de la requête
-			try {
-				dataTableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
-				detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
-				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
-				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
-                if(_webSession.GetSelectedUnit().Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
-                    unitFieldNameSumWithAlias = WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(_webSession, DBConstantes.TableType.Type.dataVehicle4M); //WebFunctions.SQLGenerator.GetUnitFieldName(_webSession);
-                else {
-                    unitFieldNameSumWithAlias = GetUnitFieldName(_webSession, DBConstantes.TableType.Type.dataVehicle4M);
-                    dataGroupby = "," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_banners";
-                }
-
-                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-				detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
-				//option encarts (pour la presse)
-                if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id)
-					dataJointForInsert = WebFunctions.SQLGenerator.GetJointForInsertDetail(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-				//listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
-				listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-				if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
-					try {
-						dataTableNameForGad = dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
-						dataFieldsForGad = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad();
-						dataJointForGad = "and " + WebFunctions.SQLGenerator.GetJointForGad(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-					}
-					catch (SQLGeneratorException) { ;}
-				}
-
-			}
-			catch (Exception e) {
-				throw (new PortofolioDALException("Impossible to init query parameters" + e.Message));
-			}
+			dataTableName = GetQueryFields(dataTableName, ref detailProductTablesNames, ref detailProductFields, ref detailProductJoints,
+                ref unitFieldNameSumWithAlias, ref dataGroupby, ref mediaRights, ref productsRights, ref detailProductOrderBy, 
+                ref dataJointForInsert, ref listProductHap, ref dataTableNameForGad, ref dataFieldsForGad, ref dataJointForGad);
 
 			sql += " select " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ","+unitFieldNameSumWithAlias;
 			sql += ", " + DBConstantes.Fields.DATE_MEDIA_NUM + "";
@@ -147,7 +110,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 if (_webSession.AutoPromo == WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
                     sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".auto_promotion = 0 ";
                 else if (_webSession.AutoPromo == WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany) {
-                    sql += " and (" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_holding_company) not in ( ";
+                    sql += " and (" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " 
+                        + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_holding_company) not in ( ";
                     sql += " select distinct " + idMediaLabel + ", id_holding_company ";
                     sql += " from " + tblAutoPromo.Sql + " ";
                     sql += " where " + idMediaLabel + " is not null ";
@@ -209,7 +173,56 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 		}
 
-        protected string GetUnitFieldName(WebSession webSession, DBConstantes.TableType.Type type) {
+	    protected virtual string GetQueryFields(string dataTableName, ref string detailProductTablesNames, ref string detailProductFields, ref string detailProductJoints,
+            ref string unitFieldNameSumWithAlias, ref string dataGroupby, ref string mediaRights, ref string productsRights, ref string detailProductOrderBy, ref string dataJointForInsert,
+            ref string listProductHap, ref string dataTableNameForGad, ref string dataFieldsForGad, ref string dataJointForGad)
+	    {
+	        try
+	        {
+	            dataTableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+	            detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
+	            detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
+	            detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
+	            if (_webSession.GetSelectedUnit().Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
+	                unitFieldNameSumWithAlias = WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(_webSession, DBConstantes.TableType.Type.dataVehicle4M); //WebFunctions.SQLGenerator.GetUnitFieldName(_webSession);
+	            else
+	            {
+	                unitFieldNameSumWithAlias = GetUnitFieldName(_webSession, DBConstantes.TableType.Type.dataVehicle4M);
+	                dataGroupby = string.Format(",{0}.id_banners", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+	            }
+
+	            mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+	            productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+	            detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
+	            //option encarts (pour la presse)
+	            if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id 
+                    || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id)
+	                dataJointForInsert = WebFunctions.SQLGenerator.GetJointForInsertDetail(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+	            listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+	            if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
+	            {
+	                try
+	                {
+	                    dataTableNameForGad = dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
+	                    dataFieldsForGad = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad();
+	                    dataJointForGad = "and " + WebFunctions.SQLGenerator.GetJointForGad(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+	                }
+	                catch (SQLGeneratorException)
+	                {
+	                    ;
+	                }
+	            }
+	        }
+	        catch (Exception e)
+	        {
+	            throw (new PortofolioDALException("Impossible to init query parameters" + e.Message));
+	        }
+	        return dataTableName;
+	    }
+
+
+	    protected virtual string GetUnitFieldName(WebSession webSession, DBConstantes.TableType.Type type) {
             StringBuilder sql = new StringBuilder();
             switch(type) {
                 case DBConstantes.TableType.Type.dataVehicle4M:

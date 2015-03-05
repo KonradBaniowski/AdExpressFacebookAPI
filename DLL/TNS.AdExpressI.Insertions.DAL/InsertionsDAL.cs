@@ -1105,6 +1105,29 @@ namespace TNS.AdExpressI.Insertions.DAL
                 throw new InsertionsDALException(" Error impossible to obtain versions data", exc);
             }
         }
+
+        /// <summary>
+        /// Get Version Min Parution Date
+        /// </summary>
+        /// <param name="idVersion"></param>
+        /// <param name="idVehicle"></param>
+        /// <returns></returns>
+        public string GetVersionMinParutionDate(string idVersion, long idVehicle)
+        {
+            string minDate = string.Empty;
+            Table dataTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv);
+           var sql = new StringBuilder(1000);
+          
+            sql.AppendFormat(" select min(date_media_num) from {0} where id_slogan={1}",dataTable.SqlWithPrefix,idVersion);
+
+            var ds =_session.Source.Fill(sql.ToString());
+
+             if (ds != null && ds.Tables[0] != null){
+                minDate = Convert.ToString(ds.Tables[0].Rows[0][0]);
+            }
+            return minDate;
+        }
+
         #endregion
 
         #region Sub Methods

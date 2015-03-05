@@ -89,7 +89,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     this.Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "thickbox", this.Page.ResolveClientUrl("~/scripts/thickboxNoConflict.js"));
 
                 #region Script
-                StringBuilder js = new StringBuilder();
+                var js = new StringBuilder();
                 js.Append("\r\n <script language=\"javascript\" type=\"text/javascript\"> ");
 
                 js.Append("\r\n function getCookieContent(cname) { ");
@@ -116,6 +116,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 js.Append("\r\n</script>");
 
                 if (!Page.ClientScript.IsClientScriptBlockRegistered("ThickBoxCall")) Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ThickBoxCall", js.ToString());
+
+                if (!Page.ClientScript.IsClientScriptBlockRegistered("OpenNewWindow")) Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenNewWindow", js.ToString());
                 #endregion
 
             }
@@ -133,8 +135,9 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
             if (_display) {
                 output.Write("<div id=\"newsContent\" style=\"display:none;\">"); 
-                output.Write("<div class=\"" + _titleFont + " " + _titleStyle + "\">" + GestionWeb.GetWebWord(3008, _session.SiteLanguage) + "</div>");
-                output.Write("<div class=\"" + _contentFont + "\">" + GestionWeb.GetWebWord(3009, _session.SiteLanguage) + "</div>");
+                //output.Write("<div class=\"" + _titleFont + " " + _titleStyle + "\">" + GestionWeb.GetWebWord(3008, _session.SiteLanguage) + "</div>");
+                //output.Write("<div class=\"" + _contentFont + "\">" + GestionWeb.GetWebWord(3009, _session.SiteLanguage) + "</div>");
+                output.Write("<div class=\"" + _contentFont + "\"><p style=\"text-align:center\"><a href=\"http://ow.ly/JFxzl\"  target=\"_blank\"><img src=\"/Images/AdExpress Final_ver.png\" width=\"500\"/></a></p></div>");
                 output.Write("</div>");
             }
 

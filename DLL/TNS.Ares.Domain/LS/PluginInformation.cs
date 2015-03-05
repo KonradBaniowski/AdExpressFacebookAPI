@@ -87,6 +87,10 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         Ptah =28,
         /// <summary>
+        /// Blur Press Creative
+        /// </summary>
+        BlurPressCreative = 29,
+        /// <summary>
         /// easyMusicExcel Plugin
         /// </summary>
         easyMusicExcel = 30,

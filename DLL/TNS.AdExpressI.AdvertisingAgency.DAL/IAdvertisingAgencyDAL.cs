@@ -11,7 +11,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL{
         /// <summary>
         /// Load data for the module Advertising Agency report.
         /// </summary>
+        ///   <param name="sortByProductClassification">True if sort By ProductClassification</param>
         /// <returns>DataSet</returns>
-        DataSet GetData();
+        DataSet GetData(bool sortByProductClassification = false);
     }
 }

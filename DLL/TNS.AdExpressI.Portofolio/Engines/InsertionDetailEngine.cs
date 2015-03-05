@@ -512,8 +512,12 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                             foreach (string str in files)
                                             {
                                                 if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                                    listVisual += string.Format("/ImagesPresse/{0}/{1}/{2}{3},", _idMedia, row["date_media_num"],blur, str);
-                                                else listVisual += string.Format("/ImagesPresse/{0}/{1}/{2}{3},", _idMedia, row["date_cover_num"],blur, str);
+                                                    listVisual += string.Format("/ImagesPresse/{0}/{1}/{2}{3},", _idMedia, row["date_media_num"]
+                                                                                , TNS.AdExpress.Web.Functions.Rights.ParutionDateBefore2015(row["date_media_num"].ToString()) ? string.Empty : blur
+                                                                                , str);
+                                                else listVisual += string.Format("/ImagesPresse/{0}/{1}/{2}{3},", _idMedia, row["date_cover_num"]
+                                                                                , TNS.AdExpress.Web.Functions.Rights.ParutionDateBefore2015(row["date_cover_num"].ToString()) ? string.Empty : blur
+                                                                                , str);
                                             }
                                             if (listVisual.Length > 0)
                                             {

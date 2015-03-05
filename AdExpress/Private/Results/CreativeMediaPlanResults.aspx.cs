@@ -72,6 +72,8 @@ namespace AdExpress.Private.Results{
 		/// Capture de l'évènement responsbale du postBack
 		/// </summary>
 		protected int  eventButton=0;
+
+	    private string _idVehicle;
 		#endregion
 
 		#region Variable MMI
@@ -88,9 +90,11 @@ namespace AdExpress.Private.Results{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public CreativeMediaPlanResults():base(){
+		public CreativeMediaPlanResults()
+		{
 			idsession=HttpContext.Current.Request.QueryString.Get("idSession");
-            this._useThemes = false;
+            _idVehicle = HttpContext.Current.Request.QueryString.Get("idvehicle");
+            _useThemes = false;
 		}
 		#endregion
 
@@ -160,9 +164,14 @@ namespace AdExpress.Private.Results{
                     
                     TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
                     if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
-                    var param = new object[2];
+                    var param = (string.IsNullOrEmpty(_idVehicle)) ? new object[2] : new object[3];
                     param[0] = _webSession;
                     param[1] = period;
+                    if (!string.IsNullOrEmpty(_idVehicle))
+                    {
+                        param[2] = Convert.ToInt64(_idVehicle);
+                        creativeSelectionWebControl.IdVehicle = _idVehicle;
+                    }
                     var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
                         , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false,
                         BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);

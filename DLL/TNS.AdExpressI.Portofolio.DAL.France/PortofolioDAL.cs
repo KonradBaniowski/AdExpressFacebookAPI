@@ -7,6 +7,7 @@
 using System;
 using System.Data;
 using System.Collections.Generic;
+using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -72,6 +73,53 @@ namespace TNS.AdExpressI.Portofolio.DAL.France {
         public PortofolioDAL(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string beginingDate, string endDate, List<PortofolioStructure.Ventilation> ventilationTypeList)
             : base(webSession, vehicleInformation, idMedia, beginingDate, endDate, ventilationTypeList) {
 
+        }
+        #endregion
+        #region IPortofolioDAL Membres
+
+        /// <summary>
+        /// Get synthesis data
+        /// </summary>
+        /// <returns></returns>
+        public override DataSet GetData()
+        {
+            DAL.Engines.Engine res = null;
+
+            switch (_webSession.CurrentTab)
+            {
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                    res = new Engines.PortofolioDetailEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                    res = new Engines.CalendarEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                    switch (_vehicleInformation.Id)
+                    {
+                        case DBClassificationConstantes.Vehicles.names.others:
+                        case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                        case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                        case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                        case DBClassificationConstantes.Vehicles.names.radio:
+                        case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                        case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.radioMusic:
+                            res = new DAL.Engines.MediaDetailEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
+                            break;
+                        default:
+                            throw (new PortofolioDALException("Impossible to identified current vehicle "));
+                    }
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                    res = GetStructData();
+                    break;
+                default:
+                    throw (new PortofolioDALException("Impossible to identified current tab "));
+            }
+
+            return res.GetData();
         }
         #endregion
 

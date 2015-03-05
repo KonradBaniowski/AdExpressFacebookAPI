@@ -849,7 +849,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                 + GestionWeb.GetWebWord(1911, siteLanguage) + "\" type=\"application/x-oleobject\">');");
             res.Append(" document.write('<param name=\"FileName\" value='+filepath+' >');");
             res.Append(" document.write('<param name=\"AutoStart\" value=\"true\">');");
-            res.Append(" document.write('<embed type=\"application/x-mplayer2\" pluginspage=\"http://www.microsoft.com/Windows/MediaPlayer/\"  src='+filepath+' name=\"video1\" height=\"288\" width=\"352\" AutoStart=true>'); ");
+            res.Append(" document.write('<embed type=\"application/x-mplayer2\" pluginspage=\"http://www.microsoft.com/Windows/MediaPlayer/\"  src=\"'+filepath+'\" name=\"video1\" height=\"288\" width=\"352\" AutoStart=true>'); ");
             res.Append(" document.write('</embed>');");
             res.Append(" document.write('</object>');");
             res.Append(" document.write('</TD></TR></TBODY></TABLE></TD>');");

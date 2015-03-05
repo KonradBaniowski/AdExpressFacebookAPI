@@ -197,5 +197,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         }
         #endregion
 
+        protected virtual string GetBannerGroupby()
+        {
+            return string.Format(",{0}.id_banners", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
+        }
+
     }
 }

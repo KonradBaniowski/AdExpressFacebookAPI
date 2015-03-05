@@ -497,8 +497,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 switch(periodBreakDown) {
                     case CstPeriod.PeriodBreakdownType.data:
                     case CstPeriod.PeriodBreakdownType.data_4m:
-                        unitFieldName = string.Format(" to_char({0}.{1}) as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField, _session.GetSelectedUnit().Id.ToString());
-                        groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
+                        unitFieldName = string.Format(" {0}.{1} as {2} ",
+                            WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField, _session.GetSelectedUnit().Id.ToString());
+                        groupByOptional = string.Format(", {0}.{1} ", 
+                            WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
                         break;
                     default:
                         unitFieldName = string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());

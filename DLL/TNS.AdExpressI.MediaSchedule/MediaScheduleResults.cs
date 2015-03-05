@@ -2687,10 +2687,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// </summary>
         /// <returns>True if access authorised</returns>
         protected virtual bool AllowInsertions() {
-            bool allow = false;
-            foreach(VehicleInformation v in Vehicles) {
-                allow = allow || v.ShowInsertions;
-            }
+            bool allow = Vehicles.Aggregate(false, (current, v) => current || v.ShowInsertions);
 
             return
                 allow

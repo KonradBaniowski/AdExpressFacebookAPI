@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
 using System.Reflection;
-
+using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI;
@@ -158,11 +158,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 
                     #region Zoom Date
 
-                    #region Obtention du vehicle
-                    string vehicleSelection = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
-                    if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
-                    DBClassificationConstantes.Vehicles.names vehicle = VehiclesInformation.DatabaseIdToEnum(long.Parse(vehicleSelection));
-                    #endregion
+                    var vehicle = Vehicle;
 
                     DateTime dayOfWeek = DateTime.Now;
 
@@ -197,6 +193,23 @@ namespace TNS.AdExpress.Web.Controls.Results {
                     break;
             }
         }
+
+        private DBClassificationConstantes.Vehicles.names Vehicle
+        {
+            get
+            {
+                #region Obtention du vehicle
+
+                string vehicleSelection = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
+                if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
+                DBClassificationConstantes.Vehicles.names vehicle = VehiclesInformation.DatabaseIdToEnum(long.Parse(vehicleSelection));
+
+                #endregion
+
+                return vehicle;
+            }
+        }
+
         /// <summary>
         /// Prérender
         /// </summary>
@@ -211,7 +224,11 @@ namespace TNS.AdExpress.Web.Controls.Results {
         protected override void Render(HtmlTextWriter output) {
 
             if (_renderType == RenderType.html)
+            {
+                AdIndeRadioMessage(output, "<table cellpadding=0 cellspacing=0 width=100% >", "</table>");
                 base.Render(output);
+               
+            }              
             else {
                 if (_customerWebSession == null) {
                     output.WriteLine("<table cellpadding=0 cellspacing=0 bgcolor=#644883>");
@@ -226,7 +243,9 @@ namespace TNS.AdExpress.Web.Controls.Results {
                 {
 					output.WriteLine(zoomDetailSelectionWebControl.GetLogo(_customerWebSession));
 					output.WriteLine(zoomDetailSelectionWebControl.GetHeader());
+                    AdIndeRadioMessage(output, "<br><table cellpadding=0 cellspacing=0 width=100% >", "</table><br>");
 					output.WriteLine(base.GetExcel());
+                   
 					output.WriteLine(zoomDetailSelectionWebControl.GetFooter());
                 }
             }
@@ -328,6 +347,26 @@ namespace TNS.AdExpress.Web.Controls.Results {
         
         }
         #endregion
+
+        private void AdIndeRadioMessage(HtmlTextWriter output, string tableBegin = null, string tableEnd = null)
+        {
+            //Les indes Radio
+            if (WebApplicationParameters.CountryCode.Equals(Constantes.Web.CountryCode.FRANCE)
+                && Vehicle == DBClassificationConstantes.Vehicles.names.radio
+                && _customerWebSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.idTopDiffusion))
+            {
+
+                if (!string.IsNullOrEmpty(tableBegin))
+                {
+                    output.WriteLine(tableBegin);
+                    output.WriteLine("<tr class=\"txtViolet\" width=\"100%\"><td width=\"100%\" colspan=8>");
+                }
+                else output.WriteLine("<tr class=\"txtViolet\" width=\"100%\"><td width=\"100%\">");
+                output.Write("<FONT face=\"Arial, Helvetica, sans-serif\" size=1 class=\"txtViolet\">" + GestionWeb.GetWebWord(3018, _customerWebSession.SiteLanguage) + "</FONT>");
+                output.WriteLine("</td></tr>");
+                if (!string.IsNullOrEmpty(tableEnd)) output.WriteLine(tableEnd);
+            }
+        }
 
     }
 }

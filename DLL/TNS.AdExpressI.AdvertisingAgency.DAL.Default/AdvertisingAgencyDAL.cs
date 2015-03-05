@@ -16,7 +16,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL.Default
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="session">User session</param>
+        /// <param name="session">User session</param>      
         public AdvertisingAgencyDAL(WebSession session, MediaSchedulePeriod period) : base(session, period) { }
         #endregion
 

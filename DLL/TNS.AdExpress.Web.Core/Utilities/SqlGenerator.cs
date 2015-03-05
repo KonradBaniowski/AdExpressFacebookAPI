@@ -2722,7 +2722,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         }
                         else
                         {
-                            sql.AppendFormat("to_char({0}{1}) as {2}", prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
+                            sql.AppendFormat("{0}{1} as {2}", prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
                         }
                         return sql.ToString();
                     }

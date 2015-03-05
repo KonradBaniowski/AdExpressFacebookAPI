@@ -194,8 +194,8 @@ namespace TNS.AdExpress.Web.Controls.Results
         {
             string blurDirectory = HasPressCopyright(Convert.ToInt64(_idMedia)) ? string.Empty : "blur/";
 
-            _pathWeb = string.Format("{0}/{1}/{2}/imagette/{3}", CstWeb.CreationServerPathes.IMAGES, _idMedia, _dateFacial, blurDirectory);
-            _pathWeb2 = string.Format("{0}/{1}/{2}/{3}", CstWeb.CreationServerPathes.IMAGES, _idMedia, _dateFacial,blurDirectory);
+            _pathWeb = string.Format("{0}/{1}/{2}/imagette/{3}", CstWeb.CreationServerPathes.IMAGES, _idMedia, _dateFacial,blurDirectory);
+            _pathWeb2 = string.Format("{0}/{1}/{2}/{3}", CstWeb.CreationServerPathes.IMAGES, _idMedia, _dateFacial,  blurDirectory);
 
 
             #region GetData
@@ -336,7 +336,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                     string pathCouv = _pathWeb + CstWeb.CreationServerPathes.COUVERTURE;
 
                     // Chemin du répertoire contenant le visuel de la couverture presse
-                    string pathCouv2 = CstWeb.CreationServerPathes.LOCAL_PATH_IMAGE + _idMedia + @"\" + _dateFacial + @"\" + blurDirectory + CstWeb.CreationServerPathes.COUVERTURE;
+                    string pathCouv2 = CstWeb.CreationServerPathes.LOCAL_PATH_IMAGE + _idMedia + @"\" + _dateFacial + @"\" + (ParutionDateBefore2015(_dateFacial) ? string.Empty : blurDirectory) + CstWeb.CreationServerPathes.COUVERTURE;
                     // Pour test en localhost :
                     //string pathCouv2="\\\\localhost\\ImagesPresse\\"+_idMedia+"\\"+_dateFacial+"\\"+CstWeb.CreationServerPathes.COUVERTURE;
 
@@ -467,12 +467,28 @@ namespace TNS.AdExpress.Web.Controls.Results
         {
             string ids = Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaExcludedForCopyright);
 
-            if (!string.IsNullOrEmpty(ids))
+            if (!string.IsNullOrEmpty(ids) && !ParutionDateBefore2015(_dateFacial))
             {
                 var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
                 return !notAllowedMediaIds.Contains(idMedia);
             }
             return true;
+        }
+        /// <summary>
+        /// Check if parution date is before the year 2015
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        private bool ParutionDateBefore2015(string date)
+        {
+
+            string year = date.Substring(0, 4);
+
+            if (int.Parse(year) < 2015)
+                return true;
+            else
+                return false;
+
         }
     }
 }

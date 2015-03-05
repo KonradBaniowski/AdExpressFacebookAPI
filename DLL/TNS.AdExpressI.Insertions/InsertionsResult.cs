@@ -529,9 +529,9 @@ namespace TNS.AdExpressI.Insertions
             string blurDirectory = UseBlurImageForPress ? "blur/" : string.Empty;
 
             string pathWebImagette = string.Format("{0}/{1}/{2}/imagette/{3}", CreationServerPathes.IMAGES, currentRow["id_media"].ToString()
-                , currentRow[dateField].ToString(),blurDirectory);
+                , currentRow[dateField].ToString(), blurDirectory);
             string pathWeb = string.Format("{0}/{1}/{2}/{3}", CreationServerPathes.IMAGES, currentRow["id_media"].ToString()
-                , currentRow[dateField].ToString(),blurDirectory);
+                , currentRow[dateField].ToString(), blurDirectory);
 
             foreach (string file in fileList)
             {
@@ -967,6 +967,7 @@ namespace TNS.AdExpressI.Insertions
                                 case Vehicles.names.radio:
                                     tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
                                         _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
+                                  
                                     break;
                                 case Vehicles.names.radioGeneral:
                                     tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
@@ -1053,6 +1054,8 @@ namespace TNS.AdExpressI.Insertions
 
             }
         }
+
+    
         protected virtual bool IsTvVehicle(VehicleInformation vehicle)
         {
             return (vehicle.Id == Vehicles.names.tv
@@ -1684,18 +1687,18 @@ namespace TNS.AdExpressI.Insertions
             return (disponibility <= 10 && activation <= 100 && idMedia > 0 && dateCoverNum > 0);
         }
 
-        protected virtual bool HasPressCopyright(DataRow row)
-        {
+        //protected virtual bool HasPressCopyright(DataRow row)
+        //{
          
-            if (row.Table.Columns.Contains("id_media") && row["id_media"] != DBNull.Value)
-            {
-               long idMedia = Convert.ToInt64(row["id_media"]);
-               string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
-               var notAllowedMediaIds = ids.Split(',').Select( p => Convert.ToInt64(p)).ToList();
-                return !notAllowedMediaIds.Contains(idMedia);
-            }
-            return true;
-        }
+        //    if (row.Table.Columns.Contains("id_media") && row["id_media"] != DBNull.Value)
+        //    {
+        //       long idMedia = Convert.ToInt64(row["id_media"]);
+        //       string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
+        //       var notAllowedMediaIds = ids.Split(',').Select( p => Convert.ToInt64(p)).ToList();
+        //        return !notAllowedMediaIds.Contains(idMedia);
+        //    }
+        //    return true;
+        //}
 
         protected virtual bool HasPressCopyright(long idMedia)
         {
@@ -1706,6 +1709,23 @@ namespace TNS.AdExpressI.Insertions
                 return !notAllowedMediaIds.Contains(idMedia);                      
             }
             return true;
+        }
+
+        /// <summary>
+        /// Check if parution date is before the year 2015
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        protected virtual bool ParutionDateBefore2015(string date)
+        {
+
+            string year = date.Substring(0, 4);
+
+            if (int.Parse(year) < 2015)
+                return true;
+            else
+                return false;
+
         }
         #endregion
 
@@ -1723,7 +1743,8 @@ namespace TNS.AdExpressI.Insertions
         protected virtual string GetCreativePathPress(string file, Int64 idMedia, Int64 dateCoverNum, bool bigSize, Int64 dateMediaNum)
         {
             string imagette = (bigSize) ? string.Empty : "/Imagette";
-            string blurDirectory = (HasPressCopyright(idMedia)) ? string.Empty : "/blur";
+            string blurDirectory = string.Empty ;
+            long date = dateCoverNum;
 
             lock (_mutex)
             {
@@ -1737,11 +1758,12 @@ namespace TNS.AdExpressI.Insertions
                     { }
                 }
             }
-            if (_mediaList != null && Array.IndexOf(_mediaList, idMedia.ToString()) > -1)
-            {
-                return string.Format("{0}/{1}/{2}{3}{4}/{5}", CreationServerPathes.IMAGES, idMedia, dateMediaNum, imagette,blurDirectory, file);
-            }
-            return string.Format("{0}/{1}/{2}{3}{4}/{5}", CreationServerPathes.IMAGES, idMedia, dateCoverNum, imagette,blurDirectory, file);
+            if (_mediaList != null && Array.IndexOf(_mediaList, idMedia.ToString()) > -1)           
+                 date = dateMediaNum;
+            
+             if(!HasPressCopyright(idMedia) && !ParutionDateBefore2015(date.ToString()))
+                blurDirectory = "/blur";
+              return string.Format("{0}/{1}/{2}{3}{4}/{5}", CreationServerPathes.IMAGES, idMedia, date, imagette, blurDirectory, file);
         }
         #endregion
 
@@ -1818,5 +1840,6 @@ namespace TNS.AdExpressI.Insertions
         #endregion
 
         #endregion
+        
     }
 }

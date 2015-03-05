@@ -2678,22 +2678,24 @@ namespace TNS.AdExpress.Web.UI
 
             HtmlMeta metaKeywords;
 
-            this.Response.ContentEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelContentEncoding);
+            Response.ContentEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelContentEncoding);
 
-            if (WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelCharset.Length > 0) {
-                metaKeywords = new HtmlMeta();
-                metaKeywords.Name = "charset";
-                metaKeywords.Content = WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelCharset;
-                this.Page.Header.Controls.Add(metaKeywords);
-            }
-
+         
             string temp = string.Empty;
             string absolutePath = string.Empty;
 
             if (!string.IsNullOrEmpty(_webSession.DomainName)) absolutePath = "http://" + _webSession.DomainName;
 
-            if (Page.Header != null)
+            if (Page != null && Page.Header != null)
             {
+                if (WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelCharset.Length > 0)
+                {
+                    metaKeywords = new HtmlMeta();
+                    metaKeywords.Name = "charset";
+                    metaKeywords.Content = WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelCharset;
+                    Page.Header.Controls.Add(metaKeywords);
+                }
+
                 for (int i = 0; i < Page.Header.Controls.Count; i++)
                 {
                     if (Page.Header.Controls[i] is HtmlLink && ((HtmlLink)this.Page.Header.Controls[i]).Href.Contains("App_Themes"))

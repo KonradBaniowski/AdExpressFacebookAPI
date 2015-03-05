@@ -520,18 +520,23 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         output.WriteLine(this.AjaxEventScript());
 
                         output.WriteLine("<table align=\"center\" class=\"backGroundWhite\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
+                       
                         output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
                         _header.RenderControl(output);
                         output.WriteLine("</td></tr>");
+                     
                         if (!_isCreativeConfig)
                         {
                             output.WriteLine("<tr width=\"100%\" align=\"left\"><td width=\"100%\">");
                             _columns.RenderControl(output);
                             output.WriteLine("</td></tr>");
                         }
+                        AdIndeRadioMessage(output);
                         output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
                         base.Render(output);
                         output.WriteLine("</td></tr>");
+
+                     
 
                         output.WriteLine("</table>");
                     }
@@ -565,7 +570,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
                         output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession,
                             false, _fromDate.ToString(), _toDate.ToString(), filters, Convert.ToInt32(_idVehicle)));
+                        AdIndeRadioMessage(output, "<table cellpadding=0 cellspacing=0>", "</table><br>");
                         output.WriteLine(GetRawExcel());
+                     
                         output.WriteLine(detailSelectionWebControl.GetFooter());
                         _customerWebSession.CurrentModule = oldIdModule;
                     }
@@ -590,6 +597,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession,
                             false, _fromDate.ToString(), _toDate.ToString(), filters, Convert.ToInt32(_idVehicle)));
                         output.WriteLine(base.GetExcel());
+                     
                         output.WriteLine(detailSelectionWebControl.GetFooter());
                         _customerWebSession.CurrentModule = oldIdModule;
                     }
@@ -597,7 +605,28 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
 
         }
-        #endregion
+
+	    private void AdIndeRadioMessage(HtmlTextWriter output,string tableBegin= null, string tableEnd = null)
+	    {
+               //Les indes Radio
+	        if (!_isCreativeConfig && WebApplicationParameters.CountryCode.Equals(Constantes.Web.CountryCode.FRANCE)
+	            && VehiclesInformation.Get(IdVehicle).Id == CstDBClassif.Vehicles.names.radio
+	            && _customerWebSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.idTopDiffusion))
+	        {
+
+                if (!string.IsNullOrEmpty(tableBegin))
+                {
+                    output.WriteLine(tableBegin);
+                    output.WriteLine("<tr class=\"txtViolet\" width=\"100%\"><td width=\"100%\"  colspan=8>");
+                }
+                else output.WriteLine("<tr class=\"txtViolet\" width=\"100%\"><td width=\"100%\">");
+                output.WriteLine("<FONT face=\"Arial, Helvetica, sans-serif\" size=1 class=\"txtViolet\">" + GestionWeb.GetWebWord(3018, _customerWebSession.SiteLanguage) + "</FONT>");
+	            output.WriteLine("</td></tr>");
+                if (!string.IsNullOrEmpty(tableEnd)) output.WriteLine(tableEnd);
+	        }
+	    }
+
+	    #endregion
 
         #region GetResultTable
         /// <summary>
@@ -1161,6 +1190,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             return filtersList;
         }
         #endregion
+
+
 
     }
 }

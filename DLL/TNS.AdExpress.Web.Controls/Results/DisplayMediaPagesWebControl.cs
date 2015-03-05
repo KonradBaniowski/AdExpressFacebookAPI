@@ -209,15 +209,16 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			#region Variables
 
 		    bool hasPressCopyright = Web.Functions.Rights.HasPressCopyright(_idMedia);
+		    bool parutionDateBefore2015 = Web.Functions.Rights.ParutionDateBefore2015(_dateCover);
 
             string pathWeb = string.Format("{0}/{1}/{2}/{3}/{4}",
                 WebCst.CreationServerPathes.IMAGES, _idMedia, _dateCover,
                 (string.IsNullOrEmpty(SubFolder)) ? "imagette" : SubFolder,
-                hasPressCopyright ? string.Empty : "blur/");
+                (hasPressCopyright || parutionDateBefore2015) ? string.Empty : "blur/");
             string path = string.Format("{0}{1}\\{2}\\{3}{4}",
                 WebCst.CreationServerPathes.LOCAL_PATH_IMAGE, _idMedia, _dateCover,
                 (string.IsNullOrEmpty(SubFolder)) ? "imagette" : SubFolder,
-                 hasPressCopyright ? string.Empty : "\\blur");
+                 (hasPressCopyright || parutionDateBefore2015) ? string.Empty : "\\blur");
 
            
 			string[] files = Directory.GetFiles(path, "*.jpg");
@@ -242,12 +243,15 @@ namespace TNS.AdExpress.Web.Controls.Results {
                 , GestionWeb.GetWebWord(1385, _webSession.SiteLanguage), _nbrePages);
 			t.Append("</tr></table>");
 
-            t.Append("<table border=1 class=\"violetBorder paleVioletBackGroundV2\" cellpadding=2 cellspacing=2 width=100% ><tr>");
+            if (!hasPressCopyright && !parutionDateBefore2015)
+            {
+                t.Append("<table border=1 class=\"violetBorder paleVioletBackGroundV2\" cellpadding=2 cellspacing=2 width=100% ><tr>");
 
-            t.AppendFormat("<td align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none;\">{0}</td>"
-                , GestionWeb.GetWebWord(3015, _webSession.SiteLanguage));
+                t.AppendFormat("<td align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none;\">{0}</td>"
+                               , GestionWeb.GetWebWord(3015, _webSession.SiteLanguage));
             
-            t.Append("</tr></table>");
+                t.Append("</tr></table>");
+            }
 
 			t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100% class=\"paleVioletBackGroundV2\">");
 			foreach (string name in files) {

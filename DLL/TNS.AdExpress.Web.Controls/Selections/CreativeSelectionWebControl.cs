@@ -55,6 +55,10 @@ namespace TNS.AdExpress.Web.Controls.Selections
         {
             set { _webSession = value; }
         }
+        /// <summary>
+        /// Id Vehicle
+        /// </summary>
+        public string IdVehicle { get; set; }
         #endregion
 
         #region Evènement
@@ -161,7 +165,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
             // Lien vers XLS
             output.Write("<tr height=40 valign=middle>");
             output.Write("<td colspan=3 align=center>");
-            output.Write("<a class=\"roll02\" href=\"" + XLS_LINK + "?idSession=" + _webSession.IdSession + "\">" + GestionWeb.GetWebWord(1796, _webSession.SiteLanguage) + "</a>");
+            if (!string.IsNullOrEmpty(IdVehicle))
+                output.Write("<a class=\"roll02\" href=\"" + XLS_LINK + "?idSession=" + _webSession.IdSession + "&idvehicle=" + IdVehicle + "\">" + GestionWeb.GetWebWord(1796, _webSession.SiteLanguage) + "</a>");
+            else output.Write("<a class=\"roll02\" href=\"" + XLS_LINK + "?idSession=" + _webSession.IdSession + "\">" + GestionWeb.GetWebWord(1796, _webSession.SiteLanguage) + "</a>");
             output.Write("</td>");
             output.Write("</tr>");
             output.Write("</table>");

@@ -43,27 +43,33 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
         /// DataBase Schema
         /// </summary>
         protected static Schema _schAdexpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="session">User session</param>
         /// <param name="period">Media Schedule Period</param>
+      
         public AdvertisingAgencyDAL(WebSession session, MediaSchedulePeriod period)
         {
             _session = session;
             _period = period;
+          
         }
+
         #endregion
 
         #region GetData
         /// <summary>
         /// Load data for the module Advertising Agency report.
         /// </summary>
+        ///   <param name="sortByMediaClassification">True if sort By MediaClassification</param>
         /// <returns>DataSet</returns>
-        public virtual DataSet GetData() {
+        public virtual DataSet GetData( bool sortByMediaClassification = false) {
 
             #region Variables
             bool first = true;
@@ -172,7 +178,9 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             {
                 sql.AppendFormat(", {0} ", u.Id.ToString());
             }
-            sql.AppendFormat(" order by {0}, {1} {2} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), mediaDetailLevel.GetSqlOrderFieldsWithoutTablePrefix(), dataFieldsForGad);
+            if (sortByMediaClassification)
+                sql.AppendFormat(" order by {0}, {1} {2} ", mediaDetailLevel.GetSqlOrderFieldsWithoutTablePrefix(), detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), dataFieldsForGad);
+            else sql.AppendFormat(" order by {0}, {1} {2} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), mediaDetailLevel.GetSqlOrderFieldsWithoutTablePrefix(), dataFieldsForGad);
             #endregion
 
             #region Execution de la requête

@@ -12,7 +12,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Text;
 using System.Linq;
 using TNS.AdExpress.Domain.Layers;
@@ -22,11 +21,10 @@ using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Exceptions;
+using TNS.AdExpress.Web.Functions;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
 using WeBCst = TNS.AdExpress.Constantes.Web;
 using CustomCst = TNS.AdExpress.Constantes.Customer;
-
-using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.Insertions.Cells;
@@ -227,15 +225,18 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             Dictionary<Int64, List<Int64>> mediasByVersionId = null;
 			switch(this._vehicle){
 				case DBCst.Vehicles.names.press:
-					if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE){
+			        bool isBefore2015 = true;
+					if (_webSession.CurrentModule==Module.Name.BILAN_CAMPAGNE){
 						dtSet = VersionDataAccess.GetAPPMVersions(_versions.Keys, _webSession);
                         dtVersionAllMedia = VersionDataAccess.GetAPPMVersionsAllMedia(_versions.Keys, _webSession);
                         mediasByVersionId = GetMediasByVersionId(dtVersionAllMedia);
+                       isBefore2015 =  Functions.Rights.ParutionDateBefore2015(_webSession.PeriodBeginningDate)
+                    || Rights.ParutionDateBefore2015(_webSession.PeriodEndDate);
 					}
 					else{
 						dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession,DBCst.Vehicles.names.press,_period);
                         dtVersionAllMedia = VersionDataAccess.GetVersionsAllMedia(_versions.Keys, _webSession, DBCst.Vehicles.names.press, _period);
-                        mediasByVersionId = GetMediasByVersionId(dtVersionAllMedia);
+                        mediasByVersionId = GetMediasByVersionId(dtVersionAllMedia);                        
 					}
 					break;
 
@@ -347,7 +348,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 						}
 
 						//fill version path
-						item = ((VersionItem) this._versions[(Int64)row["id"]]);
+						item = ((VersionItem) _versions[(Int64)row["id"]]);
 						if (item == null){
 							continue;
 						}
@@ -373,7 +374,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								if (path.Length>0){
 									item.Path = path.Substring(0, path.Length - 1);
 								}
-                                versionUi = new VersionPressUI(this._webSession, item) { };
+                                versionUi = new VersionPressUI(_webSession, item) { };
 								break;
 
                             case DBCst.Vehicles.names.directMarketing:
@@ -383,69 +384,69 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                                 if (path.Length > 0){
                                     item.Path = path.Substring(0, path.Length - 1);
                                 }
-                                versionUi = new VersionPressUI(this._webSession, item);
+                                versionUi = new VersionPressUI(_webSession, item);
                                 break;
 
 							case DBCst.Vehicles.names.radio:
 								if (path.Length>0){
 									item.Path = path;
 								}
-                                versionUi = new VersionRadioUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radio));
+                                versionUi = new VersionRadioUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radio));
 								break;
                             case DBCst.Vehicles.names.radioGeneral:
                                 if (path.Length > 0)
                                 {
                                     item.Path = path;
                                 }
-                                versionUi = new VersionRadioUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioGeneral));
+                                versionUi = new VersionRadioUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioGeneral));
                                 break;
                             case DBCst.Vehicles.names.radioSponsorship:
                                 if (path.Length > 0)
                                 {
                                     item.Path = path;
                                 }
-                                versionUi = new VersionRadioUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioSponsorship));
+                                versionUi = new VersionRadioUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioSponsorship));
                                 break;
                             case DBCst.Vehicles.names.radioMusic:
                                 if (path.Length > 0)
                                 {
                                     item.Path = path;
                                 }
-                                versionUi = new VersionRadioUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioSponsorship));
+                                versionUi = new VersionRadioUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioSponsorship));
                                 break;
 							case DBCst.Vehicles.names.tv:
 								if (path.Length>0){
 									item.Path = path;
 								}
-                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tv));
+                                versionUi = new VersionTvUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tv));
 								break;
                             case DBCst.Vehicles.names.tvGeneral:
                                 if (path.Length > 0)
                                 {
                                     item.Path = path;
                                 }
-                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvGeneral));
+                                versionUi = new VersionTvUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvGeneral));
                                 break;
                             case DBCst.Vehicles.names.tvSponsorship:
                                 if (path.Length > 0)
                                 {
                                     item.Path = path;
                                 }
-                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvSponsorship));
+                                versionUi = new VersionTvUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvSponsorship));
                                 break;
                             case DBCst.Vehicles.names.tvAnnounces:
                                 if (path.Length > 0)
                                 {
                                     item.Path = path;
                                 }
-                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvAnnounces));
+                                versionUi = new VersionTvUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvAnnounces));
                                 break;
                             case DBCst.Vehicles.names.tvNonTerrestrials:
                                 if (path.Length > 0)
                                 {
                                     item.Path = path;
                                 }
-                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvNonTerrestrials));
+                                versionUi = new VersionTvUI(_webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvNonTerrestrials));
                                 break;
 
 							default:
@@ -641,7 +642,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
         }
         #endregion
 
-        #endregion
+        
 
         #region Internal Methods
         /// <summary>
@@ -680,28 +681,57 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
         }
 
         #region HasPressCopyright
-        /// <summary>
+        ///// <summary>
+        ///// Has Press Copyright
+        ///// </summary>
+        ///// <param name="row">Row</param>
+        ///// <param name="mediasByVersionId">Medias By Version Id</param>
+        ///// <returns>True if has copyright press</returns>
+        //protected bool HasPressCopyright(DataRow row, Dictionary<Int64, List<Int64>> mediasByVersionId) {
+
+        //    string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
+        //    if (!string.IsNullOrEmpty(ids))
+        //    {
+        //        if (row.Table.Columns.Contains("id") && row["id"] != DBNull.Value) {
+        //            long idSlogan = Convert.ToInt64(row["id"]);
+              
+        //            var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+        //            foreach (Int64 idMedia in mediasByVersionId[idSlogan]) {
+        //                if (!notAllowedMediaIds.Contains(idMedia))
+        //                    return true;
+        //            }
+        //        }
+
+        //        return false;
+        //    }
+        //    return true;
+        //}
+        #endregion
+         /// <summary>
         /// Has Press Copyright
         /// </summary>
         /// <param name="row">Row</param>
         /// <param name="mediasByVersionId">Medias By Version Id</param>
         /// <returns>True if has copyright press</returns>
-        protected bool HasPressCopyright(DataRow row, Dictionary<Int64, List<Int64>> mediasByVersionId) {
-
+        protected bool HasPressCopyright(DataRow row, Dictionary<Int64, List<Int64>> mediasByVersionId)
+        {
             string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
             if (!string.IsNullOrEmpty(ids))
             {
-                if (row.Table.Columns.Contains("id") && row["id"] != DBNull.Value) {
-                    long idSlogan = Convert.ToInt64(row["id"]);
-              
-                    var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
-                    foreach (Int64 idMedia in mediasByVersionId[idSlogan]) {
-                        if (!notAllowedMediaIds.Contains(idMedia))
-                            return true;
-                    }
-                }
+                bool isBefore2015;
+                   if (_period != null && _webSession.CurrentModule!=Module.Name.BILAN_CAMPAGNE)
+                isBefore2015 = Rights.ParutionDateBefore2015(_period.Begin.ToString("yyyyMMdd")) || Rights.ParutionDateBefore2015(_period.End.ToString("yyyyMMdd"));
+            else
+                isBefore2015 = Rights.ParutionDateBefore2015(_webSession.PeriodBeginningDate) || Rights.ParutionDateBefore2015(_webSession.PeriodEndDate) ;
 
-                return false;
+                if (!isBefore2015 && row.Table.Columns.Contains("id") && row["id"] != DBNull.Value)
+                {
+                    long idSlogan = Convert.ToInt64(row["id"]);
+                  
+                    var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+                    return mediasByVersionId[idSlogan].Any(idMedia => !notAllowedMediaIds.Contains(idMedia));
+                }            
+
             }
             return true;
         }

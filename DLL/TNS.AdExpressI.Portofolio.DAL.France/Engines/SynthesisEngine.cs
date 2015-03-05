@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
-
+using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
@@ -179,6 +179,159 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
 
             return dsRetour;
 
+        }
+        #endregion
+
+        #region GetRequestForNumberBanner (Evaliant)
+        /// <summary>
+        /// Build query to get to number of banners
+        /// </summary>
+        /// <param name="type">Type table</param>
+        /// <returns>Query string</returns>
+        protected override string GetRequestForNumberBanner(DBConstantes.TableType.Type type)
+        {
+
+            #region Build Sql query
+            CustomerPeriod customerPeriod = _webSession.CustomerPeriodSelected;
+
+            string table = string.Empty;
+            //Data table			
+            switch (type)
+            {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+                    break;
+                case DBConstantes.TableType.Type.dataVehicle:
+                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
+                    break;
+                case DBConstantes.TableType.Type.webPlan:
+                    table = WebApplicationParameters.GetDataTable(TableIds.monthData, _webSession.IsSelectRetailerDisplay).SqlWithPrefix;
+                    break;
+                default:
+                    throw (new PortofolioDALException("Table type unknown"));
+            }
+            string product = GetProductData();
+            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            string productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+            //list product hap
+            string listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            string date = string.Empty;
+
+            switch (type)
+            {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                case DBConstantes.TableType.Type.dataVehicle:
+                    date = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + DBConstantes.Fields.DATE_MEDIA_NUM;
+                    break;
+                case DBConstantes.TableType.Type.webPlan:
+                    date = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DATE_FIELD;
+                    break;
+            }
+
+            var sql = new StringBuilder();
+
+            if (type == DBConstantes.TableType.Type.webPlan)
+            {
+                sql.Append("select distinct list_banners as hashcode ");
+            }
+            else
+            {
+
+                sql.Append("select distinct hashcode ");
+            }
+
+            if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
+            {
+                sql.AppendFormat(", {0} as date_num ", date);
+            }
+            sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
+
+
+            // Autopromo
+            string idMediaLabel = string.Empty;
+
+            if (_vehicleInformation.Id == AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack 
+                || _vehicleInformation.Id == AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile)
+                idMediaLabel = "id_media_evaliant";
+            else if (_vehicleInformation.Id == AdExpress.Constantes.Classification.DB.Vehicles.names.mms)
+                idMediaLabel = "id_media_mms";
+
+            if (_vehicleInformation.Autopromo && (_vehicleInformation.Id == AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack
+                || _vehicleInformation.Id == AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile
+                || _vehicleInformation.Id == AdExpress.Constantes.Classification.DB.Vehicles.names.mms))
+            {
+
+                Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
+
+                if (_webSession.AutoPromo == WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
+                    sql.Append(" and auto_promotion = 0 ");
+                else if (_webSession.AutoPromo == WebConstantes.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany)
+                {
+                    sql.Append(" and (id_media, id_holding_company) not in ( ");
+                    sql.Append(" select distinct " + idMediaLabel + ", id_holding_company ");
+                    sql.Append(" from " + tblAutoPromo.Sql + " ");
+                    sql.Append(" where " + idMediaLabel + " is not null ");
+                    sql.Append(" ) ");
+                }
+            }
+
+            sql.Append(GetFormatClause(null));
+            sql.Append(GetPurchaseModeClause(null));
+
+            // Period
+            switch (type)
+            {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                    sql.AppendFormat(" and {0}>={1} and {0}<={2}", date, customerPeriod.StartDate, customerPeriod.EndDate);
+                    break;
+                case DBConstantes.TableType.Type.dataVehicle:
+                    if (_webSession.CustomerPeriodSelected.PeriodDayBegin.Count == 0)
+                    {
+                        sql.AppendFormat(" and {0}>={1} and {0}<={2}", date, customerPeriod.StartDate, customerPeriod.EndDate);
+                    }
+                    else if (_webSession.CustomerPeriodSelected.PeriodDayBegin.Count == 2)
+                    {
+                        sql.AppendFormat(" and (({0}>={1} and {0}<={2}) or ({0}>={3} and {0}<={4}))"
+                            , date
+                            , customerPeriod.PeriodDayBegin[0]
+                            , customerPeriod.PeriodDayEnd[0]
+                            , customerPeriod.PeriodDayBegin[1]
+                            , customerPeriod.PeriodDayEnd[1]);
+                    }
+                    else
+                    {
+                        sql.AppendFormat(" and {0}>={1} and {0}<={2}", date, customerPeriod.PeriodDayBegin[0], customerPeriod.PeriodDayEnd[0]);
+                    }
+                    break;
+                case DBConstantes.TableType.Type.webPlan:
+                    sql.AppendFormat(" and {0}>={1} and {0}<={2}"
+                        , date
+                        , customerPeriod.PeriodMonthBegin[0].ToString().Substring(0, 6)
+                        , customerPeriod.PeriodMonthEnd[0].ToString().Substring(0, 6));
+                    break;
+            }
+            sql.Append(product);
+            sql.Append(productsRights);
+            sql.Append(mediaRights);
+            sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            sql.Append(listProductHap);
+            sql.Append(" group by ");
+            if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
+            {
+                sql.AppendFormat(" {0},", date);
+            }
+            if (type == DBConstantes.TableType.Type.webPlan)
+            {
+                sql.Append("list_banners");
+            }
+            else
+            {
+                sql.Append("hashcode");
+            }
+
+            #endregion
+
+            return sql.ToString();
         }
         #endregion
 

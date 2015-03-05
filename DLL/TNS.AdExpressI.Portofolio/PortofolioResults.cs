@@ -387,9 +387,13 @@ namespace TNS.AdExpressI.Portofolio {
                     if (dr["disponibility_visual"] != DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10) {
                         if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
                             dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
-                                , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_media_num"].ToString(), blurDirectory,WebCst.CreationServerPathes.COUVERTURE));
+                                , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_media_num"].ToString()
+                                , Rights.ParutionDateBefore2015(dr["date_media_num"].ToString()) ? string.Empty : blurDirectory
+                                ,WebCst.CreationServerPathes.COUVERTURE));
                         else dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
-                            , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_cover_num"].ToString(),blurDirectory, WebCst.CreationServerPathes.COUVERTURE));
+                            , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_cover_num"].ToString()
+                            , Rights.ParutionDateBefore2015(dr["date_cover_num"].ToString()) ? string.Empty : blurDirectory
+                            , WebCst.CreationServerPathes.COUVERTURE));
                     }
                     else
                         dic.Add(dr["date_media_num"].ToString(), "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif");
@@ -466,11 +470,15 @@ namespace TNS.AdExpressI.Portofolio {
                                 if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
                                     pathWeb = string.Format("{0}/{1}/{2}/Imagette/{3}{4}",
                                         WebCst.CreationServerPathes.IMAGES, _idMedia.ToString(),
-                                        dtVisuel.Rows[i]["date_media_num"].ToString(), blurDirectory, WebCst.CreationServerPathes.COUVERTURE);
+                                        dtVisuel.Rows[i]["date_media_num"].ToString()
+                                        , Rights.ParutionDateBefore2015(dtVisuel.Rows[i]["date_media_num"].ToString()) ? string.Empty : blurDirectory
+                                        , WebCst.CreationServerPathes.COUVERTURE);
                                 else
                                     pathWeb = string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
                                         , WebCst.CreationServerPathes.IMAGES, _idMedia.ToString(),
-                                        dtVisuel.Rows[i]["date_cover_num"].ToString(), blurDirectory, WebCst.CreationServerPathes.COUVERTURE);
+                                        dtVisuel.Rows[i]["date_cover_num"].ToString()
+                                        , Rights.ParutionDateBefore2015(dtVisuel.Rows[i]["date_cover_num"].ToString()) ? string.Empty : blurDirectory
+                                        , WebCst.CreationServerPathes.COUVERTURE);
                             }
                             else
                             {

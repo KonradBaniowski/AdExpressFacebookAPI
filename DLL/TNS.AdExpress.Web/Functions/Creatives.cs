@@ -8,9 +8,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 //using TNS.AdExpress.Web.Core.ClassificationList;
@@ -46,23 +43,20 @@ namespace TNS.AdExpress.Web.Functions {
             lock (_mutex) {
                 if (_mediaList == null) {
                     try {
-
-                        //_mediaList = Media.GetMediaItemsList(AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).GetMediaItemsList.Split(',');
+                       
                         MediaItemsList mediaItemsList = Media.GetItemsList(AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID);
                         _mediaList = mediaItemsList.MediaList.Split(',');
                     }
                     catch { }
                 }
             }
-            if (Array.IndexOf(_mediaList, mediaId.ToString()) > -1) {
-                return string.Format("{0}{1}{2}{1}{3}{1}{4}{5}{6}", path, separator, mediaId, dateKiosque
-                    , (smallSize) ? string.Format("imagette{0}", separator) : string.Empty
-                     , (hasCopyRight) ? string.Format("blur{0}", separator) : string.Empty
-                    , filename);
-            }
-            return string.Format("{0}{1}{2}{1}{3}{1}{4}{5}{6}", path, separator, mediaId, dateCover
+            long date = dateCover;
+            if (Array.IndexOf(_mediaList, mediaId.ToString()) > -1)                
+                date = dateKiosque;
+            bool isbefore2015 = Functions.Rights.ParutionDateBefore2015(date.ToString());
+            return string.Format("{0}{1}{2}{1}{3}{1}{4}{5}{6}", path, separator, mediaId, date.ToString()
                                  , (smallSize) ? string.Format("imagette{0}", separator) : string.Empty
-                                 , (!hasCopyRight) ? string.Format("blur{0}", separator) : string.Empty
+                                 , (!hasCopyRight && !isbefore2015) ? string.Format("blur{0}", separator) : string.Empty
                                  , filename);
         }
     }

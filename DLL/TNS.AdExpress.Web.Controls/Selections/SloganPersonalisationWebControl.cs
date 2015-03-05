@@ -5,30 +5,18 @@
 #endregion
 
 using System;
-using System.IO;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
-
-using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Controls.Exceptions;
-using TNS.AdExpress.Web.DataAccess.Selections.Slogans;
 using TNS.AdExpress.Web.Core.Sessions;
-using RightConstantes = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
-using DBConstantesClassification = TNS.AdExpress.Constantes.Classification.DB;
 using VhCstes = TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
-using TableName = TNS.AdExpress.Constantes.Classification.DB.Table.name;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using DBConstantes = TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Controls.Buttons;
 using TNS.AdExpress.Domain.Classification;
-using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpressI.Insertions.DAL;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Insertions;
@@ -81,6 +69,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
         /// Medias By Version Id
         /// </summary>
         private Dictionary<Int64, List<Int64>> _mediasByVersionId;
+
+        private string _periodBeginning;
+        private string _periodEnd;
         #endregion
 
         #region Accesseurs
@@ -143,17 +134,17 @@ namespace TNS.AdExpress.Web.Controls.Selections
                     || webSession.CurrentModule == Constantes.Web.Module.Name.BILAN_CAMPAGNE
                     || webSession.CurrentModule == Constantes.Web.Module.Name.JUSTIFICATIFS_PRESSE)
                 {
-                    periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-                    periodEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+                    _periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+                    _periodEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
                 }
                 else
                 {
-                    periodBeginning = webSession.PeriodBeginningDate;
-                    periodEnd = webSession.PeriodEndDate;
+                    _periodBeginning = webSession.PeriodBeginningDate;
+                    _periodEnd = webSession.PeriodEndDate;
 
                 }
 
-                if (_zoomDate != null && _zoomDate.Length > 0)
+                if (!string.IsNullOrEmpty(_zoomDate))
                 {
                     if (_zoomDate.Length < 8)
                     {
@@ -166,11 +157,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
                         end = WebFunctions.Dates.Min(end,
                                     WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
-                        periodBeginning = begin.ToString("yyyyMMdd");
-                        periodEnd = end.ToString("yyyyMMdd");
+                        _periodBeginning = begin.ToString("yyyyMMdd");
+                        _periodEnd = end.ToString("yyyyMMdd");
 
                     }
-                    else periodBeginning = periodEnd = _zoomDate;
+                    else _periodBeginning = _periodEnd = _zoomDate;
                 }
                 //Chargement des données
                 if (WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession))
@@ -185,7 +176,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                         , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false,
                         System.Reflection.BindingFlags.CreateInstance |
                         System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
-                    dsSloganList = _dalLayer.GetVersions(periodBeginning, periodEnd);
+                    dsSloganList = _dalLayer.GetVersions(_periodBeginning, _periodEnd);
                     _mediasByVersionId = GetMediasByVersionId(dsSloganList);
                 }
             }
@@ -615,7 +606,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
             {
                 foreach (DataRow currentRow in ds.Tables[0].Rows)
                 {
-                    if (currentRow["id_slogan"] != null && currentRow["id_slogan"] != System.DBNull.Value && Int64.Parse(currentRow["id_slogan"].ToString()) != 0)
+                    if (currentRow["id_slogan"] != null && currentRow["id_slogan"] != DBNull.Value && Int64.Parse(currentRow["id_slogan"].ToString()) != 0)
                     {
 
                         idSlogan = Int64.Parse(currentRow["id_slogan"].ToString());
@@ -657,15 +648,16 @@ namespace TNS.AdExpress.Web.Controls.Selections
             string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
             if (!string.IsNullOrEmpty(ids))
             {
-                if (row.Table.Columns.Contains("id_slogan") && row["id_slogan"] != DBNull.Value)
+                bool isBefore2015 = WebFunctions.Rights.ParutionDateBefore2015(_periodBeginning)
+                    || WebFunctions.Rights.ParutionDateBefore2015(_periodEnd);
+
+                if (!isBefore2015 && row.Table.Columns.Contains("id_slogan") && row["id_slogan"] != DBNull.Value)
                 {
                     long idSlogan = Convert.ToInt64(row["id_slogan"]);
-
+                  
                     var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
                     return mediasByVersionId[idSlogan].Any(idMedia => !notAllowedMediaIds.Contains(idMedia));
-                }
-
-                return false;
+                }            
 
             }
             return true;

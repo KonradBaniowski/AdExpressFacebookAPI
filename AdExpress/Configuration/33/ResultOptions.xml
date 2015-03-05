@@ -13,7 +13,7 @@
   <tendency useComparativeWeekType="true"/>
   <news displayNews="true"/>
   <evaliantCountryAccess applyEvaliantCountryAccess="true"/>
-  <plurimediaEvol hidePlurimediaEvol="true"/>
+  <plurimediaEvol hidePlurimediaEvol="false"/>
   <purchaseMode use="false"/>
   <bannersFormat use="true">
     <allowVehicle id="6" description="Evaliant" rightBannersType="FormatEvaliantInternet" dataTableName="banners"               formatTableName="groupFormatBanners"/>

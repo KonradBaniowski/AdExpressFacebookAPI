@@ -2454,8 +2454,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerCategory.GetHashCode().ToString()));
                     if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.mediaSeller))
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2970, customerWebSession.SiteLanguage),
-                        SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerTitle.GetHashCode().ToString())); 
-
+                        SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerTitle.GetHashCode().ToString()));
+                    if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.media))
+                        mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage),
+                            SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
                 }
                 else if (customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || customerWebSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE)
                 {

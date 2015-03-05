@@ -6,7 +6,6 @@
 
 using System;
 using System.Data;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text;
@@ -26,10 +25,7 @@ using TNS.AdExpress.Domain.Units;
 
 using TNS.AdExpress.Web.Exceptions;
 using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
-using CstProject = TNS.AdExpress.Constantes.Project;
-using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Exceptions;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -194,26 +190,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                     unitFields = WebFunctions.SQLGenerator.GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 }
-                else {
+                else
+                {
                     unitFields = GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                    {
-                        groupByOptional = string.Format(",{0}.list_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-                    }
-                    else
-                    {
-                        groupByOptional = string.Format(",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-                    } 
-                    //if (type != DBConstantes.TableType.Type.webPlan)
-                    //{
-                    //    groupByOptional = "," + UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).DatabaseField;
-                    //}
-                    //else {
-                    //    fromOptional = string.Format(", table({0}.{1}) t2 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).DatabaseMultimediaField);
-                    //}
+                    groupByOptional = GetBannerGroupByOptional(type);
                 }
-				
-                detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
+
+			    detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
 
 				switch (type) {
 					case DBConstantes.TableType.Type.dataVehicle4M:
@@ -358,13 +341,21 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			#endregion
 
 		}
-		#endregion
+
+	    protected virtual string GetBannerGroupByOptional(DBConstantes.TableType.Type type)
+	    {
+	        string groupByOptional = string.Format(type == DBConstantes.TableType.Type.webPlan 
+	                                                   ? ",{0}.list_banners " : ",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+	        return groupByOptional;
+	    }
+
+	    #endregion
 
 
         public static string GetUnitFieldsName(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe) {
             List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
-            StringBuilder sqlUnit = new StringBuilder();
-            if(dataTablePrefixe != null && dataTablePrefixe.Length > 0)
+            var sqlUnit = new StringBuilder();
+            if(!string.IsNullOrEmpty(dataTablePrefixe))
                 dataTablePrefixe += ".";
             else
                 dataTablePrefixe = "";

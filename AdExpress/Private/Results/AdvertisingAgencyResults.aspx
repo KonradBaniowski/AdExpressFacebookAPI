@@ -113,7 +113,7 @@
 									   <!-- Tableau de Résultat -->
 									   <td bgColor="#ffffff" style="HEIGHT: 37px">
 									       <cc3:ResultWebControl id="_resultWebControl" runat="server" JavascriptFilePath='/scripts/WebResult4.js' 
-											        PageSizeOptions="100,200,500,1000" AllowPaging="True" AjaxProTimeOut="120" OutputType="html" 
+											        PageSizeOptions="100,200,500,1000" AllowPaging="True" AjaxProTimeOut="300" OutputType="html" 
 											        SkinID="mediaAgencyResultTable"></cc3:ResultWebControl>
 									   </td>
 								   </tr>

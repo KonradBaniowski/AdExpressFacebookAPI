@@ -28,8 +28,28 @@ namespace TNS.AdExpress.Web.Functions {
         public static  bool HasPressCopyright(long idMedia)
         {
             string ids = Lists.GetIdList(WebCst.GroupList.ID.media, WebCst.GroupList.Type.mediaExcludedForCopyright);
-            var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
-            return !notAllowedMediaIds.Contains(idMedia);
+            if (!string.IsNullOrEmpty(ids))
+            {
+                var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
+                return !notAllowedMediaIds.Contains(idMedia);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Check if parution date is before the year 2015
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static bool ParutionDateBefore2015(string date)
+        {
+
+            string year = date.Substring(0, 4);
+
+            if (int.Parse(year) < 2015)
+                return true;
+            else
+                return false;
 
         }
 	}

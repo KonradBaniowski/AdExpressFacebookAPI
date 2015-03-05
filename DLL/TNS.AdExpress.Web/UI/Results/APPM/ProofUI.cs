@@ -63,8 +63,9 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 
 
                 bool hasCopyRight = WebFnc.Rights.HasPressCopyright(idMedia);
+                bool parutionDateBefore2015 = WebFnc.Rights.ParutionDateBefore2015(dateCover.ToString());
                 const string blurDirectory = "blur";
-                if (!hasCopyRight)
+                if (!hasCopyRight && !parutionDateBefore2015)
                 {
                     pathWeb = string.Format("{0}{1}/", pathWeb, blurDirectory);
                     pathWeb2 = string.Format("{0}{1}/", pathWeb2, blurDirectory);
@@ -174,7 +175,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
                     string pathCouv = pathWeb + CstWeb.CreationServerPathes.COUVERTURE;
 
                     // Chemin du répertoire contenant le visuel de la couverture presse
-                    string pathCouv2 = (hasCopyRight) ? string.Format("{0}{1}\\{2}\\{3}",
+                    string pathCouv2 = (hasCopyRight || parutionDateBefore2015) ? string.Format("{0}{1}\\{2}\\{3}",
                         CstWeb.CreationServerPathes.LOCAL_PATH_IMAGE, idMedia, dateCover, CstWeb.CreationServerPathes.COUVERTURE) :
                         string.Format("{0}{1}\\{2}\\{3}\\{4}",
                         CstWeb.CreationServerPathes.LOCAL_PATH_IMAGE, idMedia, dateCover, blurDirectory, CstWeb.CreationServerPathes.COUVERTURE);

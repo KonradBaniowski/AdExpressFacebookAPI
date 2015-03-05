@@ -161,6 +161,14 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <returns>versions data ["id_advertiser","advertiser","id_product","product","id_vehicle","vehicle","id_slogan","date_media_num","id_media","advertDimension", "associated_file" </returns>
         DataSet GetVersions(string beginningDate, string endDate);
 
-        
+        /// <summary>
+        /// Get Version Min Parution Date
+        /// </summary>
+        /// <param name="idVersion"></param>
+        /// <param name="idVehicle"></param>
+        /// <returns></returns>
+        string GetVersionMinParutionDate(string idVersion, long idVehicle);
+
+
     }
 }

@@ -48,6 +48,8 @@ namespace AdExpress.Private
         /// Langue de la page
         /// </summary>
         private int _siteLanguage;
+
+        private string _versionListIdString;
         #endregion
 
         #region Evènements
@@ -78,8 +80,7 @@ namespace AdExpress.Private
                 string vehicleListIdString = HttpContext.Current.Request.QueryString.Get("idVehicle");
                 string vehicleId = string.Empty;
                 string productListIdString = HttpContext.Current.Request.QueryString.Get("listeProduct");
-                string[] versionListId;
-                string versionListIdString = HttpContext.Current.Request.QueryString.Get("listeVersion");
+                _versionListIdString = HttpContext.Current.Request.QueryString.Get("listeVersion");
                 _siteLanguage = int.Parse(HttpContext.Current.Request.QueryString.Get("langueSite"));
 
                 #endregion
@@ -95,7 +96,7 @@ namespace AdExpress.Private
                 List<long> vehicleListId = vehicleListIdString.Split(',').Select(Int64.Parse).ToList();
                 if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.POLAND))
                 {
-                    vehicleListId = SwicthToAdExpressVehicle(vehicleListId);
+                    vehicleListId = SwicthToAdExpressVehicle(vehicleListId,webSession);
                 }
                 string[] productListId = productListIdString.Split(',');
 
@@ -124,8 +125,12 @@ namespace AdExpress.Private
                     webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
 
                     if (vehicleListId.Count == 1 && VehiclesInformation.Get(vehicleListId[0]).Id == Vehicles.names.adnettrack)
-                    {                       
+                    {
+                          webSession.SiteLanguage = _siteLanguage;
                           webSession.Unit = WebConstantes.CustomerSessions.Unit.occurence;
+                          SetAdNetTrackProductSelection(webSession, Convert.ToInt64(_versionListIdString));
+                          //webSession.DataLanguage = _siteLanguage;
+                          TNS.AdExpress.Web.Functions.ProductDetailLevel.SetProductLevel(webSession, Convert.ToInt32(productListId[0]), DetailLevelItemInformation.Levels.product);
                     }
                     else  webSession.Unit = UnitsInformation.DefaultCurrency;
 
@@ -187,9 +192,9 @@ namespace AdExpress.Private
                     #region Versions
                     try
                     {
-                        if (!string.IsNullOrEmpty(versionListIdString))
+                        if (!string.IsNullOrEmpty(_versionListIdString))
                         {
-                            versionListId = versionListIdString.Split(',');
+                            string[] versionListId = _versionListIdString.Split(',');
                             webSession.IdSlogans = new ArrayList();
                             if (vehicleListId.Count > 1)
                                 throw (new AdExpressException.AdExpressCustomerException("On ne peut pas avoir un plan media pluri media si on passe un numéro de version en paramètre"));
@@ -199,10 +204,10 @@ namespace AdExpress.Private
                             {
                                 if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
                                 {
-                                    vehicleId = idVersion.Substring(0, vehicleListIdString.Length);
-                                    if (!vehicleId.Equals(vehicleListIdString))
-                                        throw (new AdExpressException.AdExpressCustomerException("La version " + idVersion + " n'appartient pas au media : " + vehicleListIdString));
-                                    webSession.IdSlogans.Add(Int64.Parse(idVersion.Substring(vehicleListIdString.Length)));
+                                    vehicleId = idVersion.Substring(0, _versionListIdString.Length);
+                                    if (!vehicleId.Equals(_versionListIdString))
+                                        throw (new AdExpressException.AdExpressCustomerException("La version " + idVersion + " n'appartient pas au media : " + _versionListIdString));
+                                    webSession.IdSlogans.Add(Int64.Parse(idVersion.Substring(_versionListIdString.Length)));
                                 }
                                 else
                                 {
@@ -231,9 +236,9 @@ namespace AdExpress.Private
                     webSession.SiteLanguage = _siteLanguage;
                     //Sauvegarder la session
                     webSession.Save();
-                    //if (vehicleListId.Count==1)
-                    //    Response.Redirect("/Private/Results/CreativeMediaPlanResults.aspx?idSession=" + webSession.IdSession + "&idvehicle=" + vehicleListId[0]);
-                    //else
+                    if (vehicleListId.Count == 1)
+                        Response.Redirect("/Private/Results/CreativeMediaPlanResults.aspx?idSession=" + webSession.IdSession + "&idvehicle=" + vehicleListId[0]);
+                    else
                         Response.Redirect("/Private/Results/CreativeMediaPlanResults.aspx?idSession=" + webSession.IdSession);
                     Response.Flush();
 
@@ -275,7 +280,7 @@ namespace AdExpress.Private
         {
         }
 
-        private List<long> SwicthToAdExpressVehicle(List<long> vehicles)
+        private List<long> SwicthToAdExpressVehicle(List<long> vehicles,WebSession webSession)
         {
             var newVehicle = new List<long>();
 
@@ -290,13 +295,25 @@ namespace AdExpress.Private
                     case 8: newVehicle.Add(5);
                         break;
                     case 9: newVehicle.Add(6); break;
-                    case 20: newVehicle.Add(9); break;   
-                    case 6: newVehicle.Add(8);break;                       
+                    case 20: newVehicle.Add(9); break;
+                    case 7:
+                        newVehicle.Add(!string.IsNullOrEmpty(_versionListIdString) ? 8 : p);                      
+                        break;       
+                    case 6: 
+                        newVehicle.Add(8);break;                       
                     default: newVehicle.Add(p); break;
 
                 }
             });
             return newVehicle;
+        }
+
+        private void SetAdNetTrackProductSelection(WebSession webSession,long id)
+        {
+
+          webSession.AdNetTrackSelection = 
+              new AdNetTrackProductSelection(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type.visual, id);
+           
         }
         #endregion
     }

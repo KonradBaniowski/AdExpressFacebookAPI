@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.FrameWork.WebResultUI;
 
 namespace TNS.AdExpressI.Insertions.France {
     public class InsertionsResult : TNS.AdExpressI.Insertions.InsertionsResult {
@@ -75,6 +79,7 @@ namespace TNS.AdExpressI.Insertions.France {
             return vignettes;
         }
         #endregion
+       
 
         #region Add Country Acronym
         /// <summary>

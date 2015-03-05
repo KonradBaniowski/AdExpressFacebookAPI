@@ -4,15 +4,10 @@
 // Date de modification: 
 #endregion
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
-
-using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpressI.Visual;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web;
@@ -159,8 +154,8 @@ namespace TNS.AdExpress.Web.Controls.Results {
 
            
 
-            string pathWeb1 = string.Format("{0}/{1}/{2}/{3}{4}", _idMedia, _dateCover, SubFolder, blurDirectory, _fileName1);
-            string pathWeb2 = string.Format("{0}/{1}/{2}/{3}{4}", _idMedia, _dateCover, SubFolder, blurDirectory,_fileName2);
+            string pathWeb1 = string.Format("{0}/{1}/{2}/{3}{4}", _idMedia, _dateCover, SubFolder, Web.Functions.Rights.ParutionDateBefore2015(_dateCover) ? string.Empty : blurDirectory, _fileName1);
+            string pathWeb2 = string.Format("{0}/{1}/{2}/{3}{4}", _idMedia, _dateCover, SubFolder, Web.Functions.Rights.ParutionDateBefore2015(_dateCover) ? string.Empty : blurDirectory, _fileName2);
 
 			StringBuilder t = new StringBuilder(3000);
         
@@ -183,8 +178,8 @@ namespace TNS.AdExpress.Web.Controls.Results {
                 parameters[0] = vehicleId;
                 parameters[1] = pathWeb2;
                 visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\"
-                    + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, 
-                    WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, 
+                    + WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.visual].AssemblyName, 
+                    WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.visual].Class, false, 
                     BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
                 t.Append("<img src='" + visual.GetVirtualPath(_isBlur) + "' border=\"0\" width=470 height=627>");
             }

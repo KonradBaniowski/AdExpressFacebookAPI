@@ -761,7 +761,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// Get data language
         /// </summary>
         public int DataLanguage
-        {
+        {            
             get
             {
                 if (WebApplicationParameters.AllowedLanguages.ContainsKey(siteLanguage))
