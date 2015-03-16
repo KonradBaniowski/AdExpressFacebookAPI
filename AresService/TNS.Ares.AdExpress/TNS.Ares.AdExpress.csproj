@@ -191,9 +191,7 @@
     <Content Include="Configuration\33\Trends.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\Units.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Configuration\33\Units.xml" />
     <Content Include="Configuration\33\UniverseBranches.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -208,7 +206,6 @@
     </Content>
     <Content Include="Configuration\33\WebLanguages.xml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Configuration\33\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -321,10 +318,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configuration\353\WebLanguages.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Configuration\353\WebLanguages.xml" />
     <Content Include="Configuration\353\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
