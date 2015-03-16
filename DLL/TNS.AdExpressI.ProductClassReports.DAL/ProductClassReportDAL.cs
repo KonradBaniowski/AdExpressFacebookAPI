@@ -15,7 +15,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 
 
@@ -382,6 +384,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapNewspaper, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapNewspaperSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.plurimedia:
+                case CstDBClassif.Vehicles.names.PlurimediaWithoutMms:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.mediasTactics:
@@ -948,7 +951,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 _reportFormat == CstFormat.PreformatedTables.productMedia_X_YearMensual)
                 sql.Insert(beginningIndex, " '0' as id_p, 'TOTAL' as p, ");
             if ((_reportFormat == CstFormat.PreformatedTables.mediaProduct_X_Year || _reportFormat == CstFormat.PreformatedTables.mediaProduct_X_YearMensual)
-                && _vehicle == CstDBClassif.Vehicles.names.plurimedia)
+                && (_vehicle == CstDBClassif.Vehicles.names.plurimedia || _vehicle == CstDBClassif.Vehicles.names.PlurimediaWithoutMms))
             {
                 sql.Insert(beginningIndex, " '0' as id_m, 'TOTAL' as m, ");
             }
@@ -1101,16 +1104,25 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             string list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
 
 			sql.Append(FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, _dataTable.Prefix, true));
+            var vehicleIds = new List<long>();
+            if (list.Length > 0) vehicleIds = new List<string>(list.Trim().Split(',')).ConvertAll(Convert.ToInt64);
 
             //on ne teste pas le vehicle si on est en pluri
-            if (list.Length > 0 && list.IndexOf(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.plurimedia).ToString()) < 0)
+            var plurimediaDbIds = new List<long> {VehiclesInformation.Get(CstDBClassif.Vehicles.names.plurimedia).DatabaseId};
+            long? plurimediaWithoutMmsId = null;
+            if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.PlurimediaWithoutMms))
+            {
+                plurimediaWithoutMmsId = VehiclesInformation.Get(CstDBClassif.Vehicles.names.PlurimediaWithoutMms).DatabaseId;               
+                plurimediaDbIds.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.PlurimediaWithoutMms).DatabaseId);
+            }
+            if (vehicleIds.Any() && vehicleIds.All(p => !plurimediaDbIds.Contains(p)) )
             {
                 first = false;
                 sql.AppendFormat(" and ( {0}.id_vehicle in ({1})", _dataTable.Prefix, list);
             }
-			//sql.Append(FctUtilities.SQLGenerator.getAdExpressUniverseCondition(_session, CstWeb.AdExpressUniverse.RECAP_MEDIA_LIST_ID, _dataTable.Prefix, true));
+			
             // Vérifie s'il à toujours les droits pour accéder aux données de ce Vehicle
-            if (list.IndexOf(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.plurimedia).ToString()) < 0)
+            if (vehicleIds.All(p => !plurimediaDbIds.Contains(p)))
             {
                 sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, _dataTable.Prefix, true));
             }
@@ -1128,7 +1140,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             }
             //media !!!!!!! necessaire en fonction de la table attaquée?
             list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.mediaAccess);
-            if (list.Length > 0 && (sql.ToString().IndexOf(_dataRadio.Label) > -1 || sql.ToString().IndexOf(_dataTV.Label) > -1 || sql.ToString().IndexOf(_dataOutdoor.Label) > -1 || sql.ToString().IndexOf(_dataTactic.Label) > -1))
+            if (list.Length > 0 && (sql.ToString().IndexOf(_dataRadio.Label) > -1 || sql.ToString().IndexOf(_dataTV.Label) > -1 
+                || sql.ToString().IndexOf(_dataOutdoor.Label) > -1 || sql.ToString().IndexOf(_dataTactic.Label) > -1))
             {
                 if (first)
                 {
@@ -1144,11 +1157,20 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
             {
 				idSponsorShipCategory = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.productClassAnalysisSponsorShipTv);
-				if (idSponsorShipCategory != null && idSponsorShipCategory.Length > 0) {
+				if (!string.IsNullOrEmpty(idSponsorShipCategory)) {
 					sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", _dataTable.Prefix, idSponsorShipCategory);
 				}		      
             }
 
+            //Exclude Internet Display when selection Plurimedia Without Mms
+            if (plurimediaWithoutMmsId.HasValue
+               && vehicleIds.Any(p => p == plurimediaWithoutMmsId.Value))
+            {
+                sql.AppendFormat("  and  {0}.id_vehicle not in ( {1},{2}) "
+                    , _dataTable.Prefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId
+                    , VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId);
+
+            }
             #endregion
 
             #region Sélection produits
@@ -1193,7 +1215,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 			}
 			#endregion
 
-			if (withProductToPersonnalize && _session.SecondaryProductUniverses.Count > 0 && (_session.SecondaryProductUniverses.ContainsKey(0) || _session.SecondaryProductUniverses.ContainsKey(1))) {
+			if (withProductToPersonnalize && _session.SecondaryProductUniverses.Count > 0
+                && (_session.SecondaryProductUniverses.ContainsKey(0) || _session.SecondaryProductUniverses.ContainsKey(1))) {
 				int downLoadDate = _session.DownLoadDate;
 				//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 				//du dernier mois dispo en BDD
@@ -1202,7 +1225,9 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                 object[] param = new object[1];
                 param[0] = _session;
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                var dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
+                    , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
 
 				if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
@@ -1388,7 +1413,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                     break;
                 case CstFormat.PreformatedTables.mediaProduct_X_Year:
                 case CstFormat.PreformatedTables.mediaProduct_X_YearMensual:
-                    if (_vehicle != CstDBClassif.Vehicles.names.plurimedia)
+                    if (_vehicle != CstDBClassif.Vehicles.names.plurimedia && _vehicle != CstDBClassif.Vehicles.names.PlurimediaWithoutMms)
                         sql.Append(" order by m1, id_m1");
                     else
                         sql.Append(" order by m,id_m, m1, id_m1");

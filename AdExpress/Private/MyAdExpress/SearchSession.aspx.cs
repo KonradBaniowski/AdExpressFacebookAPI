@@ -21,6 +21,7 @@ using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
+using DBClassifConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 using TNS.Alert.Domain;
@@ -731,13 +732,21 @@ namespace AdExpress.Private.MyAdExpress{
                     #endregion
 
 
-					//rajouté le 27/10 par Guillaume Ragneau
 					if (_webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR 
-						|| _webSession.CurrentModule == CstWeb.Module.Name.TABLEAU_DYNAMIQUE){
-                           
-                            _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(((LevelInformation)_webSession.SelectionUniversMedia.Nodes[0].Tag).ID);
-						//_webSession.LastAvailableRecapMonth = DBFunctions.CheckAvailableDateForMedia(
-						//	((LevelInformation)_webSession.SelectionUniversMedia.Nodes[0].Tag).ID, _webSession);
+						|| _webSession.CurrentModule == CstWeb.Module.Name.TABLEAU_DYNAMIQUE)
+					{
+
+					    long levelInfoId = ((LevelInformation) _webSession.SelectionUniversMedia.Nodes[0].Tag).ID;
+                        _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(levelInfoId);
+
+                            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE)
+                                && VehiclesInformation.Get(DBClassifConstantes.Vehicles.names.plurimedia).DatabaseId == levelInfoId)
+                            {
+                                string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBClassifConstantes.Vehicles.names.mms));                             
+                                if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
+                                    _webSession.LastAvailableRecapMonth = mmsLastAvailableRecapMonth;
+                            }
+						
 					}
 
                     if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
@@ -1334,7 +1343,9 @@ namespace AdExpress.Private.MyAdExpress{
                 CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                 object[] param = new object[1];
                 param[0] = _webSession;
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                var dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
+                    , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 string absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 				
                 if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) 	|| (absolutEndPeriod.Substring(4,2).Equals("00"))){

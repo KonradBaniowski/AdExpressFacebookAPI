@@ -166,7 +166,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
                 bool evolution = true;
                 VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia && WebApplicationParameters.HidePlurimediaEvol)
+                if (vehicleInfo != null && (vehicleInfo.Id == Constantes.Classification.DB.Vehicles.names.plurimedia
+                    || vehicleInfo.Id == Constantes.Classification.DB.Vehicles.names.PlurimediaWithoutMms) 
+                    && WebApplicationParameters.HidePlurimediaEvol)
                     evolution = false;
 
 				#region Session Parameters
@@ -1020,7 +1022,8 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			try{
                 if (tab.GetLongLength(0) != 0) {
 					bool withPluriByCategory = (_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory
-					&& CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID));
+                    && (CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID)
+                    || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID)));
 
                     #region GRP graph
 

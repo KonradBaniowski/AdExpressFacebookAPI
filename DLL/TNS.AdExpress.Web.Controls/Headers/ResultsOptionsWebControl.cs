@@ -2498,6 +2498,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                             case ClassificationCst.DB.Vehicles.names.mobileTelephony:
                             case ClassificationCst.DB.Vehicles.names.emailing:
                             case ClassificationCst.DB.Vehicles.names.plurimedia:
+                            case ClassificationCst.DB.Vehicles.names.PlurimediaWithoutMms:
                             case ClassificationCst.DB.Vehicles.names.directMarketing:
                             case ClassificationCst.DB.Vehicles.names.mms:
                             case ClassificationCst.DB.Vehicles.names.search:
@@ -2516,6 +2517,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         switch (vehicleInfo.Id)
                         {
                             case ClassificationCst.DB.Vehicles.names.plurimedia:
+                            case ClassificationCst.DB.Vehicles.names.PlurimediaWithoutMms:
                                 mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                                 mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2652, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.region.GetHashCode().ToString()));
                                 if ((customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
@@ -3554,7 +3556,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
         protected bool CanShowProductClassAnalysisResult(WebSession webSession, ResultPageInformation current) {
 
             VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-            if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia 
+            if (vehicleInfo != null && (vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia
+                || vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.PlurimediaWithoutMms)
                 && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION && WebApplicationParameters.HidePlurimediaEvol) {
                 return false;
             }

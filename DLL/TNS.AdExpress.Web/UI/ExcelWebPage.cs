@@ -2616,6 +2616,9 @@ namespace TNS.AdExpress.Web.UI
 						case ClassificationConstant.Vehicles.names.plurimedia:
 							mediaNames+=GestionWeb.GetWebWord(1596,webSession.SiteLanguage);
 							break;
+                        case ClassificationConstant.Vehicles.names.PlurimediaWithoutMms:
+                            mediaNames += GestionWeb.GetWebWord(3019, webSession.SiteLanguage);
+                            break;
 						case ClassificationConstant.Vehicles.names.internationalPress:
 							mediaNames+=GestionWeb.GetWebWord(646,webSession.SiteLanguage);
 							break;

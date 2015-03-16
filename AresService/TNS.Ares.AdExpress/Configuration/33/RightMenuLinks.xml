@@ -4,7 +4,7 @@
         cssIconName="updateDateMenuIcon"
         href="/Private/Informations/DataUpdate2.aspx"
         language="false" idSession="true"
-        displayInPopUp="true" javascriptFunctionName="popupOpenBis" width="1045" height="650"
+        displayInPopUp="true" javascriptFunctionName="popupOpenBis" width="1055" height="650"
         />
   <link name="Site kantar Media" idWebText="758"
         cssIconName="kantarWebsiteMenuIcon"

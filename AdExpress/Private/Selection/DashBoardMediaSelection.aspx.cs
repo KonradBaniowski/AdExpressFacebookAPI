@@ -362,7 +362,9 @@ namespace AdExpress.Private.Selection {
                     else _webSession.SelectionUniversMedia = current;
                     if (eventButton == constEvent.eventSelection.VALID_EVENT)
                         _webSession.CurrentUniversMedia = new System.Windows.Forms.TreeNode("media");
-                    if (_webSession.SelectionUniversMedia != null && _webSession.SelectionUniversMedia.FirstNode != null && ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID != DBClassificationConstantes.Vehicles.names.plurimedia.GetHashCode())
+                    if (_webSession.SelectionUniversMedia != null && _webSession.SelectionUniversMedia.FirstNode != null 
+                        && ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID != DBClassificationConstantes.Vehicles.names.plurimedia.GetHashCode()
+                         && ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID != DBClassificationConstantes.Vehicles.names.PlurimediaWithoutMms.GetHashCode())
                         _webSession.PreformatedMediaDetail = WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter;
                     else
                         _webSession.PreformatedMediaDetail = WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;

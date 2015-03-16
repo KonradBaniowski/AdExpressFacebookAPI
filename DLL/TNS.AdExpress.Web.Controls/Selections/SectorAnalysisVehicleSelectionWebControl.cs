@@ -118,10 +118,23 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				
 				//Build checkbox list
 				_currentVehicleList = new List<long>();
-				VehicleInformation vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+			    VehicleInformation vehicleInfo = null;
+
+                //pmlurimedia without Internet Display
+			    if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+			    {
+			        vehicleInfo = VehiclesInformation.Get(VhCstes.PlurimediaWithoutMms);
+			        if (vehicleInfo != null)
+			        {
+			            //Remark : It's always possible to select plurimedia vehicle
+			            Items.Add(new ListItem(GestionWeb.GetWebWord(3020, webSession.SiteLanguage), "vh_" + vehicleInfo.DatabaseId.ToString()));
+			            _currentVehicleList.Add(vehicleInfo.DatabaseId);
+			        }
+			    }
+			    vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
 				if (vehicleInfo != null) {
 					//Remark : It's always possible to select plurimedia vehicle
-					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(210, webSession.SiteLanguage), "vh_" + vehicleInfo.DatabaseId.ToString()));
+					this.Items.Add(new ListItem(GestionWeb.GetWebWord(210, webSession.SiteLanguage), "vh_" + vehicleInfo.DatabaseId.ToString()));
 					_currentVehicleList.Add(vehicleInfo.DatabaseId);
 				}
 				
@@ -208,10 +221,30 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				//Global table 
                 t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td class=\"backGroundWhite\" >\n");
                 t.Append("<a href=\"javascript: ExpandColapseAllDivs('" + vhlist + "')\" ");
-				t.Append("\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+GestionWeb.GetWebWord(1117,webSession.SiteLanguage)+"</a>");	
-				
-				#region  PluriMedia
-				VehicleInformation vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+				t.Append("\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+GestionWeb.GetWebWord(1117,webSession.SiteLanguage)+"</a>");
+			    VehicleInformation vehicleInfo = null;
+
+                #region  PluriMedia without Internet Display
+                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+			    {
+                     vehicleInfo = VehiclesInformation.Get(VhCstes.PlurimediaWithoutMms);
+                    if (vehicleInfo != null)
+                    {
+                        //Top table border
+                        t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\" >");
+                        if (idVehicleOld == -1) t.Append("\n<table class=\"backGroundWhite violetBorderWithoutBottom txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">\n<tr>");
+                        else t.Append("\n<table class=\"backGroundWhite violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">\n<tr>");
+                        t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" width=100%>");
+                        t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\" name=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" onClick=\"CheckAllChilds('vh_" + vehicleInfo.DatabaseId.ToString() + "','" + VehicleIds + "','vh_" + vehicleInfo.DatabaseId.ToString() + "')\" value=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\">" + GestionWeb.GetWebWord(3020, webSession.SiteLanguage) + "");
+                        t.Append("\n</td>\n</tr>");
+                        t.Append("\n</table></div></td></tr>");
+                        i++;
+                    }
+                }
+                #endregion
+
+                #region  PluriMedia
+                 vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
 				if (vehicleInfo != null) {
 					//Top table border
 					t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\" >");
@@ -434,16 +467,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		private bool showCategory(Int64 idVehicle)
 		{
 			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
-			return (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category));
-			#region A supprimer
-			//switch (vehicleInfo.Id)
-			//{
-			//    case DBConstantesClassification.Vehicles.names.cinema:
-			//        return(false);
-			//    default:
-			//        return(true);
-			//}
-			#endregion
+			return (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category));			
 		}
 
 		/// <summary>
@@ -454,21 +478,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		private bool showMedia(Int64 idVehicle)
 		{
 			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
-			return (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media));
-			#region A supprimer
-			//switch (vehicleInfo.Id)
-			//{
-			//    case DBConstantesClassification.Vehicles.names.internet:
-			//    case DBConstantesClassification.Vehicles.names.press:
-			//    case DBConstantesClassification.Vehicles.names.internationalPress:
-			//    case DBConstantesClassification.Vehicles.names.cinema:
-			//    case DBConstantesClassification.Vehicles.names.mobileTelephony:
-			//    case DBConstantesClassification.Vehicles.names.emailing:
-			//        return(false);
-			//    default:
-			//        return(true);
-			//}
-			#endregion
+			return (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media));		
 		}
 
 		/// <summary>
@@ -481,15 +491,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		{
 			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
 			return (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category));
-			#region A supprimer
-			//switch (vehicleInfo.Id)
-			//{
-			//    case DBConstantesClassification.Vehicles.names.cinema:
-			//        return(false);
-			//    default:
-			//        return(true);
-			//}
-			#endregion
+			
 		}
 		#endregion
 

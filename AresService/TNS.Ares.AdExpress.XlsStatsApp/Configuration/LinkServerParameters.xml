@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <servers selectedServerId="1">
-  <smtp host="frmitch-msprod" from="tnsadexpress@tnsmi.fr" errorEmailList="youssef.rkaina@kantarmedia.com" mailPort="25"/>
+  <smtp host="frmitch-msprod" from="tnsadexpress@tnsmi.fr" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>
   <!-- Slovaquie -->
   <!--<smtp host="195.168.127.142" from="tnsadexpress@tns-global.sk" errorEmailList="youssef.rkaina@kantarmedia.com;alexandre.rousseau@kantarmedia.com;benjamin.masson@kantarmedia.com;guillaume.facon@kantarmedia.com;dede.mussuma@kantarmedia.com" mailPort="25"/>-->
   <server server_id="1" host="frmitch-vmls03" port="30000" />

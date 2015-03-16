@@ -446,7 +446,7 @@ namespace TNS.AdExpressI.Date.DAL {
 
             sql = sql.Remove(sql.Length - 1, 1);
 
-            sql += " from " + TNS.AdExpress.Web.Core.Utilities.SQLGenerator.getVehicleTableNameForSectorAnalysisResult(VehiclesInformation.DatabaseIdToEnum(idVehicle), _session.IsSelectRetailerDisplay);
+            sql += " from " + SQLGenerator.getVehicleTableNameForSectorAnalysisResultSegmentLevel(VehiclesInformation.DatabaseIdToEnum(idVehicle), _session.IsSelectRetailerDisplay);
             #endregion
 
             #region Exécution de la requete

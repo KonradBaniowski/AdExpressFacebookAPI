@@ -1262,4 +1262,26 @@
     </ColumnDetailLevel>
     <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>
   </vehicle>
+  <!-- PLURIMEDIA Hors Inernet display-->
+  <vehicle id="PlurimediaWithoutMms" databaseId="51" showInsertions="false" showCreations="false">
+    <!-- Units-->
+    <allowedUnits defaultUnit="euro">
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
+        <!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+    </allowedUniverseLevels>
+  </vehicle>
 </vehicles>

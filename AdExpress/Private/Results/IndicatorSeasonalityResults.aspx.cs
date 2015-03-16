@@ -145,7 +145,8 @@ namespace AdExpress.Private.Results
                     if (vehicleInfo != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null
                         && !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)
                         && !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)
-                        && vehicleInfo.Id != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia)
+                        && vehicleInfo.Id != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia
+                        && vehicleInfo.Id != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.PlurimediaWithoutMms)
                     {
                         _webSession.Graphics = false;
                         ResultsOptionsWebControl1.GraphRadioButton.Checked = false;
@@ -215,7 +216,10 @@ namespace AdExpress.Private.Results
                             if(_webSession.Graphics){
                                 if(vehicleInfo != null){
                                     // si WebSession est au niveau media on se met au niveau categorie/media
-                                    if(_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicle && vehicleInfo.Id != CstDBClassif.Vehicles.names.plurimedia){
+                                    if(_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicle 
+                                        && vehicleInfo.Id != CstDBClassif.Vehicles.names.plurimedia
+                                        && vehicleInfo.Id != CstDBClassif.Vehicles.names.PlurimediaWithoutMms)
+                                    {
                                         _webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory;
                                     }
                                 }
@@ -374,6 +378,7 @@ namespace AdExpress.Private.Results
                                 result = noResult("");
                                 break;
                             case CstDBClassif.Vehicles.names.plurimedia:
+                            case CstDBClassif.Vehicles.names.PlurimediaWithoutMms:
                                 ResultsOptionsWebControl1.mediaDetail.Enabled = true;
                                 break;
                             default:

@@ -30,6 +30,7 @@
     <Streaming id="READ_WM_PAN_EURO_SERVER" name="Serveur WMV en streaming en Pan euro" value="mms://streamwm.secodip.com/paneurostream"/>
     <Streaming id="READ_REAL_TV_SERVER" name="Serveur Real en streaming en TV" value="rtsp://streamrl.secodip.com/stream/fr/rm"/>
   </Streamings>
+
   <Networks>
     <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\radio\"/>
     <Network id="LOCAL_PATH_CREATIVES_RADIO" name="Nouveau Répertoire pour télécharger les spots radio" value="\\frmitch-fs03.tnsad.com\quali_multimedia\Streaming\fr"/>

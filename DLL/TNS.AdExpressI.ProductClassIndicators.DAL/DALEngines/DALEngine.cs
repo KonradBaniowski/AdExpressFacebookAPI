@@ -232,6 +232,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapMagazine, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapMagazineSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.plurimedia:
+                case CstDBClassif.Vehicles.names.PlurimediaWithoutMms:
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.mediasTactics:
@@ -652,7 +653,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 			//Media Selection
 			sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
 
-			if (idProductList != null && idProductList.Length > 0) {
+			if (!string.IsNullOrEmpty(idProductList)) {
 				sql.Append(" and " + FctUtilities.SQLGenerator.GetInClauseMagicMethod(dataTable.Prefix + ".id_product", idProductList, true));
 			}
 

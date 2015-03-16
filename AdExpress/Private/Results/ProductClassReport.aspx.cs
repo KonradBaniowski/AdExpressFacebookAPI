@@ -136,7 +136,10 @@ namespace AdExpress.Private.Results
                     _webSession.Save();
                 }
 
-                if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia && WebApplicationParameters.HidePlurimediaEvol) {
+                if (vehicleInfo != null 
+                    && ( vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia || 
+                    vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.PlurimediaWithoutMms)
+                    && WebApplicationParameters.HidePlurimediaEvol) {
                     ResultsOptionsWebControl1.EvolutionOption = false;
                     _webSession.Evolution = false;
                 }

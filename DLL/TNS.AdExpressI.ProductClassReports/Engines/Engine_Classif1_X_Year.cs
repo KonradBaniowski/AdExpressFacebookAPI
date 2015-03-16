@@ -149,7 +149,8 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			}
 			//if productXyear or plurimedia ==> add total line
             if (_session.PreformatedTable == CstFormat.PreformatedTables.product_X_Year
-                || vehicle == CstDBClassif.Vehicles.names.plurimedia)
+                || vehicle == CstDBClassif.Vehicles.names.plurimedia 
+                || vehicle == CstDBClassif.Vehicles.names.PlurimediaWithoutMms)
             {
                 nbLine++;
                 currentLine = 0;
@@ -276,14 +277,13 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 				#endregion
 
 				#region Parcours du tableau
-				bool monoMedia = false;
-				//pluri et présentation nomenclature media
-				if (_session.PreformatedTable == CstFormat.PreformatedTables.media_X_Year
-					&& vehicle != CstDBClassif.Vehicles.names.plurimedia){
-					monoMedia = true;
-				}
 
-				for(int i = 0; i < data.GetLength(0); i++){
+			    bool monoMedia = _session.PreformatedTable == CstFormat.PreformatedTables.media_X_Year
+			                     && (vehicle != CstDBClassif.Vehicles.names.plurimedia |
+                                 vehicle != CstDBClassif.Vehicles.names.PlurimediaWithoutMms);
+			    //pluri et présentation nomenclature media
+
+			    for(int i = 0; i < data.GetLength(0); i++){
 
 					//Extract level info
                     int lIndex = 0;

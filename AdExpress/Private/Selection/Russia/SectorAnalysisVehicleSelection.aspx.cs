@@ -299,7 +299,9 @@ namespace AdExpress.Private.Selection.Russia
                         CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                         object[] param = new object[1];
                         param[0] = _webSession;
-                        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                            , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
+                            , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                         _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(((LevelInformation)vehicle.Tag).ID);
 
                         #endregion

@@ -183,7 +183,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             #region Evolution
             VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
-            if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia && WebApplicationParameters.HidePlurimediaEvol)
+            if (vehicleInfo != null && (vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia
+                || vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.PlurimediaWithoutMms) 
+                && WebApplicationParameters.HidePlurimediaEvol)
                 _evolution = false;
             #endregion
         }

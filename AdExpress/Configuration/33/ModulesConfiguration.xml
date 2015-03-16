@@ -111,7 +111,7 @@
       <!-- *****************************************      Present / Absent                    *****************************************-->
       <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
-        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.France.dll" class="TNS.AdExpressI.PresentAbsent.DAL.France.PresentAbsentDAL"/>
+        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
         <ProductRights branches="product|advertiser"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">
         </ModuleAllowedMediaUniverse>
@@ -756,7 +756,7 @@
       <!-- *****************************************      Portefeuille d'un support           *****************************************-->
       <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
-        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.France.dll" class="TNS.AdExpressI.Portofolio.DAL.France.PortofolioDAL"/>
+        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
         <ProductRights branches="product|advertiser"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">     
         </ModuleAllowedMediaUniverse>

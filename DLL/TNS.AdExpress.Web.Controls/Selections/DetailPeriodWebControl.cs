@@ -298,7 +298,12 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     t.Append("<td colspan=" + colSpan + " " + cssTitleData + "><font " + cssTitle + ">" + (addSpace ? "&nbsp;" : "") + GestionWeb.GetWebWord(3002, _webSession.SiteLanguage) + " : </font>&nbsp; " + tdList[WebConstantes.DetailSelection.Type.periodDisponibilityType] + "</td>");
 
                 t.Append("</tr>");
-
+                if (tdList.ContainsKey(WebConstantes.DetailSelection.Type.vehicleSelected))
+                {
+                    t.Append("<tr>");
+                    t.Append(tdList[WebConstantes.DetailSelection.Type.vehicleSelected]);
+                    t.Append("</tr>");
+                }
                 t.Append("</table>");
 
                 if (_webSession.SiteLanguage == TNS.AdExpress.Constantes.DB.Language.FRENCH
@@ -405,6 +410,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 if (tmpHTML.Length > 0)
                     tdList.Add(WebConstantes.DetailSelection.Type.comparativeDate, tmpHTML);
             }
+          
             #endregion
 
             #region Type Sélection comparative
@@ -450,6 +456,15 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 }
             }
             #endregion
+
+            #region Media Type Selected
+
+            tmpHTML = GetMediaTypeSelected(_webSession);
+            if (tmpHTML.Length > 0)
+                tdList.Add(DetailSelection.Type.vehicleSelected, tmpHTML);
+
+            #endregion
+
 
         }
         #endregion
@@ -905,6 +920,29 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             }
 
             return false;
+        }
+        #endregion
+
+        #region Get Media Type Selected
+        private string GetMediaTypeSelected(WebSession webSession)
+        {
+            var html = new StringBuilder();
+            if ( WebApplicationParameters.CountryCode.Equals(CountryCode.FRANCE) &&
+                (_webSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR
+                || _webSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE))
+            {
+                VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                if(vehicleInfo.Id == CstDBClassif.Vehicles.names.PlurimediaWithoutMms || vehicleInfo.Id == CstDBClassif.Vehicles.names.plurimedia)
+                {
+                    string webWord = vehicleInfo.Id == CstDBClassif.Vehicles.names.PlurimediaWithoutMms
+                                         ? GestionWeb.GetWebWord(3020, webSession.SiteLanguage)
+                                         : GestionWeb.GetWebWord(210, webSession.SiteLanguage);
+                    html.AppendFormat("<td colspan=4 {0}><font {1}>{2} : </font>&nbsp; {3}</td>"
+                        , cssTitleData, cssTitle, GestionWeb.GetWebWord(190, webSession.SiteLanguage), webWord);   
+                }             
+               
+            }
+            return (html.ToString());
         }
         #endregion
 

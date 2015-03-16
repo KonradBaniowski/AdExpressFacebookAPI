@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web.UI;
 using System.Reflection;
@@ -353,18 +354,28 @@ namespace TNS.AdExpress.Web.Controls.Results {
             //Les indes Radio
             if (WebApplicationParameters.CountryCode.Equals(Constantes.Web.CountryCode.FRANCE)
                 && Vehicle == DBClassificationConstantes.Vehicles.names.radio
-                && _customerWebSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.idTopDiffusion))
+                //&& (_customerWebSession.GenericInsertionColumns != null && _customerWebSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.idTopDiffusion)) 
+                )
             {
+                #region Columns levels (Generic)
+                VehicleInformation vehicleInfos = VehiclesInformation.Get(Vehicle);
+                var columnItems = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(vehicleInfos.DetailColumnId);
+                var isColumnTopDif = columnItems.Any(column => column.Id == GenericColumnItemInformation.Columns.idTopDiffusion);
 
-                if (!string.IsNullOrEmpty(tableBegin))
+              
+                #endregion
+                if (isColumnTopDif)
                 {
-                    output.WriteLine(tableBegin);
-                    output.WriteLine("<tr class=\"txtViolet\" width=\"100%\"><td width=\"100%\" colspan=8>");
+                    if ( !string.IsNullOrEmpty(tableBegin))
+                    {
+                        output.WriteLine(tableBegin);
+                        output.WriteLine("<tr class=\"txtViolet\" width=\"100%\"><td width=\"100%\" colspan=8>");
+                    }
+                    else output.WriteLine("<tr class=\"txtViolet\" width=\"100%\"><td width=\"100%\">");
+                    output.Write("<FONT face=\"Arial, Helvetica, sans-serif\" size=1 class=\"txtViolet\">" + GestionWeb.GetWebWord(3018, _customerWebSession.SiteLanguage) + "</FONT>");
+                    output.WriteLine("</td></tr>");
+                    if (!string.IsNullOrEmpty(tableEnd)) output.WriteLine(tableEnd);
                 }
-                else output.WriteLine("<tr class=\"txtViolet\" width=\"100%\"><td width=\"100%\">");
-                output.Write("<FONT face=\"Arial, Helvetica, sans-serif\" size=1 class=\"txtViolet\">" + GestionWeb.GetWebWord(3018, _customerWebSession.SiteLanguage) + "</FONT>");
-                output.WriteLine("</td></tr>");
-                if (!string.IsNullOrEmpty(tableEnd)) output.WriteLine(tableEnd);
             }
         }
 

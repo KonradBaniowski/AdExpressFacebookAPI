@@ -19,7 +19,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
-
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -317,16 +317,33 @@ namespace AdExpress.Private.Selection
                         CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                         object[] param = new object[1];
                         param[0] = _webSession;
-                        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                            , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
+                            , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                         _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(((LevelInformation)vehicle.Tag).ID);
 
                         #endregion
 
                         _webSession.SelectionUniversMedia = _webSession.CurrentUniversMedia = current;
-                        if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID != DBConstantesClassification.Vehicles.names.plurimedia.GetHashCode())
+                         long selectVehicleId = ((LevelInformation) _webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+                        VehicleInformation vehicleInfo = VehiclesInformation.Get(selectVehicleId);
+
+
+                        if (vehicleInfo.Id != DBConstantesClassification.Vehicles.names.plurimedia
+                            && vehicleInfo.Id != DBConstantesClassification.Vehicles.names.PlurimediaWithoutMms)
                             _webSession.PreformatedMediaDetail = WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
                         else
+                        {
                             _webSession.PreformatedMediaDetail = WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
+
+                            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE)
+                                   && vehicleInfo.Id == DBConstantesClassification.Vehicles.names.plurimedia)
+                            {
+                                string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantesClassification.Vehicles.names.mms));
+                                if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
+                                    _webSession.LastAvailableRecapMonth = mmsLastAvailableRecapMonth;
+                            }
+                        }
                         _webSession.Save();
                         //Redirection Page suivante
                         _webSession.Source.Close();

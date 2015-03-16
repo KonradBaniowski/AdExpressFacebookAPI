@@ -2947,6 +2947,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternet, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
+                case ClassificationConstantes.DB.Vehicles.names.PlurimediaWithoutMms:
                     return WebApplicationParameters.GetDataTable(TableIds.recapPluri, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
                     return WebApplicationParameters.GetDataTable(TableIds.recapTactic, isRetailerSelected).Sql;
@@ -2992,10 +2993,12 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.recapInDoorSegment, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.instore:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInStoreSegment, isRetailerSelected).Sql;
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.plurimedia:
+                case ClassificationConstantes.DB.Vehicles.names.PlurimediaWithoutMms:
                     return WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
                     return WebApplicationParameters.GetDataTable(TableIds.recapTacticSegment, isRetailerSelected).Sql;                    
