@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+***********************************************************************************************
+website.publishproj
+
+WARNING: DO NOT MODIFY this file, it is used for the web publish process.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+***********************************************************************************************
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{f12a93cb-0875-4e38-ba30-1fa6a5f52dda}</ProjectGuid>
+    <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
+    <SourceWebVirtualPath>/AdExpress</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SourceWebProject>
+    </SourceWebProject>
+    <SourceWebMetabasePath>
+    </SourceWebMetabasePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- for VS2010 we need to use 10.5 but for VS2012+ we should use VisualStudioVersion -->
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)' =='' and '$(VisualStudioVersion)' == 10.0 ">10.5</WebPublishTargetsVersion>
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)'=='' ">$(VisualStudioVersion)</WebPublishTargetsVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(WebPublishTargetsVersion)</VSToolsPath>
+    <_WebPublishTargetsPath Condition=" '$(_WebPublishTargetsPath)'=='' ">$(VSToolsPath)</_WebPublishTargetsPath>
+    <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">1.0.0.0</AssemblyFileVersion>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Anubis.Constantes\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Anubis\TNS.AdExpress.Anubis.csproj">
+      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
+      <Name>TNS.AdExpress.Anubis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{A4DEDE88-C99E-495F-98F2-E2762520F4BE}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Web.Controls\TNS.AdExpress.Web.Controls.csproj">
+      <Project>{F9CEFF0A-7A0A-4724-8B68-2A9DB9FBCC51}</Project>
+      <Name>TNS.AdExpress.Web.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
+      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
+      <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.AdvertisingAgency.DAL\TNS.AdExpressI.AdvertisingAgency.DAL.csproj">
+      <Project>{499DA15C-BCE1-45A2-86C1-C20C5370BEB7}</Project>
+      <Name>TNS.AdExpressI.AdvertisingAgency.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.AdvertisingAgency\TNS.AdExpressI.AdvertisingAgency.csproj">
+      <Project>{F714F160-EBAD-464F-9D83-ADAE37DE761D}</Project>
+      <Name>TNS.AdExpressI.AdvertisingAgency</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Classification.DAL.Russia\TNS.AdExpressI.Classification.DAL.Russia.csproj">
+      <Project>{EEE4B6D8-C8FE-4950-96DA-26B2A1C27C3A}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Classification.DAL\TNS.AdExpressI.Classification.DAL.csproj">
+      <Project>{B731E9A2-0DBF-43A6-A89E-6DC27D96FFD4}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Common.DAL.Russia\TNS.AdExpressI.Common.DAL.Russia.csproj">
+      <Project>{D5E70526-FCBE-49BA-BED2-3330F5B5D0D9}</Project>
+      <Name>TNS.AdExpressI.Common.DAL.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
+      <Project>{8889ED07-01CE-4F3A-A296-3A2C4B21989C}</Project>
+      <Name>TNS.AdExpressI.Date.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Date.Default\TNS.AdExpressI.Date.Default.csproj">
+      <Project>{EF01A668-D5FF-4D49-A908-F7AD22BC9FD5}</Project>
+      <Name>TNS.AdExpressI.Date.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Date\TNS.AdExpressI.Date.csproj">
+      <Project>{D24531CC-E000-4AEF-8218-56885D87DFCB}</Project>
+      <Name>TNS.AdExpressI.Date</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.GAD.DAL\TNS.AdExpressI.GAD.DAL.csproj">
+      <Project>{C28E12A2-821A-451B-A1A6-C401173283E6}</Project>
+      <Name>TNS.AdExpressI.GAD.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.GAD\TNS.AdExpressI.GAD.csproj">
+      <Project>{A3E2BF3B-45F2-4253-826D-7A2CA03C15F7}</Project>
+      <Name>TNS.AdExpressI.GAD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.InfoNews\TNS.AdExpressI.InfoNews.csproj">
+      <Project>{D1C27E92-7BF1-4336-84F1-4E4E81A58ABC}</Project>
+      <Name>TNS.AdExpressI.InfoNews</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj">
+      <Project>{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}</Project>
+      <Name>TNS.AdExpressI.Insertions.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
+      <Project>{E1A418FC-6512-46D5-99CF-374682F0C792}</Project>
+      <Name>TNS.AdExpressI.Insertions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.LostWon.DAL\TNS.AdExpressI.LostWon.DAL.csproj">
+      <Project>{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}</Project>
+      <Name>TNS.AdExpressI.LostWon.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.LostWon\TNS.AdExpressI.LostWon.csproj">
+      <Project>{EAD29F53-3152-4356-B965-F34299402360}</Project>
+      <Name>TNS.AdExpressI.LostWon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.MediaSchedule.DAL\TNS.AdExpressI.MediaSchedule.DAL.csproj">
+      <Project>{39325692-D25F-400C-8E46-080BCB3B3524}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
+      <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.NewCreatives.DAL\TNS.AdExpressI.NewCreatives.DAL.csproj">
+      <Project>{C1CEB169-5D12-4669-90B4-85552AC8B10D}</Project>
+      <Name>TNS.AdExpressI.NewCreatives.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.NewCreatives\TNS.AdExpressI.NewCreatives.csproj">
+      <Project>{BBABD681-7FA1-473D-B9DA-B1B3173491B8}</Project>
+      <Name>TNS.AdExpressI.NewCreatives</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Portofolio.DAL\TNS.AdExpressI.Portofolio.DAL.csproj">
+      <Project>{AFC56975-EB58-416A-84A9-564F2537D4BA}</Project>
+      <Name>TNS.AdExpressI.Portofolio.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Portofolio.Default\TNS.AdExpressI.Portofolio.Default.csproj">
+      <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>
+      <Name>TNS.AdExpressI.Portofolio.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Portofolio\TNS.AdExpressI.Portofolio.csproj">
+      <Project>{7E85C26D-A9C8-40CD-B98D-AD04E96D340B}</Project>
+      <Name>TNS.AdExpressI.Portofolio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.PresentAbsent.DAL\TNS.AdExpressI.PresentAbsent.DAL.csproj">
+      <Project>{234DC672-6124-4101-A1BC-2F8C9D75B50F}</Project>
+      <Name>TNS.AdExpressI.PresentAbsent.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.PresentAbsent\TNS.AdExpressI.PresentAbsent.csproj">
+      <Project>{459F24EC-384D-404F-A6D2-F3B76C288A57}</Project>
+      <Name>TNS.AdExpressI.PresentAbsent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.ProductClassIndicators.DAL\TNS.AdExpressI.ProductClassIndicators.DAL.csproj">
+      <Project>{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}</Project>
+      <Name>TNS.AdExpressI.ProductClassIndicators.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.ProductClassIndicators.Russia\TNS.AdExpressI.ProductClassIndicators.Russia.csproj">
+      <Project>{2329412E-C706-4180-921A-4D6B0146C7CE}</Project>
+      <Name>TNS.AdExpressI.ProductClassIndicators.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.ProductClassIndicators\TNS.AdExpressI.ProductClassIndicators.csproj">
+      <Project>{F0E136B5-AA9D-468D-BAE4-3599B11D854F}</Project>
+      <Name>TNS.AdExpressI.ProductClassIndicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.ProductClassReports.DAL\TNS.AdExpressI.ProductClassReports.DAL.csproj">
+      <Project>{10F045E8-CB61-470C-AD90-1C942D751B4C}</Project>
+      <Name>TNS.AdExpressI.ProductClassReports.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.ProductClassReports\TNS.AdExpressI.ProductClassReports.csproj">
+      <Project>{C0D576BE-BB8D-4F27-B361-385162442113}</Project>
+      <Name>TNS.AdExpressI.ProductClassReports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Rolex.DAL\TNS.AdExpressI.Rolex.DAL.csproj">
+      <Project>{31521727-C1D6-4017-A105-96E377138FB2}</Project>
+      <Name>TNS.AdExpressI.Rolex.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Rolex\TNS.AdExpressI.Rolex.csproj">
+      <Project>{257EEF45-C4CE-4C02-8D18-35E3019D6F6A}</Project>
+      <Name>TNS.AdExpressI.Rolex</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Trends.DAL\TNS.AdExpressI.Trends.DAL.csproj">
+      <Project>{4FDC4DB7-6A16-4331-BF79-85C72C286F9D}</Project>
+      <Name>TNS.AdExpressI.Trends.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Trends\TNS.AdExpressI.Trends.csproj">
+      <Project>{B2BE1C87-8341-462E-907A-F2EDAA87F819}</Project>
+      <Name>TNS.AdExpressI.Trends</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.Visual\TNS.AdExpressI.Visual.csproj">
+      <Project>{79A0173F-A728-4739-A110-D4FD9166A8CC}</Project>
+      <Name>TNS.AdExpressI.Visual</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.VP.DAL\TNS.AdExpressI.VP.DAL.csproj">
+      <Project>{F9421544-2B9E-4F1E-9F89-6441BDA08991}</Project>
+      <Name>TNS.AdExpressI.VP.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpressI.VP\TNS.AdExpressI.VP.csproj">
+      <Project>{34E6D72A-AA47-4B86-969E-D1BFBCC3D70C}</Project>
+      <Name>TNS.AdExpressI.VP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
+      <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
+      <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
+      <Project>{741A9674-6545-469F-8528-F96BA2DB3A74}</Project>
+      <Name>TNS.Alert.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Ares.Alerts.DAL\TNS.Ares.Alerts.DAL.csproj">
+      <Project>{3EDBE8FB-A516-49C9-92FC-B0B0103F7D06}</Project>
+      <Name>TNS.Ares.Alerts.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
+      <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
+      <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />
+</Project>

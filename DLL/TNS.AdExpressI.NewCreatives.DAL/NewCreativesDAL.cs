@@ -196,7 +196,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 if (useTableDataMobile)
                 {
                     sql.Append(" and " + table.Prefix + ".HASHCODE = " + prefixDataMobile + ".HASHCODE ");
-                    sql.Append(" and " + table.Prefix + ".ID_BANNERS_MOBILE = " + prefixDataMobile + ".ID_BANNERS ");
+                   // sql.Append(" and " + table.Prefix + ".ID_BANNERS_MOBILE = " + prefixDataMobile + ".ID_BANNERS ");
                     sql.Append(" and " + prefixDataMobile + ".id_category not in (" + TNS.AdExpress.Domain.Lists.GetIdList(TNS.AdExpress.Constantes.Web.GroupList.Type.applicationMobile) + ") ");
                 }
 

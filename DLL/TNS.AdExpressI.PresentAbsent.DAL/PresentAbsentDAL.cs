@@ -866,7 +866,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 	                }
 	                else
 	                {
-	                    groupByOptional = string.Format(",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        groupByOptional = string.Format(",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 	                }
 	            }
 

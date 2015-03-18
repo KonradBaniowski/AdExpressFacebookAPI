@@ -344,8 +344,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 	    protected virtual string GetBannerGroupByOptional(DBConstantes.TableType.Type type)
 	    {
-	        string groupByOptional = string.Format(type == DBConstantes.TableType.Type.webPlan 
-	                                                   ? ",{0}.list_banners " : ",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            //string groupByOptional = string.Format(type == DBConstantes.TableType.Type.webPlan 
+            //                                           ? ",{0}.list_banners " : ",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            string groupByOptional = string.Format(type == DBConstantes.TableType.Type.webPlan
+                                                       ? ",{0}.list_banners " : ",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 	        return groupByOptional;
 	    }
 
@@ -367,7 +369,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         if(unitsList[i].Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
                             sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseField, unitsList[i].Id.ToString());
                         else
-                            sqlUnit.AppendFormat("to_char({1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseField, unitsList[i].Id.ToString());
+                            sqlUnit.AppendFormat(" {1} as {2}", dataTablePrefixe, unitsList[i].DatabaseField, unitsList[i].Id.ToString());
                         break;
                     case DBConstantes.TableType.Type.webPlan:
                         if(unitsList[i].Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)

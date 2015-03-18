@@ -189,7 +189,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	            else
 	            {
 	                unitFieldNameSumWithAlias = GetUnitFieldName(_webSession, DBConstantes.TableType.Type.dataVehicle4M);
-	                dataGroupby = string.Format(",{0}.id_banners", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    dataGroupby = string.Format(",{0}.id_banners", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 	            }
 
 	            mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
