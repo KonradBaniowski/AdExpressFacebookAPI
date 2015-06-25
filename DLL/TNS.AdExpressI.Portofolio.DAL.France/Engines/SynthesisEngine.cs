@@ -237,7 +237,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
             else
             {
 
-                sql.Append("select distinct hashcode ");
+                sql.Append("select distinct to_char(hashcode) as hashcode ");
             }
 
             if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
