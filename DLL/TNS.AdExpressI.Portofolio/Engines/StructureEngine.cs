@@ -356,7 +356,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         }
                         else
                         {
-                            t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + string.Format(fp, unitInformationList[i].StringFormat, Convert.ToDouble(dr[unitInformationList[i].Id.ToString()])) + "</td>");
+                            if (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value)
+                                t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + string.Format(fp, unitInformationList[i].StringFormat, Convert.ToDouble(dr[unitInformationList[i].Id.ToString()])) + "</td>");
+                            else t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>&nbsp;</td>");
                         }
                     }
 					t.Append("</tr>");
