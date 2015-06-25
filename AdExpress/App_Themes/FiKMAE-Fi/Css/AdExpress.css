@@ -217,6 +217,9 @@ hr {
 .violetBackGround{
 	background-color : #656565;
 }
+.orangeBackGround{
+	background-color : #ff7100;
+}
 .violetBackGroundV2{
 	background-color : #C3C7D0;
 }
@@ -2935,6 +2938,12 @@ td.pmcategorynb
 	border-right: 1px solid #656565;
 	border-bottom: 1px solid #656565;
 	border-left: 1px none #656565;
+}
+.ColumnnOrangeHeaderRight {
+	border-top: 1px solid #ff7100;
+	border-right: 1px solid #ff7100;
+	border-bottom: 1px solid #ff7100;
+	border-left: 1px none #ff7100;
 }
 .CellTopLeft {
 	border-top: 1px solid #656565;
