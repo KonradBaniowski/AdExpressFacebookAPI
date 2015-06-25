@@ -284,7 +284,11 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             /// None
             /// </summary>
-            None
+            None,
+            /// <summary>
+            /// Display Internet
+            /// </summary>
+            FormatDisplayInternet
         }
         #endregion
     }

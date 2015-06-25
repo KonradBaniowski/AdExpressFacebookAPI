@@ -325,7 +325,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Selected Purchase Mode List
             /// </summary>
-            selectedPurchaseModeList = 75
+            selectedPurchaseModeList = 75,
+            /// <summary>
+            /// Selected Mms Banners Format List
+            /// </summary>
+            selectedMmsBannersFormatList = 76
 		}
 	
 	}
@@ -2563,7 +2567,7 @@ namespace TNS.AdExpress.Constantes.Web{
         /// <summary>
         /// Serveur WMA en streaming en radio (nouveau chemin)
         /// </summary>
-        public static string READ_WM_CREATIVES_RADIO_SERVER = string.Empty;
+        public static string READ_WM_CREATIVES_RADIO_SERVER = string.Empty;      
         /// <summary>
         /// Répertoire des spots radio
         /// </summary>

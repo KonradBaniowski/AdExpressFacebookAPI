@@ -178,6 +178,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Chaîne de connexion à la base de données pour HERMES (Indicateurs AdExpress)
 		/// </summary>
 		//public const string HERMES_CONNECTION_STRING="User Id=adexpr03_proc_8; Password=lnampt8; Data Source=adexpr03.pige; Pooling=False;Connection Timeout=120;";
+        public const string CREATIVE_CONNECTION_STRING = "User Id=CREATIVE3; Password=EXPLOV3;  Data Source=" + TNSName.CUSTOMER_TNS_NAME + " ;Pooling=true; Max Pool Size=150; Decr Pool Size=20; Connection Timeout=120";
 		#endregion
 	}
 
