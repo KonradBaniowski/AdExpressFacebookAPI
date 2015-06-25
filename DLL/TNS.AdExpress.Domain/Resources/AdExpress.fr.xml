@@ -2270,6 +2270,17 @@
     <item mnemonic="w3018" type="System.String">L&amp;rsquo;offre Nationale &amp;laquo; Les Ind&amp;eacute;s Radios &amp;raquo; recouvre plus de 120 radios locales et r&amp;eacute;gionales. L&amp;rsquo;horaire de diffusion d&amp;rsquo;un spot est communiqu&amp;eacute;  &amp;agrave; titre indicatif sur la base de l&amp;rsquo;horaire de diffusion constat&amp;eacute; sur l&amp;rsquo;une des radios pig&amp;eacute;es et ne refl&amp;egrave;te donc pas l&amp;rsquo;horaire de diffusion r&amp;eacute;el sur l&amp;rsquo;ensemble des stations composant l&amp;rsquo;offre.</item>
   <!--PLURI MEDIA HORS mmS -->  
     <item mnemonic="w3019" type="System.String">Plurimédia hors Internet Display</item>
-    <item mnemonic="w3020" type="System.String">PLURIMEDIA HORS INTERNET DISPLAY</item>    
+    <item mnemonic="w3020" type="System.String">PLURIMEDIA HORS INTERNET DISPLAY</item>
+    <!--Ajout élément video-->
+    <item mnemonic="w3021" type="System.String">Votre navigateur ne gère pas l'élément &lt;code>video&lt;/code&gt;.</item>
+    <item mnemonic="w3022" type="System.String">Votre navigateur ne gère pas l'élément &lt;code>audio&lt;/code&gt;.</item>
+    <item mnemonic="w3023" type="System.String">Format MPEG-4</item>
+    <item mnemonic="w3024" type="System.String">Format MP3</item>
+    <!--dates mis à jour-->
+    <item mnemonic="w3025" type="System.String">5 à 6&lt;br&gt;semaines&lt;br&gt;après&lt;br&gt;la fin&lt;br&gt;du mois&lt;br&gt;précédent</item>
+<!--Filtre Format-->
+    <item mnemonic="w3026" type="System.String">Format Internet Display</item>
+    <item mnemonic="w3027" type="System.String">Format Internet Evaliant</item>
+    <item mnemonic="w3028" type="System.String">INTERNET DISPLAY</item>
   </items>
 </localization>
