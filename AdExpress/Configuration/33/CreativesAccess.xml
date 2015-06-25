@@ -35,7 +35,7 @@
     <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\radio\"/>
     <Network id="LOCAL_PATH_CREATIVES_RADIO" name="Nouveau Répertoire pour télécharger les spots radio" value="\\frmitch-fs03.tnsad.com\quali_multimedia\Streaming\fr"/>
     <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="\\frmitch-fs03.tnsad.com\quali_multimedia\Streaming\fr"/>
-    <Network id="LOCAL_PATH_PAN_EURO" name="Répertoire pour télécharger les paneuro" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\PanEuro"/>
+    <Network id="LOCAL_PATH_PAN_EURO" name="Répertoire pour télécharger les paneuro"  value="\\KMCHMFS001\Adex\Multimedia\PanEuro"/>
     <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
     <!--<Network id="LOCAL_PATH_MD_IMAGE" name="Répertoire contenant les visuels du Marketing Direct" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\MarketingDirect\"/>-->
     <Network id="LOCAL_PATH_MD_IMAGE" name="Répertoire contenant les visuels du Marketing Direct" value="\\KMCHMFS001\Adex\Multimedia\MarketingDirect\"/>
