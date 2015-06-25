@@ -100,9 +100,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxPro.2, Version=6.10.6.2, Culture=neutral, PublicKeyToken=4735ae9824c7d3ec, processorArchitecture=MSIL">
+    <Reference Include="AjaxPro.2, Version=9.2.17.1, Culture=neutral, PublicKeyToken=4735ae9824c7d3ec, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\AjaxPro.2.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\AjaxPro.2.dll</HintPath>
     </Reference>
     <Reference Include="DundasWebChart, Version=6.0.0.1722, Culture=neutral, PublicKeyToken=90d06b0c62d592d0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
