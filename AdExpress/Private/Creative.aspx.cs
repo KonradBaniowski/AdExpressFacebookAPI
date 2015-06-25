@@ -96,7 +96,7 @@ namespace AdExpress.Private
                 List<long> vehicleListId = vehicleListIdString.Split(',').Select(Int64.Parse).ToList();
                 if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.POLAND))
                 {
-                    vehicleListId = SwicthToAdExpressVehicle(vehicleListId,webSession);
+                    vehicleListId = SwicthToAdExpressVehicle(vehicleListId, webSession);
                 }
                 string[] productListId = productListIdString.Split(',');
 
@@ -126,13 +126,13 @@ namespace AdExpress.Private
 
                     if (vehicleListId.Count == 1 && VehiclesInformation.Get(vehicleListId[0]).Id == Vehicles.names.adnettrack)
                     {
-                          webSession.SiteLanguage = _siteLanguage;
-                          webSession.Unit = WebConstantes.CustomerSessions.Unit.occurence;
-                          SetAdNetTrackProductSelection(webSession, Convert.ToInt64(_versionListIdString));
-                          //webSession.DataLanguage = _siteLanguage;
-                          TNS.AdExpress.Web.Functions.ProductDetailLevel.SetProductLevel(webSession, Convert.ToInt32(productListId[0]), DetailLevelItemInformation.Levels.product);
+                        webSession.SiteLanguage = _siteLanguage;
+                        webSession.Unit = WebConstantes.CustomerSessions.Unit.occurence;
+                        SetAdNetTrackProductSelection(webSession, Convert.ToInt64(_versionListIdString));
+                        //webSession.DataLanguage = _siteLanguage;
+                        TNS.AdExpress.Web.Functions.ProductDetailLevel.SetProductLevel(webSession, Convert.ToInt32(productListId[0]), DetailLevelItemInformation.Levels.product);
                     }
-                    else  webSession.Unit = UnitsInformation.DefaultCurrency;
+                    else webSession.Unit = UnitsInformation.DefaultCurrency;
 
                     webSession.LastReachedResultUrl = string.Empty;
 
@@ -146,12 +146,12 @@ namespace AdExpress.Private
                         {
 
                             tmpNode = new System.Windows.Forms.TreeNode(vehicleLabels[currentVehicleId])
-                                {
-                                    Tag =
-                                        new LevelInformation(
-                                            TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,
-                                            currentVehicleId, vehicleLabels[currentVehicleId])
-                                };
+                            {
+                                Tag =
+                                    new LevelInformation(
+                                        TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,
+                                        currentVehicleId, vehicleLabels[currentVehicleId])
+                            };
                             webSession.CurrentUniversMedia.Nodes.Add(tmpNode);
                         }
                         webSession.SelectionUniversMedia = (System.Windows.Forms.TreeNode)webSession.CurrentUniversMedia.Clone();
@@ -204,10 +204,10 @@ namespace AdExpress.Private
                             {
                                 if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
                                 {
-                                    vehicleId = idVersion.Substring(0, _versionListIdString.Length);
-                                    if (!vehicleId.Equals(_versionListIdString))
-                                        throw (new AdExpressException.AdExpressCustomerException("La version " + idVersion + " n'appartient pas au media : " + _versionListIdString));
-                                    webSession.IdSlogans.Add(Int64.Parse(idVersion.Substring(_versionListIdString.Length)));
+                                    vehicleId = idVersion.Substring(0, vehicleListIdString.Length);
+                                    if (!vehicleId.Equals(vehicleListIdString))
+                                        throw (new AdExpressException.AdExpressCustomerException("La version " + idVersion + " n'appartient pas au media : " + vehicleListIdString));
+                                    webSession.IdSlogans.Add(Int64.Parse(idVersion.Substring(vehicleListIdString.Length)));
                                 }
                                 else
                                 {
@@ -280,7 +280,7 @@ namespace AdExpress.Private
         {
         }
 
-        private List<long> SwicthToAdExpressVehicle(List<long> vehicles,WebSession webSession)
+        private List<long> SwicthToAdExpressVehicle(List<long> vehicles, WebSession webSession)
         {
             var newVehicle = new List<long>();
 
@@ -297,10 +297,10 @@ namespace AdExpress.Private
                     case 9: newVehicle.Add(6); break;
                     case 20: newVehicle.Add(9); break;
                     case 7:
-                        newVehicle.Add(!string.IsNullOrEmpty(_versionListIdString) ? 8 : p);                      
-                        break;       
-                    case 6: 
-                        newVehicle.Add(8);break;                       
+                        newVehicle.Add(!string.IsNullOrEmpty(_versionListIdString) ? 8 : p);
+                        break;
+                    case 6:
+                        newVehicle.Add(8); break;
                     default: newVehicle.Add(p); break;
 
                 }
@@ -308,12 +308,12 @@ namespace AdExpress.Private
             return newVehicle;
         }
 
-        private void SetAdNetTrackProductSelection(WebSession webSession,long id)
+        private void SetAdNetTrackProductSelection(WebSession webSession, long id)
         {
 
-          webSession.AdNetTrackSelection = 
-              new AdNetTrackProductSelection(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type.visual, id);
-           
+            webSession.AdNetTrackSelection =
+                new AdNetTrackProductSelection(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type.visual, id);
+
         }
         #endregion
     }

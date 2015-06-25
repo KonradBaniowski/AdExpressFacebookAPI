@@ -6,37 +6,9 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Windows.Forms;
-using TNS.AdExpress.Web.Core.Sessions;
-using AdExpressWebRules = TNS.AdExpress.Web.Rules;
-using WebFunctions = TNS.AdExpress.Web.Functions;
-using WebConstantes = TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Web.UI;
-using ProductClassification = TNS.AdExpress.DataAccess.Classification.ProductBranch;
-using MediaClassification = TNS.AdExpress.DataAccess.Classification.MediaBranch;
-using AdExpressException = TNS.AdExpress.Exceptions;
-using TNS.AdExpress.Domain.Translation;
-using TNS.FrameWork.DB.Common;
-using TNS.FrameWork.Exceptions;
-using TNS.Classification.Universe;
-using TNS.AdExpress.Classification;
-
-using TNS.FrameWork.Date;
-using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress;
 using TNS.AdExpressI.Visual;
 using System.Reflection;
-using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private
