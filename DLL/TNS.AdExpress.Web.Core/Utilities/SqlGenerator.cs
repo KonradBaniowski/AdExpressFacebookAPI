@@ -2705,7 +2705,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         public static string GetUnitFieldNameSumWithAlias(WebSession webSession, DBConstantes.TableType.Type type, string prefixe)
         {
             StringBuilder sql = new StringBuilder();
-            if (prefixe != null && prefixe.Length > 0)
+            if (!string.IsNullOrEmpty(prefixe))
                 prefixe += ".";
             else
                 prefixe = "";
@@ -2721,8 +2721,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             sql.AppendFormat("sum({0}{1}) as {2}", prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
                         }
                         else
-                        {
-                            sql.AppendFormat("{0}{1} as {2}", prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
+                        {                           
+                            sql.AppendFormat("to_char({0}{1}) as {2}", prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
                         }
                         return sql.ToString();
                     }
