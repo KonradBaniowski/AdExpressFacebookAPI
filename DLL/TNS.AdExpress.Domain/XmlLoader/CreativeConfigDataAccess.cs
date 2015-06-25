@@ -161,11 +161,11 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                         break;
                                     case "LOCAL_PATH_VP":
                                         CreationServerPathes.LOCAL_PATH_VP = value;
-                                        break;                                    
+                                        break;
                                     case "IMAGES_EDITORIAL":
                                         CreationServerPathes.IMAGES_EDITORIAL = value;
                                         break;
-                                    case "LOCAL_PATH_EDITORIAL" :
+                                    case "LOCAL_PATH_EDITORIAL":
                                         CreationServerPathes.LOCAL_PATH_EDITORIAL = value;
                                         break;
                                     case "LOCAL_PATH_INTERNET":
@@ -190,30 +190,30 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "LOCAL_PATH_ROLEX":
                                         CreationServerPathes.LOCAL_PATH_ROLEX = value;
                                         break;
-                                    case "IMAGES_PSA" :
+                                    case "IMAGES_PSA":
                                         CreationServerPathes.IMAGES_PSA = value;
                                         break;
-                                    case "IMAGES_PSA_MR" :
+                                    case "IMAGES_PSA_MR":
                                         CreationServerPathes.IMAGES_PSA_MR = value;
-                                         break;
+                                        break;
                                     case "VIDEOS_PSA":
-                                         CreationServerPathes.VIDEOS_PSA = value;
-                                         break;
+                                        CreationServerPathes.VIDEOS_PSA = value;
+                                        break;
                                     case "RADIOS_PSA":
-                                         CreationServerPathes.RADIOS_PSA = value;
-                                         break;
+                                        CreationServerPathes.RADIOS_PSA = value;
+                                        break;
                                     case "BANNERS_PSA":
-                                         CreationServerPathes.BANNERS_PSA = value;
-                                         break;
+                                        CreationServerPathes.BANNERS_PSA = value;
+                                        break;
                                     case "LOCAL_PATH_IMAGES_PSA_MR":
-                                         CreationServerPathes.LOCAL_PATH_IMAGES_PSA_MR = value;
-                                         break;
+                                        CreationServerPathes.LOCAL_PATH_IMAGES_PSA_MR = value;
+                                        break;
                                     case "LOCAL_PATH_BANNERS_PSA":
-                                         CreationServerPathes.LOCAL_PATH_BANNERS_PSA = value;
-                                         break;
+                                        CreationServerPathes.LOCAL_PATH_BANNERS_PSA = value;
+                                        break;
                                     case "LOCAL_PATH_EVALIANT":
-                                         CreationServerPathes.LOCAL_PATH_EVALIANT = value;
-                                         break;  
+                                        CreationServerPathes.LOCAL_PATH_EVALIANT = value;
+                                        break;
                                 }
                                 break;
                         }

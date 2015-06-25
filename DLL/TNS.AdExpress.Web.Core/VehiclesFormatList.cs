@@ -65,7 +65,7 @@ namespace TNS.AdExpress.Web.Core {
         /// </summary>
         /// <param name="vehicleId">Vehicle identifier</param>
         /// <returns>The list of banners format</returns>
-        protected static Dictionary<Int64, FilterItem> GetList(Int64 vehicleId)
+        public static Dictionary<Int64, FilterItem> GetList(Int64 vehicleId)
         {
             var formatList = new Dictionary<Int64, FilterItem>();
             if (_list.Count > 0 && _list.ContainsKey(vehicleId)

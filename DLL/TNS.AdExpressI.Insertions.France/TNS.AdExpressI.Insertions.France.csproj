@@ -44,6 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cells\CellCreativesRadioInformation.cs" />
     <Compile Include="CreativeResult\CreativePopUp.cs" />
     <Compile Include="InsertionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +62,10 @@
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Classification.DAL\TNS.AdExpressI.Classification.DAL.csproj">
+      <Project>{b731e9a2-0dbf-43a6-a89e-6dc27d96ffd4}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj">
       <Project>{446aa1fa-2ce3-49d1-99cc-6ebaeccda911}</Project>
       <Name>TNS.AdExpressI.Insertions.DAL</Name>
@@ -68,6 +73,10 @@
     <ProjectReference Include="..\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
       <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
       <Name>TNS.AdExpressI.Insertions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">
+      <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
+      <Name>TNS.AdExpress</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

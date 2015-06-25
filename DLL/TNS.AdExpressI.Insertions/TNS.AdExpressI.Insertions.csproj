@@ -89,6 +89,7 @@
     <Compile Include="Cells\CellCreativesRadioInformation.cs" />
     <Compile Include="Cells\CellCreativesTvInformation.cs" />
     <Compile Include="Cells\CellCreativesEvaliantMobileInformation.cs" />
+    <Compile Include="CreativeResult\ICreativePopUp.cs" />
     <Compile Include="Exceptions\DescriptorException.cs" />
     <Compile Include="CreativeResult\CreativePopUp.cs" />
     <Compile Include="Exceptions\InsertionsException.cs" />
