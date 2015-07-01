@@ -621,8 +621,8 @@ namespace KMI.AdExpress.AdVolumeChecker.Rules {
                             cells[lineIndex, columnIndex].SetStyle(rowStyle2);
                         columnIndex++;
 
-                        cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["associated_file"].ToString()));
-                        worksheet.Hyperlinks.Add(lineIndex, columnIndex, 1, 1, "http://www.tnsadexpress.com/Public/CreativeView.aspx?creation=" + row["associated_file"].ToString());
+                        cells[lineIndex, columnIndex].PutValue(Int64.Parse(row["id_slogan"].ToString()));
+                        worksheet.Hyperlinks.Add(lineIndex, columnIndex, 1, 1, "http://www.tnsadexpress.com/Public/CreativeView.aspx?creation=" + row["id_slogan"].ToString());
 
                         if (lineIndex % 2 == 0)
                             cells[lineIndex, columnIndex].SetStyle(rowStyle1);

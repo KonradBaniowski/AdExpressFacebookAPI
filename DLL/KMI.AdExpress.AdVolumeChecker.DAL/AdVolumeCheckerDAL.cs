@@ -424,7 +424,7 @@ namespace KMI.AdExpress.AdVolumeChecker.DAL {
                 StringBuilder sql = new StringBuilder();
                 OracleCommand sqlCommand = null;
 
-                sql.Append(" select distinct associated_file, date_media_num, ad.id_advertiser, ad.advertiser, md.id_media, md.media, pr.id_product, pr.product, sc.id_sector, sc.sector, gr.id_group_, gr.group_, top_diffusion, duration, id_commercial_break, id_rank, duration_commercial_break, number_message_commercial_brea, wp.id_category as idCategory, advertising_agency ");
+                sql.Append(" select distinct id_slogan, date_media_num, ad.id_advertiser, ad.advertiser, md.id_media, md.media, pr.id_product, pr.product, sc.id_sector, sc.sector, gr.id_group_, gr.group_, top_diffusion, duration, id_commercial_break, id_rank, duration_commercial_break, number_message_commercial_brea, wp.id_category as idCategory, advertising_agency ");
                 sql.Append("       , (CASE                                                                ");
                 sql.Append("            WHEN TOP_DIFFUSION  between 030000 AND 035959   THEN '03H - 04H'  ");
                 sql.Append("            WHEN TOP_DIFFUSION  between 040000 AND 045959   THEN '04H - 05H'  ");
@@ -477,7 +477,7 @@ namespace KMI.AdExpress.AdVolumeChecker.DAL {
                 }
 
                 sql.Append(" and adva.id_advertising_agency(+)=wp.id_advertising_agency  and adva.id_language(+)=33  and adva.activation(+)<50  ");
-                sql.Append(" group by associated_file,date_media_num,ad.id_advertiser,ad.advertiser,md.id_media,md.media,pr.id_product,pr.product,sc.id_sector,sc.sector,gr.id_group_,gr.group_,top_diffusion,duration,id_commercial_break,id_rank,duration_commercial_break,number_message_commercial_brea,wp.id_category , advertising_agency   ");
+                sql.Append(" group by id_slogan,date_media_num,ad.id_advertiser,ad.advertiser,md.id_media,md.media,pr.id_product,pr.product,sc.id_sector,sc.sector,gr.id_group_,gr.group_,top_diffusion,duration,id_commercial_break,id_rank,duration_commercial_break,number_message_commercial_brea,wp.id_category , advertising_agency   ");
                 sql.Append(" order by wp.date_media_num,wp.top_diffusion ");
 
                 sqlCommand = new OracleCommand(sql.ToString());
