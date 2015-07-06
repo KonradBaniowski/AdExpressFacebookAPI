@@ -11,7 +11,7 @@
   <lostWon useComparative="false"  useDiponibility="true" useType="true"/>
   <mediaSchedule useComparative="true"/>
   <tendency useComparativeWeekType="true"/>
-  <news displayNews="true"/>
+  <news displayNews="false"/>
   <evaliantCountryAccess applyEvaliantCountryAccess="true"/>
   <plurimediaEvol hidePlurimediaEvol="false"/>
   <purchaseMode use="false"/>

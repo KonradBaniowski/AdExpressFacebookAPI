@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Web.UI.Results;
-using TNS.AdExpressI.Insertions.Default.CreativeResult;
+using TNS.AdExpressI.Insertions.CreativeResult;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.UI;
+using TNS.FrameWork.DB.Common;
 
 public partial class Public_CreativeView : WebPage {
 
@@ -56,16 +52,7 @@ public partial class Public_CreativeView : WebPage {
     string file = "";
     #endregion
 
-    #region constantes
-    /// <summary>
-    /// Constante cookie pour fichier format windows media player 
-    /// </summary>
-    private const string WINDOWS_MEDIA_PLAYER_FORMAT = "windowsPlayerFormat";
-    /// <summary>
-    ///  Constante cookie pour fichier format real media player 
-    /// </summary>
-    private const string REAL_MEDIA_PLAYER_FORMAT = "realPalyerFormat";
-    #endregion
+
 
     #region Page Load
     /// <summary>
@@ -73,17 +60,33 @@ public partial class Public_CreativeView : WebPage {
     /// </summary>
     /// <param name="sender">Object sender</param>
     /// <param name="e">Event Args</param>
-    protected void Page_Load(object sender, EventArgs e) {
+    protected void Page_Load(object sender, EventArgs e)
+    {
 
-        title = GestionWeb.GetWebWord(876, WebApplicationParameters.DefaultLanguage);
+
         file = Page.Request.QueryString.Get("creation");
+        //Connection       
 
-        WebSession session = new WebSession();
-        session.SiteLanguage = WebApplicationParameters.DefaultLanguage;
-        session.CurrentModule = 0;
-        CreativePopUp creativePopUp = new CreativePopUp(this, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv, "", file, session, title, true, false);
-        streamingCreationsResult = creativePopUp.CreativePopUpRenderWithoutOptions(800,600);
+        IDataSource dataSource = new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.CREATIVE_CONNECTION_STRING));
+        var session = new WebSession { SiteLanguage = WebApplicationParameters.DefaultLanguage, CurrentModule = 0, Source = dataSource };
+        var cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativePopUp];
+        if (cl == null) throw (new NullReferenceException("Core layer is null for the creative pop up"));
+        title = GestionWeb.GetWebWord(876, _siteLanguage);
+
+        var param = new object[8];
+        param[0] = this;
+        param[1] = TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv;
+        param[2] = file;
+        param[3] = file;
+        param[4] = session;
+        param[5] = title;
+        param[6] = true;
+        param[7] = false;
+        var creativePopUp = (ICreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+            , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+            | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
+
+        streamingCreationsResult = creativePopUp.CreativePopUpRenderWithoutOptions(800, 600);
     }
     #endregion
-
 }

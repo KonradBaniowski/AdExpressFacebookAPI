@@ -16,21 +16,18 @@ using System.Data;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Domain.Web.Navigation;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
-using VehicleClassificationCst = TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
-using DBClassificationCst = TNS.AdExpress.Constantes.Classification.DB;
-
 using TNS.FrameWork.DB.Common;
 using TNS.Classification.Universe;
 using System.Reflection;
 
-namespace TNS.AdExpressI.Classification.DAL {
+namespace TNS.AdExpressI.Classification.DAL
+{
 
-	/// <summary>
+    /// <summary>
     /// This class provides all the SQL queries to search or select items of the product or vehicle
     /// clasification brand.
     /// The data can be filtered according to the rights or the selections of the customer.
@@ -44,31 +41,32 @@ namespace TNS.AdExpressI.Classification.DAL {
     /// <code>GetRecapItems</code> provides to the customer the possibility to search items in product or vehicle classification brand. 
     /// <remarks>This methods is used only intio the modules
     /// " Product class analysis: Graphic key reports " and "Product class analysis: Detailed reports".</remarks>
-	/// </summary>
+    /// </summary>
     /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
     /// Impossible to execute query
     /// </exception>
     /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
     /// execution or building of the query to search classification items</exception>
-	public abstract class ClassificationDAL : IClassificationDAL {
+    public abstract class ClassificationDAL : IClassificationDAL
+    {
 
-		#region Variables
-		/// <summary>
-		/// User session
-		/// </summary>
-		protected WebSession _session = null;
-		/// <summary>
-		/// Generic detail level selected by the customer (ex. Sub Media\Vehicle)
-		/// </summary>
-		protected GenericDetailLevel _genericDetailLevel = null;
-		/// <summary>
-		/// Identifier list of vehicle to find (ex. 20,205,301)
-		/// </summary>
+        #region Variables
+        /// <summary>
+        /// User session
+        /// </summary>
+        protected WebSession _session = null;
+        /// <summary>
+        /// Generic detail level selected by the customer (ex. Sub Media\Vehicle)
+        /// </summary>
+        protected GenericDetailLevel _genericDetailLevel = null;
+        /// <summary>
+        /// Identifier list of vehicle to find (ex. 20,205,301)
+        /// </summary>
         protected string _vehicleList = "";
-		/// <summary>
-		/// Current classification brand (product or vehicle)
-		/// </summary>
-		protected  TNS.Classification.Universe.Dimension _dimension;
+        /// <summary>
+        /// Current classification brand (product or vehicle)
+        /// </summary>
+        protected TNS.Classification.Universe.Dimension _dimension;
         /// <summary>
         /// Data base schema
         /// </summary>
@@ -94,66 +92,72 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </summary>
         protected TNS.FrameWork.DB.Common.IDataSource _dataSource = null;
         /// <summary>
-		#endregion
+        #endregion
 
-		#region Constructors
-		/// <summary>
-		/// Default Constructor
-		/// </summary>
-		/// <param name="session">User session</param>		
-		public ClassificationDAL(WebSession session) {
+        #region Constructors
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="session">User session</param>		
+        public ClassificationDAL(WebSession session)
+        {
             //Set  customer web session
-			_session = session;
+            _session = session;
             //Get data source
             _dataSource = GetDataSource();
             _toLowerCase = true;
-		}
-		
-		/// <summary>
-		/// Default Constructor
-		/// </summary>
-		/// <param name="session">User session</param>
+        }
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="session">User session</param>
         /// <param name="dimension">Product or vehicle classification brand</param>
-		public ClassificationDAL(WebSession session, TNS.Classification.Universe.Dimension dimension)
-			: this(session) {
-                //Set  Current classification brand (product or vehicle)
-			_dimension = dimension;
+        public ClassificationDAL(WebSession session, TNS.Classification.Universe.Dimension dimension)
+            : this(session)
+        {
+            //Set  Current classification brand (product or vehicle)
+            _dimension = dimension;
             //Get data source
             _dataSource = GetDataSource();
             _toLowerCase = true;
-		}
-		/// <summary>
-		/// Default Constructor
-		/// </summary>
-		/// <param name="session">User session</param>
+        }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="session">User session</param>
         /// <param name="genericDetailLevel">Generic detail level selected by the customer (ex. Sub Media\Vehicle)</param>
         /// <param name="vehicleList">List of vehicles selected by the user</param>
         public ClassificationDAL(WebSession session, GenericDetailLevel genericDetailLevel, string vehicleList)
-			: this(session) {
-                //Set Generic detail level selected by the customer (ex. Sub Media\Vehicle)
-			_genericDetailLevel = genericDetailLevel;
+            : this(session)
+        {
+            //Set Generic detail level selected by the customer (ex. Sub Media\Vehicle)
+            _genericDetailLevel = genericDetailLevel;
             //Set List of vehicles selected by the user
             _vehicleList = vehicleList;
             //Get data source
             _dataSource = GetDataSource();
             _toLowerCase = true;
-		}
-		#endregion
+        }
+        #endregion
 
         #region Properties
         /// <summary>
         /// Database schema
         /// <remarks>Can be null for others country execpted for france</remarks>
         /// </summary>
-        public string DBSchema{
-            set {
+        public string DBSchema
+        {
+            set
+            {
                 _dBSchema = value;
-            }        
+            }
         }
         /// <summary>
         /// Get/Set Control filters
         /// </summary>
-        public Dictionary<long, string> Filters{
+        public Dictionary<long, string> Filters
+        {
             get { return _filters; }
             set { _filters = value; }
         }
@@ -192,13 +196,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
         /// Impossible to execute query
         /// </exception>
-		public virtual DataSet GetMediaType() {
+        public virtual DataSet GetMediaType()
+        {
             //Calling the engine which compute data
-			VehiclesDAL engineDal = new VehiclesDAL(_session);
+            VehiclesDAL engineDal = new VehiclesDAL(_session);
             engineDal.DataSource = _dataSource;
-			return engineDal.GetData();
-		}
-		#endregion
+            return engineDal.GetData();
+        }
+        #endregion
 
         #region Get Detail Product
         /// <summary>
@@ -209,7 +214,8 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
         /// Exception throwed when an error occurs in the building or execution of the SQL query.
         /// </exception>
-        public virtual DataSet GetDetailProduct() {
+        public virtual DataSet GetDetailProduct()
+        {
             //Calling the engine which compute data
             DetailProductDAL engineDal = new DetailProductDAL(_session, _genericDetailLevel, _vehicleList);
             return engineDal.GetData();
@@ -233,12 +239,13 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
         /// Exception throwed when an error occurs in the building or execution of the SQL query.</exception>
-		public virtual DataSet GetDetailMedia() {
+        public virtual DataSet GetDetailMedia()
+        {
             //Calling the engine which compute data
-			DetailMediaDAL engineDal = new DetailMediaDAL(_session,_genericDetailLevel,_vehicleList);
+            DetailMediaDAL engineDal = new DetailMediaDAL(_session, _genericDetailLevel, _vehicleList);
             engineDal.DataSource = _dataSource;
-			return engineDal.GetData();
-		}
+            return engineDal.GetData();
+        }
 
         /// <summary>
         /// Get the list of vehicles organised by Media genre or Sub media or Media Owner or Title.
@@ -257,13 +264,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
         /// Exception throwed when an error occurs in the building or execution of the SQL query.</exception>
-		public virtual DataSet GetDetailMedia(string keyWord) {
+        public virtual DataSet GetDetailMedia(string keyWord)
+        {
             //Calling the engine which compute data
-			DetailMediaDAL engineDal = new DetailMediaDAL(_session, _genericDetailLevel, _vehicleList);
+            DetailMediaDAL engineDal = new DetailMediaDAL(_session, _genericDetailLevel, _vehicleList);
             engineDal.DataSource = _dataSource;
-			return engineDal.GetData(keyWord);
-		}
-		#endregion
+            return engineDal.GetData(keyWord);
+        }
+        #endregion
 
         #region  GetSubMediaData
         /// <summary>
@@ -354,7 +362,7 @@ namespace TNS.AdExpressI.Classification.DAL {
             try
             {
                 //Execution of the query
-                return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis,WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort).Fill(sql.ToString());
+                return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort).Fill(sql.ToString());
 
             }
             catch (System.Exception err)
@@ -363,7 +371,7 @@ namespace TNS.AdExpressI.Classification.DAL {
             }
             #endregion
 
-           // throw new NotImplementedException(" This query should be only implemented in Russia");
+            // throw new NotImplementedException(" This query should be only implemented in Russia");
         }
         #endregion
 
@@ -423,20 +431,20 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        public virtual DataSet GetItems(long levelId , string wordToSearch)
+        public virtual DataSet GetItems(long levelId, string wordToSearch)
         {
-           //string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
+            //string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
             string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
             //Calling the engine which compute data
             if (_dBSchema == null || _dBSchema.Length == 0)
                 throw (new ArgumentException("Invalid dBSchema parameter"));//Excepted for france data base, can be null for other country         
-            ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session,_dimension);
+            ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
             engineDal.Filters = _filters;
-            engineDal.FilterWithProductSelection = _filterWithProductSelection;            
+            engineDal.FilterWithProductSelection = _filterWithProductSelection;
             engineDal.DataSource = _dataSource;
             return engineDal.GetItems(classificationLevelLabel, wordToSearch);
-		}
+        }
 
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
@@ -516,7 +524,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         public virtual DataSet GetItems(long levelId, string selectedClassificationItemsIds, long selectedLevelId)
         {
             string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
-            string selectedClassificationLevelLabel = UniverseLevels.Get(selectedLevelId).TableName; 
+            string selectedClassificationLevelLabel = UniverseLevels.Get(selectedLevelId).TableName;
 
             //Calling the engine which compute data
             if (_dBSchema == null || _dBSchema.Length == 0)
@@ -524,10 +532,10 @@ namespace TNS.AdExpressI.Classification.DAL {
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
             engineDal.Filters = _filters;
-            engineDal.FilterWithProductSelection = _filterWithProductSelection;           
+            engineDal.FilterWithProductSelection = _filterWithProductSelection;
             engineDal.DataSource = _dataSource;
             return engineDal.GetItems(classificationLevelLabel, selectedClassificationItemsIds, selectedClassificationLevelLabel);
-		}
+        }
 
 
         /// <summary>
@@ -594,9 +602,9 @@ namespace TNS.AdExpressI.Classification.DAL {
             engineDal.FilterWithProductSelection = _filterWithProductSelection;
             engineDal.DataSource = _dataSource;
             return engineDal.GetSelectedItems(classificationLevelLabel, idList);
-		}
+        }
 
-       
+
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
         ///  with customer classification rights. It means product or media restriction.
@@ -654,8 +662,8 @@ namespace TNS.AdExpressI.Classification.DAL {
             engineDal.DBSchema = _dBSchema;
             engineDal.DataSource = _dataSource;
             return engineDal.GetRecapItems(classificationLevelLabel, customerRightType);
-		}
-		#endregion
+        }
+        #endregion
 
         #region GetSectors
         /// <summary>
@@ -667,8 +675,8 @@ namespace TNS.AdExpressI.Classification.DAL {
         {
             #region Variables
             StringBuilder sql = new StringBuilder(2000);
-            DataSet ds = new DataSet();            
-           
+            DataSet ds = new DataSet();
+
             #endregion
 
             #region Construction de la requête
@@ -682,7 +690,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 
                 sql.Append(oView.Prefix + ".ID_" + sectorTable.Label + "," + oView.Prefix + "." + sectorTable.Label);
 
-                sql.Append(" from " + oView.Sql + _session.DataLanguage + " " + oView.Prefix );
+                sql.Append(" from " + oView.Sql + _session.DataLanguage + " " + oView.Prefix);
 
 
                 // Product Selection
@@ -691,7 +699,7 @@ namespace TNS.AdExpressI.Classification.DAL {
                     sql.Append(" where ");
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(oView.Prefix, false));
                 }
-           
+
             }
             catch (System.Exception e)
             {
@@ -712,29 +720,60 @@ namespace TNS.AdExpressI.Classification.DAL {
             }
             #endregion
         }
+
+        /// <summary>
+        /// Get product from view
+        /// </summary>
+        /// <param name="idProducts"></param>
+        /// <returns></returns>
+        public DataSet GetAllProduct(string idProducts)
+        {
+            var sql = new StringBuilder(2000);
+            DataSet ds;
+            try
+            {
+                View oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+                Table productTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product);
+
+                // The query that is being used to collect sectors from the database using selected groups.
+                sql.Append("Select * ");
+                sql.AppendFormat(" from {0}{1} {2}", oView.Sql, _session.DataLanguage, oView.Prefix);
+                sql.Append(" where ");
+                sql.AppendFormat("{0}.ID_{1} in  ({2}) ", oView.Prefix, productTable.Label, idProducts);
+
+                ds = _dataSource.Fill(sql.ToString());
+            }
+            catch (Exception e)
+            {
+                throw (new Exceptions.ClassificationDALException("Impossible to build GetAllProduct sql query " + e.Message));
+            }
+            return ds;
+        }
+
         #endregion
 
-       
+
 
         /// <summary>
         /// Get Data Source
         /// </summary>
         /// <returns></returns>
-        protected virtual TNS.FrameWork.DB.Common.IDataSource GetDataSource()
+        protected virtual IDataSource GetDataSource()
         {
-            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
-            object[] param = new object[1];
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+            var param = new object[1];
             param[0] = _session;
             if (cl == null) throw (new NullReferenceException("Core layer is null for the source provider layer"));
-            TNS.AdExpress.Web.Core.ISourceProvider sourceProvider = (TNS.AdExpress.Web.Core.ISourceProvider)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            var sourceProvider = (TNS.AdExpress.Web.Core.ISourceProvider)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             return sourceProvider.GetSource();
 
         }
 
 
 
-        
 
-		#endregion
-	}
+
+        #endregion
+    }
 }

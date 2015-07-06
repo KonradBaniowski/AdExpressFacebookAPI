@@ -47,7 +47,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellCreativesRadioInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module)
+        public CellCreativesRadioInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns,
+            List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module)
             : base(session, vehicle, columns, columnNames, cells, module)
         {
         }
@@ -55,8 +56,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellCreativesRadioInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, Int64 idColumnsSet)
-            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet) {
+        public CellCreativesRadioInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns,
+            List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, Int64 idColumnsSet)
+            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet)
+        {
         }
         #endregion
 
@@ -68,7 +71,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         /// <param name="cssClass">Css classe</param>
         /// <returns>HTML Code</returns>
-        public override string Render(string cssClass) {
+        public override string Render(string cssClass)
+        {
             StringBuilder str = new StringBuilder();
 
             if (_newGroup)
@@ -82,21 +86,29 @@ namespace TNS.AdExpressI.Insertions.Cells
             List<string> cols = new List<string>();
 
             bool hasData = false;
-            foreach (GenericColumnItemInformation g in _columns) {
+            foreach (GenericColumnItemInformation g in _columns)
+            {
                 i++;
                 _values[i].Parent = this.Parent;
                 value = _values[i].ToString();
-                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax) {
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual &&
+                    g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster
+                    && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                {
 
-                    StringBuilder tmpStr = new StringBuilder();
+                    var tmpStr = new StringBuilder();
                     tmpStr.AppendFormat("<td width=\"1%\"><span>{0}<span></td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
                     tmpStr.Append("<td>: ");
                     hasData = false;
-                    if (_values[i] != null) {
-                        if (!(_values[i] is CellUnit)) {
+                    if (_values[i] != null)
+                    {
+                        if (!(_values[i] is CellUnit))
+                        {
                             values = value.Split(',');
-                            foreach (string s in values) {
-                                if (hasData) {
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
                                     tmpStr.Append("<br/>");
                                 }
                                 hasData = true;
@@ -122,7 +134,8 @@ namespace TNS.AdExpressI.Insertions.Cells
                                 }
                             }
                         }
-                        else {
+                        else
+                        {
                             tmpStr.AppendFormat("{0}", value);
                         }
                     }
@@ -137,14 +150,17 @@ namespace TNS.AdExpressI.Insertions.Cells
             #region visuals
             bool hasVisual = false;
             str.Append("<tr><th valign=\"top\">");
-            foreach (string s in _visuals) {
+            foreach (string s in _visuals)
+            {
                 string[] tmp = s.Split(',');
-                foreach (string st in tmp) {
-                    str.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\"><div class=\"audioFileBackGround\"></div></a>", s, _idVersion, this._session.IdSession, _vehicle.DatabaseId);
+                foreach (string st in tmp)
+                {
+                    SetOpenDownloadScript(str, s);
                     hasVisual = true;
                 }
             }
-            if (!hasVisual) {
+            if (!hasVisual)
+            {
                 str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
             }
 
@@ -154,14 +170,17 @@ namespace TNS.AdExpressI.Insertions.Cells
             #region Info
             str.Append("<tr><td><p><table>");
             int nbLine = (int)Math.Ceiling(((double)cols.Count) / 2.0);
-            for (int l = 0; l < nbLine; l++) {
+            for (int l = 0; l < nbLine; l++)
+            {
                 str.Append("<tr>");
                 str.Append(cols[l]);
                 str.Append("<td>&nbsp;</td>");
-                if (l + nbLine < cols.Count) {
+                if (l + nbLine < cols.Count)
+                {
                     str.Append(cols[l + nbLine]);
                 }
-                else {
+                else
+                {
                     str.Append("<td></td><td></td>");
                 }
                 str.Append("<td width=\"100%\"></td></tr>");
@@ -173,6 +192,13 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             return str.ToString();
         }
+
+        protected virtual void SetOpenDownloadScript(StringBuilder str, string s)
+        {
+            str.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\"><div class=\"audioFileBackGround\"></div></a>"
+                , s, _idVersion, _session.IdSession, _vehicle.DatabaseId);
+        }
+
         #endregion
 
         #region RenderThumbnails
@@ -180,10 +206,11 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Render
         /// </summary>
         /// <returns>HTML Code</returns>
-        public override string RenderThumbnails() {
+        public override string RenderThumbnails()
+        {
 
             string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
 
             //Table
             str.Append("<table align=\"left\"  cellpadding=0 cellspacing=0  border=\"0\" width=100% class=\"violetBackGroundV3\">");
@@ -191,29 +218,34 @@ namespace TNS.AdExpressI.Insertions.Cells
             //Render Verion visual
             str.Append("<tr ><td  height=\"40px\" width=\"100%\" align=\"center\" class=\"sloganVioletBackGround\" >");
 
-            if (_visuals.Count > 0) {
-                str.Append("<a href=\"javascript:openDownload('" + _visuals[0] + "," + _idVersion + "','" + this._session.IdSession + "','" + _vehicle.DatabaseId + "');\">");
-                str.Append("<img border=0 src=\"/App_Themes/" + themeName + "/Images/common/Picto_Radio.gif\">");
+            if (_visuals.Count > 0)
+            {
+                SetOpenDownloadScript(str, _visuals[0]);
+                str.AppendFormat("<img border=0 src=\"/App_Themes/{0}/Images/common/Picto_Radio.gif\">", themeName);
                 str.Append("</a>");
             }
-            else {
-                str.Append("<span class=\"noVisuDetailVersion\">" + GestionWeb.GetWebWord(843, this._session.SiteLanguage) + "</span>");
+            else
+            {
+                str.Append("<span class=\"noVisuDetailVersion\">" + GestionWeb.GetWebWord(843, _session.SiteLanguage) + "</span>");
             }
 
             str.Append("</td></tr>");
 
             //Render version nb cell
-            str.Append("<tr align=\"left\"><td align=\"left\" nowrap=\"nowrap\" " +
-                ((_session.SloganColors[_idVersion].ToString().Length > 0) ? "class=\"" + _session.SloganColors[_idVersion] + "\">" : "class=\"sloganVioletBackGround\">"));
+            str.AppendFormat("<tr align=\"left\"><td align=\"left\" nowrap=\"nowrap\" {0}"
+                , ((_session.SloganColors[_idVersion].ToString().Length > 0) ? string.Format("class=\"{0}\">", _session.SloganColors[_idVersion]) : "class=\"sloganVioletBackGround\">"));
 
             TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
-            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+            var creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.
+                CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
+                , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
             if (!creativesUtilities.IsSloganZoom(_session.SloganIdZoom))
             {
-                str.Append("<a href=\"javascript:get_version('" + _idVersion + "');\" onmouseover=\"res_" + _idVersion + ".src='/App_Themes/" + themeName + "/Images/Common/button/result2_down.gif';\" onmouseout=\"res_" + _idVersion + ".src ='/App_Themes/" + themeName + "/Images/Common/button/result2_up.gif';\">");
-                str.Append("<img name=\"res_" + _idVersion + "\" border=0  align=\"left\" src=\"/App_Themes/" + themeName + "/Images/Common/button/result2_up.gif\">");
+                str.AppendFormat("<a href=\"javascript:get_version('{0}');\" onmouseover=\"res_{0}.src='/App_Themes/{1}/Images/Common/button/result2_down.gif';\" onmouseout=\"res_{0}.src ='/App_Themes/{1}/Images/Common/button/result2_up.gif';\">"
+                    , _idVersion, themeName);
+                str.AppendFormat("<img name=\"res_{0}\" border=0  align=\"left\" src=\"/App_Themes/{1}/Images/Common/button/result2_up.gif\">", _idVersion, themeName);
                 str.Append("</a>");
             }
 
@@ -238,7 +270,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// <param name="index">Index</param>
         /// <param name="colorList">Color list</param>
         /// <returns>HTML Code</returns>
-        public override string RenderPDF(bool withDetail, Int64 index, List<Color> colorList) {
+        public override string RenderPDF(bool withDetail, Int64 index, List<Color> colorList)
+        {
 
             int colorIndex = int.Parse(_session.SloganColors[_idVersion].ToString().Substring(2, (_session.SloganColors[_idVersion].ToString().Length - 2)));
             string color = colorList[colorIndex].Name.Substring(2, 6);
@@ -260,49 +293,62 @@ namespace TNS.AdExpressI.Insertions.Cells
             str.Append("<tr><td></td></tr>");
 
             #region Init Informations
-            List<string> cols = new List<string>();
+            var cols = new List<string>();
             string style1 = string.Empty;
             string style2 = string.Empty;
             bool first = true;
 
             bool hasData = false;
-            foreach (GenericColumnItemInformation g in _columns) {
+            foreach (GenericColumnItemInformation g in _columns)
+            {
                 i++;
                 _values[i].Parent = this.Parent;
                 value = _values[i].ToString();
-                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax) {
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual &&
+                    g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster
+                    && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                {
 
-                    StringBuilder tmpStr = new StringBuilder();
+                    var tmpStr = new StringBuilder();
 
-                    if (first) {
-                        style1 = "BORDER-RIGHT: " + baseColor + " 1px solid; BORDER-LEFT: " + color + " 1px solid";
-                        style2 = "BORDER-RIGHT: " + color + " 1px solid";
+                    if (first)
+                    {
+                        style1 = string.Format("BORDER-RIGHT: {0} 1px solid; BORDER-LEFT: {1} 1px solid", baseColor, color);
+                        style2 = string.Format("BORDER-RIGHT: {0} 1px solid", color);
                         first = false;
                     }
-                    else if (i == _columns.Count - 1) {
-                        style1 = "BORDER-RIGHT: " + baseColor + " 1px solid; BORDER-BOTTOM: " + color + " 1px solid; BORDER-TOP: " + baseColor + " 1px solid; BORDER-LEFT: " + color + " 1px solid";
-                        style2 = "BORDER-TOP: " + baseColor + " 1px solid; BORDER-BOTTOM: " + color + " 1px solid; BORDER-RIGHT: " + color + " 1px solid";
+                    else if (i == _columns.Count - 1)
+                    {
+                        style1 = string.Format("BORDER-RIGHT: {0} 1px solid; BORDER-BOTTOM: {1} 1px solid; BORDER-TOP: {0} 1px solid; BORDER-LEFT: {1} 1px solid", baseColor, color);
+                        style2 = string.Format("BORDER-TOP: {0} 1px solid; BORDER-BOTTOM: {1} 1px solid; BORDER-RIGHT: {1} 1px solid", baseColor, color);
                     }
-                    else {
-                        style1 = "BORDER-RIGHT: " + baseColor + " 1px solid; BORDER-TOP: " + baseColor + " 1px solid; BORDER-LEFT: " + color + " 1px solid";
-                        style2 = "BORDER-TOP: " + baseColor + " 1px solid; BORDER-RIGHT: " + color + " 1px solid";
+                    else
+                    {
+                        style1 = string.Format("BORDER-RIGHT: {0} 1px solid; BORDER-TOP: {0} 1px solid; BORDER-LEFT: {1} 1px solid", baseColor, color);
+                        style2 = string.Format("BORDER-TOP: {0} 1px solid; BORDER-RIGHT: {1} 1px solid", baseColor, color);
                     }
 
-                    tmpStr.AppendFormat("<td width=\"150\" class=\"backGroundWhite\"  style=\"" + style1 + "\"  nowrap><span>{0} <span></td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
-                    tmpStr.Append("<td width=\"150\" class=\"backGroundWhite\"  style=\"" + style2 + "\"> ");
+                    tmpStr.AppendFormat("<td width=\"150\" class=\"backGroundWhite\"  style=\"{1}\"  nowrap><span>{0} <span></td> "
+                        , GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage), style1);
+                    tmpStr.AppendFormat("<td width=\"150\" class=\"backGroundWhite\"  style=\"{0}\"> ", style2);
                     hasData = false;
-                    if (_values[i] != null) {
-                        if (!(_values[i] is CellUnit)) {
+                    if (_values[i] != null)
+                    {
+                        if (!(_values[i] is CellUnit))
+                        {
                             values = value.Split(',');
-                            foreach (string s in values) {
-                                if (hasData) {
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
                                     tmpStr.Append("<br/>");
                                 }
                                 hasData = true;
                                 tmpStr.AppendFormat("{0}", s);
                             }
                         }
-                        else {
+                        else
+                        {
                             tmpStr.AppendFormat("{0}", value);
                         }
                     }
@@ -315,15 +361,16 @@ namespace TNS.AdExpressI.Insertions.Cells
             int nbLine = cols.Count;
 
             str.Append("<tr><td valign=\"top\"><TABLE width=\"320\" cellSpacing=\"0\" class=\"txtViolet11Bold\" border=\"0\" valign=\"top\">");
-            str.Append("<tr><td nowrap colSpan=2 style=\"BORDER-RIGHT: " + color + " 1px solid; BORDER-LEFT: " + color +
-                              " 1px solid; BORDER-TOP: " + color + " 1px solid; BORDER-BOTTOM: " + color + " 1px solid\" " +
-                             ((_session.SloganColors[_idVersion].ToString().Length > 0) ? "class=\"" + _session.SloganColors[_idVersion].ToString().Replace("c", "m") + "\" style=\"BORDER-RIGHT: " + color + " 1px solid; BORDER-TOP: " + color + " 1px solid; BORDER-LEFT: " + color + " 1px solid; BORDER-BOTTOM: " + color + " 1px solid\">" : "\" style=\"BORDER-RIGHT: " + color + " 1px solid; BORDER-TOP: " + color + " 1px solid; BORDER-LEFT: " + color + " 1px solid; BORDER-BOTTOM: " + color + " 1px solid\">"));
+            str.AppendFormat("<tr><td nowrap colSpan=2 style=\"BORDER-RIGHT: {0} 1px solid; BORDER-LEFT: {0} 1px solid; BORDER-TOP: {0} 1px solid; BORDER-BOTTOM: {0} 1px solid\" {1}"
+                , color, ((_session.SloganColors[_idVersion].ToString().Length > 0) ? string.Format("class=\"{0}\" style=\"BORDER-RIGHT: {1} 1px solid; BORDER-TOP: {1} 1px solid; BORDER-LEFT: {1} 1px solid; BORDER-BOTTOM: {1} 1px solid\">"
+                , _session.SloganColors[_idVersion].ToString().Replace("c", "m"), color) : string.Format("\" style=\"BORDER-RIGHT: {0} 1px solid; BORDER-TOP: {0} 1px solid; BORDER-LEFT: {0} 1px solid; BORDER-BOTTOM: {0} 1px solid\">", color)));
             str.Append("<font size=1>");
             str.Append("&nbsp;" + _idVersion);
             str.Append("</font>");
             str.Append("</td></tr>");
 
-            for (int l = 0; l < nbLine; l++) {
+            for (int l = 0; l < nbLine; l++)
+            {
                 str.Append("<tr valign=\"top\">" + cols[l] + "</tr>");
             }
 

@@ -379,7 +379,7 @@ namespace TNS.AdExpressI.Insertions
 
         #region GetCreativeLinks
 
-       
+
 
         /// <summary>
         /// Get creative Links
@@ -440,12 +440,13 @@ namespace TNS.AdExpressI.Insertions
 
             string sloganDetail = "\n<table border=\"0\" width=\"50\" height=\"64\" class=\"txtViolet10\">";
 
-            if (vignettes.Length > 0) {
+            if (vignettes.Length > 0)
+            {
                 sloganDetail += "\n<tr><td   nowrap align=\"center\">";
                 sloganDetail += vignettes;
                 sloganDetail += "\n</td></tr>";
             }
-            
+
             sloganDetail += "\n<tr><td  nowrap align=\"center\">";
             sloganDetail += currentRow["id_slogan"].ToString();
             if (currentRow["advertDimension"] != DBNull.Value && currentRow["advertDimension"] != DBNull.Value)
@@ -909,7 +910,7 @@ namespace TNS.AdExpressI.Insertions
                             break;
                         case GenericColumnItemInformation.Columns.topDiffusion:
                             if (IsTvVehicle(vehicle))
-                            {                               
+                            {
                                 long idCategory =
                                     Convert.ToInt64(row[WebApplicationParameters.GenericColumnItemsInformation.
                                                                                  Get(
@@ -924,8 +925,8 @@ namespace TNS.AdExpressI.Insertions
                                                                                     GenericColumnItemInformation
                                                                                         .Columns.media)
                                                                                .DataBaseIdField].ToString());
-                              
-                                if ( (MediasWithoutTopDif != null && MediasWithoutTopDif.Contains(idMedia))
+
+                                if ((MediasWithoutTopDif != null && MediasWithoutTopDif.Contains(idMedia))
                                     || (CategoriesWithoutTopDif != null && CategoriesWithoutTopDif.Contains(idCategory)))
                                 {
                                     val = 0;
@@ -967,7 +968,7 @@ namespace TNS.AdExpressI.Insertions
                                 case Vehicles.names.radio:
                                     tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
                                         _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
-                                  
+
                                     break;
                                 case Vehicles.names.radioGeneral:
                                     tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
@@ -1055,7 +1056,7 @@ namespace TNS.AdExpressI.Insertions
             }
         }
 
-    
+
         protected virtual bool IsTvVehicle(VehicleInformation vehicle)
         {
             return (vehicle.Id == Vehicles.names.tv
@@ -1088,7 +1089,7 @@ namespace TNS.AdExpressI.Insertions
                 }
             }
             else
-            {                
+            {
                 c = (CellInsertionInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
@@ -1120,7 +1121,7 @@ namespace TNS.AdExpressI.Insertions
                     case CstDBClassif.Vehicles.names.radioSponsorship:
                     case CstDBClassif.Vehicles.names.radioGeneral:
                     case CstDBClassif.Vehicles.names.radioMusic:
-                        tab[cLine, 1] = c = new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        tab[cLine, 1] = c = GetCellCreativesRadioInformation(vehicle, columns, columnsName, cells);
                         break;
                     case CstDBClassif.Vehicles.names.tv:
                     case CstDBClassif.Vehicles.names.tvGeneral:
@@ -1136,14 +1137,14 @@ namespace TNS.AdExpressI.Insertions
                         break;
                     case CstDBClassif.Vehicles.names.evaliantMobile:
                         tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
-                        break;                   
+                        break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
                 }
             }
             else
-            {                
+            {
                 c = (CellCreativesInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
@@ -1156,6 +1157,12 @@ namespace TNS.AdExpressI.Insertions
             }
             c.Add(row, visuals);
 
+        }
+
+        protected virtual CellCreativesRadioInformation GetCellCreativesRadioInformation(VehicleInformation vehicle, List<GenericColumnItemInformation> columns
+            , List<string> columnsName, List<Cell> cells)
+        {
+            return new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module);
         }
 
 
@@ -1177,7 +1184,7 @@ namespace TNS.AdExpressI.Insertions
                     case Vehicles.names.radioSponsorship:
                     case Vehicles.names.radioGeneral:
                     case Vehicles.names.radioMusic:
-                        tab[cLine, 1] = c = new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
+                        tab[cLine, 1] = c = GetCellCreativesRadioInformation(vehicle, columns, columnsName, cells, idColumnsSet);
                         break;
                     case Vehicles.names.tv:
                     case Vehicles.names.tvGeneral:
@@ -1196,14 +1203,14 @@ namespace TNS.AdExpressI.Insertions
                     case Vehicles.names.evaliantMobile:
                         tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle,
                             columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
-                        break;                      
+                        break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
                         break;
                 }
             }
             else
-            {               
+            {
                 c = (CellCreativesInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
@@ -1215,6 +1222,15 @@ namespace TNS.AdExpressI.Insertions
                 }
             }
             c.Add(row, visuals);
+
+        }
+
+        protected virtual CellCreativesRadioInformation GetCellCreativesRadioInformation(VehicleInformation vehicle, List<GenericColumnItemInformation> columns,
+            List<string> columnsName, List<Cell> cells, long idColumnsSet)
+        {
+            return
+                new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
+
 
         }
 
@@ -1689,7 +1705,7 @@ namespace TNS.AdExpressI.Insertions
 
         //protected virtual bool HasPressCopyright(DataRow row)
         //{
-         
+
         //    if (row.Table.Columns.Contains("id_media") && row["id_media"] != DBNull.Value)
         //    {
         //       long idMedia = Convert.ToInt64(row["id_media"]);
@@ -1703,10 +1719,10 @@ namespace TNS.AdExpressI.Insertions
         protected virtual bool HasPressCopyright(long idMedia)
         {
             string ids = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaExcludedForCopyright);
-            if(!string.IsNullOrEmpty(ids))
+            if (!string.IsNullOrEmpty(ids))
             {
                 var notAllowedMediaIds = ids.Split(',').Select(p => Convert.ToInt64(p)).ToList();
-                return !notAllowedMediaIds.Contains(idMedia);                      
+                return !notAllowedMediaIds.Contains(idMedia);
             }
             return true;
         }
@@ -1743,7 +1759,7 @@ namespace TNS.AdExpressI.Insertions
         protected virtual string GetCreativePathPress(string file, Int64 idMedia, Int64 dateCoverNum, bool bigSize, Int64 dateMediaNum)
         {
             string imagette = (bigSize) ? string.Empty : "/Imagette";
-            string blurDirectory = string.Empty ;
+            string blurDirectory = string.Empty;
             long date = dateCoverNum;
 
             lock (_mutex)
@@ -1758,12 +1774,12 @@ namespace TNS.AdExpressI.Insertions
                     { }
                 }
             }
-            if (_mediaList != null && Array.IndexOf(_mediaList, idMedia.ToString()) > -1)           
-                 date = dateMediaNum;
-            
-             if(!HasPressCopyright(idMedia) && !ParutionDateBefore2015(date.ToString()))
+            if (_mediaList != null && Array.IndexOf(_mediaList, idMedia.ToString()) > -1)
+                date = dateMediaNum;
+
+            if (!HasPressCopyright(idMedia) && !ParutionDateBefore2015(date.ToString()))
                 blurDirectory = "/blur";
-              return string.Format("{0}/{1}/{2}{3}{4}/{5}", CreationServerPathes.IMAGES, idMedia, date, imagette, blurDirectory, file);
+            return string.Format("{0}/{1}/{2}{3}{4}/{5}", CreationServerPathes.IMAGES, idMedia, date, imagette, blurDirectory, file);
         }
         #endregion
 
@@ -1840,6 +1856,6 @@ namespace TNS.AdExpressI.Insertions
         #endregion
 
         #endregion
-        
+
     }
 }

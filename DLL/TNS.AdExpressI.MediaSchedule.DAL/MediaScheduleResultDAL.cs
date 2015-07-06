@@ -845,14 +845,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                         else sqlFormatSelectedClause.Append(" OR ");
                         sqlFormatSelectedClause.Append(" (");
 
-                        List<Int64> formatIdList = null;
-                        var validFormats = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
-                        if (validFormats.ContainsKey(cVehicleInfo.DatabaseId))
-                            formatIdList = validFormats[cVehicleInfo.DatabaseId];
-
-                        if (formatIdList != null && formatIdList.Count > 0)
+                        var formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
+                        if (formatIdList.Count > 0)
                         {
-
                             sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ",
                                              WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
                                              cVehicleInfo.DatabaseId);

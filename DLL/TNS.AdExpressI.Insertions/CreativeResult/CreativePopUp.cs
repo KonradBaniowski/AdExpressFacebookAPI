@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Text;
 using System.Web.UI;
 using CstClassification = TNS.AdExpress.Constantes.Classification;
@@ -19,7 +20,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
     /// <summary>
     /// Class used to display tv and radio creatives in reading and streamin mode
     /// </summary>
-    public class CreativePopUp
+    public abstract class CreativePopUp : ICreativePopUp
     {
 
         #region constantes
@@ -32,9 +33,13 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// </summary>
         protected const string REAL_MEDIA_PLAYER_FORMAT = "realPalyerFormat";
         protected const string RA_EXTENSION = "ra";
-        protected  const string WMA_EXTENSION = "wma";
+        protected const string WMA_EXTENSION = "wma";
         protected const string WMV_EXTENSION = "wmv";
         protected const string RM_EXTENSION = "rm";
+        protected const string MP4_EXTENSION = "MP4";
+        protected const string VIDEO_240_SUBFOLDER = "240";
+        protected const string MP3_EXTENSION = "MP3";
+        protected const string AVI_EXTENSION = "AVI";
         #endregion
 
         #region Variables
@@ -53,11 +58,11 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// <summary>
         /// Indique si l'utilisateur à le droit de lire les créations
         /// </summary>
-        protected bool _hasCreationReadRights = false;
+        private bool _hasCreationReadRights = false;
         /// <summary>
         /// Indique si l'utilisateur à le droit de télécharger les créations
         /// </summary>
-        protected bool _hasCreationDownloadRights = false;
+        private bool _hasCreationDownloadRights = false;
         /// <summary>
         /// Is New Real Audio File Path
         /// </summary>
@@ -97,11 +102,38 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// <summary>
         /// Video object Width
         /// </summary>
-        private int _width = 0;
+        protected int _width = 0;
         /// <summary>
         /// Video object Height
         /// </summary>
-        private int _height = 0;
+        protected int _height = 0;
+        /// <summary>
+        /// DAL
+        /// </summary>
+        protected IInsertionsDAL _dal;
+
+        protected VehicleInformation _vehicleInformation;
+
+
+        /// <summary>
+        /// Chemin du fichier  média en téléchargement
+        /// <remarks>Rajouter pour le passage en HTML5 avec la lecture via element video et audio</remarks>
+        /// </summary>
+        protected string _pathDownloadingFile = null;
+        /// <summary>
+        /// Chemin du fichier   média en lecture
+        /// <remarks>Rajouter pour le passage en HTML5 avec la lecture via element video et audio</remarks>
+        /// </summary>
+        protected string _pathReadingFile = null;
+        /// <summary>
+        /// Vérifie si fichier video trouvé
+        /// </summary>
+        public bool IsVideoFileFound { get; set; }
+        /// <summary>
+        /// Vérifie si fichier audio trouvé
+        /// </summary>
+        public bool IsAudioFileFound { get; set; }
+
         #endregion
 
         #region Constructor
@@ -116,6 +148,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         public CreativePopUp(Page popUp, CstClassificationVehicle.names vehicle, string idSlogan, string file,
             WebSession webSession, string title, bool hasCreationReadRights, bool hasCreationDownloadRights)
         {
+            IdProduct = null;
             _vehicle = vehicle;
             _idSlogan = idSlogan;
             _file = file;
@@ -125,6 +158,30 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
             _hasCreationReadRights = hasCreationReadRights;
             _popUp = popUp;
         }
+
+        /// <summary>
+        /// Identifiant Produit
+        /// </summary>
+        public string IdProduct { get; set; }
+
+        /// <summary>
+        /// Indique si l'utilisateur à le droit de lire les créations
+        /// </summary>
+        public bool HasCreationReadRights
+        {
+            get { return _hasCreationReadRights; }
+            set { _hasCreationReadRights = value; }
+        }
+
+        /// <summary>
+        /// Indique si l'utilisateur à le droit de télécharger les créations
+        /// </summary>
+        public bool HasCreationDownloadRights
+        {
+            get { return _hasCreationDownloadRights; }
+            set { _hasCreationDownloadRights = value; }
+        }
+
         #endregion
 
         #region Get Creative PopUp
@@ -150,7 +207,8 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// Get creative popup Html code
         /// </summary>
         /// <returns>Html code</returns>
-        public virtual string CreativePopUpRenderWithoutOptions(int width, int height) {
+        public virtual string CreativePopUpRenderWithoutOptions(int width, int height)
+        {
             //Vérification de l'existence des fichiers et construction des chemins d'accès suivant la volonté de 
             //lire ou de télécharger le fichier
             bool realFormatFound = false;
@@ -192,7 +250,8 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                     res.Append(ManageCreationsDownloadWithCookies(_pathReadingRealFile, _pathReadingWindowsFile, true,
                                                                   realFormatFound, windowsFormatFound));
 
-                if (withOptions) {
+                if (withOptions)
+                {
                     //Tableau des options
                     res.Append(GetCreationsOptionsRender(realFormatFound, windowsFormatFound, _pathDownloadingRealFile,
                                                          _pathDownloadingWindowsFile, false, 2079));
@@ -293,10 +352,10 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                     GetOthersCreativePathes();
                     break;
                 case CstClassificationVehicle.names.adnettrack:
-                   
+
                     IsEvaliantFileExists(out realFormatFound, out windowsFormatFound);
                     GetEvaliantCreativePathes();
-                    break;                 
+                    break;
                 default:
                     _webSession.Source.Close();
                     _popUp.Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}",
@@ -314,7 +373,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// </summary>
         protected virtual void GetEvaliantCreativePathes()
         {
-           // Func<string, string> getCreativePath = s =>string.Format("{0}/{1}", s, _file.Replace("/","\\"));
+
 
             //Construction des chemins real et wm	
             if (_hasCreationReadRights)
@@ -542,13 +601,13 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
             var result = new StringBuilder(1000);
             bool withDetail = false;
-               const string AVI_EXTENSION = "AVI";
+
             DataSet ds = GetCreativeDS();
 
             if ((ds != null && ds.Tables[0].Rows.Count > 0) || (_hasCreationDownloadRights))
             {
 
-                result.Append("<TD><TABLE height=\"326\" cellPadding=\"5\" width=\""+WebApplicationParameters.CustomStyles.CreativePopUpWidth+"\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD vAlign=\"top\">");
+                result.Append("<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"" + WebApplicationParameters.CustomStyles.CreativePopUpWidth + "\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD vAlign=\"top\">");
                 //Détail version
 
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
@@ -593,7 +652,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                             "</span></td></tr>");
                         result.Append("<TR><TD align=\"left\">");
 
-                        string formatTypeText = !string.IsNullOrEmpty(path2) 
+                        string formatTypeText = !string.IsNullOrEmpty(path2)
                             && Path.GetExtension(path2).ToUpper().Trim() == string.Format(".{0}", AVI_EXTENSION)
                                                ? GestionWeb.GetWebWord(3003, _webSession.SiteLanguage)
                                                : GestionWeb.GetWebWord(2086, _webSession.SiteLanguage);
@@ -642,18 +701,27 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                 )
             {
 
-                CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertionsDAL];
-                if (cl == null) throw (new NullReferenceException("Core layer is null for insertions DAL"));
-                object[] param = new object[2];
-                param[0] = _webSession;
-                param[1] = _webSession.CurrentModule;
-                var dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
-                    + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance
-                    | System.Reflection.BindingFlags.Public, null, param, null, null);
-                ds = dalLayer.GetVersion(_file, VehiclesInformation.Get(_vehicle).DatabaseId);
+                SetDAL();
+                var vehicleDbId = _vehicleInformation == null ? VehiclesInformation.Get(_vehicle).DatabaseId : _vehicleInformation.DatabaseId;
+                ds = _dal.GetVersion(_file, vehicleDbId);
             }
 
             return ds;
+        }
+
+        protected virtual void SetDAL()
+        {
+            if (_dal == null)
+            {
+                CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.insertionsDAL];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for insertions DAL"));
+                var param = new object[2];
+                param[0] = _webSession;
+                param[1] = _webSession.CurrentModule;
+                _dal = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                                                                                           + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance
+                                                                                                                                         | BindingFlags.Public, null, param, null, null);
+            }
         }
         #endregion
 
@@ -682,7 +750,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
             if (realFormatFound)
             {
                 if (windowsFormatFound) result.Append(",");
-                result.Append("&nbsp;<a href=\"http://www.real.com\"  target=\"_blank\" class=txtViolet11>" 
+                result.Append("&nbsp;<a href=\"http://www.real.com\"  target=\"_blank\" class=txtViolet11>"
                     + GestionWeb.GetWebWord(2090, _webSession.SiteLanguage) + "</a>");
             }
 
@@ -710,7 +778,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
             //Vérifie si le navigateur accepte les cookies
             if (_popUp.Request.Browser.Cookies)
             {
-              
+
 
                 //Si les cookies existent				
                 HttpCookie cspotFileType = _popUp.Request.Cookies[CstWeb.Cookies.SpotFileType];
@@ -727,11 +795,11 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                         {
 
                             case WINDOWS_MEDIA_PLAYER_FORMAT:
-                                res.Append("<script language=\"JavaScript\" type=\"text/javascript\">GetObjectWindowsMediaPlayerRender('" + path2 + "');</script>");
+                                res.AppendFormat("<script language=\"JavaScript\" type=\"text/javascript\">GetObjectWindowsMediaPlayerRender('{0}');</script>", path2);
                                 break;
 
                             case REAL_MEDIA_PLAYER_FORMAT:
-                                res.Append("<script language=\"JavaScript\" type=\"text/javascript\">GetObjectRealPlayer('" + path1 + "');</script>");
+                                res.AppendFormat("<script language=\"JavaScript\" type=\"text/javascript\">GetObjectRealPlayer('{0}');</script>", path1);
                                 break;
 
                             default:
@@ -746,14 +814,14 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                 }
                 else if (realFormatFound)
                 {
-                    res.Append("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectRealPlayer('" + path1 + "');");
-                    res.Append("\n setCookie('" + CstWeb.Cookies.SpotFileType + "','" + REAL_MEDIA_PLAYER_FORMAT + "');");
+                    res.AppendFormat("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectRealPlayer('{0}');", path1);
+                    res.AppendFormat("\n setCookie('{0}','{1}');", CstWeb.Cookies.SpotFileType, REAL_MEDIA_PLAYER_FORMAT);
                     res.Append("</script>");
                 }
                 else
                 {
                     res.Append("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectWindowsMediaPlayerRender('" + path2 + "');");
-                    res.Append("\n setCookie('" + CstWeb.Cookies.SpotFileType + "','" + WINDOWS_MEDIA_PLAYER_FORMAT + "');");
+                    res.AppendFormat("\n setCookie('{0}','{1}');", CstWeb.Cookies.SpotFileType, WINDOWS_MEDIA_PLAYER_FORMAT);
                     res.Append("</script>");
                 }
             }
@@ -789,8 +857,8 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
                 //Si l'utilisateur possède le pugin Windows Media Player on charge le fichier windows Media 
                 res.Append(" \n if(pluginlist.indexOf(\"Windows Media Player\")!=-1){");
-                res.Append("	\n\t GetObjectWindowsMediaPlayerRender('" + path2 + "');");
-                res.Append(" \n\t setCookie('" + CstWeb.Cookies.SpotFileType + "','" + WINDOWS_MEDIA_PLAYER_FORMAT + "');");
+                res.AppendFormat("	\n\t GetObjectWindowsMediaPlayerRender('{0}');", path2);
+                res.AppendFormat(" \n\t setCookie('{0}','{1}');", CstWeb.Cookies.SpotFileType, WINDOWS_MEDIA_PLAYER_FORMAT);
                 res.Append(" \n } ");
 
                 //Sinon si l'utilisateur possède le pugin Windows RealPlayer on charge le fichier real Media 
@@ -800,7 +868,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                 res.Append(" \n } ");
                 res.Append("\n else{ ");
                 res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD>');");
-                res.Append("\n  document.write('" + DownLoadPlayerRender(windowsFormatFound, realFormatFound) + "');");
+                res.AppendFormat("\n  document.write('{0}');", DownLoadPlayerRender(windowsFormatFound, realFormatFound));
                 res.Append("  document.write('</TD></TR></TBODY></TABLE></TD>');");
                 res.Append("\n } ");
                 res.Append("</script>");
@@ -812,7 +880,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
                     //Seule le fichier real est disponible
                     res.Append("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectRealPlayer('" + path1 + "');");
-                    res.Append("\n setCookie('" + CstWeb.Cookies.SpotFileType + "','" + REAL_MEDIA_PLAYER_FORMAT + "');");
+                    res.AppendFormat("\n setCookie('{0}','{1}');", CstWeb.Cookies.SpotFileType, REAL_MEDIA_PLAYER_FORMAT);
                     res.Append("</script>");
 
                 }
@@ -821,7 +889,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
                     //Seul le fichier wm est dispo
                     res.Append("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectWindowsMediaPlayerRender('" + path2 + "');");
-                    res.Append("\n setCookie('" + CstWeb.Cookies.SpotFileType + "','" + WINDOWS_MEDIA_PLAYER_FORMAT + "');");
+                    res.AppendFormat("\n setCookie('{0}','{1}');", CstWeb.Cookies.SpotFileType, WINDOWS_MEDIA_PLAYER_FORMAT);
                     res.Append("</script>");
                 }
             }
@@ -845,8 +913,8 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
             res.Append(" function GetObjectWindowsMediaPlayerRender(filepath){");
             res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD>');");
             //Lecture par Media player
-            res.Append(" document.write('<object id=\"video1\"  classid=\"CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95\" height=\""+height+"\" width=\""+width+"\" align=\"middle\"  codebase=\"http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715\"  standby=\"" 
-                + GestionWeb.GetWebWord(1911, siteLanguage) + "\" type=\"application/x-oleobject\">');");
+            res.AppendFormat(" document.write('<object id=\"video1\"  classid=\"CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95\" height=\"{0}\" width=\"{1}\" align=\"middle\"  codebase=\"http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715\"  standby=\"{2}\" type=\"application/x-oleobject\">');"
+                , height, width, GestionWeb.GetWebWord(1911, siteLanguage));
             res.Append(" document.write('<param name=\"FileName\" value='+filepath+' >');");
             res.Append(" document.write('<param name=\"AutoStart\" value=\"true\">');");
             res.Append(" document.write('<embed type=\"application/x-mplayer2\" pluginspage=\"http://www.microsoft.com/Windows/MediaPlayer/\"  src=\"'+filepath+'\" name=\"video1\" height=\"288\" width=\"352\" AutoStart=true>'); ");

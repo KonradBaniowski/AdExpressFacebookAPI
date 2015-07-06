@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
@@ -165,9 +165,9 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// Get Version Min Parution Date
         /// </summary>
         /// <param name="idVersion"></param>
-        /// <param name="idVehicle"></param>
+        /// <param name="vehicleInformation"></param>
         /// <returns></returns>
-        string GetVersionMinParutionDate(string idVersion, long idVehicle);
+        string GetVersionMinParutionDate(string idVersion, VehicleInformation vehicleInformation);
 
 
     }

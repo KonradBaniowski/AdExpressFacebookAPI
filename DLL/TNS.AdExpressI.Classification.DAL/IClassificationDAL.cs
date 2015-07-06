@@ -9,14 +9,11 @@
  */
 #endregion
 
-using System;
 using System.Data;
-using System.Collections.Generic;
-using System.Text;
-using TNS.Classification.Universe;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 
-namespace TNS.AdExpressI.Classification.DAL {
+namespace TNS.AdExpressI.Classification.DAL
+{
 
     /// <summary>
     /// This class provides all the SQL queries to search or select items of the product or vehicle
@@ -38,7 +35,8 @@ namespace TNS.AdExpressI.Classification.DAL {
     /// </exception>
     /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
     /// execution or building of the query to search classification items</exception>
-	public interface IClassificationDAL {
+    public interface IClassificationDAL
+    {
 
         /// <summary>
         /// This method provides SQL queries to get the media classification level's items.
@@ -81,7 +79,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <remarks>
         /// The media type to use is available through the client selection
         /// </remarks>
-		DataSet GetDetailMedia();
+        DataSet GetDetailMedia();
 
         /// <summary>
         /// Get the list of vehicles organised by product
@@ -118,7 +116,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <remarks>
         /// The media type to use is available through the client selection
         /// </remarks>
-		DataSet GetDetailMedia(string keyWord);
+        DataSet GetDetailMedia(string keyWord);
 
         /// <summary>
         /// Get the list of sub media corresponding to media type selected
@@ -384,9 +382,9 @@ namespace TNS.AdExpressI.Classification.DAL {
             get;
             set;
         }
-		
-	    /// <summary>
-	    /// Get detailed media for Product class analysis in Russia.
+
+        /// <summary>
+        /// Get detailed media for Product class analysis in Russia.
         /// with fields [id_vehicle,vehicle,id_region,region,id_media,media]
         /// Where:
         /// id_vehicle : ID of  media type.
@@ -395,9 +393,9 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// region : region label
         /// id_media : ID of  vehicle
         /// media : vehicle label
-	    /// </summary>
+        /// </summary>
         /// <returns>Dataset with fields [id_vehicle,vehicle,id_region,region,id_media,media]</returns>
-		DataSet GetRecapDetailMedia();
+        DataSet GetRecapDetailMedia();
 
         /// <summary>
         ///This method is used in Graphic key reports module  to get a list of Sectors
@@ -405,6 +403,12 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </summary>
         /// <returns>Dataset with  sectors list</returns>
         DataSet GetSectors();
-       
-	}
+        /// <summary>
+        /// Get products from view
+        /// </summary>
+        /// <param name="idProducts"></param>
+        /// <returns></returns>
+        DataSet GetAllProduct(string idProducts);
+
+    }
 }

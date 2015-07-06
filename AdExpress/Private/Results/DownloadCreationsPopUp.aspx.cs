@@ -6,6 +6,7 @@
 
 using System;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstClassification = TNS.AdExpress.Constantes.Classification;
@@ -13,162 +14,183 @@ using TNS.AdExpress.Web.UI;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Classification;
 
-namespace AdExpress.Private.Results{
-	/// <summary>
-	/// PopUp donnant accès au téléchargement des créations radio et télévisions
-	/// suivant les droits du clients et la disponibilité de la créations.
-	/// </summary>
-    public partial class DownloadCreationsPopUp : WebPage{
+namespace AdExpress.Private.Results
+{
+    /// <summary>
+    /// PopUp donnant accès au téléchargement des créations radio et télévisions
+    /// suivant les droits du clients et la disponibilité de la créations.
+    /// </summary>
+    public partial class DownloadCreationsPopUp : WebPage
+    {
 
-		#region Variables
-		/// <summary>
-		/// Identifiant d'une version
-		/// </summary>
-		string _idSlogan = null;
-		/// <summary>
-		/// Titre de la PopUp
-		/// </summary>
-		public string title="";
-		/// <summary>
-		/// Session utilisateur
-		/// </summary>
-		private WebSession _webSession;
+        #region Variables
+        /// <summary>
+        /// Identifiant d'une version
+        /// </summary>
+        string _idSlogan = null;
+        /// <summary>
+        /// Titre de la PopUp
+        /// </summary>
+        public string title = "";
+        /// <summary>
+        /// Session utilisateur
+        /// </summary>
+        private WebSession _webSession;
 
-		/// <summary>
-		/// Indique si l'utilisateur à le droit de lire les créations
-		/// </summary>
-		private bool _hasCreationReadRights = false;
-		
-		/// <summary>
-		/// Indique si l'utilisateur à le droit de télécharger les créations
-		/// </summary>
-		private bool _hasCreationDownloadRights = false;
+        /// <summary>
+        /// Indique si l'utilisateur à le droit de lire les créations
+        /// </summary>
+        private bool _hasCreationReadRights = false;
 
-		/// <summary>
-		/// Rendu des crétaions en lecture
-		/// </summary>
-		public string streamingCreationsResult ="";
+        /// <summary>
+        /// Indique si l'utilisateur à le droit de télécharger les créations
+        /// </summary>
+        private bool _hasCreationDownloadRights = false;
 
-		/// <summary>
-		/// Rendu des zones de texte 
-		/// </summary>
-		public string explanationTextResult ="";
+        /// <summary>
+        /// Rendu des crétaions en lecture
+        /// </summary>
+        public string streamingCreationsResult = "";
 
-		/// <summary>
-		/// Chemin du fichier  Real média en lecture
-		/// </summary>
-		protected string pathReadingRealFile = null;
+        /// <summary>
+        /// Rendu des zones de texte 
+        /// </summary>
+        public string explanationTextResult = "";
 
-		/// <summary>
-		/// Chemin du fichier  Real média en téléchargement
-		/// </summary>
-		protected string pathDownloadingRealFile = null;
+        /// <summary>
+        /// Chemin du fichier  Real média en lecture
+        /// </summary>
+        protected string pathReadingRealFile = null;
 
-		/// <summary>
-		/// Chemin du fichier  Windows média en lecture
-		/// </summary>
-		protected string pathReadingWindowsFile = null;
+        /// <summary>
+        /// Chemin du fichier  Real média en téléchargement
+        /// </summary>
+        protected string pathDownloadingRealFile = null;
 
-		/// <summary>
-		/// Chemin du fichier  Windows média en téléchargement
-		/// </summary>
-		protected string pathDownloadingWindowsFile = null;
+        /// <summary>
+        /// Chemin du fichier  Windows média en lecture
+        /// </summary>
+        protected string pathReadingWindowsFile = null;
 
-		/// <summary>
-		/// Code html de fermeture du flash d'attente
-		/// </summary>
-		public string divClose="";
-		
-		/// <summary>
-		/// Identifiant création
-		/// </summary>
-		string file="";
+        /// <summary>
+        /// Chemin du fichier  Windows média en téléchargement
+        /// </summary>
+        protected string pathDownloadingWindowsFile = null;
 
-	
-		/// <summary>
-		/// Média considéré
-		/// </summary>
-		protected CstClassification.DB.Vehicles.names vehicle=0;
-		#endregion
+        /// <summary>
+        /// Code html de fermeture du flash d'attente
+        /// </summary>
+        public string divClose = "";
 
-		#region constantes
-		/// <summary>
-		/// Constante cookie pour fichier format windows media player 
-		/// </summary>
-		private const string WINDOWS_MEDIA_PLAYER_FORMAT ="windowsPlayerFormat";
-		
+        /// <summary>
+        /// Identifiant création
+        /// </summary>
+        string file = "";
 
-		/// <summary>
-		///  Constante cookie pour fichier format real media player 
-		/// </summary>
-		private const string REAL_MEDIA_PLAYER_FORMAT ="realPalyerFormat";
-		#endregion
 
-		#region Evènement
+        /// <summary>
+        /// Média considéré
+        /// </summary>
+        protected CstClassification.DB.Vehicles.names vehicle = 0;
+        #endregion
 
-		#region Chargement
-		/// <summary>
-		/// Chargement de la page
-		/// </summary>
-		/// <param name="sender">Objet qui lance l'évènement</param>
-		/// <param name="e">Arguments</param>
-		protected void Page_Load(object sender, System.EventArgs e){
-		    #region Chargement de la session
-			try{
-				_webSession = (WebSession)WebSession.Load(Page.Request.QueryString.Get("idSession"));
-					
-			}
-			catch(System.Exception){
-				//_webSession.Source.Close();
-				Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}"
+        #region constantes
+        /// <summary>
+        /// Constante cookie pour fichier format windows media player 
+        /// </summary>
+        private const string WINDOWS_MEDIA_PLAYER_FORMAT = "windowsPlayerFormat";
+
+
+        /// <summary>
+        ///  Constante cookie pour fichier format real media player 
+        /// </summary>
+        private const string REAL_MEDIA_PLAYER_FORMAT = "realPalyerFormat";
+        #endregion
+
+        #region Evènement
+
+        #region Chargement
+        /// <summary>
+        /// Chargement de la page
+        /// </summary>
+        /// <param name="sender">Objet qui lance l'évènement</param>
+        /// <param name="e">Arguments</param>
+        protected void Page_Load(object sender, System.EventArgs e)
+        {
+            #region Chargement de la session
+            try
+            {
+                _webSession = (WebSession)WebSession.Load(Page.Request.QueryString.Get("idSession"));
+
+            }
+            catch (System.Exception)
+            {
+                //_webSession.Source.Close();
+                Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}"
                     , GestionWeb.GetWebWord(891, CstDB.Language.ENGLISH), GestionWeb.GetWebWord(887, CstDB.Language.ENGLISH)));
-			}
-			#endregion
-			
-			//Titre de la popUp
-			title = GestionWeb.GetWebWord(876, _webSession.SiteLanguage);			
-            file="";
-			
-            try{
-                VehicleInformation vehicleInformation = VehiclesInformation.Get(int.Parse(Page.Request.QueryString.Get("idVehicle")));				
+            }
+            #endregion
+
+            //Titre de la popUp
+            title = GestionWeb.GetWebWord(876, _webSession.SiteLanguage);
+            file = "";
+
+            try
+            {
+                VehicleInformation vehicleInformation = VehiclesInformation.Get(int.Parse(Page.Request.QueryString.Get("idVehicle")));
                 vehicle = vehicleInformation.Id;
-				
-				file = Page.Request.QueryString.Get("creation");
-				if (
-                (vehicle==CstClassification.DB.Vehicles.names.radio
+
+                file = Page.Request.QueryString.Get("creation");
+                if (
+                (vehicle == CstClassification.DB.Vehicles.names.radio
                 || vehicle == CstClassification.DB.Vehicles.names.radioGeneral
                 || vehicle == CstClassification.DB.Vehicles.names.radioMusic
                 || vehicle == CstClassification.DB.Vehicles.names.radioSponsorship
-				) 
+                )
                     && !string.IsNullOrEmpty(file))
-				{
-				    string[] fileArr = file.Split(',');
-				    if (fileArr != null && fileArr.Length > 0) {
-						file = fileArr[0];
-						if (fileArr.Length > 1) _idSlogan = fileArr[1];
-					}
-				}
+                {
+                    if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+                    {
+                        _idSlogan = file;
+                    }
+                    else
+                    {
+                        string[] fileArr = file.Split(',');
+                        if (fileArr != null && fileArr.Length > 0)
+                        {
+                            file = fileArr[0];
+                            if (fileArr.Length > 1) _idSlogan = fileArr[1];
+                        }
+
+                    }
+
+                }
+                if (vehicle == CstClassification.DB.Vehicles.names.tv)
+                    _idSlogan = file;
             }
-			catch(System.Exception){
-				_webSession.Source.Close();
-				Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}"
+            catch (System.Exception)
+            {
+                _webSession.Source.Close();
+                Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}"
                     , GestionWeb.GetWebWord(880, _webSession.SiteLanguage), GestionWeb.GetWebWord(887, _webSession.SiteLanguage)));
-			}
+            }
 
-			#region Droits et sélection des options de résultats
+            #region Droits et sélection des options de résultats
 
-			if (!Page.IsPostBack) {
+            if (!Page.IsPostBack)
+            {
 
                 //L'utilisateur a accès au créations en lecture ?
-                _hasCreationReadRights =_webSession.CustomerLogin.ShowCreatives(vehicle);
-					
-				if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DOWNLOAD_ACCESS_FLAG)) {
-					//L'utilisateur a accès aux créations en téléchargement
-					_hasCreationDownloadRights = true;
-				}
+                _hasCreationReadRights = _webSession.CustomerLogin.ShowCreatives(vehicle);
 
-			}
-			#endregion
+                if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DOWNLOAD_ACCESS_FLAG))
+                {
+                    //L'utilisateur a accès aux créations en téléchargement
+                    _hasCreationDownloadRights = true;
+                }
+
+            }
+            #endregion
 
             CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativePopUp];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the creative pop up"));
@@ -181,39 +203,39 @@ namespace AdExpress.Private.Results{
             param[5] = title;
             param[6] = _hasCreationReadRights;
             param[7] = _hasCreationDownloadRights;
-            var result = (TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+            var result = (TNS.AdExpressI.Insertions.CreativeResult.ICreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
                 , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, System.Reflection.BindingFlags.CreateInstance
                 | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
-            
+
             streamingCreationsResult = result.CreativePopUpRender();
-		}
-		#endregion
+        }
+        #endregion
 
-		#endregion
+        #endregion
 
-		#region Code généré par le Concepteur Web Form
-		/// <summary>
-		/// Initialisation
-		/// </summary>
-		/// <param name="e">Arguments</param>
-		override protected void OnInit(EventArgs e)
-		{
-			//
-			// CODEGEN : Cet appel est requis par le Concepteur Web Form ASP.NET.
-			//
-			InitializeComponent();
-			base.OnInit(e);
-		}
-		
-		/// <summary>
-		/// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
-		/// le contenu de cette méthode avec l'éditeur de code.
-		/// </summary>
-		private void InitializeComponent()
-		{    
+        #region Code généré par le Concepteur Web Form
+        /// <summary>
+        /// Initialisation
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        override protected void OnInit(EventArgs e)
+        {
+            //
+            // CODEGEN : Cet appel est requis par le Concepteur Web Form ASP.NET.
+            //
+            InitializeComponent();
+            base.OnInit(e);
+        }
 
-		}
-		#endregion
+        /// <summary>
+        /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
+        /// le contenu de cette méthode avec l'éditeur de code.
+        /// </summary>
+        private void InitializeComponent()
+        {
 
-	}
+        }
+        #endregion
+
+    }
 }

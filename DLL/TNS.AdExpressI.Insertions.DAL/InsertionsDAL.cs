@@ -269,7 +269,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                      * */
                     if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
                         dataTable = GetDataTable(v, CstWeb.Module.Type.tvSponsorship);
-                    else if(Dates.Is4M(fromDate))
+                    else if (Dates.Is4M(fromDate))
                         dataTable = GetDataTable(v, CstWeb.Module.Type.alert);
                     else
                         dataTable = GetDataTable(v, CstWeb.Module.Type.analysis);
@@ -446,7 +446,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             //Swithc 
             if (vehicle.Id == Vehicles.names.mailValo)
-                classifIds = ReplaceMailValoByVmc( level, id);
+                classifIds = ReplaceMailValoByVmc(level, id);
 
             if (level.Id == DetailLevelItemInformation.Levels.slogan &&
                 (vehicle.Id == Vehicles.names.adnettrack
@@ -489,46 +489,46 @@ namespace TNS.AdExpressI.Insertions.DAL
         }
 
         protected Func<string, long, List<long>, string> replaceId = (idList, oldId, newIds) =>
+        {
+            string ids = idList;
+            var list = new List<long>(idList.Split(',').Select(p => Convert.ToInt64(p)));
+            int index = list.FindIndex(p => p == oldId);
+            if (index >= 0)
             {
-                string ids = idList;
-                var list = new List<long>(idList.Split(',').Select(p => Convert.ToInt64(p)));
-                int index = list.FindIndex(p => p == oldId);
-                if (index >= 0)
-                {
-                    list.RemoveAt(index);
-                    list.AddRange(newIds);
-                    ids = string.Join(",", list.ToArray());
-                }
-                return ids;
-            };
+                list.RemoveAt(index);
+                list.AddRange(newIds);
+                ids = string.Join(",", list.ToArray());
+            }
+            return ids;
+        };
 
 
         protected string ReplaceMailValoByVmc(long levelId, string idList)
         {
             string ids = idList;
 
-           
+
             switch (levelId)
             {
                 case TNSClassificationLevels.VEHICLE:
                     ids = replaceId(idList, VehiclesInformation.Get(Vehicles.names.mailValo).DatabaseId
-                                    ,new List<long> {VehiclesInformation.Get(Vehicles.names.directMarketing).DatabaseId});
-                                                        
+                                    , new List<long> { VehiclesInformation.Get(Vehicles.names.directMarketing).DatabaseId });
+
                     break;
                 case TNSClassificationLevels.CATEGORY:
                     ids = replaceId(idList, CstDB.Category.COURRIER_ADRESSE_VALO
-                                       , new List<long> { Convert.ToInt64(CstDB.Category.COURRIER_ADRESSE)});     
+                                       , new List<long> { Convert.ToInt64(CstDB.Category.COURRIER_ADRESSE) });
                     ids = replaceId(ids, CstDB.Category.IMPRIME_PUBLICITAIRE_VALO
-                                       , new List<long> { Convert.ToInt64(CstDB.Category.PUBLICITE_NON_ADRESSEE)});                           
+                                       , new List<long> { Convert.ToInt64(CstDB.Category.PUBLICITE_NON_ADRESSEE) });
                     break;
 
                 case TNSClassificationLevels.MEDIA:
                     ids = replaceId(idList, CstDB.Media.COURRIER_ADRESSE_VALO
-                                      ,  new List<long> { Convert.ToInt64(CstDB.Media.COURRIER_ADRESSE_GENERAL)
-                  , Convert.ToInt64(CstDB.Media.COURRIER_ADRESSE_GESTION), Convert.ToInt64(CstDB.Media.COURRIER_ADRESSE_PRESSE)}); 
-      
-              ids = replaceId(ids, CstDB.Media.IMPRIME_PUBLICITAIRE_VALO
-                                      ,  new List<long> { Convert.ToInt64(CstDB.Media.PUBLICITE_NON_ADRESSEE)}); 
+                                      , new List<long> { Convert.ToInt64(CstDB.Media.COURRIER_ADRESSE_GENERAL)
+                  , Convert.ToInt64(CstDB.Media.COURRIER_ADRESSE_GESTION), Convert.ToInt64(CstDB.Media.COURRIER_ADRESSE_PRESSE)});
+
+                    ids = replaceId(ids, CstDB.Media.IMPRIME_PUBLICITAIRE_VALO
+                                            , new List<long> { Convert.ToInt64(CstDB.Media.PUBLICITE_NON_ADRESSEE) });
                     break;
             }
             return ids;
@@ -547,7 +547,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                     return ReplaceMailValoByVmc(TNSClassificationLevels.CATEGORY, idList);
                 case CstCustomer.Right.type.mediaAccess:
                 case CstCustomer.Right.type.mediaException:
-                    return ReplaceMailValoByVmc(TNSClassificationLevels.MEDIA, idList);                    
+                    return ReplaceMailValoByVmc(TNSClassificationLevels.MEDIA, idList);
             }
             return ids;
         }
@@ -673,9 +673,9 @@ namespace TNS.AdExpressI.Insertions.DAL
 
         #endregion
 
-       
 
-       #region MS Creatives
+
+        #region MS Creatives
         /// <summary>
         /// Extract advertising detail for media schedule creatives details 
         /// </summary>
@@ -719,7 +719,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             Table tData;
             if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
-            else if(Dates.Is4M(fromDate))
+            else if (Dates.Is4M(fromDate))
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
             else
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
@@ -814,7 +814,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             Table tData;
             if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
-            else if(Dates.Is4M(fromDate))
+            else if (Dates.Is4M(fromDate))
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
             else
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
@@ -906,9 +906,9 @@ namespace TNS.AdExpressI.Insertions.DAL
              * Example : data_press, data_tv, data_radio ...
              * */
             Table tData;
-            if(_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
-            else if(Dates.Is4M(fromDate))
+            else if (Dates.Is4M(fromDate))
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
             else
                 tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
@@ -1110,19 +1110,20 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// Get Version Min Parution Date
         /// </summary>
         /// <param name="idVersion"></param>
-        /// <param name="idVehicle"></param>
+        /// <param name="vehicleInformation">vehicle infos</param>
         /// <returns></returns>
-        public string GetVersionMinParutionDate(string idVersion, long idVehicle)
+        public string GetVersionMinParutionDate(string idVersion, VehicleInformation vehicleInformation)
         {
             string minDate = string.Empty;
-            Table dataTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv);
-           var sql = new StringBuilder(1000);
-          
-            sql.AppendFormat(" select min(date_media_num) from {0} where id_slogan={1}",dataTable.SqlWithPrefix,idVersion);
+            Table dataTable = GetDataTable(vehicleInformation, CstWeb.Module.Type.analysis);
+            var sql = new StringBuilder(1000);
 
-            var ds =_session.Source.Fill(sql.ToString());
+            sql.AppendFormat(" select min(date_media_num) from {0} where id_slogan={1}", dataTable.SqlWithPrefix, idVersion);
 
-             if (ds != null && ds.Tables[0] != null){
+            var ds = _session.Source.Fill(sql.ToString());
+
+            if (ds != null && ds.Tables[0] != null)
+            {
                 minDate = Convert.ToString(ds.Tables[0].Rows[0][0]);
             }
             return minDate;
@@ -1493,13 +1494,15 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             if (vehicle.Autopromo && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack
                 || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile
-                || vehicle.Id == CstDBClassif.Vehicles.names.mms)) {
+                || vehicle.Id == CstDBClassif.Vehicles.names.mms))
+            {
 
                 Table tblAutoPromo = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.autoPromo);
 
                 if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoAdvertiser)
                     sql.AppendFormat(" and {0}.auto_promotion = 0 ", tData.Prefix);
-                else if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany) {
+                else if (_session.AutoPromo == CstWeb.CustomerSessions.AutoPromo.exceptAutoPromoHoldingCompany)
+                {
                     sql.AppendFormat(" and ({0}.id_media, {0}.id_holding_company) not in ( ", tData.Prefix);
                     sql.AppendFormat(" select distinct {0}, id_holding_company ", idMediaLabel);
                     sql.AppendFormat(" from {0} ", tblAutoPromo.Sql);
@@ -1527,7 +1530,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                     GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse
                     .EXCLUDE_PRODUCT_LIST_ID, tData.Prefix, true, false));
             }
-           
+
             #endregion
 
             #region Banners Format Filter
@@ -1597,7 +1600,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             }
         }
 
-       
+
 
         /// <summary>
         /// Append Filters depending on client univers selection and rights
@@ -1737,7 +1740,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 sql.Append((vehicle.Id == Vehicles.names.mailValo)
                                ? _session.SecondaryMediaUniverses[0].GetSqlConditions(tData.Prefix, true, ReplaceMailValoByVmc)
                                : _session.SecondaryMediaUniverses[0].GetSqlConditions(tData.Prefix, true));
-                
+
             }
             #endregion
 
@@ -1752,11 +1755,11 @@ namespace TNS.AdExpressI.Insertions.DAL
             /* Get media classification rights
              * */
             if (vehicle.Id == Vehicles.names.mailValo)
-                sql.Append( SQLGenerator.getAnalyseCustomerMediaRight(_session, tData.Prefix, true,ReplaceMailValoByVmc));
+                sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, tData.Prefix, true, ReplaceMailValoByVmc));
             else
-            sql.Append(vehicle.Id == Vehicles.names.internet
-                           ? SQLGenerator.GetAdNetTrackMediaRight(_session, tData.Prefix, true)
-                           : SQLGenerator.getAnalyseCustomerMediaRight(_session, tData.Prefix, true));
+                sql.Append(vehicle.Id == Vehicles.names.internet
+                               ? SQLGenerator.GetAdNetTrackMediaRight(_session, tData.Prefix, true)
+                               : SQLGenerator.getAnalyseCustomerMediaRight(_session, tData.Prefix, true));
 
             /* Get rights detail spot to spot TNT
              * */
@@ -1773,7 +1776,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             }
 
 
-           
+
             #endregion
 
             #region Sponsorship univers
@@ -2221,7 +2224,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
                 tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.tvSponsorship);
-            else if(Dates.Is4M(beginingDate))
+            else if (Dates.Is4M(beginingDate))
                 tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.alert);
             else
                 tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.analysis);
@@ -2503,7 +2506,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         protected virtual string GetTableName(VehicleInformation vehicleInformation,
             CstWeb.Module.Type moduleType)
         {
-            string tableName = string.Empty;;
+            string tableName = string.Empty; ;
 
             if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
             {

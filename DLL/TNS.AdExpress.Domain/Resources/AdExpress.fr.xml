@@ -298,7 +298,7 @@
     <item mnemonic="w976" type="System.String">Veuillez entrer un nom pour l'univers. </item>
     <item mnemonic="w977" type="System.String">Univers</item>
     <item mnemonic="w979" type="System.String">Annuler tous les univers en cours</item>
-    <item mnemonic="w980" type="System.String">Pour naviguer sur le site Adexpress, vous devez utiliser le navigateur Internet Explorer (version 6.0 minimum). Vous pouvez vous connectez sur le site de Microsoft à l'adresse suivante : &lt;a href="http://www.microsoft.fr" target="blank" class="roll05"&gt;http://www.microsoft.fr&lt;/a&gt; pour télécharger la version disponible.</item>
+    <item mnemonic="w980" type="System.String">Pour naviguer sur le site Adexpress, vous devez utiliser le navigateur Internet Explorer (version 9.0 minimum). Vous pouvez vous connectez sur le site de Microsoft à l'adresse suivante : &lt;a href="http://www.microsoft.fr" target="blank" class="roll05"&gt;http://www.microsoft.fr&lt;/a&gt; pour télécharger la version disponible.</item>
     <item mnemonic="w981" type="System.String">Le site Internet est accessible depuis un « PC ».</item>
     <item mnemonic="w982" type="System.String">FICHE TECHNIQUE</item>
     <item mnemonic="w983" type="System.String">(Version Août 2004)</item>
