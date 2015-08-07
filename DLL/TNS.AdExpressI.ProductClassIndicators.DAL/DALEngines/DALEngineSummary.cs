@@ -95,8 +95,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 }
                 //product rights
                 TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
-                string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
-				sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, and,productRightsBranches));
+                string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
+                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, and, productRightsBranches));
                 and = true;
             }
             if (type == CstComparaisonCriterion.sectorTotal)
@@ -178,8 +178,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, false));
                 //product rights
                 TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
-                string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
-                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true,productRightsBranches));
+                string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
+                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix,  true, productRightsBranches));
                 sql.Append(" and ");
             }
             if (type == CstComparaisonCriterion.sectorTotal)

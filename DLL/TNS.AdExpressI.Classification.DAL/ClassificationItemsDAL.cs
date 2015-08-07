@@ -615,7 +615,7 @@ namespace TNS.AdExpressI.Classification.DAL {
           
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
             string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
-            return (SQLGenerator.GetClassificationCustomerProductRight(_session, tablePrefix, tablePrefix, tablePrefix, tablePrefix, tablePrefix, beginByAnd, productRightsBranches));
+            return (SQLGenerator.GetClassificationCustomerProductRight(_session, tablePrefix, beginByAnd, productRightsBranches));
 
 		}
 

@@ -1304,7 +1304,7 @@
     <item mnemonic="w2088" type="System.String">Windows Media Player</item>
     <item mnemonic="w2090" type="System.String">Real Player</item>
     <item mnemonic="w2091" type="System.String">Pays</item>
-    <item mnemonic="w2092" type="System.String">http://www3.docmarketing.fr/societes/index.asp?id_soc={0}&amp;perso=0&amp;cle={1}</item>
+    <item mnemonic="w2092" type="System.String">http://www3.docmarketing.fr/front/societe/{0},{1}.html</item>
     <item mnemonic="w2095" type="System.String">Fiche détaillée de l'annonceur {0}</item>
     <item mnemonic="w2096" type="System.String">Min</item>
     <item mnemonic="w2097" type="System.String">Max</item>

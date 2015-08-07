@@ -369,7 +369,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
             string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
-            return (Utilities.SQLGenerator.GetClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd, productRightsBranches));
+            return (Utilities.SQLGenerator.GetClassificationCustomerProductRight(webSession, tablePrefixe, beginByAnd, productRightsBranches));
 
 		}		
 
@@ -460,11 +460,12 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.groupAccess], include); break;
 				case TNS.Classification.Universe.TNSClassificationLevels.SEGMENT:
 					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess], include); break;
-                case TNS.Classification.Universe.TNSClassificationLevels.BRAND: break;
+                case TNS.Classification.Universe.TNSClassificationLevels.BRAND: 
+                    	accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.brandAccess], include); break;                    
 				default:
 					throw (new CoreExceptions.SearchLevelDataAccessException("Identifiant de niveau de nomenclature inconnu"));
 			}
-			return (accessItems != null && accessItems.Length > 0) ? " and " + accessItems : accessItems;
+			return !string.IsNullOrEmpty(accessItems) ? " and " + accessItems : accessItems;
 		}
 
 		#endregion

@@ -145,8 +145,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
                 // Product rights
                 TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
-                string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
-                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true,productRightsBranches));
+                string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
+                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix,  true, productRightsBranches));
 
             }
             //Total famille
@@ -312,7 +312,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
                 // Product rights
                 TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
                 string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
-                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true,productRightsBranches));
+                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, true,productRightsBranches));
             }
             //Sector total
             if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && !withAdvertisers && !withRights) {
@@ -444,7 +444,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
                     // Product rights
                     TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
                     string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
-                    sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true, productRightsBranches));
+                    sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, true, productRightsBranches));
                 }
 
                 //Si la requete porte sur le total famille

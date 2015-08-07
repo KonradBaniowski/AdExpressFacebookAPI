@@ -6,37 +6,10 @@
 using System;
 using System.Data;
 using System.Text;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using ClassificationDA = TNS.AdExpress.DataAccess.Classification;
-using ClassificationTable = TNS.AdExpress.Constantes.Classification.DB.Table;
-using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Controls.Results;
-using TNS.AdExpress.Web.Controls.Buttons;
-using TNS.AdExpress.Web.Controls.Translation;
-using AjaxPro;
-using UniverseAccessType = TNS.Classification.Universe.AccessType;
-using TNS.FrameWork.Exceptions;
-using TNS.Classification;
 using TNS.Classification.Universe;
-using TNS.Classification.WebControls;
-using TNS.AdExpress.Domain.Web.Navigation;
-using CoreSelection = TNS.AdExpress.Web.Core.Selection;
-using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
-using Oracle.DataAccess.Client;
-using WebConstantes = TNS.AdExpress.Constantes.Web;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 
 namespace TNS.AdExpress.Web.Controls.Selections {
@@ -200,7 +173,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				accessItemIds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetAccessRights(_webSession, universeLevelId, "id_" + UniverseLevels.Get(universeLevelId).TableName,true);
                 _lowerCase = true;
 				//Show only access items when first access to the current branch
-				if (accessItemIds != null && accessItemIds.Length > 0) {
+				if (!string.IsNullOrEmpty(accessItemIds)) {
 					dt = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetRecapItems(UniverseLevels.Get(universeLevelId).TableName, _webSession, _dBSchema, universeLevelId, _dimension).Tables[0];
 				}
 				else {
@@ -208,7 +181,9 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 					if (universeLevelId == TNS.Classification.Universe.TNSClassificationLevels.SECTOR
 						&& _webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess].Length==0
 						&& _webSession.CustomerLogin[CustomerRightConstante.type.groupAccess].Length==0
-						&& _webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess].Length == 0) {
+						&& _webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess].Length == 0
+                        && _webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length == 0
+                        &&  _webSession.CustomerLogin[CustomerRightConstante.type.brandAccess].Length == 0) {
 						dt = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName,"*", _webSession, _dBSchema, _dimension).Tables[0];
 					}
 				}
@@ -251,6 +226,9 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 //Get level segment
                 case TNS.Classification.Universe.TNSClassificationLevels.SEGMENT:
                     return CustomerRightConstante.type.segmentAccess;
+                //Get level brand
+                case TNS.Classification.Universe.TNSClassificationLevels.BRAND:
+                    return CustomerRightConstante.type.brandAccess;
                 default:
                     throw (new Exceptions.SelectRecapItemsInClassificationWebControlException("Identifier of classification level unknown"));
             }

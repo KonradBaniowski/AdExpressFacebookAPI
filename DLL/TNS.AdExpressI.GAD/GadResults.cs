@@ -110,11 +110,11 @@ namespace TNS.AdExpressI.GAD
                     _docMarketingKey = myRow["docKey"].ToString();
                 }
             }
-            if (!string.IsNullOrEmpty(_docMarketingId))
+            if (!string.IsNullOrEmpty(_company) && !string.IsNullOrEmpty(_docMarketingId))
             {
                 _docMarketingTarget = string.Format("<a href=\"javascript:OpenGad('{0}');\" onMouseOver=\"advertiserFile.src=ficheDown.src\" onMouseOut=\"advertiserFile.src=ficheUp.src\"><img title=\"{1}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/{2}/Images/Culture/Button/bt_fiche_up.gif\"/></a>",
                     //lien
-                    string.Format(GestionWeb.GetWebWord(2092, _session.SiteLanguage), _docMarketingId, _docMarketingKey),
+                    string.Format(GestionWeb.GetWebWord(2092, _session.SiteLanguage), _company, _docMarketingId),
                     GestionWeb.GetWebWord(2098, _session.SiteLanguage),
                     _theme
                     );

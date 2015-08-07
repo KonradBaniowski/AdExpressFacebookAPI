@@ -415,7 +415,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <returns>Code SQL généré</returns>
         public static string getAnalyseCustomerProductRight(WebSession webSession, string tablePrefixe, bool beginByAnd)
         {
-            return (getClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd));
+            return (getClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe,tablePrefixe, beginByAnd));
         }
 
         /// <summary>
@@ -433,7 +433,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <returns>Code SQL généré</returns>
         public static string getClassificationCustomerProductRight(WebSession webSession, bool beginByAnd)
         {
-            return (getClassificationCustomerProductRight(webSession, DBConstantes.Tables.SECTOR_PREFIXE, DBConstantes.Tables.SUBSECTOR_PREFIXE, DBConstantes.Tables.GROUP_PREFIXE, DBConstantes.Tables.SEGMENT_PREFIXE, beginByAnd));
+            return (getClassificationCustomerProductRight(webSession, DBConstantes.Tables.SECTOR_PREFIXE,
+                DBConstantes.Tables.SUBSECTOR_PREFIXE, DBConstantes.Tables.GROUP_PREFIXE, DBConstantes.Tables.SEGMENT_PREFIXE,DBConstantes.Tables.BRAND_PREFIXE, beginByAnd));
         }
 
 
@@ -447,7 +448,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="segmentPrefixe">Préfixe de la table segment</param>
         /// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
         /// <returns>Code SQL généré</returns>
-        public static string getClassificationCustomerProductRight(WebSession webSession, string sectorPrefixe, string subsectorPrefixe, string groupPrefixe, string segmentPrefixe, bool beginByAnd)
+        public static string getClassificationCustomerProductRight(WebSession webSession, string sectorPrefixe, string subsectorPrefixe, string groupPrefixe, string segmentPrefixe, string brandPrefixe, bool beginByAnd)
         {
 			string sql = "";
 			bool premier = true;
@@ -486,7 +487,19 @@ namespace TNS.AdExpress.Web.Core.Utilities
 				}
 				sql += "  " + GetInClauseMagicMethod(segmentPrefixe + ".id_segment", webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess], true);
 				premier = false;
-			}			
+			}
+            // Brand 
+            if (webSession.CustomerLogin[CustomerRightConstante.type.brandAccess].Length > 0)
+            {
+                if (!premier) sql += " or";
+                else
+                {
+                    if (beginByAnd) sql += " and";
+                    sql += " ((";
+                }
+                sql += string.Format("  {0}", GetInClauseMagicMethod(string.Format("{0}.id_brand", brandPrefixe), webSession.CustomerLogin[CustomerRightConstante.type.brandAccess], true));
+                premier = false;
+            }		
 			if (!premier) sql += " )";
 			// Droits en exclusion
 			// Sector (Famille)
@@ -528,7 +541,19 @@ namespace TNS.AdExpress.Web.Core.Utilities
 				}
 				sql += "  " + GetInClauseMagicMethod(segmentPrefixe + ".id_segment", webSession.CustomerLogin[CustomerRightConstante.type.segmentException], false);
 				premier = false;
-			}			
+			}
+            // Brand
+            if (webSession.CustomerLogin[CustomerRightConstante.type.brandException].Length > 0)
+            {
+                if (!premier) sql += " and";
+                else
+                {
+                    if (beginByAnd) sql += " and";
+                    sql += " (";
+                }
+                sql += "  " + GetInClauseMagicMethod(brandPrefixe + ".id_brand", webSession.CustomerLogin[CustomerRightConstante.type.brandException], false);
+                premier = false;
+            }		
 			if (!premier) sql += " )";
 			return (sql);
         }
@@ -577,7 +602,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <returns>Code SQL généré</returns>
         public static string GetClassificationCustomerProductRight(WebSession webSession, string tablePrefixe, bool beginByAnd, string productRightBranches)
         {
-            return (GetClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe,beginByAnd,productRightBranches));
+            return (GetClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe,beginByAnd, productRightBranches));
         }
 
 		
@@ -592,9 +617,11 @@ namespace TNS.AdExpress.Web.Core.Utilities
 		/// <param name="groupPrefixe">Préfixe de la table group_</param>
 		/// <param name="segmentPrefixe">Préfixe de la table segment</param>
 		/// <param name="advertiserPrefixe">Préfixe de la table annonceur</param>
+		/// <paramref name="brandPrefixe"/>
 		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
 		/// <returns>Code SQL généré</returns>
-        public static string GetClassificationCustomerProductRight(WebSession webSession, string sectorPrefixe, string subsectorPrefixe, string groupPrefixe, string segmentPrefixe, string advertiserPrefixe, bool beginByAnd, string productRightBranches)
+        public static string GetClassificationCustomerProductRight(WebSession webSession, string sectorPrefixe, string subsectorPrefixe, string groupPrefixe,
+            string segmentPrefixe, string advertiserPrefixe, string brandPrefixe, bool beginByAnd, string productRightBranches)
         {
 			string sql = "";
 			bool premier = true;
@@ -660,6 +687,22 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         sql += " ((";
                     }
                     sql += "  " + GetInClauseMagicMethod(advertiserPrefixe + ".id_advertiser", webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess], true);
+                    premier = false;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(productRightBranches) && productRightBranches.IndexOf("brand") >= 0)
+            {
+                // Brand 
+                if (webSession.CustomerLogin[CustomerRightConstante.type.brandAccess].Length > 0)
+                {
+                    if (!premier) sql += " or";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " ((";
+                    }
+                    sql += "  " + GetInClauseMagicMethod(brandPrefixe + ".id_brand", webSession.CustomerLogin[CustomerRightConstante.type.brandAccess], true);
                     premier = false;
                 }
             }
@@ -733,6 +776,22 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         sql += " (";
                     }
                     sql += "  " + GetInClauseMagicMethod(advertiserPrefixe + ".id_advertiser", webSession.CustomerLogin[CustomerRightConstante.type.advertiserException], false);
+                    premier = false;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(productRightBranches) && productRightBranches.IndexOf("brand") >= 0)
+            {
+                // Brand
+                if (webSession.CustomerLogin[CustomerRightConstante.type.brandException].Length > 0)
+                {
+                    if (!premier) sql += " and";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " (";
+                    }
+                    sql += "  " + GetInClauseMagicMethod(brandPrefixe + ".id_brand", webSession.CustomerLogin[CustomerRightConstante.type.brandException], false);
                     premier = false;
                 }
             }

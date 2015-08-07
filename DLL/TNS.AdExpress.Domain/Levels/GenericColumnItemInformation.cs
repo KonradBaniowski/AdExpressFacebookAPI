@@ -735,7 +735,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Media Group
             /// </summary>
-            mediaGroup = 178
+            mediaGroup = 178,
+            /// <summary>
+            /// Date Media real
+            /// </summary>
+            dateMediaReal = 179
         }
         #endregion
 

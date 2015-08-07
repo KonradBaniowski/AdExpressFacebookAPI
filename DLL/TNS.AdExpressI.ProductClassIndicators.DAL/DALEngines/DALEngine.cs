@@ -464,7 +464,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 // Product rights
                 TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
                 string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
-                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true,productRightsBranches));
+                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, true,productRightsBranches));
             }
 
             #region Media selection
@@ -664,7 +664,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 			// Product rights
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
             string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
-            sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true, productRightsBranches));
+            sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix,  true, productRightsBranches));
 			#endregion
 
 			sql.AppendFormat(" group by {0}.id_product,{0}.id_advertiser ", dataTable.Prefix);

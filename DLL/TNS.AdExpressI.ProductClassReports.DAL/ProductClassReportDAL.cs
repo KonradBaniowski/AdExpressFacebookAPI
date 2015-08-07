@@ -423,7 +423,9 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                   || _session.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes)
                   || _session.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.excludes)
                  || _session.CustomerLogin[CstRight.type.advertiserException].Length > 0
-                 || _session.CustomerLogin[CstRight.type.advertiserAccess].Length > 0);
+                 || _session.CustomerLogin[CstRight.type.advertiserAccess].Length > 0
+                  || _session.CustomerLogin[CstRight.type.brandAccess].Length > 0
+                 || _session.CustomerLogin[CstRight.type.brandException].Length > 0);
         }
 
         /// <summary>
@@ -1287,7 +1289,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         {
 
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
-            sql.Append(" " + FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, true, module.ProductRightBranches)); 
+            sql.Append(" " + FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, _dataTable.Prefix,  true, module.ProductRightBranches)); 
             //!!!!!!!!!!!!!!!! Pas de gestion des droits de la nomenclature media dans les recap (src : G Facon le 27/09/2004)
 
 			sql.Append(" " + FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, _dataTable.Prefix));
