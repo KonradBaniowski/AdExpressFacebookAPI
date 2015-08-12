@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configurations>
+   <!--Config FR (33)
+<lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30231" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="33\Plugins\Miysis.xml">
+  <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
+</lsClientConfiguration>-->
+
+  <!--Config FR (33)-->
+<lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30368" productName="Ares Service treatment - Zip export creatives (Dedoum)" maxAvailableSlots="1" directoryName="33\Plugins\Dedoum.xml">
+  <moduleDescription description="Ares Service treatment - Zip export creatives (Dedoum)" moduleId="24"/>
+</lsClientConfiguration>
+
+</configurations>
