@@ -47,13 +47,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Russia
                 case CstWeb.CustomerSessions.Unit.kEuro:
                 case CstWeb.CustomerSessions.Unit.kRubles:
                 case CstWeb.CustomerSessions.Unit.kusd:
-                    return string.Format(fp, f, ConvertToKEuro(value, fp));
-                case CstWeb.CustomerSessions.Unit.euro:
-                case CstWeb.CustomerSessions.Unit.grp:
-                case CstWeb.CustomerSessions.Unit.spot:
-                case CstWeb.CustomerSessions.Unit.insertion:
-                case CstWeb.CustomerSessions.Unit.versionNb:
-                case CstWeb.CustomerSessions.Unit.mmPerCol:
+                    return string.Format(fp, f, ConvertToKEuro(value, fp));               
                 default:
                     return string.Format(fp, f, Convert.ToDouble(value.ToString()));
             }

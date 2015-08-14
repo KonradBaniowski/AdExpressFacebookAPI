@@ -1186,6 +1186,40 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         purchaseModeMMS = 260,
         /// <summary>
+        /// Search Data Retailer
+        /// </summary>
+        dataSearchRetailer = 261,
+        /// <summary>
+        /// 4M Search Data Retailer
+        /// </summary>
+        dataSearchAlertRetailer = 262,
+        /// <summary>
+        /// Recap Search Retailer
+        /// </summary>
+        recapSearchRetailer = 263,
+        /// <summary>
+        /// Recap Search Segment Retailer
+        /// </summary>
+        recapSearchSegmentRetailer = 264,
+        /// <summary>
+        /// Social Data
+        /// </summary>
+        dataSocial = 265,
+        /// <summary>
+        /// 4M Social Data
+        /// </summary>
+        dataSocialAlert = 266,
+        /// <summary>
+        /// Recap Social
+        /// </summary>
+        recapSocial = 267,
+        /// <summary>
+        /// Recap Social Segment
+        /// </summary>
+        recapSocialSegment = 268,
+      
+
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

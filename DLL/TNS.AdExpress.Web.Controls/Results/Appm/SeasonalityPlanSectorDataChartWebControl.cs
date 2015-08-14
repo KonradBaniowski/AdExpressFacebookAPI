@@ -554,8 +554,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 								  break;
 							  case WebConstantes.CustomerSessions.Unit.pages:
                                   unitName = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId, _customerWebSession.SiteLanguage));
-								  break;
-							  default : break;
+								  break;                                
+                              case WebConstantes.CustomerSessions.Unit.numberPost:
+                                  unitName = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberPost].WebTextId, _customerWebSession.SiteLanguage));
+                                  break;							
 						  }
 						  #endregion
 				

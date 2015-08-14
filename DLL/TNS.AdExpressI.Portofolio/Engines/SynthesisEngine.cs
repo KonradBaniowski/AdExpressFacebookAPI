@@ -178,6 +178,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                  && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                  && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search
+                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.social
                 )) {
                 if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
@@ -301,6 +302,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.social
                 ) {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.periodSelected);
                 DataTable dt = ds.Tables[0];
@@ -405,7 +407,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search
+                   && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.social)
             {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInTracking);
                 DataTable dt = ds.Tables[0];
@@ -431,7 +434,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.social)
             {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInVehicle);
                 DataTable dt = ds.Tables[0];
@@ -518,6 +522,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                  || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mailValo && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.czinternet && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.search && _webSession.CustomerPeriodSelected.IsSliding4M)
+                    || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.social && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
 
                 // Date begin and date end for outdooor
@@ -1152,6 +1157,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (dataUnit!=null && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.radio
                     && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms
                     && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search
+                   && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.social
                    && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
@@ -1314,7 +1320,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search
+                  && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.social)
                 && isAlertModule) {
 
                 #region Get Data
@@ -1357,6 +1364,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mms
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.search
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.social
                 )
                 && isAlertModule) {
 

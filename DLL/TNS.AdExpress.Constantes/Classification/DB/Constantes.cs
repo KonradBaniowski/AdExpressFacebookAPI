@@ -233,6 +233,10 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// </summary>
             search = 34,
             /// <summary>
+            /// Search
+            /// </summary>
+            social = 35,
+            /// <summary>
             /// Plurimédia without Mms
             /// </summary>
             PlurimediaWithoutMms = 51,

@@ -639,7 +639,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// MMS volume
             /// </summary>
-            volumeMms = 27
+            volumeMms = 27,
+            /// <summary>
+            /// number of post
+            /// </summary>
+            numberPost =28
 		}
 		#endregion
 
@@ -1391,8 +1395,9 @@ namespace TNS.AdExpress.Constantes.Web{
 			UnitsTraductionCodes.Add(Unit.pages,943);
 			UnitsTraductionCodes.Add(Unit.numberBoard,1604);
 			UnitsTraductionCodes.Add(Unit.grp,1679);
-			UnitsTraductionCodes.Add(Unit.kEuro,1789); // Nouveau
-            UnitsTraductionCodes.Add(Unit.volume,2216); // Nouveau
+			UnitsTraductionCodes.Add(Unit.kEuro,1789); 
+            UnitsTraductionCodes.Add(Unit.volume,2216); 
+            UnitsTraductionCodes.Add(Unit.numberPost, 3029); 
 
 			XLSUnitsTraductionCodes = new Hashtable();
 			XLSUnitsTraductionCodes.Add(Unit.euro,938);
@@ -1403,8 +1408,9 @@ namespace TNS.AdExpress.Constantes.Web{
 			XLSUnitsTraductionCodes.Add(Unit.pages,943);
 			XLSUnitsTraductionCodes.Add(Unit.numberBoard,1604);
 			XLSUnitsTraductionCodes.Add(Unit.grp,1679);
-			XLSUnitsTraductionCodes.Add(Unit.kEuro,1789); // Nouveau
-            XLSUnitsTraductionCodes.Add(Unit.volume, 2216); // Nouveau
+			XLSUnitsTraductionCodes.Add(Unit.kEuro,1789); 
+            XLSUnitsTraductionCodes.Add(Unit.volume, 2216);
+            XLSUnitsTraductionCodes.Add(Unit.numberPost, 3029);
 			
 			InsertsTraductionCodes = new Hashtable();
 			InsertsTraductionCodes.Add(Insert.total,1401);

@@ -2282,5 +2282,8 @@
     <item mnemonic="w3026" type="System.String">Format Internet Display</item>
     <item mnemonic="w3027" type="System.String">Format Internet Evaliant</item>
     <item mnemonic="w3028" type="System.String">INTERNET DISPLAY</item>
+    <!--Media Social-->
+    <item mnemonic="w3029" type="System.String">Nombre de posts</item>
+    <item mnemonic="w3030" type="System.String">il n'est pas possible de faire une étude plurimédia si vous sélectionnez le média Social, veuillez changer votre sélection</item>
   </items>
 </localization>

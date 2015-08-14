@@ -704,6 +704,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                 case DBConstantesClassification.Vehicles.names.adnettrack:
                 case DBConstantesClassification.Vehicles.names.mms:
                 case DBConstantesClassification.Vehicles.names.search:
+                case DBConstantesClassification.Vehicles.names.social:
                     return (true);
                 default:
                     return (false);

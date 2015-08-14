@@ -2502,6 +2502,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                             case ClassificationCst.DB.Vehicles.names.directMarketing:
                             case ClassificationCst.DB.Vehicles.names.mms:
                             case ClassificationCst.DB.Vehicles.names.search:
+                            case ClassificationCst.DB.Vehicles.names.social:
                                 mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                                 if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))
                                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
@@ -2578,6 +2579,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         case ClassificationCst.DB.Vehicles.names.emailing:
                         case ClassificationCst.DB.Vehicles.names.mms:
                         case ClassificationCst.DB.Vehicles.names.search:
+                        case ClassificationCst.DB.Vehicles.names.social:
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
                             break;
@@ -3573,7 +3575,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
             VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
-            if (vehicleInformation.Id == ClassificationCst.DB.Vehicles.names.search && current.Id == FrameWorkResults.DynamicAnalysis.SYNTHESIS)
+            if ( (vehicleInformation.Id == ClassificationCst.DB.Vehicles.names.search
+                || vehicleInformation.Id == ClassificationCst.DB.Vehicles.names.social
+                ) && current.Id == FrameWorkResults.DynamicAnalysis.SYNTHESIS)
                 return false;
 
             return true;
@@ -3605,6 +3609,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case ClassificationCst.DB.Vehicles.names.evaliantMobile:
                 case ClassificationCst.DB.Vehicles.names.mms:
                 case ClassificationCst.DB.Vehicles.names.search:
+                case ClassificationCst.DB.Vehicles.names.social:
                     return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO
                         || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
                 case ClassificationCst.DB.Vehicles.names.others:

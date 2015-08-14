@@ -22,6 +22,9 @@
       <matchingTable defaultEnumId="51"   retailerEnumId="197" description="Data: Radio Retailer 4M" />
       <matchingTable defaultEnumId="42"   retailerEnumId="198" description="Data: TV Retailer" />
       <matchingTable defaultEnumId="52"   retailerEnumId="199" description="Data: TV Retailer 4M" />
+      <matchingTable defaultEnumId="255"   retailerEnumId="261" description="Data: Search Retailer" />
+      <matchingTable defaultEnumId="256"   retailerEnumId="262" description="Data: Search Retailer 4M" />
+      
       <matchingTable defaultEnumId="36"   retailerEnumId="201" description="Data: Month Retailer" />
       <matchingTable defaultEnumId="37"   retailerEnumId="202" description="Data: Week Retailer" />
       <matchingTable defaultEnumId="76"   retailerEnumId="203" description="Recap Data: Cinema Retailer" />
@@ -40,8 +43,13 @@
       <matchingTable defaultEnumId="81"   retailerEnumId="216" description="Recap Data: Radio Segment Retailer" />
       <matchingTable defaultEnumId="72"   retailerEnumId="217" description="Recap Data: TV Retailer" />
       <matchingTable defaultEnumId="80"   retailerEnumId="218" description="Recap Data: TV Segment Retailer" />
+      <matchingTable defaultEnumId="257"   retailerEnumId="263" description="Recap Data: Search Retailer" />
+      <matchingTable defaultEnumId="258"   retailerEnumId="264" description="Recap Data: Search Segment Retailer" />
+      
       <matchingTable defaultEnumId="219"  retailerEnumId="227" description="Dash Board Data: Pluri Month" />
       <matchingTable defaultEnumId="220"  retailerEnumId="228" description="Dash Board Data: Pluri Week" />
+      
+      
     </matchingTables>
   </retailer>
   <lostWon useComparative="false"  useDiponibility="true" useType="true"/>

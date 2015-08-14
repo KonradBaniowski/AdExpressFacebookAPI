@@ -178,53 +178,32 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 case CstDBClassif.Vehicles.names.PlurimediaWithoutMms:
                     headers.Root.Add(new Header(true, GestionWeb.GetWebWord(210, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     break;
-                case CstDBClassif.Vehicles.names.press:
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
-                case CstDBClassif.Vehicles.names.magazine:
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
-                case CstDBClassif.Vehicles.names.newspaper:
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
+                case CstDBClassif.Vehicles.names.press:                   
+                case CstDBClassif.Vehicles.names.magazine:                   
+                case CstDBClassif.Vehicles.names.newspaper:                   
                 case CstDBClassif.Vehicles.names.radio:
                 case CstDBClassif.Vehicles.names.radioGeneral:
                 case CstDBClassif.Vehicles.names.radioSponsorship:
-                case CstDBClassif.Vehicles.names.radioMusic:
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
+                case CstDBClassif.Vehicles.names.radioMusic:					
                 case CstDBClassif.Vehicles.names.tv:
                 case CstDBClassif.Vehicles.names.tvGeneral:
                 case CstDBClassif.Vehicles.names.tvSponsorship:
                 case CstDBClassif.Vehicles.names.tvNonTerrestrials:
-                case CstDBClassif.Vehicles.names.tvAnnounces:
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
-                case CstDBClassif.Vehicles.names.mediasTactics:
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
+                case CstDBClassif.Vehicles.names.tvAnnounces:                 
+                case CstDBClassif.Vehicles.names.mediasTactics:                
                 case CstDBClassif.Vehicles.names.czinternet:
                 case CstDBClassif.Vehicles.names.internet:
-                 
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
                 case CstDBClassif.Vehicles.names.outdoor:
                 case CstDBClassif.Vehicles.names.indoor:
-                case CstDBClassif.Vehicles.names.instore:					
+                case CstDBClassif.Vehicles.names.instore:
+                case CstDBClassif.Vehicles.names.cinema:
+                case CstDBClassif.Vehicles.names.emailing:
+                case CstDBClassif.Vehicles.names.mms:
+                case CstDBClassif.Vehicles.names.search:
+                case CstDBClassif.Vehicles.names.social:
 					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
-                case CstDBClassif.Vehicles.names.cinema:                   
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
-                case CstDBClassif.Vehicles.names.emailing:
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
-                case CstDBClassif.Vehicles.names.mms:
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
-                case CstDBClassif.Vehicles.names.search:
-                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
-                    break;
+                             
             }
             //Go threw data to extract media levels
             string sortStr = "";

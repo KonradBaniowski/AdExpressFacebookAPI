@@ -528,6 +528,7 @@ namespace AdExpress.Private.Results{
 				case ClassificationCst.DB.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.mms:
                 case DBClassificationConstantes.Vehicles.names.search:
+                case DBClassificationConstantes.Vehicles.names.social:
 					if (!_webSession.CustomerPeriodSelected.IsSliding4M && (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY
                         || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || 
                         _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE ||

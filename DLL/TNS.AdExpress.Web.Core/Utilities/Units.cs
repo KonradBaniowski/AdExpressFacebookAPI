@@ -68,13 +68,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         return string.Format(fp, f, ConvertToKEuro(value));
                     case CstWeb.CustomerSessions.Unit.versionNb:
                         if (value is CellIdsNumber) return string.Format(fp, f, ((CellIdsNumber)value).Value);
-                        else return string.Format(fp, f, Convert.ToDouble(value.ToString()));
-                    case CstWeb.CustomerSessions.Unit.euro:
-                    case CstWeb.CustomerSessions.Unit.grp:
-                    case CstWeb.CustomerSessions.Unit.spot:
-                    case CstWeb.CustomerSessions.Unit.insertion:
-                    case CstWeb.CustomerSessions.Unit.mmPerCol:
-                    case CstWeb.CustomerSessions.Unit.pln:
+                         return string.Format(fp, f, Convert.ToDouble(value.ToString()));                    
                     default:
                         return string.Format(fp, f, Convert.ToDouble(value.ToString()));
                 }
@@ -105,14 +99,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return ConvertToDuration(value);
                 case CstWeb.CustomerSessions.Unit.kEuro:
                 case CstWeb.CustomerSessions.Unit.kpln:
-                    return Math.Round(ConvertToKEuro(value));
-                case CstWeb.CustomerSessions.Unit.euro:
-                case CstWeb.CustomerSessions.Unit.grp:
-                case CstWeb.CustomerSessions.Unit.spot:
-                case CstWeb.CustomerSessions.Unit.insertion:
-                case CstWeb.CustomerSessions.Unit.versionNb:
-                case CstWeb.CustomerSessions.Unit.mmPerCol:
-                case CstWeb.CustomerSessions.Unit.pln:
+                    return Math.Round(ConvertToKEuro(value));               
                 default:
                     return Convert.ToDouble(value);
             }

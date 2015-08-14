@@ -219,6 +219,7 @@ namespace AdExpress.Private.Selection
                 List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
                 System.Windows.Forms.TreeNode tmpNode;
                 bool containsSearch = false;
+                bool containsSocial = false;
 
                 // On recherche les éléments sélectionnés
                 foreach (ListItem currentItem in VehicleSelectionWebControl2.Items)
@@ -232,6 +233,9 @@ namespace AdExpress.Private.Selection
                         if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.search) 
                             && currentItem.Value == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.search).DatabaseId.ToString())
                             containsSearch = true;
+                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.social)
+                            && currentItem.Value == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.social).DatabaseId.ToString())
+                            containsSocial = true;
                     }
                 }
                 if (levelsSelected.Count == 0) {                
@@ -239,6 +243,10 @@ namespace AdExpress.Private.Selection
                 }
                 else if (containsSearch && levelsSelected.Count > 1) {
                     Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(3011, _webSession.SiteLanguage)));
+                }
+                else if (containsSocial && levelsSelected.Count > 1)
+                {
+                    Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(3030, _webSession.SiteLanguage)));
                 }
                 else {
 
