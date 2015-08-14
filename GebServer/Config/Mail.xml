@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <smtp>
-    <server adress="smtp.secodip.com" port="25"/>
+    <server adress="frmitch-msprod" port="25"/>
     <message from="geb@adexpress.com">
-        <to>benjamin.masson@tnsmi.fr</to>
+        <to>dede.mussuma@kantarmedia.com</to>
     </message>
 </smtp>

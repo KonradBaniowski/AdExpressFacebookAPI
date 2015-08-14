@@ -132,7 +132,7 @@ namespace Geb{
 				TNS.FrameWork.DB.Common.Oracle.DataBaseConfiguration connection = FrameworkDBBusiness.Oracle.DataBaseConfigurationBussinessFacade.GetOne(_appPath+CONFIGURATION_PATH+APPLICATION_CONFIGURATION_FILE_NAME);
 				_source = new TNS.FrameWork.DB.Common.OracleDataSource(connection.ConnectionString);
 			}
-			catch(System.Exception){
+			catch(System.Exception ex){
 				Application.Exit();
 			}
 			#endregion

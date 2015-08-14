@@ -295,6 +295,8 @@
 
     <table enumId="259" description="Mapping: Banners Country" schemaEnumId="0" label="banners_country" prefix="bc"/>
 
+    <table enumId="260" description="Classif: Purchase Mode" schemaEnumId="0" label="purchase_mode_mms" prefix="pmm"/>
+
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>

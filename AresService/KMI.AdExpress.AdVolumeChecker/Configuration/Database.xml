@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <dataBaseConfiguration>
-  <!--<dataBase description="AdExpr03" user="gfacon" password="sandie5" tns="ADEXPRESS_WEB_TEST.PIGE" pooling="false" timeout="120" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
-  <!--<dataBase description="AdExpr03" user="gfacon" password="sandie5" tns="adexpr03.pige" pooling="false" timeout="120" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
-  <dataBase connectionString="User Id=gfacon; Password=sandie5; Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=172.17.236.126)(PORT=1521)))(CONNECT_DATA=(SID=ADEXPR03))); Pooling=false; Connection Timeout=120;"/>
+  
+<!--Test-->
+  <dataBase connectionString="User Id=gfacon; Password=sandie5; Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=172.17.236.122)(PORT=1521)))(CONNECT_DATA=(SID=ADEXPR03))); Pooling=false; Connection Timeout=120;"/>
+  <!--Prod-->
+  <!--<dataBase connectionString="User Id=gfacon; Password=sandie5; Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=172.17.236.126)(PORT=1521)))(CONNECT_DATA=(SID=ADEXPR03))); Pooling=false; Connection Timeout=120;"/>-->
 </dataBaseConfiguration>

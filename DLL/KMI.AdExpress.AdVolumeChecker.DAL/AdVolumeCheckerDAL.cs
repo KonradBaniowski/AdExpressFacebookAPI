@@ -145,17 +145,14 @@ namespace KMI.AdExpress.AdVolumeChecker.DAL {
                 sql.Append("            END) TRANCHE_HORAIRE ");
                 sql.Append("        , to_char( to_date(date_media_num,'yyyymmdd'),'DAY') JOUR ");
                 sql.Append("        , sum(duration) duration FROM ( ");
-                sql.Append("                SELECT am.media,dt.id_media, ");
-                sql.Append("                    (CASE ");
-                sql.Append("                        WHEN TOP_DIFFUSION between 030000 AND 055959 THEN  to_number(to_char(to_date(date_media_num,'yyyymmdd')+1 , 'yyyymmdd')  ) ");
-                sql.Append("                        ELSE date_media_num ");
-                sql.Append("                        END) date_media_num ");
+                sql.Append("                SELECT am.media,dt.id_media, ");          
+                sql.Append("                       date_media_num ");
                 sql.Append("                    ,top_diffusion,sum(duration) duration ");
                 sql.Append("                FROM ");
                 sql.Append("                    ADEXPR03.DATA_TV  dt, adexpr03.all_media_33 am ");
                 sql.Append("                WHERE ");
                 sql.Append("                    am.id_media = dt.id_media ");
-                sql.AppendFormat("                    and date_media_num>={0} and     date_media_num<={1} ", startDate.AddDays(-1).ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"));
+                sql.AppendFormat("                    and date_media_num>={0} and     date_media_num<={1} ", startDate.ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"));
                 sql.AppendFormat("                    and dt.id_media = {0} ", mediaId);
                 if(advertiserList.Length > 0)
                     sql.Append("                    and dt.id_advertiser " + (isIn ? "in" : "not in") + " ("+ advertiserList +") ");
@@ -260,17 +257,13 @@ namespace KMI.AdExpress.AdVolumeChecker.DAL {
                 sql.Append("            END) TRANCHE_HORAIRE ");
                 sql.Append("        , to_char( to_date(date_media_num,'yyyymmdd'),'DAY') JOUR, top_diffusion ");
                 sql.Append("        , sum(duration) duration FROM ( ");
-                sql.Append("                SELECT am.media,dt.id_media, ");
-                sql.Append("                    (CASE ");
-                sql.Append("                        WHEN TOP_DIFFUSION between 030000 AND 055959 THEN  to_number(to_char(to_date(date_media_num,'yyyymmdd')+1 , 'yyyymmdd')  ) ");
-                sql.Append("                        ELSE date_media_num ");
-                sql.Append("                        END) date_media_num ");
+                sql.Append("                SELECT am.media,dt.id_media, date_media_num");
                 sql.Append("                    ,top_diffusion,sum(duration) duration ");
                 sql.Append("                FROM ");
                 sql.Append("                    ADEXPR03.DATA_TV  dt, adexpr03.all_media_33 am ");
                 sql.Append("                WHERE ");
                 sql.Append("                    am.id_media = dt.id_media ");
-                sql.AppendFormat("                    and date_media_num>={0} and     date_media_num<={1} ", startDate.AddDays(-1).ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"));
+                sql.AppendFormat("                    and date_media_num>={0} and     date_media_num<={1} ", startDate.ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"));
                 sql.AppendFormat("                    and dt.id_media = {0} ", mediaId);
                 if (advertiserList.Length > 0)
                     sql.Append("                    and dt.id_advertiser " + (isIn ? "in" : "not in") + " (" + advertiserList + ") ");
@@ -424,7 +417,7 @@ namespace KMI.AdExpress.AdVolumeChecker.DAL {
                 StringBuilder sql = new StringBuilder();
                 OracleCommand sqlCommand = null;
 
-                sql.Append(" select distinct id_slogan, date_media_num, ad.id_advertiser, ad.advertiser, md.id_media, md.media, pr.id_product, pr.product, sc.id_sector, sc.sector, gr.id_group_, gr.group_, top_diffusion, duration, id_commercial_break, id_rank, duration_commercial_break, number_message_commercial_brea, wp.id_category as idCategory, advertising_agency ");
+                sql.Append(" select distinct id_slogan, date_media_num, DATE_MEDIA_REAL,ad.id_advertiser, ad.advertiser, md.id_media, md.media, pr.id_product, pr.product, sc.id_sector, sc.sector, gr.id_group_, gr.group_, top_diffusion, duration, id_commercial_break, id_rank, duration_commercial_break, number_message_commercial_brea, wp.id_category as idCategory, advertising_agency ");
                 sql.Append("       , (CASE                                                                ");
                 sql.Append("            WHEN TOP_DIFFUSION  between 030000 AND 035959   THEN '03H - 04H'  ");
                 sql.Append("            WHEN TOP_DIFFUSION  between 040000 AND 045959   THEN '04H - 05H'  ");
@@ -454,9 +447,7 @@ namespace KMI.AdExpress.AdVolumeChecker.DAL {
                 sql.Append("            END) TRANCHE_HORAIRE, to_char( to_date(date_media_num,'yyyymmdd'),'DAY') JOUR ");
                 sql.Append(" from adexpr03.data_tv wp, adexpr03.advertising_agency adva, adexpr03.advertiser ad, adexpr03.media md, adexpr03.product pr, adexpr03.sector sc, adexpr03.group_ gr ");
                 sql.AppendFormat(" Where  wp.id_media={0}  ", mediaId);
-                if (slot.Equals("03H - 04H") || slot.Equals("04H - 05H") || slot.Equals("05H - 06H"))
-                    sql.AppendFormat(" and wp.date_media_num={0} ", date.AddDays(-1).ToString("yyyyMMdd"));
-                else
+                              
                     sql.AppendFormat(" and wp.date_media_num={0} ", date.ToString("yyyyMMdd"));
                 sql.Append(GetTopDiffusionSQL(slot));
                 sql.Append(" and wp.id_vehicle = 3 ");
@@ -477,8 +468,8 @@ namespace KMI.AdExpress.AdVolumeChecker.DAL {
                 }
 
                 sql.Append(" and adva.id_advertising_agency(+)=wp.id_advertising_agency  and adva.id_language(+)=33  and adva.activation(+)<50  ");
-                sql.Append(" group by id_slogan,date_media_num,ad.id_advertiser,ad.advertiser,md.id_media,md.media,pr.id_product,pr.product,sc.id_sector,sc.sector,gr.id_group_,gr.group_,top_diffusion,duration,id_commercial_break,id_rank,duration_commercial_break,number_message_commercial_brea,wp.id_category , advertising_agency   ");
-                sql.Append(" order by wp.date_media_num,wp.top_diffusion ");
+                sql.Append(" group by id_slogan,date_media_num,DATE_MEDIA_REAL,ad.id_advertiser,ad.advertiser,md.id_media,md.media,pr.id_product,pr.product,sc.id_sector,sc.sector,gr.id_group_,gr.group_,top_diffusion,duration,id_commercial_break,id_rank,duration_commercial_break,number_message_commercial_brea,wp.id_category , advertising_agency   ");
+                sql.Append(" order by wp.date_media_num,DATE_MEDIA_REAL,wp.top_diffusion ");
 
                 sqlCommand = new OracleCommand(sql.ToString());
                 sqlCommand.Connection = connection;

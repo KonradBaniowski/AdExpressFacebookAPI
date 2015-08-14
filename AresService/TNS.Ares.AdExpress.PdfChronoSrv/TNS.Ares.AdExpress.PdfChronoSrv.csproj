@@ -202,6 +202,10 @@
       <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfChrono\TNS.Ares.AdExpress.PdfChrono.csproj">
+      <Project>{53440df6-5bfb-4b0b-8aca-f14f709f98aa}</Project>
+      <Name>TNS.Ares.AdExpress.PdfChrono</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>
@@ -249,17 +253,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>echo ----------------------------------------------
-echo -                      Pre buid
-echo ----------------------------------------------
-echo  -- Suppression du lecteur I --
-subst i: /D
-echo  -- Obtention du répertoire où seront les librairies --
-set toto="$(TargetDir)"
-echo  -- Suppression du \ de fin; et ajout du " de fin --
-set toto=%25toto:~0,-2%25"
-echo  -- Définition d'un lecteur pointant sur le répertoire où seront les librairies --
-subst i: %25toto%25</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
     <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
 mkdir "$(TargetDir)Bin\"
 copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y

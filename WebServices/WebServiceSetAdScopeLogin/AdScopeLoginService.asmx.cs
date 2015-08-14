@@ -34,7 +34,7 @@ namespace WebServiceSetAdScopeLogin
           
                try
             {
-                
+               
                 //Get source
                 IDataSource dataSource = WebServiceSetAdScopeLogin.Parameters.ServiceParams.Source;
               
@@ -58,6 +58,7 @@ namespace WebServiceSetAdScopeLogin
                 #endregion
 
                 #region Decrypt parameters  
+
                 
                 //Convert HEXA to CHAR
                 login = KMI.P3.Web.Functions.QueryStringEncryption.HexAsciiConvert(login);
@@ -69,17 +70,17 @@ namespace WebServiceSetAdScopeLogin
                 action = KMI.P3.Web.Functions.QueryStringEncryption.HexAsciiConvert(action);
 
 
-                 //Decrypt parameters               
-                  decryptedLogin = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(login);
-                  decryptedpassword = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(password);
-                  decryptedName = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(name);
-                  decryptedFirstName = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(firstName);
-                  decryptedAccount = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(account);
-                  decryptedCreationDate = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(creationDate);
-                  decryptedAction = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(action);
+                //Decrypt parameters               
+                decryptedLogin = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(login);
+                decryptedpassword = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(password);
+                decryptedName = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(name);
+                decryptedFirstName = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(firstName);
+                decryptedAccount = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(account);
+                decryptedCreationDate = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(creationDate);
+                decryptedAction = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(action);
 
 
-                return false;
+             
                 #endregion
 
               

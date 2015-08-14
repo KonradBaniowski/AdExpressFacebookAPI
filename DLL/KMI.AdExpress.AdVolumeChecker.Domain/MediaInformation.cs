@@ -195,6 +195,9 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
             if (_encryptedMedia)
                 _unencryptedSlots = UnencryptedSlotsDL.Load(_unencryptedSlotsFilePath, startDate, endDate);
 
+            // Détection du dépassement pour la tranche ramenée de la veille de startDate (expl : si startDate = 18/01 alors vérif de la tranche 02-03h du 17/01)
+            // Ne peut concerner qu'un dimanche d'où la transposition en Lundi
+            // Utile que pour la méthode AdVolumeCheckerDAL.GetPreviousLastTopDiffusionData
             if (dsPreviousLastTopDiffusion != null && dsPreviousLastTopDiffusion.Tables.Count > 0 && dsPreviousLastTopDiffusion.Tables[0] != null && dsPreviousLastTopDiffusion.Tables[0].Rows.Count > 0) {
 
                 DataRow dr = dsPreviousLastTopDiffusion.Tables[0].Rows[dsPreviousLastTopDiffusion.Tables[0].Rows.Count - 1];
@@ -222,8 +225,10 @@ namespace KMI.AdExpress.AdVolumeChecker.Domain {
 
                     duration = topDiffusion.GetDuration();
 
+                    // permet le calcul durée par tranche / jour
                     SetTopDiffusionByDays(day, slot, duration, topDiffusion.TopDiffusionTimeSpan);
 
+                    // permet d'indiquer un dépassement de durée sur la tranche concernée
                     if (topDiffusion.Exceeding) {
 
                         day = topDiffusion.GetDay();

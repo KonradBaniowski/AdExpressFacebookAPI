@@ -72,6 +72,7 @@
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -140,10 +141,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-    <Content Include="Config\Application.xml" />
+    <Content Include="Config\Application.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config\Localization.xml" />
     <Content Include="Config\LocalizationEN.xml" />
-    <Content Include="Config\Mail.xml" />
+    <Content Include="Config\Mail.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Lib\en\TNS.Geb.Localization.resources.dll" />
     <Content Include="Lib\TNS.Geb.Localization.dll" />
     <Compile Include="AssemblyInfo.cs">
@@ -164,12 +169,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DLL\TNS.AdExpress.Geb\TNS.AdExpress.Geb.csproj">
-      <Project>{88357FB7-8967-4B23-A005-B6A339D9B2B5}</Project>
-      <Name>TNS.AdExpress.Geb</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Logs\" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +187,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Geb\TNS.AdExpress.Geb.csproj">
+      <Project>{88357fb7-8967-4b23-a005-b6a339d9b2b5}</Project>
+      <Name>TNS.AdExpress.Geb</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -131,6 +131,10 @@
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
       <Name>TNS.AdExpress</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfCadrage\TNS.Ares.AdExpress.PdfCadrage.csproj">
+      <Project>{68ef235b-3ac0-434b-953b-ec67f94dd99d}</Project>
+      <Name>TNS.Ares.AdExpress.PdfCadrage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>

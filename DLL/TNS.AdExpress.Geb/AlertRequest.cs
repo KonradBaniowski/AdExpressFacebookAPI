@@ -160,7 +160,7 @@ namespace TNS.AdExpress.Geb{
 				sqlCommand.CommandType = CommandType.Text;			
 
 				//Fill parametres
-				OracleParameter param2 = sqlCommand.Parameters.Add("new_id",OracleDbType.Int64);
+				OracleParameter param2 = sqlCommand.Parameters.Add("new_id",OracleDbType.Int32);
 				param2.Direction = ParameterDirection.Output;
 				OracleParameter param = sqlCommand.Parameters.Add("blobtodb", OracleDbType.Blob);
 				param.Direction = ParameterDirection.Input;
@@ -168,7 +168,8 @@ namespace TNS.AdExpress.Geb{
 				
 				//Execute PL/SQL block
 				sqlCommand.ExecuteNonQuery();
-				idStaticNavSession=(Int64)param2.Value;
+
+                idStaticNavSession = Convert.ToInt64(Convert.ToString(param2.Value));               
 			}
 			#endregion
 

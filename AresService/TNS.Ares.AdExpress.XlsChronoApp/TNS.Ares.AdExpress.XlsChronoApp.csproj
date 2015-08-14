@@ -144,6 +144,10 @@
       <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>
       <Name>TNS.AdExpressI.MediaSchedule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.XlsChrono\TNS.Ares.AdExpress.XlsChrono.csproj">
+      <Project>{d2e2fd87-b29f-4c35-af84-2b0b92e38ccc}</Project>
+      <Name>TNS.Ares.AdExpress.XlsChrono</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>
