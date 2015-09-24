@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <Mails>
+    <server adress="frmitch-msprod" port="25"/>
+    <message from="AudioVideoConverter@kantarmedia.com">
+      <!--        
+      <to>francois.simon@kantarmedia.com</to>    
+        <to>stephane.fassier@KantarMedia.com</to>
+      -->
+      <to>dede.mussuma@kantarmedia.com</to>
+    
+    </message>
+  </Mails>
+</Configuration>

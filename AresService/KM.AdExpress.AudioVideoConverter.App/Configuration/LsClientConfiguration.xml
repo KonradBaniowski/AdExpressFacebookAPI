@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configurations>
+  <lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30620" productName="AdExpress - Audio Video Converter">
+    <moduleDescription description="AdExpress - 43 -  Audio Converter" moduleId="43" isSelectable="true"/>
+    <!--<moduleDescription description="AdExpress - 44 -  Video Converter" moduleId="44" isSelectable="true"/>-->
+  </lsClientConfiguration>
+</configurations>
