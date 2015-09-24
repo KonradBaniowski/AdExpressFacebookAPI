@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D0620224-99C1-4602-B44E-2260AFF219D7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KM.AdExpress.AudioVideoConverter</RootNamespace>
+    <AssemblyName>KM.AdExpress.AudioVideoConverter</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BLToolkit.4">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\BLToolKit4.1\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.Data.DataProvider.Generic.4">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\BLToolKit4.1\BLToolkit.Data.DataProvider.Generic.4.dll</HintPath>
+    </Reference>
+    <Reference Include="LinkSystem">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\LinkSystem\V4\LinkSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine.AudioConverter.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="Engine.VideoConvert.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DLL\KM.AdExpress.AudioVideoConverter.DAL\KM.AdExpress.AudioVideoConverter.DAL.csproj">
+      <Project>{3b9e7836-38be-4355-b9a9-f05979f1d5fc}</Project>
+      <Name>KM.AdExpress.AudioVideoConverter.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\KM.AdExpress.AudioVideoConverter.Domain\KM.AdExpress.AudioVideoConverter.Domain.csproj">
+      <Project>{a581f970-80b7-453e-9c1c-5ecd8ff9abd2}</Project>
+      <Name>KM.AdExpress.AudioVideoConverter.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\KM.AdExpress.AudioVideoConverter.Tools\KM.AdExpress.AudioVideoConverter.Tools.csproj">
+      <Project>{3311a492-0ef0-4561-a8e2-4e270934adbd}</Project>
+      <Name>KM.AdExpress.AudioVideoConverter.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
