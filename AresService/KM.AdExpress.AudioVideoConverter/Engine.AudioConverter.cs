@@ -49,7 +49,7 @@ namespace KM.AdExpress.AudioVideoConverter
 
                     
                     var creatives = dal.GetCreative(db, dateCreationBeginning, dateCreationEnd, ID_VEHICLE_RADIO);
-                    return;
+                  
                     ReportGenerator reportGenerator = new ReportGenerator(dateCreationBeginning, dateCreationEnd,  "RADIO");
 
                     string temPath = Path.Combine(Path.GetTempPath(), string.Format(@"AdExRadioCreative_{0}\", DateTime.Now.ToString("yyyyMMdd")));

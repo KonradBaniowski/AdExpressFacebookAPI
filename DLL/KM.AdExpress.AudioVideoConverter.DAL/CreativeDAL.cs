@@ -37,7 +37,7 @@ namespace KM.AdExpress.AudioVideoConverter.DAL
 
              sqlQuery.AppendFormat(" WHERE mm.date_creation >= to_date('{0}','DD/MM/YYYY')", dateCreationBegin.ToString("dd/MM/yyyy"));
              sqlQuery.AppendFormat(" and mm.date_creation < to_date('{0}','DD/MM/YYYY')", dateCreationEnd.AddDays(1).ToString("dd/MM/yyyy"));
-             sqlQuery.AppendFormat(" and mm.ID_VEHICLE_I = {0} and mm.activation < {1}", idVehicle, INACTIVATION_CODE);
+             sqlQuery.AppendFormat(" and mm.ID_VEHICLE_I = {0} and mm.activation < {1}", idVehicle, INACTIVATION_CODE);            
              sqlQuery.AppendFormat(" and mm.ID_LANGUAGE_DATA_I  = {0} and mm.ID_CATEGORY_MULTIMEDIA in ", LANGUAGE_CODE);
              sqlQuery.Append(" ( ");
              sqlQuery.Append("  SELECT distinct  ID_CATEGORY_MULTIMEDIA ");

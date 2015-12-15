@@ -28,6 +28,7 @@ namespace KM.AdExpress.AudioVideoConverter.Tools
             public int NbFilesSourceNotExisting { get; set; }
             public int NbFileConverted { get; set; }
             public int NbExistingDestinationFiles { get; set; }
+            public int NbExistingMp4SourceFiles { get; set; }
 
             #region Constructeur
             /// <summary>
@@ -90,6 +91,14 @@ namespace KM.AdExpress.AudioVideoConverter.Tools
                 {
                     t.AppendFormat("<tr><td nowrap><font color=\"#008000\" size=\"2\" face=\"Arial\"> <strong>{0}</strong> fichiers existent déjà dans le dossier de destination. Veuillez  consulter le fichier de log qui repertorie les fichiers existants.</font>&nbsp;&nbsp;<br/>"
                         , NbExistingDestinationFiles);
+                    t.Append("</td>");
+                    t.Append("</tr>");
+                }
+
+                if (NbExistingMp4SourceFiles > 0)
+                {
+                    t.AppendFormat("<tr><td nowrap><font color=\"#008000\" size=\"2\" face=\"Arial\"> <strong>{0}</strong> fichiers MP4 existent déjà dans le dossier source. </font>&nbsp;&nbsp;<br/>"
+                        , NbExistingMp4SourceFiles);
                     t.Append("</td>");
                     t.Append("</tr>");
                 }

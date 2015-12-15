@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<LinkClient>
- 
+<LinkClient> 
   <LinkServer host="KMCHMVLS008" port="30000" />
 </LinkClient>
