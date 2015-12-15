@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.PPTX.App", "KM.AdExpress.PPTX.App.csproj", "{DD4B23A6-6628-4A4E-9D35-B2EAA62B1079}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.PPTX", "..\KM.AdExpress.PPTX\KM.AdExpress.PPTX.csproj", "{E2B57FEA-298D-48C4-8564-D7CA43A42A07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.PPTX.Tools", "..\..\DLL\KM.AdExpress.PPTX.Tools\KM.AdExpress.PPTX.Tools.csproj", "{5935DF15-724C-47FA-A74D-836D8D1F667C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.PPTX.Domain", "..\..\DLL\KM.AdExpress.PPTX.Domain\KM.AdExpress.PPTX.Domain.csproj", "{70CBF42F-27ED-4CEC-A08F-143D4412EECE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD4B23A6-6628-4A4E-9D35-B2EAA62B1079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4B23A6-6628-4A4E-9D35-B2EAA62B1079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4B23A6-6628-4A4E-9D35-B2EAA62B1079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4B23A6-6628-4A4E-9D35-B2EAA62B1079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2B57FEA-298D-48C4-8564-D7CA43A42A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2B57FEA-298D-48C4-8564-D7CA43A42A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2B57FEA-298D-48C4-8564-D7CA43A42A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2B57FEA-298D-48C4-8564-D7CA43A42A07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5935DF15-724C-47FA-A74D-836D8D1F667C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5935DF15-724C-47FA-A74D-836D8D1F667C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5935DF15-724C-47FA-A74D-836D8D1F667C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5935DF15-724C-47FA-A74D-836D8D1F667C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70CBF42F-27ED-4CEC-A08F-143D4412EECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70CBF42F-27ED-4CEC-A08F-143D4412EECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70CBF42F-27ED-4CEC-A08F-143D4412EECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70CBF42F-27ED-4CEC-A08F-143D4412EECE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
