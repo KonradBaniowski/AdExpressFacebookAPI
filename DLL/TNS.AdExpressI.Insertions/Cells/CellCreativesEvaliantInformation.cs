@@ -32,12 +32,14 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpressI.Insertions.MultiPart;
 
-namespace TNS.AdExpressI.Insertions.Cells {
+namespace TNS.AdExpressI.Insertions.Cells
+{
     /// <summary>
     /// Cellule contenant les informations d'une insertions
     /// </summary>
     [System.Serializable]
-    public class CellCreativesEvaliantInformation : CellCreativesInformation {
+    public class CellCreativesEvaliantInformation : CellCreativesInformation
+    {
 
         #region Constantes
         /// <summary>
@@ -89,6 +91,14 @@ namespace TNS.AdExpressI.Insertions.Cells {
         /// </summary>
         private const string AVI_ID = "AVI";
         /// <summary>
+        /// MP4 id
+        /// </summary>
+        private const string MP4_ID = "MP4";
+        /// <summary>
+        /// MOV id
+        /// </summary>
+        private const string MOV_ID = "MOV";
+        /// <summary>
         /// Chemin de la page des plans médias AdNetTrack
         /// </summary>
         private const string MEDIA_SCHEDULE_PATH = "/Private/Results/AdNetTrackMediaSchedule.aspx";
@@ -111,7 +121,8 @@ namespace TNS.AdExpressI.Insertions.Cells {
         /// </summary>
         /// <param name="label">Texte</param>
         public CellCreativesEvaliantInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, string zoomDate, Int64 universId)
-            : base(session, vehicle, columns, columnNames, cells, module) {
+            : base(session, vehicle, columns, columnNames, cells, module)
+        {
             this._universId = universId;
             this._zoomDate = zoomDate;
         }
@@ -120,61 +131,78 @@ namespace TNS.AdExpressI.Insertions.Cells {
         /// </summary>
         /// <param name="label">Texte</param>
         public CellCreativesEvaliantInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, string zoomDate, Int64 universId, Int64 idColumnsSet)
-            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet) {
+            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet)
+        {
             this._universId = universId;
             this._zoomDate = zoomDate;
         }
         #endregion
 
         #region Add Values
-        public override void Add(DataRow row, List<string> visuals) {
+        public override void Add(DataRow row, List<string> visuals)
+        {
 
             int i = -1;
             string cValue;
             Cell cCell;
-            if (_visuals.Count <= 0) {
-                foreach (string s in visuals) {
-                    if (!_visuals.Contains(s)) {
+            if (_visuals.Count <= 0)
+            {
+                foreach (string s in visuals)
+                {
+                    if (!_visuals.Contains(s))
+                    {
                         _visuals.Add(s);
                     }
                 }
             }
-            foreach (GenericColumnItemInformation g in _columns) {
+            foreach (GenericColumnItemInformation g in _columns)
+            {
 
                 i++;
-                if (g.Id == GenericColumnItemInformation.Columns.advertiser) {
+                if (g.Id == GenericColumnItemInformation.Columns.advertiser)
+                {
                     _idAdvertiser = Convert.ToInt64(row[g.DataBaseIdField]);
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.productAdNetTrack) {
+                if (g.Id == GenericColumnItemInformation.Columns.productAdNetTrack)
+                {
                     _idProduct = Convert.ToInt64(row[g.DataBaseIdField]);
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.bannerHashcode) {
+                if (g.Id == GenericColumnItemInformation.Columns.bannerHashcode)
+                {
                     _idVersion = Convert.ToInt64(row[g.DataBaseField]);
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.bannerDimension || g.Id == GenericColumnItemInformation.Columns.bannerInternetDimension) {
+                if (g.Id == GenericColumnItemInformation.Columns.bannerDimension || g.Id == GenericColumnItemInformation.Columns.bannerInternetDimension)
+                {
                     _dimension = row[g.DataBaseField].ToString();
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.bannerFormat || g.Id == GenericColumnItemInformation.Columns.bannerInternetFormat) {
+                if (g.Id == GenericColumnItemInformation.Columns.bannerFormat || g.Id == GenericColumnItemInformation.Columns.bannerInternetFormat)
+                {
                     _format = row[g.DataBaseField].ToString();
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.bannerUrl) {
+                if (g.Id == GenericColumnItemInformation.Columns.bannerUrl)
+                {
                     _url = row[g.DataBaseField].ToString();
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.addressId && row[_columnsName[i]] != System.DBNull.Value) {
+                if (g.Id == GenericColumnItemInformation.Columns.addressId && row[_columnsName[i]] != System.DBNull.Value)
+                {
                     _adressId = Convert.ToInt64(row[_columnsName[i]]);
                 }
 
 
                 cValue = row[_columnsName[i]].ToString();
                 cCell = _values[i];
-                if (cCell is CellUnit) {
+                if (cCell is CellUnit)
+                {
                     ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
                 }
-                else if (cCell is CellDate) {
+                else if (cCell is CellDate)
+                {
                     ((CellDate)cCell).SetCellValue(row[_columnsName[i]]);
                 }
-                else {
-                    if (cValue != _previousValues[i] && cValue.Length > 0) {
+                else
+                {
+                    if (cValue != _previousValues[i] && cValue.Length > 0)
+                    {
                         CellLabel c = ((CellLabel)cCell);
                         c.Label = string.Format("{0}{2}{1}", c.Label, cValue, ((c.Label.Length > 0) ? "," : ""));
                     }
@@ -187,7 +215,8 @@ namespace TNS.AdExpressI.Insertions.Cells {
         #endregion
 
         #region Render
-        public override string Render(string cssClass) {
+        public override string Render(string cssClass)
+        {
             StringBuilder str = new StringBuilder();
 
             if (_newGroup)
@@ -202,31 +231,39 @@ namespace TNS.AdExpressI.Insertions.Cells {
             List<string> cols = new List<string>();
 
             bool hasData = false;
-            foreach (GenericColumnItemInformation g in _columns) {
+            foreach (GenericColumnItemInformation g in _columns)
+            {
                 i++;
                 _values[i].Parent = this.Parent;
                 value = _values[i].ToString();
-                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax) {
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                {
 
                     StringBuilder tmpStr = new StringBuilder();
                     tmpStr.AppendFormat("<td width=\"1%\"><span>{0}<span></td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
                     tmpStr.Append("<td>: ");
                     hasData = false;
-                    if (_values[i] != null) {
-                        if (!(_values[i] is CellUnit)) {
+                    if (_values[i] != null)
+                    {
+                        if (!(_values[i] is CellUnit))
+                        {
                             values = value.Split(',');
-                            foreach (string s in values) {
-                                if (hasData) {
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
                                     tmpStr.Append("<br/>");
                                 }
                                 hasData = true;
-                                if (g.Id == GenericColumnItemInformation.Columns.advertiser) {
+                                if (g.Id == GenericColumnItemInformation.Columns.advertiser)
+                                {
 
                                     #region GAD
                                     string openBaliseA = string.Empty;
                                     string closeBaliseA = string.Empty;
 
-                                    if (_adressId != -1) {
+                                    if (_adressId != -1)
+                                    {
                                         openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}');\">", _session.IdSession, value, _adressId);
                                         closeBaliseA = "</a>";
                                     }
@@ -234,12 +271,14 @@ namespace TNS.AdExpressI.Insertions.Cells {
 
                                     tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
                                 }
-                                else {
+                                else
+                                {
                                     tmpStr.AppendFormat("{0}", s);
                                 }
                             }
                         }
-                        else {
+                        else
+                        {
                             tmpStr.AppendFormat("{0}", value);
                         }
                     }
@@ -254,10 +293,12 @@ namespace TNS.AdExpressI.Insertions.Cells {
             #region Visual
             bool hasVisual = false;
             str.Append("<tr><th valign=\"top\">");
-            if (_visuals.Count < 1) {
+            if (_visuals.Count < 1)
+            {
                 str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
             }
-            else {
+            else
+            {
                 RenderBanner(str);
             }
 
@@ -267,7 +308,8 @@ namespace TNS.AdExpressI.Insertions.Cells {
             #region Links
             //Liens plans médias
             StringBuilder t = new StringBuilder();
-            if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG)) {
+            if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG))
+            {
                 t.AppendFormat("<td width=\"1%\"><span>{0}<span></td><td>: ", GestionWeb.GetWebWord(2156, _session.SiteLanguage));
 
                 t.AppendFormat("<a href=\"#\" onclick=\"javascript:window.open('{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}', '', 'toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1');\" class=\"roll06\">{7}</a>",
@@ -281,7 +323,8 @@ namespace TNS.AdExpressI.Insertions.Cells {
                     GestionWeb.GetWebWord(857, _session.SiteLanguage),
                     _vehicle.DatabaseId
                 );
-                if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+                if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                {
                     t.AppendFormat(" | <a href=\"#\" onclick=\"javascript:window.open('{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}', '', 'toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1');\" class=\"roll06\">{7}</a>",
                         MEDIA_SCHEDULE_PATH,
                         _session.IdSession,
@@ -313,14 +356,17 @@ namespace TNS.AdExpressI.Insertions.Cells {
             #region Description
             str.Append("<tr><td><p><table>");
             int nbLine = cols.Count;
-            for (int l = 0; l < nbLine; l++) {
+            for (int l = 0; l < nbLine; l++)
+            {
                 str.Append("<tr>");
                 str.Append(cols[l]);
                 str.Append("<td>&nbsp;</td>");
-                if (l + nbLine < cols.Count) {
+                if (l + nbLine < cols.Count)
+                {
                     str.Append(cols[l + nbLine]);
                 }
-                else {
+                else
+                {
                     str.Append("<td></td><td></td>");
                 }
                 str.Append("<td width=\"100%\"></td></tr>");
@@ -339,25 +385,30 @@ namespace TNS.AdExpressI.Insertions.Cells {
         /// Render Banner Creative Zone
         /// </summary>
         /// <param name="output"></param>
-        private void RenderBanner(StringBuilder output) {
+        private void RenderBanner(StringBuilder output)
+        {
 
 
             #region Formatage des longueur et largeur du fichier
-            bool displayFlv =false;
+            bool displayFlv = false;
             string[] dimensionValue = null;
             string width = "";
             string height = "";
-            if (_dimension.Length != 0) {
+            if (_dimension.Length != 0)
+            {
                 dimensionValue = _dimension.Split('*');
                 width = dimensionValue[0];
                 height = dimensionValue[1];
             }
             else throw (new Exception("File does not have dimension"));
+            string embededType = string.Empty;
             #endregion
 
-            if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INTERNET_ACCESS_FLAG)) {
+            if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INTERNET_ACCESS_FLAG))
+            {
 
-                if (_format.ToUpper() == FLASH_ID) {
+                if (_format.ToUpper() == FLASH_ID)
+                {
                     // Flash banner
                     output.AppendFormat("\n <OBJECT classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"{0}\" height=\"{1}\">",
                         width,
@@ -371,10 +422,10 @@ namespace TNS.AdExpressI.Insertions.Cells {
                         height);
                     output.Append("\n </OBJECT>");
                 }
-                else if (_format.ToUpper() == FLV_ID)
+                else if (_format.ToUpper() == FLV_ID || _format.ToUpper() == MP4_ID || _format.ToUpper() == MOV_ID)
                 {
 
-                  
+
 
                     if (!WebApplicationParameters.VehiclesFormatInformation.Use)
                     {
@@ -387,42 +438,38 @@ namespace TNS.AdExpressI.Insertions.Cells {
                             VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack));
                         List<Int64> formatIdList = _session.GetValidFormatSelectedList(vehicleInformationList, true);
 
-                        displayFlv = (formatIdList!=null && formatIdList.Contains(AdExpress.Constantes.Classification.DB.Formats.InStream));
+                        displayFlv = (formatIdList != null && formatIdList.Contains(AdExpress.Constantes.Classification.DB.Formats.InStream));
                     }
 
-                    if (displayFlv) {
-                        output.Append("<object id=\"video_" + _idVersion + "\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"400\" height=\"315\">");
-                        output.Append("<param name=\"movie\" value=\"/Player/playerflv.swf\" />");
-                        output.Append("<param name=\"allowfullscreen\" value=\"true\" />");
-                        output.Append("<param name=\"allowscriptaccess\" value=\"always\" />");
-                        output.Append("<param name=\"flashvars\" value=\"file=" + _visuals[0] + "\" />");
-                        output.Append("<embed type=\"application/x-shockwave-flash\"");
-                        output.Append("src=\"/Player/playerflv.swf\" ");
-                        output.Append("width=\"400\" ");
-                        output.Append("height=\"315\"");
-                        output.Append("allowscriptaccess=\"always\" ");
-                        output.Append("allowfullscreen=\"false\"");
-                        output.Append("flashvars=\"file=" + _visuals[0] + "\" ");
-                        output.Append("/>");
-                        output.Append("</object>");
+                    if (displayFlv)
+                    {
+                        embededType = "application/x-shockwave-flash";
+                        if (_format.ToUpper() == MP4_ID) embededType = "video/mp4";
+                        if (_format.ToUpper() == MOV_ID) embededType = "video/quicktime";
+                        AppendVideo(output, embededType, _visuals[0]);
                     }
-                    else {
+                    else
+                    {
                         output.AppendFormat("<img border=0 src=\"/App_Themes/{0}/Images/Common/no_visuel_flv.jpeg\" border=\"0\">",
                             WebApplicationParameters.Themes[_session.SiteLanguage].Name);
                     }
-                }else   if (_format.ToUpper() == AVI_ID)
+                }              
+                else if (_format.ToUpper() == AVI_ID)
                 {
                     output.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><div class=\"videoFileBackGround\"></div></a>"
                         , _visuals[0].Replace("\\", "/"), _session.IdSession, _vehicle.DatabaseId);
                 }
-                else if (_format.ToUpper() == MULTIPART_ID) {
+                else if (_format.ToUpper() == MULTIPART_ID)
+                {
                     Descriptor descriptor = null;
-                    try {
+                    try
+                    {
                         string physicalPath = System.Web.HttpContext.Current.Request.MapPath(System.IO.Path.Combine(_visuals[0], "Descriptor.xml"));
                         descriptor = new Descriptor(physicalPath);
                     }
                     catch { }
-                    if (descriptor != null && descriptor.PanelList != null && descriptor.PanelList.Count > 0) {
+                    if (descriptor != null && descriptor.PanelList != null && descriptor.PanelList.Count > 0)
+                    {
                         output.Append("\n<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" class=\"creativeTableDescriptor\" align=\"center\">");
 
                         output.Append("\n<tr><td align=\"center\" class=\"creativeTableDescriptorTdLabel\">");
@@ -440,26 +487,29 @@ namespace TNS.AdExpressI.Insertions.Cells {
                         output.Append("\n</td></tr>");
 
                         #region Visual SWF File
-                        output.Append("\n<tr><td align=\"center\" id=\"tdBannerBox_" + _idVersion+ "\" class=\"creativeTableDescriptorTdVisual\" style=\"width:" + descriptor.GetMaxWidth() + "px; height:" + descriptor.GetMaxHeight() + "px;\" align=\"center\">");
+                        output.Append("\n<tr><td align=\"center\" id=\"tdBannerBox_" + _idVersion + "\" class=\"creativeTableDescriptorTdVisual\" style=\"width:" + descriptor.GetMaxWidth() + "px; height:" + descriptor.GetMaxHeight() + "px;\" align=\"center\">");
                         output.Append(GetHtmlFlash(descriptor.PanelList[0]));
                         output.Append("\n</td></tr>");
                         #endregion
 
                         output.Append("\n</table>");
-                        if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOWNLOAD_ACCESS_FLAG)) {
+                        if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOWNLOAD_ACCESS_FLAG))
+                        {
                             output.AppendFormat("\n<br/><a href=\"#\" onclick=\"{0}\" class=\"roll06\" title=\"{1}\">{2}</a>",
                                 "javascript:if(document.bannerBox_" + _idVersion + ".movie){this.href=document.bannerBox_" + _idVersion + ".movie;}else{this.href=document.bannerBox_" + _idVersion + ".src;}",
                                 GestionWeb.GetWebWord(SAVE_LINK_LABEL_HELP_ID, _session.SiteLanguage),
                                 GestionWeb.GetWebWord(2830, _session.SiteLanguage));
                         }
                     }
-                    else {
+                    else
+                    {
                         output.Append("\n ");
                         output.AppendFormat("<a href=\"{0}\" target=\"_blank\"><img border=0 src=\"{0}\" border=\"0\"></a>",
                             _visuals[0]);
                     }
                 }
-                else {
+                else
+                {
                     // Other type of media
                     output.Append("\n <br/><br/>");
                     output.AppendFormat("<a href=\"{0}\" target=\"_blank\"><img border=0 src=\"{1}\" border=\"0\"></a>",
@@ -467,7 +517,7 @@ namespace TNS.AdExpressI.Insertions.Cells {
                         _visuals[0]);
                 }
 
-                if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOWNLOAD_ACCESS_FLAG) && _visuals != null && _visuals.Count>0)
+                if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOWNLOAD_ACCESS_FLAG) && _visuals != null && _visuals.Count > 0)
                 {
                     if ((_format.ToUpper() != MULTIPART_ID && _format.ToUpper() != FLV_ID)
                         || displayFlv)
@@ -479,25 +529,47 @@ namespace TNS.AdExpressI.Insertions.Cells {
                     }
                 }
 
-                
+
             }
-            else {
+            else
+            {
                 output.AppendFormat("<p valign=\"top\" width=\"240\">{0}</p>", GestionWeb.GetWebWord(2250, _session.SiteLanguage));
             }
 
+        }
+
+        private void AppendVideo(StringBuilder output, string embededType, string fileName)
+        {
+            output.Append("<object id=\"video_" + _idVersion + "\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"400\" height=\"315\">");
+            output.Append("<param name=\"movie\" value=\"/Player/playerflv.swf\" />");
+            output.Append("<param name=\"allowfullscreen\" value=\"true\" />");
+            output.Append("<param name=\"allowscriptaccess\" value=\"always\" />");
+            output.AppendFormat("<param name=\"flashvars\" value=\"file={0}\" />", fileName);
+            output.AppendFormat("<embed type=\"{0}\"", embededType);
+            output.Append("src=\"/Player/playerflv.swf\" ");
+            output.Append("width=\"400\" ");
+            output.Append("height=\"315\"");
+            output.Append("allowscriptaccess=\"always\" ");
+            output.Append("allowfullscreen=\"false\"");
+            output.AppendFormat("flashvars=\"file={0}\" ", fileName);
+            output.Append("/>");
+            output.Append("</object>");
         }
 
         /// <summary>
         /// Get Html
         /// </summary>
         /// <returns>Html</returns>
-        private string GetHtmlPanels(List<Panel> panelList, string iframeId, string filePath, Panel panelSelected) {
+        private string GetHtmlPanels(List<Panel> panelList, string iframeId, string filePath, Panel panelSelected)
+        {
             StringBuilder html = new StringBuilder();
-            if (panelList != null) {
-                foreach (Panel currentPanel in panelList) {
+            if (panelList != null)
+            {
+                foreach (Panel currentPanel in panelList)
+                {
 
                     html.AppendFormat("\n<option value=\"{0}\" ",
-                        GetHtmlFlash(currentPanel).Replace("\"","&quot;"));
+                        GetHtmlFlash(currentPanel).Replace("\"", "&quot;"));
                     if (System.IO.Path.Combine(filePath, currentPanel.Src).Replace("\\", "/") == System.IO.Path.Combine(filePath, panelSelected.Src).Replace("\\", "/"))
                         html.Append("selected=\"selected\"");
 
@@ -509,11 +581,12 @@ namespace TNS.AdExpressI.Insertions.Cells {
 
         }
 
-         /// <summary>
+        /// <summary>
         /// Get Html
         /// </summary>
         /// <returns>Html</returns>
-        private string GetHtmlFlash(TNS.AdExpressI.Insertions.MultiPart.Panel panel) {
+        private string GetHtmlFlash(TNS.AdExpressI.Insertions.MultiPart.Panel panel)
+        {
             StringBuilder output = new StringBuilder();
             output.AppendFormat("\n <OBJECT id=\"bannerBox_" + _idVersion + "\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"{0}\" height=\"{1}\">",
                             panel.Width.ToString(),
