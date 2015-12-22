@@ -1115,10 +1115,10 @@ namespace TNS.AdExpressI.Insertions.DAL
         public string GetVersionMinParutionDate(string idVersion, VehicleInformation vehicleInformation)
         {
             string minDate = string.Empty;
-            Table dataTable = GetDataTable(vehicleInformation, CstWeb.Module.Type.analysis);
+            Table sloganTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.slogan);
             var sql = new StringBuilder(1000);
 
-            sql.AppendFormat(" select min(date_media_num) from {0} where id_slogan={1}", dataTable.SqlWithPrefix, idVersion);
+            sql.AppendFormat(" select to_char(DATE_CREATION,'yyyymmdd')  from {0} where id_slogan={1}", sloganTable.SqlWithPrefix, idVersion);
 
             var ds = _session.Source.Fill(sql.ToString());
 
