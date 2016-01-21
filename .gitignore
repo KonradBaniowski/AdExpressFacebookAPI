@@ -17,6 +17,7 @@ _ReSharper*/
 *.suo
 *.userprefs
 *.user
+.vs/
 
 #Xamarin
 test-results/
