@@ -62,7 +62,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// <summary>
         /// Indique si l'utilisateur à le droit de télécharger les créations
         /// </summary>
-        private bool _hasCreationDownloadRights = false;
+        protected bool _hasCreationDownloadRights = false;
         /// <summary>
         /// Is New Real Audio File Path
         /// </summary>
