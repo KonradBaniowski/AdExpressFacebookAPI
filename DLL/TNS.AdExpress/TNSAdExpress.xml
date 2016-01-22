@@ -1,0 +1,446 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TNS.AdExpress</name>
+    </assembly>
+    <members>
+        <member name="T:TNS.AdExpress.Classification.AdExpressUniverse">
+            <summary>
+            AdExpress Universe Class
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Classification.AdExpressUniverse.#ctor(TNS.Classification.Universe.Dimension)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dimension">Universe dimension (product or media)</param>
+        </member>
+        <member name="M:TNS.AdExpress.Classification.AdExpressUniverse.#ctor(System.String,TNS.Classification.Universe.Dimension)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dimension">Universe dimension (product or media)</param>
+            <param name="universeLabel">universe label</param>
+        </member>
+        <member name="M:TNS.AdExpress.Classification.AdExpressUniverse.GetSqlConditions(System.String,System.Boolean,System.Func{System.Int64,System.String,System.String})">
+             <summary>
+             Get sql conditions corresponding to the selected universe items
+             </summary>
+             <param name="dataTablePrefix">Current dataTable Prefix</param>
+             <param name="beginByAnd">Indicates if condition begin by and</param>
+            <param name="replaceIds">replace classificaion items ids</param>
+             <returns>String sql conditions</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Classification.AdExpressUniverse.GetSqlConditions(System.String,System.Boolean,TNS.Classification.Universe.AccessType,System.Func{System.Int64,System.String,System.String})">
+            <summary>
+            Get sql conditions corresponding to the selected universe items according access type (include or exclude)
+            </summary>
+            <param name="dataTablePrefix">Current dataTable Prefix</param>
+            <param name="beginByAnd">Indicates if condition begin by and</param>
+            <returns>String sql conditions</returns>
+            <param name="accessType">access type (include or exclude)</param>
+            <param name="replaceIds">replace classificaion items ids</param>
+            <returns></returns>
+        </member>
+        <member name="T:TNS.AdExpress.AdExpressWordListLoader">
+            <summary>
+            Load AdExpress Word list
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.AdExpressWordListLoader.LoadLists">
+            <summary>
+            Load AdExpress Word list
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Exceptions.AdExpressCustomerDBException">
+            <summary>
+            Exception de l'accès client à AdExpress
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.AdExpressCustomerDBException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.AdExpressCustomerDBException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.AdExpressCustomerDBException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Exceptions.AdExpressCustomerException">
+            <summary>
+            Description résumée de AdExpressCustomerExcpetion.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.AdExpressCustomerException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.AdExpressCustomerException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.AdExpressCustomerException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Exceptions.OracleDataSourceException">
+            <summary>
+            Erreur de la source de données
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.OracleDataSourceException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.OracleDataSourceException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Exceptions.OracleDataSourceException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Right">
+            <summary>
+            AdExpress customer rights
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._rights">
+            <summary>
+            clé : type de liste dans la nomenclature en accès ou en exception 
+            valeur : liste correspondant à la clé 
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._modulesRights">
+            <summary>
+            Modules list
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._flagsRights">
+            <summary>
+            hashtable : clé idFlag
+            valeur : Flag
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._moduleFrequencies">
+            <summary>
+            Module frequencies
+            module id, frequency id
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._moduleAssignmentAlertsAdExpress">
+            <summary>
+            ModuleAssignement Alerts AdExpress
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._rightsBannersAssignementList">
+            <summary>
+            Key : Right Banners Type
+            valeur : Value List assignment
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._loginId">
+            <summary>
+            identifiant login
+            </summary>		
+        </member>
+        <member name="F:TNS.AdExpress.Right._login">
+            <summary>
+            login
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._password">
+            <summary>
+            mot de passe
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right.nbLineBD">
+            <summary>
+            Nbre de lignes dans la base de données que l'on compare
+            avec les listes des droits clients
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right.rightDetermined">
+            <summary>
+            Vérifie si les droits ont été déterminés
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right.rightValidated">
+            <summary>
+            Indique si l'utilisateur a le droit de se connecter
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right.connectionString">
+            <summary>
+            Chaîne de connection à la base de données
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right.firstRequest">
+            <summary>
+            bool indiquant si c'est la première connection au site
+            true si première connection
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._source">
+            <summary>
+            DB Connection
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._connectionDate">
+            <summary>
+            date de connection
+            </summary>		
+        </member>
+        <member name="F:TNS.AdExpress.Right._lastModificationDate">
+            <summary>
+            Date de modification des droits utilisateur
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Right._siteLanguage">
+            <summary>
+            Site language
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Right.#ctor(System.String,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="login">Customer Login</param>
+            <param name="password">Customer Password</param>
+        </member>
+        <member name="M:TNS.AdExpress.Right.#ctor(System.String,System.String,System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="login">Customer Login</param>
+            <param name="password">Customer Password</param>
+            <param name="sitelanguage">Site language</param>
+        </member>
+        <member name="M:TNS.AdExpress.Right.CanAccessToAdExpress">
+            <summary>
+            Vérifie l'existence du projet adExpress 
+            avec au moins un module.
+            Si true assigne idLogin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.CheckLogin(TNS.FrameWork.DB.Common.IDataSource)">
+            <summary>
+            vérifie le Login-mot de passe
+            </summary>
+            <returns>true si login-mot de passe correct, false sinon</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.isRightModifiedDB">
+            <summary>
+            Customer rights have been modified ?
+            </summary>
+            <returns>True if the rights have been modified</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.IsProductTemplateExist">
+            <summary>
+            Check if some product tempates exist
+            </summary>
+            <returns>True if some templates exist</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.IsMediaTemplateExist">
+            <summary>
+            Check if some media tempates exist
+            </summary>
+            <returns>True if some templates exist</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.SetRights">
+            <summary>
+            Remplit les droits d'un utilisateur dans _rights
+            </summary>
+            <returns>_rights</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.ClearModulesList">
+            <summary>
+            Clear Modules list
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Right.SetModuleRights">
+            <summary>
+            Set module rights
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Right.GetCustomerModuleListHierarchy">
+            <summary>
+            Get Modules list
+            </summary>
+            <returns>modules lists</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.GetModule(System.Int64)">
+            <summary>
+            Get Module
+            </summary>
+            <param name="moduleId">module Id</param>
+            <returns>Module</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.SetModuleFrequencies">
+            <summary>
+            Set Module frequencies
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Right.GetIdFrequency(System.Int64)">
+            <summary>
+            Méthode pour récupérer la fréquence d'un module
+            </summary>
+            <param name="moduleId">identifiant du module</param>
+            <returns>Valeur de la fréquence</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.SetModuleAssignmentAlertsAdExpress">
+            <summary>
+            Set Module frequencies
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Right.HasModuleAssignmentAlertsAdExpress">
+            <summary>
+            HasModuleAssignment (A utiliser seulement pour les Alertes AdExpress !!!)
+            </summary>
+            <param name="moduleId">module Id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.IsModuleAssignmentValidDateAlertsAdExpress">
+            <summary>
+            IsModuleAssignmentValidDate (A utiliser seulement pour les Alertes AdExpress !!!)
+            </summary>
+            <param name="moduleId">module Id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.GetNbAlertsAdExpress">
+            <summary>
+            Méthode pour récupérer le nb d'alerte maximale de l'utilisateur (A utiliser seulement pour les Alertes AdExpress !!!)
+            </summary>
+            <param name="moduleId">identifiant du module</param>
+            <returns>Nb Alerts</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.SetBannersAssignement">
+            <summary>
+            Set Banners Format Assignement
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Right.GetBannersFormatAssignement(System.Collections.Generic.List{TNS.AdExpress.Constantes.Customer.RightBanners.Type})">
+            <summary>
+            Get Banners Format Assignement 
+            </summary>
+            <returns>Format identifier list</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.SetFlagsRights">
+            <summary>
+            Set flags rights
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Right.CustormerFlagAccess(System.Int64)">
+            <summary>
+            Indicate if the customer have access to a flag
+            </summary>
+            <param name="flagId">Flag id</param>
+            <returns>True if the customer have access to the flag</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.CustomerMediaAgencyFlagAccess(System.Collections.Generic.List{System.Int64})">
+            <summary>
+            Verify if vehicles Id list have all media agencies flags
+            </summary>
+            <param name="vehicleIds">vehicle Ids</param>
+            <returns>True if vehicles Id list have all media agencies flags</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.CustomerMediaAgencyFlagAccess(System.Int64)">
+            <summary>
+            Verify if vehicles Id list have all media agencies flags
+            </summary>
+            <param name="vehicleId">vehicle Id</param>
+            <returns>True if vehicles Id list have all media agencies flags</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.HasAtLeastOneMediaAgencyFlag">
+            <summary>
+            Check if customer has at least one media agency flag
+            </summary>
+            <returns>True if customer has at least one media agency flag</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.ShowCreatives(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names)">
+            <summary>
+            Indicate if the customer can access to the creative of a specific vehicle
+            </summary>
+            <param name="vehicleId">vehicle id</param>
+            <returns>True, if the customer has access</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.ShowVehiclePages(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names)">
+            <summary>
+            Indicate if the customer can access to the pages of a specific vehicle
+            </summary>
+            <param name="vehicleId">vehicle id</param>
+            <returns>True, if the customer has access</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.GetProductClassVehicleList">
+            <summary>
+            Get vehicle list for product class analysis
+            </summary>
+            <remarks>A vehicle is accessible so at least an element from this vehicle is accessible.</remarks>
+            <returns>vehicle list</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Right.listValue(System.String[],System.String[])">
+            <summary>
+            Retreive string (addition tab1 plus tab2)
+            </summary>
+            <param name="tab1">right string table</param>
+            <param name="tab2">right string table</param>
+            <returns>string</returns>
+        </member>
+        <member name="P:TNS.AdExpress.Right.UseDefaultConnection">
+            <summary>
+            Gte if use default connection
+            <remarks>User particularly for Russia customer</remarks>
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Right.Source">
+            <summary>
+            Get Customer Data Source
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Right.Item(TNS.AdExpress.Constantes.Customer.Right.type)">
+            <summary>
+            Retourne un  string correspondant aux éléments d'une liste représentant
+            un type de droit (famille,media,annonceur...). Ces listes sont soient en accès soient en exception.
+            </summary>
+            <param name="typeRight">Choix d'une liste en accès ou en exception</param>
+            <returns>string d'une liste</returns>
+        </member>
+        <member name="P:TNS.AdExpress.Right.IdLogin">
+            <summary>
+            Get login Id
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Right.Login">
+            <summary>
+            Get login
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Right.PassWord">
+            <summary>
+            Get password
+            </summary>
+        </member>
+    </members>
+</doc>

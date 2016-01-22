@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TNS.Ares</name>
+    </assembly>
+    <members>
+        <member name="T:TNS.Ares.Exceptions.FunctionsException">
+            <summary>
+            Exception lors de l'exécution d'une fontions tools
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.Exceptions.FunctionsException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.Exceptions.FunctionsException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.Ares.Exceptions.FunctionsException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.Ares.Exceptions.ReportingSystemException">
+            <summary>
+            Description résumée de ReportingSystemException.
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.Exceptions.ReportingSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.Exceptions.ReportingSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.Ares.Exceptions.ReportingSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.Ares.Functions">
+            <summary>
+            Usefull tools
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.Functions.GetRandomString(System.Int32,System.Int32)">
+            <summary>
+            Generate a string with random size and random caracters authorized in a file name
+            </summary>
+            <param name="maxL">Minimal length of the string</param>
+            <param name="minL">Maximal Length of the string (0 or less for no limit)</param>
+            <returns>Random String</returns>
+        </member>
+        <member name="M:TNS.Ares.Functions.GetRandomInteger(System.Int32,System.Int32)">
+            <summary>
+            Determine a random integer between i and j included
+            </summary>
+            <param name="min">Minimal value</param>
+            <param name="max">Maximal value (0 or less for no limit)</param>
+            <returns>Random integer</returns>
+        </member>
+        <member name="M:TNS.Ares.Functions.GetRandomIntegerAbove(System.Int32)">
+            <summary>
+            Determine a random integer equal or superior to min
+            </summary>
+            <param name="min">Minimal value</param>
+            <returns>Random number</returns>
+        </member>
+        <member name="M:TNS.Ares.Functions.GetRandomIntegerUnder(System.Int32)">
+            <summary>
+            Determine a random integer equal or inferior to max
+            </summary>
+            <param name="max">Maximal value</param>
+            <returns>Random number</returns>
+        </member>
+        <member name="M:TNS.Ares.Functions.CleanWorkDirectory(System.String)">
+            <summary>
+            Suppress a directory and its content
+            </summary>
+            <param name="path">Directory path to delete</param>
+        </member>
+        <member name="T:TNS.Ares.StartWork">
+            <summary>
+            Lancement du module
+            </summary>
+        </member>
+        <member name="T:TNS.Ares.StopWorkerJob">
+            <summary>
+            Arrêt du module
+            </summary>
+        </member>
+        <member name="T:TNS.Ares.MessageAlert">
+            <summary>
+            Message d'une alerte
+            </summary>
+        </member>
+        <member name="T:TNS.Ares.Error">
+            <summary>
+            Erreur
+            </summary>
+        </member>
+        <member name="T:TNS.Ares.SendReport">
+            <summary>
+            Envoie des rapports
+            </summary>
+        </member>
+        <member name="T:TNS.Ares.IPlugin">
+            <summary>
+            Interface à implémenté pour un plug-in de l'alerte
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.IPlugin.GetPluginName">
+            <summary>
+            Obtient le nom du plug-in
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.Ares.IPlugin.Treatement(System.String,TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Lance le traitement du résultat
+            </summary>
+            <param name="confifurationFilePath">Chemin de configuration du plug-in</param>
+            <param name="dataSource">Source de données pour charger la session</param>
+            <param name="navSessionId">Identifiant de la session à traiter</param>
+            <remarks>
+            Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
+            </remarks>
+        </member>
+        <member name="M:TNS.Ares.IPlugin.AbortTreatement">
+            <summary>
+            Arrête le traitement du job
+            </summary>
+        </member>
+        <member name="E:TNS.Ares.IPlugin.EvtStartWork">
+            <summary>
+            Lancement du module
+            </summary>
+        </member>
+        <member name="E:TNS.Ares.IPlugin.EvtStopWorkerJob">
+            <summary>
+            Arrêt du module
+            </summary>
+        </member>
+        <member name="E:TNS.Ares.IPlugin.EvtMessageAlert">
+            <summary>
+            Message d'une alerte
+            </summary>
+        </member>
+        <member name="E:TNS.Ares.IPlugin.EvtError">
+            <summary>
+            Erreur
+            </summary>
+        </member>
+        <member name="E:TNS.Ares.IPlugin.EvtSendReport">
+            <summary>
+            Envoie des rapports
+            </summary>
+        </member>
+        <member name="T:TNS.Ares.ReportingSystem">
+            <summary>
+            Description résumée de ReportingSystem.
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.LOGO_PATH">
+            <summary>
+            Nom de l'image "logo_Tns.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.DEGRA_COIN_GH">
+            <summary>
+             Nom de l'image "degra_coinGH.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.PIXEL">
+            <summary>
+             Nom de l'image "pixel.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.DEGRA_FOND_VERTI_HAUT">
+            <summary>
+            Nom de l'image "degra_fond_verti_haut.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.DEGRA_COIN_DH">
+            <summary>
+            Nom de l'image "degra_coinDH.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.DEGRA_FOND_HORI_G">
+            <summary>
+            Nom de l'image "degra_fond_hori_G.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.DEGRA_FOND_HORI_D">
+            <summary>
+            Nom de l'image "degra_fond_hori_D.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.DEGRA_COIN_GB">
+            <summary>
+            Nom de l'image "degra_coinGB.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.DEGRA_FOND_VERTI_BAS">
+            <summary>
+            Nom de l'image "degra_fond_verti_bas.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem.DEGRA_COIN_DB">
+            <summary>
+            Nom de l'image "degra_coinDB.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._directoryPath">
+            <summary>
+            Chemin du répertoire qui contient les images
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._reportTitle">
+            <summary>
+            Le titre du rapport
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._duration">
+            <summary>
+            Le temps d'exécution
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._endExecutionDateTime">
+            <summary>
+            L'heure de fin d'exécution
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._reportCore">
+            <summary>
+            Le corps du rapports
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._mailList">
+            <summary>
+            Liste des mails
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._errorList">
+            <summary>
+            Liste des erreurs survenues lors du traitement
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._from">
+            <summary>
+            L'expediteur du mail
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._mailServer">
+            <summary>
+            Le serveur de mail
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._mailPort">
+            <summary>
+            Le port utilisé pour l'envoie de mail
+            </summary>
+        </member>
+        <member name="F:TNS.Ares.ReportingSystem._navSessionId">
+            <summary>
+            Id Session
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.ReportingSystem.#ctor(System.String,System.TimeSpan,System.DateTime,System.String,System.Collections.ArrayList,System.Collections.ArrayList,System.String,System.String,System.Int32,System.Int64)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="reportTitle">Titre du rapport</param>
+            <param name="duration">Durée d'exécution</param>
+            <param name="endExecutionDateTime">Date de fin du traitement</param>
+            <param name="reportCore">le corps du rapport</param>
+            <param name="mailList">La liste des mails</param>
+            <param name="errorList">La liste des erreurs</param>
+            <param name="from">l'expediteur du mail</param>
+            <param name="mailServer">le serveur du mail</param>
+            <param name="mailPort">le port utilisé pour l'envoie de mail</param>
+            <param name="navSessionId">Id session</param>
+        </member>
+        <member name="M:TNS.Ares.ReportingSystem.SetReport">
+            <summary>
+            Création d'un rapport
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.ReportingSystem.SendReport(System.String)">
+            <summary>
+            Envoie d'un rapport
+            </summary>
+            <param name="html">Le code html du rapport</param>
+        </member>
+        <member name="M:TNS.Ares.ReportingSystem.mail_mailKoHandler(System.Object,System.String)">
+            <summary>
+            Rise exception when the customer mail has not been sent
+            </summary>
+            <param name="source">Error source></param>
+            <param name="message">Error message</param>
+        </member>
+    </members>
+</doc>
