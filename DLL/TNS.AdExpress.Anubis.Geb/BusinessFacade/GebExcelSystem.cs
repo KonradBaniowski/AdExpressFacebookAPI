@@ -243,7 +243,7 @@ namespace TNS.AdExpress.Anubis.Geb.BusinessFacade{
             t.Append("<body><p>"+messageBody+"</p>");
             t.Append("<p align=\"center\">"+_alertParameters.MediaName + " " + GestionWeb.GetWebWord(1729,_alertParameters.LanguageId) + " " + FrameworkDate.DateString.YYYYMMDDToDD_MM_YYYY(_alertParametersBlob.DateMediaNum,_alertParameters.LanguageId) + "<br>");
 
-            if (File.Exists(couvPath) && _alertParameters.NotCopyrightMediaIds)
+            if (File.Exists(couvPath))
                 t.Append("<img src=\"cid:123456789@GEG\" border=0>");
 
             t.Append("</p><p align=\"center\"><a href=\"http://www.kantarmedia.fr\">www.kantarmedia.fr</a></p>");

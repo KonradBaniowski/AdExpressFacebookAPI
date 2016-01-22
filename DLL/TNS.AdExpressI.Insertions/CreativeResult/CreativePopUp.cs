@@ -58,7 +58,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         /// <summary>
         /// Indique si l'utilisateur à le droit de lire les créations
         /// </summary>
-        private bool _hasCreationReadRights = false;
+        protected bool _hasCreationReadRights = false;
         /// <summary>
         /// Indique si l'utilisateur à le droit de télécharger les créations
         /// </summary>

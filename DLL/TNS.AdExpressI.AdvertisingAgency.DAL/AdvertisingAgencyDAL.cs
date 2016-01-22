@@ -21,6 +21,7 @@ using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web.Navigation;
 using System.Collections;
 using TNS.AdExpress.Web.Core.Exceptions;
+using CstDB = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.AdvertisingAgency.DAL
 {
@@ -606,9 +607,11 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #endregion
 
             #region Purchase Mode Filter
-            if (WebApplicationParameters.UsePurchaseMode) {
+            if (WebApplicationParameters.UsePurchaseMode && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
+            {
                 if (vehicleInfo != null) {
-                    if (vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId && WebApplicationParameters.UsePurchaseMode) {
+                    if (vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId && WebApplicationParameters.UsePurchaseMode && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
+                    {
                         string purchaseModeIdList = _session.SelectedPurchaseModeList;
                         if (purchaseModeIdList.Length > 0)
                             sql.AppendFormat(" and {0}ID_{1} in ({2}) "
@@ -624,7 +627,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                         if (vehicleInfoList.ContainsKey(VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId)) {
                             foreach (var cVehicleInformation in vehicleInfoList.Values) {
 
-                                if (cVehicleInformation.Id == CstDBClassif.Vehicles.names.mms && WebApplicationParameters.UsePurchaseMode) {
+                                if (cVehicleInformation.Id == CstDBClassif.Vehicles.names.mms && WebApplicationParameters.UsePurchaseMode && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
+                                {
                                     string purchaseModeIdList = _session.SelectedPurchaseModeList;
                                     string mmsId = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.mms).ToString();
                                     if (purchaseModeIdList.Length > 0)

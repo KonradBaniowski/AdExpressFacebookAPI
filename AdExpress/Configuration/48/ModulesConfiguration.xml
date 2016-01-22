@@ -17,7 +17,7 @@
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
         <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,9"/>
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -110,7 +110,7 @@
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
         <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,9"/>
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -281,7 +281,7 @@
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
         <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,9"/>
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -474,7 +474,7 @@
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Poland.dll" class="TNS.AdExpressI.Portofolio.DAL.Poland.PortofolioDAL"/>
         <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,9"/>
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>

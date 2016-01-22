@@ -661,7 +661,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- Search -->
-  <vehicle id="search" databaseId="8" showInsertions="false" showCreations="false" showActiveMedia="false" autopromo="false">
+  <vehicle id="search" databaseId="8" showInsertions="false" showCreations="false"  needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>

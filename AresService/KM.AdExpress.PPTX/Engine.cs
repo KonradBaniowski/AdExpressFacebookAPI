@@ -14,6 +14,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Domain;
+using TNS.AdExpress.Domain.CampaignTypes;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.XmlLoader;
+using TNS.AdExpress.Web.Core;
+using TNS.Ares.Constantes;
+using TNS.Ares.Domain.LS;
+using TNS.Classification.Universe;
+using TNS.FrameWork.DB.Common;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace KM.AdExpress.PPTX
 {
@@ -58,7 +71,10 @@ namespace KM.AdExpress.PPTX
         private string _providerDataAccess = string.Empty;
         private string _customerMailFrom = string.Empty;
         private string _customerMailServer = string.Empty;
-       
+        /// <summary>
+        /// DataSource
+        /// </summary>
+        protected IDataSource _source;
 
         public bool UseImpersonate { get; set; }
         #endregion
@@ -252,6 +268,66 @@ namespace KM.AdExpress.PPTX
             _oImp = null;
         }
         #endregion
+
+        protected void LoadConfiguration()
+        {
+            new WebApplicationParameters();
+
+            //Initialization of creative pathes
+            CreativeConfigDataAccess.LoadPathes(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.CREATIVES_PATH_CONFIGURATION));
+
+            //Lists
+            TNS.AdExpress.Domain.Lists.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.LISTS_CONFIGURATION_FILENAME));
+
+            // Product Baal List
+            Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+
+            // Media Baal List
+            Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+
+            // Units Informations
+            UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
+
+            // Vehicles Informations
+            VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
+
+            // Universes Informations
+            UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
+
+            // Universe Branchess
+            UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
+
+            // Universe Levels
+            UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
+
+            //Load flag list
+            AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
+
+            //ModulesList
+            new ModulesList();
+
+            //ResultOptions XL
+            ResultOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.RESULT_OPTIONS_CONFIGURATION_FILENAME));
+
+            if (WebApplicationParameters.VehiclesFormatInformation != null && WebApplicationParameters.VehiclesFormatInformation.Use)
+                VehiclesFormatList.Init(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList, WebApplicationParameters.DefaultDataLanguage);
+
+            //Get Source
+            _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
+
+            //Loading DataBase configuration
+            TNS.Ares.Domain.DataBase.DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
+
+            //Plugins Configuration
+            PluginConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
+
+            //_confFile = WebApplicationParameters.ConfigurationDirectoryRoot + pathConfiguration;
+
+            //Campaign  types
+            CampaignTypesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.CAMPAIGN_TYPES_CONFIGURATION_FILENAME));
+
+
+        }
 
 
     }

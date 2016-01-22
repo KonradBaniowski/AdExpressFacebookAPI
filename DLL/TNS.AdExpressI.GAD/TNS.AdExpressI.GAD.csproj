@@ -61,6 +61,10 @@
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
+      <Project>{2370d3fd-15e0-4fa6-8535-2f16eb42fe93}</Project>
+      <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.GAD.DAL\TNS.AdExpressI.GAD.DAL.csproj">
       <Project>{C28E12A2-821A-451B-A1A6-C401173283E6}</Project>
       <Name>TNS.AdExpressI.GAD.DAL</Name>

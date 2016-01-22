@@ -130,9 +130,12 @@ namespace TNS.AdExpress.Web.Core.France.Utilities
 
                                 #region Famille, classe, groupe, variété
                                 case DetailLevelItemInformation.Levels.sector:
-                                case DetailLevelItemInformation.Levels.subSector:
-                                case DetailLevelItemInformation.Levels.group:
+                                case DetailLevelItemInformation.Levels.subSector:                             
                                     if (CheckProductDetailLevelAccess()) return (true);
+                                    return (false);
+                                case DetailLevelItemInformation.Levels.group:
+                                    if (CheckProductDetailLevelAccess() &&
+                                        _customerWebSession.CustomerLogin.CustormerFlagAccess(Constantes.DB.Flags.ID_GROUP_LEVEL_ACCESS_FLAG)) return (true);
                                     return (false);
                                 case DetailLevelItemInformation.Levels.segment:
                                     if (CheckProductDetailLevelAccess() &&
@@ -202,11 +205,13 @@ namespace TNS.AdExpress.Web.Core.France.Utilities
 
                                 #region  sector, subsector, group ,segment,Annonceur
                                 case DetailLevelItemInformation.Levels.sector:
-                                case DetailLevelItemInformation.Levels.subSector:
-                                case DetailLevelItemInformation.Levels.group:
+                                case DetailLevelItemInformation.Levels.subSector:                              
                                 case DetailLevelItemInformation.Levels.advertiser:
                                 case DetailLevelItemInformation.Levels.publicationType:
                                     return (true);
+                                case DetailLevelItemInformation.Levels.group:
+                                    if (_customerWebSession.CustomerLogin.CustormerFlagAccess(Constantes.DB.Flags.ID_GROUP_LEVEL_ACCESS_FLAG)) return true;
+                                    return false;
                                 case DetailLevelItemInformation.Levels.segment:
                                     if (_customerWebSession.CustomerLogin.CustormerFlagAccess(Constantes.DB.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG)) return true;
                                     return false;
@@ -330,9 +335,12 @@ namespace TNS.AdExpress.Web.Core.France.Utilities
 
                         #region Famille, classe, groupe, variété
                         case DetailLevelItemInformation.Levels.sector:
-                        case DetailLevelItemInformation.Levels.subSector:
-                        case DetailLevelItemInformation.Levels.group:
+                        case DetailLevelItemInformation.Levels.subSector:                      
                             if (CheckProductDetailLevelAccess()) return (true);
+                            return (false);
+                        case DetailLevelItemInformation.Levels.group:
+                            if (CheckProductDetailLevelAccess() &&
+                                _customerWebSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_GROUP_LEVEL_ACCESS_FLAG)) return (true);
                             return (false);
                         case DetailLevelItemInformation.Levels.segment:
                             if (CheckProductDetailLevelAccess() &&
@@ -485,9 +493,11 @@ namespace TNS.AdExpress.Web.Core.France.Utilities
 
                         #region Famille, classe, groupe, variété
                         case DetailLevelItemInformation.Levels.sector:
-                        case DetailLevelItemInformation.Levels.subSector:
-                        case DetailLevelItemInformation.Levels.group:
+                        case DetailLevelItemInformation.Levels.subSector:                      
                             return (true);
+                        case DetailLevelItemInformation.Levels.group:
+                            if (_customerWebSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_GROUP_LEVEL_ACCESS_FLAG)) return (true);
+                            return (false);
                         case DetailLevelItemInformation.Levels.segment:
                             if (_customerWebSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG)) return (true);
                             return (false);

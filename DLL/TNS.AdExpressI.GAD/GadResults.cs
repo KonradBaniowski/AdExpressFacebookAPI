@@ -112,9 +112,9 @@ namespace TNS.AdExpressI.GAD
             }
             if (!string.IsNullOrEmpty(_company) && !string.IsNullOrEmpty(_docMarketingId))
             {
-                _docMarketingTarget = string.Format("<a href=\"javascript:OpenGad('{0}');\" onMouseOver=\"advertiserFile.src=ficheDown.src\" onMouseOut=\"advertiserFile.src=ficheUp.src\"><img title=\"{1}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/{2}/Images/Culture/Button/bt_fiche_up.gif\"/></a>",
+                _docMarketingTarget = string.Format("<a href=\"javascript:OpenWindow('{0}');\" onMouseOver=\"advertiserFile.src=ficheDown.src\" onMouseOut=\"advertiserFile.src=ficheUp.src\"><img title=\"{1}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/{2}/Images/Culture/Button/bt_fiche_up.gif\"/></a>",
                     //lien
-                    string.Format(GestionWeb.GetWebWord(2092, _session.SiteLanguage), _company, _docMarketingId),
+                    string.Format(GestionWeb.GetWebWord(2092, _session.SiteLanguage), _company.Replace("/","-"), _docMarketingId),
                     GestionWeb.GetWebWord(2098, _session.SiteLanguage),
                     _theme
                     );
@@ -203,6 +203,7 @@ namespace TNS.AdExpressI.GAD
             html.AppendLine(" </div> ");
 
 
+            html.Append(TNS.AdExpress.Web.Functions.Script.OpenWindow());
 
             return html.ToString();
         }

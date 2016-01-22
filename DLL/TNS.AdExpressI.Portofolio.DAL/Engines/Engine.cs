@@ -30,6 +30,7 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.DB;
 
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
@@ -182,7 +183,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         /// <returns>Sql Purchase Mode selected Clause</returns>
         protected virtual string GetPurchaseModeClause(string prefix) {
             var sql = new StringBuilder();
-            if (WebApplicationParameters.UsePurchaseMode) {
+            if (WebApplicationParameters.UsePurchaseMode && _webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
+            {
                 var vehicleInfoList = _webSession.GetVehiclesSelected();
                 if (vehicleInfoList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)) {
                     string purchaseModeIdList = _webSession.SelectedPurchaseModeList;

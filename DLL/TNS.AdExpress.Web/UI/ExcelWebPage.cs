@@ -1936,7 +1936,8 @@ namespace TNS.AdExpress.Web.UI
                     }
                 }
 
-                if (WebApplicationParameters.UsePurchaseMode) {
+                if (WebApplicationParameters.UsePurchaseMode && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
+                {
                     Dictionary<Int64, VehicleInformation> VehicleInformationList = webSession.GetVehiclesSelected();
                     if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)) {
                         List<Int64> selectedPurchaseModeIdList = (new List<string>(webSession.SelectedPurchaseModeList.Split(','))).ConvertAll<Int64>(Int64.Parse);

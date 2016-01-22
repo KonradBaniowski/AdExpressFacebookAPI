@@ -1732,8 +1732,11 @@ namespace TNS.AdExpress.Constantes.DB{
         /// </summary>
         /// <remarks>Used for Finland</remarks>
         public const Int64 ID_SEGMENT_LEVEL_ACCESS_FLAG = 293;
-
-
+        /// <summary>
+        /// Right Flag  of  Group level
+        /// </summary>
+        /// <remarks>Used for Finland</remarks>
+        public const Int64 ID_GROUP_LEVEL_ACCESS_FLAG = 294;
         /// <summary>
         /// Identifier of PRESS's media agency flag
         /// </summary>
@@ -1830,10 +1833,16 @@ namespace TNS.AdExpress.Constantes.DB{
         /// </summary>
         public const Int64 ID_VOLUME_DISPLAY = 353;
 
+        ///// <summary>
+        ///// Identifier of SEARCH's media agency flag
+        ///// </summary>
+        //public const Int64 ID_SEARCH_MEDIA_AGENCY_FLAG = 358;
+
         /// <summary>
         /// Identifier of SEARCH's media agency flag
         /// </summary>
-        public const Int64 ID_SEARCH_MEDIA_AGENCY_FLAG = 358;
+        public const Int64 ID_PURCHASE_MODE_DISPLAY_FLAG = 358;
+        
     }
 	#endregion
 
