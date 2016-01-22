@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?> 
-<rules>
-	<rule id="1" name="Radio 6h-9h" tableName="data_radio" listId="308" hourBegin="0600" hourEnd="0900" diffusionId="1" pluginId="13"/>
-	<rule id="2" name="Radio 24h" tableName="data_radio" listId="308" hourBegin="0901" hourEnd="2359" diffusionId="2" pluginId="13"/>
-	<rule id="3" name="Radio IDF" tableName="data_radio" listId="309" hourBegin="0901" hourEnd="2359" diffusionId="2" pluginId="13"/>
-	<rule id="4" name="TV Nat" tableName="data_tv" listId="307" hourBegin="0900" hourEnd="2359" pluginId="13"/>
-	<rule id="5" name="TV Thematique" tableName="data_tv" listId="310" hourBegin="0900" hourEnd="2359" pluginId="13"/>
-	<rule id="6" name="Presse" tableName="data_press" listId="306" pluginId="12"/>
-</rules>

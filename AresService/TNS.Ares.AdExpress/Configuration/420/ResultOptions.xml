@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<resultOptions>
-  <inset available="false" description="Specify if the option inset is available overall the website"/>
-  <mediaSchedule useComparative="false"/>
-  <bannersFormat use="false"/>
-  <retailer use ="false"/>
-  <lostWon useComparative="false" useDiponibility="true" useType="true"/>
-</resultOptions>

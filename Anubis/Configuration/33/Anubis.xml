@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?> 
-<Configuration>
-	<WorksConfig>
-		<JobsUpDateInterval time="60000"/>
-		<JobsUpDateErrorDelay time="600000"/>
-	</WorksConfig>
-	<Distribution jobsNumber="8" distributionTime="3000"/>
-	<Trace logFilePath="log"/>
-</Configuration>

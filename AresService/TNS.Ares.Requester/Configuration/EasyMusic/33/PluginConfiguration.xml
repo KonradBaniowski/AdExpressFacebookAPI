@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<pluginConfiguration isAlertsActivated="true" targetHost="http://localhost:2018/" defaultConnectionId="music">
-  <dataAccessLayers>
-    <dataAccessLayer enum="Session" name="SessionDAL" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL" />
-  </dataAccessLayers>
-  <plugins description="List of plugins" defaultLongevity="30" defaultFamilyId="142" defaultFilePath="C:\Anubis" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
-    <plugin enumId="easyMusicExcel" name="easyMusicExcel" resultType="40" longevity="10" deleteExpired="true" extension=".xls" pathFileConfiguration="Plugins\ExportExcel.xml" />
-  </plugins>
-</pluginConfiguration>

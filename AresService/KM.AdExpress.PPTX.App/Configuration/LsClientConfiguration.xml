@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configurations>
-  <lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30621" productName="AdExpress - PowerPoint Media Schedule">
-    <moduleDescription description="AdExpress - 45 -  PowerPoint Media Schedule" moduleId="45" isSelectable="true"/>
-    <!--
-    <lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30622" productName="AdExpress - Graphic Key Reports">
-    <moduleDescription description="AdExpress - 46 - PowerPoint Graphic Key Reports" moduleId="46" isSelectable="true"/>-->
-  </lsClientConfiguration>
-</configurations>

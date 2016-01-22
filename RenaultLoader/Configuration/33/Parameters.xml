@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<parameters>
-  <!--<parameter visualConditionPathOut="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\VP" />
-  <parameter visualPromotionPathOut="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\VP" />-->
-  <parameter visualConditionPathOut="F:\VP" />
-  <parameter visualPromotionPathOut="F:\VP" />
-</parameters>

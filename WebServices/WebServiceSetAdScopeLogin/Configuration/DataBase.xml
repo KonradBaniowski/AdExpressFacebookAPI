@@ -1,4 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Configuration>
-  <dataBase description="Database MAU01" tns="adexpr03.pige" user="gfacon" password="sandie5" pooling="false" timeout="120" />
-</Configuration>

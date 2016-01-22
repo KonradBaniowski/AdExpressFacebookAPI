@@ -1,4 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-  <webServiceRightConfiguration url="http://frmitch-ws001:2019/Rights.asmx" tnsName="adexwebirl01.test"/>
-</configuration>

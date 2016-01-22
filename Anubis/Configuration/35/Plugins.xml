@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<plugins>
-<plugin name="Hotep (Indicateurs) PDF Generator" resultType="6" assembly="TNS.AdExpress.Anubis.Hotep.dll" class="TNS.AdExpress.Anubis.Hotep.TreatementSystem" configurationFilePath="Configuration\35\Plugins\Hotep.xml" resultLongevity="10" resultsRoot="\\fitnses-dmzad01\AdExCustomerFiles"/>
-<plugin name="Miysis PDF Generator" resultType="7" assembly="TNS.AdExpress.Anubis.Miysis.dll" class="TNS.AdExpress.Anubis.Miysis.TreatementSystem" configurationFilePath="Configuration\35\Plugins\Miysis.xml" resultLongevity="10" resultsRoot="\\fitnses-dmzad01\AdExCustomerFiles"/>
-</plugins>  

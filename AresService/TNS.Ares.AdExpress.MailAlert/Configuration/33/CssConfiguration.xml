@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-	<cssStyles>
-		<cssStyle key="AdExpress" path="Css\AdExpress.css" />
-		<cssStyle key="MediaSchedule" path="Css\MediaSchedule.css" />
-		<cssStyle key="GenericUI" path="Css\GenericUI.css" />	
-	</cssStyles>

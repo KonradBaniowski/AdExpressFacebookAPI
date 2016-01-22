@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configurations>
-  <lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30234" productName="Ares Service treatment - PDF promo file Vp (Selket)" maxAvailableSlots="1" directoryName="33\Plugins\Selket.xml">
-    <moduleDescription description="Ares Service treatment -  PDF promo file Vp (Selket)" moduleId="22"/>
-  </lsClientConfiguration>
-
-</configurations>

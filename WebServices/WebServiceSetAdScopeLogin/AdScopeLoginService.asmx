@@ -1,1 +1,0 @@
-﻿<%@ WebService Language="C#" CodeBehind="AdScopeLoginService.asmx.cs" Class="WebServiceSetAdScopeLogin.AdScopeLoginService" %>

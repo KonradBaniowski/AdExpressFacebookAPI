@@ -1,4 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<layers>
-  <dataAccessLayer name="Default Trends data access layers" assemblyName="KMI.AdExpress.Aphrodite.DAL.Default.dll" class="KMI.AdExpress.Aphrodite.DAL.Default.TrendsDAL"/>
-</layers>

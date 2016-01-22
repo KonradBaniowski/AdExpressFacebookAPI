@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<configuration>
-	<!-- Frequency : valeur défini en seconde -->
-	<frequency value="900" />
-	<dataBaseConfiguration>
-		<dataBase description="AdExpress" user="adexpr03_proc_7" password="pushit76" tns="adexpr03.pige" pooling="false" timeout="120" /> 
-	</dataBaseConfiguration>
-</configuration>

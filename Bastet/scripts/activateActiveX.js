@@ -1,2 +1,0 @@
-﻿function activateActiveX(){if (navigator.appName == "Microsoft Internet Explorer") {var arrElements = new Array(3);arrElements[0] = "object";arrElements[1] = "embed";arrElements[2] = "applet";for (n = 0; n < arrElements.length; n++) {replaceObj = document.getElementsByTagName(arrElements[n]);for (i = 0; i < replaceObj.length; i++ ) {parentObj = replaceObj[i].parentNode;newHTML = parentObj.innerHTML;parentObj.removeChild(replaceObj[i]);parentObj.innerHTML = newHTML;}}}}
-

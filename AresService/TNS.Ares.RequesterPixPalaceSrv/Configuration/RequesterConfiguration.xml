@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configurations>
-  <!-- Config FR (33)-->
-  <aresConfigurations>
-    <lsClientConfiguration name="PixPalaceRequester" directoryName="PixPalace" familyId="128" familyName="PixPalace FR Requester Treatment service" monitorPort="30245" productName="PixPalace Requester">
-      <moduleDescription description="PixPalace Requester" moduleId="5"/>
-    </lsClientConfiguration>
-  </aresConfigurations>
-</configurations>

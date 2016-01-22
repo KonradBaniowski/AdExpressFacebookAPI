@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-  <layers>
-    <layer id="classification" name="layer of classification" assemblyName="TNS.AdExpressI.VP.Loader.Default.dll" class="TNS.AdExpressI.VP.Loader.Default.Classification.ClassifVeillePromo"/>
-    <layer id="classificationDAL" name="layer of classification" assemblyName="TNS.AdExpressI.VP.Loader.DAL.Default.dll" class="TNS.AdExpressI.VP.Loader.DAL.Default.Classification.ClassifVeillePromoDAL"/>
-    <layer id="rules" name="layer of rules" assemblyName="TNS.AdExpressI.VP.Loader.Default.dll" class="TNS.AdExpressI.VP.Loader.Default.Data.DataVeillePromo"/>
-    <layer id="dataAccess" name="layer of data access" assemblyName="TNS.AdExpressI.VP.Loader.DAL.Default.dll" class="TNS.AdExpressI.VP.Loader.DAL.Default.Data.DataVeillePromoDAL"/>
-  </layers>
-</configuration>
