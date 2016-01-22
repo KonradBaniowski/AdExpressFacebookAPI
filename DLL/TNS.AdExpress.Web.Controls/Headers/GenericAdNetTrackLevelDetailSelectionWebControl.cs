@@ -287,14 +287,19 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			switch(currentDetailLevelItem.Id){
 					#region Annonceur produit, famille, classe, groupe, variété 
 				case DetailLevelItemInformation.Levels.sector:
-				case DetailLevelItemInformation.Levels.subSector:
-				case DetailLevelItemInformation.Levels.group:
+				case DetailLevelItemInformation.Levels.subSector:			
 				case DetailLevelItemInformation.Levels.advertiser:
 					if(// Droit sur les niveaux de détail produit
 						CheckProductDetailLevelAccess())return(true);
 					return(false);
+                case DetailLevelItemInformation.Levels.group:
+                    if (// Droit sur les niveaux de détail group
+                        CheckProductDetailLevelAccess() &&
+                        _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_GROUP_LEVEL_ACCESS_FLAG)
+                        ) return (true);
+                    return (false);
                 case DetailLevelItemInformation.Levels.segment:
-                    if (// Droit sur les niveaux de détail produit
+                    if (// Droit sur les niveaux de détail variété
                         CheckProductDetailLevelAccess() &&
                         _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG)
                         ) return (true);

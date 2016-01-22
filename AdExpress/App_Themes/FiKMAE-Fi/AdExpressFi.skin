@@ -1253,7 +1253,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrSelections:vehicleselectionwebcontrol 
                            runat="server" 
                            CssClass="txtViolet11Bold"
-CheckActiveVehicle="False"
+CheckActiveVehicle="True"
 />
 
 <%-- generic media schedule web control : used to display a generic media plan --%>

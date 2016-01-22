@@ -137,7 +137,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("<div id=\"newsContent\" style=\"display:none;\">"); 
                 //output.Write("<div class=\"" + _titleFont + " " + _titleStyle + "\">" + GestionWeb.GetWebWord(3008, _session.SiteLanguage) + "</div>");
                 //output.Write("<div class=\"" + _contentFont + "\">" + GestionWeb.GetWebWord(3009, _session.SiteLanguage) + "</div>");
-                output.Write("<div class=\"" + _contentFont + "\"><p style=\"text-align:center\"><a href=\"http://ow.ly/JFxzl\"  target=\"_blank\"><img src=\"/Images/AdExpress Final_ver.png\" width=\"500\"/></a></p></div>");
+                output.Write("<div class=\"" + _contentFont + "\"><p style=\"text-align:center\"><a href=\"http://adintelligence.kantarmedia.fr/ressources/livres-blancs/6-etapes-cles-pour-devenir-plus-performant-en-paid-search?utm_source=Adexpress&utm_medium=Insale&utm_campaign=6%C3%A9tapescl%C3%A9sPPC\"  target=\"_blank\"><img src=\"/Images/AdExpress Final_ver.png\" width=\"500\"/></a></p></div>");
                 output.Write("</div>");
             }
 

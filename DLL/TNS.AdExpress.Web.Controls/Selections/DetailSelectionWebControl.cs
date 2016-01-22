@@ -41,6 +41,7 @@ using TNS.AdExpress.Domain.CampaignTypes;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.DB;
 
 #endregion
 
@@ -1488,7 +1489,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <returns>HTML</returns>
         private string GetPurchaseModeSelected(WebSession webSession) {
             var html = new StringBuilder();
-            if (WebApplicationParameters.UsePurchaseMode) {
+            if (WebApplicationParameters.UsePurchaseMode && webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
+            {
                 if (VehiclesInformation.Contains(Constantes.Classification.DB.Vehicles.names.mms)) {
 
                     Dictionary<Int64, VehicleInformation> VehicleInformationList = webSession.GetVehiclesSelected();

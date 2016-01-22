@@ -1233,7 +1233,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
         /// <returns>Sql Purchase Mode selected Clause</returns>
         protected virtual string GetPurchaseModeClause(string prefix) {
             var sql = new StringBuilder();
-            if (WebApplicationParameters.UsePurchaseMode) {
+            if (WebApplicationParameters.UsePurchaseMode && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
+            {
                 var vehicleInfoList = _session.GetVehiclesSelected();
                 if (vehicleInfoList.ContainsKey(VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId)) {
                     string purchaseModeIdList = _session.SelectedPurchaseModeList;

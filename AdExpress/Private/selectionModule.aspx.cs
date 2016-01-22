@@ -26,6 +26,7 @@ using System.Reflection;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Constantes.DB;
 
 namespace AdExpress
 {
@@ -259,7 +260,7 @@ namespace AdExpress
                     _webSession.SortKey = string.Empty;
 
                     _webSession.SelectedBannersFormatList = string.Empty;
-                    if (WebApplicationParameters.UsePurchaseMode)
+                    if (WebApplicationParameters.UsePurchaseMode && _webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
                     {
                         var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
                         _webSession.SelectedPurchaseModeList = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());

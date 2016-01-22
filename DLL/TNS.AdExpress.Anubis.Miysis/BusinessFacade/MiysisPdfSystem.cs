@@ -596,6 +596,13 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             }
             #endregion
 
+            //tsest
+
+            byte[] data = this.ConvertHtmlToSnapJpgByte(html.ToString(),
+            WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].PdfContentEncoding,
+            WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+            _config.WebServer);
+
             html.Append("</TABLE>");
 
             ConvertHtmlToPDF(html.ToString(),

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<medias>
+  <media id="1300" label="NOTRE TEMPS" latestBlurDate="20150101" periodicity="monthly"/>
+  <media id="1320" label="CHALLENGES" latestBlurDate="20150108" periodicity="weekly"/>
+  <media id="1365" label="L OBS" latestBlurDate="20150122" periodicity="weekly"/>
+  <media id="1374" label="PELERIN" latestBlurDate="20150122" periodicity="weekly"/>
+  <media id="1387" label="RUSTICA L HEBDO JARDIN" latestBlurDate="20150123" periodicity="weekly"/>
+  <media id="1390" label="SCIENCES ET AVENIR" latestBlurDate="20150201" periodicity="monthly"/>
+  <media id="1395" label="SYSTEME D" latestBlurDate="20150101" periodicity="monthly"/>
+  <media id="1576" label="DETOURS EN FRANCE" latestBlurDate="20150201" periodicity="monthly"/>
+  <media id="1592" label="SANTE MAGAZINE" latestBlurDate="20150201" periodicity="monthly"/>
+  <media id="1596" label="ALTERNATIVES ECO." latestBlurDate="20150101" periodicity="monthly"/>
+  <media id="4171" label="DETENTE JARDIN" latestBlurDate="20150101" periodicity="bimonthly"/>
+  <media id="7230" label="INROCKUPTIBLES HEBDO" latestBlurDate="20150121" periodicity="weekly"/>
+  <media id="8902" label="REGAL" latestBlurDate="20150101" periodicity="monthly"/>
+  <media id="9103" label="REVENU HEBDO" latestBlurDate="20150123" periodicity="weekly"/>
+  <media id="9109" label="REVENU PLACEMENT" latestBlurDate="20150101" periodicity="monthly"/>
+  <media id="9178" label="20 MINUTES GRAND PARIS" latestBlurDate="20150127" periodicity="daily"/>
+  <media id="9260" label="MAISON CREATIVE" latestBlurDate="20150101" periodicity="monthly"/>
+  <media id="9992" label="DOSSIER FAMILIAL" latestBlurDate="20150101" periodicity="monthly"/>
+  <media id="9364" label="NOUVEL ECONOMISTE HEBDO" latestBlurDate="20150123" periodicity="weekly"/>
+  <media id="15940" label="20 MINUTES TED" latestBlurDate="20150127" periodicity="daily"/>
+  <media id="24328" label="BOTTIN GOURMAND" latestBlurDate="20150101" periodicity="bimonthly"/>
+</medias>

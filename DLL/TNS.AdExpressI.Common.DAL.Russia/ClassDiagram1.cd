@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TNS.AdExpressI.Common.DAL.Russia.CommonDAL" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAIAAEAAACQAAAIACAAAAQAAQAsZADAAgIAwAA=</HashCode>
+      <FileName>CommonDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.AdTypeClassification" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAA=</HashCode>
+      <FileName>AdTypeClassification.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.DetailLevel" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAIIAAAAAkQgAAAADAAACAAAAAQABIAAAJAAAAAAQ=</HashCode>
+      <FileName>DetailLevel.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.MediaClassification" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgQAAAAAAAgAEAACAAAgAAAAAAAAASAAAAAAAAAA=</HashCode>
+      <FileName>MediaClassification.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.MediaRight" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAJAAAAAAAAAAAABAAAAAAAAAIABAAABAAAAAAAA=</HashCode>
+      <FileName>MediaRight.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.ProductClassification" Collapsed="true">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAICACABAACAAEAAAABAAAQACgAAAAAAAAAAAE=</HashCode>
+      <FileName>ProductClassification.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.ProductLevel" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAIAAAAAAAAAABAAASAAA=</HashCode>
+      <FileName>ProductLevel.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.ProductRight" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACIAQAAAAAAIABAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductRight.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.ProfessionClassification" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAIAAAAgAAAAAQAAAAAAAQAACAA=</HashCode>
+      <FileName>ProfessionClassification.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNS.AdExpressI.Common.DAL.Russia.RegionClassification" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgQAAAAAAAAAAAACAAAgAAAAAAAAASAAAAAAAAAA=</HashCode>
+      <FileName>RegionClassification.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

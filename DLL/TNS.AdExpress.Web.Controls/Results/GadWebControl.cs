@@ -60,6 +60,7 @@ namespace TNS.AdExpress.Web.Controls.Results
             js.Append("}");
             js.Append("\r\n</script>");
             if (!Page.ClientScript.IsClientScriptBlockRegistered("FicheScript")) Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FicheScript", js.ToString());
+            //if (!Page.ClientScript.IsClientScriptBlockRegistered("OpenWindow")) Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenWindow", TNS.AdExpress.Web.Functions.Script.OpenWindow());
             #endregion
         }
         #endregion

@@ -24,4 +24,5 @@
   <flag id="266" description="Accéder Spot à Spot TNT"/>
   <flag id="271" description="Accès aux Produits (Finlande)"/>
   <flag id="293" description="Accès aux Variétés (Finlande)"/>
+  <flag id="294" description="Accès aux Groupes (Finlande)"/>
 </flags>

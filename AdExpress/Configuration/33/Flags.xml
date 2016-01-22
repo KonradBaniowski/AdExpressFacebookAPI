@@ -40,5 +40,6 @@
   <flag id="343" description="Accès Marque Media"/>
   <flag id="348" description="Accès Agences Media DISPLAY"/>
   <flag id="353" description="Accès aux volumes du Media Display"/>
-  <flag id="358" description="Accès Agences Media SEARCH"/>
+  <!--<flag id="359" description="Accès Agences Media SEARCH"/>-->
+  <flag id="358" description="Accès Mode de vente Display"/>
 </flags>
