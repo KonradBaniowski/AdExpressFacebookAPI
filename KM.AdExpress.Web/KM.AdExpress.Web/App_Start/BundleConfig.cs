@@ -9,9 +9,7 @@ namespace KM.AdExpress.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                      "~/Scripts/jquery-{version}.js",
-                      "~/libs/jquery/jquery/dist/jquery.js",
-                      "~/libs/jquery/bootstrap/dist/js/bootstrap.js"));
+                      "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -19,29 +17,26 @@ namespace KM.AdExpress.Web
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
-                      "~/Scripts/js/app.min.js",
-                      "~/Scripts/js/app.src.js",
-                      "~/Scripts/js/ui-accordion.js",
-                      "~/Scripts/js/ui-client.js",
-                      "~/Scripts/js/ui-count.js",
-                      "~/Scripts/js/ui-jp.config.js",
-                      "~/Scripts/js/ui-jp.js",
-                      "~/Scripts/js/ui-load.js",
-                      "~/Scripts/js/ui-nav.js",
-                      "~/Scripts/js/ui-toggle.js"));
+                      "~/Scripts/custom/app.min.js",
+                      "~/Scripts/custom/app.src.js",
+                      "~/Scripts/custom/ui-accordion.js",
+                      "~/Scripts/custom/ui-client.js",
+                      "~/Scripts/custom/ui-count.js",
+                      "~/Scripts/custom/ui-jp.config.js",
+                      "~/Scripts/custom/ui-jp.js",
+                      "~/Scripts/custom/ui-load.js",
+                      "~/Scripts/custom/ui-nav.js",
+                      "~/Scripts/custom/ui-toggle.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/css/animate.css",
+                      "~/Content/css/font-awesome.min.css",
+                      "~/Content/css/bootstrap.css",
                       "~/Content/css/app.css",
                       "~/Content/css/count.css",
                       "~/Content/css/font.css"));
-
-            bundles.Add(new StyleBundle("~/lib/css").Include(
-                      "~/libs/assets/animate.css/animate.css",
-                      "~/libs/assets/font-awesome/css/font-awesome.min.css",
-                      "~/libs/assets/simple-line-icons/css/simple-line-icons.css",
-                      "~/libs/jquery/bootstrap/dist/css/bootstrap.css"));
 
         }
     }
