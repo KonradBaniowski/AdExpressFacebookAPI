@@ -4,58 +4,65 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
 <div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+    <div class="col-xs-12 login-page">
+        <div class="col-xs-12 centre">
+
+            <div class="col-md-6">
+                <div class="margin-t padder-v text-center">
+                    <h1><strong>AdExpress </strong>c'est ...</h1>
+                </div>
+                <div class="text-center">
+                    <h3><strong>AdExpress </strong>en quelques chiffres</h3>
+                    <p>&nbsp;</p>
+                    <div class="count">
+                        <div class="b-r-w"><span class="text1">0</span><h3>Marques</h3></div>
+                        <div class="b-r-w"><span class="text2">0</span><h3>Produits</h3></div>
+                        <div><span class="text3">0</span><h3>Plan Média</h3></div>
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-2">&nbsp;</div>
+
+            <div class="col-md-4">
+                <div class="panel-sans text-left">
+                    <div class="panel-heading text-left">
+                        <i class="fa glyphicon glyphicon-user text-lg text-primary-lt "></i>
+                        <h4 class="font-normal m-t-none m-b-md text-primary-lt">Connexion</h4>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+
+
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-validation padder-v padder bg-dark", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="text-danger text-center">
+                            @Html.ValidationMessage("erreurAuthentification")
                         </div>
-                    </div>
+                        <div class="list-group list-group-sm">
+                            @Html.ValidationMessageFor(model => model.Login)
+                            <div class="list-group-item inputs">
+                                @Html.TextBoxFor(m => m.Login, new { @class = "form-control no-border", @placeholder = "Login" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Password)
+                            <div class="list-group-item inputs">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control no-border", @placeholder = "Mot de passe" })
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-valider btn-block"> Accéder&nbsp;<i class="fa fa-check"></i></button>
+                        <div class="text-right m-t m-b">@Html.ActionLink("Mot de passe oublié?", "ForgotPassword", new object { }, new { @class = "orange" })</div>
+                        <h4 class="font-normal m-t-none m-b-md text-primary-lt">+ Pas encore client?</h4>
+                        @Html.ActionLink("Demander votre accès", "Register", new object { }, new { @class = "btn btn-inscription btn-block white" })
+                    }
+
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
+            </div>
+
+        </div>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+
 </div>
 
 @section Scripts {

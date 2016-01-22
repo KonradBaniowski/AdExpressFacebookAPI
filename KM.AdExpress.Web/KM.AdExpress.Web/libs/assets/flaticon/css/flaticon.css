@@ -1,0 +1,319 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+    font-family: Flaticon;      
+   font-style: normal;
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: grayscale;
+}
+.flaticon-audio bars:before {
+	content: "\e000";
+}
+.flaticon-balance7:before {
+	content: "\e001";
+}
+.flaticon-bank17:before {
+	content: "\e002";
+}
+.flaticon-basket36:before {
+	content: "\e003";
+}
+.flaticon-bills5:before {
+	content: "\e004";
+}
+.flaticon-bitcoin103:before {
+	content: "\e005";
+}
+.flaticon-board2:before {
+	content: "\e006";
+}
+.flaticon-book bag:before {
+	content: "\e007";
+}
+.flaticon-buy12:before {
+	content: "\e008";
+}
+.flaticon-calendar184:before {
+	content: "\e009";
+}
+.flaticon-calendar3:before {
+	content: "\e00a";
+}
+.flaticon-chart5:before {
+	content: "\e00b";
+}
+.flaticon-chart6:before {
+	content: "\e00c";
+}
+.flaticon-chat bubble:before {
+	content: "\e00d";
+}
+.flaticon-circular clock1:before {
+	content: "\e00e";
+}
+.flaticon-circular clock:before {
+	content: "\e00f";
+}
+.flaticon-clipboard1:before {
+	content: "\e010";
+}
+.flaticon-cloudy52:before {
+	content: "\e011";
+}
+.flaticon-coffee cup1:before {
+	content: "\e012";
+}
+.flaticon-computer203:before {
+	content: "\e013";
+}
+.flaticon-computer206:before {
+	content: "\e014";
+}
+.flaticon-computer monitor:before {
+	content: "\e015";
+}
+.flaticon-counting6:before {
+	content: "\e016";
+}
+.flaticon-currency14:before {
+	content: "\e017";
+}
+.flaticon-currency15:before {
+	content: "\e018";
+}
+.flaticon-dart19:before {
+	content: "\e019";
+}
+.flaticon-diamond:before {
+	content: "\e01a";
+}
+.flaticon-disc33:before {
+	content: "\e01b";
+}
+.flaticon-document205:before {
+	content: "\e01c";
+}
+.flaticon-document206:before {
+	content: "\e01d";
+}
+.flaticon-documents1:before {
+	content: "\e01e";
+}
+.flaticon-dollar symbol1:before {
+	content: "\e01f";
+}
+.flaticon-drink91:before {
+	content: "\e020";
+}
+.flaticon-electronics1:before {
+	content: "\e021";
+}
+.flaticon-equalizer:before {
+	content: "\e022";
+}
+.flaticon-euro coin:before {
+	content: "\e023";
+}
+.flaticon-gallery1:before {
+	content: "\e024";
+}
+.flaticon-geography6:before {
+	content: "\e025";
+}
+.flaticon-gold ingots:before {
+	content: "\e026";
+}
+.flaticon-identification11:before {
+	content: "\e027";
+}
+.flaticon-letter2:before {
+	content: "\e028";
+}
+.flaticon-lifeguard6:before {
+	content: "\e029";
+}
+.flaticon-light102:before {
+	content: "\e02a";
+}
+.flaticon-location1:before {
+	content: "\e02b";
+}
+.flaticon-loud1:before {
+	content: "\e02c";
+}
+.flaticon-magnifier58:before {
+	content: "\e02d";
+}
+.flaticon-map point1:before {
+	content: "\e02e";
+}
+.flaticon-market1:before {
+	content: "\e02f";
+}
+.flaticon-maths26:before {
+	content: "\e030";
+}
+.flaticon-maths27:before {
+	content: "\e031";
+}
+.flaticon-money163:before {
+	content: "\e032";
+}
+.flaticon-money card1:before {
+	content: "\e033";
+}
+.flaticon-money card:before {
+	content: "\e034";
+}
+.flaticon-money currency:before {
+	content: "\e035";
+}
+.flaticon-negative:before {
+	content: "\e036";
+}
+.flaticon-newspaper18:before {
+	content: "\e037";
+}
+.flaticon-notebook83:before {
+	content: "\e038";
+}
+.flaticon-nut1:before {
+	content: "\e039";
+}
+.flaticon-padlock75:before {
+	content: "\e03a";
+}
+.flaticon-paperclip1:before {
+	content: "\e03b";
+}
+.flaticon-paper plane:before {
+	content: "\e03c";
+}
+.flaticon-pencil1:before {
+	content: "\e03d";
+}
+.flaticon-percentage1:before {
+	content: "\e03e";
+}
+.flaticon-phone11:before {
+	content: "\e03f";
+}
+.flaticon-photo camera2:before {
+	content: "\e040";
+}
+.flaticon-physics1:before {
+	content: "\e041";
+}
+.flaticon-picture42:before {
+	content: "\e042";
+}
+.flaticon-pound:before {
+	content: "\e043";
+}
+.flaticon-power2:before {
+	content: "\e044";
+}
+.flaticon-present27:before {
+	content: "\e045";
+}
+.flaticon-print52:before {
+	content: "\e046";
+}
+.flaticon-profiles avatar:before {
+	content: "\e047";
+}
+.flaticon-purse9:before {
+	content: "\e048";
+}
+.flaticon-read7:before {
+	content: "\e049";
+}
+.flaticon-rubbish12:before {
+	content: "\e04a";
+}
+.flaticon-savings3:before {
+	content: "\e04b";
+}
+.flaticon-schedule4:before {
+	content: "\e04c";
+}
+.flaticon-science28:before {
+	content: "\e04d";
+}
+.flaticon-sheet5:before {
+	content: "\e04e";
+}
+.flaticon-shopping1:before {
+	content: "\e04f";
+}
+.flaticon-shopping2:before {
+	content: "\e050";
+}
+.flaticon-shop:before {
+	content: "\e051";
+}
+.flaticon-stormy5:before {
+	content: "\e052";
+}
+.flaticon-telephone113:before {
+	content: "\e053";
+}
+.flaticon-telephone114:before {
+	content: "\e054";
+}
+.flaticon-telephone115:before {
+	content: "\e055";
+}
+.flaticon-telephone116:before {
+	content: "\e056";
+}
+.flaticon-telephone117:before {
+	content: "\e057";
+}
+.flaticon-telesales:before {
+	content: "\e058";
+}
+.flaticon-test3:before {
+	content: "\e059";
+}
+.flaticon-text166:before {
+	content: "\e05a";
+}
+.flaticon-text168:before {
+	content: "\e05b";
+}
+.flaticon-think4:before {
+	content: "\e05c";
+}
+.flaticon-think5:before {
+	content: "\e05d";
+}
+.flaticon-thumb56:before {
+	content: "\e05e";
+}
+.flaticon-tie7:before {
+	content: "\e05f";
+}
+.flaticon-time:before {
+	content: "\e060";
+}
+.flaticon-users30:before {
+	content: "\e061";
+}
+.flaticon-withdrawing:before {
+	content: "\e062";
+}
+.flaticon-woman154:before {
+	content: "\e063";
+}

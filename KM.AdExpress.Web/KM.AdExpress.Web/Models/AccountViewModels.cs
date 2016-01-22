@@ -48,12 +48,11 @@ namespace KM.AdExpress.Web.Models
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Required(ErrorMessage = "Le champ Login est requis.")]
+        [Display(Name = "Login")]
+        public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Le champ Password est requis.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
