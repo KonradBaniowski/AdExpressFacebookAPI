@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.DataAccess;
 using Kantar.AdExpress.Service.Core.Domain.Identity;
 using Kantar.AdExpress.Service.DataAccess.Extensions;
 using Kantar.AdExpress.Service.DataAccess.Identity;
@@ -18,9 +19,11 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
     {
         private readonly UserManager<ApplicationIdentityUser, int> _userManager;
         private readonly IAuthenticationManager _authenticationManager;
+        private readonly IUnitOfWork _uow;
         private bool _disposed;
-        public ApplicationUserManager(UserManager<ApplicationIdentityUser, int> userManager, IAuthenticationManager authenticationManager)
+        public ApplicationUserManager(UserManager<ApplicationIdentityUser, int> userManager, IAuthenticationManager authenticationManager, IUnitOfWork uow)
         {
+            _uow = uow;
             _userManager = userManager;
             _authenticationManager = authenticationManager;
         }
@@ -142,10 +145,14 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             _authenticationManager.Challenge(properties, authenticationTypes);
         }
 
-        public virtual async Task<bool> CheckPasswordAsync(AppUser user, string password)
+        public virtual async Task<bool> CheckPasswordAsync(Core.Domain.Identity.AppUser user, string password)
         {
+            //var applicationUser = user.ToApplicationUser();
+            //var flag = await _userManager.CheckPasswordAsync(applicationUser, password).ConfigureAwait(false);
+            //user.CopyApplicationIdentityUserProperties(applicationUser);
+            //return flag;
             var applicationUser = user.ToApplicationUser();
-            var flag = await _userManager.CheckPasswordAsync(applicationUser, password).ConfigureAwait(false);
+            var flag = await _uow.LoginRepository.CheckPasswordAsync(applicationUser.UserName, password);
             user.CopyApplicationIdentityUserProperties(applicationUser);
             return flag;
         }
@@ -157,7 +164,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return identityResult.ToApplicationIdentityResult();
         }
 
-        public virtual async Task<ApplicationIdentityResult> CreateAsync(AppUser user)
+        public virtual async Task<ApplicationIdentityResult> CreateAsync(Core.Domain.Identity.AppUser user)
         {
             var applicationUser = user.ToApplicationUser();
             var identityResult = await _userManager.CreateAsync(applicationUser).ConfigureAwait(false);
@@ -165,7 +172,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return identityResult.ToApplicationIdentityResult();
         }
 
-        public virtual async Task<ApplicationIdentityResult> CreateAsync(AppUser user, string password)
+        public virtual async Task<ApplicationIdentityResult> CreateAsync(Core.Domain.Identity.AppUser user, string password)
         {
             var applicationUser = user.ToApplicationUser();
             var identityResult = await _userManager.CreateAsync(applicationUser, password).ConfigureAwait(false);
@@ -173,7 +180,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return identityResult.ToApplicationIdentityResult();
         }
 
-        public virtual ClaimsIdentity CreateIdentity(AppUser user, string authenticationType)
+        public virtual ClaimsIdentity CreateIdentity(Core.Domain.Identity.AppUser user, string authenticationType)
         {
             var applicationUser = user.ToApplicationUser();
             var claimsIdentity = _userManager.CreateIdentity(applicationUser, authenticationType);
@@ -181,7 +188,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return claimsIdentity;
         }
 
-        public virtual async Task<ClaimsIdentity> CreateIdentityAsync(AppUser user, string authenticationType)
+        public virtual async Task<ClaimsIdentity> CreateIdentityAsync(Core.Domain.Identity.AppUser user, string authenticationType)
         {
             var applicationUser = user.ToApplicationUser();
             var claimsIdentity = await _userManager.CreateIdentityAsync(applicationUser, authenticationType).ConfigureAwait(false);
@@ -189,7 +196,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return claimsIdentity;
         }
 
-        public virtual ApplicationIdentityResult Create(AppUser user)
+        public virtual ApplicationIdentityResult Create(Core.Domain.Identity.AppUser user)
         {
             var applicationUser = user.ToApplicationUser();
             var identityResult = _userManager.Create(applicationUser);
@@ -197,7 +204,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return identityResult.ToApplicationIdentityResult();
         }
 
-        public virtual ApplicationIdentityResult Create(AppUser user, string password)
+        public virtual ApplicationIdentityResult Create(Core.Domain.Identity.AppUser user, string password)
         {
             var applicationUser = user.ToApplicationUser();
             var identityResult = _userManager.Create(applicationUser, password);
@@ -235,19 +242,19 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return await SignInOrTwoFactor(user, isPersistent).ConfigureAwait(false);
         }
 
-        public virtual async Task<AppUser> FindAsync(ApplicationUserLoginInfo login)
+        public virtual async Task<Core.Domain.Identity.AppUser> FindAsync(ApplicationUserLoginInfo login)
         {
             var user = await _userManager.FindAsync(login.ToUserLoginInfo()).ConfigureAwait(false);
             return user.ToAppUser();
         }
 
-        public virtual async Task<AppUser> FindAsync(string userName, string password)
+        public virtual async Task<Core.Domain.Identity.AppUser> FindAsync(string userName, string password)
         {
             var user = await _userManager.FindAsync(userName, password).ConfigureAwait(false);
             return user.ToAppUser();
         }
 
-        public virtual async Task<AppUser> FindByEmailAsync(string email)
+        public virtual async Task<Core.Domain.Identity.AppUser> FindByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email).ConfigureAwait(false);
             return user.ToAppUser();
@@ -258,16 +265,26 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return _userManager.FindById(userId).ToAppUser();
         }
 
-        public virtual async Task<AppUser> FindByIdAsync(int userId)
+        public virtual async Task<Core.Domain.Identity.AppUser> FindByIdAsync(int userId)
         {
             var user = await _userManager.FindByIdAsync(userId).ConfigureAwait(false);
             return user.ToAppUser();
         }
 
-        public virtual async Task<AppUser> FindByNameAsync(string userName)
+        public virtual async Task<Core.Domain.Identity.AppUser> FindByNameAsync(string userName)
         {
-            var user = await _userManager.FindByNameAsync(userName).ConfigureAwait(false);
-            return user.ToAppUser();
+            //Implémentation original
+            //var user = await _userManager.FindByNameAsync(userName).ConfigureAwait(false);
+            //return user.ToAppUser();
+            //OVERRIDE MAU
+            var user = await _uow.LoginRepository.GetLogin(userName);
+            ApplicationIdentityUser aIdentityUser = new ApplicationIdentityUser();
+            aIdentityUser.Id = user.Id;
+            aIdentityUser.Email = user.LoginName;
+            aIdentityUser.TwoFactorEnabled = false;
+            aIdentityUser.LockoutEnabled = false;
+            aIdentityUser.UserName = user.LoginName;
+            return aIdentityUser.ToAppUser();
         }
 
         public virtual AppUser FindByName(string userName)
@@ -401,11 +418,11 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
 
         public virtual async Task<int?> GetVerifiedUserIdAsync()
         {
-            var result = await _authenticationManager.AuthenticateAsync(DefaultAuthenticationTypes.TwoFactorCookie).ConfigureAwait(false);
-            if (result != null && result.Identity != null && !String.IsNullOrEmpty(result.Identity.GetUserId()))
-            {
-                return int.Parse(result.Identity.GetUserId());
-            }
+            //var result = await _authenticationManager.AuthenticateAsync(DefaultAuthenticationTypes.TwoFactorCookie).ConfigureAwait(false);
+            //if (result != null && result.Identity != null && !String.IsNullOrEmpty(result.Identity.GeApplicationIdentityUserId()))
+            //{
+            //    return int.Parse(result.Identity.GeApplicationIdentityUserId());
+            //}
             return null;
         }
 
@@ -452,23 +469,30 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             {
                 return SignInStatus.Failure;
             }
-            if (await IsLockedOutAsync(user.Id).ConfigureAwait(false))
-            {
-                return SignInStatus.LockedOut;
-            }
+            //on ne lock pas les utilisateurs
+            //if (await IsLockedOutAsync(user.Id).ConfigureAwait(false))
+            //{
+            //    return SignInStatus.LockedOut;
+            //}
             if (await CheckPasswordAsync(user, password).ConfigureAwait(false))
             {
-                return await SignInOrTwoFactor(user, isPersistent).ConfigureAwait(false);
+                await SignInAsync(user, isPersistent, false).ConfigureAwait(false);
+                return SignInStatus.Success;
+                //Implémentation original on ne loggue pas en twofactor
+                //return await SignInOrTwoFactor(user, isPersistent).ConfigureAwait(false);
             }
-            if (shouldLockout)
-            {
-                // If lockout is requested, increment access failed count which might lock out the user
-                await AccessFailedAsync(user.Id).ConfigureAwait(false);
-                if (await IsLockedOutAsync(user.Id).ConfigureAwait(false))
-                {
-                    return SignInStatus.LockedOut;
-                }
-            }
+            //Implémentation original
+            //if (shouldLockout)
+            //{
+            //    // If lockout is requested, increment access failed count which might lock out the user
+            //    await AccessFailedAsync(user.Id).ConfigureAwait(false);
+            //    if (await IsLockedOutAsync(user.Id).ConfigureAwait(false))
+            //    {
+            //        return SignInStatus.LockedOut;
+            //    }
+            //}
+
+            //forcement trop loin 
             return SignInStatus.Failure;
         }
 
@@ -597,7 +621,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return identityResult.ToApplicationIdentityResult();
         }
 
-        public virtual async Task<SignInStatus> SignInOrTwoFactor(AppUser user, bool isPersistent)
+        public virtual async Task<SignInStatus> SignInOrTwoFactor(Core.Domain.Identity.AppUser user, bool isPersistent)
         {
             if (await GetTwoFactorEnabledAsync(user.Id).ConfigureAwait(false) &&
                 !await TwoFactorBrowserRememberedAsync(user.Id).ConfigureAwait(false))
@@ -622,7 +646,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             _authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, identities);
         }
 
-        public virtual void SignIn(AppUser user, bool isPersistent, bool rememberBrowser)
+        public virtual void SignIn(Core.Domain.Identity.AppUser user, bool isPersistent, bool rememberBrowser)
         {
             // Clear any partial cookies from external or two factor partial sign ins
             SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
@@ -638,7 +662,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             }
         }
 
-        public virtual async Task SignInAsync(AppUser user, bool isPersistent, bool rememberBrowser)
+        public virtual async Task SignInAsync(Core.Domain.Identity.AppUser user, bool isPersistent, bool rememberBrowser)
         {
             // Clear any partial cookies from external or two factor partial sign ins
             SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
@@ -709,12 +733,12 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             return identityResult.ToApplicationIdentityResult();
         }
 
-        public virtual IEnumerable<AppUser> GetUsers()
+        public virtual IEnumerable<Core.Domain.Identity.AppUser> GeApplicationIdentityUsers()
         {
             return _userManager.Users.ToList().ToAppUserList();
         }
 
-        public virtual async Task<IEnumerable<AppUser>> GetUsersAsync()
+        public virtual async Task<IEnumerable<Core.Domain.Identity.AppUser>> GeApplicationIdentityUsersAsync()
         {
             var users = await _userManager.Users.ToListAsync().ConfigureAwait(false);
             return users.ToAppUserList();

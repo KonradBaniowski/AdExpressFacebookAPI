@@ -1,14 +1,10 @@
-﻿using AutoMapper;
-using Kantar.AdExpress.Service.Contracts;
-using Kantar.AdExpress.Service.Core.BusinessService;
+﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Kantar.AdExpress.Service.Contracts.Mau;
 using Kantar.AdExpress.Service.Core.DataAccess;
+using Kantar.AdExpress.Service.DataAccess.Identity;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.Identity
 {
@@ -32,7 +28,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.Identity
             //return Mapper.Map<SignInStatus>(res);
         }
 
-        public async Task<ApplicationIdentityResult> Register(AppUser user, string password)
+        public async Task<ApplicationIdentityResult> Register(Core.Domain.Identity.AppUser user, string password)
         {
 
             var res = await _userManager.CreateAsync(user, password);
@@ -40,7 +36,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.Identity
             //return Mapper.Map<SignInStatus>(res);
         }
 
-        public KantarUserModel GetUser(string login, string password)
+        public KantarUserModel GeApplicationIdentityUser(string login, string password)
         {
             var contract = new KantarUserModel();
             var res = _unitOfWork.LoginRepository.FirstOrDefault(e => e.LoginName == login.ToUpper()
@@ -51,6 +47,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.Identity
              
             return contract;
         }
+
+        //public ApplicationIdentityUser get()
+        //{
+        //    return _userManager.sig
+        //}
 
 
     }

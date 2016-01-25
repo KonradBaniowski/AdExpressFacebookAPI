@@ -1,21 +1,18 @@
 ﻿using Autofac;
-using Autofac.Integration.WebApi;
-using Kantar.AdExpress.Bootstrapper;
+using Autofac.Integration.Mvc;
 using Kantar.AdExpress.Service.BusinessLogic.Identity;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.DataAccess;
 using Kantar.AdExpress.Service.DataAccess;
 using Kantar.AdExpress.Service.DataAccess.Identity;
 using Kantar.AdExpress.Service.DataAccess.IdentityImpl;
+using Km.AdExpressClientWeb;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using System.Data.Entity;
-using System.Reflection;
 using System.Web;
-using System.Web.Http;
-
-//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(IocConfig), "RegisterDependencies")]
+using System.Web.Mvc;
 
 namespace Kantar.AdExpress.Bootstrapper
 {
@@ -24,27 +21,18 @@ namespace Kantar.AdExpress.Bootstrapper
         public static void RegisterDependencies(IAppBuilder app)
         {
             var builder = new ContainerBuilder();
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterModule<AutofacWebTypesModule>();
+            //API
+            //var config = new HttpConfiguration();
+            //var toto = Assembly.Load("Kantar.AdExpress.ServiceRest");
+            //builder.RegisterApiControllers(toto);
 
-            var config = new HttpConfiguration();
-
-            var toto = Assembly.Load("Kantar.AdExpress.ServiceRest");
-
-            builder.RegisterApiControllers(toto);
-
-            //DATA
-            builder.RegisterType<AdExpressContext>().AsSelf();
-            builder.RegisterType<IdentityContext>().AsSelf();
-            builder.RegisterType<AdExpressUnitOfWork>().As<IUnitOfWork>();
-            
-            //IDENTITY
+            #region ...identity
             builder.RegisterType<ApplicationUserManager>().As<IApplicationUserManager>();
             builder.RegisterType<ApplicationRoleManager>().As<IApplicationRoleManager>();
             builder.RegisterType(typeof(ApplicationIdentityUser)).As(typeof(IUser<int>));
-            //builder.Register<IdentityContext>(b =>
-            //{
-            //    var context = new IdentityContext();
-            //    return context;
-            //});
+
             builder.Register(b => b.Resolve<IdentityContext>() as DbContext);
             builder.Register(b =>
             {
@@ -60,16 +48,25 @@ namespace Kantar.AdExpress.Bootstrapper
             builder.Register(b => IdentityFactory.CreateRoleManager(b.Resolve<DbContext>()));
             builder.Register(b => HttpContext.Current.GetOwinContext().Authentication);
 
-            //BL
+            #endregion
+            //DATA
+            builder.RegisterType<AdExpressContext>().AsSelf();
+            builder.RegisterType<IdentityContext>().AsSelf();
+            builder.RegisterType<AdExpressUnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<LoginService>().As<ILoginService>();
+
             //BUILD
             var container = builder.Build();
-            var resolver = new AutofacWebApiDependencyResolver(container);
-            config.DependencyResolver = resolver;
-            GlobalConfiguration.Configuration.DependencyResolver = resolver;
-            app.UseAutofacMiddleware(container);
-            app.UseAutofacWebApi(config);
-            app.UseWebApi(config);
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+
+            //API 
+            //var resolver = new AutofacWebApiDependencyResolver(container);
+            //config.DependencyResolver = resolver;
+            //GlobalConfiguration.Configuration.DependencyResolver = resolver;
+            //app.UseAutofacMiddleware(container);
+            //app.UseAutofacWebApi(config);
+            //app.UseWebApi(config);
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿.navbar-color {
+    background-color: #1b171f;
+}
+
+.navbar.navbar-color {
+    border:none;
+}
+
+.navbar-default.navbar-color .navbar-nav > li > a{
+    color: #ffffff;
+}
+.navbar-default.navbar-color .navbar-brand{
+    color: #ffffff;
+
+}
+
+.container-kantar{
+    background : url('../Content/img/kantarmedia-bg-0.jpg') no-repeat;
+    color: #ffffff;
+}
+
+/*logo center*/
+.navbar-brand
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+}

@@ -103,8 +103,8 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         Task<SignInStatus> TwoFactorSignIn(string provider, string code, bool isPersistent, bool rememberBrowser);
         Task<ApplicationIdentityResult> UpdateAsync(int userId);
         Task<ApplicationIdentityResult> UpdateSecurityStampAsync(int userId);
-        IEnumerable<AppUser> GetUsers();
-        Task<IEnumerable<AppUser>> GetUsersAsync();
+        IEnumerable<AppUser> GeApplicationIdentityUsers();
+        Task<IEnumerable<AppUser>> GeApplicationIdentityUsersAsync();
         Task<bool> VerifyChangePhoneNumberTokenAsync(int userId, string token, string phoneNumber);
         Task<bool> VerifyTwoFactorTokenAsync(int userId, string twoFactorProvider, string token);
         Task<bool> VerifyUserTokenAsync(int userId, string purpose, string token);

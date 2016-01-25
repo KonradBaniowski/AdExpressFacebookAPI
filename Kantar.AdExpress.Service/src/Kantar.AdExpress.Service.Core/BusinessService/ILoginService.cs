@@ -23,6 +23,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        KantarUserModel GetUser(string login, string password);
+        KantarUserModel GeApplicationIdentityUser(string login, string password);
     }
 }

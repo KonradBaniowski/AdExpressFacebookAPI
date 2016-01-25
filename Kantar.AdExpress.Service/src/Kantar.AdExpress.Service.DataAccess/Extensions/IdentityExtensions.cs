@@ -1,15 +1,12 @@
-﻿using Kantar.AdExpress.Service.Core.Domain.Identity;
-using Kantar.AdExpress.Service.DataAccess.Identity;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Kantar.AdExpress.Service.Core.Domain.Identity;
+using Kantar.AdExpress.Service.DataAccess.Identity;
 
 namespace Kantar.AdExpress.Service.DataAccess.Extensions
 {
@@ -149,12 +146,12 @@ namespace Kantar.AdExpress.Service.DataAccess.Extensions
 
         public static ApplicationExternalLoginInfo ToApplicationExternalLoginInfo(this ExternalLoginInfo externalLoginInfo)
         {
-            return externalLoginInfo == null ? null : new ApplicationExternalLoginInfo { DefaultUserName = externalLoginInfo.DefaultUserName, Email = externalLoginInfo.Email, ExternalIdentity = externalLoginInfo.ExternalIdentity, Login = externalLoginInfo.Login.ToApplicationUserLoginInfo() };
+            return externalLoginInfo == null ? null : new ApplicationExternalLoginInfo { DefaulApplicationIdentityUserName = externalLoginInfo.DefaultUserName, Email = externalLoginInfo.Email, ExternalIdentity = externalLoginInfo.ExternalIdentity, Login = externalLoginInfo.Login.ToApplicationUserLoginInfo() };
         }
 
         public static ExternalLoginInfo ToExternalLoginInfo(this ApplicationExternalLoginInfo externalLoginInfo)
         {
-            return externalLoginInfo == null ? null : new ExternalLoginInfo { DefaultUserName = externalLoginInfo.DefaultUserName, Email = externalLoginInfo.Email, ExternalIdentity = externalLoginInfo.ExternalIdentity, Login = externalLoginInfo.Login.ToUserLoginInfo() };
+            return externalLoginInfo == null ? null : new ExternalLoginInfo { DefaultUserName = externalLoginInfo.DefaulApplicationIdentityUserName, Email = externalLoginInfo.Email, ExternalIdentity = externalLoginInfo.ExternalIdentity, Login = externalLoginInfo.Login.ToUserLoginInfo() };
         }
 
         public static ApplicationAuthenticationDescription ToApplicationAuthenticationDescription(this AuthenticationDescription authenticationDescription)

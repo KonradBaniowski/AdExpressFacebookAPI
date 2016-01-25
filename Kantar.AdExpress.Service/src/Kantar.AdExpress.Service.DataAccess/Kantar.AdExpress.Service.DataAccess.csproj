@@ -111,10 +111,14 @@
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="IdentityImpl\ApplicationRoleManager.cs" />
     <Compile Include="IdentityImpl\ApplicationUserManager.cs" />
+    <Compile Include="IdentityImpl\CustomSignInManager.cs" />
+    <Compile Include="IdentityImpl\CustomUserManager.cs" />
+    <Compile Include="IdentityImpl\CustomUserStore.cs" />
     <Compile Include="Identity\IdentityFactory.cs" />
     <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Mapping\AddressMapping.cs" />
     <Compile Include="MauMapping\LoginMappingMau.cs" />
+    <Compile Include="MauMapping\ModuleAssignmentMappingMau.cs" />
     <Compile Include="MauMapping\RightAssignmentMappingMau.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AddressRepository.cs" />

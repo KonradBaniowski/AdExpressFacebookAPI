@@ -39,8 +39,8 @@ namespace Kantar.AdExpress.ServiceRest.Controllers
         [Route("api/loginKantar/")]
         public KantarUserModel loginKantar([FromBody]stuff model)
         {
-            App
-            var result = _loginService.GetUser(model.Email, model.Password);
+            
+            var result = _loginService.GeApplicationIdentityUser(model.Email, model.Password);
             return result;
         }
 

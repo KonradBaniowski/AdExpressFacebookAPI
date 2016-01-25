@@ -14,6 +14,7 @@ namespace Kantar.AdExpress.Service.DataAccess.Identity
         public static UserManager<ApplicationIdentityUser, int> CreateUserManager(DbContext context)
         {
             var manager = new UserManager<ApplicationIdentityUser, int>(new UserStore<ApplicationIdentityUser, ApplicationIdentityRole, int, ApplicationIdentityUserLogin, ApplicationIdentityUserRole, ApplicationIdentityUserClaim>(context));
+            //var manager = new UserManager<ApplicationIdentityUser, int>(new MyUserStore<ApplicationIdentityUser, ApplicationIdentityRole, int, ApplicationIdentityUserLogin, ApplicationIdentityUserRole, ApplicationIdentityUserClaim>(context)); 
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationIdentityUser, int>(manager)
             {

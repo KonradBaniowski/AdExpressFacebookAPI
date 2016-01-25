@@ -41,6 +41,7 @@ namespace Kantar.AdExpress.Service.DataAccess
                     modelBuilder.Configurations.Add(mapping);
                 });
             modelBuilder.Configurations.Add(new LoginMappingMau(schemaMau));
+            modelBuilder.Configurations.Add(new ModuleAssignmentMappingMau(schemaMau));
             base.OnModelCreating(modelBuilder);
         }
 

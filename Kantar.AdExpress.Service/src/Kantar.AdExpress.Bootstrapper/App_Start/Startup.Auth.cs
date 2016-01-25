@@ -1,11 +1,4 @@
-﻿using Autofac;
-using Autofac.Integration.WebApi;
-using Kantar.AdExpress.Service.BusinessLogic.Identity;
-using Kantar.AdExpress.Service.Core.BusinessService;
-using Kantar.AdExpress.Service.Core.DataAccess;
-using Kantar.AdExpress.Service.DataAccess;
-using Kantar.AdExpress.Service.DataAccess.Identity;
-using Kantar.AdExpress.Service.DataAccess.IdentityImpl;
+﻿using Kantar.AdExpress.Service.DataAccess.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -13,14 +6,6 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.DataProtection;
 using Owin;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
 
 
 namespace Kantar.AdExpress.Bootstrapper
@@ -47,7 +32,8 @@ namespace Kantar.AdExpress.Bootstrapper
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<UserManager<ApplicationIdentityUser, int>, ApplicationIdentityUser, int>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentityCallback: (manager, user) => manager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie),
-                        getUserIdCallback: (user) => int.Parse(user.GetUserId())
+                         getUserIdCallback: (id) => (id.GetUserId<int>())
+                        //geApplicationIdentityUserIdCallback: (user) => int.Parse(user.GeApplicationIdentityUserId())
                 )
                 }
             });

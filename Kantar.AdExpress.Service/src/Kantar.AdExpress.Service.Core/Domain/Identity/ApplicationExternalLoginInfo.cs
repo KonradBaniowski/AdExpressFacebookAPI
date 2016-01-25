@@ -9,7 +9,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.Identity
 {
     public class ApplicationExternalLoginInfo
     {
-        public string DefaultUserName
+        public string DefaulApplicationIdentityUserName
         {
             get;
             set;
