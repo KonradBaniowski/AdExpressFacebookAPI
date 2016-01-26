@@ -149,7 +149,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Km.AdExpressClientWeb\Km.AdExpressClientWeb.csproj">
+    <ProjectReference Include="..\Km.AdExpressClientWeb\Km.AdExpressClientWeb.csproj">
       <Project>{ba78bfd4-6124-4659-9f72-34150ef8cf74}</Project>
       <Name>Km.AdExpressClientWeb</Name>
     </ProjectReference>
