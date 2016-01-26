@@ -66,8 +66,7 @@ namespace Kantar.AdExpress.Service.DataAccess
         public IdentityContext() : base(connectionLOCAL)
         {
            
-        }
-        
+        }        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
