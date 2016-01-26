@@ -5,64 +5,70 @@
 }
 
 <div class="row">
-
-    <div class="col-xs-12 login-page">
-        <div class="col-xs-12 centre">
-
-            <div class="col-md-6">
-                <div class="margin-t padder-v text-center">
-                    <h1><strong>AdExpress </strong>c'est ...</h1>
-                </div>
-                <div class="text-center">
-                    <h3><strong>AdExpress </strong>en quelques chiffres</h3>
-                    <p>&nbsp;</p>
-                    <div class="count">
-                        <div class="b-r-w"><span class="text1">100</span><h3>Marques</h3></div>
-                        <div class="b-r-w"><span class="text2">200</span><h3>Produits</h3></div>
-                        <div><span class="text3">300</span><h3>Plan Média</h3></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-2">&nbsp;</div>
-
-            <div class="col-md-4">
-                <div class="panel-sans text-left">
-                    <div class="panel-heading text-left">
-                        <i class="fa glyphicon glyphicon-user text-lg text-primary-lt "></i>
-                        <h4 class="font-normal m-t-none m-b-md text-primary-lt">Connexion</h4>
-                    </div>
-
-
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-validation padder-v padder bg-dark", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <div class="text-danger text-center">
-                            @Html.ValidationMessage("erreurAuthentification")
-                        </div>
-                        <div class="list-group list-group-sm">
-                            @Html.ValidationMessageFor(model => model.Email)
-                            <div class="list-group-item inputs">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control no-border", @placeholder = "Login" })
-                            </div>
-                            @Html.ValidationMessageFor(model => model.Password)
-                            <div class="list-group-item inputs">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control no-border", @placeholder = "Mot de passe" })
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-valider btn-block"> Accéder&nbsp;<i class="fa fa-check"></i></button>
-                        <div class="text-right m-t m-b">@Html.ActionLink("Mot de passe oublié?", "ForgotPassword", new object { }, new { @class = "orange" })</div>
-                        <h4 class="font-normal m-t-none m-b-md text-primary-lt">+ Pas encore client?</h4>
-                        @Html.ActionLink("Demander votre accès", "Register", new object { }, new { @class = "btn btn-inscription btn-block white" })
-                    }
-
-                </div>
-            </div>
-
+    <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="page-header-custom">
+            <h1><strong>AdExpress </strong> bla bla bla</h1>
+            <h1><small>AdExpress en quelques chiffres</small></h1>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <a class="fig">
+                1347
+                <span><br />MARQUES</span>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <a class="fig">
+                2400
+                <span><br />PRODUITS</span>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <a class="fig">
+                170
+                <span><br />PLAN M&Eacute;DIA</span>
+            </a>
         </div>
     </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="panel panel-default login">
+            <div class="panel-heading">
+                <img src="../Content/img/logo_kantarmedia.png" class="img-responsive" alt="Ad Express - Kantar Media">
+                AD EXPRESS
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
+                        </div>
+                    </div>
 
+                    <div class="form-group padding-top-15">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-success btn-sm btn-block">
+                                Accéder
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group padding-top-15">
+                        <div class="col-sm-12">
+                            <h5>+ Pas encore client?</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <a class="btn btn-primary btn-sm btn-block">
+                                Demander votre accès
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

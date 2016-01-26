@@ -19,7 +19,6 @@
     color: #ffffff;
 }
 
-/*logo center*/
 .navbar-brand
 {
     position: absolute;
@@ -29,3 +28,60 @@
     text-align: center;
     margin: auto;
 }
+
+.panel-default.login
+{
+    margin-top: 60px;
+    color: #ffffff;
+	background: #261222;
+}
+
+.panel-default.login > .panel-heading 
+{
+      color: #ffffff;
+      background: #261222;
+      border-bottom: none;
+}
+
+.panel.panel-default.login
+{
+      border: none;
+}
+
+.padding-top-15 {
+    padding-top :15px;
+}
+
+.panel-default.login .form-group {
+    margin-bottom:5px;
+}
+
+.page-header-custom{
+    padding-bottom: 9px;
+    margin: 60px 0 20px;
+}
+
+
+.fig {
+    color: #ffffff;
+	font-weight: 200;
+	font-size: 21px;
+	text-align: center;
+	border-radius: 30px;
+	display: inline-block;
+	padding: 10px;
+	width: 150px;
+	border-left: 1px solid #ffffff;	
+	border-right: 1px solid #ffffff;
+	-webkit-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+.fig:hover {
+	border-radius: 0px;
+	color: #333;
+	background: #ffffff;
+    opacity:0.3;
+    text-decoration: none;
+}
+	

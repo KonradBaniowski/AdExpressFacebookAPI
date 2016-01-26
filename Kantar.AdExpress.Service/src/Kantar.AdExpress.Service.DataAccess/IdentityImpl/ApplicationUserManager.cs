@@ -667,8 +667,12 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
         {
             // Clear any partial cookies from external or two factor partial sign ins
             SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
-            var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.UserName) },
-                    DefaultAuthenticationTypes.ApplicationCookie);
+            //var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.UserName) },
+            //        DefaultAuthenticationTypes.ApplicationCookie);
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.NameIdentifier, ClaimTypes.Role);
+            claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), "http://www.w3.org/2001/XMLSchema#string"));
+            claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
+            claimsIdentity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
             //var userIdentity = await CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie).ConfigureAwait(false);
             if (rememberBrowser)
             {
@@ -677,7 +681,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             }
             else
             {
-                _authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, identity);
+                _authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, claimsIdentity);
             }
         }
 
