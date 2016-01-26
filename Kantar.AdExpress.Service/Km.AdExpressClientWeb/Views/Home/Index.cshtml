@@ -1,13 +1,14 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<h1>@(User.Identity.Name)</h1>
+@(Request.IsAuthenticated)
+    {
+<h1>here</h1>
+    }
+@Html.ActionLink("Connexion", "Login", "Account")
+
 
 <div class="row">
-    <h1>@(User.Identity.Name)</h1>
-    @(Request.IsAuthenticated)
-    {
-    <h1>here</h1>
-    }
-    @Html.ActionLink("Connexion", "Login", "Account")
-
+    
 </div>

@@ -61,6 +61,17 @@
     margin: 60px 0 20px;
 }
 
+.btn-orange, .btn-orange:hover{
+    background-color:#ff8c00;
+    color:white;
+}
+
+ .btn-blue, .btn-blue:hover{
+     background-color:#00c1ff;
+    color:white;
+ }
+
+
 
 .fig {
     color: #ffffff;
@@ -84,4 +95,9 @@
     opacity:0.3;
     text-decoration: none;
 }
-	
+
+input {
+    background-color: #ffffff;
+    opacity:0.9;
+    border:0;
+}

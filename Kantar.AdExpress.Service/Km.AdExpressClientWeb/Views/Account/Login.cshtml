@@ -29,28 +29,31 @@
             </a>
         </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="col-md-4 col-sm-4 col-xs-12 ">
         <div class="panel panel-default login">
             <div class="panel-heading">
                 <img src="../Content/img/logo_kantarmedia.png" class="img-responsive" alt="Ad Express - Kantar Media">
-                AD EXPRESS
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" role="form">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , placeholder = "Utilisateur" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "mot de passe" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                         </div>
-                    </div>
-
+                    </div>                  
                     <div class="form-group padding-top-15">
                         <div class="col-sm-12">
-                            <button type="submit" class="btn btn-success btn-sm btn-block">
+                            <button type="submit" class="btn btn-orange btn-sm btn-block">
                                 Accéder
                             </button>
                         </div>
@@ -60,12 +63,10 @@
                             <h5>+ Pas encore client?</h5>
                         </div>
                         <div class="col-sm-12">
-                            <a class="btn btn-primary btn-sm btn-block">
-                                Demander votre accès
-                            </a>
+                            @Html.ActionLink("Demander votre accès", "ForgotPassword", null, new { @class = "btn btn-blue btn-sm btn-block" })
                         </div>
                     </div>
-                </form>
+                }
             </div>
         </div>
     </div>
