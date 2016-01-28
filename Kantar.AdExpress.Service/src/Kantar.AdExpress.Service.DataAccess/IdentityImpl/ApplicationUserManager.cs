@@ -424,7 +424,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             //{
             //    return int.Parse(result.Identity.GeApplicationIdentityUserId());
             //}
-            return null;
+            return await Task.Run(() => (int?)null);
         }
 
         public virtual async Task<bool> HasBeenVerified()
@@ -665,24 +665,27 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
 
         public virtual async Task SignInAsync(Core.Domain.Identity.AppUser user, bool isPersistent, bool rememberBrowser)
         {
-            // Clear any partial cookies from external or two factor partial sign ins
-            SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
-            //var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.UserName) },
-            //        DefaultAuthenticationTypes.ApplicationCookie);
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.NameIdentifier, ClaimTypes.Role);
-            claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), "http://www.w3.org/2001/XMLSchema#string"));
-            claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
-            claimsIdentity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
-            //var userIdentity = await CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie).ConfigureAwait(false);
-            if (rememberBrowser)
+            await Task.Run(() =>
             {
-                var rememberBrowserIdentity = CreateTwoFactorRememberBrowserIdentity(user.Id);
-                _authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, rememberBrowserIdentity);
-            }
-            else
-            {
-                _authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, claimsIdentity);
-            }
+                // Clear any partial cookies from external or two factor partial sign ins
+                SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
+                //var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.UserName) },
+                //        DefaultAuthenticationTypes.ApplicationCookie);
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.NameIdentifier, ClaimTypes.Role);
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), "http://www.w3.org/2001/XMLSchema#string"));
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
+                claimsIdentity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
+                //var userIdentity = await CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie).ConfigureAwait(false);
+                if (rememberBrowser)
+                {
+                    var rememberBrowserIdentity = CreateTwoFactorRememberBrowserIdentity(user.Id);
+                    _authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, rememberBrowserIdentity);
+                }
+                else
+                {
+                    _authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, claimsIdentity);
+                }
+            });
         }
 
         public void SignOut(params string[] authenticationTypes)
