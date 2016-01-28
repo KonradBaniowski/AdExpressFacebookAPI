@@ -17,19 +17,13 @@ namespace Kantar.AdExpress.Service.DataAccess.Repository.Mau
 
         public async Task<Login> GetLogin(string name)
         {
-
-            var res = (from a in mycontext.Login
-                       where a.LoginName == name.ToUpper()
-                       select a).FirstOrDefault();
-            return res;
-            /*
             return await Task.Run(() =>
             {
                 var res = (from a in mycontext.Login
                            where a.LoginName == name.ToUpper()
                            select a).FirstOrDefault();
                 return res;
-            });*/
+            });
         }
 
         public async Task<bool> CheckPasswordAsync(string userName, string password)
