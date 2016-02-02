@@ -41,7 +41,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             // This doen't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
-            var result = await _userManager.PasswordSignIn(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await _userManager.PasswordSignIn(model.Email, model.Password, false, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:

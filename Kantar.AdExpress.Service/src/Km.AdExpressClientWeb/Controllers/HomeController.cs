@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
 namespace Km.AdExpressClientWeb.Controllers {
+    [Authorize]
     public class HomeController : Controller {
         public ActionResult Index()
         {

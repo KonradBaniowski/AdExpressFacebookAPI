@@ -1,15 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
-@*<h1>@(User.Identity.Name)</h1>
-    @(Request.IsAuthenticated)
-        {
-    <h1>here</h1>
-        }*@
-@Html.ActionLink("Connexion", "Login", "Account")
-
-
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <h4 class="text-center">Modules</h4>
@@ -17,7 +9,7 @@
         @*Four Mostly Importants*@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
-                <div class="tile-body text-center">
+                <a href="@Url.Action("Index", "MediaSchedule")" class="tile-body text-center">
                     <div class="flip-container">
                         <div class="front">
                             <i class="icon-chart sli-size blue"></i>
@@ -27,7 +19,7 @@
                             <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
@@ -262,7 +254,7 @@
             </div>
         </div>
         @*CONTACT*@
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-10" data-toggle="collapse" data-target="#Analyses">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-10" >
             <div class="tile-third bg-green">
                 <div class="tile-body text-center">
                     <div class="flip-container">

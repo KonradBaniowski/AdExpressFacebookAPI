@@ -690,7 +690,8 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
 
         public void SignOut(params string[] authenticationTypes)
         {
-            _authenticationManager.SignOut(authenticationTypes);
+            //_authenticationManager.SignOut(authenticationTypes);
+            _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
 
         public virtual async Task<bool> TwoFactorBrowserRememberedAsync(int userId)
