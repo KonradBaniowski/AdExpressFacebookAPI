@@ -22,5 +22,10 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult PeriodSelection()
+        {
+            return View();
+        }
     }
 }

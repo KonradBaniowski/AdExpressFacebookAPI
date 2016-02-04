@@ -2181,6 +2181,7 @@ textarea.input-lg {
   }
   .form-inline .form-control {
     display: inline-block;
+    width: auto;
   }
   .form-inline select.form-control {
     width: auto;
