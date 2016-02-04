@@ -1001,3 +1001,17 @@ a {
 .margin-b-20{
     margin-bottom:20px
 }
+
+.btn-valider:hover,
+.btn-valider:focus,
+.btn-valider:active,
+.btn-valider.active,
+.btn-valider {
+  color: #fff;
+  background-color: #ff8c00;
+  border:0;
+  font-weight:bolder;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
