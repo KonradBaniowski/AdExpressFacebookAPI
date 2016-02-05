@@ -1,0 +1,108 @@
+﻿
+/*.hasDatepicker .ui-datepicker {
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 2px;
+    padding: 15px;
+    border-radius: 20px;
+    background: none;
+}
+
+
+
+.ui-datepicker-calendar tr > td > a {
+    background-color:red;
+}
+
+    .ui-datepicker-calendar tr > td > .ui-state-default:hover {
+   
+    }
+
+
+
+.ui-datepicker-calendar tr > td.ui-datepicker-current-day {
+    
+}
+
+
+.ui-datepicker-header.ui-widget-header {
+    background:none;
+    border:none;
+
+}
+
+.ui-datepicker-calendar tr > td.ui-datepicker-other-month.ui-datepicker-unselectable.ui-state-disabled 
+{
+   
+}
+
+.ui-state-disabled
+{
+    opacity:1;
+}
+
+table.ui-datepicker-calendar{
+    background:none;
+}*/
+
+.hasDatepicker .ui-datepicker {
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 2px;
+    padding: 15px;
+    border-radius: 5px;
+    background: none;
+}
+
+    .hasDatepicker .ui-datepicker td {
+        padding: 2px;
+    }
+
+    .ui-datepicker-calendar tr > th > span {
+    color:#fff;
+}
+
+    .ui-datepicker-header.ui-widget-header {
+    background:none;
+    border:none;
+
+}
+
+
+.ui-datepicker-calendar tr > td > a.ui-state-default {
+    color: #00c1ff;
+    text-align: center;
+    background: #414550;
+    border: none;
+    border-radius: 3px;
+}
+
+    .ui-datepicker-calendar tr > td > a.ui-state-default:hover {
+        background: #2b2e35;
+        text-align: center;
+        color: #00c1ff;
+        border: none;
+        border-radius: 3px;
+    }
+
+    .ui-datepicker-calendar tr > td.ui-datepicker-current-day > a.ui-state-default {
+        background: #00c1ff;
+        text-align: center;
+        color: white;
+        border: none;
+        border-radius: 3px;
+    }
+      
+
+.ui-datepicker-calendar tr > td.ui-state-disabled {
+    /*background: #878d9a;*/
+    color: #fff;
+    border: none;
+    opacity: 1;
+}
+
+    .ui-datepicker-calendar tr > td.ui-state-disabled > span.ui-state-default {
+        background: #878d9a;
+        border: none;
+        color: #fff;
+        border-radius: 3px;
+        text-align: center;
+    }
