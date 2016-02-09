@@ -1,4 +1,8 @@
-﻿.timeline {
+﻿.disabled-effect{
+    opacity:0.2;
+}
+
+.timeline {
     padding: 0;
     margin: 0;
     text-align: center;
