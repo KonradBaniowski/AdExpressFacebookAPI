@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resultOptions>
+  <inset available="false" description="Specify if the option inset is available overall the website"/>
+  <campaignType available="false" description="Specify if the option campaign Type is available overall the website"/>
+  <refineUniverse keepSelection="false" description="Specify if client select is kept when go back to universe refine selection page"/>
+  <lostWon useComparative="false"  useDiponibility="true" useType="true"/>
+  <mediaSchedule useComparative="false"/>
+  <bannersFormat use="false">
+    <allowVehicle id="6" description="Evaliant" rightBannersType="FormatEvaliantInternet" dataTableName="banners" formatTableName="groupFormatBanners"/>
+  </bannersFormat>
+  <retailer use="false"/>
+</resultOptions>

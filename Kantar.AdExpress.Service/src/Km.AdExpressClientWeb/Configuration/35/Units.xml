@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<units defaultCurrency="euro" defaultKCurrency="kEuro">
+  <unit id="kEuro"       format="max0"      baseId ="none"     assembly="TNS.FrameWork.WebResultUI"    cellType="TNS.FrameWork.WebResultUI.CellKEuro"      field="expenditure_euro"  multimediaField="totalunite"       trendsField="expenditure" webTextId="1789" webTextSignId="2798"/>
+  <unit id="euro"        format="max0"      baseId ="none"      assembly="TNS.FrameWork.WebResultUI"   cellType="TNS.FrameWork.WebResultUI.CellEuro"       field="expenditure_euro"  multimediaField="totalunite"       trendsField="expenditure" webTextId="938"  webTextSignId="2797"/>
+  <unit id="spot"        format="max0"      baseId ="insertion"   assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"      trendsField="insertion"   webTextId="939" />
+  <unit id="insertion"   format="max0"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"      trendsField="insertion"   webTextId="940" />
+  <unit id="duration"    format="duration"  baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellDuration"   field="duration"          multimediaField="totalduree"       trendsField="duration"    webTextId="280" />
+  <unit id="mmPerCol"    format="max0"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellMMC"        field="area_mmc"          multimediaField="totalmmc"         trendsField="mmc"         webTextId="941" />
+  <unit id="pages"       format="max3"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellPage"       field="area_page"         multimediaField="totalpages"       trendsField="page"        webTextId="943" />
+</units>

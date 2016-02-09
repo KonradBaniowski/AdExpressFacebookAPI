@@ -1,0 +1,10 @@
+<resultOptions> 
+ <inset available="false" description="Specify if the option inset is available overall the website"/>
+  <campaignType available="true" description="Specify if the option campaign Type is available overall the website"/>
+  <refineUniverse keepSelection="true" description="Specify if client select is kept when go back to universe refine selection page"/>
+  <lostWon useComparative="true" useDiponibility="false" useType="false"/>
+  <insertionReport isAllPeriodIsRestrictTo4Month="false" canSaveLevels="true"/>  
+  <mediaSchedule useComparative="false"/>
+  <bannersFormat use="false"/>
+  <retailer use ="false"/>
+</resultOptions>
