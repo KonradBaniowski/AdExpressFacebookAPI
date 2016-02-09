@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pluginConfiguration isAlertsActivated="true" targetHost="http://localhost:2018/" defaultConnectionId="alert">
+  <dataAccessLayers>
+    <dataAccessLayer enum="Alert" name="AlertDAL" assemblyName="TNS.Ares.Alerts.DAL.Default.dll" class="TNS.Ares.Alerts.DAL.Default.AlertsDAL" />
+    <dataAccessLayer enum="Session" name="SessionDAL" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL" />
+  </dataAccessLayers>
+  <plugins description="List of plugins" defaultFamilyId="123" defaultLongevity="30" defaultFilePath="C:\Anubis" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
+    <plugin enumId="Bastet" name="Bastet" resultType="2" resultLongevity="5" deleteExpired="true" extension=".pdf"  assemblyName="TNS.AdExpress.Anubis.Bastet.dll" class="TNS.AdExpress.Anubis.Bastet.TreatementSystem"/>
+    <plugin enumId="Hotep" name="Hotep" resultType="6" resultLongevity="5" deleteExpired="true" extension=".pdf" assemblyName="TNS.AdExpress.Anubis.Hotep.Russia.dll" class="TNS.AdExpress.Anubis.Hotep.Russia.TreatementSystem"/>
+    <plugin enumId="Miysis" name="Miysis" resultType="7" resultLongevity="5" deleteExpired="true" extension=".pdf"  assemblyName="TNS.AdExpress.Anubis.Miysis.dll" class="TNS.AdExpress.Anubis.Miysis.TreatementSystem"/>
+    <plugin enumId="Apis" name="Apis" resultType="26" resultLongevity="5" deleteExpired="true" extension=".pdf"  assemblyName="TNS.AdExpress.Anubis.Apis.dll" class="TNS.AdExpress.Anubis.Apis.TreatementSystem"/>
+  </plugins>
+</pluginConfiguration>

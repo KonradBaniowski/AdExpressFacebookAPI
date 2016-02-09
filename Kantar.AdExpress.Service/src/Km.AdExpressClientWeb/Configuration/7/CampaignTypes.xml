@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<campaignTypes>
+  <campaignType id="national"    webTextId="1624"/>
+  <campaignType id="nationalMoscow"    webTextId="2669"/>
+  <campaignType id="nationalLocal"    webTextId="2670"/>
+  <campaignType id="local"   webTextId="1625"/>
+  <campaignType id="none"   webTextId="2767"/>
+</campaignTypes>

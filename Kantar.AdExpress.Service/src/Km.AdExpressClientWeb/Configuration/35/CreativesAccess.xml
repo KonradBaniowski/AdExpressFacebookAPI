@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CreativesAccess>
+  <VirtualPaths>
+    <!--<VirtualPath id="IMAGES" name="Répertoire virtuel des créations presse" value="/ImagesPresse"/>-->
+  </VirtualPaths>
+  <Streamings>
+    <!--<Streaming id="READ_REAL_TV_SERVER" name="Serveur Real en streaming en TV" value="rtsp://streamrl.secodip.com/stream/fr/rm"/>-->
+  </Streamings>
+  <Networks>
+    <!--<Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>-->
+  </Networks>
+</CreativesAccess>

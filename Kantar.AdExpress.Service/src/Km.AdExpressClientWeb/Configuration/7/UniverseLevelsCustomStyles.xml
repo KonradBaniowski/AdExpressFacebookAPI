@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<levelsCustomStyles>
+  <level id="1" name="sector">
+    <style width="330"></style>
+  </level>
+  <level id="2" name="subsector">
+    <style width="330"></style>
+  </level>
+  <level id="3" name="group_">
+    <style width="330"></style>
+  </level>
+  <level id="4" name="segment">
+    <style width="330"></style>
+  </level>
+  <level id="7" name="holding_company">
+    <style width="330"></style>
+  </level>
+  <level  id="6" name="advertiser">
+    <style width="330"></style>
+  </level>
+  <level id="8" name="brand">
+    <style width="330"></style>
+  </level>
+  <level id="5" name="product">
+    <style width="330"></style>
+  </level>
+  <level id="12" name="category">
+    <style width="330"></style>
+  </level>
+  <level id="11" name="vehicle">
+    <style width="330"></style>
+  </level>
+  <level id="14" name="media">
+    <style width="330"></style>
+  </level>
+  <level id="15" name="interest_center">
+    <style width="330"></style>
+  </level>
+  <level id="16" name="sub_brand">
+    <style width="330"></style>
+  </level>
+  <level id="17" name="region">
+    <style width="330"></style>
+  </level>
+  <level id="18" name="advertisement_type">
+    <style width="330"></style>
+  </level>
+  <level id="21" name="profession">
+    <style width="330"></style>
+  </level>
+  <level id="25" name="name">
+    <style width="330"></style>
+  </level>
+</levelsCustomStyles>

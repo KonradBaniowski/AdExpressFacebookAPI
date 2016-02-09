@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<smtp>
+  <!--<server adress="mailgw.tns-gallup.fi" port="25"/>-->
+  <server adress="frmitch-msprod" port="25"/>
+  <message from="tnsadexpress@tns-global.fi">  
+    <to>youssef.rkaina@kantarmedia.com</to>
+    <to>dede.mussuma@kantarmedia.com</to>
+  </message>
+</smtp>

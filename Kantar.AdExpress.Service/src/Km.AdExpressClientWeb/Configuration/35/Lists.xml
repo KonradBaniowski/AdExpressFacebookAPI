@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<lists>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="encart" listIds="100"/>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="flyingEncart" listIds="101"/>
+  <list group="media"         keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaInSelectAll"                   listIds ="3,1,7,6,5,98,99"/>
+</lists>
