@@ -1,10 +1,10 @@
 ﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.XmlLoader;
+//using TNS.AdExpress.Constantes.Web;
+//using TNS.AdExpress.Domain.Classification;
+//using TNS.AdExpress.Domain.Web;
+//using TNS.AdExpress.Domain.XmlLoader;
 using TNS.FrameWork.DB.Common;
 
 namespace Km.AdExpressClientWeb
@@ -55,9 +55,9 @@ namespace Km.AdExpressClientWeb
             try
             {
                 //Initialisation des chemins d'accès aux créations
-                CreativeConfigDataAccess.LoadPathes(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.CREATIVES_PATH_CONFIGURATION));
-                Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
-                Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                //CreativeConfigDataAccess.LoadPathes(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.CREATIVES_PATH_CONFIGURATION));
+                //Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                //Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
 
             }
             catch (System.Exception)
