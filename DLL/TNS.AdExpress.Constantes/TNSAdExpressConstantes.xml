@@ -351,6 +351,9 @@
         </member>
         <member name="T:TNS.AdExpress.Constantes.Classification.DB.Vehicles">
             <summary>
+            
+            </summary>
+            <summary>
             Media type List
             </summary>
         </member>
@@ -727,6 +730,196 @@
         <member name="F:TNS.AdExpress.Constantes.Classification.DB.Formats.InStream">
             <summary>
             In-Stream Video
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Constantes.Classification.VehiclesEnum">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.press">
+            <summary>
+            Press
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.radio">
+            <summary>
+            Radio
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.tv">
+            <summary>
+            Television
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.mediasTactics">
+            <summary>
+            Media tactique
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.others">
+            <summary>
+            Others media types
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.adnettrack">
+            <summary>
+            AdNetTrack
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.internet">
+            <summary>
+            Internet
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.outdoor">
+            <summary>
+            Outdoor
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.cinema">
+            <summary>
+            Cinéma
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.directMarketing">
+            <summary>
+            Marketing Direct
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.internationalPress">
+            <summary>
+            Presse internationale
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.plurimedia">
+            <summary>
+            Plurimédia
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.mobileTelephony">
+            <summary>
+            Mobile telephony
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.emailing">
+            <summary>
+            Emailing
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.evaliantMobile">
+            <summary>
+            Evaliant mobile
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.newspaper">
+            <summary>
+            Evaliant mobile
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.magazine">
+            <summary>
+            Evaliant mobile
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.radioGeneral">
+            <summary>
+            Radio General
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.radioSponsorship">
+            <summary>
+            Radio Sponsorship
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.radioMusic">
+            <summary>
+            Radio Music
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.tvGeneral">
+            <summary>
+            Television General
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.tvSponsorship">
+            <summary>
+            Television SponsorShip
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.tvAnnounces">
+            <summary>
+            Television Announces
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.tvNonTerrestrials">
+            <summary>
+            Television non Terrestrials
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.indoor">
+            <summary>
+            inDoor
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.tvNicheChannels">
+            <summary>
+            Television Niche Channels
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.instore">
+            <summary>
+            IN Store 
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.editorial">
+            <summary>
+            Editorial
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.czinternet">
+            <summary>
+            CZ Internet Media
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.tvClipping">
+            <summary>
+            TV Clipping
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.pressClipping">
+            <summary>
+            Press Clipping
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.mailValo">
+            <summary>
+            Mail valorized with France Pub data
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.mms">
+            <summary>
+            MMS
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.search">
+            <summary>
+            Search
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.social">
+            <summary>
+            Search
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.PlurimediaWithoutMms">
+            <summary>
+            Plurimédia without Mms
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.VehiclesEnum.webPromotion">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.Project">

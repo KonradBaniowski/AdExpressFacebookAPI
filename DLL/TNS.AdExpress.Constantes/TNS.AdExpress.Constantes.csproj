@@ -136,6 +136,7 @@
     <Compile Include="Classification\DB\Constantes.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classification\VehiclesEnum.cs" />
     <Compile Include="Constantes.cs">
       <SubType>Code</SubType>
     </Compile>

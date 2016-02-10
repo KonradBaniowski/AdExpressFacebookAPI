@@ -85,13 +85,17 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 
 		}
 	}
-	#endregion
+    #endregion
 
-	#region Vehicles
-	/// <summary>
-	/// Media type List
-	/// </summary>
-	public class Vehicles{
+    #region Vehicles
+    /// <summary>
+    /// 
+    /// </summary>
+   
+    /// <summary>
+    /// Media type List
+    /// </summary>
+    public class Vehicles{
 		/// <summary>
         /// Media type
 		/// </summary>
