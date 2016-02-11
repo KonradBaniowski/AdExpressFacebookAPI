@@ -33,48 +33,52 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     new Media()
                     {
-                        MediaEnum = Vehicles.names.press,
+                        MediaEnum = Vehicles.names.cinema,
                         Id= 1,
-                        
-                        Label = "Nom 1",
+
+                        Label = "Cinéma",
                         Disabled = false
                     },
                     new Media()
                     {
-                        Id = 3,
-                        Label = "Nom 3",
+                          MediaEnum = Vehicles.names.search,
+                        Id = 34,
+                        Label = "Search",
                         Disabled = false
                     },
                     new Media()
                     {
+                          MediaEnum = Vehicles.names.tv,
                         Id = 2,
-                        Label = "Nom 2",
+                        Label = "Télévision",
                         Disabled = true
                     },
                         new Media()
                     {
+                              MediaEnum = Vehicles.names.evaliantMobile,
                         Id = 4,
-                        Label = "Nom 4",
+                        Label = "Evaliant Mobile",
                         Disabled = false
                     },
                             new Media()
                     {
-                        Id = 5,
-                        Label = "Nom 5",
+                                MediaEnum = Vehicles.names.directMarketing,
+                        Id = 10,
+                        Label = "Courrier",
                         Disabled = false
-                    },
-                      new Media()
-                    {
-                        Id = 6,
-                        Label = "Nom 6",
-                        Disabled = false
-                    },
-                          new Media()
-                    {
-                        Id = 7,
-                        Label = "Nom 7",
-                        Disabled = true
                     }
+                    //  new Media()
+                    //{
+                    //    Id = 6,
+                    //    Label = "Nom 6",
+                    //    Disabled = false
+                    //},
+                    //      new Media()
+                    //{
+                    //    Id = 7,
+                    //    Label = "Nom 7",
+                    //    Disabled = true
+                    //}
 
                 },
                 IdMediasCommon =
@@ -87,9 +91,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 }
             };
 
-            foreach(var e in model.Medias)
+            foreach (var e in model.Medias)
             {
-                icon = IconSelector.getIcon(e.MediaEnum);
+                e.icon = IconSelector.getIcon(e.MediaEnum);
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             return View(model);

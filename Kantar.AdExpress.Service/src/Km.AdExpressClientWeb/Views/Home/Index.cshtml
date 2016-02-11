@@ -107,30 +107,62 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-equalizer sli-size blue"></i>
-                            <h3>Absents / Présents</h3>
+                @if (Model.ModuleRight.ContainsKey(278))
+                {
+                    <a href="@Url.Action("Index", "PresentAbsent")" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-equalizer sli-size blue"></i>
+                                <h3>Absents / Présents</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
-                        <div class="back">
-                            <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-equalizer sli-size blue"></i>
+                                <h3>Absents / Présents</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
         @*Three Mostly Importants*@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-book-open sli-size-small green"></i>
-                            <h5>Chronopresse</h5>
+                @if (Model.ModuleRight.ContainsKey(546))
+                {
+                    <a href="@Url.Action("Index","Chrono")" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-book-open sli-size-small green"></i>
+                                <h5>Chronopresse</h5>
+                            </div>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-book-open sli-size-small green"></i>
+                                <h5>Chronopresse</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                }
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
