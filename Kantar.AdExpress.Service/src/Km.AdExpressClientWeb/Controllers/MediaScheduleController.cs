@@ -33,7 +33,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     new Media()
                     {
-                        MediaEnum = VehiclesEnum.press,
+                        MediaEnum = Vehicles.names.press,
                         Id= 1,
                         
                         Label = "Nom 1",
