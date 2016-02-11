@@ -564,6 +564,7 @@
     <Content Include="Views\MediaSchedule\MediaSelection.cshtml" />
     <Content Include="Views\MediaSchedule\Presentation.cshtml" />
     <Content Include="Views\MediaSchedule\PeriodSelection.cshtml" />
+    <Content Include="Views\MediaSchedule\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
