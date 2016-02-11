@@ -1,4 +1,5 @@
 ﻿using Km.AdExpressClientWeb.Models;
+using KM.AdExpress.Framework.MediaSelection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,62 +89,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
             foreach(var e in model.Medias)
             {
-                icon = getIcon(e.MediaEnum);
+                icon = IconSelector.getIcon(e.MediaEnum);
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             return View(model);
-        }
-
-        private string getIcon(VehiclesEnum element)
-        {
-            var icon = string.Empty;
-           switch (element)
-            {
-                case VehiclesEnum.cinema:
-                    icon = "iconkantar-video163";
-                    break;
-                case VehiclesEnum.search:
-                    icon = "iconkantar-internet94";
-                    break;
-                case VehiclesEnum.press:
-                    icon = "iconkantar-news12";
-                    break;
-                case VehiclesEnum.tv:
-                    icon = "iconkantar-television20";
-                    break;
-                case VehiclesEnum.evaliantMobile:
-                    icon = "iconkantar-cellphone55";
-                    break;
-                case VehiclesEnum.mms:
-                    icon = "iconkantar-planetary2";
-                    break;
-                case VehiclesEnum.directMarketing:
-                    icon = "iconkantar-mail114";
-                    break;
-                case VehiclesEnum.emailing:
-                    icon = "iconkantar-envelope82";
-                    break;
-                case VehiclesEnum.adnettrack:
-                    icon = "iconkantar-monitor74";
-                    break;
-                case VehiclesEnum.internationalPress:
-                    icon = "iconkantar-newspapers5";
-                    break;
-                case VehiclesEnum.outdoor:
-                    icon = "iconkantar-commercial";
-                    break;
-                case VehiclesEnum.radio:
-                    icon = "iconkantar-radio46";
-                    break;
-                case VehiclesEnum.tvSponsorship:
-                    icon = "iconkantar-wireless-connectivity79";
-                    break;
-                default:
-                    icon = "iconkantar-window50";
-                    break;
-
-            }
-            return icon;
         }
 
         public ActionResult PeriodSelection()

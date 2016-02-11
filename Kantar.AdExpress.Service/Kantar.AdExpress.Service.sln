@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Domain", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Constantes", "..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj", "{E25DBD07-256D-4078-A3C9-27153081629F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.Framework", "KM.AdExpress.Framework\KM.AdExpress.Framework.csproj", "{162C80D7-64E5-4963-A991-95DA1BD5F1B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,12 @@ Global
 		{E25DBD07-256D-4078-A3C9-27153081629F}.Release [Mixed Platforms]|Any CPU.Build.0 = Release [Mixed Platforms]|Any CPU
 		{E25DBD07-256D-4078-A3C9-27153081629F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E25DBD07-256D-4078-A3C9-27153081629F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162C80D7-64E5-4963-A991-95DA1BD5F1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162C80D7-64E5-4963-A991-95DA1BD5F1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162C80D7-64E5-4963-A991-95DA1BD5F1B0}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{162C80D7-64E5-4963-A991-95DA1BD5F1B0}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{162C80D7-64E5-4963-A991-95DA1BD5F1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162C80D7-64E5-4963-A991-95DA1BD5F1B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -119,5 +127,6 @@ Global
 		{14CA47FE-6409-45A8-936C-88A32160B0CC} = {81DC8D53-B9D7-44FA-9FBD-0D77BFCC963C}
 		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A} = {14CA47FE-6409-45A8-936C-88A32160B0CC}
 		{E25DBD07-256D-4078-A3C9-27153081629F} = {14CA47FE-6409-45A8-936C-88A32160B0CC}
+		{162C80D7-64E5-4963-A991-95DA1BD5F1B0} = {14CA47FE-6409-45A8-936C-88A32160B0CC}
 	EndGlobalSection
 EndGlobal
