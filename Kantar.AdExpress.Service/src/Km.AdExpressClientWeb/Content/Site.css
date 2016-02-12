@@ -1037,63 +1037,107 @@ a {
     opacity: 0;
 }
 
-    #radioSelection input[type=checkbox]:not(old) + label,
-    #radioSelection input[type=radio ]:not(old) + label {
-        display: inline-block;
-        margin-left: -2em;
-        line-height: 1.5em;
-    }
+#radioSelection input[type=checkbox]:not(old) + label,
+#radioSelection input[type=radio ]:not(old) + label {
+    display: inline-block;
+    margin-left: -2em;
+    line-height: 1.5em;
+}
 
-        #radioSelection input[type=checkbox]:not(old) + label > span,
-        #radioSelection input[type=radio ]:not(old) + label > span {
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            margin: 0.25em 0.5em 0.25em 0.25em;
-            /*border           : 0.0625em solid rgb(192,192,192);*/
-            border-radius: 0.25em;
-            background: rgb(224,224,224);
-            background-image: -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-            background-image: -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-            background-image: -o-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-            background-image: -webkit-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-            background-image: linear-gradient(rgb(240,240,240),rgb(224,224,224));
-            vertical-align: bottom;
-        }
+#radioSelection input[type=checkbox]:not(old) + label > span,
+#radioSelection input[type=radio ]:not(old) + label > span {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin: 0.25em 0.5em 0.25em 0.25em;
+    /*border           : 0.0625em solid rgb(192,192,192);*/
+    border-radius: 0.25em;
+    background: rgb(224,224,224);
+    background-image: -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    background-image: -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    background-image: -o-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    background-image: -webkit-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    background-image: linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    vertical-align: bottom;
+}
 
 
-    #radioSelection input[type=checkbox]:not(old):checked + label > span,
-    #radioSelection input[type=radio ]:not(old):checked + label > span {
-        background-image: -moz-linear-gradient(rgb(224,224,224),rgb(240,240,240));
-        background-image: -ms-linear-gradient(rgb(224,224,224),rgb(240,240,240));
-        background-image: -o-linear-gradient(rgb(224,224,224),rgb(240,240,240));
-        background-image: -webkit-linear-gradient(rgb(224,224,224),rgb(240,240,240));
-        background-image: linear-gradient(rgb(224,224,224),rgb(240,240,240));
-    }
+#radioSelection input[type=checkbox]:not(old):checked + label > span,
+#radioSelection input[type=radio ]:not(old):checked + label > span {
+    background-image: -moz-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+    background-image: -ms-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+    background-image: -o-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+    background-image: -webkit-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+    background-image: linear-gradient(rgb(224,224,224),rgb(240,240,240));
+}
 
-        #radioSelection input[type=checkbox]:not(old):checked + label > span:before {
-            content: '✓';
-            display: block;
-            width: 1em;
-            color: rgb(153,204,102);
-            font-size: 0.875em;
-            line-height: 1em;
-            text-align: center;
-            text-shadow: 0 0 0.0714em rgb(115,153,77);
-            font-weight: bold;
-        }
+#radioSelection input[type=checkbox]:not(old):checked + label > span:before {
+    content: '✓';
+    display: block;
+    width: 1em;
+    color: rgb(153,204,102);
+    font-size: 0.875em;
+    line-height: 1em;
+    text-align: center;
+    text-shadow: 0 0 0.0714em rgb(115,153,77);
+    font-weight: bold;
+}
 
-        #radioSelection input[type=radio]:not(old):checked + label > span > span {
-            display: block;
-            width: 1em;
-            height: 1em;
-            border: 0.0625em solid rgb(115,153,77);
-            border-radius: 0.25em;
-            background: #00c1ff;
-            opacity: 0.6;
-            background-image: -moz-linear-gradient(#00c1ff,#00c1ff);
-            background-image: -ms-linear-gradient(#00c1ff,#00c1ff);
-            background-image: -o-linear-gradient(#00c1ff,#00c1ff);
-            background-image: -webkit-linear-gradient(#00c1ff,#00c1ff);
-            background-image: linear-gradient(#00c1ff,#00c1ff);
-        }
+#radioSelection input[type=radio]:not(old):checked + label > span > span {
+    display: block;
+    width: 1em;
+    height: 1em;
+    border: 0.0625em solid rgb(115,153,77);
+    border-radius: 0.25em;
+    background: #00c1ff;
+    opacity: 0.6;
+    background-image: -moz-linear-gradient(#00c1ff,#00c1ff);
+    background-image: -ms-linear-gradient(#00c1ff,#00c1ff);
+    background-image: -o-linear-gradient(#00c1ff,#00c1ff);
+    background-image: -webkit-linear-gradient(#00c1ff,#00c1ff);
+    background-image: linear-gradient(#00c1ff,#00c1ff);
+}
+
+.input-datepicker {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    color: #00c1ff;
+    display: block;
+    vertical-align: middle;
+    margin: 0 0 2px 0;
+    width: 100%;
+    text-align:center;
+    font-weight: bold;
+}
+
+.select-date{
+  width:60px;
+  float: left;
+  margin-left: 16px;
+}
+
+.site-select .form-control{
+  height: 20px!important;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50px;
+  padding: 0px 0px; 
+  background-color: transparent!important;
+  color: #ffffff;
+}
+
+.site-select-option { 
+    background-color: #00c1ff;  
+}
+
+.select-date:hover{
+  background-color: #2B2E35;
+}
+
+.site-select-option:hover {
+  box-shadow: 0 0 10px 100px #2B2E35 inset;
+}
+
+.select-date-label{
+  margin-top: 6px;
+}
