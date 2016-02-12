@@ -637,6 +637,10 @@ input {
     margin-top: 30px;
 }
 
+.margin-bot-30 {
+    margin-bottom: 30px;
+}
+
 
 .panel.panel-marche {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
