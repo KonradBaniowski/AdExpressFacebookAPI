@@ -9,8 +9,7 @@ namespace Km.AdExpressClientWeb
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-ui-{version}.js",
-                        "~/Scripts/datepicker-fr.js"));
+                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -25,7 +24,11 @@ namespace Km.AdExpressClientWeb
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                        "~/Scripts/moment.js",
+                        "~/Scripts/moment-with-locales.js",
+                        "~/Scripts/bootstrap-datetimepicker.js",
+                        "~/Scripts/bootstrap-select.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/period-selector").Include(
                       "~/Scripts/period-selector.js"));
@@ -35,9 +38,10 @@ namespace Km.AdExpressClientWeb
                       "~/Content/font-awesome.css",
                       "~/Content/site.css",
                       "~/Content/icon-kantar.css",
-                      "~/Content/date-picker-theming.css",
+                      "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/themes/base/base.css",
-                      "~/Content/themes/base/theme.css"
+                      "~/Content/themes/base/theme.css",
+                       "~/Content/bootstrap-select.css"
                       ));
         }
     }
