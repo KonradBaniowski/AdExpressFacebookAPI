@@ -549,26 +549,6 @@
             Constantes des périodicités
             </summary>
         </member>
-        <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.DAY_NUMBER_IN_WEEK">
-            <summary>
-            Nombre de jour pour un hebdomadaire
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.DAY_NUMBER_IN_BIWEEKLY">
-            <summary>
-            Nombre de jour pour un bimensuel
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.MONTH_NUMBER_IN_BIMONTHLY">
-            <summary>
-            Nombre de mois pour un bimestriel
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.MONTH_NUMBER_IN_QUATERLY">
-            <summary>
-            Nombre de mois pour un trimestriel
-            </summary>
-        </member>
         <member name="T:TNS.AdExpress.Constantes.Classification.DB.Periodicity.type">
             <summary>
             Type de périodicité
@@ -672,6 +652,26 @@
         <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.type.indetermine">
             <summary>
             Indetermine
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.DAY_NUMBER_IN_WEEK">
+            <summary>
+            Nombre de jour pour un hebdomadaire
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.DAY_NUMBER_IN_BIWEEKLY">
+            <summary>
+            Nombre de jour pour un bimensuel
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.MONTH_NUMBER_IN_BIMONTHLY">
+            <summary>
+            Nombre de mois pour un bimestriel
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Classification.DB.Periodicity.MONTH_NUMBER_IN_QUATERLY">
+            <summary>
+            Nombre de mois pour un trimestriel
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.Classification.DB.insertType">
@@ -949,7 +949,7 @@
             forme de parrainage en exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.basicMediaAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.basicMediaAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.basicMediaException">
             <summary>
             Basic media in exception
@@ -985,49 +985,49 @@
             Type d'annonce en exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.circuitAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.circuitAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.circuitException">
             <summary>
             Circuit in exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.vpBrandAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.vpBrandAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.vpBrandException">
             <summary>
             VP Brand in exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.vpSegmentAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.vpSegmentAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.vpSegmentException">
             <summary>
             VP Segment in exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.vpSubSegmentAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.vpSubSegmentAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.vpSubSegmentException">
             <summary>
             VP Sub segment in exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.vpProductAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.vpProductAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.vpProductException">
             <summary>
             VP product in exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.professionAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.professionAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.professionException">
             <summary>
             Profession in exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.nameAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.nameAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.nameException">
             <summary>
             Name in exception
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Customer.Right.type.siteAccess" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Customer.Right.type.siteAccess" -->
         <member name="F:TNS.AdExpress.Constantes.Customer.Right.type.siteException">
             <summary>
             Site in exception
@@ -3290,71 +3290,6 @@
             Constantes utilisées pour Hathor
             </summary>
         </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.ID_PRESS">
-            <summary>
-            Constante indiquant que l'on traite de la press
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.PDM_TRUE">
-            <summary>
-            Indique si le resultat est en pdm
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.PDM_FALSE">
-            <summary>
-            Indique si le resultat n'est pas en pdm
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_TRUE">
-            <summary>
-            Indique que c'est un cumul de mois
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_FALSE">
-            <summary>
-            Indique que ce n'est pas un cumul à date
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_SUBTOTAL">
-            <summary>
-            Indique que l'on a regrouper les médias
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_TOTAL">
-            <summary>
-            Indique que l'on se trouve ds le cas total
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.YEAR_PERIOD_CUMULATIVE">
-            <summary>
-            Year le Cumul à date
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.DATE_PERIOD_CUMULATIVE">
-            <summary>
-            Date période pour le cumul à date
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.ID_PERIOD_CUMULATIVE">
-            <summary>
-            id periode pour le cumul à date
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.LIST_EXCLUDE_PRODUCT">
-            <summary>
-            Excluded product list
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.COMPARATIVE_TYPE_DEFAULT">
-            <summary>
-            Comparative Type = Default : current month with previous month and current week number with previous week number
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.COMPARATIVE_TYPE_DATE_TO_DATE">
-            <summary>
-            Comparative Type = Date to Date
-            </summary>
-        </member>
         <member name="T:TNS.AdExpress.Constantes.DB.Hathor.Tables">
             <summary>
             Tables dans Hathor
@@ -3418,6 +3353,71 @@
         <member name="F:TNS.AdExpress.Constantes.DB.Hathor.Fields.DATA_TABLE_AREA_PAGE">
             <summary>
             Champ page dans les tables quotidiennes
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.ID_PRESS">
+            <summary>
+            Constante indiquant que l'on traite de la press
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.PDM_TRUE">
+            <summary>
+            Indique si le resultat est en pdm
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.PDM_FALSE">
+            <summary>
+            Indique si le resultat n'est pas en pdm
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_TRUE">
+            <summary>
+            Indique que c'est un cumul de mois
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.CUMULATIVE_FALSE">
+            <summary>
+            Indique que ce n'est pas un cumul à date
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_SUBTOTAL">
+            <summary>
+            Indique que l'on a regrouper les médias
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.TYPE_TENDENCY_TOTAL">
+            <summary>
+            Indique que l'on se trouve ds le cas total
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.YEAR_PERIOD_CUMULATIVE">
+            <summary>
+            Year le Cumul à date
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.DATE_PERIOD_CUMULATIVE">
+            <summary>
+            Date période pour le cumul à date
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.ID_PERIOD_CUMULATIVE">
+            <summary>
+            id periode pour le cumul à date
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.LIST_EXCLUDE_PRODUCT">
+            <summary>
+            Excluded product list
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.COMPARATIVE_TYPE_DEFAULT">
+            <summary>
+            Comparative Type = Default : current month with previous month and current week number with previous week number
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.DB.Hathor.COMPARATIVE_TYPE_DATE_TO_DATE">
+            <summary>
+            Comparative Type = Date to Date
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.DB.DashBoard">
@@ -4918,6 +4918,21 @@
             Classe Mère des Récap
             </summary>
         </member>
+        <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType">
+            <summary>
+            Type de tableau
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType.product">
+            <summary>
+            Affichage des produits
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType.advertiser">
+            <summary>
+            Affichage des annonceurs
+            </summary>
+        </member>
         <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.SEASONALITY">
             <summary>
             Saisonnalité
@@ -4943,24 +4958,24 @@
             Identifiant planche synthèse
             </summary>
         </member>
-        <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType">
-            <summary>
-            Type de tableau
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType.product">
-            <summary>
-            Affichage des produits
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType.advertiser">
-            <summary>
-            Affichage des annonceurs
-            </summary>
-        </member>
         <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap">
             <summary>
             Partie palmares des Recap
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.typeYearSelected">
+            <summary>
+            Année de référence
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.typeYearSelected.currentYear">
+            <summary>
+            Année courante
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.typeYearSelected.previousYear">
+            <summary>
+            Année précédente
             </summary>
         </member>
         <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.TABLE">
@@ -5021,21 +5036,6 @@
         <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.COMPETITOR">
             <summary>
             Index permettant de savoir si l'on est en présence d'un élément concurent
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.typeYearSelected">
-            <summary>
-            Année de référence
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.typeYearSelected.currentYear">
-            <summary>
-            Année courante
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.typeYearSelected.previousYear">
-            <summary>
-            Année précédente
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.EvolutionRecap">
@@ -5764,14 +5764,14 @@
             Index de la colonne contenant l'identifiant de l'adresse
             </summary>
         </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.TOTAL_INDEX">
-            <summary>
-            Nombre total de colonnes
-            </summary>
-        </member>
         <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.TOTAL_LINE_INDEX">
             <summary>
             Index de la ligne total
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.TOTAL_INDEX">
+            <summary>
+            Nombre total de colonnes
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioCalendar">
@@ -6199,6 +6199,41 @@
             Constantes of tab structure of Vehicle Portofolio
             </summary>
         </member>
+        <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation">
+            <summary>
+            Type of Media type Press' ventilation 
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.format">
+            <summary>
+            Format
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.color">
+            <summary>
+            Color
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.location">
+            <summary>
+            Position
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.insert">
+            <summary>
+            Inset
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.design">
+            <summary>
+            Design
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.nonStandardPlacement">
+            <summary>
+            Non standard placement
+            </summary>
+        </member>
         <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.MEDIA_HOURS_COLUMN_INDEX">
             <summary>
             Colonne des tranches horaires des média
@@ -6247,41 +6282,6 @@
         <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.PRESS_NB_MAX_COLUMNS">
             <summary>
             Nombre de colonnes max pour la presse
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation">
-            <summary>
-            Type of Media type Press' ventilation 
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.format">
-            <summary>
-            Format
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.color">
-            <summary>
-            Color
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.location">
-            <summary>
-            Position
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.insert">
-            <summary>
-            Inset
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.design">
-            <summary>
-            Design
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.FrameWork.Results.PortofolioStructure.Ventilation.nonStandardPlacement">
-            <summary>
-            Non standard placement
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.DashBoard">
@@ -6704,7 +6704,7 @@
             Nb minimum weeks to show period label
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.FrameWork.Results.VeillePromo.NB_CHAR_BY_COL" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.FrameWork.Results.VeillePromo.NB_CHAR_BY_COL" -->
         <member name="T:TNS.AdExpress.Constantes.FrameWork.Results.VeillePromo.itemType">
             <summary>
             Type of promo presence
@@ -7578,34 +7578,6 @@
             Constantes spécifiques aux sessions
             </summary>
         </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.UnitsTraductionCodes">
-            <summary>
-            Codes de traduction des différentes unités
-            </summary>
-            <example>
-            UnitsTraductionCodes[TNS.AdExpress.Constantes.Web.CustomerSessions.Units.duration] renvoie le code de traduction de l'unité durée
-            </example>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.XLSUnitsTraductionCodes">
-            <summary>
-            Codes de traduction des différentes unités pour les pages Excel
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.InsertsTraductionCodes">
-            <summary>
-            Codes de traduction des encarts
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.AutoPromoTraductionCodes">
-            <summary>
-            Auto Promo Traduction Codes
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Constantes.Web.CustomerSessions.#cctor">
-            <summary>
-            Constructeur statique de la classe CustomerSessions : initialise la HashTable UnitsTraductionCodes avec comme clé les unités présentes dans TNS.AdExpress.Constantes.Web.CustomerSessions.Units et comme valeur un entier représentant le code de traduction de l'unité
-            </summary>
-        </member>
         <member name="T:TNS.AdExpress.Constantes.Web.CustomerSessions.Period">
             <summary>
             Définition des caractéristiques de période
@@ -7947,6 +7919,29 @@
             number of post
             </summary>
         </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.UnitsTraductionCodes">
+            <summary>
+            Codes de traduction des différentes unités
+            </summary>
+            <example>
+            UnitsTraductionCodes[TNS.AdExpress.Constantes.Web.CustomerSessions.Units.duration] renvoie le code de traduction de l'unité durée
+            </example>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.XLSUnitsTraductionCodes">
+            <summary>
+            Codes de traduction des différentes unités pour les pages Excel
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.InsertsTraductionCodes">
+            <summary>
+            Codes de traduction des encarts
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.AutoPromoTraductionCodes">
+            <summary>
+            Auto Promo Traduction Codes
+            </summary>
+        </member>
         <member name="T:TNS.AdExpress.Constantes.Web.CustomerSessions.SortOrder">
             <summary>
             Classe définissant l'ordre de tri des résultats affichés
@@ -8242,11 +8237,11 @@
              Table detailed by subSector / Sector
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.subSectorProduct" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupSubbrand" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorBrand" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentSubbrand" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.subbrand" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.subSectorProduct" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupSubbrand" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorBrand" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentSubbrand" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.subbrand" -->
         <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiserClass">
             <summary>
             Table detailed by Advertiser / Class
@@ -8267,7 +8262,7 @@
              Table detailed by SubSector /Brand 
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.subSectorSubbrand" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.subSectorSubbrand" -->
         <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiserSubSector">
             <summary>
             Table detailed by Advertiser / SubSector
@@ -8765,6 +8760,11 @@
                 en colonnes : Format
             </summary>
         </member>
+        <member name="M:TNS.AdExpress.Constantes.Web.CustomerSessions.#cctor">
+            <summary>
+            Constructeur statique de la classe CustomerSessions : initialise la HashTable UnitsTraductionCodes avec comme clé les unités présentes dans TNS.AdExpress.Constantes.Web.CustomerSessions.Units et comme valeur un entier représentant le code de traduction de l'unité
+            </summary>
+        </member>
         <member name="T:TNS.AdExpress.Constantes.Web.CustomerSessions.AutoPromo">
             <summary>
             Critère pour les encarts
@@ -8855,8 +8855,8 @@
             national
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.nationalMoscow" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.nationalLocal" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.nationalMoscow" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.nationalLocal" -->
         <member name="F:TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.local">
             <summary>
             local
@@ -10537,96 +10537,6 @@
             Classe des sous modules d'infos/news
             </summary>
         </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.ADEXNEWS">
-            <summary>
-            Sous module ADEXNEWS
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.ADEXREPORT">
-            <summary>
-            Sous module ADEXREPORT
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.ADEXREVIEW">
-            <summary>
-            Sous module ADEXREVIEW
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NOUVEAUTES">
-            <summary>
-            Sous module NOUVEAUTES
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LINK_ADEXNEWS">
-            <summary>
-            Nom du répertoire virtuel IIS pour ADEXNEWS
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LINK_ADEXREPORT">
-            <summary>
-            Nom du répertoire virtuel IIS pour ADEXREPORT
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LINK_ADEXREVIEW">
-            <summary>
-            Nom du répertoire virtuel IIS pour ADEXREVIEW
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LINK_NOUVEAUTES">
-            <summary>
-            Nom du répertoire virtuel IIS pour NOUVEAUTES
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NB_ELEMENTS_ADEXNEWS">
-            <summary>
-            Nombre d'élément à afficher pour ADEXNEWS
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NB_ELEMENTS_ADEXREPORT">
-            <summary>
-            Nombre d'élément à afficher pour ADEXREPORT
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NB_ELEMENTS_ADEXREVIEW">
-            <summary>
-            Nombre d'élément à afficher pour ADEXREVIEW
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NB_ELEMENTS_NOUVEAUTES">
-            <summary>
-            Nombre d'élément à afficher pour NOUVEAUTES
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_ADEXNEWS">
-            <summary>
-            Répertoire des fichiers ADEXNEWS
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_ADEXREPORT">
-            <summary>
-            Répertoire des fichiers ADEXREPORT
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_ADEXREVIEW">
-            <summary>
-            Répertoire des fichiers ADEXREVIEW
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_NOUVEAUTES">
-            <summary>
-            Répertoire des fichiers NOUVEAUTES
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_MEDIA_UPDATE">
-            <summary>
-            Répertoire des fichiers NOUVEAUTES
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.MEDIA_UPDATE">
-            <summary>
-            Répertoire contenant la liste des médias dispo
-            </summary>
-        </member>
         <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.Directories.adExNews">
             <summary>
             adExNews
@@ -10737,6 +10647,96 @@
             International trends
             </summary>
         </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.ADEXNEWS">
+            <summary>
+            Sous module ADEXNEWS
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.ADEXREPORT">
+            <summary>
+            Sous module ADEXREPORT
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.ADEXREVIEW">
+            <summary>
+            Sous module ADEXREVIEW
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NOUVEAUTES">
+            <summary>
+            Sous module NOUVEAUTES
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_ADEXNEWS">
+            <summary>
+            Répertoire des fichiers ADEXNEWS
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_ADEXREPORT">
+            <summary>
+            Répertoire des fichiers ADEXREPORT
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_ADEXREVIEW">
+            <summary>
+            Répertoire des fichiers ADEXREVIEW
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_NOUVEAUTES">
+            <summary>
+            Répertoire des fichiers NOUVEAUTES
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LOCAL_PATH_MEDIA_UPDATE">
+            <summary>
+            Répertoire des fichiers NOUVEAUTES
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.MEDIA_UPDATE">
+            <summary>
+            Répertoire contenant la liste des médias dispo
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LINK_ADEXNEWS">
+            <summary>
+            Nom du répertoire virtuel IIS pour ADEXNEWS
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LINK_ADEXREPORT">
+            <summary>
+            Nom du répertoire virtuel IIS pour ADEXREPORT
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LINK_ADEXREVIEW">
+            <summary>
+            Nom du répertoire virtuel IIS pour ADEXREVIEW
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.LINK_NOUVEAUTES">
+            <summary>
+            Nom du répertoire virtuel IIS pour NOUVEAUTES
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NB_ELEMENTS_ADEXNEWS">
+            <summary>
+            Nombre d'élément à afficher pour ADEXNEWS
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NB_ELEMENTS_ADEXREPORT">
+            <summary>
+            Nombre d'élément à afficher pour ADEXREPORT
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NB_ELEMENTS_ADEXREVIEW">
+            <summary>
+            Nombre d'élément à afficher pour ADEXREVIEW
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.ModuleInfosNews.NB_ELEMENTS_NOUVEAUTES">
+            <summary>
+            Nombre d'élément à afficher pour NOUVEAUTES
+            </summary>
+        </member>
         <member name="T:TNS.AdExpress.Constantes.Web.FilesResults">
             <summary>
             
@@ -10745,21 +10745,6 @@
         <member name="F:TNS.AdExpress.Constantes.Web.FilesResults.PDF">
             <summary>
             pdf
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.FilesResults.LINK_FILE">
-            <summary>
-            Nom du répertoire virtuel IIS pour pdf
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.FilesResults.LOCAL_PATH_PDF">
-            <summary>
-            Répertoire des fichiers pdf
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.FilesResults.NB_ELEMENTS_PDF">
-            <summary>
-            Nombre d'élément à afficher pour pdf
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.Web.FilesResults.Type">
@@ -10780,6 +10765,21 @@
         <member name="F:TNS.AdExpress.Constantes.Web.FilesResults.Type.excel">
             <summary>
             Fichier excel
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.FilesResults.LINK_FILE">
+            <summary>
+            Nom du répertoire virtuel IIS pour pdf
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.FilesResults.LOCAL_PATH_PDF">
+            <summary>
+            Répertoire des fichiers pdf
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.FilesResults.NB_ELEMENTS_PDF">
+            <summary>
+            Nombre d'élément à afficher pour pdf
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.Web.SortedItems">
@@ -11167,6 +11167,36 @@
             Constantes des colonnes génériques
             </summary>
         </member>
+        <member name="T:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom">
+            <summary>
+            Provenance de la sélection
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.unknown">
+            <summary>
+            Inconnu
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.defaultColumns">
+            <summary>
+            Colonnes par défaut
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.savedColumns">
+            <summary>
+            Colonnes sauvegardées
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.customColumns">
+            <summary>
+            Colonnes définis par le client
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.vehiculeTab">
+            <summary>
+            Changement d'onglet
+            </summary>
+        </member>
         <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.VEHICLE_COLUMN_ID">
             <summary>
             Identifiant colonne média
@@ -11340,36 +11370,6 @@
         <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.VISUAL_COLUMN_ID">
             <summary>
             Identifiant Visuel
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom">
-            <summary>
-            Provenance de la sélection
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.unknown">
-            <summary>
-            Inconnu
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.defaultColumns">
-            <summary>
-            Colonnes par défaut
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.savedColumns">
-            <summary>
-            Colonnes sauvegardées
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.customColumns">
-            <summary>
-            Colonnes définis par le client
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Constantes.Web.GenericColumn.SelectedFrom.vehiculeTab">
-            <summary>
-            Changement d'onglet
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Constantes.Web.Percentage">
