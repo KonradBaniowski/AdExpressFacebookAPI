@@ -196,3 +196,4 @@ ModelManifest.xml
 Thumbs.db
 *.lnk
 *.[Tt][Mm][Pp]
+/Kantar.AdExpress.Service/src/Km.AdExpressClientWeb/Properties/PublishProfiles/*.pubxml
