@@ -3,7 +3,7 @@ using Kantar.AdExpress.Service.Core.Domain.Mau;
 using Kantar.AdExpress.Service.DataAccess.Identity;
 using Kantar.AdExpress.Service.DataAccess.MauMapping;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Oracle.ManagedDataAccess.EntityFramework;
+using Oracle.DataAccess.EntityFramework;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;

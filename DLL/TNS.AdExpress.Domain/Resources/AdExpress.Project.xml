@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly>
   <name>AdExpress.Localization</name>
-  <compiler>C:\Windows\Microsoft.NET\Framework\v4.0.30319</compiler>
+  <!--<compiler>C:\Windows\Microsoft.NET\Framework\v4.0.30319</compiler>-->
+  <compiler>C:\Windows\Microsoft.NET\Framework64\v4.0.30319</compiler>
   <alinker>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin</alinker>
   <projects>
     <project id="Global">
@@ -24,6 +25,7 @@
     </project>
   </projects>
   <outputs>
-    <dir>\\172.17.236.86\Programme\Projets\France\AdExpress Olympe 2009\Bin</dir>
+    <!--<dir>\\172.17.236.86\Programme\Projets\France\AdExpress Olympe 2009\Bin</dir>-->
+    <dir>\\172.17.236.86\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64</dir>
   </outputs>
 </assembly>
