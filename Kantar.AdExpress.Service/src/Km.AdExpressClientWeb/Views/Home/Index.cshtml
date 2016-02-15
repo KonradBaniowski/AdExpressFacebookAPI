@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Km.AdExpressClientWeb.Models.HomePageViewModel
+@using TNS.AdExpress.Constantes.Web
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
@@ -9,104 +11,216 @@
         @*Four Mostly Importants*@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
-                <a href="@Url.Action("Index", "MediaSchedule")" class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-chart sli-size blue"></i>
-                            <h3>Plan Media</h3>
+                @if (Model.ModuleRight.ContainsKey(Module.Name.ALERTE_PLAN_MEDIA))
+                {
+                    <a href="@Url.Action("Index", "MediaSchedule" )" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-chart sli-size blue"></i>
+                                <h3>Plan Media</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
-                        <div class="back">
-                            <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-chart sli-size blue"></i>
+                                <h3>Plan Media</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
                     </div>
-                </a>
+                }
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-layers sli-size blue"></i>
-                            <h3>Portefeuille</h3>
+                @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PORTEFEUILLE))
+                {
+                    <a href="@Url.Action("Index", "Portefolio" )" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-layers sli-size blue"></i>
+                                <h3>Portefeuille</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
-                        <div class="back">
-                            <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-layers sli-size blue"></i>
+                                <h3>Portefeuille</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-calculator sli-size blue"></i>
-                            <h3>Perdus / Gagnés</h3>
+                @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DYNAMIQUE))
+                {
+                    <a href="@Url.Action("Index", "LostWon" )" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-calculator sli-size blue"></i>
+                                <h3>Perdus / Gagnés</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
-                        <div class="back">
-                            <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-calculator sli-size blue"></i>
+                                <h3>Perdus / Gagnés</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-equalizer sli-size blue"></i>
-                            <h3>Absents / Présents</h3>
+                @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_CONCURENTIELLE))
+                {
+                    <a href="@Url.Action("Index", "PresentAbsent" )" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-equalizer sli-size blue"></i>
+                                <h3>Absents / Présents</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
-                        <div class="back">
-                            <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-equalizer sli-size blue"></i>
+                                <h3>Absents / Présents</h3>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
         @*Three Mostly Importants*@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-book-open sli-size-small green"></i>
-                            <h5>Chronopresse</h5>
+                @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
+                {
+                    <a href="@Url.Action("Index","Chrono")" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-book-open sli-size-small green"></i>
+                                <h5>Chronopresse</h5>
+                            </div>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-book-open sli-size-small green"></i>
+                                <h5>Chronopresse</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                }
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-picture sli-size-small green"></i>
-                            <h5>Nouvelles créations</h5>
+                @if (Model.ModuleRight.ContainsKey(Module.Name.NEW_CREATIVES))
+                {
+                    <a href="@Url.Action("Index", "NouvelleCrea")" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-picture sli-size-small green"></i>
+                                <h5>Nouvelles créations</h5>
+                            </div>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-picture sli-size-small green"></i>
+                                <h5>Nouvelles créations</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="icon-eye sli-size-small green"></i>
-                            <h5>Tendances</h5>
+                @if (Model.ModuleRight.ContainsKey(Module.Name.TENDACES))
+                {
+                    <a href="@Url.Action("Index", "Tendances")" class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-eye sli-size-small green"></i>
+                                <h5>Tendances</h5>
+                            </div>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="icon-eye sli-size-small green"></i>
+                                <h5>Tendances</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
         @*Two pdf stuff*@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10" data-toggle="collapse" data-target="#Analyses">
             <div class="tile-third">
+
                 <div class="tile-body text-center">
                     <div class="flip-container">
                         <div class="front">
@@ -115,14 +229,47 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="tile-deploy collapse" id="Analyses">
                 <div class="tile-body text-center">
                     <div class="list-group">
-                        <a href="#" class="list-group-item text-left">analyses</a>
-                        <a href="#" class="list-group-item text-left">Morbi leo risus</a>
-                        <a href="#" class="list-group-item text-left">Porta ac consectetur ac</a>
-                        <a href="#" class="list-group-item text-left">Vestibulum at eros</a>
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
+                        {
+                            <a href="#" class="list-group-item text-left">Analyse des mandataires</a>
+                        }
+                        else {
+                            <div class="list-group-item text-left disabled-effect">Analyse des mandataires</div>
+                        }
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.INDICATEUR))
+                        {
+                            <a href="#" class="list-group-item text-left">Analyse sectorielle: Les indicateurs graphiques</a>
+                        }
+                        else {
+                            <div class="list-group-item text-left disabled-effect">Analyse sectorielle: Les indicateurs graphiques</div>
+                        }
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
+                        {
+                            <a href="#" class="list-group-item text-left">Analyse sectorielle: Les tableaux dynamiques</a>
+                        }
+                        else
+                        {
+                            <div class="list-group-item text-left disabled-effect">Analyse sectorielle: Les tableaux dynamiques</div>
+                        }
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_DISPOSITIFS))
+                        {
+                            <a href="#" class="list-group-item text-left">Analyse des dispositifs</a>
+                        }
+                        else {
+                            <div class="list-group-item text-left disabled-effect">Analyse des dispositifs</div>
+                        }
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_PROGRAMMES))
+                        {
+                            <a href="#" class="list-group-item text-left">Analyse des programmes</a>
+                        }
+                        else {
+                            <div class="list-group-item text-left disabled-effect">Analyse des programmes</div>
+                        }
                     </div>
                 </div>
             </div>
@@ -141,10 +288,34 @@
             <div class="tile-deploy collapse" id="board">
                 <div class="tile-body text-center">
                     <div class="list-group">
-                        <a href="#" class="list-group-item text-left">tableaux</a>
-                        <a href="#" class="list-group-item text-left">Morbi leo risus</a>
-                        <a href="#" class="list-group-item text-left">Porta ac consectetur ac</a>
-                        <a href="#" class="list-group-item text-left">Vestibulum at eros</a>
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
+                        {
+                            <a href="#" class="list-group-item text-left">Tableau de bord Pan euro</a>
+                        }
+                        else {
+                            <div class="list-group-item text-left disabled-effect">Tableau de bord Pan euro</div>
+                        }
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
+                        {
+                            <a href="#" class="list-group-item text-left">Tableau de bord Presse</a>
+                        }
+                        else {
+                            <div class="list-group-item text-left disabled-effect">Tableau de bord Presse</div>
+                        }
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
+                        {
+                            <a href="#" class="list-group-item text-left">Tableau de bord Radio</a>
+                        }
+                        else {
+                            <div class="list-group-item text-left disabled-effect">Tableau de bord Radio</div>
+                        }
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
+                        {
+                            <a href="#" class="list-group-item text-left">Tableau de bord Télévision</a>
+                        }
+                        else {
+                            <div class="list-group-item text-left disabled-effect">Tableau de bord Télévision</div>
+                        }
                     </div>
                 </div>
             </div>
@@ -190,71 +361,36 @@
         </div>
 
         @*PDF*@
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-2" data-toggle="collapse" data-target="#news">
-            <div class="tile-pdf">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-
-                            <i class="fa fa-file-pdf-o sli-size-small red"></i>
-                            <h5>Adex news<span class="caret red"></span></h5>
+        @foreach (var item in Model.Documents)
+        {
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-2" data-toggle="collapse" data-target="#X@(item.Id)">
+                <div class="tile-pdf">
+                    <div class="tile-body text-center">
+                        <div class="flip-container">
+                            <div class="front">
+                                <i class="fa fa-file-pdf-o sli-size-small red"></i>
+                                <h5>@item.Label<span class="caret red"></span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-deploy pdf collapse" id="X@(item.Id)">
+                    <div class="tile-body text-center">
+                        <div class="list-group">
+                            @if (item.InfosNews != null)
+                            {
+                                foreach (var e in item.InfosNews)
+                                {
+                                    <a href="@e.Url" class="list-group-item text-left">@e.Label</a>
+                                }
+                            }
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tile-deploy pdf collapse" id="news">
-                <div class="tile-body text-center">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item text-left">analyses</a>
-                        <a href="#" class="list-group-item text-left">Morbi leo risus</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-2" data-toggle="collapse" data-target="#report">
-            <div class="tile-pdf">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="fa fa-file-pdf-o sli-size-small red"></i>
-                            <h5>Adex report<span class="caret red"></span></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tile-deploy pdf collapse" id="report">
-                <div class="tile-body text-center">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item text-left">analyses</a>
-                        <a href="#" class="list-group-item text-left">Morbi leo risus</a>
-                    
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-2" data-toggle="collapse" data-target="#doc">
-            <div class="tile-pdf">
-                <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <i class="fa fa-file-pdf-o sli-size-small red"></i>
-                            <h5>Documents<span class="caret red"></span></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tile-deploy pdf collapse " id="doc">
-                <div class="tile-body text-center">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item text-left">analyses</a>
-                        <a href="#" class="list-group-item text-left">Morbi leo risus</a>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
         @*CONTACT*@
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-10" >
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-10">
             <div class="tile-third bg-green">
                 <div class="tile-body text-center">
                     <div class="flip-container">

@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Domain", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Constantes", "..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj", "{E25DBD07-256D-4078-A3C9-27153081629F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.Framework", "KM.AdExpress.Framework\KM.AdExpress.Framework.csproj", "{162C80D7-64E5-4963-A991-95DA1BD5F1B0}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress", "..\DLL\TNS.AdExpress\TNS.AdExpress.csproj", "{6E75699B-838C-4534-99F7-D4C3E768CD57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.DataAccess", "..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj", "{A4DEDE88-C99E-495F-98F2-E2762520F4BE}"

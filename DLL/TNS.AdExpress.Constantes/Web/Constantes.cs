@@ -7,7 +7,8 @@
 using System;
 using System.Collections;
 
-namespace TNS.AdExpress.Constantes.Web{
+namespace TNS.AdExpress.Constantes.Web
+{
 	
 	#region Constantes des Sessions
 	/// <summary>

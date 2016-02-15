@@ -13,11 +13,11 @@
             <div class="clearfix"></div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div id="begin-date">
+                    <div id="datetimepicker-begin">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div id="end-date">
+                    <div id="datetimepicker-end">
                     </div>
                 </div>
 
@@ -27,13 +27,13 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                         <div class="form-group">
                             <label for="exampleInputName2">Depuis le</label>
-                            <input type="text" class="form-control" id="alt-begin-date" />
+                            <input id="begin-date-value" type="text" class="form-control input-datepicker" />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                         <div class="form-group">
                             <label for="exampleInputEmail2">Jusqu'au</label>
-                            <input type="text" id="alt-end-date" class="form-control" />
+                            <input id="end-date-value" type="text" class="form-control input-datepicker" />
                         </div>
                     </div>
                 </div>
@@ -50,52 +50,44 @@
             <form class="form-horizontal">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
                     <h4>Au cours de(s):</h4>
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <select class="form-control">
-                                <option></option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-8 control-label">dernière(s) année(s)</label>
+                    <div class="form-group site-select">
+                        <select id="year-sliding" class="select-date form-control">
+                            <option class="site-select-option">----</option>
+                            <option class ="site-select-option">1</option>
+                            <option class="site-select-option">2</option>
+                            <option class="site-select-option">3</option>
+                        </select>
+                        <label class="col-sm-8">dernière(s) année(s)</label>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <select class="form-control">
-                                <option></option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-8 control-label">dernier(s) mois</label>
+                    <div class="form-group site-select">
+                        <select id="month-sliding" class="select-date form-control">
+                            <option class="site-select-option">----</option>
+                            <option class="site-select-option">1</option>
+                            <option class="site-select-option">2</option>
+                            <option class="site-select-option">3</option>
+                        </select>
+                        <label class="col-sm-8 select-date-label">dernier(s) mois</label>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <select class="form-control">
-                                <option></option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-8 control-label">dernière(s) semaine(s)</label>
+                    <div class="form-group site-select">
+                        <select id="week-sliding" class="select-date form-control">
+                            <option class="site-select-option">----</option>
+                            <option class="site-select-option">1</option>
+                            <option class="site-select-option">2</option>
+                            <option class="site-select-option">3</option>
+                        </select>
+                        <label class="col-sm-8 select-date-label">dernière(s) semaine(s)</label>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <select class="form-control">
-                                <option></option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-8 control-label"> dernier(s) jour(s)</label>
+                    <div class="form-group site-select">
+                        <select id="day-sliding" class="select-date form-control">
+                            <option class="site-select-option">----</option>
+                            <option class="site-select-option">1</option>
+                            <option class="site-select-option">2</option>
+                            <option class="site-select-option">3</option>
+                        </select>
+                        <label class="col-sm-8 select-date-label"> dernier(s) jour(s)</label>
                     </div>
                     <h4>Ou bien sur:</h4>
-                    <div class="radio">
+                    @*<div class="radio">
                         <label>
                             <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
                             L'année courante
@@ -124,8 +116,8 @@
                             <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
                             Le jour précédent
                         </label>
-                    </div>
-                    <div  id="radioSelection">
+                    </div>*@
+                    <div id="radioSelection">
                         <div>
                             <input id="radioPureCSS1" type="radio" name="radioPureCSS" value="1">
                             <label for="radioPureCSS1"><span><span></span></span>L'année courante</label>
@@ -148,15 +140,95 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bot-30">
                     <button type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
                 </div>
             </form>
 
         </div>
     </div>
+</div>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/period-selector")
+@section scripts {
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datetimepicker-begin').datetimepicker({
+            inline: true,
+            locale: 'fr',
+            format: 'DD/MM/YYYY',
+            useCurrent: false
+        }).on('dp.change', function (e) {
+            $('#begin-date-value').val($('#datetimepicker-begin').data('date'));
+        });
 
-    }
+        $('#datetimepicker-end').datetimepicker({
+            inline: true,
+            locale: 'fr',
+            format: 'DD/MM/YYYY',
+            useCurrent: false
+        }).on('dp.change', function (e) {
+            $('#end-date-value').val($('#datetimepicker-end').data('date'));
+        });
+
+        $('#year-sliding').on('change', function (e) {
+            $('#month-sliding').val('----');
+            $('#week-sliding').val('----');
+            $('#day-sliding').val('----');
+        });
+
+        $('#month-sliding').on('change', function (e) {
+            $('#year-sliding').val('----');
+            $('#week-sliding').val('----');
+            $('#day-sliding').val('----');
+        });
+
+        $('#week-sliding').on('change', function (e) {
+            $('#year-sliding').val('----');
+            $('#month-sliding').val('----');
+            $('#day-sliding').val('----');
+        });
+
+        $('#day-sliding').on('change', function (e) {
+            $('#year-sliding').val('----');
+            $('#month-sliding').val('----');
+            $('#week-sliding').val('----');
+        });
+
+        $('#radioPureCSS1').on('click', function (e) {
+            $('#year-sliding').val('----');
+            $('#month-sliding').val('----');
+            $('#week-sliding').val('----');
+            $('#day-sliding').val('----');
+        });
+
+        $('#radioPureCSS2').on('click', function (e) {
+            $('#year-sliding').val('----');
+            $('#month-sliding').val('----');
+            $('#week-sliding').val('----');
+            $('#day-sliding').val('----');
+        });
+
+        $('#radioPureCSS3').on('click', function (e) {
+            $('#year-sliding').val('----');
+            $('#month-sliding').val('----');
+            $('#week-sliding').val('----');
+            $('#day-sliding').val('----');
+        });
+
+        $('#radioPureCSS4').on('click', function (e) {
+            $('#year-sliding').val('----');
+            $('#month-sliding').val('----');
+            $('#week-sliding').val('----');
+            $('#day-sliding').val('----');
+        });
+
+        $('#radioPureCSS5').on('click', function (e) {
+            $('#year-sliding').val('----');
+            $('#month-sliding').val('----');
+            $('#week-sliding').val('----');
+            $('#day-sliding').val('----');
+        });
+
+    });
+</script>
+}
