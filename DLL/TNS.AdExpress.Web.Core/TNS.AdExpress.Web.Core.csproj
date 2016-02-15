@@ -119,10 +119,12 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
-    <Reference Include="TNS.Baal.Common">
+    <Reference Include="TNS.Baal.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Baal.Common.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.Baal.ExtractList">
+    <Reference Include="TNS.Baal.ExtractList, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Baal.ExtractList.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Classification">
