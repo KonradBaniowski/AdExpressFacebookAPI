@@ -38,6 +38,7 @@ namespace Km.AdExpressClientWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            //TO DO
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             if (!ModelState.IsValid)
             {
