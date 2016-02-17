@@ -8,17 +8,29 @@ using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
 using TNS.AdExpress.Constantes.Web;
 using System.Data;
+using TNS.AdExpress.Domain.Classification;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
-    public class MediaScheduleService : IMediaScheduleService
+    public class MediaService : IMediaService
     {
         private WebSession _webSession = null;
-        public List<Media> GetMedia(string idWebSession)
+        public List<Core.Domain.Media> GetMedia(string idWebSession)
         {
-            var result = new List<Media>();
+            var result = new List<Core.Domain.Media>();
             var _webSession = (WebSession)WebSession.Load(idWebSession);
             var myMedia =GetMyMedia(_webSession);
+
+            return result;
+        }
+
+        public List<Core.Domain.Media> GetAllMedia(string idWebSession)
+        {
+            var result = new List<Core.Domain.Media>();
+            var _webSession = (WebSession)WebSession.Load(idWebSession);
+
+            var vehiclesInfos = VehiclesInformation.GetAll();
+            var myMedia = GetMyMedia(_webSession);
 
             return result;
         }

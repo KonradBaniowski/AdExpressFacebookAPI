@@ -46,7 +46,7 @@
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
     <Compile Include="BusinessService\IApplicationUserManager.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
-    <Compile Include="BusinessService\IMediaScheduleService.cs" />
+    <Compile Include="BusinessService\IMediaService.cs" />
     <Compile Include="BusinessService\SignInStatus.cs" />
     <Compile Include="DataAccess\IUnitOfWork.cs" />
     <Compile Include="DataAccess\Repository\IAddressRepository.cs" />

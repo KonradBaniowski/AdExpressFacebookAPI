@@ -15,10 +15,10 @@ namespace Km.AdExpressClientWeb.Controllers
     [Authorize]
     public class MediaScheduleController : Controller
     {
-        private IMediaScheduleService _mediaScheduleService;
+        private IMediaService _mediaScheduleService;
 
         private string icon;
-        public MediaScheduleController(IMediaScheduleService mediaScheduleService)
+        public MediaScheduleController(IMediaService mediaScheduleService)
         {
             _mediaScheduleService = mediaScheduleService;
         }
