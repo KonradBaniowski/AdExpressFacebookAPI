@@ -1,8 +1,10 @@
-﻿using Km.AdExpressClientWeb.Models;
+﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Km.AdExpressClientWeb.Models;
 using KM.AdExpress.Framework.MediaSelection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Classification;
@@ -13,11 +15,17 @@ namespace Km.AdExpressClientWeb.Controllers
     [Authorize]
     public class MediaScheduleController : Controller
     {
-        private string icon;
+        private IMediaScheduleService _mediaScheduleService;
 
+        private string icon;
+        public MediaScheduleController(IMediaScheduleService mediaScheduleService)
+        {
+            _mediaScheduleService = mediaScheduleService;
+        }
         public ActionResult Index()
         {
-            var model = LoadNavBar(1);
+            var marketNode = new MediaPlanNavigationNode { Position = 1 };
+            var model = LoadNavBar(marketNode.Position);
             return View(model);
         }
 
@@ -28,94 +36,99 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult MediaSelection()
         {
-            var model = new MediaSelectionViewModel();
-            model.Medias = GetClientMedia();
+            //var model = new MediaSelectionViewModel();
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var media = _mediaScheduleService.GetMedia(idWebSession);
             #region Hardcoded model data
-            //var model = new MediaSelectionViewModel()
-            //    {
-            //        Multiple = true,
-            //        Medias = new List<Media>()
-            //    {
-            //        new Media()
-            //        {
-            //            MediaEnum = Vehicles.names.cinema,
-            //            Id= 1,
+            var model = new MediaSelectionViewModel()
+            {
+                Multiple = true,
+                Medias = new List<Media>()
+                {
+                    new Media()
+                    {
+                        MediaEnum = Vehicles.names.cinema,
+                        Id= 1,
 
-            //            Label = "Cinéma",
-            //            Disabled = false
-            //        },
-            //        new Media()
-            //        {
-            //              MediaEnum = Vehicles.names.search,
-            //            Id = 34,
-            //            Label = "Search",
-            //            Disabled = false
-            //        },
-            //        new Media()
-            //        {
-            //              MediaEnum = Vehicles.names.tv,
-            //            Id = 2,
-            //            Label = "Télévision",
-            //            Disabled = true
-            //        },
-            //            new Media()
-            //        {
-            //                  MediaEnum = Vehicles.names.evaliantMobile,
-            //            Id = 4,
-            //            Label = "Evaliant Mobile",
-            //            Disabled = false
-            //        },
-            //                new Media()
-            //        {
-            //                    MediaEnum = Vehicles.names.directMarketing,
-            //            Id = 10,
-            //            Label = "Courrier",
-            //            Disabled = false
-            //        }
-            //        //  new Media()
-            //        //{
-            //        //    Id = 6,
-            //        //    Label = "Nom 6",
-            //        //    Disabled = false
-            //        //},
-            //        //      new Media()
-            //        //{
-            //        //    Id = 7,
-            //        //    Label = "Nom 7",
-            //        //    Disabled = true
-            //        //}
+                        Label = "Cinéma",
+                        Disabled = false
+                    },
+                    new Media()
+                    {
+                          MediaEnum = Vehicles.names.search,
+                        Id = 34,
+                        Label = "Search",
+                        Disabled = false
+                    },
+                    new Media()
+                    {
+                          MediaEnum = Vehicles.names.tv,
+                        Id = 2,
+                        Label = "Télévision",
+                        Disabled = true
+                    },
+                        new Media()
+                    {
+                              MediaEnum = Vehicles.names.evaliantMobile,
+                        Id = 4,
+                        Label = "Evaliant Mobile",
+                        Disabled = false
+                    },
+                            new Media()
+                    {
+                                MediaEnum = Vehicles.names.directMarketing,
+                        Id = 10,
+                        Label = "Courrier",
+                        Disabled = false
+                    }
+                    //  new Media()
+                    //{
+                    //    Id = 6,
+                    //    Label = "Nom 6",
+                    //    Disabled = false
+                    //},
+                    //      new Media()
+                    //{
+                    //    Id = 7,
+                    //    Label = "Nom 7",
+                    //    Disabled = true
+                    //}
 
-            //    },
-            //        IdMediasCommon =
-            //        new List<int>()
-            //        {
-            //        { 1 },
-            //        { 2 },
-            //        { 4 },
-            //        { 6 }
-            //        }
-            //    };
+                },
+                IdMediasCommon =
+                    new List<int>()
+                    {
+                    { 1 },
+                    { 2 },
+                    { 4 },
+                    { 6 }
+                    }
+            };
 
-            //    foreach (var e in model.Medias)
-            //    {
-            //        e.icon = IconSelector.getIcon(e.MediaEnum);
-            //    }
-            //    model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
+            foreach (var e in model.Medias)
+            {
+                e.icon = IconSelector.getIcon(e.MediaEnum);
+            }
+            model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             #endregion
-            model.NavigationBar = LoadNavBar(2);
+            var mediaNode = new MediaPlanNavigationNode { Position = 2 };
+            model.NavigationBar = LoadNavBar(mediaNode.Position);
             
             return View(model);
         }
 
         public ActionResult PeriodSelection()
         {
-            var model = LoadNavBar(3);
+            var periodeNode = new MediaPlanNavigationNode { Position = 3 };
+            var model = LoadNavBar(periodeNode.Position);
             return View(model);
         }
 
         public ActionResult Results()
         {
-            var model = LoadNavBar(4);
+            var resultNode = new MediaPlanNavigationNode { Position = 4 };
+            var model = LoadNavBar(resultNode.Position);
             return View(model);
         }
 

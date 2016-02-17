@@ -46,6 +46,7 @@
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
     <Compile Include="BusinessService\IApplicationUserManager.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
+    <Compile Include="BusinessService\IMediaScheduleService.cs" />
     <Compile Include="BusinessService\SignInStatus.cs" />
     <Compile Include="DataAccess\IUnitOfWork.cs" />
     <Compile Include="DataAccess\Repository\IAddressRepository.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Domain\Mau\ModuleAssignment.cs" />
     <Compile Include="Domain\Mau\RightAssignment.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
+    <Compile Include="Domain\Media.cs" />
     <Compile Include="Domain\Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
