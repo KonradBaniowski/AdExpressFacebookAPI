@@ -1,153 +1,189 @@
-﻿
+﻿@model  List<Km.AdExpressClientWeb.Models.MediaPlanNavigationNode>
+
 @{
     ViewBag.Title = "PeriodSelection";
 }
 
 <div class="row">
     @Html.Partial("Presentation")
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+        <div class="row">
+            <ul>
+                @foreach (var navigation in Model)
+                {
+                    if (navigation.IsActive)
+                    {
+                        <li class="tl-header">
+                            <a class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
+                                <i class="fa fa-file-text"></i>
+                            </a>
+                            <p class="lead">@navigation.Title</p>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="tl-header">
+                            <a class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
+                                <i class="fa fa-file-text"></i>
+                            </a>
+                            <p class="lead">@navigation.Title</p>
+                        </li>
+                    }
+                    if (navigation.Id < Model.Count())
+                    {
+                        <li class="tl-item">
+                            <div class="tl-wrap tl-active">
+                                <div class="tl-content">
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
 
-    <div class="clearfix"></div>
-    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h4 class=""><i class="fa fa-eye"></i> Sélection par période calandaires</h4>
-            <div class="clearfix"></div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div id="datetimepicker-begin">
+        <div class="clearfix"></div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4 class=""><i class="fa fa-eye"></i> Sélection par période calandaires</h4>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div id="datetimepicker-begin">
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div id="datetimepicker-end">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div id="datetimepicker-end">
+                        </div>
                     </div>
+
                 </div>
+                <form class="form-inline">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+                            <div class="form-group">
+                                <label for="exampleInputName2">Depuis le</label>
+                                <input id="begin-date-value" type="text" class="form-control input-datepicker" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+                            <div class="form-group">
+                                <label for="exampleInputEmail2">Jusqu'au</label>
+                                <input id="end-date-value" type="text" class="form-control input-datepicker" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4 class=""><i class="fa fa-eye"></i> Sélection par période glissantes</h4>
+                <div class="clearfix"></div>
+                <form class="form-horizontal">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
+                        <h4>Au cours de(s):</h4>
+                        <div class="form-group site-select">
+                            <select id="year-sliding" class="select-date form-control">
+                                <option class="site-select-option">----</option>
+                                <option class="site-select-option">1</option>
+                                <option class="site-select-option">2</option>
+                                <option class="site-select-option">3</option>
+                            </select>
+                            <label class="col-sm-8">dernière(s) année(s)</label>
+                        </div>
+                        <div class="form-group site-select">
+                            <select id="month-sliding" class="select-date form-control">
+                                <option class="site-select-option">----</option>
+                                <option class="site-select-option">1</option>
+                                <option class="site-select-option">2</option>
+                                <option class="site-select-option">3</option>
+                            </select>
+                            <label class="col-sm-8 select-date-label">dernier(s) mois</label>
+                        </div>
+                        <div class="form-group site-select">
+                            <select id="week-sliding" class="select-date form-control">
+                                <option class="site-select-option">----</option>
+                                <option class="site-select-option">1</option>
+                                <option class="site-select-option">2</option>
+                                <option class="site-select-option">3</option>
+                            </select>
+                            <label class="col-sm-8 select-date-label">dernière(s) semaine(s)</label>
+                        </div>
+                        <div class="form-group site-select">
+                            <select id="day-sliding" class="select-date form-control">
+                                <option class="site-select-option">----</option>
+                                <option class="site-select-option">1</option>
+                                <option class="site-select-option">2</option>
+                                <option class="site-select-option">3</option>
+                            </select>
+                            <label class="col-sm-8 select-date-label"> dernier(s) jour(s)</label>
+                        </div>
+                        <h4>Ou bien sur:</h4>
+                        @*<div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                    L'année courante
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    L'année précédente
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    Le mois précédent
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    La semaine prochaine
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    Le jour précédent
+                                </label>
+                            </div>*@
+                        <div id="radioSelection">
+                            <div>
+                                <input id="radioPureCSS1" type="radio" name="radioPureCSS" value="1">
+                                <label for="radioPureCSS1"><span><span></span></span>L'année courante</label>
+                            </div>
+                            <div>
+                                <input id="radioPureCSS2" type="radio" name="radioPureCSS" value="2">
+                                <label for="radioPureCSS2"><span><span></span></span>L'année précédente</label>
+                            </div>
+                            <div>
+                                <input id="radioPureCSS3" type="radio" name="radioPureCSS" value="3">
+                                <label for="radioPureCSS3"><span><span></span></span>Le mois précédent</label>
+                            </div>
+                            <div>
+                                <input id="radioPureCSS4" type="radio" name="radioPureCSS" value="4">
+                                <label for="radioPureCSS4"><span><span></span></span>La semaine prochaine</label>
+                            </div>
+                            <div>
+                                <input id="radioPureCSS5" type="radio" name="radioPureCSS" value="5">
+                                <label for="radioPureCSS5"><span><span></span></span> Le jour précédent</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bot-30">
+                        <button type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
+                    </div>
+                </form>
 
             </div>
-            <form class="form-inline">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
-                        <div class="form-group">
-                            <label for="exampleInputName2">Depuis le</label>
-                            <input id="begin-date-value" type="text" class="form-control input-datepicker" />
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
-                        <div class="form-group">
-                            <label for="exampleInputEmail2">Jusqu'au</label>
-                            <input id="end-date-value" type="text" class="form-control input-datepicker" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <button type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
-                </div>
-            </form>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h4 class=""><i class="fa fa-eye"></i> Sélection par période glissantes</h4>
-            <div class="clearfix"></div>
-            <form class="form-horizontal">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
-                    <h4>Au cours de(s):</h4>
-                    <div class="form-group site-select">
-                        <select id="year-sliding" class="select-date form-control">
-                            <option class="site-select-option">----</option>
-                            <option class ="site-select-option">1</option>
-                            <option class="site-select-option">2</option>
-                            <option class="site-select-option">3</option>
-                        </select>
-                        <label class="col-sm-8">dernière(s) année(s)</label>
-                    </div>
-                    <div class="form-group site-select">
-                        <select id="month-sliding" class="select-date form-control">
-                            <option class="site-select-option">----</option>
-                            <option class="site-select-option">1</option>
-                            <option class="site-select-option">2</option>
-                            <option class="site-select-option">3</option>
-                        </select>
-                        <label class="col-sm-8 select-date-label">dernier(s) mois</label>
-                    </div>
-                    <div class="form-group site-select">
-                        <select id="week-sliding" class="select-date form-control">
-                            <option class="site-select-option">----</option>
-                            <option class="site-select-option">1</option>
-                            <option class="site-select-option">2</option>
-                            <option class="site-select-option">3</option>
-                        </select>
-                        <label class="col-sm-8 select-date-label">dernière(s) semaine(s)</label>
-                    </div>
-                    <div class="form-group site-select">
-                        <select id="day-sliding" class="select-date form-control">
-                            <option class="site-select-option">----</option>
-                            <option class="site-select-option">1</option>
-                            <option class="site-select-option">2</option>
-                            <option class="site-select-option">3</option>
-                        </select>
-                        <label class="col-sm-8 select-date-label"> dernier(s) jour(s)</label>
-                    </div>
-                    <h4>Ou bien sur:</h4>
-                    @*<div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                            L'année courante
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                            L'année précédente
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                            Le mois précédent
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                            La semaine prochaine
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                            Le jour précédent
-                        </label>
-                    </div>*@
-                    <div id="radioSelection">
-                        <div>
-                            <input id="radioPureCSS1" type="radio" name="radioPureCSS" value="1">
-                            <label for="radioPureCSS1"><span><span></span></span>L'année courante</label>
-                        </div>
-                        <div>
-                            <input id="radioPureCSS2" type="radio" name="radioPureCSS" value="2">
-                            <label for="radioPureCSS2"><span><span></span></span>L'année précédente</label>
-                        </div>
-                        <div>
-                            <input id="radioPureCSS3" type="radio" name="radioPureCSS" value="3">
-                            <label for="radioPureCSS3"><span><span></span></span>Le mois précédent</label>
-                        </div>
-                        <div>
-                            <input id="radioPureCSS4" type="radio" name="radioPureCSS" value="4">
-                            <label for="radioPureCSS4"><span><span></span></span>La semaine prochaine</label>
-                        </div>
-                        <div>
-                            <input id="radioPureCSS5" type="radio" name="radioPureCSS" value="5">
-                            <label for="radioPureCSS5"><span><span></span></span> Le jour précédent</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bot-30">
-                    <button type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
 
 @section scripts {
 <script type="text/javascript">

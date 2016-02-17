@@ -1,4 +1,4 @@
-﻿
+﻿@model  List<Km.AdExpressClientWeb.Models.MediaPlanNavigationNode>
 @{
     ViewBag.Title = "Index";
 }
@@ -10,85 +10,44 @@
     @*BREADCRUM*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
 
-        <ol class="breadcrumb home">
-            <li>
-                <a class="btn btn-warning btn-circle">
-                    <i class="fa fa-file-text"></i>
-                </a>
-                <p class="lead">Marché</p>
-            </li>
-            <li>
-                <a class="btn btn-warning btn-circle btn-empty active">
-                    <i class="fa fa-eye"></i>
-                </a>
-                <p class="lead">Médias</p>
-            </li>
-            <li>
-                <a class="btn btn-warning btn-circle btn-empty">
-                    <i class="fa fa-file-text"></i>
-                </a>
-                <p class="lead">NEXT</p>
-            </li>
-            <li>
-                <a class="btn btn-warning btn-circle btn-empty ">
-                    <i class="fa fa-eye"></i>
-                </a>
-                <p class="lead">Médias</p>
-            </li>
-        </ol>
+        @*@Html.Partial("NavigationBar", Model)*@
 
-        <ul class="timeline">
-            <li class="tl-header">
-                <a class="btn btn-warning btn-circle">
-                    <i class="fa fa-file-text"></i>
-                </a>
-                <p class="lead">Marché</p>
-            </li>
-            <li class="tl-item">
-                <div class="tl-wrap tl-active">
-                    <div class="tl-content">
-                    </div>
-                </div>
-            </li>
-            <li class="tl-header">
-                <a class="btn btn-warning btn-circle btn-empty active">
-                    <i class="fa fa-file-text"></i>
-                </a>
-                <p class="lead">Marché</p>
-            </li>
-            <li class="tl-item">
-                <div class="tl-wrap">
-                    <div class="tl-content">
-                    </div>
-                </div>
-            </li>
-            <li class="tl-header">
-                <a class="btn btn-warning btn-circle btn-empty">
-                    <i class="fa fa-file-text"></i>
-                </a>
-                <p class="lead">Marché</p>
-            </li>
-            <li class="tl-item">
-                <div class="tl-wrap">
-                    <div class="tl-content">
-                    </div>
-                </div>
-            </li>
-            <li class="tl-header">
-                <a class="btn btn-warning btn-circle btn-empty">
-                    <i class="fa fa-file-text"></i>
-                </a>
-                <p class="lead">Marché</p>
-            </li>
-        </ul>
 
-        <ul id="breadcrumbs-two">
-            <li><a href="" class="current">Lorem ipsum</a></li>
-            <li><a href="">Vivamus nisi eros</a></li>
-            <li><a href="" class="current">Nulla sed lorem risus</a></li>
-            <li><a href="">Nam iaculis commodo</a></li>
-            <li><a href="" class="current">Current crumb</a></li>
-        </ul>
+        <div class="row">
+            <ul>
+                @foreach (var navigation in Model)
+                {
+                    if (navigation.IsActive)
+                    {
+                        <li class="tl-header">
+                            <a class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
+                                <i class="fa fa-file-text"></i>
+                            </a>
+                            <p class="lead">@navigation.Title</p>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="tl-header">
+                            <a class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
+                                <i class="fa fa-file-text"></i>
+                            </a>
+                            <p class="lead">@navigation.Title</p>
+                        </li>
+                    }
+                    if (navigation.Id < Model.Count())
+                    {
+                        <li class="tl-item">
+                            <div class="tl-wrap tl-active">
+                                <div class="tl-content">
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
     </div>
     @*SEARCH*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 ">
