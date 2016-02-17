@@ -10,6 +10,7 @@ using TNS.AdExpress.Constantes.Classification.DB;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class MediaScheduleController : Controller
     {
         private string icon;

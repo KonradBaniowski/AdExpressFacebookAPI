@@ -66,9 +66,15 @@
     <Compile Include="Domain\Mau\Module.cs" />
     <Compile Include="Domain\Mau\ModuleAssignment.cs" />
     <Compile Include="Domain\Mau\RightAssignment.cs" />
+    <Compile Include="BusinessService\IRightService.cs" />
+    <Compile Include="Domain\Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Contracts\Kantar.AdExpress.Service.Contracts.csproj">
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>
       <Name>Kantar.AdExpress.Service.Contracts</Name>

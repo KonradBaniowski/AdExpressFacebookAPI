@@ -159,6 +159,25 @@ namespace TNS.AdExpress
                 throw (new RightException("Impossible to access to the Database", err));
             }
         }
+
+        public Right(long loginId, string login, string password, int sitelanguage)
+        {
+            //if (login == null || login.Length == 0) throw (new ArgumentException("Invalid login parameter"));
+            //if (password == null || password.Length == 0) throw (new ArgumentException("Invalid password parameter"));
+           
+            try
+            {
+                _loginId = loginId;
+                _login = login;
+                _password = password;
+                _connectionDate = DateTime.Now;
+                _siteLanguage = sitelanguage;
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to access to the Database", err));
+            }
+        }
         #endregion
 
         #region Accessors
@@ -189,7 +208,8 @@ namespace TNS.AdExpress
                     }
                     if (UseDefaultConnection)
                         _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
-                    else _source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort, CustomerConnectionIds.adexpr03);
+                    else
+                        _source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort, CustomerConnectionIds.adexpr03);
                 }
                 return (_source);
             }
@@ -428,11 +448,11 @@ namespace TNS.AdExpress
                             //VP Enseigne en accès
                             if ((Int64)row[2] == MediaProductIdType.ID_VP_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
                                 _rights.Add(CustomerCst.Right.type.vpBrandAccess, row[0].ToString().Split(','));
-                         
+
                             //VP Enseigne  en exception
                             if ((Int64)row[2] == MediaProductIdType.ID_VP_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
                                 _rights.Add(CustomerCst.Right.type.vpBrandException, row[0].ToString().Split(','));
-                           
+
                         }
                     }
                 }
@@ -519,20 +539,20 @@ namespace TNS.AdExpress
                             {
                                 vh = row[0].ToString();
                                 _rights.Add(CustomerCst.Right.type.vehicleAccess, vh.Split(','));
-                         
+
                                 // On ajoute AdNetTrack si Internet est présent
                             }
                             //Vehicle en exception
                             if ((Int64)row[2] == MediaProductIdType.ID_VEHICLE_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
                             {
                                 _rights.Add(CustomerCst.Right.type.vehicleException, row[0].ToString().Split(','));
-                                
+
                             }
                             //Category en accès
                             if ((Int64)row[2] == MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
                             {
                                 _rights.Add(CustomerCst.Right.type.categoryAccess, row[0].ToString().Split(','));
-                               
+
                             }
                             //Category en exception
                             if ((Int64)row[2] == MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
@@ -544,18 +564,18 @@ namespace TNS.AdExpress
                             if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
                             {
                                 _rights.Add(CustomerCst.Right.type.regionAccess, row[0].ToString().Split(','));
-                              
+
                             }
                             //Region en exception
                             if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
                             {
                                 _rights.Add(CustomerCst.Right.type.regionException, row[0].ToString().Split(','));
-                              
+
                             }
                             //média en accès
                             if ((Int64)row[2] == MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
                                 _rights.Add(CustomerCst.Right.type.mediaAccess, row[0].ToString().Split(','));
-                           
+
 
                             //média en exception
                             if ((Int64)row[2] == MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
@@ -570,9 +590,9 @@ namespace TNS.AdExpress
                             //VP Vehicle in exception
                             if ((Int64)row[2] == MediaProductIdType.ID_VP_VEHICLE_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
                             {
-                                _rights.Add(CustomerCst.Right.type.vpVehicleException, row[0].ToString().Split(','));                              
+                                _rights.Add(CustomerCst.Right.type.vpVehicleException, row[0].ToString().Split(','));
                             }
-                        
+
 
                         }
                     }
@@ -612,7 +632,7 @@ namespace TNS.AdExpress
                         //VP Media Type in acccess                     
                         AddRights(row, MediaProductIdType.ID_VP_VEHICLE_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.vpVehicleAccess);
                         //VP Media Type in exception                       
-                        AddRights(row, MediaProductIdType.ID_VP_VEHICLE_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.vpVehicleException);                    
+                        AddRights(row, MediaProductIdType.ID_VP_VEHICLE_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.vpVehicleException);
                     }
                 }
             }
@@ -639,7 +659,7 @@ namespace TNS.AdExpress
                                 Aggregate(listVehicleForRecap, (current, row) => current + (row[0] + ","));
                             if (listVehicleForRecap.Length > 0)
                             {
-                                _rights.Add(CustomerCst.Right.type.vehicleAccessForRecap, 
+                                _rights.Add(CustomerCst.Right.type.vehicleAccessForRecap,
                                     listVehicleForRecap.Substring(0, listVehicleForRecap.Length - 1).Split(','));
                             }
                         }

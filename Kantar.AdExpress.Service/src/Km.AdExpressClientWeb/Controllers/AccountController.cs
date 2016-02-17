@@ -9,6 +9,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Date.DAL;
 using System;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -40,6 +41,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             //TO DO
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
+            //model.ReturnUrl = returnUrl;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -50,55 +52,19 @@ namespace Km.AdExpressClientWeb.Controllers
             //MOCK List<>MODULE  
 
             var result = await _userManager.PasswordSignIn(model.Email, model.Password, false, shouldLockout: false);
+
+            var cla = new ClaimsPrincipal(User.Identity);
+            var idlogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
+            
+            TempData["Test"] = model.Password;
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (returnUrl == null)
-                    {
-                        
-                            return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        #region Rights
-                        //TODO : A mettre dans PasswordSignIn
-
-                        //Rights 
-
-                        //Get language send by parameters or set default language
-                        WebSession _webSession = null;
-                        int _siteLanguage = WebApplicationParameters.DefaultLanguage;
-                        var right = new TNS.AdExpress.Right(model.Email, model.Password, _siteLanguage);
-                        if (right != null && right.CanAccessToAdExpress())
-                        {
-                            right.SetModuleRights();
-                            right.SetFlagsRights();
-                            right.SetRights();
-                            if (WebApplicationParameters.VehiclesFormatInformation.Use)
-                                right.SetBannersAssignement();
-                            //newRight.HasModuleAssignmentAlertsAdExpress();
-                            if (_webSession == null) _webSession = new WebSession(right);
-                            _webSession.SiteLanguage = _siteLanguage;
-                            // Année courante pour les recaps                    
-                            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
-                            if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
-                            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
-                            _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
-                            // On met à jour IDataSource à partir de la session elle même.
-                            _webSession.Source = right.Source;
-                            //Sauvegarder la session
-                            _webSession.Save();
-                            // Tracking (NewConnection)
-                            // On obtient l'adresse IP:
-                            _webSession.OnNewConnection(this.Request.UserHostAddress);
-
-                            //TODO : gestion de la rediction vers les Alert
-                        }
-
-                        #endregion
-
-                        return RedirectToLocal(returnUrl);
-                    }
+                    
+                  
+                    //_webSession = new WebSession(right);
+                    return RedirectToAction("Index", "Home");
+             
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresTwoFactorAuthentication:
