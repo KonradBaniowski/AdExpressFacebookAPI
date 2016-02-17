@@ -319,6 +319,12 @@
             Set module rights
             </summary>
         </member>
+        <member name="M:TNS.AdExpress.Right.GetModuleRights">
+            <summary>
+            Return Dictionnary de int module
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:TNS.AdExpress.Right.GetCustomerModuleListHierarchy">
             <summary>
             Get Modules list

@@ -675,6 +675,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.NameIdentifier, ClaimTypes.Role);
                 claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), "http://www.w3.org/2001/XMLSchema#string"));
                 claimsIdentity.AddClaim(new Claim(ClaimTypes.Hash, user.OraPass, "http://www.w3.org/2001/XMLSchema#string"));
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.AuthorizationDecision, true.ToString(), "http://www.w3.org/2001/XMLSchema#string"));
                 claimsIdentity.AddClaim(new Claim(ClaimTypes.UserData, DateTime.Now.ToString("yyyyMMddHHmmss") + Convert.ToString(user.Id), "http://www.w3.org/2001/XMLSchema#string"));
                 claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
                 claimsIdentity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", user.UserName, "http://www.w3.org/2001/XMLSchema#string"));

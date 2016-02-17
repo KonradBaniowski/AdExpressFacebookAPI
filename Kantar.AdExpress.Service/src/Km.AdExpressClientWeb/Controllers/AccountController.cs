@@ -53,17 +53,18 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var result = await _userManager.PasswordSignIn(model.Email, model.Password, false, shouldLockout: false);
 
-            var cla = new ClaimsPrincipal(User.Identity);
-            var idlogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
+            //_userManager.AddClaimAsync(User.Identity)
+            //var cla = new ClaimsPrincipal(User.Identity);
+            //var idlogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
             
-            TempData["Test"] = model.Password;
+            //TempData["fromAccount"] = true;
             switch (result)
             {
                 case SignInStatus.Success:
-                    
-                  
+
+                    return RedirectToAction("webSession");
                     //_webSession = new WebSession(right);
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "Home");
              
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -73,6 +74,46 @@ namespace Km.AdExpressClientWeb.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+
+        [Authorize]
+        public ActionResult WebSession()
+        {
+            var cla = new ClaimsPrincipal(User.Identity);
+            var idLogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
+            var login = cla.Claims.Where(e => e.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();
+            var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
+            var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            WebSession _webSession = null;
+            int _siteLanguage = WebApplicationParameters.DefaultLanguage;
+            var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
+            if (right != null && right.CanAccessToAdExpress())
+            {
+                right.SetModuleRights();
+                right.SetFlagsRights();
+                right.SetRights();
+                if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                    right.SetBannersAssignement();
+                //newRight.HasModuleAssignmentAlertsAdExpress();
+                if (_webSession == null) _webSession = new WebSession(right);
+                _webSession.IdSession = idWS;
+                //_webSession.SiteLanguage = _siteLanguage;
+                // Année courante pour les recaps                    
+                TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+                _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
+                // On met à jour IDataSource à partir de la session elle même.
+                _webSession.Source = right.Source;
+                //Sauvegarder la session
+                _webSession.Save();
+                // Tracking (NewConnection)
+                // On obtient l'adresse IP:
+                _webSession.OnNewConnection(this.Request.UserHostAddress);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         //
