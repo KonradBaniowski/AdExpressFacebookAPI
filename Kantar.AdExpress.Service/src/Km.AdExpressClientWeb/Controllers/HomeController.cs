@@ -1,4 +1,5 @@
-﻿using Km.AdExpressClientWeb.Models;
+﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Km.AdExpressClientWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,20 @@ namespace Km.AdExpressClientWeb.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private IRightService _rightService;
+
+        public HomeController(IRightService rightService)
+        {
+            _rightService = rightService;
+        }
+
         public ActionResult Index()
         {
             var cla = new ClaimsPrincipal(User.Identity);
             var idLogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
             var login = cla.Claims.Where(e => e.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();
             var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
+            var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             //int _siteLanguage = WebApplicationParameters.DefaultLanguage;
             //var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
@@ -38,7 +47,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         right.SetBannersAssignement();
                     //newRight.HasModuleAssignmentAlertsAdExpress();
                     if (_webSession == null) _webSession = new WebSession(right);
-                    _webSession.IdSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                    _webSession.IdSession = idWS;
                     //_webSession.SiteLanguage = _siteLanguage;
                     // Année courante pour les recaps                    
                     TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
@@ -57,10 +66,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 //_webSession.CustomerLogin.
             }
 
-            
-            
+
+
 
             //var test = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)
+            var res = _rightService.GetModule(idWS);
             var docu = new Documents()
             {
                 Id = 1,

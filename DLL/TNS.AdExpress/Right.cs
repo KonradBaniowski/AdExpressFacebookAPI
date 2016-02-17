@@ -208,7 +208,8 @@ namespace TNS.AdExpress
                     }
                     if (UseDefaultConnection)
                         _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
-                    else _source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort, CustomerConnectionIds.adexpr03);
+                    else
+                        _source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort, CustomerConnectionIds.adexpr03);
                 }
                 return (_source);
             }
