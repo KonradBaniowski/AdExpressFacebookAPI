@@ -155,7 +155,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public ActionResult CalendarValidation(string selectedStartDate, string selectedEndDate)
+        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -177,10 +177,15 @@ namespace Km.AdExpressClientWeb.Controllers
 
              CustomerSession.Save();
 
-            return RedirectToAction("");
+             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+             string url = context.Action("Results", "MediaSchedule");
+
+             JsonResult jsonModel = Json(new { RedirectUrl = url });
+
+             return jsonModel;
         }
 
-        public ActionResult SlidingDateValidation(int selectedPeriod, int selectedValue)
+        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -189,14 +194,19 @@ namespace Km.AdExpressClientWeb.Controllers
             globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
 
             CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
-            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
            
             if (selectedValue == 0) throw new Exception(GestionWeb.GetWebWord(885, CustomerSession.SiteLanguage));
             date.SetDate(ref CustomerSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedPeriod, selectedValue);
 
             CustomerSession.Save();
 
-            return RedirectToAction("");
+            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+            string url = context.Action("Results", "MediaSchedule");
+
+            JsonResult jsonModel = Json(new { RedirectUrl = url });
+
+            return jsonModel;
         }
 
         public ActionResult Results()
