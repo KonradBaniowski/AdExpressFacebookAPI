@@ -4,7 +4,8 @@ using TNS.AdExpress.Domain.XmlLoader;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Exceptions;
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -46,7 +47,8 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			_htModuleCategory=new Hashtable();
             ModulesListXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CONFIGURATION_FILENAME),_htModuleGroup,_htModule);
             ModuleCategoryListXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME),_htModuleCategory);
-		}
+
+        }
 		#endregion
 
 		#region Initialisation de la classe
@@ -210,7 +212,29 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 				return(null);
 			}
 		}
-		#endregion
 
-	}
+        /// <summary>
+		/// Retourne l'objet Module
+		/// </summary>
+		/// <param name="idModule">Identifiant du module</param>
+		/// <returns>Module</returns>
+		public static Dictionary<long,Module> GetModules()
+        {
+            try
+            {
+                           
+                return    _htModule
+         .Cast<DictionaryEntry>()
+         .ToDictionary(kvp => (Int64)kvp.Key, kvp => (Module)kvp.Value);
+             
+               
+            }
+            catch (System.Exception)
+            {
+                return (null);
+            }
+        }
+        #endregion
+
+    }
 }
