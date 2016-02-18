@@ -23,8 +23,8 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js",
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/respond.js",
                         "~/Scripts/moment.js",
                         "~/Scripts/moment-with-locales.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
@@ -41,8 +41,7 @@ namespace Km.AdExpressClientWeb
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/themes/base/base.css",
                       "~/Content/themes/base/theme.css",
-                       "~/Content/bootstrap-select.css"
-                      ));
+                      "~/Content/bootstrap-select.css"));
         }
     }
 }
