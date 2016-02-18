@@ -1,4 +1,4 @@
-﻿@model Km.AdExpressClientWeb.Models.PeriodViewModel
+﻿@model Km.AdExpressClientWeb.Models.PeriodSelectionViewModel
 @using TNS.AdExpress.Domain.Translation;
 
 @{
@@ -10,7 +10,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row">
             <ul>
-                @foreach (var navigation in Model)
+                @foreach (var navigation in Model.NavigationBar)
                 {
                     if (navigation.IsActive)
                     {
@@ -30,7 +30,7 @@
                             <p class="lead">@navigation.Title</p>
                         </li>
                     }
-                    if (navigation.Id < Model.Count())
+                    if (navigation.Id < Model.NavigationBar.Count())
                     {
                         <li class="tl-item">
                             <div class="tl-wrap tl-active">
@@ -46,7 +46,7 @@
         <div class="clearfix"></div>
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h4 class=""><i class="fa fa-eye"></i> @GestionWeb.GetWebWord(776, Model.SiteLanguage)</h4>
+            <h4 class=""><i class="fa fa-eye"></i> @GestionWeb.GetWebWord(776, Model.PeriodViewModel.SiteLanguage)</h4>
                 <div class="clearfix"></div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -82,73 +82,73 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h4 class=""><i class="fa fa-eye"></i> @GestionWeb.GetWebWord(777, Model.SiteLanguage)</h4>
+            <h4 class=""><i class="fa fa-eye"></i> @GestionWeb.GetWebWord(777, Model.PeriodViewModel.SiteLanguage)</h4>
                 <div class="clearfix"></div>
                 <form class="form-horizontal">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
-                    <h4>@GestionWeb.GetWebWord(785, Model.SiteLanguage)</h4>
+                    <h4>@GestionWeb.GetWebWord(785, Model.PeriodViewModel.SiteLanguage)</h4>
                     <div class="selectdatecontainer">
                         <select id="year-sliding" class="selectdatepicker" selectedperiod="0">
                             <option>--</option>
-                            @for (int i = 1; i <= Model.SlidingYearsNb; i++)
+                            @for (int i = 1; i <= Model.PeriodViewModel.SlidingYearsNb; i++)
                             {
                                 <option>@i</option>
                             }
                             </select>
-                        <label class="col-sm-8">@GestionWeb.GetWebWord(781, Model.SiteLanguage)</label>
+                        <label class="col-sm-8">@GestionWeb.GetWebWord(781, Model.PeriodViewModel.SiteLanguage)</label>
                         </div>
                     <div class="selectdatecontainer">
                         <select id="month-sliding" class="selectdatepicker" selectedperiod="1">
                             <option>--</option>
-                            @for (int i = 1; i <= Model.SlidingMonthsNb; i++)
+                            @for (int i = 1; i <= Model.PeriodViewModel.SlidingMonthsNb; i++)
                             {
                                 <option>@i</option>
                             }
                             </select>
-                        <label class="col-sm-8">@GestionWeb.GetWebWord(783, Model.SiteLanguage)</label>
+                        <label class="col-sm-8">@GestionWeb.GetWebWord(783, Model.PeriodViewModel.SiteLanguage)</label>
                         </div>
                     <div class="selectdatecontainer">
                         <select id="week-sliding" class="selectdatepicker" selectedperiod="2">
                             <option>--</option>
-                            @for (int i = 1; i <= Model.SlidingWeeksNb; i++)
+                            @for (int i = 1; i <= Model.PeriodViewModel.SlidingWeeksNb; i++)
                             {
                                 <option>@i</option>
                             }
                             </select>
-                        <label class="col-sm-8">@GestionWeb.GetWebWord(784, Model.SiteLanguage)</label>
+                        <label class="col-sm-8">@GestionWeb.GetWebWord(784, Model.PeriodViewModel.SiteLanguage)</label>
                         </div>
                     <div class="selectdatecontainer">
                         <select id="day-sliding" class="selectdatepicker" selectedperiod="3">
                             <option>--</option>
-                            @for (int i = 1; i <= Model.SlidingDaysNb; i++)
+                            @for (int i = 1; i <= Model.PeriodViewModel.SlidingDaysNb; i++)
                             {
                                 <option>@i</option>
                             }
                             </select>
-                        <label class="col-sm-8">@GestionWeb.GetWebWord(1974, Model.SiteLanguage)</label>
+                        <label class="col-sm-8">@GestionWeb.GetWebWord(1974, Model.PeriodViewModel.SiteLanguage)</label>
                         </div>
                     <div class="sep-div "></div>
-                    <h4>@GestionWeb.GetWebWord(786, Model.SiteLanguage)</h4>
+                    <h4>@GestionWeb.GetWebWord(786, Model.PeriodViewModel.SiteLanguage)</h4>
                     <div class=".container">
                             <div>
                             <input id="current-year" name="single-date" type="radio" class="with-font" value="1" selectedperiod="8" />
-                            <label for="current-year">@GestionWeb.GetWebWord(1119, Model.SiteLanguage)</label>
+                            <label for="current-year">@GestionWeb.GetWebWord(1119, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
                             <div>
                             <input id="previous-year" name="single-date" type="radio" class="with-font" value="2" selectedperiod="4" />
-                            <label for="previous-year">@GestionWeb.GetWebWord(787, Model.SiteLanguage)</label>
+                            <label for="previous-year">@GestionWeb.GetWebWord(787, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
                             <div>
                             <input id="previous-month" name="single-date" type="radio" class="with-font" value="3" selectedperiod="5" />
-                            <label for="previous-month">@GestionWeb.GetWebWord(788, Model.SiteLanguage)</label>
+                            <label for="previous-month">@GestionWeb.GetWebWord(788, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
                             <div>
                             <input id="next-week" name="single-date" type="radio" class="with-font" value="4" selectedperiod="6" />
-                            <label for="next-week">@GestionWeb.GetWebWord(789, Model.SiteLanguage)</label>
+                            <label for="next-week">@GestionWeb.GetWebWord(789, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
                             <div>
                             <input id="previous-day" name="single-date" type="radio" class="with-font" value="5" selectedperiod="7" />
-                            <label for="previous-day">@GestionWeb.GetWebWord(1975, Model.SiteLanguage)</label>
+                            <label for="previous-day">@GestionWeb.GetWebWord(1975, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
                         </div>
                     </div>
@@ -173,8 +173,8 @@
             locale: 'fr',
             format: 'DD/MM/YYYY',
             useCurrent: false,
-            minDate: new Date('@Model.StartYear'),
-            maxDate: new Date('@Model.EndYear')
+            minDate: new Date('@Model.PeriodViewModel.StartYear'),
+            maxDate: new Date('@Model.PeriodViewModel.EndYear')
         }).on('dp.change', function (e) {
             $('#begin-date-value').val($('#datetimepicker-begin').data('date'));
         });
@@ -184,8 +184,8 @@
             locale: 'fr',
             format: 'DD/MM/YYYY',
             useCurrent: false,
-            minDate: new Date('@Model.StartYear'),
-            maxDate: new Date('@Model.EndYear')
+            minDate: new Date('@Model.PeriodViewModel.StartYear'),
+            maxDate: new Date('@Model.PeriodViewModel.EndYear')
         }).on('dp.change', function (e) {
             $('#end-date-value').val($('#datetimepicker-end').data('date'));
         });

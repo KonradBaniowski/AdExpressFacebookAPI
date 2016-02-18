@@ -138,11 +138,18 @@ namespace Km.AdExpressClientWeb.Controllers
             int startYear = dateDAL.GetCalendarStartDate();
             int endYear = DateTime.Now.Year;
 
-            PeriodViewModel model = new PeriodViewModel();
+            PeriodViewModel periodModel = new PeriodViewModel();
 
-            model.SiteLanguage = CustomerSession.SiteLanguage;
-            model.StartYear = string.Format("{0}-01-01", startYear);
-            model.EndYear = string.Format("{0}-12-31", endYear);
+            periodModel.SiteLanguage = CustomerSession.SiteLanguage;
+            periodModel.StartYear = string.Format("{0}-01-01", startYear);
+            periodModel.EndYear = string.Format("{0}-12-31", endYear);
+
+            MediaPlanNavigationNode periodeNode = new MediaPlanNavigationNode { Position = 3 };
+            var navBarModel = LoadNavBar(periodeNode.Position);
+
+            PeriodSelectionViewModel model = new PeriodSelectionViewModel();
+            model.PeriodViewModel = periodModel;
+            model.NavigationBar = navBarModel;
 
             return View(model);
         }
