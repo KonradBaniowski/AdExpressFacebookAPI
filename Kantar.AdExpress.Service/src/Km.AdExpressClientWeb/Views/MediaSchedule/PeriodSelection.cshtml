@@ -1,4 +1,5 @@
-﻿@model  List<Km.AdExpressClientWeb.Models.MediaPlanNavigationNode>
+﻿@model Km.AdExpressClientWeb.Models.PeriodViewModel
+@using TNS.AdExpress.Domain.Translation;
 
 @{
     ViewBag.Title = "PeriodSelection";
@@ -45,7 +46,7 @@
         <div class="clearfix"></div>
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4 class=""><i class="fa fa-eye"></i> Sélection par période calandaires</h4>
+            <h4 class=""><i class="fa fa-eye"></i> @GestionWeb.GetWebWord(776, Model.SiteLanguage)</h4>
                 <div class="clearfix"></div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -74,110 +75,85 @@
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <button type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
+                    <button id="calendarSubmit" type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4 class=""><i class="fa fa-eye"></i> Sélection par période glissantes</h4>
+            <h4 class=""><i class="fa fa-eye"></i> @GestionWeb.GetWebWord(777, Model.SiteLanguage)</h4>
                 <div class="clearfix"></div>
                 <form class="form-horizontal">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
-                        <h4>Au cours de(s):</h4>
-                        <div class="form-group site-select">
-                            <select id="year-sliding" class="select-date form-control">
-                                <option class="site-select-option">----</option>
-                                <option class="site-select-option">1</option>
-                                <option class="site-select-option">2</option>
-                                <option class="site-select-option">3</option>
+                    <h4>@GestionWeb.GetWebWord(785, Model.SiteLanguage)</h4>
+                    <div class="selectdatecontainer">
+                        <select id="year-sliding" class="selectdatepicker" selectedperiod="0">
+                            <option>--</option>
+                            @for (int i = 1; i <= Model.SlidingYearsNb; i++)
+                            {
+                                <option>@i</option>
+                            }
                             </select>
-                            <label class="col-sm-8">dernière(s) année(s)</label>
+                        <label class="col-sm-8">@GestionWeb.GetWebWord(781, Model.SiteLanguage)</label>
                         </div>
-                        <div class="form-group site-select">
-                            <select id="month-sliding" class="select-date form-control">
-                                <option class="site-select-option">----</option>
-                                <option class="site-select-option">1</option>
-                                <option class="site-select-option">2</option>
-                                <option class="site-select-option">3</option>
+                    <div class="selectdatecontainer">
+                        <select id="month-sliding" class="selectdatepicker" selectedperiod="1">
+                            <option>--</option>
+                            @for (int i = 1; i <= Model.SlidingMonthsNb; i++)
+                            {
+                                <option>@i</option>
+                            }
                             </select>
-                            <label class="col-sm-8 select-date-label">dernier(s) mois</label>
+                        <label class="col-sm-8">@GestionWeb.GetWebWord(783, Model.SiteLanguage)</label>
                         </div>
-                        <div class="form-group site-select">
-                            <select id="week-sliding" class="select-date form-control">
-                                <option class="site-select-option">----</option>
-                                <option class="site-select-option">1</option>
-                                <option class="site-select-option">2</option>
-                                <option class="site-select-option">3</option>
+                    <div class="selectdatecontainer">
+                        <select id="week-sliding" class="selectdatepicker" selectedperiod="2">
+                            <option>--</option>
+                            @for (int i = 1; i <= Model.SlidingWeeksNb; i++)
+                            {
+                                <option>@i</option>
+                            }
                             </select>
-                            <label class="col-sm-8 select-date-label">dernière(s) semaine(s)</label>
+                        <label class="col-sm-8">@GestionWeb.GetWebWord(784, Model.SiteLanguage)</label>
                         </div>
-                        <div class="form-group site-select">
-                            <select id="day-sliding" class="select-date form-control">
-                                <option class="site-select-option">----</option>
-                                <option class="site-select-option">1</option>
-                                <option class="site-select-option">2</option>
-                                <option class="site-select-option">3</option>
+                    <div class="selectdatecontainer">
+                        <select id="day-sliding" class="selectdatepicker" selectedperiod="3">
+                            <option>--</option>
+                            @for (int i = 1; i <= Model.SlidingDaysNb; i++)
+                            {
+                                <option>@i</option>
+                            }
                             </select>
-                            <label class="col-sm-8 select-date-label"> dernier(s) jour(s)</label>
+                        <label class="col-sm-8">@GestionWeb.GetWebWord(1974, Model.SiteLanguage)</label>
                         </div>
-                        <h4>Ou bien sur:</h4>
-                        @*<div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                                    L'année courante
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                    L'année précédente
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                    Le mois précédent
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                    La semaine prochaine
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                    Le jour précédent
-                                </label>
-                            </div>*@
-                        <div id="radioSelection">
+                    <div class="sep-div "></div>
+                    <h4>@GestionWeb.GetWebWord(786, Model.SiteLanguage)</h4>
+                    <div class=".container">
                             <div>
-                                <input id="radioPureCSS1" type="radio" name="radioPureCSS" value="1">
-                                <label for="radioPureCSS1"><span><span></span></span>L'année courante</label>
+                            <input id="current-year" name="single-date" type="radio" class="with-font" value="1" selectedperiod="8" />
+                            <label for="current-year">@GestionWeb.GetWebWord(1119, Model.SiteLanguage)</label>
                             </div>
                             <div>
-                                <input id="radioPureCSS2" type="radio" name="radioPureCSS" value="2">
-                                <label for="radioPureCSS2"><span><span></span></span>L'année précédente</label>
+                            <input id="previous-year" name="single-date" type="radio" class="with-font" value="2" selectedperiod="4" />
+                            <label for="previous-year">@GestionWeb.GetWebWord(787, Model.SiteLanguage)</label>
                             </div>
                             <div>
-                                <input id="radioPureCSS3" type="radio" name="radioPureCSS" value="3">
-                                <label for="radioPureCSS3"><span><span></span></span>Le mois précédent</label>
+                            <input id="previous-month" name="single-date" type="radio" class="with-font" value="3" selectedperiod="5" />
+                            <label for="previous-month">@GestionWeb.GetWebWord(788, Model.SiteLanguage)</label>
                             </div>
                             <div>
-                                <input id="radioPureCSS4" type="radio" name="radioPureCSS" value="4">
-                                <label for="radioPureCSS4"><span><span></span></span>La semaine prochaine</label>
+                            <input id="next-week" name="single-date" type="radio" class="with-font" value="4" selectedperiod="6" />
+                            <label for="next-week">@GestionWeb.GetWebWord(789, Model.SiteLanguage)</label>
                             </div>
                             <div>
-                                <input id="radioPureCSS5" type="radio" name="radioPureCSS" value="5">
-                                <label for="radioPureCSS5"><span><span></span></span> Le jour précédent</label>
+                            <input id="previous-day" name="single-date" type="radio" class="with-font" value="5" selectedperiod="7" />
+                            <label for="previous-day">@GestionWeb.GetWebWord(1975, Model.SiteLanguage)</label>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bot-30">
-                        <button type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
+                    <button id="slidingDateSubmit" type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
                     </div>
                 </form>
 
@@ -188,11 +164,17 @@
 @section scripts {
 <script type="text/javascript">
     $(document).ready(function () {
+
+        var selectedValue = -1;
+        var selectedPeriod = -1;
+
         $('#datetimepicker-begin').datetimepicker({
             inline: true,
             locale: 'fr',
             format: 'DD/MM/YYYY',
-            useCurrent: false
+            useCurrent: false,
+            minDate: new Date('@Model.StartYear'),
+            maxDate: new Date('@Model.EndYear')
         }).on('dp.change', function (e) {
             $('#begin-date-value').val($('#datetimepicker-begin').data('date'));
         });
@@ -201,70 +183,167 @@
             inline: true,
             locale: 'fr',
             format: 'DD/MM/YYYY',
-            useCurrent: false
+            useCurrent: false,
+            minDate: new Date('@Model.StartYear'),
+            maxDate: new Date('@Model.EndYear')
         }).on('dp.change', function (e) {
             $('#end-date-value').val($('#datetimepicker-end').data('date'));
         });
 
+        $('#year-sliding').selectpicker();
+        $('#month-sliding').selectpicker();
+        $('#week-sliding').selectpicker();
+        $('#day-sliding').selectpicker();
+
         $('#year-sliding').on('change', function (e) {
-            $('#month-sliding').val('----');
-            $('#week-sliding').val('----');
-            $('#day-sliding').val('----');
+            selectedValue = $('#year-sliding').val();
+            selectedPeriod = $('#year-sliding').attr("selectedperiod");
+            $('#month-sliding').selectpicker('val', '--');
+            $('#week-sliding').selectpicker('val', '--');
+            $('#day-sliding').selectpicker('val', '--');
+            DisableSingleDates();
         });
 
         $('#month-sliding').on('change', function (e) {
-            $('#year-sliding').val('----');
-            $('#week-sliding').val('----');
-            $('#day-sliding').val('----');
+            selectedValue = $('#month-sliding').val();
+            selectedPeriod = $('#month-sliding').attr("selectedperiod");
+            $('#year-sliding').selectpicker('val', '--');
+            $('#week-sliding').selectpicker('val', '--');
+            $('#day-sliding').selectpicker('val', '--');
+            DisableSingleDates();
         });
 
         $('#week-sliding').on('change', function (e) {
-            $('#year-sliding').val('----');
-            $('#month-sliding').val('----');
-            $('#day-sliding').val('----');
+            selectedValue = $('#week-sliding').val();
+            selectedPeriod = $('#week-sliding').attr("selectedperiod");
+            $('#year-sliding').selectpicker('val', '--');
+            $('#month-sliding').selectpicker('val', '--');
+            $('#day-sliding').selectpicker('val', '--');
+            DisableSingleDates();
         });
 
         $('#day-sliding').on('change', function (e) {
-            $('#year-sliding').val('----');
-            $('#month-sliding').val('----');
-            $('#week-sliding').val('----');
+            selectedValue = $('#day-sliding').val();
+            selectedPeriod = $('#day-sliding').attr("selectedperiod");
+            $('#year-sliding').selectpicker('val', '--');
+            $('#month-sliding').selectpicker('val', '--');
+            $('#week-sliding').selectpicker('val', '--');
+            DisableSingleDates();
         });
 
-        $('#radioPureCSS1').on('click', function (e) {
-            $('#year-sliding').val('----');
-            $('#month-sliding').val('----');
-            $('#week-sliding').val('----');
-            $('#day-sliding').val('----');
+        $('#current-year').on('click', function (e) {
+            selectedPeriod = $('#current-year').attr("selectedperiod");
+            DisableSlidingDates();
         });
 
-        $('#radioPureCSS2').on('click', function (e) {
-            $('#year-sliding').val('----');
-            $('#month-sliding').val('----');
-            $('#week-sliding').val('----');
-            $('#day-sliding').val('----');
+        $('#previous-year').on('click', function (e) {
+            selectedPeriod = $('#previous-year').attr("selectedperiod");
+            DisableSlidingDates();
         });
 
-        $('#radioPureCSS3').on('click', function (e) {
-            $('#year-sliding').val('----');
-            $('#month-sliding').val('----');
-            $('#week-sliding').val('----');
-            $('#day-sliding').val('----');
+        $('#previous-month').on('click', function (e) {
+            selectedPeriod = $('#previous-month').attr("selectedperiod");
+            DisableSlidingDates();
         });
 
-        $('#radioPureCSS4').on('click', function (e) {
-            $('#year-sliding').val('----');
-            $('#month-sliding').val('----');
-            $('#week-sliding').val('----');
-            $('#day-sliding').val('----');
+        $('#next-week').on('click', function (e) {
+            selectedPeriod = $('#next-week').attr("selectedperiod");
+            DisableSlidingDates();
         });
 
-        $('#radioPureCSS5').on('click', function (e) {
-            $('#year-sliding').val('----');
-            $('#month-sliding').val('----');
-            $('#week-sliding').val('----');
-            $('#day-sliding').val('----');
+        $('#previous-day').on('click', function (e) {
+            selectedPeriod = $('#previous-day').attr("selectedperiod");
+            DisableSlidingDates();
         });
 
+        function DisableSlidingDates() {
+            selectedValue = -1;
+            $('#year-sliding').selectpicker('val', '--');
+            $('#month-sliding').selectpicker('val', '--');
+            $('#week-sliding').selectpicker('val', '--');
+            $('#day-sliding').selectpicker('val', '--');
+        }
+
+        function DisableSingleDates() {
+            $('#current-year').prop('checked', false);
+            $('#previous-year').prop('checked', false);
+            $('#previous-month').prop('checked', false);
+            $('#next-week').prop('checked', false);
+            $('#previous-day').prop('checked', false);
+        }
+
+        $('#calendarSubmit').off("click");
+        $('#calendarSubmit').on("click", function (event) {
+            PreventDefault(event);
+            var startDate = $('#begin-date-value').val();
+            var endDate = $('#end-date-value').val();
+
+            @*if (startDate == '' || endDate == '') {
+                BootstrapDialog.show({
+                    type: BootstrapDialog.TYPE_WARNING,
+                    title: 'Alerte',
+                    message: '@GestionWeb.GetWebWord(1119, Model.SiteLanguage)',
+                    buttons: [{
+                        label: 'OK'
+                    }]
+                });
+                return;
+            }*@
+
+            var params = {
+                selectedStartDate: startDate,
+                selectedEndDate: endDate
+            };
+
+            $.ajax({
+                url: '@Url.Action("CalendarValidation", "MediaSchedule")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                    }
+                }
+            });
+
+        });
+
+        $('#slidingDateSubmit').off("click");
+        $('#slidingDateSubmit').on("click", function (event) {
+            PreventDefault(event);
+
+            var params = {
+                selectedPeriod: selectedPeriod,
+                selectedValue: selectedValue
+            };
+
+            $.ajax({
+                url: '@Url.Action("SlidingDateValidation", "MediaSchedule")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                    }
+                }
+            });
+
+        });
+
+        function PreventDefault(event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+            else {
+                event.returnValue = false;
+            }
+        }
     });
 </script>
 }

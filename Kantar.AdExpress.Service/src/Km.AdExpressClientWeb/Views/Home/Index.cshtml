@@ -17,10 +17,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-chart sli-size blue"></i>
-                                <h3>Plan Media</h3>
+                                <h3>@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -31,10 +31,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-chart sli-size blue"></i>
-                                <h3>Plan Media</h3>
+                                <h3>@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -49,10 +49,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-layers sli-size blue"></i>
-                                <h3>Portefeuille</h3>
+                                <h3>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -63,10 +63,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-layers sli-size blue"></i>
-                                <h3>Portefeuille</h3>
+                                <h3>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -81,10 +81,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-calculator sli-size blue"></i>
-                                <h3>Perdus / Gagnés</h3>
+                                <h3>@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -95,10 +95,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-calculator sli-size blue"></i>
-                                <h3>Perdus / Gagnés</h3>
+                                <h3>@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -113,10 +113,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-equalizer sli-size blue"></i>
-                                <h3>Absents / Présents</h3>
+                                <h3>@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -127,10 +127,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-equalizer sli-size blue"></i>
-                                <h3>Absents / Présents</h3>
+                                <h3>@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">Connaître l'activité publicitaire d'un annonceur ou d'un secteur.</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -143,10 +143,13 @@
                 @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
                 {
                     <a href="@Url.Action("Index","Chrono")" class="tile-body text-center">
-                        <div class="flip-container">
-                            <div class="front">
+                        <div class="flip-container-second">
+                            <div class="front-second">
                                 <i class="icon-book-open sli-size-small green"></i>
-                                <h5>Chronopresse</h5>
+                                <h5>@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -157,7 +160,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-book-open sli-size-small green"></i>
-                                <h5>Chronopresse</h5>
+                                <h5>@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</h5>
+                            </div>
+                            <div class="back">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -170,10 +176,13 @@
                 @if (Model.ModuleRight.ContainsKey(Module.Name.NEW_CREATIVES))
                 {
                     <a href="@Url.Action("Index", "NouvelleCrea")" class="tile-body text-center">
-                        <div class="flip-container">
-                            <div class="front">
+                        <div class="flip-container-second">
+                            <div class="front-second">
                                 <i class="icon-picture sli-size-small green"></i>
-                                <h5>Nouvelles créations</h5>
+                                <h5>@Model.Modules[(Module.Name.NEW_CREATIVES)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.NEW_CREATIVES)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -181,10 +190,13 @@
                 else
                 {
                     <div class="tile-body text-center disabled-effect">
-                        <div class="flip-container">
-                            <div class="front">
+                        <div class="flip-container-second">
+                            <div class="front-second">
                                 <i class="icon-picture sli-size-small green"></i>
-                                <h5>Nouvelles créations</h5>
+                                <h5>@Model.Modules[(Module.Name.NEW_CREATIVES)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.NEW_CREATIVES)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -196,10 +208,13 @@
                 @if (Model.ModuleRight.ContainsKey(Module.Name.TENDACES))
                 {
                     <a href="@Url.Action("Index", "Tendances")" class="tile-body text-center">
-                        <div class="flip-container">
-                            <div class="front">
+                        <div class="flip-container-second">
+                            <div class="front-second">
                                 <i class="icon-eye sli-size-small green"></i>
-                                <h5>Tendances</h5>
+                                <h5>@Model.Modules[(Module.Name.TENDACES)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TENDACES)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -207,10 +222,13 @@
                 else
                 {
                     <div class="tile-body text-center disabled-effect">
-                        <div class="flip-container">
-                            <div class="front">
+                        <div class="flip-container-second">
+                            <div class="front-second">
                                 <i class="icon-eye sli-size-small green"></i>
-                                <h5>Tendances</h5>
+                                <h5>@Model.Modules[(Module.Name.TENDACES)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TENDACES)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -236,39 +254,39 @@
                     <div class="list-group">
                         @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
                         {
-                            <a href="#" class="list-group-item text-left">Analyse des mandataires</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</a>
                         }
                         else {
-                            <div class="list-group-item text-left disabled-effect">Analyse des mandataires</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.INDICATEUR))
                         {
-                            <a href="#" class="list-group-item text-left">Analyse sectorielle: Les indicateurs graphiques</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
                         }
                         else {
-                            <div class="list-group-item text-left disabled-effect">Analyse sectorielle: Les indicateurs graphiques</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.INDICATEUR)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                         {
-                            <a href="#" class="list-group-item text-left">Analyse sectorielle: Les tableaux dynamiques</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</a>
                         }
                         else
                         {
-                            <div class="list-group-item text-left disabled-effect">Analyse sectorielle: Les tableaux dynamiques</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_DISPOSITIFS))
                         {
-                            <a href="#" class="list-group-item text-left">Analyse des dispositifs</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</a>
                         }
                         else {
-                            <div class="list-group-item text-left disabled-effect">Analyse des dispositifs</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_PROGRAMMES))
                         {
-                            <a href="#" class="list-group-item text-left">Analyse des programmes</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>
                         }
                         else {
-                            <div class="list-group-item text-left disabled-effect">Analyse des programmes</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</div>
                         }
                     </div>
                 </div>
@@ -290,31 +308,31 @@
                     <div class="list-group">
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
                         {
-                            <a href="#" class="list-group-item text-left">Tableau de bord Pan euro</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</a>
                         }
                         else {
-                            <div class="list-group-item text-left disabled-effect">Tableau de bord Pan euro</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</div>
                         }
-                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PRESSE))
                         {
-                            <a href="#" class="list-group-item text-left">Tableau de bord Presse</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</a>
                         }
                         else {
-                            <div class="list-group-item text-left disabled-effect">Tableau de bord Presse</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</div>
                         }
-                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_RADIO))
                         {
-                            <a href="#" class="list-group-item text-left">Tableau de bord Radio</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_RADIO)].Title</a>
                         }
                         else {
-                            <div class="list-group-item text-left disabled-effect">Tableau de bord Radio</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_RADIO)].Title</div>
                         }
-                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_TELEVISION))
                         {
-                            <a href="#" class="list-group-item text-left">Tableau de bord Télévision</a>
+                            <a href="#" class="list-group-item text-left">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_TELEVISION)].Title</a>
                         }
                         else {
-                            <div class="list-group-item text-left disabled-effect">Tableau de bord Télévision</div>
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_TELEVISION)].Title</div>
                         }
                     </div>
                 </div>
