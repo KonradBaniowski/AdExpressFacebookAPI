@@ -214,7 +214,7 @@
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
           '<button type="button" class="btn dropdown-toggle selectpicker' + btnSize + '" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
-          '<span class="icon-angle-down"></span>' +
+          '<span class="glyphicon glyphicon-chevron-down"></span>' +
           '</button>' +
           '<div class="dropdown-menu open">' +
           header +
