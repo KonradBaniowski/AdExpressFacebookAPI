@@ -1145,3 +1145,127 @@ a {
 .select-date-label{
   margin-top: 6px;
 }
+
+.container label {
+    font-weight: normal;
+}
+
+input[type=radio].with-font,
+input[type=checkbox].with-font {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+    
+input[type=radio].with-font ~ label:before,
+input[type=checkbox].with-font ~ label:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f1db";
+    letter-spacing: 10px;
+    font-size: 1.2em;
+    color: rgba(255,255,255,0.2);
+    width: 1.4em;
+}
+
+input[type=radio].with-font:checked ~ label:before,
+input[type=checkbox].with-font:checked ~ label:before  {
+    content: "\f192";
+    font-size: 1.2em;
+    color: #00c1ff;
+    letter-spacing: 5px;
+}
+input[type=checkbox].with-font ~ label:before {        
+    content: "\f096";
+}
+input[type=checkbox].with-font:checked ~ label:before {
+    content: "\f046";        
+    color: #00c1ff;
+}
+input[type=radio].with-font:focus ~ label:before,
+input[type=checkbox].with-font:focus ~ label:before,
+input[type=radio].with-font:focus ~ label,
+input[type=checkbox].with-font:focus ~ label
+{                
+    color: #00c1ff;
+}
+
+.selectdatecontainer {
+    height: 36px!important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.selectdatecontainer button {
+    /*outline: none;*/
+    height: 21px;
+    padding: 0px 12px;
+    background-image: none!important;
+    outline: 0!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+.selectdatecontainer.form-control:focus {
+    box-shadow: none;
+}
+
+.selectdatecontainer .bootstrap-select .btn.selectpicker {
+    background-color: transparent !important;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+}
+.selectdatecontainer .bootstrap-radio > .btn.btn-link {
+    color: #fff;
+}
+
+.selectdatecontainer .selectdatepicker {
+    width: 60px!important;
+    float: left!important;
+}
+
+.selectdatecontainer .dropdown-menu>li>a {
+    color:#fff;
+    background-color: #00c1ff;
+}
+
+.selectdatecontainer .bootstrap-select.btn-group .dropdown-menu
+{
+    background-color:#009ACC!important;
+    border: 1px solid #009ACC; /* @beegray*/
+    padding:0;
+}
+
+.selectdatecontainer .dropdown-menu>li>a:hover, 
+.selectdatecontainer .dropdown-menu>li>a:focus {
+    text-decoration: none;
+    color: #fff;
+    background-color: transparent!important;
+    outline: none!important;
+}
+
+.selectdatecontainer .dropdown-menu>li.selected>a
+{
+     color: #fff;
+     outline: none!important;
+}
+
+.selectdatecontainer .glyphicon {
+    font-size: 10px;
+}
+
+.selectdatecontainer .bootstrap-select .dropdown-toggle:focus {
+    background-image: none!important;
+    outline: 0!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+.sep-div {
+    clear: both;
+}
