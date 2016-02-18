@@ -169,9 +169,11 @@
     padding: 15px 10px;
 }
 
-.panel-default.login .form-group {
-    margin-bottom: 5px;
-}
+
+.form-control::-webkit-input-placeholder { color: white; }
+.form-control:-moz-placeholder { color: white; }
+.form-control::-moz-placeholder { color: white; }
+.form-control:-ms-input-placeholder { color: white; }
 
 .page-header-custom {
     padding-bottom: 9px;
@@ -191,8 +193,8 @@
 form[role] input {
     background-color: rgba(255,255,255,0.2);
     border: none;
+    color:white;
 }
-
 
 .fig {
     color: #ffffff;
