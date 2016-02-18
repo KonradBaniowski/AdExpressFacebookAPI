@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
-    public interface IMediaScheduleService
+    public interface IMediaService
     {
          List<Media> GetMedia(string idWebSession);
     }
