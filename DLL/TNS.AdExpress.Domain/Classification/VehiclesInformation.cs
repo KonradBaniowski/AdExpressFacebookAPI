@@ -180,6 +180,21 @@ namespace TNS.AdExpress.Domain.Classification {
                 throw (new ArgumentException("impossible to reteive the requested vehicle", err));
             }
         }
+
+        /// <summary>
+        /// Get All Vehicle informations
+        /// </summary>
+        public static Dictionary<Vehicles.names, VehicleInformation> GetAll()
+        {
+            try
+            {
+                return _listVehicleNames;
+            }
+            catch (System.Exception err)
+            {
+                throw (new ArgumentException("impossible to reteive the all vehicle", err));
+            }
+        }
         #endregion
 
         #region Get Media Agency Flag

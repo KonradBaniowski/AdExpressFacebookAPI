@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Kantar.AdExpress.Service.BusinessLogic.Identity;
+using Kantar.AdExpress.Service.BusinessLogic.ServiceImpl;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.DataAccess;
 using Kantar.AdExpress.Service.DataAccess;
@@ -11,6 +12,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using System.Data.Entity;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -53,7 +55,10 @@ namespace Kantar.AdExpress.Bootstrapper
             builder.RegisterType<AdExpressContext>().AsSelf();
             builder.RegisterType<IdentityContext>().AsSelf();
             builder.RegisterType<AdExpressUnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterType<LoginService>().As<ILoginService>();
+            //builder.RegisterType<LoginService>().As<ILoginService>();
+            //builder.RegisterType<RightService>().As<IRightService>();
+            //builder.RegisterAssemblyTypes(TypeOf(LoginService))
+            builder.RegisterAssemblyTypes(Assembly.Load("Kantar.AdExpress.Service.BusinessLogic")).AsImplementedInterfaces();
 
             //BUILD
             var container = builder.Build();

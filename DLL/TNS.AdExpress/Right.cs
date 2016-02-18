@@ -208,7 +208,8 @@ namespace TNS.AdExpress
                     }
                     if (UseDefaultConnection)
                         _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
-                    else _source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort, CustomerConnectionIds.adexpr03);
+                    else
+                        _source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort, CustomerConnectionIds.adexpr03);
                 }
                 return (_source);
             }
@@ -721,6 +722,34 @@ namespace TNS.AdExpress
                 throw (new RightException("Impossible to retreive module rights", err));
             }
         }
+
+        /// <summary>
+        /// Return Dictionnary de int module
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<long, Module> GetModuleRights()
+        {
+            DataSet ds;
+            var dico = new Dictionary<long, Module>();
+            try
+            {
+                if (_modulesRights == null) SetModuleRights();
+                ds = RightDAL.GetModulesRights(Source, _loginId);
+                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        dico.Add((Int64)row[1], ModulesList.GetModule((Int64)row[1]));
+                    }
+                }
+                return dico;
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to retreive module rights", err));
+            }
+        }
+
         /// <summary>
         /// Get Modules list
         /// </summary>

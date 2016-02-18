@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kantar.AdExpress.Service.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,15 +8,11 @@ namespace Km.AdExpressClientWeb.Models
 {
     public class HomePageViewModel
     {
-        public Dictionary<Int64, Module> ModuleRight { get; set; }
+        public Dictionary<long, Module> ModuleRight { get; set; }
         public List<Documents> Documents { get; set; }
         
     }
-    public class Module
-    {
-
-    }
-
+  
     public class Documents
     {
         public int Id { get; set; }

@@ -519,6 +519,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\app\Layout\Layout.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
@@ -582,6 +583,7 @@
     <Content Include="Views\MediaSchedule\Presentation.cshtml" />
     <Content Include="Views\MediaSchedule\PeriodSelection.cshtml" />
     <Content Include="Views\MediaSchedule\Results.cshtml" />
+    <Content Include="Views\MediaSchedule\NavigationBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -607,9 +609,17 @@
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date.DAL.Default\TNS.AdExpressI.Date.DAL.Default.csproj">
+      <Project>{68d00a09-6ae1-4009-a790-d43f313b5912}</Project>
+      <Name>TNS.AdExpressI.Date.DAL.Default</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
       <Project>{8889ed07-01ce-4f3a-a296-3a2c4b21989c}</Project>
       <Name>TNS.AdExpressI.Date.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date.Default\TNS.AdExpressI.Date.Default.csproj">
+      <Project>{ef01a668-d5ff-4d49-a908-f7ad22bc9fd5}</Project>
+      <Name>TNS.AdExpressI.Date.Default</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date\TNS.AdExpressI.Date.csproj">
       <Project>{d24531cc-e000-4aef-8218-56885d87dfcb}</Project>
