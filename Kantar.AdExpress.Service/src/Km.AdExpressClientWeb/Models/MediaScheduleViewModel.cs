@@ -10,7 +10,7 @@ namespace Km.AdExpressClientWeb.Models
 {
     public class MediaSelectionViewModel
     {
-        public List<Media> Medias { get; set; }
+        public List<Kantar.AdExpress.Service.Core.Domain.Media> Medias { get; set; }
         public bool Multiple { get; set; }
         public List<int> IdMediasCommon { get; set; }
 

@@ -33,40 +33,9 @@ namespace Km.AdExpressClientWeb.Controllers
             var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-
-            //WebSession _webSession = null;
-            //int _siteLanguage = WebApplicationParameters.DefaultLanguage;
-            //var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
-            //if (right != null && right.CanAccessToAdExpress())
-            //{
-            //    right.SetModuleRights();
-            //    right.SetFlagsRights();
-            //    right.SetRights();
-            //    if (WebApplicationParameters.VehiclesFormatInformation.Use)
-            //        right.SetBannersAssignement();
-            //    //newRight.HasModuleAssignmentAlertsAdExpress();
-            //    if (_webSession == null) _webSession = new WebSession(right);
-            //    _webSession.IdSession = idWS;
-            //    //_webSession.SiteLanguage = _siteLanguage;
-            //    // Année courante pour les recaps                    
-            //    TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
-            //    if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
-            //    IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
-            //    _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
-            //    // On met à jour IDataSource à partir de la session elle même.
-            //    _webSession.Source = right.Source;
-            //    //Sauvegarder la session
-            //    _webSession.Save();
-            //    // Tracking (NewConnection)
-            //    // On obtient l'adresse IP:
-            //    _webSession.OnNewConnection(this.Request.UserHostAddress);
-            //}
-
-
-
-
             //var test = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)
-            var res = _rightService.GetModule(idWS);
+            var resList = _rightService.GetModulesList(idWS);
+            var res = _rightService.GetModules(idWS);
             var docu = new Documents()
             {
                 Id = 1,
@@ -97,6 +66,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 //    { 1781, new Models.Module() },
                 //    { 4370, new Models.Module() }
                 //},
+                Modules = resList,
                 Documents = new List<Documents>() {
                     new Documents()
                     {

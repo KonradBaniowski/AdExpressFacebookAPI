@@ -23,12 +23,12 @@ namespace Km.AdExpressClientWeb.Controllers
     [Authorize]
     public class MediaScheduleController : Controller
     {
-        private IMediaService _mediaScheduleService;
+        private IMediaService _mediaService;
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaScheduleService)
+        public MediaScheduleController(IMediaService mediaService)
         {
-            _mediaScheduleService = mediaScheduleService;
+            _mediaService = mediaService;
         }
         public ActionResult Index()
         {
@@ -47,63 +47,64 @@ namespace Km.AdExpressClientWeb.Controllers
             //var model = new MediaSelectionViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var media = _mediaScheduleService.GetMedia(idWebSession);
+            var media = _mediaService.GetMedia(idWebSession);
             #region Hardcoded model data
             var model = new MediaSelectionViewModel()
             {
                 Multiple = true,
-                Medias = new List<Media>()
-                {
-                    new Media()
-                    {
-                        MediaEnum = Vehicles.names.cinema,
-                        Id= 1,
+                Medias =media,
+                //Medias = new List<Media>()
+                //{
+                //    new Media()
+                //    {
+                //        MediaEnum = Vehicles.names.cinema,
+                //        Id= 1,
 
-                        Label = "Cinéma",
-                        Disabled = false
-                    },
-                    new Media()
-                    {
-                          MediaEnum = Vehicles.names.search,
-                        Id = 34,
-                        Label = "Search",
-                        Disabled = false
-                    },
-                    new Media()
-                    {
-                          MediaEnum = Vehicles.names.tv,
-                        Id = 2,
-                        Label = "Télévision",
-                        Disabled = true
-                    },
-                        new Media()
-                    {
-                              MediaEnum = Vehicles.names.evaliantMobile,
-                        Id = 4,
-                        Label = "Evaliant Mobile",
-                        Disabled = false
-                    },
-                            new Media()
-                    {
-                                MediaEnum = Vehicles.names.directMarketing,
-                        Id = 10,
-                        Label = "Courrier",
-                        Disabled = false
-                    }
-                    //  new Media()
-                    //{
-                    //    Id = 6,
-                    //    Label = "Nom 6",
-                    //    Disabled = false
-                    //},
-                    //      new Media()
-                    //{
-                    //    Id = 7,
-                    //    Label = "Nom 7",
-                    //    Disabled = true
-                    //}
+                //        Label = "Cinéma",
+                //        Disabled = false
+                //    },
+                //    new Media()
+                //    {
+                //          MediaEnum = Vehicles.names.search,
+                //        Id = 34,
+                //        Label = "Search",
+                //        Disabled = false
+                //    },
+                //    new Media()
+                //    {
+                //          MediaEnum = Vehicles.names.tv,
+                //        Id = 2,
+                //        Label = "Télévision",
+                //        Disabled = true
+                //    },
+                //        new Media()
+                //    {
+                //              MediaEnum = Vehicles.names.evaliantMobile,
+                //        Id = 4,
+                //        Label = "Evaliant Mobile",
+                //        Disabled = false
+                //    },
+                //            new Media()
+                //    {
+                //                MediaEnum = Vehicles.names.directMarketing,
+                //        Id = 10,
+                //        Label = "Courrier",
+                //        Disabled = false
+                //    }
+                //    //  new Media()
+                //    //{
+                //    //    Id = 6,
+                //    //    Label = "Nom 6",
+                //    //    Disabled = false
+                //    //},
+                //    //      new Media()
+                //    //{
+                //    //    Id = 7,
+                //    //    Label = "Nom 7",
+                //    //    Disabled = true
+                //    //}
 
-                },
+                //},
                 IdMediasCommon =
                     new List<int>()
                     {
