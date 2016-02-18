@@ -11,7 +11,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public string icon { get; set; }
         public Vehicles.names MediaEnum { get; set; }
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Label { get; set; }
         public bool Disabled { get; set; }
     }
