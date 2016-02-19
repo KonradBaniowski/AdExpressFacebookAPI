@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="/IgniteUI/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" type="text/css" />
+    <link href="/IgniteUI/css/structure/infragistics.css" rel="stylesheet" type="text/css" />
     @Styles.Render("~/Content/css")
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.2.3/css/simple-line-icons.css">
 </head>
@@ -60,7 +62,15 @@
         @RenderBody()
     </div>
     @Scripts.Render("~/bundles/jquery")
+    
+    @*<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>*@
+    @*<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>*@
+
+    @Scripts.Render("~/bundles/jquery-ui")
     @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="/IgniteUI/js/infragistics.core.js"></script>
+    <script src="/IgniteUI/js/infragistics.lob.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
