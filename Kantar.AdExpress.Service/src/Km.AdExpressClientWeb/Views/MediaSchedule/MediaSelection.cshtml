@@ -19,7 +19,7 @@
                                 if (navigation.IsActive)
                                 {
                                     <li class="tl-header">
-                                        <a class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
+                                        <a class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
                                             <i class="fa fa-file-text"></i>
                                         </a>
                                         <p class="lead">@navigation.Title</p>
@@ -28,7 +28,7 @@
                                 else
                                 {
                                     <li class="tl-header">
-                                        <a class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
+                                        <a class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
                                             <i class="fa fa-file-text"></i>
                                         </a>
                                         <p class="lead">@navigation.Title</p>
@@ -36,12 +36,24 @@
                                 }
                                 if (navigation.Id < Model.NavigationBar.Count())
                                 {
-                                    <li class="tl-item">
-                                        <div class="tl-wrap tl-active">
-                                            <div class="tl-content">
+                                    if (navigation.IsActive)
+                                    {
+                                        <li class="tl-item">
+                                            <div class="tl-wrap tl-active">
+                                                <div class="tl-content">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="tl-item">
+                                            <div class="tl-wrap">
+                                                <div class="tl-content">
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
                                 }
                             }
                         </ul>

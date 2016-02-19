@@ -45,6 +45,8 @@ namespace Km.AdExpressClientWeb.Models
 
         public string Controller { get; set; }
 
+        public string Icon { get; set; }
+
         
     }
 
