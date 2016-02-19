@@ -9,12 +9,8 @@
 
     @*BREADCRUM*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-
-        @*@Html.Partial("NavigationBar", Model)*@
-
-
         <div class="row">
-            <ul>
+            <ul class="timeline">
                 @foreach (var navigation in Model)
                 {
                     if (navigation.IsActive)

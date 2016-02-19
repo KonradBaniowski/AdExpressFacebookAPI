@@ -237,6 +237,40 @@
             <param name="password">Customer Password</param>
             <param name="sitelanguage">Site language</param>
         </member>
+        <member name="P:TNS.AdExpress.Right.UseDefaultConnection">
+            <summary>
+            Gte if use default connection
+            <remarks>User particularly for Russia customer</remarks>
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Right.Source">
+            <summary>
+            Get Customer Data Source
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Right.Item(TNS.AdExpress.Constantes.Customer.Right.type)">
+            <summary>
+            Retourne un  string correspondant aux éléments d'une liste représentant
+            un type de droit (famille,media,annonceur...). Ces listes sont soient en accès soient en exception.
+            </summary>
+            <param name="typeRight">Choix d'une liste en accès ou en exception</param>
+            <returns>string d'une liste</returns>
+        </member>
+        <member name="P:TNS.AdExpress.Right.IdLogin">
+            <summary>
+            Get login Id
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Right.Login">
+            <summary>
+            Get login
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Right.PassWord">
+            <summary>
+            Get password
+            </summary>
+        </member>
         <member name="M:TNS.AdExpress.Right.CanAccessToAdExpress">
             <summary>
             Vérifie l'existence du projet adExpress 
@@ -413,40 +447,6 @@
             <param name="tab1">right string table</param>
             <param name="tab2">right string table</param>
             <returns>string</returns>
-        </member>
-        <member name="P:TNS.AdExpress.Right.UseDefaultConnection">
-            <summary>
-            Gte if use default connection
-            <remarks>User particularly for Russia customer</remarks>
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Right.Source">
-            <summary>
-            Get Customer Data Source
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Right.Item(TNS.AdExpress.Constantes.Customer.Right.type)">
-            <summary>
-            Retourne un  string correspondant aux éléments d'une liste représentant
-            un type de droit (famille,media,annonceur...). Ces listes sont soient en accès soient en exception.
-            </summary>
-            <param name="typeRight">Choix d'une liste en accès ou en exception</param>
-            <returns>string d'une liste</returns>
-        </member>
-        <member name="P:TNS.AdExpress.Right.IdLogin">
-            <summary>
-            Get login Id
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Right.Login">
-            <summary>
-            Get login
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Right.PassWord">
-            <summary>
-            Get password
-            </summary>
         </member>
     </members>
 </doc>
