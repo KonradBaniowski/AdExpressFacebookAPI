@@ -1280,3 +1280,42 @@ input[type=checkbox].with-font:focus ~ label
 .sep-div {
     clear: both;
 }
+
+
+
+/**********************************************************************/
+.timeline {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+.row-sm > div {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+
+
+
+
+.tl-wrap {
+    display: table;
+    padding: 9px;
+    margin: 0;
+    border-color: #dee5e7;
+    border-style: solid;
+    border-width: 0 0 2px 0;
+    width: 220px;
+    vertical-align: super;
+}
