@@ -1,6 +1,9 @@
 ﻿@model  List<Km.AdExpressClientWeb.Models.MediaPlanNavigationNode>
 @{
-    ViewBag.Title = "Market";
+    ViewBag.Title = "MarketSelection";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/media-selection")
 }
 <div class="row">
     @*PRESENTATION*@
@@ -24,7 +27,7 @@
                             </li>
                         }
                         <li class="tl-header">
-                            <a class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                            <a id=@(navigation.Description) class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
                                 <i class="fa fa-file-text"></i>
                             </a>
                             <p class="lead">@navigation.Title</p>
@@ -42,7 +45,7 @@
                             </li>
                         }
                         <li class="tl-header">
-                            <a class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                            <a id=@(navigation.Description)  class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
                                 <i class="fa fa-file-text"></i>
                             </a>
                             <p class="lead">@navigation.Title</p>

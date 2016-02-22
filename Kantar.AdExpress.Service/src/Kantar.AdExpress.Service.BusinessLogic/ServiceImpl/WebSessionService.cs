@@ -13,5 +13,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
 
         }
+
+        public void SaveMarketSelection(string webSessionId)
+        {
+
+        }
     }
 }

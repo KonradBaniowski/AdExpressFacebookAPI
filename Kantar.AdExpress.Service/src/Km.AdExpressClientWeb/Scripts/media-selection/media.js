@@ -106,10 +106,11 @@ $(function () {
         var fileName = location.href.split("/").slice(-1);
         var action = "";
         var params;
-        if (fileName == "MarketSelection") {
+        alert(fileName);
+        if (fileName == "MediaSchedule") { //this the market selection page
             action = "SaveMarketSelection";
             params = {
-                nextStep: "Media"
+                nextStep: "MediaSelection"
             };
         }
         $.ajax({
@@ -164,13 +165,16 @@ $(function () {
         var params;
         if (fileName == "Index") {
             action = "SaveMarketSelection";
+            params = {
+                nextStep: "PeriodSelection"
+            };
 
         }
         if (fileName == "MediaSelection") {
             action = "SaveMediaSelection";
             params = {
                 selectedMedia: idList,
-                nextStep: "Results"
+                nextStep: "PeriodSelection"
             };
         }
 
@@ -207,13 +211,6 @@ $(function () {
                 selectedMedia: idList,
                 nextStep: "Results"
             };
-        }
-        
-        if (fileName == "PeriodSelection") {
-            action = "CalendarValidation";
-            //params = {
-            //    nextStep: "Results"           ||
-            //};                                
         }
         $.ajax({
             url: '/MediaSchedule/' + action,

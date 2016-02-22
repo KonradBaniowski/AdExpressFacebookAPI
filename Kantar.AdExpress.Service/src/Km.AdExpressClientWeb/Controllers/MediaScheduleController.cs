@@ -25,6 +25,7 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
+        private const string _controller = "MediaSchedule";
 
         private string icon;
         public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService)
@@ -227,7 +228,20 @@ namespace Km.AdExpressClientWeb.Controllers
                 _webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
             }
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-            string url = context.Action(nextStep, "MediaSchedule");
+            string url = context.Action(nextStep, _controller);
+            JsonResult jsonModel = Json(new { RedirectUrl = url });
+            return jsonModel;
+        }
+
+        public JsonResult SaveMarketSelection(string nextStep)
+        {
+            
+                var claim = new ClaimsPrincipal(User.Identity);
+                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                _webSessionService.SaveMarketSelection( idWebSession);
+            
+            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+            string url = context.Action(nextStep, _controller);
             JsonResult jsonModel = Json(new { RedirectUrl = url });
             return jsonModel;
         }
