@@ -79,25 +79,6 @@ $(function () {
         }
     }
 
-    //$('#btnSubmit').on('click', function (e) {
-    //    e.preventDefault();
-    //    var selectedMedia = idList;
-    //    $.ajax({
-    //        url: '/MediaSchedule/PeriodSelection',
-    //        contentType: 'application/json',
-    //        type: 'POST',
-    //        datatype: 'JSON',
-    //        data: JSON.stringify(selectedMedia),
-    //        error: function (xmlHttpRequest, errorText, thrownError) {
-    //        },
-    //        success: function (data) {
-    //            if (data != null) {
-    //                document.location = data.RedirectUrl;
-    //            }
-    //        }
-    //    });
-    //});
-
     $('#btnSubmitMediaSelection').on('click', function (e) {
         e.preventDefault();
         var params = {
@@ -120,6 +101,32 @@ $(function () {
         });
     });
 
+    $('#Media').on('click', function (e) {
+        e.preventDefault();
+        var fileName = location.href.split("/").slice(-1);
+        var action = "";
+        var params;
+        if (fileName == "MarketSelection") {
+            action = "SaveMarketSelection";
+            params = {
+                nextStep: "Media"
+            };
+        }
+        $.ajax({
+            url: '/MediaSchedule/' + action,
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                if (data != null) {
+                    document.location = data.RedirectUrl;
+                }
+            }
+        });
+    });
     $('#Market').on('click', function (e) {
         e.preventDefault();
         var fileName = location.href.split("/").slice(-1);
@@ -133,33 +140,6 @@ $(function () {
                 nextStep: "Index"
             };
         }
-        //switch (fileName)
-        //{
-        //    case "Index":
-        //        action = "Index";
-        //        alert(fileName + action);
-        //        break
-        //    case media:
-        //        action = "SaveMediaSelection";
-        //        alert("Hello");
-        //        //params = {
-        //        //    selectedMedia: idList,
-        //        //    nextStep: "Index"
-        //        //};
-        //        break;
-        //    case "PeriodSelection":
-        //        action = "PeriodSelection";
-        //        alert(fileName + action);
-        //        break;
-        //    case "Results":
-        //        action = "Results";
-        //        alert(fileName + action);
-        //        break;
-        //    }
-        //var params = {
-        //    selectedMedia: idList,
-        //    nextStep: "Index"
-        //};
         $.ajax({
             url: '/MediaSchedule/'+action,
             contentType: 'application/json',
@@ -182,13 +162,18 @@ $(function () {
         var fileName = location.href.split("/").slice(-1);
         var action = "";
         var params;
+        if (fileName == "Index") {
+            action = "SaveMarketSelection";
+
+        }
         if (fileName == "MediaSelection") {
             action = "SaveMediaSelection";
             params = {
                 selectedMedia: idList,
-                nextStep: "PeriodSelection"
+                nextStep: "Results"
             };
         }
+
         $.ajax({
             url: '/MediaSchedule/' + action,
             contentType: 'application/json',
@@ -212,7 +197,8 @@ $(function () {
         var action = "";
         var params;
         if (fileName == "Index") {
-            action = "SaveMarketSelection";
+            action = "SaveMarketSelection",
+            nextStep="Results"
 
         }
         if (fileName == "MediaSelection") {
@@ -225,17 +211,9 @@ $(function () {
         
         if (fileName == "PeriodSelection") {
             action = "CalendarValidation";
-            //params = {                        ||
-            //    selectedMedia: idList,        ||  To Do
+            //params = {
             //    nextStep: "Results"           ||
-            //};                                ||
-        }
-        if (fileName == "MediaSelection") {
-            action = "SaveMediaSelection";
-            params = {
-                selectedMedia: idList,
-                nextStep: "Results"
-            };
+            //};                                
         }
         $.ajax({
             url: '/MediaSchedule/' + action,
