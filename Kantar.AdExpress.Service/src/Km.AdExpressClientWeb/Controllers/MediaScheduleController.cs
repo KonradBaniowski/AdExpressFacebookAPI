@@ -24,11 +24,13 @@ namespace Km.AdExpressClientWeb.Controllers
     public class MediaScheduleController : Controller
     {
         private IMediaService _mediaService;
+        private IWebSessionService _webSessionService;
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService)
         {
             _mediaService = mediaService;
+            _webSessionService = webSessionService;
         }
         public ActionResult Index()
         {
@@ -216,6 +218,20 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
+        public JsonResult SaveMediaSelection(List<int> selectedMedia, string nextStep)
+        {
+            if( selectedMedia !=null)
+            {
+                var claim = new ClaimsPrincipal(User.Identity);
+                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                _webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
+            }
+            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+            string url = context.Action(nextStep, "MediaSchedule");
+            JsonResult jsonModel = Json(new { RedirectUrl = url });
+            return jsonModel;
+        }
+        #region Private methodes
         private List< MediaPlanNavigationNode> LoadNavBar(int currentPosition)
         {
             var model = new List<MediaPlanNavigationNode>();
@@ -225,7 +241,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 Id = 1,
                 IsActive = false,
-                Description = "Lorem ipsum incidiunt empror....",
+                Description = "Market",
                 Title = "Marché",
                 Action = "Index",
                 Controller = "MediaSchedule"
@@ -235,7 +251,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 Id = 2,
                 IsActive = false,
-                Description = "Lorem ipsum incidiunt empror....",
+                Description = "Media",
                 Title = "Media",
                 Action = "MediaSelection",
                 Controller = "MediaSchedule"
@@ -245,7 +261,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 Id = 3,
                 IsActive = false,
-                Description = "Lorem ipsum incidiunt empror....",
+                Description = "Dates",
                 Title = "Dates",
                 Action = "PeriodSelection",
                 Controller = "MediaSchedule"
@@ -255,7 +271,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 Id = 4,
                 IsActive = false,
-                Description = "Lorem ipsum incidiunt empror....",
+                Description = "Results",
                 Title = "Resultats",
                 Action = "Results",
                 Controller = "MediaSchedule"
@@ -268,6 +284,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             return model;
         }
+        #endregion
 
     }
 }
