@@ -1,9 +1,9 @@
 ﻿if (typeof jQuery === "undefined") { throw new Error("Media Client selector requires jQuery") }
 
 $(function () {
-
+    var idList = [];
     if ($('#Multiple').val() == "True") {
-        var idList = [];
+        
         $('.tuile-medias[data-attr-id]').on('click', selectMultiple)
 
         //CHECKBOX
@@ -33,7 +33,6 @@ $(function () {
     }
 
     function highlight() {
-        console.log("az");
         var grp = $(this).attr('data-grp');
         $('[data-grp="' + grp + '"]').addClass('highlight');
     }
@@ -61,7 +60,6 @@ $(function () {
         } else {
             idList.splice(index, 1);
         }
-        console.log(idList);
     }
 
     function preselection() {
@@ -80,4 +78,43 @@ $(function () {
             $(this).attr("checked", "");
         }
     }
+
+    //$('#btnSubmit').on('click', function (e) {
+    //    e.preventDefault();
+    //    var selectedMedia = idList;
+    //    $.ajax({
+    //        url: '/MediaSchedule/PeriodSelection',
+    //        contentType: 'application/json',
+    //        type: 'POST',
+    //        datatype: 'JSON',
+    //        data: JSON.stringify(selectedMedia),
+    //        error: function (xmlHttpRequest, errorText, thrownError) {
+    //        },
+    //        success: function (data) {
+    //            if (data != null) {
+    //                document.location = data.RedirectUrl;
+    //            }
+    //        }
+    //    });
+    //});
+
+    $('#btnSubmit').on('click', function (e) {
+        e.preventDefault();
+        var selectedMedia = idList;
+        $.ajax({
+            url: '/MediaSchedule/SaveMediaSelection',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(selectedMedia),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                if (data != null) {
+                    document.location = data.RedirectUrl;
+                }
+            }
+        });
+    });
+
 });
