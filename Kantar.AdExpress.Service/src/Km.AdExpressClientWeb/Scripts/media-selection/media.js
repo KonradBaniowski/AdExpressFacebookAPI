@@ -106,7 +106,6 @@ $(function () {
         var fileName = location.href.split("/").slice(-1);
         var action = "";
         var params;
-        alert(fileName);
         if (fileName == "MediaSchedule") { //this the market selection page
             action = "SaveMarketSelection";
             params = {

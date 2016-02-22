@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Kantar.AdExpress.Service.Core.Domain;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IWebSessionService
     {
-        void SaveMediaSelection(List<int> mediaIds, string webSessionId);
+        WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId);
 
-        void SaveMarketSelection(string webSessionId);
+        WebSessionResponse SaveMarketSelection(string webSessionId);
     }
 }

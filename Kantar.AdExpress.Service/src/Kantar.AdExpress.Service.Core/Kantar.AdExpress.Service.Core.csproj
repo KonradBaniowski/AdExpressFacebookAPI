@@ -71,6 +71,7 @@
     <Compile Include="BusinessService\IRightService.cs" />
     <Compile Include="Domain\Media.cs" />
     <Compile Include="Domain\Module.cs" />
+    <Compile Include="Domain\WebSessionResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -219,13 +219,13 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult SaveMediaSelection(List<int> selectedMedia, string nextStep)
+        public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)
         {
             if( selectedMedia !=null)
             {
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                _webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
+                var response =_webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
             }
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             string url = context.Action(nextStep, _controller);
@@ -238,7 +238,7 @@ namespace Km.AdExpressClientWeb.Controllers
             
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                _webSessionService.SaveMarketSelection( idWebSession);
+                var response = _webSessionService.SaveMarketSelection( idWebSession);
             
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             string url = context.Action(nextStep, _controller);
