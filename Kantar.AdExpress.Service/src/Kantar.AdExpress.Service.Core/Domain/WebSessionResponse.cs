@@ -18,6 +18,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
     public enum MediaScheduleStep
     {
         Market,
-        Media
+        Media,
+        Period,
+        Result
     }
 }
