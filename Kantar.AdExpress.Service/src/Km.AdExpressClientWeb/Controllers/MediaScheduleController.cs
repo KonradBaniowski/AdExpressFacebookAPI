@@ -60,7 +60,6 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 Multiple = true,
                 Medias =media,
-                ErrorMessage= GestionWeb.GetWebWord(1052, _webSession.SiteLanguage),
             //Medias = new List<Media>()
             //{
             //    new Media()

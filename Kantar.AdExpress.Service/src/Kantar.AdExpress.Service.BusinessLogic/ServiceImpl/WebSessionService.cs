@@ -2,20 +2,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
-//using WebFunctions = TNS.AdExpress.Web.Functions;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 using Kantar.AdExpress.Service.Core.Domain;
+using TNS.AdExpress.Domain.Units;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
-    class WebSessionService : IWebSessionService
+    public class WebSessionService : IWebSessionService
     {
         private WebSession _webSession = null;
         public WebSessionResponse SaveMediaSelection (List<long> mediaIds, string webSessionId)
@@ -33,7 +33,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 System.Windows.Forms.TreeNode tmpNode;
                 bool containsSearch = false;
                 bool containsSocial = false;
-
                 foreach (var item in mediaIds)
                 {
                     
@@ -57,10 +56,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage);
                 }
-                //else if (containsSocial && levelsSelected.Count > 1)
-                //{
-                //    response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
-                //}
+                else if (containsSocial && levelsSelected.Count > 1)
+                {
+                    response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
+                }
                 else {
 
                     //Reinitialize banners selection if change vehicle
@@ -93,15 +92,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
 
                     //verification que l unite deja sélectionnée convient pour tous les medias
-                    ArrayList unitList = WebFunctions.Units.getUnitsFromVehicleSelection(_webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess));
-                    unitList = WebFunctions.Units.GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
+                    var vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess);
 
+                    List<CstWeb.CustomerSessions.Unit> unitList = FctUtilities.Units.getUnitsFromVehicleSelection(vehicleSelection);
+                    unitList = GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
                     if (unitList.Count == 0)
                     {
-                        // Message d'erreur pour indiquer qu'il n'y a pas d'unité commune dans la sélection de l'utilisateur
-                        //Response.Write("<script language=javascript>");
-                        //Response.Write(" alert(\"" + GestionWeb.GetWebWord(2541, this._siteLanguage) + "\");");
-                        //Response.Write("</script>");
                         response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
 
                     }
@@ -131,5 +127,32 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             return response;
         }
+
+        // TODO To be deplaced to framework 
+        #region To be deplaced
+        /// <summary>
+        /// Get allowed units 
+        /// </summary>
+        /// <param name="vehicleSelection">List of media joined by commas</param>
+        /// <returns>Allowed units</returns>
+        public static List<CstWeb.CustomerSessions.Unit> GetAllowedUnits(List<CstWeb.CustomerSessions.Unit> unitList, List<CstWeb.CustomerSessions.Unit> AllowedUnitEnumList)
+        {
+            List<CstWeb.CustomerSessions.Unit> temp = new List<CstWeb.CustomerSessions.Unit>();
+            if (AllowedUnitEnumList != null && AllowedUnitEnumList.Count > 0)
+            {                
+                foreach(var item in unitList)
+                {
+                    if (AllowedUnitEnumList.Contains(item))
+                    {
+                        temp.Add(item);
+                    }
+                }
+                return temp;
+            }
+            return unitList;
+        }
+        
+        #endregion
     }
+
 }
