@@ -4,11 +4,6 @@
     ViewBag.Title = "MediaSelection";
     var array = @Html.Raw(Json.Encode(Model.ErrorMessage));
 }
-@*@section Scripts {
-    @Scripts.Render("~/bundles/media-selection")
-
-    
-}*@
 <div class="row">
     @Html.Partial("Presentation")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
@@ -78,6 +73,8 @@
         $(document).ready(function () {
 
             var idList = [];
+            var searchId = 18;
+            //var socialId=TBD
             if ($('#Multiple').val() == "True") {
 
                 $('.tuile-medias[data-attr-id]').on('click', selectMultiple)
@@ -160,24 +157,31 @@
                 var message=""
                 if(idList ==null ||idList.length==0)
                 {
-                    message = "Select an item";
+                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection))';
                 }
-                else if (idList.length>1 && idList)
+                else if (idList.length>1 && $.inArray(searchId,idList))
                 {
-                    message = "";//search
+                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SearchErrorMessage))';//search
                 }
+                @*else if (idList.length>1 && $.inArray(socialId,idList))   //TBD
+                {
+                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SocialErrorMessage))';//search
+                }*@
                 return message;
             }
 
             $('#btnSubmitMediaSelection').on('click', function (e) {
                 e.preventDefault();
-                if (idList.length == 0) {//mycondition
-                    //show error message
+                var msg = validate();
+                var isValide = !msg || msg.lentgh === 0;
+                if (!isValide) {//mycondition
+                    alert(msg);
                 }
+                else {
                 var params = {
                     selectedMedia: idList,
                     nextStep: "PeriodSelection"
-                };
+                };           
                 $.ajax({
                     url: '/MediaSchedule/SaveMediaSelection',
                     contentType: 'application/json',
@@ -192,12 +196,15 @@
                         }
                     }
                 });
+            }
             });
 
             $('#Market').on('click', function (e) {
                 e.preventDefault();
-                if (idList.length == 0) {//mycondition
-                    //show error message
+                var msg = validate();
+                var isValide = !msg || msg.lentgh===0;
+                if (!isValide) {//mycondition
+                    alert(msg);
                 }
                 else {
                     var action = "SaveMediaSelection";
@@ -225,8 +232,10 @@
             });
             $('#Dates').on('click', function (e) {
                 e.preventDefault();
-                if (idList.length == 0) {//mycondition
-                    //show error message
+                var msg = validate();
+                var isValide = !msg || msg.lentgh === 0;
+                if (!isValide) {//mycondition
+                    alert(msg);
                 }
                 else {
                     var action = "SaveMediaSelection";
@@ -254,30 +263,34 @@
             });
             $('#Results').on('click', function (e) {
                 e.preventDefault();
-                if (idList.length == 0) {//mycondition
-                    //show error message
+                var msg = validate();
+                var isValide = !msg || msg.lentgh === 0;
+                if (!isValide) {//mycondition
+                    alert(msg);
                 }
+                else {
                     action = "SaveMediaSelection";
                     params = {
                         selectedMedia: idList,
                         nextStep: "Results"
-                    };                
-                $.ajax({
-                    url: '/MediaSchedule/' + action,
-                    contentType: 'application/json',
-                    type: 'POST',
-                    datatype: 'JSON',
+                    };
+                    $.ajax({
+                        url: '/MediaSchedule/' + action,
+                        contentType: 'application/json',
+                        type: 'POST',
+                        datatype: 'JSON',
 
-                    data: JSON.stringify(params),
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        if (data != null) {
-                            document.location = data.RedirectUrl;
+                        data: JSON.stringify(params),
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                        },
+                        success: function (data) {
+                            if (data != null) {
+                                document.location = data.RedirectUrl;
+                            }
                         }
-                    }
+                    });
+                }
                 });
-            });
            });
 </script>
 }
