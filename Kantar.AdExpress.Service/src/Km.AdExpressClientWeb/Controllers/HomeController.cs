@@ -117,7 +117,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(Home);
         }
 
-        public ActionResult CurrentModule(int idModule)
+        public void CurrentModule(int idModule)
         {
             if (idModule != 0)
             {
@@ -130,7 +130,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 throw new Exception("Module pb");
             }
             //if here pb
-            return View();
         }
     }
 }

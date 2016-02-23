@@ -18,6 +18,8 @@ namespace Kantar.AdExpress.Bootstrapper
         {
             #region base
             DataProtectionProvider = app.GetDataProtectionProvider();
+
+            
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
@@ -39,7 +41,8 @@ namespace Kantar.AdExpress.Bootstrapper
                 }
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
+    
+            app.Use
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
             app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
 
