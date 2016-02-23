@@ -9,5 +9,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId);
 
         WebSessionResponse SaveMarketSelection(string webSessionId);
+
+        void SaveCurrentModule(string webSessionId, int moduleId);
     }
 }

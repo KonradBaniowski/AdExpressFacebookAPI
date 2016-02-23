@@ -21,6 +21,46 @@
             Distribution des demandes
             </summary>
         </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StartJob">
+            <summary>
+            Un job a été Distribué
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnStartJob">
+            <summary>
+            Lancement d'un traitement d'un job
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StopJob">
+            <summary>
+            Un job a été Traité
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnStopJob">
+            <summary>
+            Lancement fin d'un traitement d'un job
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.ErrorJob">
+            <summary>
+            Un job a été Traité
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnErrorJob">
+            <summary>
+            Lancement fin d'un traitement d'un job
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.WarningJob">
+            <summary>
+            Avertissement
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnWarningJob">
+            <summary>
+            Lancement d'un avertissement
+            </summary>
+        </member>
         <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._myThread">
             <summary>
             Thread qui traite l'alerte
@@ -69,6 +109,16 @@
             <param name="plugins">Liste des plug-ins</param>
             <param name="requestList">Liste des demandes</param>
             <param name="dataSource">Source de données</param>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.RunningJobCount">
+            <summary>
+            Obtient le nombre de process qui traite une demande
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.JobList">
+            <summary>
+            Get the list of running jobs
+            </summary>
         </member>
         <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.Treatement">
             <summary>
@@ -139,56 +189,6 @@
             <param name="mailPort">le port utilisé pour l'envoie de mail</param>
             <param name="navSessionId">Id session</param>
         </member>
-        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnStartJob">
-            <summary>
-            Lancement d'un traitement d'un job
-            </summary>
-        </member>
-        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnStopJob">
-            <summary>
-            Lancement fin d'un traitement d'un job
-            </summary>
-        </member>
-        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnErrorJob">
-            <summary>
-            Lancement fin d'un traitement d'un job
-            </summary>
-        </member>
-        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnWarningJob">
-            <summary>
-            Lancement d'un avertissement
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.RunningJobCount">
-            <summary>
-            Obtient le nombre de process qui traite une demande
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.JobList">
-            <summary>
-            Get the list of running jobs
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StartJob">
-            <summary>
-            Un job a été Distribué
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StopJob">
-            <summary>
-            Un job a été Traité
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.ErrorJob">
-            <summary>
-            Un job a été Traité
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.WarningJob">
-            <summary>
-            Avertissement
-            </summary>
-        </member>
         <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem">
             <summary>
             Liste des demandes de résultats
@@ -197,6 +197,26 @@
         <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem._list">
             <summary>
             Liste des demandes de résultat
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ConnectionNumberChangedHandler">
+            <summary>
+            Le nombre de connection change
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ErrorHandler">
+            <summary>
+            Erreur
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ConnectionNumberChanged">
+            <summary>
+            Evènement indiquant que le nombre d'éléments dans la liste à changé
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.Error">
+            <summary>
+            Evènement indiquant qu'il y a une erreur
             </summary>
         </member>
         <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.#cctor">
@@ -227,29 +247,29 @@
             </summary>
             <returns>nombre d'éléments dans la liste</returns>
         </member>
-        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ConnectionNumberChanged">
-            <summary>
-            Evènement indiquant que le nombre d'éléments dans la liste à changé
-            </summary>
-        </member>
-        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.Error">
-            <summary>
-            Evènement indiquant qu'il y a une erreur
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ConnectionNumberChangedHandler">
-            <summary>
-            Le nombre de connection change
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ErrorHandler">
-            <summary>
-            Erreur
-            </summary>
-        </member>
         <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem">
             <summary>
             Keep list of works to run up to date
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.NewLines">
+            <summary>
+            Le datatable contenant les demandes a été recalculé
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.OnNewLines">
+            <summary>
+            Le datatable contenant les demandes a été recalculé
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.Error">
+            <summary>
+            An error occured
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.OnError">
+            <summary>
+            Thrown when an error occured
             </summary>
         </member>
         <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem._myThread">
@@ -316,26 +336,6 @@
             Sinon, elle attend 
             </summary>
         </member>
-        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.OnNewLines">
-            <summary>
-            Le datatable contenant les demandes a été recalculé
-            </summary>
-        </member>
-        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.OnError">
-            <summary>
-            Thrown when an error occured
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.NewLines">
-            <summary>
-            Le datatable contenant les demandes a été recalculé
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.Error">
-            <summary>
-            An error occured
-            </summary>
-        </member>
         <member name="T:TNS.AdExpress.Anubis.BusinessFacade.StartWork">
             <summary>
             Lancement du module
@@ -366,28 +366,6 @@
             Interface à implémenté pour un plug-in de l'alerte
             </summary>
         </member>
-        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.GetPluginName">
-            <summary>
-            Obtient le nom du plug-in
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.Treatement(System.String,TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
-            <summary>
-            Lance le traitement du résultat
-            </summary>
-            <param name="confifurationFilePath">Chemin de configuration du plug-in</param>
-            <param name="dataSource">Source de données pour charger la session</param>
-            <param name="navSessionId">Identifiant de la session à traiter</param>
-            <remarks>
-            Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
-            </remarks>
-        </member>
-        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.AbortTreatement">
-            <summary>
-            Arrête le traitement du job
-            </summary>
-        </member>
         <member name="E:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.OnStartWork">
             <summary>
             Lancement du module
@@ -411,6 +389,28 @@
         <member name="E:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.OnSendReport">
             <summary>
             Envoie des rapports
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.GetPluginName">
+            <summary>
+            Obtient le nom du plug-in
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.Treatement(System.String,TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Lance le traitement du résultat
+            </summary>
+            <param name="confifurationFilePath">Chemin de configuration du plug-in</param>
+            <param name="dataSource">Source de données pour charger la session</param>
+            <param name="navSessionId">Identifiant de la session à traiter</param>
+            <remarks>
+            Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
+            </remarks>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.AbortTreatement">
+            <summary>
+            Arrête le traitement du job
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ClientSystem">
@@ -465,20 +465,24 @@
             Le serveur doit il attendre des connexions
             </summary>
         </member>
-        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.#ctor(System.String)">
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStartHandler">
             <summary>
-            Constructeur
-            </summary>
-            <param name="xmlFilePath">Chemin du fichier de configuration du serveur de demande de résultat</param>
-        </member>
-        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.Treatement">
-            <summary>
-            Lancement du serveur
+            Démarrage du serveur reseau
             </summary>
         </member>
-        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.ComputeTreatement">
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStopHandler">
             <summary>
-            Execution du serveur
+            arrêt du serveur reseau
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerErrorHandler">
+            <summary>
+            Erreur du serveur reseau
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerNewConnectionHandler">
+            <summary>
+            Nouvelle connexion
             </summary>
         </member>
         <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStart">
@@ -501,24 +505,20 @@
             Nouvelle connexion
             </summary>
         </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStartHandler">
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.#ctor(System.String)">
             <summary>
-            Démarrage du serveur reseau
+            Constructeur
+            </summary>
+            <param name="xmlFilePath">Chemin du fichier de configuration du serveur de demande de résultat</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.Treatement">
+            <summary>
+            Lancement du serveur
             </summary>
         </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStopHandler">
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.ComputeTreatement">
             <summary>
-            arrêt du serveur reseau
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerErrorHandler">
-            <summary>
-            Erreur du serveur reseau
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerNewConnectionHandler">
-            <summary>
-            Nouvelle connexion
+            Execution du serveur
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase">
@@ -678,6 +678,21 @@
             Classe de base pour générer un résultat de type PDF
             </summary>
         </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition">
+            <summary>
+            indique la position de l'image
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition.rightImage">
+            <summary>
+            Image located on the right of the header
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition.leftImage">
+            <summary>
+            Image located on the left of the header
+            </summary>
+        </member>
         <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf._style">
             <summary>
             Style
@@ -722,6 +737,41 @@
             <summary>
             Size of the footers
             </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.Style">
+            <summary>
+            Get Style
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.LeftMargin">
+            <summary>
+            Get the size of the left margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.RightMargin">
+            <summary>
+            Get the size of the right margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.TopMargin">
+            <summary>
+            Get the size of the top margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.BottomMargin">
+            <summary>
+            Get the size of the bottom margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.WorkZoneTop">
+            <summary>
+            Get Beginning of the work zone of the document (topMargin+headerSize)
+            </summary>					  
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.WorkZoneBottom">
+            <summary>
+            Get End of the work zone of the document (topMargin+headerSize)
+            </summary>					  
         </member>
         <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.#ctor">
             <summary>
@@ -779,56 +829,6 @@
             <param name="fontColor">Font color of the watermark</param>
             <param name="font">Font of the headers and footers</param>
             <returns>Index of the watermark in th epdf document</returns>
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.Style">
-            <summary>
-            Get Style
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.LeftMargin">
-            <summary>
-            Get the size of the left margin
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.RightMargin">
-            <summary>
-            Get the size of the right margin
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.TopMargin">
-            <summary>
-            Get the size of the top margin
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.BottomMargin">
-            <summary>
-            Get the size of the bottom margin
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.WorkZoneTop">
-            <summary>
-            Get Beginning of the work zone of the document (topMargin+headerSize)
-            </summary>					  
-        </member>
-        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.WorkZoneBottom">
-            <summary>
-            Get End of the work zone of the document (topMargin+headerSize)
-            </summary>					  
-        </member>
-        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition">
-            <summary>
-            indique la position de l'image
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition.rightImage">
-            <summary>
-            Image located on the right of the header
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition.leftImage">
-            <summary>
-            Image located on the left of the header
-            </summary>
         </member>
         <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem">
             <summary>
@@ -1297,6 +1297,12 @@
             Paramètre pour les résultats Bilan de campagne (APPM)
             </summary>
         </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Parameters.Appm.#ctor(TNS.AdExpress.Anubis.Constantes.Result.type)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="resultType">Type de résultat</param>
+        </member>
         <member name="T:TNS.AdExpress.Anubis.Common.Parameters.Generic">
             <summary>
             Paramètres Client générique pour construire un resultat PDF
@@ -1337,12 +1343,6 @@
             <summary>
             Obtient le type de resultats pour générer le PDF
             </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Anubis.Common.Parameters.Appm.#ctor(TNS.AdExpress.Anubis.Constantes.Result.type)">
-            <summary>
-            Constructeur
-            </summary>
-            <param name="resultType">Type de résultat</param>
         </member>
         <member name="T:TNS.AdExpress.Anubis.DataAccess.Configuration.AnubisConfigDataAccess">
             <summary>
