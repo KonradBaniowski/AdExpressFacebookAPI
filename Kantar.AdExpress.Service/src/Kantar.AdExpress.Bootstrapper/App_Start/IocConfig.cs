@@ -43,7 +43,9 @@ namespace Kantar.AdExpress.Bootstrapper
                 {
                     manager.UserTokenProvider =
                         new DataProtectorTokenProvider<ApplicationIdentityUser, int>(
-                            Startup.DataProtectionProvider.Create("ASP.NET Identity"));
+                            Startup.DataProtectionProvider.Create("ASP.NET Identity")
+                            );
+
                 }
                 return manager;
             });
@@ -51,6 +53,8 @@ namespace Kantar.AdExpress.Bootstrapper
             builder.Register(b => HttpContext.Current.GetOwinContext().Authentication);
 
             #endregion
+
+
             //DATA
             builder.RegisterType<AdExpressContext>().AsSelf();
             builder.RegisterType<IdentityContext>().AsSelf();
