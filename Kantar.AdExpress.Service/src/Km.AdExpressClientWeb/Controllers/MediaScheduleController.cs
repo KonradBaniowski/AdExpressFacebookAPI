@@ -1,6 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models;
+using Km.AdExpressClientWeb.Models.MediaSchedule;
 using KM.AdExpress.Framework.MediaSelection;
 using System;
 using System.Collections.Generic;
@@ -226,7 +227,10 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult Results()
         {
             var resultNode = new MediaPlanNavigationNode { Position = 4 };
-            var model = LoadNavBar(resultNode.Position);
+            var model = new ResultsViewModel
+            {
+                NavigationBar = LoadNavBar(resultNode.Position)
+            };            
             return View(model);
         }
 
