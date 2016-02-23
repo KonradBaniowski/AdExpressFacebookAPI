@@ -23,23 +23,49 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             _userManager = applicationUserManager;
             _rightService = rightService;
-            
         }
 
-        public ActionResult Index() 
+        public ActionResult Index()
         {
             var cla = new ClaimsPrincipal(User.Identity);
             var idLogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
             var login = cla.Claims.Where(e => e.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();
             var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-         
+
+            //var test = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)
             var resList = _rightService.GetModulesList(idWS);
             var res = _rightService.GetModules(idWS);
-         
+            var docu = new Documents()
+            {
+                Id = 1,
+                Label = "AdExpress News",
+                InfosNews = new List<InfosNews>()
+                {
+                    new InfosNews()
+                    {
+                        Label = "Novembre 2015",
+                        Url = "/AdExNews/AdexNews_201511.pdf"
+                    },
+                    new InfosNews()
+                    {
+                        Label = "Octobre 2015",
+                        Url = "/AdExNews/AdexNews_201510.pdf"
+                    }
+                }
+            };
+
             var Home = new HomePageViewModel()
             {
                 ModuleRight = res,
+                //new System.Collections.Generic.Dictionary<long, Models.Module>()
+                //{
+                //    { 198, new Models.Module() },
+                //    { 197, new Models.Module() },
+                //    { 7216, new Models.Module() },
+                //    { 1781, new Models.Module() },
+                //    { 4370, new Models.Module() }
+                //},
                 Modules = resList,
                 Documents = new List<Documents>() {
                     new Documents()
