@@ -1,5 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models;
+using Km.AdExpressClientWeb.Models.MediaSchedule;
 using KM.AdExpress.Framework.MediaSelection;
 using System;
 using System.Collections.Generic;
@@ -48,67 +50,69 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult MediaSelection()
         {
             //var model = new MediaSelectionViewModel();
+            
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var media = _mediaService.GetMedia(idWebSession);
+            var _webSession = (WebSession)WebSession.Load(idWebSession);
             #region Hardcoded model data
             var model = new MediaSelectionViewModel()
             {
                 Multiple = true,
                 Medias =media,
-                //Medias = new List<Media>()
-                //{
-                //    new Media()
-                //    {
-                //        MediaEnum = Vehicles.names.cinema,
-                //        Id= 1,
+            //Medias = new List<Media>()
+            //{
+            //    new Media()
+            //    {
+            //        MediaEnum = Vehicles.names.cinema,
+            //        Id= 1,
 
-                //        Label = "Cinéma",
-                //        Disabled = false
-                //    },
-                //    new Media()
-                //    {
-                //          MediaEnum = Vehicles.names.search,
-                //        Id = 34,
-                //        Label = "Search",
-                //        Disabled = false
-                //    },
-                //    new Media()
-                //    {
-                //          MediaEnum = Vehicles.names.tv,
-                //        Id = 2,
-                //        Label = "Télévision",
-                //        Disabled = true
-                //    },
-                //        new Media()
-                //    {
-                //              MediaEnum = Vehicles.names.evaliantMobile,
-                //        Id = 4,
-                //        Label = "Evaliant Mobile",
-                //        Disabled = false
-                //    },
-                //            new Media()
-                //    {
-                //                MediaEnum = Vehicles.names.directMarketing,
-                //        Id = 10,
-                //        Label = "Courrier",
-                //        Disabled = false
-                //    }
-                //    //  new Media()
-                //    //{
-                //    //    Id = 6,
-                //    //    Label = "Nom 6",
-                //    //    Disabled = false
-                //    //},
-                //    //      new Media()
-                //    //{
-                //    //    Id = 7,
-                //    //    Label = "Nom 7",
-                //    //    Disabled = true
-                //    //}
+            //        Label = "Cinéma",
+            //        Disabled = false
+            //    },
+            //    new Media()
+            //    {
+            //          MediaEnum = Vehicles.names.search,
+            //        Id = 34,
+            //        Label = "Search",
+            //        Disabled = false
+            //    },
+            //    new Media()
+            //    {
+            //          MediaEnum = Vehicles.names.tv,
+            //        Id = 2,
+            //        Label = "Télévision",
+            //        Disabled = true
+            //    },
+            //        new Media()
+            //    {
+            //              MediaEnum = Vehicles.names.evaliantMobile,
+            //        Id = 4,
+            //        Label = "Evaliant Mobile",
+            //        Disabled = false
+            //    },
+            //            new Media()
+            //    {
+            //                MediaEnum = Vehicles.names.directMarketing,
+            //        Id = 10,
+            //        Label = "Courrier",
+            //        Disabled = false
+            //    }
+            //    //  new Media()
+            //    //{
+            //    //    Id = 6,
+            //    //    Label = "Nom 6",
+            //    //    Disabled = false
+            //    //},
+            //    //      new Media()
+            //    //{
+            //    //    Id = 7,
+            //    //    Label = "Nom 7",
+            //    //    Disabled = true
+            //    //}
 
-                //},
-                IdMediasCommon =
+            //},
+            IdMediasCommon =
                     new List<int>()
                     {
                     { 1 },
@@ -126,6 +130,13 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             var mediaNode = new MediaPlanNavigationNode { Position = 2 };
             model.NavigationBar = LoadNavBar(mediaNode.Position);
+            model.ErrorMessage= new ErrorMessage
+            {
+                EmptySelection= GestionWeb.GetWebWord(1052, _webSession.SiteLanguage),
+                SearchErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage),
+                SocialErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage),
+                UnitErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage)
+            };
             
             return View(model);
         }
@@ -215,20 +226,26 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult Results()
         {
             var resultNode = new MediaPlanNavigationNode { Position = 4 };
-            var model = LoadNavBar(resultNode.Position);
+            var model = new ResultsViewModel
+            {
+                NavigationBar = LoadNavBar(resultNode.Position)
+            };            
             return View(model);
         }
 
         public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)
         {
-            if( selectedMedia !=null)
+            string url = string.Empty;
+            var response = new WebSessionResponse();
+            if ( selectedMedia !=null)
             {
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var response =_webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
+                response =_webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
             }
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-            string url = context.Action(nextStep, _controller);
+            if (response.Success)
+                url = context.Action(nextStep, _controller);
             JsonResult jsonModel = Json(new { RedirectUrl = url });
             return jsonModel;
         }

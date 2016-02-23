@@ -1,0 +1,65 @@
+﻿/*!@license
+* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.1027
+*
+* Copyright (c) 2011-2015 Infragistics Inc.
+*
+* http://www.infragistics.com/
+*
+*/
+
+/*global jQuery */
+(function ($) {
+    $.ig = $.ig || {};
+
+    if (!$.ig.Editor) {
+	    $.ig.Editor = {
+		    locale: {
+			    spinUpperTitle: 'Erhöhen',
+			    spinLowerTitle: 'Verringern',
+			    buttonTitle: 'Liste anzeigen',
+			    clearTitle: 'Wert löschen',
+			    datePickerButtonTitle: 'Kalender anzeigen',
+			    updateModeUnsupportedValue: 'Die Option updateMode unterstützt zwei mögliche Werte - "onChange" und "immediate"',
+			    updateModeNotSupported: 'updateMode property supports only "onchange" mode for igMaskEditor, igDateEditor and igDatePicker extensions',
+			    renderErrMsg: "Ein Basiseditor kann nicht direkt instantiiert werden. Mit einem Text-, Nummern-, Daten- oder anderen Editor versuchen.",
+			    multilineErrMsg: 'textArea erfordert eine andere Konfiguration. Der textMode sollte auf "multiline" eingestellt sein.',
+			    targetNotSupported: "Dieses Zielelement wird nicht unterstützt.",
+			    placeHolderNotSupported: "Das Platzhalterattribut wird von Ihrem Browser nicht unterstützt.",
+			    allowedValuesMsg: "Einen Wert von der Drop-Down-Liste wählen",
+			    maxLengthErrMsg: "Eintrag ist zu lang und wurde auf {0} Symbole reduziert",
+			    maxLengthWarningMsg: "Entry reached the maximum length of {0} for this field",
+			    minLengthErrMsg: "Mindestens {0} Zeichen sollten eingegeben werden",
+			    maxValErrMsg: "Eintrag hat den maximalen Wert von {0} für dieses Feld erreicht",
+			    minValErrMsg: "Eintrag hat den minimalen Wert von {0} für dieses Feld erreicht",
+			    maxValExceedRevertErrMsg: "Eintrag hat den maximalen Wert von {0} überstiegen und wurde auf den vorherigen zurückgestellt",
+			    minValExceedRevertErrMsg: "Eintrag hat den minimalen Wert von {0} überstiegen und  wurde auf den vorherigen zurückgestellt.",
+			    maxValExceededWrappedAroundErrMsg: "Eintrag hat den maximalen Wert von {0} überstiegen und wurde auf den minimal erlaubten eingestellt",
+			    minValExceededWrappedAroundErrMsg: "Eintrag hat den minimalen Wert von {0} überstiegen und wurde auf den maximal erlaubten eingestellt",
+			    btnValueNotSupported: 'Ein anderer Schaltflächenwert ist erforderlich. Wert zwischen "dropdown", "clear" und "spin" wählen.',
+			    scientificFormatErrMsg: 'Ein anderes scientificFormat ist erforderlich. Wert zwischen "E", "e", "E+" und "e+" wählen.',
+			    spinDeltaIsOfTypeNumber: "Ein anderer Typ von spinDelta ist erforderlich. Eine positive Zahl sollte eingegeben werden.",
+			    spinDeltaCouldntBeNegative: "Die spinDelta-Option kann nicht negativ sein. Eine positive Zahl sollte eingegeben werden.",
+			    spinDeltaContainsExceedsMaxDecimals: "Maximal erlaubte Bruchzahlen für spinDelta sind auf {0} festgelegt. Entweder MaxDecimals ändern oder versuchen, Ihren Wert zu verringern.",
+			    spinDeltaIncorrectFloatingPoint: 'Ein Gleitkomma-spinDelta erfordert eine andere Konfiguration. Den dataMode des Editors entweder auf "double" oder "float" festlegen.',
+			    notEditableOptionByInit: "Diese Option kann nach der Initialisierung nicht bearbeitet werden. Ihr Wert sollte während der Initialisierung festgelegt werden.",
+			    numericEditorNoSuchMethod: "Der Zahleneditor unterstützt diese Methode nicht.",
+			    displayFactorIsOfTypeNumber: "displayFactor erfordert einen anderen Wert. Sein Wert sollte auf 1 oder 100 als Zahl festgelegt werden.",
+			    displayFactorAllowedValue: "displayFactor erfordert einen anderen Wert. Sein Wert sollte auf 1 oder 100 als Zahl festgelegt werden.",
+			    instantiateCheckBoxErrMsg: "igCheckboxEditor erfordert ein anderes Element. INPUT, SPAN oder DIV-Element benutzen.",
+			    cannotParseNonBoolValue: "igCheckboxEditor erfordert einen anderen Wert. Ein boolescher Wert sollte zur Verfügung stehen.",
+			    cannotSetNonBoolValue: "igCheckboxEditor erfordert einen anderen Wert. Ein boolescher Wert sollte zur Verfügung stehen.",
+			    maskEditorNoSuchMethod: "Der Masken-Editor unterstützt diese Methode nicht.",
+			    datePickerEditorNoSuchMethod: "Der Daten-Editor unterstützt diese Methode nicht.",
+			    datePickerNoSuchMethodDropDownContainer: "The date editor does not support this method. Use 'getCalendar' one instead.",
+			    buttonTypeIsDropDownOnly: "Der Datepicker erlaubt nur Dropdown und Wert löschen für die buttonType-Option.",
+			    dateEditorMinValue: "MinValue-Option kann nicht zur Laufzeit festgelegt werden.",
+			    dateEditorMaxValue: "MaxValue-Option kann nicht zur Laufzeit festgelegt werden.",
+			    cannotSetRuntime: "Diese Option kann nicht zur Laufzeit festgelegt werden",
+                invalidDate: "Ungültiges Datum",
+                maskMessage: 'Alle erforderlichen Positionen sollten ausgefüllt werden',
+                dateMessage: 'Ein gültiges Datum sollte eingegeben werden',
+                centuryThresholdValidValues: "centuryThreshold property shoud be between 0 and 99. The value has been reverted to defaults."
+		    }
+	    };
+    }
+})(jQuery);

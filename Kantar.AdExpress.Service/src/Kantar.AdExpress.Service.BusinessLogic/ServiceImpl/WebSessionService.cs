@@ -22,6 +22,10 @@ using System.Windows.Forms;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Constantes.DB;
+using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
+using Kantar.AdExpress.Service.Core.Domain;
+using TNS.AdExpress.Domain.Units;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -43,7 +47,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 System.Windows.Forms.TreeNode tmpNode;
                 bool containsSearch = false;
                 bool containsSocial = false;
-
                 foreach (var item in mediaIds)
                 {
 
@@ -61,18 +64,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 if (levelsSelected.Count == 0)
                 {
-                    //response.ErrorMessage = WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052, _webSession.SiteLanguage));
-                    //Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)));
+                    response.ErrorMessage = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage);
                 }
                 else if (containsSearch && levelsSelected.Count > 1)
                 {
-                    //response.ErrorMessage = WebFunctions.Script.Alert(GestionWeb.GetWebWord(3011, _webSession.SiteLanguage));
-                    //Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(3011, _webSession.SiteLanguage)));
+                    response.ErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage);
                 }
                 else if (containsSocial && levelsSelected.Count > 1)
                 {
-                    //response.ErrorMessage = WebFunctions.Script.Alert(GestionWeb.GetWebWord(3030, _webSession.SiteLanguage));
-                    //Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(3030, _webSession.SiteLanguage)));
+                    response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
                 }
                 else {
 
@@ -106,30 +106,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
 
                     //verification que l unite deja sélectionnée convient pour tous les medias
-                    //ArrayList unitList = WebFunctions.Units.getUnitsFromVehicleSelection(_webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess));
-                    //unitList = WebFunctions.Units.GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
+                    var vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess);
 
-                    //if (unitList.Count == 0)
-                    //{
-                    //    // Message d'erreur pour indiquer qu'il n'y a pas d'unité commune dans la sélection de l'utilisateur
-                    //    //Response.Write("<script language=javascript>");
-                    //    //Response.Write(" alert(\"" + GestionWeb.GetWebWord(2541, this._siteLanguage) + "\");");
-                    //    //Response.Write("</script>");
-                    //    response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
+                    List<CstWeb.CustomerSessions.Unit> unitList = FctUtilities.Units.getUnitsFromVehicleSelection(vehicleSelection);
+                    unitList = GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
+                    if (unitList.Count == 0)
+                    {
+                        response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
 
-                    //}
-                    //else
-                    //{
-                    //    _webSession.Save();
-                    //    response.Success = true;
-                    //}
+                    }
+                    else
+                    {
+                        _webSession.Save();
+                        response.Success = true;
+                    }
                 }
             }
             catch (System.Exception exc)
             {
                 if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
                 {
-                    //this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                    //this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));                    
                 }
             }
 
@@ -144,6 +141,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             return response;
         }
+
 
         public void SaveCurrentModule(string webSessionId, int moduleId)
         {
@@ -516,5 +514,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         //}
         //#endregion
+
+        #region To be deplaced
+        /// <summary>
+        /// Get allowed units 
+        /// </summary>
+        /// <param name="vehicleSelection">List of media joined by commas</param>
+        /// <returns>Allowed units</returns>
+        public static List<CstWeb.CustomerSessions.Unit> GetAllowedUnits(List<CstWeb.CustomerSessions.Unit> unitList, List<CstWeb.CustomerSessions.Unit> AllowedUnitEnumList)
+        {
+            List<CstWeb.CustomerSessions.Unit> temp = new List<CstWeb.CustomerSessions.Unit>();
+            if (AllowedUnitEnumList != null && AllowedUnitEnumList.Count > 0)
+            {
+                foreach (var item in unitList)
+                {
+                    if (AllowedUnitEnumList.Contains(item))
+                    {
+                        temp.Add(item);
+                    }
+                }
+                return temp;
+            }
+            return unitList;
+        }
+
+        #endregion
     }
 }
+
