@@ -51,19 +51,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 if (levelsSelected.Count == 0)
                 {
-                    //response.ErrorMessage = WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052, _webSession.SiteLanguage));
-                    //Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)));
+                    response.ErrorMessage = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage);
                 }
                 else if (containsSearch && levelsSelected.Count > 1)
                 {
-                    //response.ErrorMessage = WebFunctions.Script.Alert(GestionWeb.GetWebWord(3011, _webSession.SiteLanguage));
-                    //Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(3011, _webSession.SiteLanguage)));
+                    response.ErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage);
                 }
-                else if (containsSocial && levelsSelected.Count > 1)
-                {
-                    //response.ErrorMessage = WebFunctions.Script.Alert(GestionWeb.GetWebWord(3030, _webSession.SiteLanguage));
-                    //Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(3030, _webSession.SiteLanguage)));
-                }
+                //else if (containsSocial && levelsSelected.Count > 1)
+                //{
+                //    response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
+                //}
                 else {
 
                     //Reinitialize banners selection if change vehicle
@@ -96,30 +93,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
 
                     //verification que l unite deja sélectionnée convient pour tous les medias
-                    //ArrayList unitList = WebFunctions.Units.getUnitsFromVehicleSelection(_webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess));
-                    //unitList = WebFunctions.Units.GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
+                    ArrayList unitList = WebFunctions.Units.getUnitsFromVehicleSelection(_webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess));
+                    unitList = WebFunctions.Units.GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
 
-                    //if (unitList.Count == 0)
-                    //{
-                    //    // Message d'erreur pour indiquer qu'il n'y a pas d'unité commune dans la sélection de l'utilisateur
-                    //    //Response.Write("<script language=javascript>");
-                    //    //Response.Write(" alert(\"" + GestionWeb.GetWebWord(2541, this._siteLanguage) + "\");");
-                    //    //Response.Write("</script>");
-                    //    response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
+                    if (unitList.Count == 0)
+                    {
+                        // Message d'erreur pour indiquer qu'il n'y a pas d'unité commune dans la sélection de l'utilisateur
+                        //Response.Write("<script language=javascript>");
+                        //Response.Write(" alert(\"" + GestionWeb.GetWebWord(2541, this._siteLanguage) + "\");");
+                        //Response.Write("</script>");
+                        response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
 
-                    //}
-                    //else
-                    //{
-                    //    _webSession.Save();
-                    //    response.Success = true;
-                    //}
+                    }
+                    else
+                    {
+                        _webSession.Save();
+                        response.Success = true;
+                    }
                 }
             }
             catch (System.Exception exc)
             {
                 if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
                 {
-                    //this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                    //this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));                    
                 }
             }
 

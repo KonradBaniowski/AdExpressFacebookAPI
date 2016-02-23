@@ -16,7 +16,7 @@ namespace Km.AdExpressClientWeb.Models
 
         public List<MediaPlanNavigationNode> NavigationBar { get; set; }
 
-        public string ErrorMessage { get; set; }
+        public ErrorMessage ErrorMessage { get; set; }
 
     }
 
@@ -46,6 +46,17 @@ namespace Km.AdExpressClientWeb.Models
         public string Controller { get; set; }
 
         
+    }
+
+    public class ErrorMessage
+    {
+        public string EmptySelection { get; set; }
+
+        public string SearchErrorMessage { get; set; }
+
+        public string SocialErrorMessage { get; set; }
+
+        public string UnitErrorMessage { get; set; }
     }
 
     #region Temp classes
