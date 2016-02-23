@@ -152,6 +152,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
+    <Compile Include="Controllers\TestExportController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -586,6 +587,7 @@
     <Content Include="Views\MediaSchedule\PeriodSelection.cshtml" />
     <Content Include="Views\MediaSchedule\Results.cshtml" />
     <Content Include="Views\MediaSchedule\NavigationBar.cshtml" />
+    <Content Include="Views\TestExport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
