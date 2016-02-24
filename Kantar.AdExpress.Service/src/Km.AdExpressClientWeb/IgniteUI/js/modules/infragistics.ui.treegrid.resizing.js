@@ -1,5 +1,5 @@
 ﻿/*!@license
- * Infragistics.Web.ClientUI Tree Grid 15.2.20152.1027
+ * Infragistics.Web.ClientUI Tree Grid 15.2.20152.2081
  *
  * Copyright (c) 2011-2015 Infragistics Inc.
  *
@@ -16,4 +16,4 @@
  *	infragistics.ui.grid.framework.js
  *	infragistics.ui.grid.resizing.js
  */
-if(typeof jQuery!=="function"){throw new Error("jQuery is undefined")}(function($){$.widget("ui.igTreeGridResizing",$.ui.igGridResizing,{css:{},_create:function(){this.element.data($.ui.igGridResizing.prototype.widgetName,this.element.data($.ui.igTreeGridResizing.prototype.widgetName));$.ui.igGridResizing.prototype._create.apply(this,arguments)},destroy:function(){$.ui.igGridResizing.prototype.destroy.apply(this,arguments);this.element.removeData($.ui.igGridResizing.prototype.widgetName)}});$.extend($.ui.igTreeGridResizing,{version:"15.2.20152.1027"})})(jQuery);
+if(typeof jQuery!=="function"){throw new Error("jQuery is undefined")}(function($){$.widget("ui.igTreeGridResizing",$.ui.igGridResizing,{css:{},_create:function(){this.element.data($.ui.igGridResizing.prototype.widgetName,this.element.data($.ui.igTreeGridResizing.prototype.widgetName));$.ui.igGridResizing.prototype._create.apply(this,arguments)},destroy:function(){$.ui.igGridResizing.prototype.destroy.apply(this,arguments);this.element.removeData($.ui.igGridResizing.prototype.widgetName)}});$.extend($.ui.igTreeGridResizing,{version:"15.2.20152.2081"})})(jQuery);

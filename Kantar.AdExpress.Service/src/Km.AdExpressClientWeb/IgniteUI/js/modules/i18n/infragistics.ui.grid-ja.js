@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -324,7 +324,8 @@
                 movingDialogCaptionButtonAsc: '上へ移動',
                 movingDialogCaptionText: '列の移動',
                 movingDialogDisplayText: '列の移動',
-            movingDialogDropTooltipText: "ここへ移動",
+                movingDialogDropTooltipText: "ここへ移動",
+                movingDialogCloseButtonTitle: '「列の移動」ダイアログを閉じる',
                 dropDownMoveLeftText: '左へ移動',
                 dropDownMoveRightText: '右へ移動',
                 dropDownMoveFirstText: '最初へ移動',
@@ -356,6 +357,7 @@
                 unboundColumnsNotSupported: 'ColumnFixing に異なる構成を使用してください。UnboundColumns を無効にしてください。',
                 excelNavigationNotSupportedWithCurrentEditMode: "ExcelNavigation に異なる構成を使用してください。editMode は cell または row に設定してください。",
                 initialFixingNotApplied: '初期化の固定設定を {0} キーの列に適用できませんでした。理由: {1}', // {0} is placeholder for columnKey, {1} error message
+                setOptionGridWidthException: 'グリッドの幅の値が無効です。固定列がある場合、固定されていない列の表示可能な領域の幅を minimalVisibleAreaWidth の値以上に設定する必要があります。',
                 internalErrors: {
                     none: 'グリッドが正しく構成されました。',
                     notValidIdentifier: '指定した列キーは有効ではありません。定義済みグリッド列のいずれかのキーと一致する列キーを使用してください。',

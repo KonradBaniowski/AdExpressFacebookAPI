@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -24,7 +24,11 @@
 			    overview: "Información general",
 			    zoomOut: "Alejar",
 			    zoomIn: "Acercar",
-			    resetZoom: "Restablecer zoom"
+			    resetZoom: "Restablecer zoom",
+			    seriesUnsupportedOption: "the current series type does not support the option: ",
+			    seriesTypeNotLoaded: "the JavaScript file containing the requested series type has not been loaded or the series type is invalid: ",
+			    axisTypeNotLoaded: "the JavaScript file containing the requested axis type has not been loaded or the axis type is invalid: ",
+			    axisUnsupportedOption: "the current axis type does not support the option: "
 		    }
 	    });
 

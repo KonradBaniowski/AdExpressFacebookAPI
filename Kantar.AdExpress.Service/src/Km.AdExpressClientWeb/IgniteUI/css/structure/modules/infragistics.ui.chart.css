@@ -34,3 +34,4 @@
 .ui-chart-area-fill-opacity{opacity:.7}
 .ui-chart-aligned-gridlines{visibility:visible}
 .ui-chart-axis-stroke,.ui-chart-axis-major-line{border-color:transparent}
+.ui-chart-legend{overflow:auto}

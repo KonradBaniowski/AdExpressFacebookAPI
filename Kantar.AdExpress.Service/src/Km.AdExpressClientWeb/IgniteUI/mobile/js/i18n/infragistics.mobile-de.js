@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI ListView localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI ListView localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -50,7 +50,7 @@ if (!$.ig.mobileListView) {
 }
 
 /*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -92,6 +92,7 @@ if (!$.ig.mobileListView) {
 			    fieldMismatch: "Der folgende Ausdruck enthält ein ungültiges Feld oder eine ungültige Filterbedingung: ",
 			    noSortingFields: "Es wurden keine Felder angegeben. Beim Aufrufen von sort() muss mindestens ein Feld zum Sortieren angegeben werden.",
 			    filteringNoSchema: "Es wurden kein Schema / Felder angegeben. Es muss ein Schema mit Felddefinitionen und Feldtypen angegeben werden, um die Datenquelle filtern zu können.",
+			    noSaveChanges: "Saving changes was not successful. Server did not return Success object or returned Success:false.",
 			    errorUnexpectedCustomFilterFunction: "Für eine kundenspezifische Filterfunktion wurde ein unerwarteter Wert angegeben. Eine Funktion oder Zeichenfolge wird erwartet."
 		    }
 	    });
@@ -100,7 +101,7 @@ if (!$.ig.mobileListView) {
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -125,7 +126,11 @@ if (!$.ig.mobileListView) {
 			    overview: "Übersicht",
 			    zoomOut: "Verkleinern",
 			    zoomIn: "Vergrößern",
-			    resetZoom: "Zoom zurücksetzen"
+			    resetZoom: "Zoom zurücksetzen",
+			    seriesUnsupportedOption: "the current series type does not support the option: ",
+			    seriesTypeNotLoaded: "the JavaScript file containing the requested series type has not been loaded or the series type is invalid: ",
+			    axisTypeNotLoaded: "the JavaScript file containing the requested axis type has not been loaded or the axis type is invalid: ",
+			    axisUnsupportedOption: "the current axis type does not support the option: "
 		    }
 	    });
 
@@ -133,7 +138,7 @@ if (!$.ig.mobileListView) {
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI templating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI templating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *

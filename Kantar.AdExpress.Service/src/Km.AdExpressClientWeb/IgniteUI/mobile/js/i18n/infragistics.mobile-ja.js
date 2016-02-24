@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.MobileUI ListView localization resources 15.2.20152.1027
+* Infragistics.Web.MobileUI ListView localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -49,7 +49,7 @@ if (!$.ig.mobileListView) {
 
 }
 /*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -89,14 +89,16 @@ if (!$.ig.mobileListView) {
 			    fieldMismatch: "この式で無効なフィールドまたはフィルター条件があります:  ",
 			    noSortingFields: "フィールドが指定されていません。sort() を呼び出すときに、並べ替えるフィールドを 1 つ以上を指定する必要があります。",
 			    filteringNoSchema: "スキーマまたはフィールドが指定されていません。データ ソースをフィルターするには、フィールド定義および型を含むスキーマを指定する必要があります。",
+			    noSaveChanges: "変更の保存に失敗しました。サーバーが Success オブジェクトを返さなかったか Success:false を返しました。",
 			    errorUnexpectedCustomFilterFunction: "カスタム フィルター関数で予期しない値が提供されました。関数または文字列が必要です。"
 		    }
 	    });
 
     }
 })(jQuery);
+
 /*!@license
-* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -121,14 +123,18 @@ if (!$.ig.mobileListView) {
 			    overview: "概要",
 			    zoomOut: "ズームアウト",
 			    zoomIn: "ズームイン",
-			    resetZoom: "ズームのリセット"
+			    resetZoom: "ズームのリセット",
+			    seriesUnsupportedOption: "現在のシリーズ タイプで次のオプションはサポートされません: ",
+			    seriesTypeNotLoaded: "要求されたシリーズ タイプを含む JavaScript ファイルが読み込まれていない、またはシリーズ タイプが無効です: ",
+			    axisTypeNotLoaded: "要求された軸タイプを含む JavaScript ファイルが読み込まれていない、または軸タイプが無効です: ",
+			    axisUnsupportedOption: "現在の軸タイプで次のオプションはサポートされません: "
 		    }
 	    });
 
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI templating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI templating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *

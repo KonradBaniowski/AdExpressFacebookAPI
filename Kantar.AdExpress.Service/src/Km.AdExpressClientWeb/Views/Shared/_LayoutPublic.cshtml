@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/IgniteUI/css")
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.2.3/css/simple-line-icons.css">
 
 </head>
@@ -22,7 +23,7 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <a class="navbar-brand" href="#">AdExpress</a>
+            <a class="navbar-brand"  style="font-weight:bold;" href="#">AdExpress</a>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#"><i class="glyphicon glyphicon-th"></i></a></li>
@@ -45,8 +46,11 @@
     </div>
 
 
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

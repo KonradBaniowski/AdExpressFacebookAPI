@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -39,14 +39,16 @@
 			    fieldMismatch: "この式で無効なフィールドまたはフィルター条件があります:  ",
 			    noSortingFields: "フィールドが指定されていません。sort() を呼び出すときに、並べ替えるフィールドを 1 つ以上を指定する必要があります。",
 			    filteringNoSchema: "スキーマまたはフィールドが指定されていません。データ ソースをフィルターするには、フィールド定義および型を含むスキーマを指定する必要があります。",
+			    noSaveChanges: "変更の保存に失敗しました。サーバーが Success オブジェクトを返さなかったか Success:false を返しました。",
 			    errorUnexpectedCustomFilterFunction: "カスタム フィルター関数で予期しない値が提供されました。関数または文字列が必要です。"
 		    }
 	    });
 
     }
 })(jQuery);
+
 /*!@license
-* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -71,14 +73,18 @@
 			    overview: "概要",
 			    zoomOut: "ズームアウト",
 			    zoomIn: "ズームイン",
-			    resetZoom: "ズームのリセット"
+			    resetZoom: "ズームのリセット",
+			    seriesUnsupportedOption: "現在のシリーズ タイプで次のオプションはサポートされません: ",
+			    seriesTypeNotLoaded: "要求されたシリーズ タイプを含む JavaScript ファイルが読み込まれていない、またはシリーズ タイプが無効です: ",
+			    axisTypeNotLoaded: "要求された軸タイプを含む JavaScript ファイルが読み込まれていない、または軸タイプが無効です: ",
+			    axisUnsupportedOption: "現在の軸タイプで次のオプションはサポートされません: "
 		    }
 	    });
 
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI shared localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI shared localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -103,7 +109,7 @@ if (!$.ig.SharedLocale) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI templating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI templating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -126,7 +132,7 @@ if (!$.ig.Templating) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Barcode localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Barcode localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -181,7 +187,7 @@ if (!$.ig.Templating) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Combo localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Combo localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -210,7 +216,7 @@ if (!$.ig.Templating) {
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI Dialog localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Dialog localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -236,7 +242,7 @@ if (!$.ig.Templating) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Doughnut Chart localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Doughnut Chart localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -259,7 +265,7 @@ if (!$.ig.Templating) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -300,9 +306,10 @@ if (!$.ig.Templating) {
 			    spinDeltaIsOfTypeNumber: "異なる spinDelta タイプが必要です。正の数を入力してください。",
 			    spinDeltaCouldntBeNegative: "指定した spinDelta オプションは負数にできません。正の数を入力してください。",
 			    spinDeltaContainsExceedsMaxDecimals: "spinDelta に使用可能な最大フラクションは {0} に設定されています。MaxDecimals を変更するか値を小さくしてください。",
-			    spinDeltaIncorrectFloatingPoint: '浮動小数点 spinDelta に異なる構成を使用してください。エディターの dataMode を "double" または "float" に設定してください。',
+			    spinDeltaIncorrectFloatingPoint: '浮動小数点 spinDelta に異なる構成を使用してください。エディターの dataMode を "double" または "float" に設定するか、spinDelta を integer に設定してください。',
 			    notEditableOptionByInit: "このオプションは初期化の後は編集できません。値は初期化後に設定してください。",
 			    numericEditorNoSuchMethod: "数値エディターはこのメソッドをサポートしません。",
+			    numericEditorNoSuchOption: "数値エディターはこのオプションをサポートしません。",
 			    displayFactorIsOfTypeNumber: "displayFactor に異なる値を使用してください。値は数値として 1 または 100 に設定する必要があります。",
 			    displayFactorAllowedValue: "displayFactor に異なる値を使用してください。値は数値として 1 または 100 に設定する必要があります。",
 			    instantiateCheckBoxErrMsg: "igCheckboxEditor を指定した要素にインスタンス化できません。INPUT、SPAN、または DIV 要素を使用してください。",
@@ -318,13 +325,14 @@ if (!$.ig.Templating) {
 			    invalidDate: "無効な日付",
 			    maskMessage: 'すべての必須文字を入力してください',
 			    dateMessage: '有効な日付を入力してください',
-			    centuryThresholdValidValues: "centuryThreshold プロパティは 0 ~ 99 である必要があります。値はデフォルトに戻されました。"
+			    centuryThresholdValidValues: "centuryThreshold プロパティは 0 ~ 99 である必要があります。値はデフォルトに戻されました。",
+			    noListItemsNoButton: "リスト項目がないため、スピンまたはドロップダウン ボタンは描画されません。"
 		    }
 	    };
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -649,7 +657,8 @@ if (!$.ig.Templating) {
                 movingDialogCaptionButtonAsc: '上へ移動',
                 movingDialogCaptionText: '列の移動',
                 movingDialogDisplayText: '列の移動',
-            movingDialogDropTooltipText: "ここへ移動",
+                movingDialogDropTooltipText: "ここへ移動",
+                movingDialogCloseButtonTitle: '「列の移動」ダイアログを閉じる',
                 dropDownMoveLeftText: '左へ移動',
                 dropDownMoveRightText: '右へ移動',
                 dropDownMoveFirstText: '最初へ移動',
@@ -681,6 +690,7 @@ if (!$.ig.Templating) {
                 unboundColumnsNotSupported: 'ColumnFixing に異なる構成を使用してください。UnboundColumns を無効にしてください。',
                 excelNavigationNotSupportedWithCurrentEditMode: "ExcelNavigation に異なる構成を使用してください。editMode は cell または row に設定してください。",
                 initialFixingNotApplied: '初期化の固定設定を {0} キーの列に適用できませんでした。理由: {1}', // {0} is placeholder for columnKey, {1} error message
+                setOptionGridWidthException: 'グリッドの幅の値が無効です。固定列がある場合、固定されていない列の表示可能な領域の幅を minimalVisibleAreaWidth の値以上に設定する必要があります。',
                 internalErrors: {
                     none: 'グリッドが正しく構成されました。',
                     notValidIdentifier: '指定した列キーは有効ではありません。定義済みグリッド列のいずれかのキーと一致する列キーを使用してください。',
@@ -729,7 +739,7 @@ if (!$.ig.Templating) {
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI HTML Editor localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI HTML Editor localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -866,7 +876,7 @@ if (!$.ig.HtmlEditor) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Notifier localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Notifier localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -892,7 +902,7 @@ if (!$.ig.Notifier) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Shared localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Shared localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -922,7 +932,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Data Selector localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Data Selector localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -956,7 +966,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -987,7 +997,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Popover localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Popover localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1012,7 +1022,7 @@ if (!$.ig.Popover) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Rating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Rating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1035,7 +1045,7 @@ if (!$.ig.Popover) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Splitter localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Splitter localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1060,7 +1070,7 @@ if (!$.ig.Splitter) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tile Manager localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tile Manager localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1085,7 +1095,7 @@ if (!$.ig.TileManager) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Toolbar localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Toolbar localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1111,7 +1121,7 @@ if (!$.ig.Toolbar) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tree localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tree localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1150,7 +1160,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tree Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tree Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1200,7 +1210,7 @@ if (!$.ig.Toolbar) {
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI Upload localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Upload localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1262,7 +1272,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Validator localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Validator localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1303,7 +1313,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Video Player localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Video Player localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1361,7 +1371,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Zoombar localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Zoombar localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1388,7 +1398,7 @@ if (!$.ig.Zoombar) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI common utilities localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common utilities localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *

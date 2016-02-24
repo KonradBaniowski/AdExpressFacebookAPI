@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI Validator localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Validator localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -30,7 +30,7 @@
 			    dateMessage: 'Пожалуйста, введите действительную дату',
 			    numberMessage: 'Пожалуйста, введите действительный номер',
                 rangeValueMessage: 'Пожалуйста, введите значение в диапазоне от {0} до {1}',
-		        minValueMessage: 'Пожалуйста, введите значение больше или равно {0},
+		        minValueMessage: 'Пожалуйста, введите значение больше или равно {0}',
 		        maxValueMessage: 'Пожалуйста, введите значение меньше или равно {0}',
 		        emailMessage: 'Следует ввести правильный адрес электронной почты',
 		        equalToMessage: 'Эти два значения не совпадают',

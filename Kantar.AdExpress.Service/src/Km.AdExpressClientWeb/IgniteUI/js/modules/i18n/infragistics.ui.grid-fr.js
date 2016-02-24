@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -324,6 +324,7 @@ if (!$.ig.Grid) {
             movingDialogCaptionText: 'Déplacer les colonnes',
             movingDialogDisplayText: 'Déplacer les colonnes',
             movingDialogDropTooltipText: "Déplacer ici",
+            movingDialogCloseButtonTitle: 'Close moving dialog',
             dropDownMoveLeftText: 'Déplacer vers la gauche',
             dropDownMoveRightText: 'Déplacer vers la droite',
             dropDownMoveFirstText: 'Déplacer en premier',
@@ -355,6 +356,7 @@ if (!$.ig.Grid) {
             unboundColumnsNotSupported: "ColumnFixing n'est pas pris en charge avec les colonnes indépendantes",
             excelNavigationNotSupportedWithCurrentEditMode: "Le mode de navigation Excel est pris en charge uniquement pour les modes Modification cellule et Modification ligne. Pour prévenir cette erreur, désactivez excelNavigationMode ou bien définissez editMode sur cellule ou ligne.",
             initialFixingNotApplied: "Le verrouillage initial n'a pas pu être appliqué sur les colonnes avec la clé : {0}. Raison : {1}", // {0} is placeholder for columnKey, {1} error message
+            setOptionGridWidthException: 'Incorrect value for option grid width. When there are fixed columns width of the visible area of unfixed column(s) should be greater that or equal to value of minimalVisibleAreaWidth.',
             internalErrors: {
                 none: 'Aucune erreur',
                 notValidIdentifier: "Il n'existe aucune colonne avec l'identifiant spécifié",
