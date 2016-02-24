@@ -44,7 +44,8 @@ namespace Km.AdExpressClientWeb
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/themes/base/base.css",
                       "~/Content/themes/base/theme.css",
-                      "~/Content/bootstrap-select.css"));
+                      "~/Content/bootstrap-select.css",
+                      "~/Content/treegrid.css"));
         }
     }
 }
