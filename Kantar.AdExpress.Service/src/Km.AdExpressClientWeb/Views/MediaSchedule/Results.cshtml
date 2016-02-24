@@ -8,7 +8,10 @@
 @*<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>*@
 @*<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>*@
-
+@*<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+    <link href="~/IgniteUI/css/structure/modules/infragistics.theme.css" rel="stylesheet" />*@
+<link href="http://cdn-na.infragistics.com/igniteui/2015.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+<link href="http://cdn-na.infragistics.com/igniteui/2015.2/latest/css/structure/infragistics.css" rel="stylesheet" />
 <!-- Infragistics Combined Scripts -->
 
 
@@ -19,10 +22,19 @@
             @Html.Partial("NavigationBar", Model.NavigationBar)
         </div>
      </div>
-   
-   
+</div>
+<div class="row">
+    <div>
+        <h1 id="changeColSett" style="cursor:pointer">Result</h1>
+    </div>
+    <div id="grid"></div>
+    <div>&nbsp;</div>
 </div>
 @section Scripts {
+<script src="~/IgniteUI/js/infragistics.loader.js" type="text/javascript"></script>
+<script src="~/IgniteUI/js/infragistics.core.js"></script>
+<script src="~/IgniteUI/js/infragistics.dv.js"></script>
+<script src="~/IgniteUI/js/infragistics.lob.js"></script>
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
 
@@ -64,6 +76,8 @@
                     { headerText: "SUPPORTS", key: "Level", width: "220px", dataType: "string", template: "" },
                     { headerText: "01/01/2016 - 31/01/2016", key: "Period", width: "220px", dataType: "number", template: "" },
                     { headerText: "PDM", key: "Pdm", width: "130px", dataType: "number", template: "" },
+                    { headerText: "Version", key: "Version", width: "130px", dataType: "string", template: "<a href='#'><img border='0' src='/Content/img/picto_plus.gif' /></a>" },
+                    { headerText: "Insertion", key: "Insertion", width: "130px", dataType: "string", template: "<a href='#'><img border='0' src='/Content/img/picto_plus.gif' /></a>" },
 
                     {
                         headerText: "Janvier 2016",
@@ -86,7 +100,11 @@
                                        { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{/if}} ></span>" }
                                    ]
                                }
-                        ]
+                        ],
+                        dataRendered: function (evt, ui) {
+                            ui.owner.element.find("tr td:nth-child(4)").css("text-align", "center");
+                            ui.owner.element.find("tr td:nth-child(5)").css("text-align", "center");
+                        }
                     }
 
             ];
