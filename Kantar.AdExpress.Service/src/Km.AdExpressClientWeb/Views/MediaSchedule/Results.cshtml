@@ -117,8 +117,21 @@
 
 
             $("#changeColSett").click(function () {
+                $.ajax({
+                    url: '@Url.Action("MediaScheduleResult", "MediaSchedule")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null) {
+                            document.location = data.RedirectUrl;
+                        }
+                    }
+                });
 
-                for (var key1 in data[0]) {
+                /*for (var key1 in data[0]) {
 
                     if (data[0][key1].group != null) {
                         cols.push({
@@ -158,7 +171,7 @@
                            pageSize: 10
                        }
                     ]
-                })
+                })*/
             });
 
         });
