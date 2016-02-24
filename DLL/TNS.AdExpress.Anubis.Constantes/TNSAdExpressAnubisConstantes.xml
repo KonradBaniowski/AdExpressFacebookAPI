@@ -159,10 +159,10 @@
             Export des visuels Evaliant (Plug-in Dedoum)
             </summary>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Anubis.Constantes.Result.type.pachet" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Anubis.Constantes.Result.type.apis" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Anubis.Constantes.Result.type.amon" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "F:TNS.AdExpress.Anubis.Constantes.Result.type.ptah" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Anubis.Constantes.Result.type.pachet" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Anubis.Constantes.Result.type.apis" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Anubis.Constantes.Result.type.amon" -->
+        <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Anubis.Constantes.Result.type.ptah" -->
         <member name="T:TNS.AdExpress.Anubis.Constantes.Result.status">
             <summary>
             Statut de la génération du résultat

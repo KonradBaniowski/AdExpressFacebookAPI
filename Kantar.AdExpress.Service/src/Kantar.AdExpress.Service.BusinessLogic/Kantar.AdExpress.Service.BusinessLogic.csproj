@@ -69,6 +69,10 @@
       <Project>{b731e9a2-0dbf-43a6-a89e-6dc27d96ffd4}</Project>
       <Name>TNS.AdExpressI.Classification.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
+      <Project>{8889ed07-01ce-4f3a-a296-3a2c4b21989c}</Project>
+      <Name>TNS.AdExpressI.Date.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
       <Name>TNS.AdExpress</Name>

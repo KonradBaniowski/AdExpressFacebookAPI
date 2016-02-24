@@ -121,28 +121,6 @@
             Interface à implémenté pour un plug-in de l'alerte
             </summary>
         </member>
-        <member name="M:TNS.Ares.IPlugin.GetPluginName">
-            <summary>
-            Obtient le nom du plug-in
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:TNS.Ares.IPlugin.Treatement(System.String,TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
-            <summary>
-            Lance le traitement du résultat
-            </summary>
-            <param name="confifurationFilePath">Chemin de configuration du plug-in</param>
-            <param name="dataSource">Source de données pour charger la session</param>
-            <param name="navSessionId">Identifiant de la session à traiter</param>
-            <remarks>
-            Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
-            </remarks>
-        </member>
-        <member name="M:TNS.Ares.IPlugin.AbortTreatement">
-            <summary>
-            Arrête le traitement du job
-            </summary>
-        </member>
         <member name="E:TNS.Ares.IPlugin.EvtStartWork">
             <summary>
             Lancement du module
@@ -166,6 +144,28 @@
         <member name="E:TNS.Ares.IPlugin.EvtSendReport">
             <summary>
             Envoie des rapports
+            </summary>
+        </member>
+        <member name="M:TNS.Ares.IPlugin.GetPluginName">
+            <summary>
+            Obtient le nom du plug-in
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.Ares.IPlugin.Treatement(System.String,TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Lance le traitement du résultat
+            </summary>
+            <param name="confifurationFilePath">Chemin de configuration du plug-in</param>
+            <param name="dataSource">Source de données pour charger la session</param>
+            <param name="navSessionId">Identifiant de la session à traiter</param>
+            <remarks>
+            Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
+            </remarks>
+        </member>
+        <member name="M:TNS.Ares.IPlugin.AbortTreatement">
+            <summary>
+            Arrête le traitement du job
             </summary>
         </member>
         <member name="T:TNS.Ares.ReportingSystem">
