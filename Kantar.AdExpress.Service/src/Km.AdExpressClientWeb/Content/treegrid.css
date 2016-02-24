@@ -1,0 +1,93 @@
+﻿.orange{
+    background-color:#e26105;
+    padding:-10px;
+    margin:-10px;
+    height:200%;
+    width:1000px;
+    display:block;
+    overflow:auto;
+}
+tr[aria-level="1"] td .orange{
+    background-color: #ff9617;
+}
+tr[aria-level="2"] td .orange{
+    background-color: #ffbb00;
+}
+tr[aria-level="3"] td .orange{
+    background-color: #ffd800;
+}
+
+.black{
+    background-color:#3e3e3e;
+    padding:-10px;
+    margin:-10px;
+    height:200%;
+    width:1000px;
+    display:block;
+    overflow:auto;
+}
+
+.mouth{
+    width:20px;
+    border-collapse: collapse;
+    padding: 0 !important;
+    text-align:center !important;
+}
+
+.ui-widget {
+    font-family: "Segoe UI",Arial,sans-serif;
+    outline: 0;
+    font-size: 1.1em;
+}
+
+.ui-iggrid table tbody td, .ui-iggrid .ui-iggrid-header, .ui-iggrid table th {
+    padding: 0px 4px;
+}
+
+.ui-widget-header{
+    color: #fff;
+}
+
+.ui-iggrid-table {
+    border-collapse: collapse;
+}
+
+tr[aria-level] td{
+
+}
+
+tr[aria-level="0"] td{
+    background-color: #b9b9b9;
+    font-weight:bold;
+    font-size:13px;
+    height:22px;
+}
+
+tr[aria-level="1"] td{
+     background-color: #dbdbdb;
+     font-size:12px;
+     font-weight:bold;
+}
+
+tr[aria-level="2"] td{
+     background-color: #f3f3f3;
+     font-size:12px;
+}
+
+tr[aria-level="3"] td{
+     background-color: #ffffff;
+     font-size:12px;
+}
+
+.ui-iggrid-header.ui-widget-header{
+    background-color:black;
+    border: 1px solid grey;
+    text-align:center;
+    font-weight:bold ;
+}
+
+.ui-iggrid .ui-iggrid-footer, .ui-iggrid .ui-iggrid-toolbar {
+    background-color: transparent !important;
+    border: none !important;
+    color: white !important;
+}

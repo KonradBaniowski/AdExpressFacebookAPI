@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
 
-namespace Km.AdExpressClientWeb.Models
+namespace Km.AdExpressClientWeb.Models.MediaSchedule
 {
     public class MediaSelectionViewModel
     {

@@ -1,61 +1,16 @@
-﻿@model  List<Km.AdExpressClientWeb.Models.MediaPlanNavigationNode>
+﻿
+@model  List<Km.AdExpressClientWeb.Models.MediaSchedule.MediaPlanNavigationNode>
 @{
     ViewBag.Title = "MarketSelection";
 }
-@section Scripts {
-    @*@Scripts.Render("~/bundles/media-selection")*@
-}
+
 <div class="row">
     @*PRESENTATION*@
     @Html.Partial("Presentation")
 
     @*BREADCRUM*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-        <div class="row">
-            <ul class="timeline">
-                @foreach (var navigation in Model)
-                {
-                    if (navigation.IsActive)
-                    {
-                        if (navigation.Id > 1)
-                        {
-                            <li class="tl-item">
-                                <div class="tl-wrap tl-active">
-                                    <div class="tl-content">
-                                    </div>
-                                </div>
-                            </li>
-                        }
-                        <li class="tl-header">
-                            <a id=@(navigation.Description) class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
-                                <i class="fa fa-file-text"></i>
-                            </a>
-                            <p class="lead">@navigation.Title</p>
-                        </li>
-                    }
-                    else
-                    {
-                        if (navigation.Id > 1)
-                        {
-                            <li class="tl-item">
-                                <div class="tl-wrap">
-                                    <div class="tl-content">
-                                    </div>
-                                </div>
-                            </li>
-                        }
-                        <li class="tl-header">
-                            <a id=@(navigation.Description)  class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
-                                <i class="fa fa-file-text"></i>
-                            </a>
-                            <p class="lead">@navigation.Title</p>
-                        </li>
-                    }
-                }
-            </ul>
-
-        </div>
-
+        @Html.Partial("NavigationBar", Model)
     </div>
     @*SEARCH*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 ">

@@ -8,7 +8,10 @@
 @*<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>*@
 @*<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>*@
-
+@*<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+    <link href="~/IgniteUI/css/structure/modules/infragistics.theme.css" rel="stylesheet" />*@
+<link href="http://cdn-na.infragistics.com/igniteui/2015.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+<link href="http://cdn-na.infragistics.com/igniteui/2015.2/latest/css/structure/infragistics.css" rel="stylesheet" />
 <!-- Infragistics Combined Scripts -->
 
 
@@ -16,49 +19,22 @@
     @Html.Partial("Presentation")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
-            <div class="col-xs-1 padder-v margin-b text-left">&nbsp;</div>
-            <div class="col-xs-10 padder-v margin-b text-left">
-                <center>
-                    <ul class="timeline">
-                        @foreach (var navigation in Model.NavigationBar)
-                        {
-                            if (navigation.IsActive)
-                            {
-                                <li class="tl-header">
-                                    <a id=@(navigation.Description) class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
-                                        <i class="fa fa-file-text"></i>
-                                    </a>
-                                    <p class="lead">@navigation.Title</p>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="tl-header">
-                                    <a id=@(navigation.Description) class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
-                                        <i class="fa fa-file-text"></i>
-                                    </a>
-                                    <p class="lead">@navigation.Title</p>
-                                </li>
-                            }
-                            if (navigation.Id < Model.NavigationBar.Count())
-                            {
-                                <li class="tl-item">
-                                    <div class="tl-wrap tl-active">
-                                        <div class="tl-content">
-                                        </div>
-                                    </div>
-                                </li>
-                            }
-                        }
-                    </ul>
-                </center>
-            </div>
+            @Html.Partial("NavigationBar", Model.NavigationBar)
         </div>
      </div>
-   
-   
+</div>
+<div class="row">
+    <div>
+        <h1 id="changeColSett" style="cursor:pointer">Result</h1>
+    </div>
+    <div id="grid"></div>
+    <div>&nbsp;</div>
 </div>
 @section Scripts {
+<script src="~/IgniteUI/js/infragistics.loader.js" type="text/javascript"></script>
+<script src="~/IgniteUI/js/infragistics.core.js"></script>
+<script src="~/IgniteUI/js/infragistics.dv.js"></script>
+<script src="~/IgniteUI/js/infragistics.lob.js"></script>
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
 
@@ -100,6 +76,8 @@
                     { headerText: "SUPPORTS", key: "Level", width: "220px", dataType: "string", template: "" },
                     { headerText: "01/01/2016 - 31/01/2016", key: "Period", width: "220px", dataType: "number", template: "" },
                     { headerText: "PDM", key: "Pdm", width: "130px", dataType: "number", template: "" },
+                    { headerText: "Version", key: "Version", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
+                    { headerText: "Insertion", key: "Insertion", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
 
                     {
                         headerText: "Janvier 2016",
@@ -107,22 +85,32 @@
                              {
                                  headerText: "01",
                                  group: [
-                                     { headerText: "L", key: "j", width: "130px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{/if}} ></span>" }
+                                     { headerText: "L", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
+                                    { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
+                                    { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
+                                    { headerText: "J", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
+                                    { headerText: "V", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
+                                    { headerText: "S", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
+                                    { headerText: "D", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
                                  ]
                              },
                               {
                                   headerText: "02",
                                   group: [
-                                      { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{/if}} ></span>" }
+                                      { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
                                   ]
                               },
                                {
                                    headerText: "03",
                                    group: [
-                                       { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{/if}} ></span>" }
+                                       { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
                                    ]
                                }
-                        ]
+                        ],
+                        dataRendered: function (evt, ui) {
+                            ui.owner.element.find("tr td:nth-child(4)").css("text-align", "center");
+                            ui.owner.element.find("tr td:nth-child(5)").css("text-align", "center");
+                        }
                     }
 
             ];
@@ -134,7 +122,7 @@
                 width: "100%",
                 defaultColumnWidth: 200,
                 avgRowHeight: 60,
-                autoGenerateColumns: true,
+                autoGenerateColumns: true
             });
 
 
@@ -163,6 +151,7 @@
                     }
 
                 }
+
                 $("#grid").igTreeGrid("destroy");
                 $("#grid").igTreeGrid({
                     dataSource: data[1],
@@ -171,15 +160,13 @@
                     autoGenerateColumns: false,
                     columns: cols,
                     features: [
-                   {
-                       name: "MultiColumnHeaders"
-                   },
+                       {
+                           name: "MultiColumnHeaders"
+                       },
                        {
                            name: "Paging",
                            mode: "allLevels",
-                           pageSize: 2,
-                           currentPageIndex: 1
-                         
+                           pageSize: 10
                        }
                     ]
                 })
@@ -188,86 +175,3 @@
         });
     </script>
 }
-
-@*<script>
-        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
-        $(function () {
-            alert("aze")
-            ;
-        });
-
-        //$(function () {
-        //    var data = [];
-        //    data[1] = [
-        //        { "TestH1": 0, "PID": -1, "Level": "Andrew", "Period": "Fuller", "Pdm": "-" },
-        //        { "TestH1": 1, "PID": -1, "Level": "Jonathan", "Period": "Smith", "Pdm": "-" },
-        //        { "TestH1": 2, "PID": -1, "Level": "Nancy", "Period": "Davolio", "Pdm": "-" },
-        //        { "TestH1": 3, "PID": -1, "Level": "Steven", "Period": "Buchanan", "Pdm": "-" },
-        //        // sub of ID 1
-        //        { "TestH1": 4, "PID": 0, "Level": "Janet", "Period": "Leverling", "Pdm": "0" },
-        //        { "TestH1": 5, "PID": 0, "Level": "Laura", "Period": "Callahan", "Pdm": "0" },
-        //        { "TestH1": 6, "PID": 0, "Level": "Margaret", "Period": "Peacock", "Pdm": "0" },
-        //        { "TestH1": 7, "PID": 0, "Level": "Michael", "Period": "Suyama", "Pdm": "0" },
-        //        // sub of ID 4
-        //        { "TestH1": 8, "PID": 4, "Level": "Anne", "Period": "Dodsworth", "Pdm": "4" },
-        //        { "TestH1": 9, "PID": 4, "Level": "Danielle", "Period": "Davis", "Pdm": "4" },
-        //        { "TestH1": 10, "PID": 4, "Level": "Robert", "Period": "King", "Pdm": "4" },
-        //        // sub of ID 2
-        //        { "TestH1": 11, "PID": 2, "Level": "Peter", "Period": "Lewis", "Pdm": "2" },
-        //        { "TestH1": 12, "PID": 2, "Level": "Ryder", "Period": "Zenaida", "Pdm": "2" },
-        //        { "TestH1": 13, "PID": 2, "Level": "Wang", "Period": "Mercedes", "Pdm": "2" },
-        //        // sub of ID 3
-        //        { "TestH1": 14, "PID": 3, "Level": "Theodore", "Period": "Zia", "Pdm": "3" },
-        //        { "TestH1": 15, "PID": 3, "Level": "Lacota", "Period": "Mufutau", "Pdm": "3" },
-        //        // sub of ID 16
-        //        { "TestH1": 16, "PID": 15, "Level": "Jin", "Period": "Elliott", "Pdm": "16" },
-        //        { "TestH1": 17, "PID": 15, "Level": "Armand", "Period": "Ross", "Pdm": "16" },
-        //        { "TestH1": 18, "PID": 15, "Level": "Dane", "Period": "Rodriquez", "Pdm": "16" },
-        //        // sub of ID 19
-        //        { "TestH1": 19, "PID": 18, "Level": "Declan", "Period": "Lester", "Pdm": "19" },
-        //        { "TestH1": 20, "PID": 18, "Level": "Bernard", "Period": "Jarvis", "Pdm": "19" },
-        //        // sub of ID 20
-        //        { "TestH1": 21, "PID": 20, "Level": "Jeremy", "Period": "Donaldson", "Pdm": "20" }
-        //    ];
-
-        //    data[0] = [
-        //        "TestH1",
-        //        "Level",
-        //        "Period"
-        //    ];
-
-
-
-        //    $("#grid").igTreeGrid({
-        //        dataSource: data,
-        //        primaryKey: "TestH1",
-        //        width: "100%",
-        //        defaultColumnWidth: 200,
-        //        avgRowHeight: 60,
-        //        autoGenerateColumns: true
-        //    });
-
-
-
-        //    $("#changeColSett").click(function () {
-
-        //        for (var key1 in data[0]) {
-        //            colType = typeof (data[0][key1]);
-
-        //            cols.push({
-        //                headerText: key1,
-        //                key: key1,
-        //                width: '200px',
-        //                dataType: colType
-        //            })
-        //        }
-        //        $("#grid").igTreeGrid("destroy");
-        //        $("#grid").igTreeGrid({
-        //            dataSource: data[1],
-        //            autoGenerateColumns: false,
-        //            columns: cols
-        //        })
-        //    });
-
-        //});
-    </script>*@

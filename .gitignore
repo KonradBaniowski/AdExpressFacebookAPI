@@ -198,3 +198,9 @@ Thumbs.db
 *.lnk
 *.[Tt][Mm][Pp]
 /Kantar.AdExpress.Service/src/Km.AdExpressClientWeb/Properties/PublishProfiles/*.pubxml
+
+#Exclude adexress xml comments
+TNSAdExpress.xml
+TNSAdExpressConstantes.xml 
+TNSAdExpressWebCore.xml 
+

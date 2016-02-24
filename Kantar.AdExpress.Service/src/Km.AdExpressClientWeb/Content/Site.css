@@ -34,7 +34,7 @@
     display: table;
     padding: 0;
     margin: 0;
-    border-color: #dee5e7;
+    border-color:  white;
     border-style: solid;
     border-width: 0 0 2px 0;
     width: 220px;
@@ -42,7 +42,7 @@
 }
 
 .tl-active {
-    border-color: #ff8c00 !important;
+    border-color: #ff8c00;
 }
 
 .tl-btn-active {
@@ -65,7 +65,7 @@
 }
 
 .btn {
-    font-weight: 500;
+    font-weight: bold;
     border-radius: 2px;
     outline: 0 !important;
     -webkit-transition: all 0.2s ease-in-out 0s;
@@ -185,11 +185,15 @@
 .btn-orange, .btn-orange:hover {
     background-color: #ff8c00;
     color: white;
+    font-weight: bolder;
+    padding: 10px 15px;
 }
 
 .btn-blue, .btn-blue:hover {
     background-color: #00c1ff;
     color: white;
+    font-weight: bolder;
+    padding: 10px 15px;
 }
 
 form[role] input {
@@ -501,13 +505,14 @@ input {
 
 
 .btn-circle {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     text-align: center;
-    padding: 6px 0;
-    font-size: 12px;
+    padding: 5px 0;
+    font-size: 16px;
     line-height: 1.428571429;
-    border-radius: 15px;
+    border-radius: 17.5px;
+    border-width:2px;
 }
 
     .btn-circle.btn-lg {
@@ -1281,47 +1286,36 @@ input[type=checkbox].with-font:focus ~ label
     clear: both;
 }
 
-
-
 /**********************************************************************/
-.timeline {
-    padding: 0;
-    margin: 0;
-    text-align: center;
-}
 
-ul, menu, dir {
-    display: block;
-    list-style-type: disc;
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    -webkit-padding-start: 40px;
-}
-
-.row-sm > div {
-    padding-right: 10px;
-    padding-left: 10px;
-}
 
 .tl-wrap {
-    display: table;
-    padding: 9px;
-    margin: 0;
-    border-color: #dee5e7;
-    border-style: solid;
-    border-width: 0 0 2px 0;
-    width: 220px;
-    vertical-align: super;
+    padding: 11px;
 }
+
+
+.input-group-vertical {
+  margin-bottom: 10px;
+  }
+  .input-group-vertical .form-control{
+    border-radius: 0;
+    padding:25px 25px;
+  }
+  .input-group-vertical .form-group {
+    margin-bottom: 0;
+  }
+  .input-group-vertical .form-group:first-child .form-control {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom:1px solid grey;
+  }
+  .input-group-vertical .form-group:last-child .form-control {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    top: -2px;
+  }
+
+
+
 /******************************************************************/
-.orange{
-    background-color:#ff9617;
-    padding:-10px;
-    margin:-10px;
-    height:200%;
-    width:1000px;
-    display:block;
-    overflow:auto;
-}
+
