@@ -8,9 +8,12 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 {
     public class MarketViewModel
     {
-        public string KeyWord { get; set; }// 893
+        public string KeyWordLbel { get; set; }// 893
         public string KeyWordDescription { get; set; }//phrase under search input 2287
         public string ErrorMessage { get; set; }//930
+        public string KeyWord { get; set; }
+        public string ElementLabel { get; set; }//
+        public string BranchLabel { get; set; }//
         public Dimension Dimension { get; set; }
         public List<UniversBranch> Branches { get; set; }
 
