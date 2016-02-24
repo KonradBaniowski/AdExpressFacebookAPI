@@ -46,6 +46,7 @@
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
     <Compile Include="BusinessService\IApplicationUserManager.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
+    <Compile Include="BusinessService\IMediaSchedule.cs" />
     <Compile Include="BusinessService\IUniverseService.cs" />
     <Compile Include="BusinessService\IMediaService.cs" />
     <Compile Include="BusinessService\IWebSessionService.cs" />
@@ -80,6 +81,14 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0ad4151f-074c-4c7d-9ffc-6de8d186626a}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
+      <Project>{23e7e071-0fb0-43d4-b19d-b964ec3082f6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Contracts\Kantar.AdExpress.Service.Contracts.csproj">
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>
