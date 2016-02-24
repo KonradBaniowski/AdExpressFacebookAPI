@@ -13,9 +13,6 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstFrameWorkResult = TNS.AdExpress.Constantes.FrameWork.Results;
 
-using FctWeb = TNS.AdExpress.Web.Functions;
-using FctExcel = TNS.AdExpress.Web.UI.ExcelWebPage;
-
 using TNS.AdExpressI.MediaSchedule.Exceptions;
 using TNS.AdExpressI.MediaSchedule.Style;
 
@@ -43,6 +40,7 @@ using Aspose.Cells;
 using TNS.AdExpressI.MediaSchedule.Functions;
 using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.WebTheme;
+using TNS.AdExpress.Web.Core.Utilities;
 
 #endregion
 
@@ -191,40 +189,41 @@ namespace TNS.AdExpressI.MediaSchedule
             #endregion
 
             #region Rappel de sélection
-            if (_isExcelReport)
-            {
-                if (_isCreativeDivisionMS)
-                {
-                    t.Append(FctExcel.GetExcelHeaderForCreativeMediaPlan(_session));
-                }
-                else
-                {
-                    if (_module.Id != CstWeb.Module.Name.BILAN_CAMPAGNE)
-                    {
-                        t.Append(FctExcel.GetLogo(_session));
-                        if (VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
-                        {
-                            t.Append(FctExcel.GetExcelHeaderForAdnettrackMediaPlanPopUp(_session, false, Zoom, (int)_session.DetailPeriod));
-                        }
-                        else
-                        {
-                            try
-                            {
-                                t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
-                            }
-                            catch (Exception)
-                            {
-                                t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
-                            }
-                        }
-                    }
-                    else
-                    {
-                        t.Append(FctExcel.GetAppmLogo(_session));
-                        t.Append(FctExcel.GetExcelHeader(_session, GestionWeb.GetWebWord(1474, _session.SiteLanguage)));
-                    }
-                }
-            }
+            // TODO : Commented temporarily for new AdExpress
+            //if (_isExcelReport)
+            //{
+            //    if (_isCreativeDivisionMS)
+            //    {
+            //        t.Append(FctExcel.GetExcelHeaderForCreativeMediaPlan(_session));
+            //    }
+            //    else
+            //    {
+            //        if (_module.Id != CstWeb.Module.Name.BILAN_CAMPAGNE)
+            //        {
+            //            t.Append(FctExcel.GetLogo(_session));
+            //            if (VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
+            //            {
+            //                t.Append(FctExcel.GetExcelHeaderForAdnettrackMediaPlanPopUp(_session, false, Zoom, (int)_session.DetailPeriod));
+            //            }
+            //            else
+            //            {
+            //                try
+            //                {
+            //                    t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            t.Append(FctExcel.GetAppmLogo(_session));
+            //            t.Append(FctExcel.GetExcelHeader(_session, GestionWeb.GetWebWord(1474, _session.SiteLanguage)));
+            //        }
+            //    }
+            //}
             #endregion
 
             GenericDetailLevel detailLevel = GetDetailsLevelSelected();
@@ -254,14 +253,14 @@ namespace TNS.AdExpressI.MediaSchedule
                 if (_allowTotal)
                 {
                     MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
-                    t.AppendFormat("\r\n\t\t<td rowspan={1} >{0}",  TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
+                    t.AppendFormat("\r\n\t\t<td rowspan={1} >{0}", TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern), rowSpanNb);
 
                     int nbtot;
                     if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                        nbtot = FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
+                        nbtot = Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
                     else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                     {
-                        nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Length;
+                        nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Length;
                     }
                     else
                         nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX])).Length;
@@ -287,16 +286,16 @@ namespace TNS.AdExpressI.MediaSchedule
             if (_allowTotal)
             {
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)                    
-                    t.AppendFormat("\r\n\t\t<td rowspan={1} >{0}", TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
+                    t.AppendFormat("\r\n\t\t<td rowspan={1} >{0}", TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern), rowSpanNb);
                 else t.AppendFormat("\r\n\t\t<td rowspan={1} >{0}",GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
 
           
                 int nbtot;
                 if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                    nbtot = FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
+                    nbtot = Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
                 else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                 {
-                    nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
+                    nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                 }
                 else
                     nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, TOTAL_COLUMN_INDEX])).Length;
@@ -464,7 +463,7 @@ namespace TNS.AdExpressI.MediaSchedule
                         if (currentDay.Month != prevPeriod)
                         {
                             if (nbPeriod >= 8)
-                                headers.AppendFormat("<td colspan=\"{0}\" align=center>{1}</td>", nbPeriod, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")));
+                                headers.AppendFormat("<td colspan=\"{0}\" align=center>{1}</td>", nbPeriod, TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")));
                             else
                                 headers.AppendFormat("<td colspan=\"{0}\" align=center>&nbsp;</td>", nbPeriod);
                             nbPeriod = 0;
@@ -482,7 +481,7 @@ namespace TNS.AdExpressI.MediaSchedule
 
                     }
                     if (nbPeriod >= 8)
-                        headers.AppendFormat("<td colspan=\"{0}\" align=center>{1}</td>", nbPeriod, TNS.FrameWork.Convertion.ToHtmlString(FctWeb.Dates.getPeriodTxt(_session, currentDay.ToString("yyyyMM"))));
+                        headers.AppendFormat("<td colspan=\"{0}\" align=center>{1}</td>", nbPeriod, TNS.FrameWork.Convertion.ToHtmlString(TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.ToString("yyyyMM"))));
                     else
                         headers.AppendFormat("<td colspan=\"{0}\"  align=center>&nbsp;</td>", nbPeriod);
 
@@ -757,9 +756,9 @@ namespace TNS.AdExpressI.MediaSchedule
                                             if (_showValues)
                                             {
                                                 if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, FctWeb.Units.ConvertUnitValueToString(((MediaPlanItemIds)data[i, j]).IdsNumber.Value, _session.Unit, fp));
+                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, Units.ConvertUnitValueToString(((MediaPlanItemIds)data[i, j]).IdsNumber.Value, _session.Unit, fp));
                                                 else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
-                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, FctWeb.Units.ConvertUnitValueToString(((MediaPlanItem)data[i, j]).Unit, _session.Unit, fp));
+                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, Units.ConvertUnitValueToString(((MediaPlanItem)data[i, j]).Unit, _session.Unit, fp));
                                                 else
                                                     t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, string.Format(fp, unit.StringFormat, ((MediaPlanItem)data[i, j]).Unit));
                                             }
@@ -795,11 +794,11 @@ namespace TNS.AdExpressI.MediaSchedule
 
             // Release table
             data = null;
-
-            if (_isExcelReport && !_isCreativeDivisionMS)
-            {
-                t.Append(FctExcel.GetFooter(_session));
-            }
+            // TODO : Commented temporarily for new AdExpress
+            //if (_isExcelReport && !_isCreativeDivisionMS)
+            //{
+            //    t.Append(FctExcel.GetFooter(_session));
+            //}
 
             oMediaScheduleData.HTMLCode = t.ToString();
             return oMediaScheduleData;
@@ -967,7 +966,7 @@ namespace TNS.AdExpressI.MediaSchedule
                     {
                         styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow + 1, colTotal);
                     }
-                    int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
+                    int nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                     int nbSpace = (nbtot - 1) / 3;
                     int nbCharTotal = nbtot + nbSpace - 5;
                     nbColTabFirst++;
@@ -1120,7 +1119,7 @@ namespace TNS.AdExpressI.MediaSchedule
                             {
                                 cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
                                 if (nbPeriod >= 8)
-                                    WorkSheet.PutCellValue(excel, cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear1", null, styleExcel);
+                                    WorkSheet.PutCellValue(excel, cells, TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear1", null, styleExcel);
                                 else
                                     WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear1", null, styleExcel);
                                 styleExcel.GetTag("MediaPlanCellYear1").SetStyleExcel(excel, cells, startIndex - 1, nbColTabFirst + nbPeriod);
@@ -1142,7 +1141,7 @@ namespace TNS.AdExpressI.MediaSchedule
 
                         cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
                         if (nbPeriod >= 8)
-                            WorkSheet.PutCellValue(excel, cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
+                            WorkSheet.PutCellValue(excel, cells, TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
                         else
                             WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
 
@@ -1490,7 +1489,7 @@ namespace TNS.AdExpressI.MediaSchedule
                     {
                         if (data[line, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
                             t.AppendFormat("<td >{0}</td>"                               
-                                , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp));//class=\"{0}\"
+                                , Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp));//class=\"{0}\"
                         else
                             t.AppendFormat("<td >&nbsp;</td>");//class=\"{0}\"
                     }
@@ -1504,7 +1503,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 {
                     if (data[line, TOTAL_COLUMN_INDEX] != null)
                         t.AppendFormat("<td>{0}</td>"                          
-                            , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp));
+                            , Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp));
                     else
                         t.AppendFormat("<td>&nbsp;</td>");
                 }
@@ -1538,7 +1537,7 @@ namespace TNS.AdExpressI.MediaSchedule
                         {
                             if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                             {
-                                s = FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Trim();
+                                s = Units.ConvertUnitValueToString(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Trim();
                             }
                             else
                             {
@@ -1561,7 +1560,7 @@ namespace TNS.AdExpressI.MediaSchedule
                     string s = string.Empty;
                     if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                     {
-                        s = FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp).Trim();
+                        s = Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp).Trim();
                     }
                     else
                     {
