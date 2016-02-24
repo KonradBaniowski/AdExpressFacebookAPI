@@ -56,7 +56,7 @@ namespace Kantar.AdExpress.Bootstrapper
 
 
             //DATA
-            builder.RegisterType<AdExpressContext>().AsSelf();
+            builder.RegisterType<AdExpressContext>().AsSelf().InstancePerRequest();
             builder.RegisterType<IdentityContext>().AsSelf();
             builder.RegisterType<AdExpressUnitOfWork>().As<IUnitOfWork>();
             //builder.RegisterType<LoginService>().As<ILoginService>();
