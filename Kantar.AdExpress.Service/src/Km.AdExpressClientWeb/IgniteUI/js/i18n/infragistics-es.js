@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -41,6 +41,7 @@
 			    fieldMismatch: "La siguiente expresión contiene un campo o una condición de filtro no válidos: ",
 			    noSortingFields: "No se ha especificado ningún campo. Debe especificar al menos un campo de ordenación al llamar a sort().",
 			    filteringNoSchema: "No se ha especificado ningún esquema / campo. Debe especificar un esquema con definiciones y tipos de campo para poder filtrar el origen de datos.",
+			    noSaveChanges: "Saving changes was not successful. Server did not return Success object or returned Success:false.",
 			    errorUnexpectedCustomFilterFunction: "Se ha proporcionado un valor inesperado para una función de filtrado personalizado. Se esperaba una función o cadena."
 		    }
 	    });
@@ -48,7 +49,7 @@
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -73,7 +74,11 @@
 			    overview: "Información general",
 			    zoomOut: "Alejar",
 			    zoomIn: "Acercar",
-			    resetZoom: "Restablecer zoom"
+			    resetZoom: "Restablecer zoom",
+			    seriesUnsupportedOption: "the current series type does not support the option: ",
+			    seriesTypeNotLoaded: "the JavaScript file containing the requested series type has not been loaded or the series type is invalid: ",
+			    axisTypeNotLoaded: "the JavaScript file containing the requested axis type has not been loaded or the axis type is invalid: ",
+			    axisUnsupportedOption: "the current axis type does not support the option: "
 		    }
 	    });
 
@@ -81,7 +86,7 @@
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI shared localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI shared localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -106,7 +111,7 @@ if (!$.ig.SharedLocale) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI templating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI templating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -129,7 +134,7 @@ if (!$.ig.SharedLocale) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Barcode localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Barcode localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -184,7 +189,7 @@ if (!$.ig.Barcode) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Combo localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Combo localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -213,7 +218,7 @@ if (!$.ig.Barcode) {
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI Dialog localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Dialog localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -239,7 +244,7 @@ if (!$.ig.Barcode) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Doughnut Chart localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Doughnut Chart localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -262,7 +267,7 @@ if (!$.ig.Barcode) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -321,14 +326,15 @@ if (!$.ig.Barcode) {
 			    invalidDate: "Fecha no válida",
 			    maskMessage: 'Deben rellenarse todas las posiciones requeridas.',
 			    dateMessage: 'Debe introducirse una fecha válida',
-			    centuryThresholdValidValues: "centuryThreshold property shoud be between 0 and 99. The value has been reverted to defaults."
+			    centuryThresholdValidValues: "centuryThreshold property shoud be between 0 and 99. The value has been reverted to defaults.",
+			    noListItemsNoButton: "No spin or dropdown button is rendered because there are no listitems."
 		    }
 	    };
     }
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -653,6 +659,7 @@ if (!$.ig.Grid) {
             movingDialogCaptionText: 'Mover columnas',
             movingDialogDisplayText: 'Mover columnas',
             movingDialogDropTooltipText: "Mover aquí",
+            movingDialogCloseButtonTitle: 'Close moving dialog',
             dropDownMoveLeftText: 'Mover a la izquierda',
             dropDownMoveRightText: 'Mover a la derecha',
             dropDownMoveFirstText: 'Mover primero',
@@ -684,6 +691,7 @@ if (!$.ig.Grid) {
             unboundColumnsNotSupported: 'ColumnFixing no se admite con columnas sueltas',
             excelNavigationNotSupportedWithCurrentEditMode: "El modo de navegación Excel solo se admite en los modos de edición de celda o de edición de fila. Para evitar este error, desactive excelNavigationMode o establezca editMode en celda o fila.",
             initialFixingNotApplied: 'No se ha podido aplicar la acción de fijado inicial en la columna con clave: {0}. Motivo: {1}', // {0} is placeholder for columnKey, {1} error message
+            setOptionGridWidthException: 'Incorrect value for option grid width. When there are fixed columns width of the visible area of unfixed column(s) should be greater that or equal to value of minimalVisibleAreaWidth.',
             internalErrors: {
                 none: 'No hay error',
                 notValidIdentifier: 'No existe ninguna columna con el identificador especificado',
@@ -731,7 +739,7 @@ if (!$.ig.Grid) {
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI HTML Editor localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI HTML Editor localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -865,7 +873,7 @@ if (!$.ig.HtmlEditor) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Notifier localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Notifier localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -891,7 +899,7 @@ if (!$.ig.Notifier) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Shared localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Shared localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -921,7 +929,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Data Selector localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Data Selector localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -955,7 +963,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -986,7 +994,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Popover localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Popover localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1011,7 +1019,7 @@ if (!$.ig.Popover) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Rating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Rating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1034,7 +1042,7 @@ if (!$.ig.Popover) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Splitter localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Splitter localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1059,7 +1067,7 @@ if (!$.ig.Splitter) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tile Manager localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tile Manager localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1084,7 +1092,7 @@ if (!$.ig.TileManager) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Toolbar localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Toolbar localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1110,7 +1118,7 @@ if (!$.ig.Toolbar) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tree localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tree localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1148,7 +1156,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tree Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tree Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1197,7 +1205,7 @@ if (!$.ig.Toolbar) {
 	}
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Upload localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Upload localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1264,7 +1272,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Validator localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Validator localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1305,7 +1313,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Video Player localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Video Player localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1363,7 +1371,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Zoombar localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Zoombar localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1390,7 +1398,7 @@ if (!$.ig.Zoombar) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI common utilities localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common utilities localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *

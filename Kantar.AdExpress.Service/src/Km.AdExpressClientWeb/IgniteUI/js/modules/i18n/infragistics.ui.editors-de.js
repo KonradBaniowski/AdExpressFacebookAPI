@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -58,7 +58,8 @@
                 invalidDate: "Ungültiges Datum",
                 maskMessage: 'Alle erforderlichen Positionen sollten ausgefüllt werden',
                 dateMessage: 'Ein gültiges Datum sollte eingegeben werden',
-                centuryThresholdValidValues: "centuryThreshold property shoud be between 0 and 99. The value has been reverted to defaults."
+                centuryThresholdValidValues: "centuryThreshold property shoud be between 0 and 99. The value has been reverted to defaults.",
+                noListItemsNoButton: "No spin or dropdown button is rendered because there are no listitems."
 		    }
 	    };
     }

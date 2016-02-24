@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -324,6 +324,7 @@
                 movingDialogCaptionText: 'Spalten verschieben',
                 movingDialogDisplayText: 'Spalten verschieben',
                 movingDialogDropTooltipText: "Hierher verschieben",
+                movingDialogCloseButtonTitle: 'Close moving dialog',
                 dropDownMoveLeftText: 'Nach links verschieben',
                 dropDownMoveRightText: 'Nach rechts verschieben',
                 dropDownMoveFirstText: 'Erste verschieben',
@@ -355,6 +356,7 @@
                 unboundColumnsNotSupported: 'Bei ungebundenen Spalten wird ColumnFixing nicht unterstützt',
                 excelNavigationNotSupportedWithCurrentEditMode: "Der Excel-Navigationsmodus wird nur für die Modi zur Bearbeitung der Zellen und der Zeilen unterstützt. Um diesen Fehler zu verhindern deaktivieren Sie excelNavigationMode oder stellen Sie den editMode auf Zelle oder Zeile ein.",
                 initialFixingNotApplied: 'Das anfängliche Fixieren konnte bei der Spalte mit folgendem Schlüssel nicht angewendet werden: {0}. Grund: {1}', // {0} is placeholder for columnKey, {1} error message
+                setOptionGridWidthException: 'Incorrect value for option grid width. When there are fixed columns width of the visible area of unfixed column(s) should be greater that or equal to value of minimalVisibleAreaWidth.',
                 internalErrors: {
                     none: 'Kein Fehler',
                     notValidIdentifier: 'Es gibt keine Spalte mit dem angegebenen Bezeichner',

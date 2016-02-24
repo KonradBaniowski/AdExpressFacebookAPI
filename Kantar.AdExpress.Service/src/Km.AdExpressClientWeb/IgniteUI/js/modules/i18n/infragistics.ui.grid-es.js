@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -324,6 +324,7 @@ if (!$.ig.Grid) {
             movingDialogCaptionText: 'Mover columnas',
             movingDialogDisplayText: 'Mover columnas',
             movingDialogDropTooltipText: "Mover aquí",
+            movingDialogCloseButtonTitle: 'Close moving dialog',
             dropDownMoveLeftText: 'Mover a la izquierda',
             dropDownMoveRightText: 'Mover a la derecha',
             dropDownMoveFirstText: 'Mover primero',
@@ -355,6 +356,7 @@ if (!$.ig.Grid) {
             unboundColumnsNotSupported: 'ColumnFixing no se admite con columnas sueltas',
             excelNavigationNotSupportedWithCurrentEditMode: "El modo de navegación Excel solo se admite en los modos de edición de celda o de edición de fila. Para evitar este error, desactive excelNavigationMode o establezca editMode en celda o fila.",
             initialFixingNotApplied: 'No se ha podido aplicar la acción de fijado inicial en la columna con clave: {0}. Motivo: {1}', // {0} is placeholder for columnKey, {1} error message
+            setOptionGridWidthException: 'Incorrect value for option grid width. When there are fixed columns width of the visible area of unfixed column(s) should be greater that or equal to value of minimalVisibleAreaWidth.',
             internalErrors: {
                 none: 'No hay error',
                 notValidIdentifier: 'No existe ninguna columna con el identificador especificado',

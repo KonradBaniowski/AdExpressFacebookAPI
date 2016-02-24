@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -40,9 +40,10 @@
 			    spinDeltaIsOfTypeNumber: "異なる spinDelta タイプが必要です。正の数を入力してください。",
 			    spinDeltaCouldntBeNegative: "指定した spinDelta オプションは負数にできません。正の数を入力してください。",
 			    spinDeltaContainsExceedsMaxDecimals: "spinDelta に使用可能な最大フラクションは {0} に設定されています。MaxDecimals を変更するか値を小さくしてください。",
-			    spinDeltaIncorrectFloatingPoint: '浮動小数点 spinDelta に異なる構成を使用してください。エディターの dataMode を "double" または "float" に設定してください。',
+			    spinDeltaIncorrectFloatingPoint: '浮動小数点 spinDelta に異なる構成を使用してください。エディターの dataMode を "double" または "float" に設定するか、spinDelta を integer に設定してください。',
 			    notEditableOptionByInit: "このオプションは初期化の後は編集できません。値は初期化後に設定してください。",
 			    numericEditorNoSuchMethod: "数値エディターはこのメソッドをサポートしません。",
+			    numericEditorNoSuchOption: "数値エディターはこのオプションをサポートしません。",
 			    displayFactorIsOfTypeNumber: "displayFactor に異なる値を使用してください。値は数値として 1 または 100 に設定する必要があります。",
 			    displayFactorAllowedValue: "displayFactor に異なる値を使用してください。値は数値として 1 または 100 に設定する必要があります。",
 			    instantiateCheckBoxErrMsg: "igCheckboxEditor を指定した要素にインスタンス化できません。INPUT、SPAN、または DIV 要素を使用してください。",
@@ -58,7 +59,8 @@
 			    invalidDate: "無効な日付",
 			    maskMessage: 'すべての必須文字を入力してください',
 			    dateMessage: '有効な日付を入力してください',
-			    centuryThresholdValidValues: "centuryThreshold プロパティは 0 ~ 99 である必要があります。値はデフォルトに戻されました。"
+			    centuryThresholdValidValues: "centuryThreshold プロパティは 0 ~ 99 である必要があります。値はデフォルトに戻されました。",
+			    noListItemsNoButton: "リスト項目がないため、スピンまたはドロップダウン ボタンは描画されません。"
 		    }
 	    };
     }

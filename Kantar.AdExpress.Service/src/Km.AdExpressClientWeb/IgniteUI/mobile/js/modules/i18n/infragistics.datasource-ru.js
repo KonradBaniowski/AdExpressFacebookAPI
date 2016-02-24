@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -40,6 +40,7 @@
 			    fieldMismatch: "Следующее выражение содержит ошибочное поле или условие фильтровки: ",
 			    noSortingFields: "Поля не установлены. Необходимо установить хотя бы одно поле для сортировки перед использованием функции sort().",
 			    filteringNoSchema: "Схема/поля не установлены. Необходимо установить схему с определением полей и типов перед фильтровкой источника данных.",
+			    noSaveChanges: "Saving changes was not successful. Server did not return Success object or returned Success:false.",
 			    errorUnexpectedCustomFilterFunction: "Для пользовательской функции фильтрации введено неожиданное значение. Ожидается функция или строка."
 		    }
 	    });

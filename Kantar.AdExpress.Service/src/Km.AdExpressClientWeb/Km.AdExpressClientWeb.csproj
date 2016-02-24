@@ -706,6 +706,7 @@
     <Content Include="IgniteUI\css\themes\ios\images\ui-icons_fd472b_256x240.png" />
     <Content Include="IgniteUI\css\themes\ios\images\ui-icons_ffffff_256x240.png" />
     <Content Include="IgniteUI\css\themes\ios\infragistics.theme.css" />
+    <Content Include="IgniteUI\css\themes\kantar\infragistics.theme.css" />
     <Content Include="IgniteUI\css\themes\metro\images\icon_sprite.png" />
     <Content Include="IgniteUI\css\themes\metro\images\igGrid\filter-icons-858585.png" />
     <Content Include="IgniteUI\css\themes\metro\images\igHtmlEditor\html-editor-sprite.png" />

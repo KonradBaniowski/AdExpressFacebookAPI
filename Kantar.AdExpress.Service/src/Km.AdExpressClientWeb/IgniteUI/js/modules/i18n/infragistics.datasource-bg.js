@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -40,6 +40,7 @@
 			    fieldMismatch: "Изразът съдържа невалидно поле или условие за филтриране: ",
 			    noSortingFields: "Моля задайте поне едно поле при извикване на sort().",
 			    filteringNoSchema: "Нямате зададени schema / fields. Нужно е да зададете schema с field дефиниция и типове, за да можете да филтрирате източника на данни.",
+			    noSaveChanges: "Saving changes was not successful. Server did not return Success object or returned Success:false.",
 			    errorUnexpectedCustomFilterFunction: "Беше подадена неочаквана стойност за създадената от потребителя функция за филтриране Очаква се функция или низ."
 		    }
 	    });

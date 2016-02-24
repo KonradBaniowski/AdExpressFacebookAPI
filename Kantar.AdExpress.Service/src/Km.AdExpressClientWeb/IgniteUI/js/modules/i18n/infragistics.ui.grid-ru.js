@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -324,6 +324,7 @@ if (!$.ig.Grid) {
             movingDialogCaptionText: 'Переместить колонки',
             movingDialogDisplayText: 'Переместить колонки',
             movingDialogDropTooltipText: "Переместить сюда",
+            movingDialogCloseButtonTitle: 'Close moving dialog',
             dropDownMoveLeftText: 'Переместить влево',
             dropDownMoveRightText: 'Переместить вправо',
             dropDownMoveFirstText: 'Переместить в начало',
@@ -355,6 +356,7 @@ if (!$.ig.Grid) {
             unboundColumnsNotSupported: 'Опция ColumnFixing не поддерживается с несвязанными столбцами',
             excelNavigationNotSupportedWithCurrentEditMode: "Режим навигации Excel поддерживается только для режимов редактирования ячейки и редактирования строки. Для предотвращения этой ошибки отключите опцию excelNavigationMode либо установите с помощью параметра editMode режим редактирования ячейки или строки.",
             initialFixingNotApplied: 'Исходная фиксация не может быть применена к столбцу с ключом: {0}. Причина: {1}', // {0} is placeholder for columnKey, {1} error message
+            setOptionGridWidthException: 'Incorrect value for option grid width. When there are fixed columns width of the visible area of unfixed column(s) should be greater that or equal to value of minimalVisibleAreaWidth.',
             internalErrors: {
                 none: 'Ошибки отсутствуют',
                 notValidIdentifier: 'Столбец с указанным идентификатором отсутствует',

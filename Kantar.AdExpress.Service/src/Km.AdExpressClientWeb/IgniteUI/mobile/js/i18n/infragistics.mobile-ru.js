@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.MobileUI ListView localization resources 15.2.20152.1027
+* Infragistics.Web.MobileUI ListView localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -48,7 +48,7 @@ if (!$.ig.mobileListView) {
 
 }
 /*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -89,6 +89,7 @@ if (!$.ig.mobileListView) {
 			    fieldMismatch: "Следующее выражение содержит ошибочное поле или условие фильтровки: ",
 			    noSortingFields: "Поля не установлены. Необходимо установить хотя бы одно поле для сортировки перед использованием функции sort().",
 			    filteringNoSchema: "Схема/поля не установлены. Необходимо установить схему с определением полей и типов перед фильтровкой источника данных.",
+			    noSaveChanges: "Saving changes was not successful. Server did not return Success object or returned Success:false.",
 			    errorUnexpectedCustomFilterFunction: "Для пользовательской функции фильтрации введено неожиданное значение. Ожидается функция или строка."
 		    }
 	    });
@@ -96,7 +97,7 @@ if (!$.ig.mobileListView) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -121,14 +122,18 @@ if (!$.ig.mobileListView) {
 			    overview: "Обзор",
 			    zoomOut: "Уменьшить",
 			    zoomIn: "Увеличить",
-			    resetZoom: "Сброс увеличения"
+			    resetZoom: "Сброс увеличения",
+			    seriesUnsupportedOption: "the current series type does not support the option: ",
+			    seriesTypeNotLoaded: "the JavaScript file containing the requested series type has not been loaded or the series type is invalid: ",
+			    axisTypeNotLoaded: "the JavaScript file containing the requested axis type has not been loaded or the axis type is invalid: ",
+			    axisUnsupportedOption: "the current axis type does not support the option: "
 		    }
 	    });
 
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI templating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI templating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *

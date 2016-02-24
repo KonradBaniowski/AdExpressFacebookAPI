@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -40,6 +40,7 @@
 			    fieldMismatch: "Изразът съдържа невалидно поле или условие за филтриране: ",
 			    noSortingFields: "Моля задайте поне едно поле при извикване на sort().",
 			    filteringNoSchema: "Нямате зададени schema / fields. Нужно е да зададете schema с field дефиниция и типове, за да можете да филтрирате източника на данни.",
+			    noSaveChanges: "Saving changes was not successful. Server did not return Success object or returned Success:false.",
 			    errorUnexpectedCustomFilterFunction: "Беше подадена неочаквана стойност за създадената от потребителя функция за филтриране Очаква се функция или низ."
 		    }
 	    });
@@ -47,7 +48,7 @@
     }
 })(jQuery);
 /*
-* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common DV widget localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -72,14 +73,18 @@
 			    overview: "Преглед",
 			    zoomOut: "Отдалечи",
 			    zoomIn: "Увеличи",
-			    resetZoom: "Рестартирай увеличението"
+			    resetZoom: "Рестартирай увеличението",
+			    seriesUnsupportedOption: "the current series type does not support the option: ",
+			    seriesTypeNotLoaded: "the JavaScript file containing the requested series type has not been loaded or the series type is invalid: ",
+			    axisTypeNotLoaded: "the JavaScript file containing the requested axis type has not been loaded or the axis type is invalid: ",
+			    axisUnsupportedOption: "the current axis type does not support the option: "
 		    }
 	    });
 
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI shared localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI shared localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -104,7 +109,7 @@ if (!$.ig.SharedLocale) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI templating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI templating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -127,7 +132,7 @@ if (!$.ig.SharedLocale) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Barcode localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Barcode localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -182,7 +187,7 @@ if (!$.ig.SharedLocale) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Combo localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Combo localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -211,7 +216,7 @@ if (!$.ig.SharedLocale) {
 })(jQuery);
 
 /*!@license
-* Infragistics.Web.ClientUI Dialog localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Dialog localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -237,7 +242,7 @@ if (!$.ig.SharedLocale) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Doughnut Chart localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Doughnut Chart localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -260,7 +265,7 @@ if (!$.ig.SharedLocale) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Editors localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -319,13 +324,14 @@ if (!$.ig.SharedLocale) {
 			    invalidDate: "Невалидна дата",
 			    maskMessage: 'Всички задължителни позиции трябва да бъдат попълнени.',
 			    dateMessage: 'Трябва да бъде въведена валидна дата.',
-			    centuryThresholdValidValues: "centuryThreshold property shoud be between 0 and 99. The value has been reverted to defaults."
+			    centuryThresholdValidValues: "centuryThreshold property shoud be between 0 and 99. The value has been reverted to defaults.",
+			    noListItemsNoButton: "No spin or dropdown button is rendered because there are no listitems."
 		    }
 	    };
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -635,7 +641,7 @@ if (!$.ig.Grid) {
             columnNotFound: "Зададения ключ на колона не беше намерен във видимата колекция от колони или зададеният индекс е бил извън границите.",
             rowOrColumnSpecifiedOutOfView: "В момента не е възможна промяната на зададения ред или колона. Те трябва да бъдат видими на конкретната страница и във виртуализационната рамка.",
             editingInProgress: "В момента се променя ред или клетка. Не може да се започне нова процедура по промяна ако сегашната не е завършена.",
-            undefinedCellValue: 'Undefined cannot be set as a cell value.'
+        	undefinedCellValue: 'Undefined cannot be set as a cell value.'
         }
     });
 
@@ -650,6 +656,7 @@ if (!$.ig.Grid) {
             movingDialogCaptionText: 'Премести колоните',
             movingDialogDisplayText: 'Премести колоните',
             movingDialogDropTooltipText: 'Премести тук',
+            movingDialogCloseButtonTitle: 'Close moving dialog',
             dropDownMoveLeftText: 'Премести наляво',
             dropDownMoveRightText: 'Премести надясно',
             dropDownMoveFirstText: 'Премести в началото',
@@ -679,7 +686,7 @@ if (!$.ig.Grid) {
             defaultColumnWidthInPercentageNotSupported: "ColumnFixing изисква различна конфигурация. Стандартната ширина на колоната трябва да бъде зададена като число в пиксели.",
             columnsWidthShouldBeSetInPixels: 'ColumnFixing изисква други настройки на ширината на колоната. Ширината на колоната с ключ {key} трябва да бъде зададена в пиксели.',
             unboundColumnsNotSupported: 'ColumnFixing изисква различна конфигурация. UnboundColumns трябва да бъде изключено.',
-            excelNavigationNotSupportedWithCurrentEditMode: 'ExcelNavigation изисква различна конфигурация. editMode трябва да бъде зададен като "cell" или "row".',
+            excelNavigationNotSupportedWithCurrentEditMode: "Режима Excel Navigation се поддържа само за режимите Cell Edit и Row Edit. За да избегнете тази грешка или изключете excelNavigationMode, или настройте editMode на клетки или редове.",
             initialFixingNotApplied: 'Първоначалното фиксиране не може да бъде приложено за колена с ключ: {0}. Причина: {1}', // {0} is placeholder for columnKey, {1} error message
             internalErrors: {
                 none: 'Вие успешно конфигурирахте мрежата!',
@@ -727,7 +734,7 @@ if (!$.ig.Grid) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI HTML Editor localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI HTML Editor localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -861,7 +868,7 @@ if (!$.ig.HtmlEditor) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Notifier localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Notifier localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -887,7 +894,7 @@ if (!$.ig.Notifier) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Shared localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Shared localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -917,7 +924,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Data Selector localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Data Selector localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -951,7 +958,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Pivot Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Pivot Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -982,7 +989,7 @@ if (!$.ig.Notifier) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Popover localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Popover localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1007,7 +1014,7 @@ if (!$.ig.Popover) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Rating localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Rating localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1030,7 +1037,7 @@ if (!$.ig.Popover) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Splitter localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Splitter localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1055,7 +1062,7 @@ if (!$.ig.Popover) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tile Manager localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tile Manager localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1080,7 +1087,7 @@ if (!$.ig.TileManager) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Toolbar localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Toolbar localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1106,7 +1113,7 @@ if (!$.ig.Toolbar) {
 }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tree localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tree localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1144,7 +1151,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Tree Grid localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Tree Grid localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1193,7 +1200,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Upload localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Upload localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1260,7 +1267,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Validator localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Validator localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1301,7 +1308,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Video Player localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Video Player localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1359,7 +1366,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*!@license
-* Infragistics.Web.ClientUI Zoombar localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI Zoombar localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -1386,7 +1393,7 @@ if (!$.ig.Toolbar) {
     }
 })(jQuery);
 /*
-* Infragistics.Web.ClientUI common utilities localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI common utilities localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *

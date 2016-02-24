@@ -104,6 +104,7 @@
 .ui-chart-area-fill-opacity{opacity:.7}
 .ui-chart-aligned-gridlines{visibility:visible}
 .ui-chart-axis-stroke,.ui-chart-axis-major-line{border-color:transparent}
+.ui-chart-legend{overflow:auto}
 .ui-igColorPicker{padding:5px 0}
 .ui-igColorPicker{width:200px}
 .ui-igColorPicker .igColorPicker-table,.ui-igtoolbar .igColorPicker-table igColorPicker-row,.igColorPicker-table igColorPicker-row{padding:0;margin:0;list-style:none outside none;line-height:1%}
@@ -560,8 +561,8 @@ td.ui-iggrid-addrow{text-align:left;position:relative;cursor:default;font-weight
 .ig-combo-icon-container a{position:absolute;top:50%;margin-top:-8px;right:.2em}
 .ui-iggrid th.ui-iggrid-multiheader-cell{text-align:center}
 .ui-iggrid-fixedcontainer{background-color:#f3f3f3;border-bottom:1px solid #DCDCDC}
-.ui-iggrid-fixedcontainer-left{border-right:2px solid #555}
-.ui-iggrid-fixedcontainer-right{border-left:2px solid #555}
+.ui-iggrid-fixedcontainer-left{border-right:2px solid #555!important}
+.ui-iggrid-fixedcontainer-right{border-left:2px solid #555!important}
 .ui-iggrid-fixcolumn-headerbuttoncontainer{float:right}
 .ui-iggrid-fixedcontainer-right .ui-iggrid-table>tbody>tr>td:last-child,.ui-iggrid .ui-iggrid-table.ui-iggrid-unfixed-table-left>tbody>tr>td:first-child{border-left-width:0!important}
 .ui-iggrid-fixedcontainer-left .ui-iggrid-table>tbody>tr>td:last-child,.ui-iggrid .ui-iggrid-table.ui-iggrid-unfixed-table-right>tbody>tr>td:first-child{border-right-width:0!important}

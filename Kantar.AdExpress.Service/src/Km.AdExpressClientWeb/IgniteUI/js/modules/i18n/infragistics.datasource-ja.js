@@ -1,5 +1,5 @@
 ﻿/*!@license
-* Infragistics.Web.ClientUI data source localization resources 15.2.20152.1027
+* Infragistics.Web.ClientUI data source localization resources 15.2.20152.2081
 *
 * Copyright (c) 2011-2015 Infragistics Inc.
 *
@@ -39,6 +39,7 @@
 			    fieldMismatch: "この式で無効なフィールドまたはフィルター条件があります:  ",
 			    noSortingFields: "フィールドが指定されていません。sort() を呼び出すときに、並べ替えるフィールドを 1 つ以上を指定する必要があります。",
 			    filteringNoSchema: "スキーマまたはフィールドが指定されていません。データ ソースをフィルターするには、フィールド定義および型を含むスキーマを指定する必要があります。",
+			    noSaveChanges: "変更の保存に失敗しました。サーバーが Success オブジェクトを返さなかったか Success:false を返しました。",
 			    errorUnexpectedCustomFilterFunction: "カスタム フィルター関数で予期しない値が提供されました。関数または文字列が必要です。"
 		    }
 	    });
