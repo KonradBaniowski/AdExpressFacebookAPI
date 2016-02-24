@@ -452,84 +452,6 @@
              <author>Guillaume.Ragneau</author>
              <since>lundi 13 août 2007 11:24:28</since>
         </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer">
-            <summary>
-             Creative comparer
-             </summary>
-             <author>Guillaume.Ragneau</author>
-             <since>lundi 13 août 2007 11:42:23</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer._caption">
-            <summary>
-            Filter Caption
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer._captionId">
-            <summary>
-            Filter Caption Id (used to display diffent captions depending on language
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer._id">
-            <summary>
-            Filter ID
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer._sort">
-            <summary>
-            Sort order
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.#ctor(System.String)">
-            <summary>
-            Default Constructor
-            </summary>
-            <param name="caption">Comparer Caption</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.#ctor(System.Int32)">
-            <summary>
-            Default Constructor
-            </summary>
-            <param name="caption">Comparer Caption</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.GetCaption">
-            <summary>
-            Get Filter Caption
-            </summary>
-            <returns>Filter Caption</returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.GetCaptionId">
-            <summary>
-            Get Filter Caption Id
-            </summary>
-            <returns>Filter Caption</returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.GetId">
-            <summary>
-            Get Filter Id
-            </summary>
-            <returns>Filter Id</returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.SetId(System.Int32)">
-            <summary>
-            Set Comparer Id
-            </summary>
-            <param name="id">Id of the comparer</param>
-            <returns></returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.SetOrder(TNS.FrameWork.WebResultUI.TableControl.SortOrder)">
-            <summary>
-            Set Sort Order
-            </summary>
-            <param name="sort">Sort Order</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.GetSortOrder">
-            <summary>
-            Get Sort Order
-            </summary>
-            <returns>Sort Order</returns>
-        </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.Compare(TNS.FrameWork.WebResultUI.TableControl.ITableElement,TNS.FrameWork.WebResultUI.TableControl.ITableElement)" -->
-        <!-- Commentaire XML incorrect ignoré pour le membre "M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)" -->
         <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdvertiserComparer.#ctor(System.String)">
             <summary>
             Default Constructor
@@ -712,6 +634,168 @@
             <param name="y">Second creative item to compare</param>
             <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
         </member>
+        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdNetTrackFormatComparer">
+            <summary>
+             Creative AdNetTrack Format Comparer
+             </summary>
+             <author>Guillaume.Ragneau</author>
+             <since>lundi 10 septembre 2007 11:24:28</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdNetTrackFormatComparer.#ctor(System.String)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="caption">AdNetTrack Format Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdNetTrackFormatComparer.#ctor(System.Int32)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="caption">AdNetTrack Format Comparer Caption ID</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdNetTrackFormatComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+            <summary>
+            Compare two CreativeItem AdNetTrack Formats
+            </summary>
+            <param name="x">First creative item to compare</param>
+            <param name="y">Second creative item to compare</param>
+            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.TVDurationComparer">
+            <summary>
+             Creative TV Duration Comparer
+             </summary>
+             <author>Guillaume.Ragneau</author>
+             <since>lundi 20 septembre 2007 11:24:28</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.TVDurationComparer.#ctor(System.String)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="caption">Product Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.TVDurationComparer.#ctor(System.Int32)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="captionId">Product Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.TVDurationComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+            <summary>
+            Compare two CreativeItem products
+            </summary>
+            <param name="x">First creative item to compare</param>
+            <param name="y">Second creative item to compare</param>
+            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.RadioDurationComparer">
+            <summary>
+             Creative TV Duration Comparer
+             </summary>
+             <author>Guillaume.Ragneau</author>
+             <since>lundi 20 septembre 2007 11:24:28</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.RadioDurationComparer.#ctor(System.String)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="caption">Product Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.RadioDurationComparer.#ctor(System.Int32)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="captionId">Product Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.RadioDurationComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+            <summary>
+            Compare two CreativeItem products
+            </summary>
+            <param name="x">First creative item to compare</param>
+            <param name="y">Second creative item to compare</param>
+            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.SupportComparer">
+            <summary>
+             Creative Support Comparer
+             </summary>
+             <author>Guillaume.Ragneau</author>
+             <since>lundi 20 septembre 2007 11:24:28</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.SupportComparer.#ctor(System.String)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="caption">Support Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.SupportComparer.#ctor(System.Int32)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="captionId">Product Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.SupportComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+            <summary>
+            Compare two CreativeItem Supports
+            </summary>
+            <param name="x">First creative item to compare</param>
+            <param name="y">Second creative item to compare</param>
+            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.ObjectNumberComparer">
+            <summary>
+             Creative Object Number Comparer
+             </summary>
+             <author>Guillaume.Ragneau</author>
+             <since>lundi 20 septembre 2007 11:24:28</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.ObjectNumberComparer.#ctor(System.String)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="caption">Object Number Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.ObjectNumberComparer.#ctor(System.Int32)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="captionId">Object Number Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.ObjectNumberComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+            <summary>
+            Compare two CreativeItem Object Numbers
+            </summary>
+            <param name="x">First creative item to compare</param>
+            <param name="y">Second creative item to compare</param>
+            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.PageNumberComparer">
+            <summary>
+             Creative Page Number Comparer
+             </summary>
+             <author>Guillaume.Ragneau</author>
+             <since>lundi 10 septembre 2007 11:24:28</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.PageNumberComparer.#ctor(System.String)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="caption">Page Number Comparer Caption</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.PageNumberComparer.#ctor(System.Int32)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="caption">Page Number Comparer Caption ID</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.PageNumberComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+            <summary>
+            Compare two CreativeItem Page Numbers
+            </summary>
+            <param name="x">First creative item to compare</param>
+            <param name="y">Second creative item to compare</param>
+            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+        </member>
         <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativeInstore">
             <summary>
              CreativeItem provides information for the display of a outdoor creative
@@ -719,173 +803,6 @@
               <author>G Ragneau</author>
               <since>09/08/2007</since>
               <stereotype>entity</stereotype>
-        </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem">
-            <summary>
-             CreativeItem provides information for the display of a creative
-             </summary>
-              <author>G Ragneau</author>
-              <since>09/08/2007</since>
-              <stereotype>entity</stereotype>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._id">
-            <summary>Version Id</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._path">
-            <summary>Version path</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._advertiser">
-            <summary>Annonceur</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._product">
-             <summary>Produit</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._group">
-             <summary>groupe de produit</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._Budget">
-            <summary>
-            Creative budget
-            </summary>
-            <author>Guillaume.Ragneau</author>
-            <since>lundi 13 août 2007</since>		
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._mediaNb">
-            <summary>
-            Number of active media
-            </summary>
-            <author>Guillaume.Ragneau</author>
-            <since>mardi 20 août 2007</since>		
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._insertNb">
-             <summary>
-             Number of insertion of the creative
-             </summary>
-            <author>Guillaume.Ragneau</author>
-            <since>mardi 20 août 2007</since>		
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._adressId">
-            <summary>
-            Adresse pour le GAD
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._session">
-            <summary>
-            Web Session
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._showProduct">
-            <summary>
-            Determine if show product level
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._vehicleId">
-            <summary>
-            Media type Id
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.#ctor(System.Int64)">
-            <summary>Constructor</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Render(System.Text.StringBuilder)">
-            <summary>
-            Render Table Element
-            </summary>
-            <param name="output">Rendered code output</param>
-            <author>Guillaume.Ragneau</author>
-            <since>mardi 14 août 2007</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Render(System.Text.StringBuilder,System.String)">
-            <summary>
-            Render Table Element
-            </summary>
-            <param name="output">Rendered code output</param>
-            <param name="cssStyle">Css Style of the element</param>
-            <author>Guillaume.Ragneau</author>
-            <since>mardi 14 août 2007</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.GetInstance(System.Data.DataRow,TNS.AdExpress.Web.Core.Sessions.WebSession)">
-            <summary>
-            Build instanc of CreativeRadio using data containded in row
-            </summary>
-            <param name="row">Data container</param>
-            <param name="session">Web Session</param>
-            <returns>New CreativeItem Instance</returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.FieldInstance(System.Data.DataRow,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
-            <summary>
-            Fill instance with data
-            </summary>
-            <param name="row">Data Container</param>
-            <param name="item">item to fill</param>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Id">
-            <summary>Get / Set Id Version</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Path">
-            <summary>Get / Set Version Path</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Advertiser">
-            <summary>Get / Set Annonceur</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Product">
-            <summary>Get / Set Produit</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Group">
-            <summary>Get / Set groupe de produit</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Budget">
-            <summary>
-            Get / Set Budget
-            </summary>
-            <author>Guillaume.Ragneau</author>
-            <since>lundi 13 août 2007</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.MediaNb">
-            <summary>
-             Get / Set Number of active media
-            </summary>
-            <author>Guillaume.Ragneau</author>
-            <since>mardi 20 août 2007</since>		
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.InsertNb">
-             <summary>
-             Get / Set Number of insertion of the creative
-             </summary>
-            <author>Guillaume.Ragneau</author>
-            <since>mardi 20 août 2007</since>		
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Session">
-            <summary>
-            Get / Set Web Session
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.ShowProduct">
-            <summary>
-            Get / Set if show product level
-            </summary>
         </member>
         <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeInstore.#ctor(System.Int64)">
             <summary>Constructor</summary>
@@ -1021,44 +938,6 @@
             AdNetTrack Media plan parameter : paramètres quelconques
             </summary>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.#ctor(System.Int64)">
-            <summary>Constructor</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.GetInstance(System.Data.DataRow,TNS.AdExpress.Web.Core.Sessions.WebSession)">
-            <summary>
-            Build instance of CreativeRadio using data containded in row
-            </summary>
-            <param name="row">Data container</param>
-            <param name="session">Web Session</param>
-            <returns>New CreativeItem Instance</returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.FieldInstance(System.Data.DataRow,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
-            <summary>
-            Fill instance with data
-            </summary>
-            <param name="row">Data Container</param>
-            <param name="item">item to fill</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.Render(System.Text.StringBuilder)">
-            <summary>
-            render creative
-            </summary>
-            <param name="output">Output</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.RenderBanner(System.Text.StringBuilder)">
-            <summary>
-            Render Banner Creative Zone
-            </summary>
-            <param name="output"></param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.RenderInfo(System.Text.StringBuilder)">
-            <summary>
-            Render banner information
-            </summary>
-            <param name="output"></param>
-        </member>
         <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.Url">
             <summary>
             Get / Set Banner Url
@@ -1109,32 +988,43 @@
             AdNetTrack Media plan paramteter : Url Parameters Unknown
             </summary>
         </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdNetTrackFormatComparer">
-            <summary>
-             Creative AdNetTrack Format Comparer
-             </summary>
-             <author>Guillaume.Ragneau</author>
-             <since>lundi 10 septembre 2007 11:24:28</since>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.#ctor(System.Int64)">
+            <summary>Constructor</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdNetTrackFormatComparer.#ctor(System.String)">
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.GetInstance(System.Data.DataRow,TNS.AdExpress.Web.Core.Sessions.WebSession)">
             <summary>
-            Default Constructor
+            Build instance of CreativeRadio using data containded in row
             </summary>
-            <param name="caption">AdNetTrack Format Comparer Caption</param>
+            <param name="row">Data container</param>
+            <param name="session">Web Session</param>
+            <returns>New CreativeItem Instance</returns>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdNetTrackFormatComparer.#ctor(System.Int32)">
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.FieldInstance(System.Data.DataRow,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
             <summary>
-            Default Constructor
+            Fill instance with data
             </summary>
-            <param name="caption">AdNetTrack Format Comparer Caption ID</param>
+            <param name="row">Data Container</param>
+            <param name="item">item to fill</param>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.AdNetTrackFormatComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.Render(System.Text.StringBuilder)">
             <summary>
-            Compare two CreativeItem AdNetTrack Formats
+            render creative
             </summary>
-            <param name="x">First creative item to compare</param>
-            <param name="y">Second creative item to compare</param>
-            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+            <param name="output">Output</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.RenderBanner(System.Text.StringBuilder)">
+            <summary>
+            Render Banner Creative Zone
+            </summary>
+            <param name="output"></param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeAdNetTrack.RenderInfo(System.Text.StringBuilder)">
+            <summary>
+            Render banner information
+            </summary>
+            <param name="output"></param>
         </member>
         <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativeTV">
             <summary>
@@ -1152,6 +1042,16 @@
         <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeTV._vehicle">
             <summary>
             Specify if component display TV or PanEuro creation
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeTV.Duration">
+            <summary>
+            Get / Set Sport duration
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeTV.Vehicle">
+            <summary>
+            Get / Set TV/PanEuro option
             </summary>
         </member>
         <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeTV.#ctor(System.Int64)">
@@ -1180,43 +1080,6 @@
             </summary>
             <param name="output">Output</param>
         </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeTV.Duration">
-            <summary>
-            Get / Set Sport duration
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeTV.Vehicle">
-            <summary>
-            Get / Set TV/PanEuro option
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.TVDurationComparer">
-            <summary>
-             Creative TV Duration Comparer
-             </summary>
-             <author>Guillaume.Ragneau</author>
-             <since>lundi 20 septembre 2007 11:24:28</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.TVDurationComparer.#ctor(System.String)">
-            <summary>
-            Default Constructor
-            </summary>
-            <param name="caption">Product Comparer Caption</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.TVDurationComparer.#ctor(System.Int32)">
-            <summary>
-            Default Constructor
-            </summary>
-            <param name="captionId">Product Comparer Caption</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.TVDurationComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
-            <summary>
-            Compare two CreativeItem products
-            </summary>
-            <param name="x">First creative item to compare</param>
-            <param name="y">Second creative item to compare</param>
-            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
-        </member>
         <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativeRadio">
             <summary>
              CreativeItem provides information for the display of a radio creative
@@ -1228,6 +1091,11 @@
         <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeRadio._duration">
             <summary>
             Sport duration
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeRadio.Duration">
+            <summary>
+            Get / Set Sport duration
             </summary>
         </member>
         <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeRadio.#ctor(System.Int64,System.Int64)">
@@ -1255,38 +1123,6 @@
             render creative
             </summary>
             <param name="output">Output</param>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeRadio.Duration">
-            <summary>
-            Get / Set Sport duration
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.RadioDurationComparer">
-            <summary>
-             Creative TV Duration Comparer
-             </summary>
-             <author>Guillaume.Ragneau</author>
-             <since>lundi 20 septembre 2007 11:24:28</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.RadioDurationComparer.#ctor(System.String)">
-            <summary>
-            Default Constructor
-            </summary>
-            <param name="caption">Product Comparer Caption</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.RadioDurationComparer.#ctor(System.Int32)">
-            <summary>
-            Default Constructor
-            </summary>
-            <param name="captionId">Product Comparer Caption</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.RadioDurationComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
-            <summary>
-            Compare two CreativeItem products
-            </summary>
-            <param name="x">First creative item to compare</param>
-            <param name="y">Second creative item to compare</param>
-            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
         </member>
         <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativeOutdoor">
             <summary>
@@ -1375,32 +1211,6 @@
             Creative Content
             </summary>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.#ctor(System.Int64)">
-            <summary>Constructor</summary>
-            <author>Guillaume Ragneau</author>
-            <since>jeudi 09 aout 2007</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.GetInstance(System.Data.DataRow,TNS.AdExpress.Web.Core.Sessions.WebSession)">
-            <summary>
-            Build instance of CreativeRadio using data containded in row
-            </summary>
-            <param name="row">Data container</param>
-            <param name="session">Web Session</param>
-            <returns>New CreativeItem Instance</returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.FieldInstance(System.Data.DataRow,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
-            <summary>
-            Fill instance with data
-            </summary>
-            <param name="row">Data Container</param>
-            <param name="item">item to fill</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.Render(System.Text.StringBuilder)">
-            <summary>
-            render creative
-            </summary>
-            <param name="output">Output</param>
-        </member>
         <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.Media">
             <summary>
             Get / Set Creative media
@@ -1446,59 +1256,31 @@
             Get / Set Creative Content
             </summary>
         </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.SupportComparer">
-            <summary>
-             Creative Support Comparer
-             </summary>
-             <author>Guillaume.Ragneau</author>
-             <since>lundi 20 septembre 2007 11:24:28</since>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.#ctor(System.Int64)">
+            <summary>Constructor</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.SupportComparer.#ctor(System.String)">
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.GetInstance(System.Data.DataRow,TNS.AdExpress.Web.Core.Sessions.WebSession)">
             <summary>
-            Default Constructor
+            Build instance of CreativeRadio using data containded in row
             </summary>
-            <param name="caption">Support Comparer Caption</param>
+            <param name="row">Data container</param>
+            <param name="session">Web Session</param>
+            <returns>New CreativeItem Instance</returns>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.SupportComparer.#ctor(System.Int32)">
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.FieldInstance(System.Data.DataRow,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
             <summary>
-            Default Constructor
+            Fill instance with data
             </summary>
-            <param name="captionId">Product Comparer Caption</param>
+            <param name="row">Data Container</param>
+            <param name="item">item to fill</param>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.SupportComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeMailing.Render(System.Text.StringBuilder)">
             <summary>
-            Compare two CreativeItem Supports
+            render creative
             </summary>
-            <param name="x">First creative item to compare</param>
-            <param name="y">Second creative item to compare</param>
-            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
-        </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.ObjectNumberComparer">
-            <summary>
-             Creative Object Number Comparer
-             </summary>
-             <author>Guillaume.Ragneau</author>
-             <since>lundi 20 septembre 2007 11:24:28</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.ObjectNumberComparer.#ctor(System.String)">
-            <summary>
-            Default Constructor
-            </summary>
-            <param name="caption">Object Number Comparer Caption</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.ObjectNumberComparer.#ctor(System.Int32)">
-            <summary>
-            Default Constructor
-            </summary>
-            <param name="captionId">Object Number Comparer Caption</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.ObjectNumberComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
-            <summary>
-            Compare two CreativeItem Object Numbers
-            </summary>
-            <param name="x">First creative item to compare</param>
-            <param name="y">Second creative item to compare</param>
-            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+            <param name="output">Output</param>
         </member>
         <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativePresse">
             <summary>
@@ -1511,6 +1293,11 @@
         <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativePresse._pageNumber">
             <summary>
             Volume of the creative in page
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativePresse.PageNumber">
+            <summary>
+            Get / Set Volume of the creative in page
             </summary>
         </member>
         <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativePresse.#ctor(System.Int64)">
@@ -1539,157 +1326,255 @@
             </summary>
             <param name="output">Output</param>
         </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativePresse.PageNumber">
+        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer">
             <summary>
-            Get / Set Volume of the creative in page
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.PageNumberComparer">
-            <summary>
-             Creative Page Number Comparer
+             Creative comparer
              </summary>
              <author>Guillaume.Ragneau</author>
-             <since>lundi 10 septembre 2007 11:24:28</since>
+             <since>lundi 13 août 2007 11:42:23</since>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.PageNumberComparer.#ctor(System.String)">
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer._caption">
+            <summary>
+            Filter Caption
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer._captionId">
+            <summary>
+            Filter Caption Id (used to display diffent captions depending on language
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer._id">
+            <summary>
+            Filter ID
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer._sort">
+            <summary>
+            Sort order
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.#ctor(System.String)">
             <summary>
             Default Constructor
             </summary>
-            <param name="caption">Page Number Comparer Caption</param>
+            <param name="caption">Comparer Caption</param>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.PageNumberComparer.#ctor(System.Int32)">
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.#ctor(System.Int32)">
             <summary>
             Default Constructor
             </summary>
-            <param name="caption">Page Number Comparer Caption ID</param>
+            <param name="caption">Comparer Caption</param>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.Comparers.PageNumberComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.GetCaption">
             <summary>
-            Compare two CreativeItem Page Numbers
+            Get Filter Caption
             </summary>
-            <param name="x">First creative item to compare</param>
-            <param name="y">Second creative item to compare</param>
-            <returns>-1 if x > y, 0 if equelas and 1 if y > x</returns>
+            <returns>Filter Caption</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.GetCaptionId">
+            <summary>
+            Get Filter Caption Id
+            </summary>
+            <returns>Filter Caption</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.GetId">
+            <summary>
+            Get Filter Id
+            </summary>
+            <returns>Filter Id</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.SetId(System.Int32)">
+            <summary>
+            Set Comparer Id
+            </summary>
+            <param name="id">Id of the comparer</param>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.SetOrder(TNS.FrameWork.WebResultUI.TableControl.SortOrder)">
+            <summary>
+            Set Sort Order
+            </summary>
+            <param name="sort">Sort Order</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.GetSortOrder">
+            <summary>
+            Get Sort Order
+            </summary>
+            <returns>Sort Order</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.Compare(TNS.FrameWork.WebResultUI.TableControl.ITableElement,TNS.FrameWork.WebResultUI.TableControl.ITableElement)" -->
+        <!-- Badly formed XML comment ignored for member "M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeComparer.Compare(TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)" -->
+        <member name="T:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem">
+            <summary>
+             CreativeItem provides information for the display of a creative
+             </summary>
+              <author>G Ragneau</author>
+              <since>09/08/2007</since>
+              <stereotype>entity</stereotype>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._id">
+            <summary>Version Id</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._path">
+            <summary>Version path</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._advertiser">
+            <summary>Annonceur</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._product">
+             <summary>Produit</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._group">
+             <summary>groupe de produit</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._Budget">
+            <summary>
+            Creative budget
+            </summary>
+            <author>Guillaume.Ragneau</author>
+            <since>lundi 13 août 2007</since>		
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._mediaNb">
+            <summary>
+            Number of active media
+            </summary>
+            <author>Guillaume.Ragneau</author>
+            <since>mardi 20 août 2007</since>		
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._insertNb">
+             <summary>
+             Number of insertion of the creative
+             </summary>
+            <author>Guillaume.Ragneau</author>
+            <since>mardi 20 août 2007</since>		
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._adressId">
+            <summary>
+            Adresse pour le GAD
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._session">
+            <summary>
+            Web Session
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._showProduct">
+            <summary>
+            Determine if show product level
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem._vehicleId">
+            <summary>
+            Media type Id
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Id">
+            <summary>Get / Set Id Version</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Path">
+            <summary>Get / Set Version Path</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Advertiser">
+            <summary>Get / Set Annonceur</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Product">
+            <summary>Get / Set Produit</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Group">
+            <summary>Get / Set groupe de produit</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Budget">
+            <summary>
+            Get / Set Budget
+            </summary>
+            <author>Guillaume.Ragneau</author>
+            <since>lundi 13 août 2007</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.MediaNb">
+            <summary>
+             Get / Set Number of active media
+            </summary>
+            <author>Guillaume.Ragneau</author>
+            <since>mardi 20 août 2007</since>		
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.InsertNb">
+             <summary>
+             Get / Set Number of insertion of the creative
+             </summary>
+            <author>Guillaume.Ragneau</author>
+            <since>mardi 20 août 2007</since>		
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Session">
+            <summary>
+            Get / Set Web Session
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.ShowProduct">
+            <summary>
+            Get / Set if show product level
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.#ctor(System.Int64)">
+            <summary>Constructor</summary>
+            <author>Guillaume Ragneau</author>
+            <since>jeudi 09 aout 2007</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Render(System.Text.StringBuilder)">
+            <summary>
+            Render Table Element
+            </summary>
+            <param name="output">Rendered code output</param>
+            <author>Guillaume.Ragneau</author>
+            <since>mardi 14 août 2007</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.Render(System.Text.StringBuilder,System.String)">
+            <summary>
+            Render Table Element
+            </summary>
+            <param name="output">Rendered code output</param>
+            <param name="cssStyle">Css Style of the element</param>
+            <author>Guillaume.Ragneau</author>
+            <since>mardi 14 août 2007</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.GetInstance(System.Data.DataRow,TNS.AdExpress.Web.Core.Sessions.WebSession)">
+            <summary>
+            Build instanc of CreativeRadio using data containded in row
+            </summary>
+            <param name="row">Data container</param>
+            <param name="session">Web Session</param>
+            <returns>New CreativeItem Instance</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem.FieldInstance(System.Data.DataRow,TNS.AdExpress.Web.Common.Results.Creatives.CreativeItem)">
+            <summary>
+            Fill instance with data
+            </summary>
+            <param name="row">Data Container</param>
+            <param name="item">item to fill</param>
         </member>
         <member name="T:TNS.AdExpress.Web.Common.Results._ExportAPPMVersionItem">
             <summary>
             Description résumée de ExportAPPMVersionItem.
             </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results._VersionItem">
-            <summary>
-            VersionItem provides information for the display of a version
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._id">
-            <summary>Version Id</summary>
-              <author>gragneau</author>
-              <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._cssClass">
-            <summary>Component CssClass</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._parution">
-            <summary>Parution date</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._path">
-            <summary>Version path</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._advertiser">
-            <summary>Annonceur</summary>
-            <author>rkaina</author>
-            		/// <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._productId">
-            <summary>Id produit</summary>
-            <author>rkaina</author>
-            <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._product">
-            <summary>Produit</summary>
-            <author>rkaina</author>
-            <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._group">
-            <summary>groupe de produit</summary>
-            <author>rkaina</author>
-            <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._sector">
-            <summary>Famille</summary>
-            <author>rkaina</author>
-            <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._subsector">
-            <summary>Classe</summary>
-            <author>rkaina</author>
-            <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._VersionItem.#ctor(System.Int64,System.String,System.String)">
-            <summary>Constructor</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._VersionItem.#ctor(System.Int64,System.String)">
-            <summary>Constructor</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Id">
-            <summary>Get / Set Id Version</summary>
-              <author>gragneau</author>
-              <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.CssClass">
-            <summary>Get / Set CssClass</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Parution">
-            <summary>Get / Set Parution Date</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Path">
-            <summary>Get / Set Version Path</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Advertiser">
-            <summary>Get / Set Annonceur</summary>
-             <author>rkaina</author>
-             <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.ProductId">
-            <summary>Get / Set Id produit</summary>
-             <author>rkaina</author>
-             <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Product">
-            <summary>Get / Set Produit</summary>
-             <author>rkaina</author>
-             <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Group">
-            <summary>Get / Set groupe de produit</summary>
-             <author>rkaina</author>
-             <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Sector">
-            <summary>Get / Set Famille</summary>
-             <author>rkaina</author>
-             <since>jeudi 08 août 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Subsector">
-            <summary>Get / Set Classe</summary>
-             <author>rkaina</author>
-             <since>jeudi 08 août 2006</since>
         </member>
         <member name="F:TNS.AdExpress.Web.Common.Results._ExportAPPMVersionItem._agency">
             <summary>Nom d'Agence Média</summary>
@@ -1786,16 +1671,6 @@
             <author>rkaina</author>
             <since>jeudi 29 août 2006</since>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._ExportAPPMVersionItem.#ctor(System.Int64,System.String,System.String)">
-            <summary>Constructor</summary>
-             <author>rkaina</author>
-             <since>jeudi 17 août 2006</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._ExportAPPMVersionItem.#ctor(System.Int64,System.String)">
-            <summary>Constructor</summary>
-             <author>rkaina</author>
-             <since>jeudi 17 août 2006</since>
-        </member>
         <member name="P:TNS.AdExpress.Web.Common.Results._ExportAPPMVersionItem.Agency">
             <summary>Get / Set Nom d'Agence Média</summary>
              <author>rkaina</author>
@@ -1891,6 +1766,16 @@
              <author>rkaina</author>
              <since>jeudi 29 août 2006</since>
         </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._ExportAPPMVersionItem.#ctor(System.Int64,System.String,System.String)">
+            <summary>Constructor</summary>
+             <author>rkaina</author>
+             <since>jeudi 17 août 2006</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._ExportAPPMVersionItem.#ctor(System.Int64,System.String)">
+            <summary>Constructor</summary>
+             <author>rkaina</author>
+             <since>jeudi 17 août 2006</since>
+        </member>
         <member name="T:TNS.AdExpress.Web.Common.Results._ExportMDVersionItem">
             <summary>
             L'item utilisé pour les exports du plan media pour le marketing direct
@@ -1952,12 +1837,6 @@
         <member name="F:TNS.AdExpress.Web.Common.Results._ExportMDVersionItem._idMedia">
             <summary>Id Media</summary>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._ExportMDVersionItem.#ctor(System.Int64,System.String,System.String)">
-            <summary>Constructor</summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._ExportMDVersionItem.#ctor(System.Int64,System.String)">
-            <summary>Constructor</summary>
-        </member>
         <member name="P:TNS.AdExpress.Web.Common.Results._ExportMDVersionItem.Weight">
             <summary>Get / Set poids d'une version</summary>
         </member>
@@ -1994,6 +1873,12 @@
         <member name="P:TNS.AdExpress.Web.Common.Results._ExportMDVersionItem.IdMedia">
             <summary>Get / Set Id media</summary>
         </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._ExportMDVersionItem.#ctor(System.Int64,System.String,System.String)">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._ExportMDVersionItem.#ctor(System.Int64,System.String)">
+            <summary>Constructor</summary>
+        </member>
         <member name="T:TNS.AdExpress.Web.Common.Results._ExportOutdoorVersionItem">
             <summary>
             Objet version pour un export de la publicité extérieur
@@ -2019,11 +1904,6 @@
             Nombre de visuels
             </summary>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._ExportOutdoorVersionItem.#ctor(System.Int64,System.String)">
-            <summary>
-            Constructor
-            </summary>
-        </member>
         <member name="P:TNS.AdExpress.Web.Common.Results._ExportOutdoorVersionItem.NbMedia">
             <summary>
             Get / Set Nombre de supports
@@ -2042,6 +1922,11 @@
         <member name="P:TNS.AdExpress.Web.Common.Results._ExportOutdoorVersionItem.NbVisuel">
             <summary>
             Get / Set Nombre de visuels
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._ExportOutdoorVersionItem.#ctor(System.Int64,System.String)">
+            <summary>
+            Constructor
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Web.Common.Results._ExportVersionItem">
@@ -2074,16 +1959,6 @@
             <author>rkaina</author>
             <since>jeudi 21 août 2006</since>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._ExportVersionItem.#ctor(System.Int64,System.String,System.String)">
-            <summary>Constructor</summary>
-             <author>rkaina</author>
-             <since>jeudi 17 août 2006</since>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results._ExportVersionItem.#ctor(System.Int64,System.String)">
-            <summary>Constructor</summary>
-             <author>rkaina</author>
-             <since>jeudi 17 août 2006</since>
-        </member>
         <member name="P:TNS.AdExpress.Web.Common.Results._ExportVersionItem.FirstInsertionDate">
             <summary>Get / Set date de la première insertion dans le plan</summary>
              <author>rkaina</author>
@@ -2108,6 +1983,16 @@
             <summary>Get / Set Nombre de visuels</summary>
              <author>rkaina</author>
              <since>jeudi 21 août 2006</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._ExportVersionItem.#ctor(System.Int64,System.String,System.String)">
+            <summary>Constructor</summary>
+             <author>rkaina</author>
+             <since>jeudi 17 août 2006</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._ExportVersionItem.#ctor(System.Int64,System.String)">
+            <summary>Constructor</summary>
+             <author>rkaina</author>
+             <since>jeudi 17 août 2006</since>
         </member>
         <member name="T:TNS.AdExpress.Web.Common.Results.FilesItem">
             <summary>
@@ -2184,89 +2069,9 @@
             Obtient la liste des éléments
             </summary>
         </member>
-        <member name="T:TNS.AdExpress.Web.Core.MediaPlanItem">
-            <summary>
-            Informations contenues dans une cellule d'un plan media
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Core.MediaPlanItem._periodicityId">
-            <summary>
-            Périodicité de l'élément
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Core.MediaPlanItem._graphicItemType">
-            <summary>
-            Element graphique représentant la cellule dans un plan média
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Core.MediaPlanItem._unit">
-            <summary>
-            Valeur de l'investissement
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Core.MediaPlanItem.#ctor">
-            <summary>
-            Constructeur
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Core.MediaPlanItem.#ctor(System.Int64)">
-            <summary>
-            Constructeur
-            </summary>
-            <param name="periodicityId">Périodicité de la cellule</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Core.MediaPlanItem.ToString">
-            <summary>
-            La périodicité sous forme de chaîne de caratères
-            </summary>
-            <returns>La périodicité sous forme de chaîne de caratères</returns>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Core.MediaPlanItem.PeriodicityId">
-            <summary>
-            Définit ou obtient l'identifiant de la périodicité
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Core.MediaPlanItem.GraphicItemType">
-            <summary>
-            Définit ou obtient la façon d'afficher la cellule
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Core.MediaPlanItem.Unit">
-            <summary>
-            Définit ou obtient la valeur de l'unité contenue dans la cellule
-            </summary>
-        </member>
         <member name="T:TNS.AdExpress.Web.Common.Results.MediaPlanResultData">
             <summary>
              Données servant à construire un plan media
-             </summary>
-              <since>13/07/2006</since>
-              <author>G. Facon</author>
-        </member>
-        <member name="T:TNS.AdExpress.Web.Common.Results.ResultData">
-            <summary>
-             Données servant à construire un Résultat (UI)
-             </summary>
-              <since>13/07/2006</since>
-              <author>G. Facon</author>
-        </member>
-        <member name="F:TNS.AdExpress.Web.Common.Results.ResultData._mediaPlanHTMLCode">
-            <summary>
-             Code HTML du calendrier d'action
-             </summary>
-              <since>13/07/2006</since>
-              <author>G. Facon</author>
-        </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.ResultData.#ctor">
-            <summary>
-            Constructeur
-            </summary>
-             <since>13/07/2006</since>
-             <author>G. Facon</author>
-        </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.ResultData.HTMLCode">
-            <summary>
-             Obtient ou définit le code HTML du calendrier d'action
              </summary>
               <since>13/07/2006</since>
               <author>G. Facon</author>
@@ -2285,19 +2090,19 @@
               <since>13/07/2006</since>
               <author>G. Facon</author>
         </member>
-        <member name="M:TNS.AdExpress.Web.Common.Results.MediaPlanResultData.GetVersionList">
-            <summary>
-            Obtient la liste des versions utilisée par le résultat
-            </summary>
-            <remarks>Format: 25001,15002,32555</remarks>
-            <returns>liste des versions utilisée par le résultat</returns>
-        </member>
         <member name="P:TNS.AdExpress.Web.Common.Results.MediaPlanResultData.VersionsDetail">
             <summary>
              Obtient la liste des informations des versions utilisées par le résultat
              </summary>
               <since>13/07/2006</since>
               <author>G. Facon</author>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.MediaPlanResultData.GetVersionList">
+            <summary>
+            Obtient la liste des versions utilisée par le résultat
+            </summary>
+            <remarks>Format: 25001,15002,32555</remarks>
+            <returns>liste des versions utilisée par le résultat</returns>
         </member>
         <member name="T:TNS.AdExpress.Web.Common.Results.ExtendedHashTable">
             <summary>
@@ -2307,6 +2112,11 @@
         <member name="F:TNS.AdExpress.Web.Common.Results.ExtendedHashTable._currentValue">
             <summary>
             Valeur du niveau courant
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.ExtendedHashTable.Value">
+            <summary>
+            Obtient ou définit Valeur du niveau courant
             </summary>
         </member>
         <member name="M:TNS.AdExpress.Web.Common.Results.ExtendedHashTable.#ctor">
@@ -2363,10 +2173,200 @@
             <param name="Keys">Liste des clés</param>
              <returns></returns>
         </member>
-        <member name="P:TNS.AdExpress.Web.Common.Results.ExtendedHashTable.Value">
+        <member name="T:TNS.AdExpress.Web.Common.Results.ResultData">
             <summary>
-            Obtient ou définit Valeur du niveau courant
+             Données servant à construire un Résultat (UI)
+             </summary>
+              <since>13/07/2006</since>
+              <author>G. Facon</author>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results.ResultData._mediaPlanHTMLCode">
+            <summary>
+             Code HTML du calendrier d'action
+             </summary>
+              <since>13/07/2006</since>
+              <author>G. Facon</author>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results.ResultData.#ctor">
+            <summary>
+            Constructeur
             </summary>
+             <since>13/07/2006</since>
+             <author>G. Facon</author>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results.ResultData.HTMLCode">
+            <summary>
+             Obtient ou définit le code HTML du calendrier d'action
+             </summary>
+              <since>13/07/2006</since>
+              <author>G. Facon</author>
+        </member>
+        <member name="T:TNS.AdExpress.Web.Common.Results._VersionItem">
+            <summary>
+            VersionItem provides information for the display of a version
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._id">
+            <summary>Version Id</summary>
+              <author>gragneau</author>
+              <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._cssClass">
+            <summary>Component CssClass</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._parution">
+            <summary>Parution date</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._path">
+            <summary>Version path</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._advertiser">
+            <summary>Annonceur</summary>
+            <author>rkaina</author>
+            		/// <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._productId">
+            <summary>Id produit</summary>
+            <author>rkaina</author>
+            <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._product">
+            <summary>Produit</summary>
+            <author>rkaina</author>
+            <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._group">
+            <summary>groupe de produit</summary>
+            <author>rkaina</author>
+            <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._sector">
+            <summary>Famille</summary>
+            <author>rkaina</author>
+            <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Common.Results._VersionItem._subsector">
+            <summary>Classe</summary>
+            <author>rkaina</author>
+            <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Id">
+            <summary>Get / Set Id Version</summary>
+              <author>gragneau</author>
+              <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.CssClass">
+            <summary>Get / Set CssClass</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Parution">
+            <summary>Get / Set Parution Date</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Path">
+            <summary>Get / Set Version Path</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Advertiser">
+            <summary>Get / Set Annonceur</summary>
+             <author>rkaina</author>
+             <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.ProductId">
+            <summary>Get / Set Id produit</summary>
+             <author>rkaina</author>
+             <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Product">
+            <summary>Get / Set Produit</summary>
+             <author>rkaina</author>
+             <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Group">
+            <summary>Get / Set groupe de produit</summary>
+             <author>rkaina</author>
+             <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Sector">
+            <summary>Get / Set Famille</summary>
+             <author>rkaina</author>
+             <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Common.Results._VersionItem.Subsector">
+            <summary>Get / Set Classe</summary>
+             <author>rkaina</author>
+             <since>jeudi 08 août 2006</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._VersionItem.#ctor(System.Int64,System.String,System.String)">
+            <summary>Constructor</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Common.Results._VersionItem.#ctor(System.Int64,System.String)">
+            <summary>Constructor</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="T:TNS.AdExpress.Web.Core.MediaPlanItem">
+            <summary>
+            Informations contenues dans une cellule d'un plan media
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Core.MediaPlanItem._periodicityId">
+            <summary>
+            Périodicité de l'élément
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Core.MediaPlanItem._graphicItemType">
+            <summary>
+            Element graphique représentant la cellule dans un plan média
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.Core.MediaPlanItem._unit">
+            <summary>
+            Valeur de l'investissement
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Core.MediaPlanItem.#ctor">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Core.MediaPlanItem.#ctor(System.Int64)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="periodicityId">Périodicité de la cellule</param>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Core.MediaPlanItem.PeriodicityId">
+            <summary>
+            Définit ou obtient l'identifiant de la périodicité
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Core.MediaPlanItem.GraphicItemType">
+            <summary>
+            Définit ou obtient la façon d'afficher la cellule
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.Core.MediaPlanItem.Unit">
+            <summary>
+            Définit ou obtient la valeur de l'unité contenue dans la cellule
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.Core.MediaPlanItem.ToString">
+            <summary>
+            La périodicité sous forme de chaîne de caratères
+            </summary>
+            <returns>La périodicité sous forme de chaîne de caratères</returns>
         </member>
         <member name="T:TNS.AdExpress.Web.DataAccess.Functions">
             <summary>
@@ -2491,12 +2491,6 @@
             <param name="onlyComparativeMonthString">Vrai si retourne uniquement les mois de l'année précédente à l'année sélectionnée.</param>
             <returns>liste des mois</returns>
         </member>
-        <member name="M:TNS.AdExpress.Web.DataAccess.Functions.GetDataSource(TNS.AdExpress.Web.Core.Sessions.WebSession)">
-            <summary>
-            Get Data Source
-            </summary>
-            <returns>Data source</returns>
-        </member>
         <member name="T:TNS.AdExpress.Web.DataAccess.Functions.RecapUniversSelection">
             <summary>
             Univers sélectionné média et produit sélectionné par le client dans l'annalyse sectorielle.
@@ -2603,6 +2597,12 @@
             Médias en accès
             </summary>
         </member>
+        <member name="M:TNS.AdExpress.Web.DataAccess.Functions.GetDataSource(TNS.AdExpress.Web.Core.Sessions.WebSession)">
+            <summary>
+            Get Data Source
+            </summary>
+            <returns>Data source</returns>
+        </member>
         <member name="T:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess">
             <summary>
             Gestion d'une sauvegarde de requête
@@ -2645,6 +2645,26 @@
             <param name="idMySession">Identifiant de la sauvegarde</param>
             <param name="webSession">Session du client</param>
         </member>
+        <member name="P:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.IdMySession">
+            <summary>
+            Obtient l'identifiant de la sauvegarde
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.MySession">
+            <summary>
+            Obtient le nom de la sauvegarde
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.SavedSession">
+            <summary>
+            Obtient l'élément sauvegardé
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.IsSaved">
+            <summary>
+            Indique si la session est sauvegardée dans la base de données
+            </summary>
+        </member>
         <member name="M:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.SaveMySession(System.Int64,System.String,TNS.AdExpress.Web.Core.Sessions.WebSession)">
             <summary>
             Sauvegarde d'une nouvelle session
@@ -2680,26 +2700,6 @@
             <returns>Retourne l'objet récupéré ou null si il y a eu un problème non géré</returns>
             <param name="idWebSession">Identifiant de la session</param>
             <param name="webSession">Session à la connexion d l'utilisateur</param>
-        </member>
-        <member name="P:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.IdMySession">
-            <summary>
-            Obtient l'identifiant de la sauvegarde
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.MySession">
-            <summary>
-            Obtient le nom de la sauvegarde
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.SavedSession">
-            <summary>
-            Obtient l'élément sauvegardé
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionDataAccess.IsSaved">
-            <summary>
-            Indique si la session est sauvegardée dans la base de données
-            </summary>
         </member>
         <member name="T:TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionsDataAccess">
             <summary>
@@ -3778,7 +3778,7 @@
             </summary>
             <param name="sql">Output</param>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "M:TNS.AdExpress.Web.DataAccess.Results.CreativesDataAccess.CheckZeroVersion(TNS.AdExpress.Domain.Level.GenericDetailLevel,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:TNS.AdExpress.Web.DataAccess.Results.CreativesDataAccess.CheckZeroVersion(TNS.AdExpress.Domain.Level.GenericDetailLevel,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names,System.String)" -->
         <member name="M:TNS.AdExpress.Web.DataAccess.Results.CreativesDataAccess.GetFiltersClause(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Domain.Level.GenericDetailLevel,System.String,System.Int32)">
             <summary>
             Generate filters clause
@@ -4859,7 +4859,7 @@
             <param name="webSession">Web Session</param>
             <returns>string sql</returns>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "M:TNS.AdExpress.Web.DataAccess.Results.ProofDataAccess.GetCustomerProductRight(TNS.AdExpress.Web.Core.Sessions.WebSession,System.String,System.Boolean)" -->
+        <!-- Badly formed XML comment ignored for member "M:TNS.AdExpress.Web.DataAccess.Results.ProofDataAccess.GetCustomerProductRight(TNS.AdExpress.Web.Core.Sessions.WebSession,System.String,System.Boolean)" -->
         <member name="T:TNS.AdExpress.Web.DataAccess.Results.SearchLevelDataAccess">
             <summary>
              Description résumée de SearchLevelDataAcess.
@@ -5329,6 +5329,11 @@
             </summary>
             <param name="webSession">Session du client</param>
         </member>
+        <member name="P:TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.List">
+            <summary>
+            Obtient la liste des vehicles visible par le client
+            </summary>
+        </member>
         <member name="M:TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.DetailInterestCenterListDataAccess(TNS.AdExpress.Web.Core.Sessions.WebSession)">
             <summary>
             Retourne la liste des centres d'intérêts avec les supports d'un utilisateur
@@ -5376,7 +5381,7 @@
             <param name="listVehicle">liste des média (vehicle) déjà sélectionnés</param>
             <returns>dataset avec 6 colonnes : id_vehicle,vehicle,id_interest_center, interest_center, id_media, media</returns>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "M:TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(TNS.AdExpress.Web.Core.Sessions.WebSession,System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(TNS.AdExpress.Web.Core.Sessions.WebSession,System.String,System.String)" -->
         <member name="M:TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(TNS.AdExpress.Web.Core.Sessions.WebSession,System.String,System.String,System.String)">
             <summary>
             Donne la liste des Media/Centre d'intérêts/supports en fonctions des droits de l'utilisateur
@@ -5448,11 +5453,6 @@
             </summary>
             <param name="webSession">Client Session </param>
             <returns>Sql query</returns>
-        </member>
-        <member name="P:TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.List">
-            <summary>
-            Obtient la liste des vehicles visible par le client
-            </summary>
         </member>
         <member name="T:TNS.AdExpress.Web.DataAccess.Selections.Periods.PortofolioAnalysisDateDataAccess">
             <summary>
@@ -5555,17 +5555,17 @@
             <param name="radioButtonBrand">bouton radio marque</param>
             <param name="listBrand">liste des marques</param>
         </member>
+        <member name="P:TNS.AdExpress.Web.DataAccess.Selections.Products.AdvertiserListDataAccess.DsListAdvertiser">
+            <summary>
+            Obtient la liste des vehicles visible par le client
+            </summary>
+        </member>
         <member name="M:TNS.AdExpress.Web.DataAccess.Selections.Products.AdvertiserListDataAccess.LoadDataSet(TNS.AdExpress.Web.Core.Sessions.WebSession,System.String)">
             <summary>
             Chargement du DataSet
             </summary>
             <param name="webSession">Session</param>
             <param name="sql">SQL</param>
-        </member>
-        <member name="P:TNS.AdExpress.Web.DataAccess.Selections.Products.AdvertiserListDataAccess.DsListAdvertiser">
-            <summary>
-            Obtient la liste des vehicles visible par le client
-            </summary>
         </member>
         <member name="T:TNS.AdExpress.Web.DataAccess.Selections.Products.GroupDataAccess">
             <summary>
@@ -12158,191 +12158,6 @@
             Page mère des page Web de résultats
             </summary>
         </member>
-        <member name="T:TNS.AdExpress.Web.UI.BaseResultWebPage">
-            <summary>
-            Page mère des page Web de résultats
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Web.UI.PrivateWebPage">
-            <summary>
-            Classe de base d'une page Web d'AdExpress.
-            <seealso cref="T:TNS.AdExpress.Web.UI.ErrorEventArgs"/>
-            </summary>
-            <remarks>
-            Cette page doit être utilisée lorsque le client est connecté.
-            En effet, dans le constructeur elle charge la session du client via la QueryString "idSession".
-            </remarks>
-            <example>
-            <code>
-            public class AlertDateSelection : TNS.AdExpress.Web.UI.WebPage{
-            
-            	// Constructeur
-            	public AlertDateSelection():base(){
-            	}
-            	
-            	// Evènement de chargement de la page
-            	private void Page_Load(object sender, System.EventArgs e){
-            		try{
-            		...
-            		}
-            		catch(System.Exception exc){
-            			if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
-            				this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,webSession));
-            			}
-            		}
-            	}
-            	
-            }
-            </code>
-            </example>
-            <exception cref="T:TNS.AdExpress.Web.Exceptions.CustomerWebException">Exception lancée lors d'une erreur, s'il on est en mode debug.</exception>
-        </member>
-        <member name="T:TNS.AdExpress.Web.UI.WebPage">
-            <summary>
-            Base class for public and private AdExpress page
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.WebPage._siteLanguage">
-            <summary>
-            Langue du site
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.WebPage._useThemes">
-            <summary>
-            Specify whereas to use themes or not
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.WebPage.#ctor">
-            <summary>
-            constructor
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.WebPage.OnPreInit(System.EventArgs)">
-            <summary>
-            On preinit event
-            </summary>
-            <param name="e">Arguments</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.WebPage.OnLoad(System.EventArgs)">
-            <summary>
-            On Load event
-            </summary>
-            <param name="e">Arguments</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.WebPage.AddScritps">
-            <summary>
-            Add javascripts
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.WebPage.OnError(System.EventArgs)">
-            <summary>
-            Evènement d'erreur
-            </summary>
-            <param name="e">Argument</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.WebPage.manageCustomerError(System.Object,System.EventArgs)">
-            <summary>
-            Traite l'affichage d'erreur en fonction du mode compilation
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._webSession">
-            <summary>
-             objet WebSession
-             </summary>
-              <supplierCardinality>1</supplierCardinality>
-              <directed>True</directed>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._nextUrl">
-            <summary>
-            Url suivante
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._nextUrlOk">
-            <summary>
-            Indique si l'url de la prochaine page est disponible ou non
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._currentModule">
-            <summary>
-            Information sur le module en cours
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._selectionError">
-            <summary>
-            ?????
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._formatFile">
-            <summary>
-            Type de format (html,excel)
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._dataSource">
-            <summary>
-            Source de données
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.PrivateWebPage.#ctor">
-            <summary>
-            Constructeur
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.PrivateWebPage.WebPage_Load(System.Object,System.EventArgs)">
-            <summary>
-            Chargement de la page
-            </summary>
-            <param name="sender">Objet source</param>
-            <param name="e">Arguments</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.PrivateWebPage.WebPage_Unload(System.Object,System.EventArgs)">
-            <summary>
-            Déchargement de la page
-            </summary>
-            <param name="sender">Objet source</param>
-            <param name="e">Arguments</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.PrivateWebPage.OnInit(System.EventArgs)">
-            <summary>
-            Initialisation
-            </summary>
-            <param name="e">Arguments</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.#ctor">
-            <summary>
-            Constructeur
-            </summary>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.CanShowResult">
-            <summary>
-            On vérifie que toutes les variables ont été sélectionnées
-            </summary>
-            <returns>0 si tous est sélectionné, sinon l'identifiant de l'élément manquant</returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.OnInitComplete(System.EventArgs)">
-            <summary>
-            OnInitComplete
-            </summary>
-            <param name="e">Event Argument</param>       
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.ResultWebPage_Load(System.Object,System.EventArgs)">
-            <summary>
-            Page Loading
-            </summary>
-            <param name="sender">Source Object</param>
-            <param name="e">Arguments</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.GetNextUrlFromMenu">
-            <summary>
-            Get next URL from contextual menu
-            </summary>
-            <returns>Next URL</returns>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.SetSelectionError">
-            <summary>
-            Set Selection Error variable
-            Check if the study univers are selected for the result page (if not we redirect the user to the error page)
-            </summary>
-        </member>
         <member name="M:TNS.AdExpress.Web.UI.ResultWebPage.#ctor">
             <summary>
             Constructeur
@@ -12371,6 +12186,26 @@
             }
             </code>
             </example>
+        </member>
+        <member name="T:TNS.AdExpress.Web.UI.ErrorEventArgs.argsName">
+            <summary>
+            Nom des arguements utilisé dans la classe TNS.AdExpress.Web.UI.ErrorEventArgs
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.ErrorEventArgs.argsName.sender">
+            <summary>
+            Page qui lance l'erreur
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.ErrorEventArgs.argsName.error">
+            <summary>
+            Exception lancée
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.ErrorEventArgs.argsName.custormerSession">
+            <summary>
+            Session du client
+            </summary>
         </member>
         <member name="F:TNS.AdExpress.Web.UI.ErrorEventArgs._exception">
             <summary>
@@ -12413,26 +12248,6 @@
         <member name="P:TNS.AdExpress.Web.UI.ErrorEventArgs.Item(TNS.AdExpress.Web.UI.ErrorEventArgs.argsName)">
             <summary>
             Accès aux arguments
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Web.UI.ErrorEventArgs.argsName">
-            <summary>
-            Nom des arguements utilisé dans la classe TNS.AdExpress.Web.UI.ErrorEventArgs
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.ErrorEventArgs.argsName.sender">
-            <summary>
-            Page qui lance l'erreur
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.ErrorEventArgs.argsName.error">
-            <summary>
-            Exception lancée
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.ErrorEventArgs.argsName.custormerSession">
-            <summary>
-            Session du client
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Web.UI.ExcelWebPage">
@@ -13150,6 +12965,21 @@
             Allowed universe levels
             </summary>
         </member>
+        <member name="T:TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type">
+            <summary>
+            Enumérateur type de requête
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession">
+            <summary>
+            Session dans Mon AdExpress
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.universe">
+            <summary>
+            Univers dans Mes Univers 
+            </summary>
+        </member>
         <member name="M:TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.#ctor">
             <summary>
             Constructeur de base 
@@ -13213,21 +13043,6 @@
         <member name="P:TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.Script">
             <summary>
             Obtient le script javaScript
-            </summary>
-        </member>
-        <member name="T:TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type">
-            <summary>
-            Enumérateur type de requête
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession">
-            <summary>
-            Session dans Mon AdExpress
-            </summary>
-        </member>
-        <member name="F:TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.universe">
-            <summary>
-            Univers dans Mes Univers 
             </summary>
         </member>
         <member name="T:TNS.AdExpress.Web.UI.PopUpWebPage">
@@ -15169,6 +14984,39 @@
             Zoom date
             </summary>
         </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Session">
+            <summary>
+            Get / Set Customer web session
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Vehicle">
+            <summary>
+            Get / Set Considered Vehicle
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Title">
+            <summary>
+            Get / Set Web Control title
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Nb_Columns">
+            <summary>
+            Get / Set Columns number
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.versions">
+            <summary>Get / Set versions</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Period">
+            <summary>Get / Set La période sélectionnée</summary>
+             <author>yrkaina</author>
+             <since>jeudi 24 janvier 2008</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.ZoomDate">
+            <summary>Get / Set Zoom date</summary>
+        </member>
         <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,System.Collections.Generic.Dictionary{System.Int64,TNS.AdExpress.Domain.Results.VersionItem},TNS.AdExpress.Constantes.Classification.DB.Vehicles.names)">
             <summary>
             Constructor
@@ -15303,7 +15151,7 @@
             <param name="idMedia">Media Id</param>
             <returns>Full path to access an image</returns>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.BuildVersionPath(System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.BuildVersionPath(System.String,System.String)" -->
         <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.GetItemContentList(System.Data.DataRow)">
             <summary>
             Renvoie la liste des item content
@@ -15315,39 +15163,6 @@
             Init images path
             </summary>
             <returns>Full path to access an image</returns>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Session">
-            <summary>
-            Get / Set Customer web session
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Vehicle">
-            <summary>
-            Get / Set Considered Vehicle
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Title">
-            <summary>
-            Get / Set Web Control title
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Nb_Columns">
-            <summary>
-            Get / Set Columns number
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.versions">
-            <summary>Get / Set versions</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.Period">
-            <summary>Get / Set La période sélectionnée</summary>
-             <author>yrkaina</author>
-             <since>jeudi 24 janvier 2008</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI.ZoomDate">
-            <summary>Get / Set Zoom date</summary>
         </member>
         <member name="T:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI">
             <summary>
@@ -15398,6 +15213,35 @@
             <summary>
             Media Type ID
             </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.Version">
+            <summary>Get / Set Version</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.Session">
+            <summary>Get / Set WebSession</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportVersion">
+            <summary>Get / Set Export Version</summary>
+             <author>rkaina</author>
+             <since>Lundi 21 août 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportAPPMVersion">
+            <summary>Get / Set Export Version for APPM</summary>
+             <author>rkaina</author>
+             <since>Lundi 29 août 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportMDVersion">
+            <summary>Get / Set Export Version for MD</summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportOutdoorVersion">
+            <summary>Get / Set Export Version for MD</summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportInStoreVersion">
+            <summary>Get / Set Export Version for MD</summary>
         </member>
         <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Domain.Results.VersionItem)">
             <summary>
@@ -15524,37 +15368,27 @@
             <param name="mailContent">Liste des mails content</param>
             <returns></returns>
         </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.Version">
-            <summary>Get / Set Version</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.Session">
-            <summary>Get / Set WebSession</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportVersion">
-            <summary>Get / Set Export Version</summary>
-             <author>rkaina</author>
-             <since>Lundi 21 août 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportAPPMVersion">
-            <summary>Get / Set Export Version for APPM</summary>
-             <author>rkaina</author>
-             <since>Lundi 29 août 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportMDVersion">
-            <summary>Get / Set Export Version for MD</summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportOutdoorVersion">
-            <summary>Get / Set Export Version for MD</summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI.ExportInStoreVersion">
-            <summary>Get / Set Export Version for MD</summary>
-        </member>
         <member name="T:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressAPPMUI">
             <summary>VersionPressAPPMUI provide a control to render a version in the APPM module</summary>
+              <author>gragneau</author>
+              <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressAPPMUI.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Domain.Results.VersionItem)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="webSession">Customer Session</param>
+            <param name="version">Version to display</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressAPPMUI.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Domain.Results.ExportAPPMVersionItem)">
+            <summary>
+            Constructor with exportVersion
+            </summary>
+            <param name="webSession">Customer Session</param>
+            <param name="exportAPPMVersion">Version to display</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressAPPMUI.RenderSynthesis(System.Text.StringBuilder)">
+            <summary>Render Version SYnthesis</summary>
               <author>gragneau</author>
               <since>jeudi 13 juillet 2006</since>
         </member>
@@ -15617,25 +15451,6 @@
               <author>rkaina</author>
               <since>vendredi 18 août 2006</since>
         </member>
-        <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressAPPMUI.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Domain.Results.VersionItem)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="webSession">Customer Session</param>
-            <param name="version">Version to display</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressAPPMUI.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Domain.Results.ExportAPPMVersionItem)">
-            <summary>
-            Constructor with exportVersion
-            </summary>
-            <param name="webSession">Customer Session</param>
-            <param name="exportAPPMVersion">Version to display</param>
-        </member>
-        <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressAPPMUI.RenderSynthesis(System.Text.StringBuilder)">
-            <summary>Render Version SYnthesis</summary>
-              <author>gragneau</author>
-              <since>jeudi 13 juillet 2006</since>
-        </member>
         <member name="T:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionRadioUI">
             <summary>VersionRadioUI provide methods to get html code to display a version of the vehicle Radio</summary>
               <author>dmussuma</author>
@@ -15669,13 +15484,6 @@
             VersionsPluriMediaUI provide methods to get html code to display a set of version depending on the vehicles criterions
             </summary>
         </member>
-        <member name="F:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.ALLOW_PLURI">
-            <summary>
-            Specifi wether plurimedia is allowed are not
-            </summary>
-            <author>gragneau</author>
-            <since>jeudi 20 juillet 2006</since>
-        </member>
         <member name="F:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI._webSession">
             <summary>
             Customer web session
@@ -15697,6 +15505,13 @@
             <author>gragneau</author>
             <since>jeudi 20 juillet 2006</since>
         </member>
+        <member name="F:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.ALLOW_PLURI">
+            <summary>
+            Specifi wether plurimedia is allowed are not
+            </summary>
+            <author>gragneau</author>
+            <since>jeudi 20 juillet 2006</since>
+        </member>
         <member name="F:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI._period">
             <summary>
             Période utilisée
@@ -15706,6 +15521,26 @@
             <summary>
             Zoom Date
             </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.Session">
+            <summary>
+            Get / Set Customer web session
+            </summary>
+            <author>gragneau</author>
+            <since>jeudi 20 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.versions">
+            <summary>Get / Set versions</summary>
+             <author>gragneau</author>
+             <since>jeudi 20 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.Period">
+            <summary>Get / Set La période sélectionnée</summary>
+             <author>yrkaina</author>
+             <since>jeudi 24 janvier 2008</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.ZoomDate">
+            <summary>Get / Set zoom date</summary>
         </member>
         <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,System.Collections.Generic.Dictionary{System.Int64,TNS.AdExpress.Domain.Results.VersionItem})">
             <summary>
@@ -15762,26 +15597,6 @@
             </summary>
             <returns>Html Code</returns>
         </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.Session">
-            <summary>
-            Get / Set Customer web session
-            </summary>
-            <author>gragneau</author>
-            <since>jeudi 20 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.versions">
-            <summary>Get / Set versions</summary>
-             <author>gragneau</author>
-             <since>jeudi 20 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.Period">
-            <summary>Get / Set La période sélectionnée</summary>
-             <author>yrkaina</author>
-             <since>jeudi 24 janvier 2008</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI.ZoomDate">
-            <summary>Get / Set zoom date</summary>
-        </member>
         <member name="T:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI">
             <summary>
             VersionsVehicleUI provide methods to get html code to display a set of version all from the same vehicle
@@ -15827,6 +15642,39 @@
             <summary>
             Zoom date
             </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Session">
+            <summary>
+            Get / Set Customer web session
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Vehicle">
+            <summary>
+            Get / Set Considered Vehicle
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Title">
+            <summary>
+            Get / Set Web Control title
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Nb_Columns">
+            <summary>
+            Get / Set Columns number
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.versions">
+            <summary>Get / Set versions</summary>
+             <author>gragneau</author>
+             <since>jeudi 13 juillet 2006</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Period">
+            <summary>Get / Set La période sélectionnée</summary>
+             <author>yrkaina</author>
+             <since>jeudi 24 janvier 2008</since>
+        </member>
+        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.ZoomDate">
+            <summary>Get / Set Zoom date</summary>
         </member>
         <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,System.Collections.Generic.Dictionary{System.Int64,TNS.AdExpress.Domain.Results.VersionItem},TNS.AdExpress.Constantes.Classification.DB.Vehicles.names)">
             <summary>
@@ -15891,7 +15739,7 @@
             <param name="idMedia">Media Id</param>
             <returns>Full path to access an image</returns>
         </member>
-        <!-- Commentaire XML incorrect ignoré pour le membre "M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.BuildVersionPath(System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.BuildVersionPath(System.String,System.String)" -->
         <member name="M:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.HasPressCopyright(System.Data.DataRow,System.Collections.Generic.Dictionary{System.Int64,System.Collections.Generic.List{System.Int64}})">
             <summary>
             Has Press Copyright
@@ -15906,39 +15754,6 @@
             </summary>
             <param name="ds">DataSet</param>
             <returns>Media list by version Id</returns>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Session">
-            <summary>
-            Get / Set Customer web session
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Vehicle">
-            <summary>
-            Get / Set Considered Vehicle
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Title">
-            <summary>
-            Get / Set Web Control title
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Nb_Columns">
-            <summary>
-            Get / Set Columns number
-            </summary>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.versions">
-            <summary>Get / Set versions</summary>
-             <author>gragneau</author>
-             <since>jeudi 13 juillet 2006</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.Period">
-            <summary>Get / Set La période sélectionnée</summary>
-             <author>yrkaina</author>
-             <since>jeudi 24 janvier 2008</since>
-        </member>
-        <member name="P:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI.ZoomDate">
-            <summary>Get / Set Zoom date</summary>
         </member>
         <member name="T:TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionTvUI">
             <summary>VersionRadioUI provide methods to get html code to display a version of the vehicle Tv</summary>
@@ -16046,6 +15861,47 @@
             <param name="pdm">pdm</param>
             <returns>format</returns>
         </member>
+        <member name="T:TNS.AdExpress.Web.UI.BaseResultWebPage">
+            <summary>
+            Page mère des page Web de résultats
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.#ctor">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.CanShowResult">
+            <summary>
+            On vérifie que toutes les variables ont été sélectionnées
+            </summary>
+            <returns>0 si tous est sélectionné, sinon l'identifiant de l'élément manquant</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.OnInitComplete(System.EventArgs)">
+            <summary>
+            OnInitComplete
+            </summary>
+            <param name="e">Event Argument</param>       
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.ResultWebPage_Load(System.Object,System.EventArgs)">
+            <summary>
+            Page Loading
+            </summary>
+            <param name="sender">Source Object</param>
+            <param name="e">Arguments</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.GetNextUrlFromMenu">
+            <summary>
+            Get next URL from contextual menu
+            </summary>
+            <returns>Next URL</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.BaseResultWebPage.SetSelectionError">
+            <summary>
+            Set Selection Error variable
+            Check if the study univers are selected for the result page (if not we redirect the user to the error page)
+            </summary>
+        </member>
         <member name="M:TNS.AdExpress.Web.UI.SelectionExcelWebPage.#ctor">
             <summary>
             Constructeur
@@ -16107,6 +15963,150 @@
             Obtient l'url suivante à partir du menu
             </summary>
             <returns>Url suivante</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Web.UI.PrivateWebPage">
+            <summary>
+            Classe de base d'une page Web d'AdExpress.
+            <seealso cref="T:TNS.AdExpress.Web.UI.ErrorEventArgs"/>
+            </summary>
+            <remarks>
+            Cette page doit être utilisée lorsque le client est connecté.
+            En effet, dans le constructeur elle charge la session du client via la QueryString "idSession".
+            </remarks>
+            <example>
+            <code>
+            public class AlertDateSelection : TNS.AdExpress.Web.UI.WebPage{
+            
+            	// Constructeur
+            	public AlertDateSelection():base(){
+            	}
+            	
+            	// Evènement de chargement de la page
+            	private void Page_Load(object sender, System.EventArgs e){
+            		try{
+            		...
+            		}
+            		catch(System.Exception exc){
+            			if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
+            				this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,webSession));
+            			}
+            		}
+            	}
+            	
+            }
+            </code>
+            </example>
+            <exception cref="T:TNS.AdExpress.Web.Exceptions.CustomerWebException">Exception lancée lors d'une erreur, s'il on est en mode debug.</exception>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._webSession">
+            <summary>
+             objet WebSession
+             </summary>
+              <supplierCardinality>1</supplierCardinality>
+              <directed>True</directed>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._nextUrl">
+            <summary>
+            Url suivante
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._nextUrlOk">
+            <summary>
+            Indique si l'url de la prochaine page est disponible ou non
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._currentModule">
+            <summary>
+            Information sur le module en cours
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._selectionError">
+            <summary>
+            ?????
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._formatFile">
+            <summary>
+            Type de format (html,excel)
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.PrivateWebPage._dataSource">
+            <summary>
+            Source de données
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.PrivateWebPage.#ctor">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.PrivateWebPage.WebPage_Load(System.Object,System.EventArgs)">
+            <summary>
+            Chargement de la page
+            </summary>
+            <param name="sender">Objet source</param>
+            <param name="e">Arguments</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.PrivateWebPage.WebPage_Unload(System.Object,System.EventArgs)">
+            <summary>
+            Déchargement de la page
+            </summary>
+            <param name="sender">Objet source</param>
+            <param name="e">Arguments</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.PrivateWebPage.OnInit(System.EventArgs)">
+            <summary>
+            Initialisation
+            </summary>
+            <param name="e">Arguments</param>
+        </member>
+        <member name="T:TNS.AdExpress.Web.UI.WebPage">
+            <summary>
+            Base class for public and private AdExpress page
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.WebPage._siteLanguage">
+            <summary>
+            Langue du site
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Web.UI.WebPage._useThemes">
+            <summary>
+            Specify whereas to use themes or not
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.WebPage.#ctor">
+            <summary>
+            constructor
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.WebPage.OnPreInit(System.EventArgs)">
+            <summary>
+            On preinit event
+            </summary>
+            <param name="e">Arguments</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.WebPage.OnLoad(System.EventArgs)">
+            <summary>
+            On Load event
+            </summary>
+            <param name="e">Arguments</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.WebPage.AddScritps">
+            <summary>
+            Add javascripts
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.WebPage.OnError(System.EventArgs)">
+            <summary>
+            Evènement d'erreur
+            </summary>
+            <param name="e">Argument</param>
+        </member>
+        <member name="M:TNS.AdExpress.Web.UI.WebPage.manageCustomerError(System.Object,System.EventArgs)">
+            <summary>
+            Traite l'affichage d'erreur en fonction du mode compilation
+            </summary>
         </member>
     </members>
 </doc>

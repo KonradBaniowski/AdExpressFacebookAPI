@@ -8,7 +8,7 @@
 <div class="row">
     @Html.Partial("Presentation")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-        <div class="row">
+        <div class="row row-sm">
             <div class="col-xs-1 padder-v margin-b text-left">&nbsp;</div>
             <div class="col-xs-10 padder-v margin-b text-left">
                 <center>
@@ -17,17 +17,8 @@
                         {
                             if (navigation.IsActive)
                             {
-                                if (navigation.Id > 1)
-                                {
-                                    <li class="tl-item">
-                                        <div class="tl-wrap tl-active">
-                                            <div class="tl-content">
-                                            </div>
-                                        </div>
-                                    </li>
-                                }
                                 <li class="tl-header">
-                                    <a class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                                    <a id=@(navigation.Description) class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
                                         <i class="fa fa-file-text"></i>
                                     </a>
                                     <p class="lead">@navigation.Title</p>
@@ -35,28 +26,26 @@
                             }
                             else
                             {
-                                if (navigation.Id > 1)
-                                {
-                                    <li class="tl-item">
-                                        <div class="tl-wrap">
-                                            <div class="tl-content">
-                                            </div>
-                                        </div>
-                                    </li>
-                                }
                                 <li class="tl-header">
-                                    <a class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                                    <a id=@(navigation.Description) class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
                                         <i class="fa fa-file-text"></i>
                                     </a>
                                     <p class="lead">@navigation.Title</p>
                                 </li>
                             }
+                            if (navigation.Id < Model.NavigationBar.Count())
+                            {
+                                <li class="tl-item">
+                                    <div class="tl-wrap tl-active">
+                                        <div class="tl-content">
+                                        </div>
+                                    </div>
+                                </li>
+                            }
                         }
                     </ul>
-
                 </center>
             </div>
-
         </div>
 
         <div class="clearfix"></div>

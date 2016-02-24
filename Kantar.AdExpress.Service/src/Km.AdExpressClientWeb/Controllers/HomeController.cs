@@ -18,11 +18,13 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IRightService _rightService;
         private IApplicationUserManager _userManager;
+        private IWebSessionService _webSessionService;
 
-        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager)
+        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService)
         {
             _userManager = applicationUserManager;
             _rightService = rightService;
+            _webSessionService = webSessionService;
         }
 
         public ActionResult Index()
@@ -115,18 +117,19 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(Home);
         }
 
-        public ActionResult About()
+        public void CurrentModule(int idModule)
         {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (idModule != 0)
+            {
+                var claim = new ClaimsPrincipal(User.Identity);
+                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                _webSessionService.SaveCurrentModule(idWebSession, idModule);
+            }
+            else
+            {
+                throw new Exception("Module pb");
+            }
+            //if here pb
         }
     }
 }

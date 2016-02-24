@@ -1,57 +1,273 @@
-﻿@model List<Km.AdExpressClientWeb.Models.MediaPlanNavigationNode>
+﻿@model Km.AdExpressClientWeb.Models.MediaSchedule.ResultsViewModel
 @{
     ViewBag.Title = "Results";
 }
 
 
+<!-- Infragistics Combined CSS -->
+@*<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>*@
+@*<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>*@
+
+<!-- Infragistics Combined Scripts -->
 
 
 <div class="row">
     @Html.Partial("Presentation")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-        <div class="row">
-            <ul class="timeline">
-                @foreach (var navigation in Model)
-                {
-                    if (navigation.IsActive)
-                    {
-                        if (navigation.Id > 1)
+        <div class="row row-sm">
+            <div class="col-xs-1 padder-v margin-b text-left">&nbsp;</div>
+            <div class="col-xs-10 padder-v margin-b text-left">
+                <center>
+                    <ul class="timeline">
+                        @foreach (var navigation in Model.NavigationBar)
                         {
-                            <li class="tl-item">
-                                <div class="tl-wrap tl-active">
-                                    <div class="tl-content">
+                            if (navigation.IsActive)
+                            {
+                                <li class="tl-header">
+                                    <a id=@(navigation.Description) class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
+                                        <i class="fa fa-file-text"></i>
+                                    </a>
+                                    <p class="lead">@navigation.Title</p>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="tl-header">
+                                    <a id=@(navigation.Description) class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action,navigation.Controller, navigation.Id)">
+                                        <i class="fa fa-file-text"></i>
+                                    </a>
+                                    <p class="lead">@navigation.Title</p>
+                                </li>
+                            }
+                            if (navigation.Id < Model.NavigationBar.Count())
+                            {
+                                <li class="tl-item">
+                                    <div class="tl-wrap tl-active">
+                                        <div class="tl-content">
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
+                            }
                         }
-                        <li class="tl-header">
-                            <a class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
-                                <i class="fa fa-file-text"></i>
-                            </a>
-                            <p class="lead">@navigation.Title</p>
-                        </li>
-                    }
-                    else
-                    {
-                        if (navigation.Id > 1)
-                        {
-                            <li class="tl-item">
-                                <div class="tl-wrap">
-                                    <div class="tl-content">
-                                    </div>
-                                </div>
-                            </li>
-                        }
-                        <li class="tl-header">
-                            <a class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
-                                <i class="fa fa-file-text"></i>
-                            </a>
-                            <p class="lead">@navigation.Title</p>
-                        </li>
-                    }
-                }
-            </ul>
+                    </ul>
+                </center>
+            </div>
+        </div>
+     </div>
+   
+   
+</div>
+@section Scripts {
+    <script>
+        //{columnKey: 'Address', allowHiding: false, hidden: true}
 
-        </div>
-        </div>
-    </div>
+        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+        $(function () {
+            var cols = [];
+            var data = [];
+            //Mock Data
+            data[1] = [
+                //Level 1
+                { "ClassifId": 0, "PID": -1, "Level": "PRESSE", "Period": "2653400", "Pdm": "-", "j": "1", "F": "2", "M": "0" },
+                { "ClassifId": 1, "PID": -1, "Level": "TELEVISION", "Period": "455", "Pdm": "-", "j": "1", "F": "1", "M": "1" },
+
+                //Level 2
+                { "ClassifId": 4, "PID": 0, "Level": "MAGAZINES", "Period": "4444", "Pdm": "0", "j": "0", "F": "1", "M": "0" },
+                { "ClassifId": 5, "PID": 1, "Level": "TV NATIONALE", "Period": "524545", "Pdm": "0", "j": "1", "F": "1", "M": "1" },
+
+                //Level 3
+                { "ClassifId": 8, "PID": 4, "Level": " AUTO JOURNAL", "Period": "45442", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
+                { "ClassifId": 9, "PID": 4, "Level": "EXPRESS", "Period": "455765", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
+
+               { "ClassifId": 10, "PID": 5, "Level": "TF1", "Period": "585454", "Pdm": "4", "j": "1", "F": "2", "M": "1" },
+               { "ClassifId": 11, "PID": 5, "Level": "FRANCE 2", "Period": "4572", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
+
+                //Level 4
+                { "ClassifId": 12, "PID": 8, "Level": "444444", "Period": "43434", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
+                { "ClassifId": 13, "PID": 8, "Level": "555555", "Period": "424", "Pdm": "2", "j": "1", "F": "1", "M": "0" },
+                { "ClassifId": 14, "PID": 9, "Level": "666666", "Period": "45454", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
+
+                { "ClassifId": 15, "PID": 10, "Level": "777777", "Period": "4554", "Pdm": "3", "j": "1", "F": "2", "M": "0" },
+                { "ClassifId": 16, "PID": 11, "Level": "888888", "Period": "5454", "Pdm": "3", "j": "1", "F": "2", "M": "0" }
+
+            ];
+
+
+            data[0] =
+            [
+                    { headerText: "Id", key: "ClassifId", width: "200px", dataType: "number", allowHiding: false, hidden: true, template: "" },
+                    { headerText: "SUPPORTS", key: "Level", width: "220px", dataType: "string", template: "" },
+                    { headerText: "01/01/2016 - 31/01/2016", key: "Period", width: "220px", dataType: "number", template: "" },
+                    { headerText: "PDM", key: "Pdm", width: "130px", dataType: "number", template: "" },
+
+                    {
+                        headerText: "Janvier 2016",
+                        group: [
+                             {
+                                 headerText: "01",
+                                 group: [
+                                     { headerText: "L", key: "j", width: "130px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{/if}} ></span>" }
+                                 ]
+                             },
+                              {
+                                  headerText: "02",
+                                  group: [
+                                      { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{/if}} ></span>" }
+                                  ]
+                              },
+                               {
+                                   headerText: "03",
+                                   group: [
+                                       { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{/if}} ></span>" }
+                                   ]
+                               }
+                        ]
+                    }
+
+            ];
+
+
+            $("#grid").igTreeGrid({
+                dataSource: data,
+                primaryKey: "ClassifId",
+                width: "100%",
+                defaultColumnWidth: 200,
+                avgRowHeight: 60,
+                autoGenerateColumns: true,
+            });
+
+
+
+            $("#changeColSett").click(function () {
+
+                for (var key1 in data[0]) {
+
+                    if (data[0][key1].group != null) {
+                        cols.push({
+                            headerText: data[0][key1].headerText,
+                            group: data[0][key1].group
+
+                        })
+                    } else {
+                        cols.push({
+                            headerText: data[0][key1].headerText,
+                            key: data[0][key1].key,
+                            width: data[0][key1].width,
+                            dataType: data[0][key1].dataType,
+                            allowHiding: data[0][key1].allowHiding,
+                            hidden: data[0][key1].hidden,
+                            template: data[0][key1].template,
+
+                        })
+                    }
+
+                }
+                $("#grid").igTreeGrid("destroy");
+                $("#grid").igTreeGrid({
+                    dataSource: data[1],
+                    primaryKey: "ClassifId",
+                    foreignKey: "PID",
+                    autoGenerateColumns: false,
+                    columns: cols,
+                    features: [
+                   {
+                       name: "MultiColumnHeaders"
+                   },
+                       {
+                           name: "Paging",
+                           mode: "allLevels",
+                           pageSize: 2,
+                           currentPageIndex: 1
+                         
+                       }
+                    ]
+                })
+            });
+
+        });
+    </script>
+}
+
+@*<script>
+        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+        $(function () {
+            alert("aze")
+            ;
+        });
+
+        //$(function () {
+        //    var data = [];
+        //    data[1] = [
+        //        { "TestH1": 0, "PID": -1, "Level": "Andrew", "Period": "Fuller", "Pdm": "-" },
+        //        { "TestH1": 1, "PID": -1, "Level": "Jonathan", "Period": "Smith", "Pdm": "-" },
+        //        { "TestH1": 2, "PID": -1, "Level": "Nancy", "Period": "Davolio", "Pdm": "-" },
+        //        { "TestH1": 3, "PID": -1, "Level": "Steven", "Period": "Buchanan", "Pdm": "-" },
+        //        // sub of ID 1
+        //        { "TestH1": 4, "PID": 0, "Level": "Janet", "Period": "Leverling", "Pdm": "0" },
+        //        { "TestH1": 5, "PID": 0, "Level": "Laura", "Period": "Callahan", "Pdm": "0" },
+        //        { "TestH1": 6, "PID": 0, "Level": "Margaret", "Period": "Peacock", "Pdm": "0" },
+        //        { "TestH1": 7, "PID": 0, "Level": "Michael", "Period": "Suyama", "Pdm": "0" },
+        //        // sub of ID 4
+        //        { "TestH1": 8, "PID": 4, "Level": "Anne", "Period": "Dodsworth", "Pdm": "4" },
+        //        { "TestH1": 9, "PID": 4, "Level": "Danielle", "Period": "Davis", "Pdm": "4" },
+        //        { "TestH1": 10, "PID": 4, "Level": "Robert", "Period": "King", "Pdm": "4" },
+        //        // sub of ID 2
+        //        { "TestH1": 11, "PID": 2, "Level": "Peter", "Period": "Lewis", "Pdm": "2" },
+        //        { "TestH1": 12, "PID": 2, "Level": "Ryder", "Period": "Zenaida", "Pdm": "2" },
+        //        { "TestH1": 13, "PID": 2, "Level": "Wang", "Period": "Mercedes", "Pdm": "2" },
+        //        // sub of ID 3
+        //        { "TestH1": 14, "PID": 3, "Level": "Theodore", "Period": "Zia", "Pdm": "3" },
+        //        { "TestH1": 15, "PID": 3, "Level": "Lacota", "Period": "Mufutau", "Pdm": "3" },
+        //        // sub of ID 16
+        //        { "TestH1": 16, "PID": 15, "Level": "Jin", "Period": "Elliott", "Pdm": "16" },
+        //        { "TestH1": 17, "PID": 15, "Level": "Armand", "Period": "Ross", "Pdm": "16" },
+        //        { "TestH1": 18, "PID": 15, "Level": "Dane", "Period": "Rodriquez", "Pdm": "16" },
+        //        // sub of ID 19
+        //        { "TestH1": 19, "PID": 18, "Level": "Declan", "Period": "Lester", "Pdm": "19" },
+        //        { "TestH1": 20, "PID": 18, "Level": "Bernard", "Period": "Jarvis", "Pdm": "19" },
+        //        // sub of ID 20
+        //        { "TestH1": 21, "PID": 20, "Level": "Jeremy", "Period": "Donaldson", "Pdm": "20" }
+        //    ];
+
+        //    data[0] = [
+        //        "TestH1",
+        //        "Level",
+        //        "Period"
+        //    ];
+
+
+
+        //    $("#grid").igTreeGrid({
+        //        dataSource: data,
+        //        primaryKey: "TestH1",
+        //        width: "100%",
+        //        defaultColumnWidth: 200,
+        //        avgRowHeight: 60,
+        //        autoGenerateColumns: true
+        //    });
+
+
+
+        //    $("#changeColSett").click(function () {
+
+        //        for (var key1 in data[0]) {
+        //            colType = typeof (data[0][key1]);
+
+        //            cols.push({
+        //                headerText: key1,
+        //                key: key1,
+        //                width: '200px',
+        //                dataType: colType
+        //            })
+        //        }
+        //        $("#grid").igTreeGrid("destroy");
+        //        $("#grid").igTreeGrid({
+        //            dataSource: data[1],
+        //            autoGenerateColumns: false,
+        //            columns: cols
+        //        })
+        //    });
+
+        //});
+    </script>*@

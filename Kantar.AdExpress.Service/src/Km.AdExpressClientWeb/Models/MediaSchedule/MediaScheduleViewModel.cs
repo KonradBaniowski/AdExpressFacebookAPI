@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
 
-namespace Km.AdExpressClientWeb.Models
+namespace Km.AdExpressClientWeb.Models.MediaSchedule
 {
     public class MediaSelectionViewModel
     {
@@ -16,7 +16,7 @@ namespace Km.AdExpressClientWeb.Models
 
         public List<MediaPlanNavigationNode> NavigationBar { get; set; }
 
-        public string ErrorMessage { get; set; }
+        public ErrorMessage ErrorMessage { get; set; }
 
     }
 
@@ -45,9 +45,18 @@ namespace Km.AdExpressClientWeb.Models
 
         public string Controller { get; set; }
 
-        public string Icon { get; set; }
-
         
+    }
+
+    public class ErrorMessage
+    {
+        public string EmptySelection { get; set; }
+
+        public string SearchErrorMessage { get; set; }
+
+        public string SocialErrorMessage { get; set; }
+
+        public string UnitErrorMessage { get; set; }
     }
 
     #region Temp classes
