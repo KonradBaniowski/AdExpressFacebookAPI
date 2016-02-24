@@ -46,6 +46,12 @@ namespace Km.AdExpressClientWeb
                       "~/Content/themes/base/theme.css",
                       "~/Content/bootstrap-select.css",
                       "~/Content/treegrid.css"));
+
+            bundles.Add(new StyleBundle("~/IgniteUI/css").Include(
+                     "~/IgniteUI/css/themes/kantar/infragistics.theme.css",
+                     "~/IgniteUI/css/structure/infragistics.css"));
+
+
         }
     }
 }
