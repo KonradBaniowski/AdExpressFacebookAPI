@@ -46,6 +46,7 @@
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
     <Compile Include="BusinessService\IApplicationUserManager.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
+    <Compile Include="BusinessService\IUniverseService.cs" />
     <Compile Include="BusinessService\IMediaService.cs" />
     <Compile Include="BusinessService\IWebSessionService.cs" />
     <Compile Include="BusinessService\SignInStatus.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="BusinessService\IRightService.cs" />
     <Compile Include="Domain\Media.cs" />
     <Compile Include="Domain\Module.cs" />
+    <Compile Include="Domain\UniverseItem.cs" />
     <Compile Include="Domain\WebSessionResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
