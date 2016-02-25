@@ -71,6 +71,7 @@
     <Compile Include="Domain\Mau\ModuleAssignment.cs" />
     <Compile Include="Domain\Mau\RightAssignment.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
+    <Compile Include="Domain\UniversBranch.cs" />
     <Compile Include="Domain\Media.cs" />
     <Compile Include="Domain\Module.cs" />
     <Compile Include="Domain\UniverseItem.cs" />

@@ -70,6 +70,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
-
+        public List<UniversBranch> GetBranches(string webSessionId)
+        {
+            var result = new List<UniversBranch>();
+            return result;
+        }
     }
 }

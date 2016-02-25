@@ -34,32 +34,49 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
         private IMediaSchedule _mediaSchedule;
+        private IUniverseService _universService;
         private const string _controller = "MediaSchedule";
-        #region CODES OF MARKET'S LABELS
-        private const long KeyWordDescriptionCode = 2287;
-        private const long KeyWordLabelCode = 893;
-        private const long ErrorMessageCode = 930;
-        private const long OverLimitMsgCode = 2286;
-        private const long SecurityMsg = 2285;
+        #region CODES OF MARKET'S LABELS  
+        private const long SaveUniversCode = 769;
+        private const long LoadUniversCode = 770;
+        private const long UserSavedUniversCode = 893;        
         private const long ExceptionMsg = 922;
+        private const long ErrorMsgCode = 930;
+        private const long NoSavedUniversCode = 930;
+        private const long KeyWordLabelCode = 972;
         private const long Capacity = 1000;
+        private const long ExcludeCode = 2269;
+        private const long IncludeCode = 2270;
+        private const long BranchLabelCode = 2272;
+        private const long ElementLabelCode = 2278;
+        private const long SecurityMsg = 2285;
+        private const long OverLimitMsgCode = 2286;
+        private const long KeyWordDescriptionCode = 2287;
+       
         #endregion
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaSchedule mediaSchedule)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaSchedule mediaSchedule, IUniverseService universService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
             _mediaSchedule = mediaSchedule;
+            _universService = universService;
         }
         public ActionResult Index()
         {
+            #region Init
             var model = new MarketViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var _webSession = (WebSession)WebSession.Load(idWebSession);
-            //model.KeyWordLabel = _marketService.GetLabels();
-            var a = GestionWeb.GetWebWord(855, _webSession.SiteLanguage);
+            var siteLanguage = ((WebSession)WebSession.Load(idWebSession)).SiteLanguage;
+            #endregion
+            #region Load each label's text in the appropriate language
+            model.Labels = LoadPageLabels(siteLanguage);           
+            #endregion
+            #region Load Branches
+            //model.Branches = _universService.
+            #endregion
             var marketNode = new MediaPlanNavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);
@@ -344,6 +361,24 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             #endregion
             return model;
+        }
+
+        private Labels LoadPageLabels (int siteLanguage)
+        {
+            var result = new Labels
+            {
+                KeyWordLabel = GestionWeb.GetWebWord(KeyWordLabelCode, siteLanguage),
+                KeyWordDescription = GestionWeb.GetWebWord(KeyWordDescriptionCode, siteLanguage),
+                ErrorMessage = GestionWeb.GetWebWord(ErrorMsgCode, siteLanguage),
+                BranchLabel = GestionWeb.GetWebWord(BranchLabelCode, siteLanguage),
+                NoSavedUnivers = GestionWeb.GetWebWord(NoSavedUniversCode, siteLanguage),
+                UserSavedUniversLabel = GestionWeb.GetWebWord(UserSavedUniversCode, siteLanguage),
+                Include = GestionWeb.GetWebWord(IncludeCode,siteLanguage),
+                Exclude = GestionWeb.GetWebWord(ExcludeCode,siteLanguage),
+                LoadUnivers = GestionWeb.GetWebWord(LoadUniversCode,siteLanguage),
+                Save =GestionWeb.GetWebWord(SaveUniversCode,siteLanguage)
+            };
+            return result;
         }
         #endregion
 
