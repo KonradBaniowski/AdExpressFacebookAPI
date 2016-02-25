@@ -1,5 +1,6 @@
 ﻿using Kantar.AdExpress.Service.Core.Domain;
 using System.Collections.Generic;
+using TNS.Classification.Universe;
 
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
@@ -10,7 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 
         List<UniverseItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession);
 
-        List<UniversBranch> GetBranches(string webSessionId);
+        UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage);
 
     }
 }

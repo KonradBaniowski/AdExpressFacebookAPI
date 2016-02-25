@@ -68,15 +68,15 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Init
             var model = new MarketViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
-            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var siteLanguage = ((WebSession)WebSession.Load(idWebSession)).SiteLanguage;
-            #endregion
-            #region Load each label's text in the appropriate language
-            model.Labels = LoadPageLabels(siteLanguage);           
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            //model.Branches = _universService.
+            var branches = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
             #endregion
+            #region Load each label's text in the appropriate language
+            model.Labels = LoadPageLabels(branches.SiteLanguage);           
+            #endregion
+            
             var marketNode = new MediaPlanNavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);

@@ -13,4 +13,12 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public int LabelId { get; set; }
         public bool IsSelected { get; set; }
     }
+
+    public class UniversBranchResult
+
+    {
+        List<UniversBranch> Branches { get; set; }
+        public int SiteLanguage { get; set; }
+        public int DefaultBranchId { get; set; }
+    }
 }
