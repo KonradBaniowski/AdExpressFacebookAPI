@@ -35,6 +35,15 @@ namespace Km.AdExpressClientWeb.Controllers
         private IWebSessionService _webSessionService;
         private IMediaSchedule _mediaSchedule;
         private const string _controller = "MediaSchedule";
+        #region CODES OF MARKET'S LABELS
+        private const long KeyWordDescriptionCode = 2287;
+        private const long KeyWordLabelCode = 893;
+        private const long ErrorMessageCode = 930;
+        private const long OverLimitMsgCode = 2286;
+        private const long SecurityMsg = 2285;
+        private const long ExceptionMsg = 922;
+        private const long Capacity = 1000;
+        #endregion
 
         private string icon;
         public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaSchedule mediaSchedule)
@@ -45,8 +54,14 @@ namespace Km.AdExpressClientWeb.Controllers
         }
         public ActionResult Index()
         {
+            var model = new MarketViewModel();
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var _webSession = (WebSession)WebSession.Load(idWebSession);
+            //model.KeyWordLabel = _marketService.GetLabels();
+            var a = GestionWeb.GetWebWord(855, _webSession.SiteLanguage);
             var marketNode = new MediaPlanNavigationNode { Position = 1 };
-            var model = LoadNavBar(marketNode.Position);
+            model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);
         }
 

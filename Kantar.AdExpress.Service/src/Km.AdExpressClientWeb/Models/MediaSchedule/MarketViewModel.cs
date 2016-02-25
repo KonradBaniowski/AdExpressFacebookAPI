@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using TNS.Classification.Universe;
 
 namespace Km.AdExpressClientWeb.Models.MediaSchedule
@@ -16,6 +17,8 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public string BranchLabel { get; set; }//
         public Dimension Dimension { get; set; }
         public List<UniversBranch> Branches { get; set; }
+        public List<SelectListItem> SavedUnivers { get; set; }
+        public List<MediaPlanNavigationNode> NavigationBar { get; set; }
 
     }
 
@@ -44,7 +47,7 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
     public class UniversItem
     {
         
-        public long ID { get; set; }
+        public long Id { get; set; }
         public int LabelId { get; set; }
         public string Label { get; set; }
 
