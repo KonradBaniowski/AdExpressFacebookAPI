@@ -66,18 +66,14 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.dll</HintPath>
+    <Reference Include="TNS.FrameWork">
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.DB.dll</HintPath>
+    <Reference Include="TNS.FrameWork.DB">
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.18774, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="TNS.FrameWork.WebResultUI">
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
