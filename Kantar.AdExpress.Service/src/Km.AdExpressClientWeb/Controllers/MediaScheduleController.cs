@@ -16,9 +16,15 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Date;
 using TNS.AdExpressI.Date.DAL;
+using TNS.AdExpressI.MediaSchedule;
+using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -27,13 +33,15 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
+        private IMediaSchedule _mediaSchedule;
         private const string _controller = "MediaSchedule";
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaSchedule mediaSchedule)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
+            _mediaSchedule = mediaSchedule;
         }
         public ActionResult Index()
         {
@@ -231,6 +239,13 @@ namespace Km.AdExpressClientWeb.Controllers
                 NavigationBar = LoadNavBar(resultNode.Position)
             };            
             return View(model);
+        }
+
+        public JsonResult MediaScheduleResult()
+        {
+            var data = _mediaSchedule.GetMediaScheduleData("");
+
+            return null;
         }
 
         public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)

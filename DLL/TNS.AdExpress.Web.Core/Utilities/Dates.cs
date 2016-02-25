@@ -36,6 +36,65 @@ namespace TNS.AdExpress.Web.Core.Utilities
     /// </summary>
     public class Dates
     {
+        #region YYYYMM => "Month, Year" ou YYYYSS => "Week nn, Year"
+        /// <summary>
+        /// Transforme une periode  sous forme YYYYMM ou YYYYSS en "Month, Yeaar" ou "Week nn, Year"
+        /// </summary>
+        /// <param name="webSession">Session utilisateur</param>
+        /// <param name="period">Période à "traduire"</param>
+        /// <returns>"Month, Year" ou "Week nn, Year"</returns>
+        public static string getPeriodTxt(WebSession webSession, string period)
+        {
+
+            StringBuilder txt = new StringBuilder(20);
+
+            // Texte de période
+            if (webSession.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.weekly)
+            {
+                txt.AppendFormat("{0} {1} ({2})", GestionWeb.GetWebWord(848, webSession.SiteLanguage), period.Substring(4, 2), period.Substring(0, 4));
+            }
+            else
+            {
+                txt.AppendFormat("{0} {1}", GetMonthLabel(Convert.ToInt32(period.Substring(4, 2)), webSession.SiteLanguage), period.Substring(0, 4));
+            }
+            return txt.ToString();
+
+        }
+        #endregion
+
+        #region Compare two dates and return the greater
+        /// <summary>
+        /// Compare two dates and return the greater
+        /// </summary>
+        /// <param name="date1">First Date Param</param>
+        /// <param name="date2">Second Date Parm</param>
+        /// <returns>Greater Date</returns>
+        public static DateTime Max(DateTime date1, DateTime date2)
+        {
+            if (date1.CompareTo(date2) >= 0)
+            {
+                return date1;
+            }
+            return date2;
+        }
+        #endregion
+
+        #region Compare two dates and return the smaller
+        /// <summary>
+        /// Compare two dates and return the smalelr
+        /// </summary>
+        /// <param name="date1">First Date Param</param>
+        /// <param name="date2">Second Date Parm</param>
+        /// <returns>Smaller Date</returns>
+        public static DateTime Min(DateTime date1, DateTime date2)
+        {
+            if (date1.CompareTo(date2) >= 0)
+            {
+                return date2;
+            }
+            return date1;
+        }
+        #endregion
 
         #region Get Period Label
        
