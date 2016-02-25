@@ -20,9 +20,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession CustomerSession = null;
 
-        public MediaScheduleData GetMediaScheduleData(string idWebSession)
+        public object[,] GetMediaScheduleData(string idWebSession)
         {
-            CustomerSession = (WebSession)WebSession.Load("201602241628131084");
+            CustomerSession = (WebSession)WebSession.Load("201602251057141084");
 
             TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
             MediaScheduleData result = null;
@@ -101,9 +101,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
                 | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             mediaScheduleResult.Module = module;
-            result = mediaScheduleResult.GetHtml();
-
-            return result;
+            return mediaScheduleResult.ComputeData();
         }
     }
 }

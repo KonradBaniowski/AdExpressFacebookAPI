@@ -23,13 +23,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public List<UniverseItem> GetItems(int universeLevelId, string keyWord, string idSession)
         {
             webSession = (WebSession)WebSession.Load(idSession);
-            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+            //CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[1];
             param[0] = webSession;
             IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
                 string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
               cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.
+            GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
             DataTable data = classficationDAL.GetItems(universeLevelId, keyWord).Tables[0];
             var result = new List<UniverseItem>();
             foreach (var item in data.AsEnumerable())
@@ -44,16 +47,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
+
         public List<UniverseItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession)
         {
             webSession = (WebSession)WebSession.Load(idSession);
-            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[1];
             param[0] = webSession;
             IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
                 string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
               cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
             DataTable data = classficationDAL.GetItems(levelId, selectedClassificationItemsIds, selectedLevelId).Tables[0];
             var result = new List<UniverseItem>();
             foreach (var item in data.AsEnumerable())

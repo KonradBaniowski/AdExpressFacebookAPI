@@ -9,6 +9,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IMediaSchedule
     {
-        MediaScheduleData GetMediaScheduleData(string idWebSession);
+        object[,] GetMediaScheduleData(string idWebSession);
     }
 }

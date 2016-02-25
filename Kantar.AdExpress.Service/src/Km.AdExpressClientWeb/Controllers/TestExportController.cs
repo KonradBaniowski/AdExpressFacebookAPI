@@ -12,17 +12,21 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
+        private IMediaSchedule _mediaSchedule;
 
         private string icon;
-        public TestExportController(IMediaService mediaService, IWebSessionService webSessionService)
+        public TestExportController(IMediaService mediaService, IWebSessionService webSessionService, IMediaSchedule mediaSchedule)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
+            _mediaSchedule = mediaSchedule;
         }
 
         // GET: TestExport
         public ActionResult Index()
         {
+            var data = _mediaSchedule.GetMediaScheduleData("");
+
             return View();
         }
     }
