@@ -37,6 +37,8 @@ namespace TNS.AdExpressI.Classification.DAL
     /// execution or building of the query to search classification items</exception>
     public interface IClassificationDAL
     {
+        string DBSchema { set; }
+
 
         /// <summary>
         /// This method provides SQL queries to get the media classification level's items.
