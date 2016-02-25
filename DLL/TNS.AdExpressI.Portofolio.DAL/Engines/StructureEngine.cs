@@ -13,7 +13,7 @@ using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
-using WebFunctions = TNS.AdExpress.Web.Functions;
+//using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
@@ -22,13 +22,14 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 
-using TNS.AdExpress.Web.Exceptions;
+//using TNS.AdExpress.Web.Exceptions;
 using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -152,7 +153,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			#region construction de la requête
 			try {
 				//Table name
-				tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+				tableName = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 				
 			}
 			catch (Exception) {
@@ -187,7 +188,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					#region Product Rights
 
 					//Access Rights
-					sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+					sql.Append(SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
 
 					//list products hap
 					string listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
@@ -205,7 +206,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
 					#region Media Rights
-					sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+					sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
 					#endregion
 
 					#region Media selection
@@ -243,7 +244,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// </summary>		
 		/// <returns>SQL</returns>
 		protected virtual string GetStructFields(string hourIntevalKey) {
-            return " '" + hourIntevalKey + "' as HourInterval," + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            return " '" + hourIntevalKey + "' as HourInterval," + SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 		}
 		#endregion
 
@@ -298,7 +299,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			#region Build query
 			try {
 				//Table name
-                tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+                tableName = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 				
 			}
 			catch (Exception) {
@@ -336,10 +337,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					#region Products Rights
 
 					//Access Rights
-					sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+					sql.Append(SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
 
 					//list products hap
-					string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+					string listProductHap = SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 					if (listProductHap != null && listProductHap.Length > 0)
 						sql.Append(listProductHap);
 
@@ -354,7 +355,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
 					#region Media Rights
-					sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+					sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
 					#endregion
 
 					#region Media selection
@@ -396,7 +397,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// <param name="ventilation">format or coulor or location or encarts</param>
 		/// <returns>SQL</returns>
 		protected virtual string GetPressStructFields(PortofolioStructure.Ventilation ventilation) {
-            string temp = "'" + ventilation.GetHashCode() + "' as ventilationType, " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle4M, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix)+", ";
+            string temp = "'" + ventilation.GetHashCode() + "' as ventilationType, " + SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle4M, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix)+", ";
 			switch (ventilation) {
 				case PortofolioStructure.Ventilation.color:
 					return temp + " color as ventilation";
