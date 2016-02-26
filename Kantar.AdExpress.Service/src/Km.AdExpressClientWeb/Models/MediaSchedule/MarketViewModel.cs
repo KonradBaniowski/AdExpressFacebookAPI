@@ -46,13 +46,15 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 
     public class UniversLevel
     {
-        public long LevelId { get; set; }
+        public long Id { get; set; }
         public int LabelId { get; set; }
         public string Label { get; set; }
-        public int Capacity { get; set; }
+        public long Capacity { get; set; }
         public string OverLimitMessage { get; set; }//2286
         public string SecurityMessage { get; set; }//2285
         public string ExceptionMessage { get; set; }//922
+
+        public long BranchId { get; set; }
 
         public List<UniversItem> UniversItems { get; set; }
     }
@@ -65,4 +67,5 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public string Label { get; set; }
 
     }
+
 }
