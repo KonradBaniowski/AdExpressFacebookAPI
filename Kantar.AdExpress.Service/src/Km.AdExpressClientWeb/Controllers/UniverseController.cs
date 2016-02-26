@@ -30,11 +30,11 @@ namespace Km.AdExpressClientWeb.Controllers
         /// <param name="keyWord"></param>
         /// <param name="branchId"></param>
         /// <returns></returns>
-        public JsonResult GetBranches(string keyWord, int branchId)
+        public JsonResult GetBranches(string keyWord, int universeId)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var model = _universeService.GetItems(branchId, keyWord, idSession);
+            var model = _universeService.GetItems(universeId, keyWord, idSession);
             return Json(new { data = model } , JsonRequestBehavior.AllowGet);
         }
 
