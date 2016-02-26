@@ -481,7 +481,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// Compute data from database
         /// </summary>
         /// <returns>Formatted table ready for UI design</returns>
-        protected virtual object[,] ComputeData()
+        public virtual object[,] ComputeData()
         {
             object[,] oTab = null;
             GenericDetailLevel detailLevel = GetDetailsLevelSelected(); ;

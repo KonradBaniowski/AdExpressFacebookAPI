@@ -54,20 +54,15 @@ namespace Kantar.AdExpress.Bootstrapper
 
             #endregion
 
-
             //DATA
             builder.RegisterType<AdExpressContext>().AsSelf().InstancePerRequest();
             builder.RegisterType<IdentityContext>().AsSelf();
             builder.RegisterType<AdExpressUnitOfWork>().As<IUnitOfWork>();
-            //builder.RegisterType<LoginService>().As<ILoginService>();
-            //builder.RegisterType<RightService>().As<IRightService>();
-            //builder.RegisterAssemblyTypes(TypeOf(LoginService))
             builder.RegisterAssemblyTypes(Assembly.Load("Kantar.AdExpress.Service.BusinessLogic")).AsImplementedInterfaces();
 
             //BUILD
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-
 
             //API 
             //var resolver = new AutofacWebApiDependencyResolver(container);

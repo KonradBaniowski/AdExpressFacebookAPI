@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Classification.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.Classification.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
