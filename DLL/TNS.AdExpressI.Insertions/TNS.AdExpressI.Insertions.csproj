@@ -68,13 +68,13 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TNS.FrameWork">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.DB">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.WebResultUI">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
