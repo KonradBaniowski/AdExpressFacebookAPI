@@ -40,7 +40,7 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public int Id { get; set; }
         public string Label { get; set; }
         public int LabelId { get; set; }
-        public bool IsSelected { get; set; } 
+        public bool IsSelected { get; set; }
         public List<UniversLevel> UniversLevels { get; set; }
     }
 

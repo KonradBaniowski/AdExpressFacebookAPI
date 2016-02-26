@@ -23,9 +23,9 @@
                 <div class="input-group">
                     <input type="text" class="form-control recherche" placeholder="Recherche" aria-describedby="basic-addon2">
                     <div class="input-group-btn dropdown" dropdown="">
-                        <button type="button" class="btn btn-default select-recherche" data-toggle="dropdown">Annonceur 1 <span class="caret"></span></button>
+                        <button type="button" class="btn btn-default select-recherche" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p=>p.IsSelected).Label <span class="caret"></span></button>
                         <ul class="dropdown-menu bg-blue pull-right">
-                            @foreach (var item in Model.Branches)
+                            @foreach (var item in Model.Branches.Where(p=> !p.IsSelected))
                             {
                                 <li><a href="" data-id="@item.Id">@item.Label</a></li>
                             }

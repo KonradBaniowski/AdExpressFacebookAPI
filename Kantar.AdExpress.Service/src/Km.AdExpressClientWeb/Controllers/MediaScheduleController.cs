@@ -75,7 +75,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
             #endregion
             #region Load each label's text in the appropriate language
-            model.Labels = LoadPageLabels(result.SiteLanguage);           
+            model.Labels = LoadPageLabels(result.SiteLanguage);
+            model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);           
             #endregion
             
             var marketNode = new VM.MediaPlanNavigationNode { Position = 1 };
