@@ -62,7 +62,7 @@
   <ItemGroup>
     <Reference Include="AdExpress.Localization, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\AdExpress.Localization.dll</HintPath>
+      <HintPath>..\..\Libs\AdExpress.Localization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
