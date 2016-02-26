@@ -23,9 +23,9 @@
                 <div class="input-group">
                     <input type="text" class="form-control recherche" placeholder="Recherche" aria-describedby="basic-addon2">
                     <div class="input-group-btn dropdown" dropdown="">
-                        <button type="button" class="btn btn-default select-recherche" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p=>p.IsSelected).Label <span class="caret"></span></button>
+                        <button type="button" class="btn btn-default select-recherche" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
                         <ul class="dropdown-menu bg-blue pull-right">
-                            @foreach (var item in Model.Branches.Where(p=> !p.IsSelected))
+                            @foreach (var item in Model.Branches.Where(p => !p.IsSelected))
                             {
                                 <li><a href="" data-id="@item.Id">@item.Label</a></li>
                             }
@@ -44,14 +44,15 @@
                     <span class="badge blue bg-light pull-right">122</span>
                     <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; Résultats</h4>
                 </div>
-                <div class="head-famille"><h5 class="famille blue">GROUPE DE SOCIÉTÉS<span class="badge bg-blue black">36</span></h5></div>
-                <div class="panel-body">
-                    TRY
-                </div>
-                <div class="head-famille"><h5 class="famille blue">ANNONCEURS<span class="badge bg-blue black">36</span></h5></div>
-                <div class="panel-body">
-                    TRY
-                </div>
+                <div id="groupSelectable1" class="panel panel-default"></div>
+                @*<div class="head-famille"><h5 class="famille blue">GROUPE DE SOCIÉTÉS<span class="badge bg-blue black">36</span></h5></div>
+                    <div class="panel-body">
+                        TRY
+                    </div>
+                    <div class="head-famille"><h5 class="famille blue">ANNONCEURS<span class="badge bg-blue black">36</span></h5></div>
+                    <div class="panel-body">
+                        TRY
+                    </div>*@
 
             </div>
         </div>
@@ -546,3 +547,7 @@
     </div>
 </div>
 
+
+@section scripts {
+    @Scripts.Render("~/bundles/universe")
+}

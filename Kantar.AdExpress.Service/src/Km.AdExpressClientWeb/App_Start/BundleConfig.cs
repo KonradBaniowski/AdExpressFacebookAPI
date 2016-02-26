@@ -36,6 +36,10 @@ namespace Km.AdExpressClientWeb
             bundles.Add(new ScriptBundle("~/bundles/period-selector").Include(
                       "~/Scripts/period-selector.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/universe").Include(
+                       "~/Scripts/universe/listbox.js",
+                       "~/Scripts/universe/universe.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.css",
