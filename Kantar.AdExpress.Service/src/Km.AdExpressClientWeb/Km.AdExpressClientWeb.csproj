@@ -127,26 +127,27 @@
     </Reference>
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Classification.dll</HintPath>
+      <HintPath>..\..\..\Libs\TNS.Classification.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.dll</HintPath>
+      <HintPath>..\..\..\Libs\TNS.FrameWork.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.Date">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.Date.dll</HintPath>
+    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\TNS.FrameWork.Date.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>..\..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Framework.Erasmus, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Framework.Erasmus.dll</HintPath>
+      <HintPath>..\..\..\Libs\TNS.Framework.Erasmus.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.Net.dll</HintPath>
+      <HintPath>..\..\..\Libs\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -492,7 +493,6 @@
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
-    <Content Include="Content\treegrid.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -717,6 +717,17 @@
     <Content Include="IgniteUI\css\themes\ios\images\ui-icons_fd472b_256x240.png" />
     <Content Include="IgniteUI\css\themes\ios\images\ui-icons_ffffff_256x240.png" />
     <Content Include="IgniteUI\css\themes\ios\infragistics.theme.css" />
+    <Content Include="IgniteUI\css\themes\kantar\images\icon_sprite.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igGrid\filter-icons-333333.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igGrid\filter-icons-FFFFFF.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igRating\ig-rating.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igVideoPlayer\igVideoPlayerIcons.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igVideoPlayer\igVPBackground.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igVideoPlayer\igVPBookmarkSprite.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-anim_basic_16x16.gif" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_222222_256x240.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_888888_256x240.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_ffffff_256x240.png" />
     <Content Include="IgniteUI\css\themes\kantar\infragistics.theme.css" />
     <Content Include="IgniteUI\css\themes\metro\images\icon_sprite.png" />
     <Content Include="IgniteUI\css\themes\metro\images\igGrid\filter-icons-858585.png" />

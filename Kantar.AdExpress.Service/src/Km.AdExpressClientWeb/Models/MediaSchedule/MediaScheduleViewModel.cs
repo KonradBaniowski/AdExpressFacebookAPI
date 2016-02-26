@@ -45,7 +45,10 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 
         public string Controller { get; set; }
 
-        
+        public string IconCssClass { get; set; }
+
+
+
     }
 
     public class ErrorMessage

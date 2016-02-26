@@ -13,7 +13,7 @@ using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
-using WebFunctions = TNS.AdExpress.Web.Functions;
+//using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
@@ -23,12 +23,13 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
 
-using TNS.AdExpress.Web.Exceptions;
+//using TNS.AdExpress.Web.Exceptions;
 using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -95,13 +96,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			try {
 				selectFields = GetFieldsDetailMedia();
-				tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+				tableName = SQLGenerator.GetVehicleTableNameForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 				groupByFields = GetGroupByDetailMedia();
 				//listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 				listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 				product = GetProductData();
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+				mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 			}
 			catch (System.Exception err) {
 				throw (new PortofolioDALException("Impossible to init query parameters", err));
@@ -143,7 +144,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		protected virtual string GetFieldsDetailMedia() {
 			string sql = "";
 
-			sql = WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle4M);
+			sql = SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle4M);
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.radioGeneral:

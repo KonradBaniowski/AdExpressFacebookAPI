@@ -19,7 +19,7 @@
                         }
                         <li class="tl-header">
                             <a id=@(navigation.Description) class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
-                                <i class="fa fa-file-text"></i>
+                                <i class="@(navigation.IconCssClass)"></i>
                             </a>
                             <p class="lead">@navigation.Title</p>
                         </li>
@@ -37,7 +37,7 @@
                         }
                         <li class="tl-header">
                             <a id=@(navigation.Description) class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
-                                <i class="fa fa-file-text"></i>
+                                <i class="@(navigation.IconCssClass)"></i>
                             </a>
                             <p class="lead">@navigation.Title</p>
                         </li>

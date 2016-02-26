@@ -10,7 +10,7 @@ using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
-using WebFunctions = TNS.AdExpress.Web.Functions;
+//using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
@@ -20,6 +20,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -154,7 +155,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 					if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
 						sql = "";
-						sql += " select " + WebFunctions.SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
+						sql += " select " + SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
 						sql += " from (";
 						sql += sqlDataVehicle;
 						sql += " UNION ";
@@ -196,10 +197,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			//Data table			
 			switch (type) {
 				case DBConstantes.TableType.Type.dataVehicle4M:
-					table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+					table = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 					break;
 				case DBConstantes.TableType.Type.dataVehicle:
-                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
+                    table = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
 					break;
 				case DBConstantes.TableType.Type.webPlan:
 					table = WebApplicationParameters.GetDataTable(TableIds.monthData, _webSession.IsSelectRetailerDisplay).SqlWithPrefix; //DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
@@ -208,8 +209,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					throw (new PortofolioDALException("Table type unknown"));
 			}
 			string product = GetProductData();
-			string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-            string productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+			string mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            string productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
 			//list product hap
 			string listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 			string date = string.Empty;
@@ -226,7 +227,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			StringBuilder sql = new StringBuilder();
 
-            sql.AppendFormat("select {0}",WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, type));         
+            sql.AppendFormat("select {0}",SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, type));         
             if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan && !customerPeriod.IsSliding4M) {
                 sql.AppendFormat(", {0} as date_num ",date);
 			}
@@ -329,10 +330,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				// Table de données
 				switch (type) {
 					case DBConstantes.TableType.Type.dataVehicle4M:
-                        tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+                        tableName = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 						break;
 					case DBConstantes.TableType.Type.dataVehicle:
-                        tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
+                        tableName = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
 						break;
 					case DBConstantes.TableType.Type.webPlan:
 						tableName = WebApplicationParameters.GetDataTable(TableIds.monthData, _webSession.IsSelectRetailerDisplay).SqlWithPrefix;
@@ -341,9 +342,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						throw (new PortofolioDALException("Table type unknown"));
 				}
 				product = GetProductData();
-				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-				listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+				mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+				listProductHap = SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 				switch (type) {
 					case DBConstantes.TableType.Type.dataVehicle4M:
 					case DBConstantes.TableType.Type.dataVehicle:
@@ -464,9 +465,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 select = GetSelectDataEcran();
                 table = GetTableData(true);
                 product = GetProductData();
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+                mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                listProductHap = SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
             }
             catch (System.Exception err) {
                 throw (new PortofolioDALException("Impossible to build the request for GetEcranData()", err));
@@ -571,7 +572,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion);
             bool isAlertModule = _webSession.CustomerPeriodSelected.IsSliding4M;
             if (isAlertModule == false) {
-                DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_beginingDate, _webSession.PeriodType);
+                DateTime DateBegin = Dates.getPeriodBeginningDate(_beginingDate, _webSession.PeriodType);
                 if (DateBegin > DateTime.Now)
                     isAlertModule = true;
             }
@@ -582,9 +583,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 select = GetSelectSpotData();
                 table = GetTableData(isAlertModule);
                 product = GetProductData();
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+                mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                listProductHap = SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
             }
             catch (System.Exception err) {
                 throw (new PortofolioDALException("Impossible to build the request for GetSpotData()", err));
@@ -1039,10 +1040,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             #region Construction de la requête
             string table = GetTableData(true);
             string product = GetProductData();
-            string productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            string productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+            string mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
             //liste des produit hap
-            string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+            string listProductHap = SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
             StringBuilder sql = new StringBuilder();
 
             UnitInformation unitInformation = UnitsInformation.Get(UnitsInformation.DefaultCurrency);
@@ -1084,13 +1085,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             #region Construction de la requête
             string table = GetTableData(true);
             string product = GetProductData();
-            string productsRights = WebFunctions.SQLGenerator.
+            string productsRights = SQLGenerator.
                 GetClassificationCustomerProductRight(_webSession,
                 WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession,
+            string mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession,
                 WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
             //liste des produit hap
-            string listProductHap = WebFunctions.SQLGenerator.
+            string listProductHap = SQLGenerator.
                 GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,
                 WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 
@@ -1150,10 +1151,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             #region Construction de la requête
             try {
                 tableName = GetTableData(true);
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
                 product = GetProductData();
-                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                listProductHap = SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 
                 sql += " select count(id_product) as nbLines ";
                 sql += " from( ";
@@ -1216,10 +1217,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             #region Construction de la requête
             try {
                 tableName = GetTableData(true);
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
                 product = GetProductData();
-                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                listProductHap = SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 
                 sql += " select count(id_advertiser) as nbLines ";
                 sql += " from( ";
@@ -1355,10 +1356,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             #region Build query
             try {
                 tableName = GetTableData(true);
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+                mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
                 product = GetProductData();
-                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                listProductHap = SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 
                 sql.AppendFormat(" select sum({0}) as {1} "
                     , unitInformation.DatabaseField
@@ -1482,10 +1483,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             //Data table			
             switch(type) {
                 case DBConstantes.TableType.Type.dataVehicle4M:
-                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+                    table = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
                     break;
                 case DBConstantes.TableType.Type.dataVehicle:
-                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
+                    table = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
                     break;
                 case DBConstantes.TableType.Type.webPlan:
                     table = WebApplicationParameters.GetDataTable(TableIds.monthData, _webSession.IsSelectRetailerDisplay).SqlWithPrefix; //DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
@@ -1494,8 +1495,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     throw (new PortofolioDALException("Table type unknown"));
             }
             string product = GetProductData();
-            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-            string productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+            string mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            string productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
             //list product hap
             string listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             string date = string.Empty;
