@@ -646,6 +646,7 @@ input {
 
 .open .dropdown-menu.bg-blue {
     background-color: rgba(0,193,255,1);
+    min-width:150px;
 }
 
     .open .dropdown-menu.bg-blue > li > a {

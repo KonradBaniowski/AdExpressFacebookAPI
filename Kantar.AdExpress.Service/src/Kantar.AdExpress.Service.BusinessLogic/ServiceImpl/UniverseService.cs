@@ -13,6 +13,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Classification.DAL;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Translation;
+using AutoMapper;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -20,6 +21,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession webSession = null;
         private const int MarketSelectionPageId = 2;// /Private/Helps/UniverseProductSelectionHelp.aspx
+        private const long Capacity = 1000;
+        private const long ExceptionMsg = 922;
+        private const long SecurityMsg = 2285;
+        private const long OverLimitMsgCode = 2286;
 
         public List<UniverseItem> GetItems(int universeLevelId, string keyWord, string idSession)
         {
@@ -77,7 +82,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             var result = new UniversBranchResult
             {
-                Branches= new List<UniversBranch>()
+                Branches = new List<UniversBranch>()
             };
             webSession = (WebSession)WebSession.Load(webSessionId);
             result.SiteLanguage = webSession.SiteLanguage;
@@ -134,11 +139,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //}
             if (_allowedBranchesIds.Any())
             {
-                foreach(var id in _allowedBranchesIds)
+                foreach (var id in _allowedBranchesIds)
                 {
-                    var branch = new UniversBranch { Id = id };
+                    var domainBranch = UniverseBranches.Get(id);
+                    var branch = new UniversBranch
+                    {
+                        Id = id,
+                        UniversLevels = new List<UniversLevel>()
+                    };
                     branch.IsSelected = (id == result.DefaultBranchId);
-                    branch.Label = GestionWeb.GetWebWord(UniverseBranches.Get(id).LabelId, result.SiteLanguage);
+                    branch.Label = GestionWeb.GetWebWord(domainBranch.LabelId, result.SiteLanguage);
+                    foreach (var item in domainBranch.Levels)
+                    {
+                        UniversLevel level = new UniversLevel
+                        {
+                            Id = item.ID,
+                            LabelId = item.LabelId,
+                            Capacity = 1000,
+                            Label = GestionWeb.GetWebWord(domainBranch.LabelId, result.SiteLanguage),
+                            BranchId = branch.Id,
+                            OverLimitMessage = GestionWeb.GetWebWord(OverLimitMsgCode, result.SiteLanguage),
+                            SecurityMessage = GestionWeb.GetWebWord(SecurityMsg, result.SiteLanguage),
+                            ExceptionMessage= GestionWeb.GetWebWord(ExceptionMsg, result.SiteLanguage)
+                        };
+                        branch.UniversLevels.Add(level);
+                    }
                     result.Branches.Add(branch);
                 }
             }
