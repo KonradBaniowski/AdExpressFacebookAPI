@@ -153,7 +153,7 @@
     background-color: transparent;
 }
 
-    .panel-default.login > .panel-heading, .panel-body{
+    .panel-default.login > .panel-heading, .panel-default.login > .panel-body{
         color: #ffffff;
         background-color: rgba(0,0,0,0.7);
         border-bottom: none;
