@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Km.AdExpressClientWeb.App_Start;
+using System;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -56,6 +57,7 @@ namespace Km.AdExpressClientWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutoMapperConfig.Configure();
             LoadConfigurations();
         }
 

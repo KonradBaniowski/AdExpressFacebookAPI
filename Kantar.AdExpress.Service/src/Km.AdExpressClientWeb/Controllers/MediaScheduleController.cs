@@ -1,7 +1,8 @@
-﻿using Kantar.AdExpress.Service.Core.BusinessService;
-using Kantar.AdExpress.Service.Core.Domain;
+﻿using AutoMapper;
+using Kantar.AdExpress.Service.Core.BusinessService;
+using Domain=Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models;
-using Km.AdExpressClientWeb.Models.MediaSchedule;
+using VM=Km.AdExpressClientWeb.Models.MediaSchedule;
 using KM.AdExpress.Framework.MediaSelection;
 using System;
 using System.Collections.Generic;
@@ -66,18 +67,18 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult Index()
         {
             #region Init
-            var model = new MarketViewModel();
+            var model = new VM.MarketViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            var branches = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
             #endregion
             #region Load each label's text in the appropriate language
-            model.Labels = LoadPageLabels(branches.SiteLanguage);           
+            model.Labels = LoadPageLabels(result.SiteLanguage);           
             #endregion
             
-            var marketNode = new MediaPlanNavigationNode { Position = 1 };
+            var marketNode = new VM.MediaPlanNavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);
         }
@@ -96,7 +97,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var media = _mediaService.GetMedia(idWebSession);
             var _webSession = (WebSession)WebSession.Load(idWebSession);
             #region Hardcoded model data
-            var model = new MediaSelectionViewModel()
+            var model = new VM.MediaSelectionViewModel()
             {
                 Multiple = true,
                 Medias =media,
@@ -168,9 +169,9 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             #endregion
-            var mediaNode = new MediaPlanNavigationNode { Position = 2 };
+            var mediaNode = new VM.MediaPlanNavigationNode { Position = 2 };
             model.NavigationBar = LoadNavBar(mediaNode.Position);
-            model.ErrorMessage= new ErrorMessage
+            model.ErrorMessage= new VM.ErrorMessage
             {
                 EmptySelection= GestionWeb.GetWebWord(1052, _webSession.SiteLanguage),
                 SearchErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage),
@@ -199,7 +200,7 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.StartYear = string.Format("{0}-01-01", startYear);
             periodModel.EndYear = string.Format("{0}-12-31", endYear);
 
-            MediaPlanNavigationNode periodeNode = new MediaPlanNavigationNode { Position = 3 };
+            VM.MediaPlanNavigationNode periodeNode = new VM.MediaPlanNavigationNode { Position = 3 };
             var navBarModel = LoadNavBar(periodeNode.Position);
 
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
@@ -265,8 +266,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult Results()
         {
-            var resultNode = new MediaPlanNavigationNode { Position = 4 };
-            var model = new ResultsViewModel
+            var resultNode = new VM.MediaPlanNavigationNode { Position = 4 };
+            var model = new VM.ResultsViewModel
             {
                 NavigationBar = LoadNavBar(resultNode.Position)
             };            
@@ -283,7 +284,7 @@ namespace Km.AdExpressClientWeb.Controllers
         public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)
         {
             string url = string.Empty;
-            var response = new WebSessionResponse();
+            var response = new Domain.WebSessionResponse();
             if ( selectedMedia !=null)
             {
                 var claim = new ClaimsPrincipal(User.Identity);
@@ -310,12 +311,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
         #region Private methodes
-        private List< MediaPlanNavigationNode> LoadNavBar(int currentPosition)
+        private List< VM.MediaPlanNavigationNode> LoadNavBar(int currentPosition)
         {
-            var model = new List<MediaPlanNavigationNode>();
+            var model = new List<VM.MediaPlanNavigationNode>();
             //TODO Update Navbar according to the country selection
             #region Hardcoded  nav Bar.
-            var market = new MediaPlanNavigationNode
+            var market = new VM.MediaPlanNavigationNode
             {
                 Id = 1,
                 IsActive = false,
@@ -325,7 +326,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Controller = "MediaSchedule"
             };
             model.Add(market);
-            var media = new MediaPlanNavigationNode
+            var media = new VM.MediaPlanNavigationNode
             {
                 Id = 2,
                 IsActive = false,
@@ -335,7 +336,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Controller = "MediaSchedule"
             };
             model.Add(media);
-            var dates = new MediaPlanNavigationNode
+            var dates = new VM.MediaPlanNavigationNode
             {
                 Id = 3,
                 IsActive = false,
@@ -345,7 +346,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Controller = "MediaSchedule"
             };
             model.Add(dates);
-            var result = new MediaPlanNavigationNode
+            var result = new VM.MediaPlanNavigationNode
             {
                 Id = 4,
                 IsActive = false,
@@ -363,9 +364,9 @@ namespace Km.AdExpressClientWeb.Controllers
             return model;
         }
 
-        private Labels LoadPageLabels (int siteLanguage)
+        private VM.Labels LoadPageLabels (int siteLanguage)
         {
-            var result = new Labels
+            var result = new VM.Labels
             {
                 KeyWordLabel = GestionWeb.GetWebWord(KeyWordLabelCode, siteLanguage),
                 KeyWordDescription = GestionWeb.GetWebWord(KeyWordDescriptionCode, siteLanguage),
