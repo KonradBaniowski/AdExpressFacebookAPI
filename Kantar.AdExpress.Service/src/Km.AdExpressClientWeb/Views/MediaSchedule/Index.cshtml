@@ -10,24 +10,25 @@
 
     @*BREADCRUM*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-        @Html.Partial("NavigationBar", Model.NavigationBar)
+        @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
     @*SEARCH*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 ">
         <div class="row  bg-black-only">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading ">
-                <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp; Mots-clé </h4>
-                <h5 class="pull-right">Mot-clé seul = Recherche « commençant par ». Mot-clé précédé d'une * = Recherche « par contenant ».</h5>
+                <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp; @Model.Labels.KeyWordLabel </h4>
+                <h5 class="pull-right"> @Model.Labels.KeyWordDescription</h5>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="input-group">
                     <input type="text" class="form-control recherche" placeholder="Recherche" aria-describedby="basic-addon2">
                     <div class="input-group-btn dropdown" dropdown="">
-                        <button type="button" class="btn btn-default select-recherche" data-toggle="dropdown">Annonceur 1 <span class="caret"></span></button>
+                        <button type="button" class="btn btn-default select-recherche" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p=>p.IsSelected).Label <span class="caret"></span></button>
                         <ul class="dropdown-menu bg-blue pull-right">
-                            <li><a href="">Annonceur 2</a></li>
-                            <li><a href="">Annonceur 3</a></li>
-                            <li><a href="">Annonceur 4</a></li>
+                            @foreach (var item in Model.Branches.Where(p=> !p.IsSelected))
+                            {
+                                <li><a href="" data-id="@item.Id">@item.Label</a></li>
+                            }
                         </ul>
                         <button class="btn btn-default btn-recherche" type="button"><i class="fa fa-search blue "></i></button>
                     </div>
@@ -59,12 +60,12 @@
                 <a class="btn btn-green2 btn-circle btn-xl">
                     <i class="fa fa-arrow-right"></i>
                 </a>
-                <p class="lead">Inclure</p>
+                <p class="lead">@Model.Labels.Include</p>
                 <div class="clearfix"></div>
                 <a class="btn btn-red btn-circle btn-xl ">
                     <i class="fa fa-arrow-right"></i>
                 </a>
-                <p class="lead">Exclure</p>
+                <p class="lead">@Model.Labels.Exclude</p>
             </div>
         </div>
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
