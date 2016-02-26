@@ -290,7 +290,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 Description = "Market",
                 Title = "Marché",
                 Action = "Index",
-                Controller = "MediaSchedule"
+                Controller = _controller,
+                IconCssClass = "fa fa-file-text"
             };
             model.Add(market);
             var media = new MediaPlanNavigationNode
@@ -300,7 +301,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 Description = "Media",
                 Title = "Media",
                 Action = "MediaSelection",
-                Controller = "MediaSchedule"
+                Controller = _controller,
+                IconCssClass = "fa fa-eye"
             };
             model.Add(media);
             var dates = new MediaPlanNavigationNode
@@ -310,7 +312,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 Description = "Dates",
                 Title = "Dates",
                 Action = "PeriodSelection",
-                Controller = "MediaSchedule"
+                Controller = _controller,
+                IconCssClass = "fa fa-calendar"
             };
             model.Add(dates);
             var result = new MediaPlanNavigationNode
@@ -320,7 +323,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 Description = "Results",
                 Title = "Resultats",
                 Action = "Results",
-                Controller = "MediaSchedule"
+                Controller = _controller,
+                IconCssClass = "fa fa-check"
             };
             model.Add(result);
             foreach( var nav in model)

@@ -486,7 +486,6 @@
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
-    <Content Include="Content\treegrid.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -711,6 +710,17 @@
     <Content Include="IgniteUI\css\themes\ios\images\ui-icons_fd472b_256x240.png" />
     <Content Include="IgniteUI\css\themes\ios\images\ui-icons_ffffff_256x240.png" />
     <Content Include="IgniteUI\css\themes\ios\infragistics.theme.css" />
+    <Content Include="IgniteUI\css\themes\kantar\images\icon_sprite.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igGrid\filter-icons-333333.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igGrid\filter-icons-FFFFFF.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igRating\ig-rating.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igVideoPlayer\igVideoPlayerIcons.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igVideoPlayer\igVPBackground.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\igVideoPlayer\igVPBookmarkSprite.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-anim_basic_16x16.gif" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_222222_256x240.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_888888_256x240.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_ffffff_256x240.png" />
     <Content Include="IgniteUI\css\themes\kantar\infragistics.theme.css" />
     <Content Include="IgniteUI\css\themes\metro\images\icon_sprite.png" />
     <Content Include="IgniteUI\css\themes\metro\images\igGrid\filter-icons-858585.png" />
