@@ -121,34 +121,39 @@
     </Reference>
     <Reference Include="TNS.Baal.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Baal.Common.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.Baal.Common.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Baal.ExtractList, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Baal.ExtractList.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.Baal.ExtractList.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.Classification">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Classification.dll</HintPath>
-    </Reference>
-    <Reference Include="TNS.FrameWork">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.dll</HintPath>
-    </Reference>
-    <Reference Include="TNS.FrameWork.Date">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.Date.dll</HintPath>
-    </Reference>
-    <Reference Include="TNS.FrameWork.DB">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.DB.dll</HintPath>
-    </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI">
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.WebResultUI.dll</HintPath>
-    </Reference>
-    <Reference Include="TNS.Isis.Constantes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Isis.Constantes.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.Classification.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.Isis.Right, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.Isis.Right.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.34756, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Isis.Constantes, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.Isis.Constantes.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Isis.Right, Version=1.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.Isis.Right.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
