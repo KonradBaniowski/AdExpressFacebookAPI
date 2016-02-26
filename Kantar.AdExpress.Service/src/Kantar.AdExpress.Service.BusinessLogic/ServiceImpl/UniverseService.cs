@@ -156,7 +156,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             Id = item.ID,
                             LabelId = item.LabelId,
                             Capacity = Capacity,
-                            Label = GestionWeb.GetWebWord(domainBranch.LabelId, result.SiteLanguage),
+                            Label = GestionWeb.GetWebWord(item.LabelId, result.SiteLanguage),
                             BranchId = branch.Id,
                             OverLimitMessage = GestionWeb.GetWebWord(OverLimitMsgCode, result.SiteLanguage),
                             SecurityMessage = GestionWeb.GetWebWord(SecurityMsg, result.SiteLanguage),

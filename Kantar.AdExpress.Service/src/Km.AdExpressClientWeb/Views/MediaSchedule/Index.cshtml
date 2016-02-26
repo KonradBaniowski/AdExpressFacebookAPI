@@ -36,6 +36,15 @@
             </div>
         </div>
     </div>
+    @foreach (var item in Model.Branches)
+    {
+    <div id="@item.Id" style="display:none">
+        @foreach (var level in item.UniversLevels)
+        {
+
+        }
+    </div>
+    }
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
 
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
@@ -44,17 +53,28 @@
                     <span class="badge blue bg-light pull-right">122</span>
                     <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; Résultats</h4>
                 </div>
-                <div class="head-famille"><h5 class="famille blue">GROUPE DE SOCIÉTÉS<span class="badge bg-blue black">36</span></h5></div>
-                <div class="panel-body">
-                    TRY
-                </div>
-                <div class="head-famille"><h5 class="famille blue">ANNONCEURS<span class="badge bg-blue black">36</span></h5></div>
-                <div class="panel-body">
-                    TRY
-                </div>
 
+                @foreach (var item in Model.Branches)
+                {
+                    <div id="@item.Id" style="display:none">
+                        @foreach (var level in item.UniversLevels)
+                        {
+
+                            <div id="@level.Id" class="head-famille"><h5 class="famille blue">@level.Label<span class="badge bg-blue black">36</span></h5></div>
+                            <div class="panel-body">
+                                TRY
+                            </div>
+                        }
+                    </div>
+                }
             </div>
         </div>
+        @*<div class="head-famille"><h5 class="famille blue">ANNONCEURS<span class="badge bg-blue black">36</span></h5></div>
+            <div class="panel-body">
+                TRY
+            </div>*@
+
+
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <div class="btn-marche text-center">
                 <a class="btn btn-green2 btn-circle btn-xl">
