@@ -58,7 +58,7 @@
     <Compile Include="App_Start\AutoMapperConfigBL.cs" />
     <Compile Include="Identity\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceImpl\MediaSchedule.cs" />
+    <Compile Include="ServiceImpl\MediaScheduleService.cs" />
     <Compile Include="ServiceImpl\MediaService.cs" />
     <Compile Include="ServiceImpl\RightService.cs" />
     <Compile Include="ServiceImpl\UniverseService.cs" />

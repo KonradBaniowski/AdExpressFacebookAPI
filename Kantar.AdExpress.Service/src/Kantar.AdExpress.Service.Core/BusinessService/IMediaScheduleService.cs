@@ -7,7 +7,7 @@ using TNS.AdExpressI.MediaSchedule;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
-    public interface IMediaSchedule
+    public interface IMediaScheduleService
     {
         object[,] GetMediaScheduleData(string idWebSession);
     }

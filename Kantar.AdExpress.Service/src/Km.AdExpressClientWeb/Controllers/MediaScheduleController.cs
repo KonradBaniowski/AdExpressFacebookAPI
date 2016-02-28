@@ -34,7 +34,7 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
-        private IMediaSchedule _mediaSchedule;
+        private IMediaScheduleService _mediaSchedule;
         private IUniverseService _universService;
         private const string _controller = "MediaSchedule";
         #region CODES OF MARKET'S LABELS  
@@ -57,7 +57,7 @@ namespace Km.AdExpressClientWeb.Controllers
         #endregion
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaSchedule mediaSchedule, IUniverseService universService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;

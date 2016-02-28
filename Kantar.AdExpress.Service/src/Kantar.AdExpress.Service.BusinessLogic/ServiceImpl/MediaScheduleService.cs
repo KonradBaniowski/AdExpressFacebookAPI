@@ -16,7 +16,7 @@ using System.Reflection;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
-    public class MediaSchedule : IMediaSchedule
+    public class MediaScheduleService : IMediaScheduleService
     {
         private WebSession CustomerSession = null;
 
