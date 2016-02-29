@@ -98,77 +98,21 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var media = _mediaService.GetMedia(idWebSession);
             var _webSession = (WebSession)WebSession.Load(idWebSession);
-           
 
-            var idMediasCommon= Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
-            #region Hardcoded model data
+            #region model data
+            var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var model = new VM.MediaSelectionViewModel()
             {
                 Multiple = true,
                 Medias =media,
-                //Medias = new List<Media>()
-                //{
-                //    new Media()
-                //    {
-                //        MediaEnum = Vehicles.names.cinema,
-                //        Id= 1,
-
-                //        Label = "Cinéma",
-                //        Disabled = false
-                //    },
-                //    new Media()
-                //    {
-                //          MediaEnum = Vehicles.names.search,
-                //        Id = 34,
-                //        Label = "Search",
-                //        Disabled = false
-                //    },
-                //    new Media()
-                //    {
-                //          MediaEnum = Vehicles.names.tv,
-                //        Id = 2,
-                //        Label = "Télévision",
-                //        Disabled = true
-                //    },
-                //        new Media()
-                //    {
-                //              MediaEnum = Vehicles.names.evaliantMobile,
-                //        Id = 4,
-                //        Label = "Evaliant Mobile",
-                //        Disabled = false
-                //    },
-                //            new Media()
-                //    {
-                //                MediaEnum = Vehicles.names.directMarketing,
-                //        Id = 10,
-                //        Label = "Courrier",
-                //        Disabled = false
-                //    }
-                //    //  new Media()
-                //    //{
-                //    //    Id = 6,
-                //    //    Label = "Nom 6",
-                //    //    Disabled = false
-                //    //},
-                //    //      new Media()
-                //    //{
-                //    //    Id = 7,
-                //    //    Label = "Nom 7",
-                //    //    Disabled = true
-                //    //}
-
-                //},
-              
-            IdMediasCommon = idMediasCommon
-                  
+                IdMediasCommon = idMediasCommon
             };
 
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
             }
-            model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
-            #endregion
+            model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();            
             var mediaNode = new VM.MediaPlanNavigationNode { Position = 2 };
             model.NavigationBar = LoadNavBar(mediaNode.Position);
             model.ErrorMessage= new VM.ErrorMessage
@@ -178,7 +122,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 SocialErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage),
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage)
             };
-            
+            #endregion
             return View(model);
         }
 
