@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Kantar.AdExpress.Service.Core.BusinessService;
-using Domain=Kantar.AdExpress.Service.Core.Domain;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models;
-using VM=Km.AdExpressClientWeb.Models.MediaSchedule;
+using VM = Km.AdExpressClientWeb.Models.MediaSchedule;
 using KM.AdExpress.Framework.MediaSelection;
 using System;
 using System.Collections.Generic;
@@ -26,6 +26,7 @@ using TNS.AdExpressI.Date.DAL;
 using TNS.AdExpressI.MediaSchedule;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -34,7 +35,7 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
-        private IMediaSchedule _mediaSchedule;
+        private IMediaScheduleService _mediaSchedule;
         private IUniverseService _universService;
         private const string _controller = "MediaSchedule";
         #region CODES OF MARKET'S LABELS  
@@ -57,7 +58,7 @@ namespace Km.AdExpressClientWeb.Controllers
         #endregion
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaSchedule mediaSchedule, IUniverseService universService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
@@ -97,71 +98,69 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var media = _mediaService.GetMedia(idWebSession);
             var _webSession = (WebSession)WebSession.Load(idWebSession);
+           
+
+            var idMediasCommon= Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             #region Hardcoded model data
             var model = new VM.MediaSelectionViewModel()
             {
                 Multiple = true,
                 Medias =media,
-            //Medias = new List<Media>()
-            //{
-            //    new Media()
-            //    {
-            //        MediaEnum = Vehicles.names.cinema,
-            //        Id= 1,
+                //Medias = new List<Media>()
+                //{
+                //    new Media()
+                //    {
+                //        MediaEnum = Vehicles.names.cinema,
+                //        Id= 1,
 
-            //        Label = "Cinéma",
-            //        Disabled = false
-            //    },
-            //    new Media()
-            //    {
-            //          MediaEnum = Vehicles.names.search,
-            //        Id = 34,
-            //        Label = "Search",
-            //        Disabled = false
-            //    },
-            //    new Media()
-            //    {
-            //          MediaEnum = Vehicles.names.tv,
-            //        Id = 2,
-            //        Label = "Télévision",
-            //        Disabled = true
-            //    },
-            //        new Media()
-            //    {
-            //              MediaEnum = Vehicles.names.evaliantMobile,
-            //        Id = 4,
-            //        Label = "Evaliant Mobile",
-            //        Disabled = false
-            //    },
-            //            new Media()
-            //    {
-            //                MediaEnum = Vehicles.names.directMarketing,
-            //        Id = 10,
-            //        Label = "Courrier",
-            //        Disabled = false
-            //    }
-            //    //  new Media()
-            //    //{
-            //    //    Id = 6,
-            //    //    Label = "Nom 6",
-            //    //    Disabled = false
-            //    //},
-            //    //      new Media()
-            //    //{
-            //    //    Id = 7,
-            //    //    Label = "Nom 7",
-            //    //    Disabled = true
-            //    //}
+                //        Label = "Cinéma",
+                //        Disabled = false
+                //    },
+                //    new Media()
+                //    {
+                //          MediaEnum = Vehicles.names.search,
+                //        Id = 34,
+                //        Label = "Search",
+                //        Disabled = false
+                //    },
+                //    new Media()
+                //    {
+                //          MediaEnum = Vehicles.names.tv,
+                //        Id = 2,
+                //        Label = "Télévision",
+                //        Disabled = true
+                //    },
+                //        new Media()
+                //    {
+                //              MediaEnum = Vehicles.names.evaliantMobile,
+                //        Id = 4,
+                //        Label = "Evaliant Mobile",
+                //        Disabled = false
+                //    },
+                //            new Media()
+                //    {
+                //                MediaEnum = Vehicles.names.directMarketing,
+                //        Id = 10,
+                //        Label = "Courrier",
+                //        Disabled = false
+                //    }
+                //    //  new Media()
+                //    //{
+                //    //    Id = 6,
+                //    //    Label = "Nom 6",
+                //    //    Disabled = false
+                //    //},
+                //    //      new Media()
+                //    //{
+                //    //    Id = 7,
+                //    //    Label = "Nom 7",
+                //    //    Disabled = true
+                //    //}
 
-            //},
-            IdMediasCommon =
-                    new List<int>()
-                    {
-                    { 1 },
-                    { 2 },
-                    { 4 },
-                    { 6 }
-                    }
+                //},
+              
+            IdMediasCommon = idMediasCommon
+                  
             };
 
             foreach (var e in model.Medias)
