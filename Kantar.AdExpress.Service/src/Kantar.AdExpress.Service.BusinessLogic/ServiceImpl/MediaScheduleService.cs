@@ -1,4 +1,5 @@
-﻿using Kantar.AdExpress.Service.Core.BusinessService;
+﻿#define DEBUG
+using Kantar.AdExpress.Service.Core.BusinessService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public object[,] GetMediaScheduleData(string idWebSession)
         {
-            CustomerSession = (WebSession)WebSession.Load("201602251057141084");
+            //CustomerSession = (WebSession)WebSession.Load("201602251057141084");
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+#if DEBUG
+            //TODOD : Mock selection marché : a supprimer dès que page marché terminée
+            TNS.AdExpress.Classification.AdExpressUniverse universe = new TNS.AdExpress.Classification.AdExpressUniverse("test", TNS.Classification.Universe.Dimension.product);
+            var group = new TNS.Classification.Universe.NomenclatureElementsGroup("Annonceur",0, TNS.Classification.Universe.AccessType.includes);
+            group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410");
+            universe.AddGroup(universe.Count(), group);
+            var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            universeDictionary.Add(universeDictionary.Count, universe);
+            CustomerSession.PrincipalProductUniverses = universeDictionary;
+#endif
+
 
             TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
             MediaScheduleData result = null;
@@ -36,7 +50,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             long oldCurrentTab = CustomerSession.CurrentTab;
             System.Windows.Forms.TreeNode oldReferenceUniversMedia = CustomerSession.ReferenceUniversMedia;
 
-            #region Period Detail
+#region Period Detail
             DateTime begin;
             DateTime end;
             string _zoomDate = string.Empty;
@@ -81,7 +95,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     period = new MediaSchedulePeriod(begin, end, CustomerSession.DetailPeriod);
 
             }
-            #endregion
+#endregion
 
             if (_zoomDate.Length > 0)
             {

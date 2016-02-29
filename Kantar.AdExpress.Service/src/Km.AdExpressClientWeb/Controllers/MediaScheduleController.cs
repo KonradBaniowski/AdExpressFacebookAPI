@@ -276,7 +276,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public JsonResult MediaScheduleResult()
         {
-            var data = _mediaSchedule.GetMediaScheduleData("");
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
 
             return null;
         }

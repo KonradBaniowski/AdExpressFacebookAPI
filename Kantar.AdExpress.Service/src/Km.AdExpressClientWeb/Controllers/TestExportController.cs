@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -25,7 +26,9 @@ namespace Km.AdExpressClientWeb.Controllers
         // GET: TestExport
         public ActionResult Index()
         {
-            var data = _mediaSchedule.GetMediaScheduleData("");
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
 
             return View();
         }
