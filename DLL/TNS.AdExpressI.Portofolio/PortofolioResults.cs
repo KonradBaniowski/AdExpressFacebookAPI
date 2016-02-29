@@ -13,20 +13,21 @@ using System.Text;
 using System.Reflection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
-using TNS.AdExpress.Web.Functions;
-using CustomerConstantes=TNS.AdExpress.Constantes.Customer;
-using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
-using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
+
+using CustomerConstantes = TNS.AdExpress.Constantes.Customer;
+using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web.Navigation;
-using WebCst=TNS.AdExpress.Constantes.Web;
+using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Level;
-using DBCst=TNS.AdExpress.Constantes.DB;
+using DBCst = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpressI.Portofolio.VehicleView;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpressI.Portofolio {
     /// <summary>
@@ -381,18 +382,15 @@ namespace TNS.AdExpressI.Portofolio {
                     }
                     catch { }
                 }
-                dic.Clear();
-                string blurDirectory = Rights.HasPressCopyright(_idMedia) ? string.Empty : "blur/";
+                dic.Clear();                
                 foreach (DataRow dr in ds.Tables[0].Rows) {
                     if (dr["disponibility_visual"] != DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10) {
                         if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                            dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
-                                , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_media_num"].ToString()
-                                , Rights.ParutionDateBefore2015(dr["date_media_num"].ToString()) ? string.Empty : blurDirectory
+                            dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/Imagette/{3}"
+                                , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_media_num"].ToString()                                
                                 ,WebCst.CreationServerPathes.COUVERTURE));
-                        else dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
-                            , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_cover_num"].ToString()
-                            , Rights.ParutionDateBefore2015(dr["date_cover_num"].ToString()) ? string.Empty : blurDirectory
+                        else dic.Add(dr["date_media_num"].ToString(), string.Format("{0}/{1}/{2}/Imagette/{3}"
+                            , WebCst.CreationServerPathes.IMAGES, _idMedia, dr["date_cover_num"].ToString()                          
                             , WebCst.CreationServerPathes.COUVERTURE));
                     }
                     else
@@ -457,9 +455,7 @@ namespace TNS.AdExpressI.Portofolio {
 
                     if (dtVisuel!=null)
                     {
-                        bool hasCopyright = true;
-                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press) hasCopyright = Rights.HasPressCopyright(_idMedia);
-                        string blurDirectory = (hasCopyright) ? string.Empty : "blur/" ;
+                       
                         for (int i = 0; i < dtVisuel.Rows.Count; i++)
                         {
                             //date_media_num
@@ -468,16 +464,14 @@ namespace TNS.AdExpressI.Portofolio {
                                 int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
                             {
                                 if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                    pathWeb = string.Format("{0}/{1}/{2}/Imagette/{3}{4}",
+                                    pathWeb = string.Format("{0}/{1}/{2}/Imagette/{3}",
                                         WebCst.CreationServerPathes.IMAGES, _idMedia.ToString(),
-                                        dtVisuel.Rows[i]["date_media_num"].ToString()
-                                        , Rights.ParutionDateBefore2015(dtVisuel.Rows[i]["date_media_num"].ToString()) ? string.Empty : blurDirectory
+                                        dtVisuel.Rows[i]["date_media_num"].ToString()                                       
                                         , WebCst.CreationServerPathes.COUVERTURE);
                                 else
-                                    pathWeb = string.Format("{0}/{1}/{2}/Imagette/{3}{4}"
+                                    pathWeb = string.Format("{0}/{1}/{2}/Imagette/{3}"
                                         , WebCst.CreationServerPathes.IMAGES, _idMedia.ToString(),
-                                        dtVisuel.Rows[i]["date_cover_num"].ToString()
-                                        , Rights.ParutionDateBefore2015(dtVisuel.Rows[i]["date_cover_num"].ToString()) ? string.Empty : blurDirectory
+                                        dtVisuel.Rows[i]["date_cover_num"].ToString()                                        
                                         , WebCst.CreationServerPathes.COUVERTURE);
                             }
                             else
