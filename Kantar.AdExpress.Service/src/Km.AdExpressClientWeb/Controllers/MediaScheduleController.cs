@@ -38,7 +38,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaScheduleService _mediaSchedule;
         private IUniverseService _universService;
         private const string _controller = "MediaSchedule";
-        #region CODES OF MARKET'S LABELS  
+        #region CODES OF MARKET'S LABELS
+        private const long MediaScheduleCode = 150;
         private const long SaveUniversCode = 769;
         private const long LoadUniversCode = 770;
         private const long UserSavedUniversCode = 893;        
@@ -53,8 +54,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const long ElementLabelCode = 2278;
         private const long SecurityMsg = 2285;
         private const long OverLimitMsgCode = 2286;
-        private const long KeyWordDescriptionCode = 2287;
-       
+        private const long KeyWordDescriptionCode = 2287;        
         #endregion
 
         private string icon;
@@ -77,9 +77,11 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);           
+            model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);
             #endregion
-            
+            #region Presentation
+            model.Presentation = LoadPresentationBar(result.SiteLanguage);
+            #endregion
             var marketNode = new VM.MediaPlanNavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);
@@ -328,6 +330,18 @@ namespace Km.AdExpressClientWeb.Controllers
                 Exclude = GestionWeb.GetWebWord(ExcludeCode,siteLanguage),
                 LoadUnivers = GestionWeb.GetWebWord(LoadUniversCode,siteLanguage),
                 Save =GestionWeb.GetWebWord(SaveUniversCode,siteLanguage)
+            };
+            return result;
+        }
+        private Models.MediaSchedule.PresentationModel LoadPresentationBar(int siteLanguage)
+        {
+            Models.MediaSchedule.PresentationModel result=new Models.MediaSchedule.PresentationModel
+            {
+                LoadUniversCode = LoadUniversCode,
+                MediaScheduleCode = MediaScheduleCode,
+                SaveUniversCode = SaveUniversCode,
+                SiteLanguage = siteLanguage,
+                SavedUnivers = new List<Models.MediaSchedule.SavedUnivers>()
             };
             return result;
         }

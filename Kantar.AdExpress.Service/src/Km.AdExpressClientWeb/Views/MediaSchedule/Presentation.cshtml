@@ -1,16 +1,601 @@
-﻿
+﻿@model Km.AdExpressClientWeb.Models.MediaSchedule.PresentationModel
+@using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "Presentation";
 }
 
 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
-    <h1 class=""><i class="icon-chart blue"></i> Plan Média</h1>
+    <h1 class=""><i class="icon-chart blue"></i> @GestionWeb.GetWebWord(Model.MediaScheduleCode, Model.SiteLanguage)</h1>
     <small class="">Connaitre l'activité publicitaire d'un annonceur ou d'un secteur</small>
 </div>
 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-    <h3 class=""><i class="icon-star blue"></i></h3>
+    <h3 class="univ text-right"><a href="#monunivers" data-toggle="modal"><i class="icon-star blue"></i></a></h3>
+    <div id="monunivers" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <i class="fa icon-star orange"></i>
+                    <h4 class="font-normal m-t-none m-b-md text-primary-lt">@GestionWeb.GetWebWord(Model.SaveUniversCode, Model.SiteLanguage)</h4>
+                </div>
+                <div class="modal-body panel-group panel-univers-select" id="accordion">
+                    <div class="panel panel-primary panel-univers-select">
+                        <div class="panel-heading head-univers-select">
+                            <h6 class="panel-title famille ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                    Produits-DEC-2015 <span class="badge bg-orange white">12</span>
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body no-padder">
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 1
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 2
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 3
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 4
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 5
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 6
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 7
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 8
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 9
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary panel-univers-select">
+                        <div class="panel-heading head-univers-select">
+                            <h6 class="panel-title famille ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                    Produits-janvier <span class="badge bg-orange white">12</span>
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body no-padder">
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 1
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 2
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 3
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 4
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 5
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 6
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 7
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 8
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 9
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary panel-univers-select">
+                        <div class="panel-heading head-univers-select">
+                            <h6 class="panel-title famille ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                    Média-octav <span class="badge bg-orange white">4</span>
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body no-padder">
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 1
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 2
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 3
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 4
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 5
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 6
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 no-padder">
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 7
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" name="a">
+                                            <i></i>
+                                            Univers 8
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox">
+                                            <i></i>
+                                            Univers 9
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-valider" data-dismiss="modal">@GestionWeb.GetWebWord(Model.LoadUniversCode, Model.SiteLanguage)</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-    <h3 class=""><i class="icon-eyeglass  blue"></i></h3>
+    <h3 class="tools text-right pull-right">
+        <a href="#myModal" data-toggle="modal"><i class="icon-eyeglass  blue"></i> </a>
+        </h3>
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <i class="fa  icon-eyeglasses blue"></i>
+                    <h4 class="font-normal m-t-none m-b-md text-primary-lt">Rappel de la sélection</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Ici la selection lorem ipsum dolor sit amet lorem ipsum dolor sit amet</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-valider" data-dismiss="modal">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
+    @*<div class="col-md-12">
+        <div class="row row-sm">
+            <div class="col-xs-11 padder-v margin-b text-left">
+                <h1 class="m-n font-thin h3 text-info"><i class="fa icon-bar-chart blue"></i> Plan Média</h1>
+                <small class="text-info">Connaitre l'activité publicitaire d'un annonceur ou d'un secteur</small>
+            </div>
+            <div class="col-xs-1 padder-v margin-b">
+                <div class="univ text-right">
+                    <a href="#monunivers" data-toggle="modal"><i class="fa icon-star orange"></i></a>
+                </div>
+                <div id="monunivers" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header panel-heading">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <i class="fa icon-star orange"></i>
+                                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@GestionWeb.GetWebWord(776, 33)</h4>
+                            </div>
+                            <div class="modal-body panel-group panel-univers-select" id="accordion">
+                                <div class="panel panel-primary panel-univers-select">
+                                    <div class="panel-heading head-univers-select">
+                                        <h6 class="panel-title famille ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                                Produits-DEC-2015 <span class="badge bg-orange white">12</span>
+                                                <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse">
+                                        <div class="panel-body no-padder">
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 1
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 2
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 3
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 4
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 5
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 6
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 7
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 8
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 9
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-primary panel-univers-select">
+                                    <div class="panel-heading head-univers-select">
+                                        <h6 class="panel-title famille ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                                Produits-janvier <span class="badge bg-orange white">12</span>
+                                                <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse">
+                                        <div class="panel-body no-padder">
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 1
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 2
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 3
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 4
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 5
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 6
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 7
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 8
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 9
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-primary panel-univers-select">
+                                    <div class="panel-heading head-univers-select">
+                                        <h6 class="panel-title famille ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                                Média-octav <span class="badge bg-orange white">4</span>
+                                                <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <div id="collapse3" class="panel-collapse collapse">
+                                        <div class="panel-body no-padder">
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 1
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 2
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 3
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 4
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 5
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 6
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 no-padder">
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 7
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox" name="a">
+                                                        <i></i>
+                                                        Univers 8
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label class="i-checks i-checks-sm">
+                                                        <input type="checkbox">
+                                                        <i></i>
+                                                        Univers 9
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-valider" data-dismiss="modal">Valider</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tools text-right pull-right">
+                    <a href="#myModal" data-toggle="modal"><i class="fa  icon-eyeglasses white"></i></a>
+                </div>
+                <div id="myModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header panel-heading">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <i class="fa  icon-eyeglasses blue"></i>
+                                <h4 class="font-normal m-t-none m-b-md text-primary-lt">Rappel de la sélection</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Ici la selection lorem ipsum dolor sit amet lorem ipsum dolor sit amet</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-valider" data-dismiss="modal">Valider</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
