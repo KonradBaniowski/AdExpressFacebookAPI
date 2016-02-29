@@ -29,6 +29,7 @@ $(function () {
         }
     });
 
+
     //var jsonParse2 = JSON.parse(jsonResult2)[0];
 
     //$("#groupSelectable2").fillGroupSelectable(jsonParse2.Title, jsonParse2.Values, 'panel-heading', 'panel-body', 'containerSelectable2', undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.')
@@ -63,3 +64,14 @@ function ShowSelection(elem) {
 
     alert('Selection : \n' + result);
 }
+$(".dropdown-menu.bg-blue.pull-right li > a").on('click', function (e) {
+    e.preventDefault();
+    var selText = $(this).text();
+    var selValue =$(this).attr("data-id");
+    $("#default").show();
+    $("#default").removeAttr("id");
+    $(this).attr("id", "default");
+    $("#default").hide();
+    $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').html(selText + '<span class="caret"></span>'); 
+    $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').attr("data-branch",selValue);
+});
