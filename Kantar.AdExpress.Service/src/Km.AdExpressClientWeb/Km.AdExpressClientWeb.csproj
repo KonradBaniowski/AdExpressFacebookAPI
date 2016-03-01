@@ -186,6 +186,7 @@
     <Compile Include="Models\MediaSchedule\ResultsViewModel.cs" />
     <Compile Include="Models\PeriodSelectionViewModel.cs" />
     <Compile Include="Models\PeriodViewModel.cs" />
+    <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
