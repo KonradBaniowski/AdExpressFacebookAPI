@@ -39,22 +39,19 @@ namespace Km.AdExpressClientWeb.Controllers
 
         //public ActionResult MediaSelection()
         //{
-        //    //var model = new MediaSelectionViewModel();
-
         //    var claim = new ClaimsPrincipal(User.Identity);
         //    string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-        //    var media = _mediaService.GetMedia(idWebSession);
-        //    var _webSession = (WebSession)WebSession.Load(idWebSession);
+        //    var result = _mediaService.GetMedia(idWebSession);
 
         //    #region model data
         //    var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
         //    var model = new VM.MediaSelectionViewModel()
         //    {
-        //        Multiple = false,
-        //        Medias = media,
+        //        Multiple = true,
+        //        Medias = result.Media,
         //        IdMediasCommon = idMediasCommon
         //    };
-        //    model.Presentation = LoadPresentationBar(_webSession.SiteLanguage);
+        //    model.Presentation = LoadPresentationBar(result.SiteLanguage);
         //    foreach (var e in model.Medias)
         //    {
         //        e.icon = IconSelector.getIcon(e.MediaEnum);
@@ -64,10 +61,10 @@ namespace Km.AdExpressClientWeb.Controllers
         //    model.NavigationBar = LoadNavBar(mediaNode.Position);
         //    model.ErrorMessage = new VM.ErrorMessage
         //    {
-        //        EmptySelection = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage),
-        //        SearchErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage),
-        //        SocialErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage),
-        //        UnitErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage)
+        //        EmptySelection = GestionWeb.GetWebWord(1052, result.SiteLanguage),
+        //        SearchErrorMessage = GestionWeb.GetWebWord(3011, result.SiteLanguage),
+        //        SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
+        //        UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
         //    };
         //    #endregion
         //    return View(model);

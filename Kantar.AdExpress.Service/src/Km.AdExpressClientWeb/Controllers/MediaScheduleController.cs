@@ -83,7 +83,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Presentation
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
             #endregion
-            var marketNode = new VM.MediaPlanNavigationNode { Position = 1 };
+            var marketNode = new VM.NavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);
         }
@@ -115,7 +115,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 e.icon = IconSelector.getIcon(e.MediaEnum);
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();            
-            var mediaNode = new VM.MediaPlanNavigationNode { Position = 2 };
+            var mediaNode = new VM.NavigationNode { Position = 2 };
             model.NavigationBar = LoadNavBar(mediaNode.Position);
             model.ErrorMessage= new VM.ErrorMessage
             {
@@ -146,7 +146,7 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.StartYear = string.Format("{0}-01-01", startYear);
             periodModel.EndYear = string.Format("{0}-12-31", endYear);
 
-            VM.MediaPlanNavigationNode periodeNode = new VM.MediaPlanNavigationNode { Position = 3 };
+            VM.NavigationNode periodeNode = new VM.NavigationNode { Position = 3 };
             var navBarModel = LoadNavBar(periodeNode.Position);
 
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
@@ -216,7 +216,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            var resultNode = new VM.MediaPlanNavigationNode { Position = 4 };
+            var resultNode = new VM.NavigationNode { Position = 4 };
             var model = new VM.ResultsViewModel
             {
                 NavigationBar = LoadNavBar(resultNode.Position),
@@ -264,12 +264,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
         #region Private methodes
-        private List< VM.MediaPlanNavigationNode> LoadNavBar(int currentPosition)
+        private List< VM.NavigationNode> LoadNavBar(int currentPosition)
         {
-            var model = new List<VM.MediaPlanNavigationNode>();
+            var model = new List<VM.NavigationNode>();
             //TODO Update Navbar according to the country selection
             #region Hardcoded  nav Bar.
-            var market = new VM.MediaPlanNavigationNode
+            var market = new VM.NavigationNode
             {
                 Id = 1,
                 IsActive = false,
@@ -280,7 +280,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-file-text"
             };
             model.Add(market);
-            var media = new VM.MediaPlanNavigationNode
+            var media = new VM.NavigationNode
             {
                 Id = 2,
                 IsActive = false,
@@ -291,7 +291,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-eye"
             };
             model.Add(media);
-            var dates = new VM.MediaPlanNavigationNode
+            var dates = new VM.NavigationNode
             {
                 Id = 3,
                 IsActive = false,
@@ -302,7 +302,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-calendar"
             };
             model.Add(dates);
-            var result = new VM.MediaPlanNavigationNode
+            var result = new VM.NavigationNode
             {
                 Id = 4,
                 IsActive = false,
