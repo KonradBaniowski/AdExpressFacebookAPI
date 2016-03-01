@@ -28,7 +28,7 @@ using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using FrameWorkResultsConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
-using WebFunctions = TNS.AdExpress.Web.Functions;
+
 
 
 namespace TNS.AdExpressI.Portofolio.Engines {

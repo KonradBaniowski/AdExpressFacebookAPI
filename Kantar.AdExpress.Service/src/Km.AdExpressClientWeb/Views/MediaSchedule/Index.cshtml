@@ -6,7 +6,7 @@
 
 <div class="row">
     @*PRESENTATION*@
-    @Html.Partial("Presentation")
+    @Html.Partial("Presentation", Model.Presentation)
 
     @*BREADCRUM*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
@@ -25,9 +25,16 @@
                     <div class="input-group-btn dropdown" dropdown="">
                         <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
                         <ul class="dropdown-menu bg-blue pull-right">
-                            @foreach (var item in Model.Branches.Where(p => !p.IsSelected))
+                            @foreach (var item in Model.Branches)
                             {
-                                <li><a data-id="@item.Id">@item.Label</a></li>
+                                if (item.IsSelected)
+                                {
+                                    <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
+                                }
+                                else
+                                {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                                }
                             }
                         </ul>
                         <button class="btn btn-default btn-recherche" type="button"><i class="fa fa-search blue "></i></button>

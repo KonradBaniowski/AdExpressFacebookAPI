@@ -38,9 +38,11 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaScheduleService _mediaSchedule;
         private IUniverseService _universService;
         private const string _controller = "MediaSchedule";
-        #region CODES OF MARKET'S LABELS  
+        #region CODES OF MARKET'S LABELS
+        private const long MediaScheduleCode = 150;
         private const long SaveUniversCode = 769;
         private const long LoadUniversCode = 770;
+        private const long UserUniversCode = 875;
         private const long UserSavedUniversCode = 893;        
         private const long ExceptionMsg = 922;
         private const long ErrorMsgCode = 930;
@@ -53,8 +55,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const long ElementLabelCode = 2278;
         private const long SecurityMsg = 2285;
         private const long OverLimitMsgCode = 2286;
-        private const long KeyWordDescriptionCode = 2287;
-       
+        private const long KeyWordDescriptionCode = 2287;        
         #endregion
 
         private string icon;
@@ -77,9 +78,11 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);           
+            model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);
             #endregion
-            
+            #region Presentation
+            model.Presentation = LoadPresentationBar(result.SiteLanguage);
+            #endregion
             var marketNode = new VM.MediaPlanNavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);
@@ -98,77 +101,21 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var media = _mediaService.GetMedia(idWebSession);
             var _webSession = (WebSession)WebSession.Load(idWebSession);
-           
 
-            var idMediasCommon= Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
-            #region Hardcoded model data
+            #region model data
+            var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var model = new VM.MediaSelectionViewModel()
             {
                 Multiple = true,
                 Medias =media,
-                //Medias = new List<Media>()
-                //{
-                //    new Media()
-                //    {
-                //        MediaEnum = Vehicles.names.cinema,
-                //        Id= 1,
-
-                //        Label = "Cinéma",
-                //        Disabled = false
-                //    },
-                //    new Media()
-                //    {
-                //          MediaEnum = Vehicles.names.search,
-                //        Id = 34,
-                //        Label = "Search",
-                //        Disabled = false
-                //    },
-                //    new Media()
-                //    {
-                //          MediaEnum = Vehicles.names.tv,
-                //        Id = 2,
-                //        Label = "Télévision",
-                //        Disabled = true
-                //    },
-                //        new Media()
-                //    {
-                //              MediaEnum = Vehicles.names.evaliantMobile,
-                //        Id = 4,
-                //        Label = "Evaliant Mobile",
-                //        Disabled = false
-                //    },
-                //            new Media()
-                //    {
-                //                MediaEnum = Vehicles.names.directMarketing,
-                //        Id = 10,
-                //        Label = "Courrier",
-                //        Disabled = false
-                //    }
-                //    //  new Media()
-                //    //{
-                //    //    Id = 6,
-                //    //    Label = "Nom 6",
-                //    //    Disabled = false
-                //    //},
-                //    //      new Media()
-                //    //{
-                //    //    Id = 7,
-                //    //    Label = "Nom 7",
-                //    //    Disabled = true
-                //    //}
-
-                //},
-              
-            IdMediasCommon = idMediasCommon
-                  
+                IdMediasCommon = idMediasCommon
             };
-
+            model.Presentation = LoadPresentationBar(_webSession.SiteLanguage);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
             }
-            model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
-            #endregion
+            model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();            
             var mediaNode = new VM.MediaPlanNavigationNode { Position = 2 };
             model.NavigationBar = LoadNavBar(mediaNode.Position);
             model.ErrorMessage= new VM.ErrorMessage
@@ -178,7 +125,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 SocialErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage),
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage)
             };
-            
+            #endregion
             return View(model);
         }
 
@@ -206,6 +153,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
+            model.Presentation = LoadPresentationBar(CustomerSession.SiteLanguage);
 
             return View(model);
         }
@@ -266,17 +214,23 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult Results()
         {
+            var cla = new ClaimsPrincipal(User.Identity);
+            string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
             var resultNode = new VM.MediaPlanNavigationNode { Position = 4 };
             var model = new VM.ResultsViewModel
             {
-                NavigationBar = LoadNavBar(resultNode.Position)
-            };            
+                NavigationBar = LoadNavBar(resultNode.Position),
+                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage)
+        };            
             return View(model);
         }
 
         public JsonResult MediaScheduleResult()
         {
-            var data = _mediaSchedule.GetMediaScheduleData("");
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
 
             return null;
         }
@@ -382,6 +336,19 @@ namespace Km.AdExpressClientWeb.Controllers
                 Exclude = GestionWeb.GetWebWord(ExcludeCode,siteLanguage),
                 LoadUnivers = GestionWeb.GetWebWord(LoadUniversCode,siteLanguage),
                 Save =GestionWeb.GetWebWord(SaveUniversCode,siteLanguage)
+            };
+            return result;
+        }
+        private Models.MediaSchedule.PresentationModel LoadPresentationBar(int siteLanguage)
+        {
+            Models.MediaSchedule.PresentationModel result=new Models.MediaSchedule.PresentationModel
+            {
+                LoadUniversCode = LoadUniversCode,
+                MediaScheduleCode = MediaScheduleCode,
+                SaveUniversCode = SaveUniversCode,
+                SiteLanguage = siteLanguage,
+                SavedUnivers = new List<Models.MediaSchedule.SavedUnivers>(),
+                UserUniversCode = UserUniversCode
             };
             return result;
         }

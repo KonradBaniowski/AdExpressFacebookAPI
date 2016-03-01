@@ -18,6 +18,8 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 
         public ErrorMessage ErrorMessage { get; set; }
 
+        public PresentationModel Presentation { get; set; }
+
     }
 
     public class Media

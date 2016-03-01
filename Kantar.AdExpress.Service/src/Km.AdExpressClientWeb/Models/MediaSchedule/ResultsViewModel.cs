@@ -8,5 +8,6 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
     public class ResultsViewModel
     {
         public List<MediaPlanNavigationNode> NavigationBar { get; set; }
+        public PresentationModel Presentation { get; set; }
     }
 }

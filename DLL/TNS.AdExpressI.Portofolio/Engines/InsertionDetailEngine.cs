@@ -464,7 +464,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 }
 
                
-                string blur = TNS.AdExpress.Web.Functions.Rights.HasPressCopyright(_idMedia) ? string.Empty : "blur/";
+                //string blur = TNS.AdExpress.Web.Functions.Rights.HasPressCopyright(_idMedia) ? string.Empty : "blur/";
                 foreach (DataRow row in dt.Rows)
                 {
 
@@ -512,11 +512,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                             foreach (string str in files)
                                             {
                                                 if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                                    listVisual += string.Format("/ImagesPresse/{0}/{1}/{2}{3},", _idMedia, row["date_media_num"]
-                                                                                , TNS.AdExpress.Web.Functions.Rights.ParutionDateBefore2015(row["date_media_num"].ToString()) ? string.Empty : blur
+                                                    listVisual += string.Format("/ImagesPresse/{0}/{1}/{2},", _idMedia, row["date_media_num"]                                                                               
                                                                                 , str);
-                                                else listVisual += string.Format("/ImagesPresse/{0}/{1}/{2}{3},", _idMedia, row["date_cover_num"]
-                                                                                , TNS.AdExpress.Web.Functions.Rights.ParutionDateBefore2015(row["date_cover_num"].ToString()) ? string.Empty : blur
+                                                else listVisual += string.Format("/ImagesPresse/{0}/{1}/{2},", _idMedia, row["date_cover_num"]                                                                               
                                                                                 , str);
                                             }
                                             if (listVisual.Length > 0)

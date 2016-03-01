@@ -11,5 +11,6 @@ namespace Km.AdExpressClientWeb.Models
         public PeriodViewModel PeriodViewModel { get; set; }
 
         public List<MediaPlanNavigationNode> NavigationBar { get; set; }
+        public PresentationModel Presentation { get; set; }
     }
 }
