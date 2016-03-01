@@ -347,8 +347,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 MediaScheduleCode = MediaScheduleCode,
                 SaveUniversCode = SaveUniversCode,
                 SiteLanguage = siteLanguage,
-                SavedUnivers = new List<Models.MediaSchedule.SavedUnivers>(),
-                UserUniversCode = UserUniversCode
+                UserUniversGroups = new List<Models.MediaSchedule.UserUniversGroup>(),
+                UserUniversCode = UserUniversCode,
+                ErrorMsgCode =ErrorMsgCode
             };
             return result;
         }
