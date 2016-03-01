@@ -42,6 +42,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const long MediaScheduleCode = 150;
         private const long SaveUniversCode = 769;
         private const long LoadUniversCode = 770;
+        private const long UserUniversCode = 875;
         private const long UserSavedUniversCode = 893;        
         private const long ExceptionMsg = 922;
         private const long ErrorMsgCode = 930;
@@ -109,7 +110,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Medias =media,
                 IdMediasCommon = idMediasCommon
             };
-
+            model.Presentation = LoadPresentationBar(_webSession.SiteLanguage);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
@@ -152,6 +153,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
+            model.Presentation = LoadPresentationBar(CustomerSession.SiteLanguage);
 
             return View(model);
         }
@@ -212,11 +214,15 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult Results()
         {
+            var cla = new ClaimsPrincipal(User.Identity);
+            string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
             var resultNode = new VM.MediaPlanNavigationNode { Position = 4 };
             var model = new VM.ResultsViewModel
             {
-                NavigationBar = LoadNavBar(resultNode.Position)
-            };            
+                NavigationBar = LoadNavBar(resultNode.Position),
+                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage)
+        };            
             return View(model);
         }
 
@@ -341,7 +347,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 MediaScheduleCode = MediaScheduleCode,
                 SaveUniversCode = SaveUniversCode,
                 SiteLanguage = siteLanguage,
-                SavedUnivers = new List<Models.MediaSchedule.SavedUnivers>()
+                SavedUnivers = new List<Models.MediaSchedule.SavedUnivers>(),
+                UserUniversCode = UserUniversCode
             };
             return result;
         }

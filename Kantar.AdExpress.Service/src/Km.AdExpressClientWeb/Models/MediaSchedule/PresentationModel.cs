@@ -14,6 +14,7 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public long SaveUniversCode { get; set; }
         public long LoadUniversCode { get; set; }
         public long MediaScheduleCode { get; set; }
+        public long UserUniversCode { get; set; }
     }
 
     public class SavedUnivers
