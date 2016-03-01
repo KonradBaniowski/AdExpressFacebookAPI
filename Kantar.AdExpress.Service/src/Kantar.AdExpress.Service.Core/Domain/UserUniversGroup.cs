@@ -1,23 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Km.AdExpressClientWeb.Models.MediaSchedule
+namespace Kantar.AdExpress.Service.Core.Domain
 {
-    public class PresentationModel
-    {
-        public int SiteLanguage { get; set; }
-
-        public List<UserUniversGroup> UserUniversGroups { get;set;}
-
-        public long SaveUniversCode { get; set; }
-        public long LoadUniversCode { get; set; }
-        public long MediaScheduleCode { get; set; }
-        public long UserUniversCode { get; set; }
-        public long ErrorMsgCode { get; set; }
-    }
-
     public class UserUniversGroup
     {
         public int Id { get; set; }
@@ -32,5 +20,4 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public string Description { get; set; }
         public List<UniversLevel> Levels { get; set; }
     }
-
 }

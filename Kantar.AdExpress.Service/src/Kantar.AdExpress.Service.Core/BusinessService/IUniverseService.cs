@@ -13,5 +13,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 
         UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage);
 
+        UserUniversGroup GetUserSavedUnivers(string webSessionId);
     }
 }

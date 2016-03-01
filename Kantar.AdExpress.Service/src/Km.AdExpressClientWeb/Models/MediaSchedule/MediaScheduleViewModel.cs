@@ -14,7 +14,7 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public bool Multiple { get; set; }
         public List<int> IdMediasCommon { get; set; }
 
-        public List<MediaPlanNavigationNode> NavigationBar { get; set; }
+        public List<NavigationNode> NavigationBar { get; set; }
 
         public ErrorMessage ErrorMessage { get; set; }
 
@@ -31,7 +31,7 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public bool Disabled { get; set; }
     }
 
-    public class MediaPlanNavigationNode
+    public class NavigationNode
     {
         public int Id { get; set; }
 
@@ -115,7 +115,7 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 
         public List<SectorModel> Sectors { get; set; }
 
-        public List<MediaPlanNavigationNode> NavigationBar { get; set;}
+        public List<NavigationNode> NavigationBar { get; set;}
 
     }
     #endregion

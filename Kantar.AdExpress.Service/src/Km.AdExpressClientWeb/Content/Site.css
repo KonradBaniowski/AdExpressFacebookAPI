@@ -133,9 +133,16 @@
 
 .container-kantar-other {
     background: url('../Content/img/kantarmedia-bg-2.jpg') no-repeat;
+    color: #ffffff;
     background-size: cover;
 }
-
+.header-kantar-popup {
+    padding:10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius:3px;
+    border-top-left-radius:3px;
+    background-color: rgba(0,0,0,0.7);
+}
 
 .navbar-brand {
     position: absolute;
@@ -209,7 +216,6 @@
     font-weight: bolder;
     padding: 10px 15px;
 }
-
 .btn-blue, .btn-blue:hover {
     background-color: #00c1ff;
     color: white;
@@ -282,6 +288,9 @@ input {
 
 .red {
     color: #de000d;
+}
+.orange {
+    color: #ff8c00 !important;
 }
 
 .tile-third.bg-green {
@@ -1396,4 +1405,23 @@ ul.ui-selectable li{
 
 .select-recherche .caret {
     margin-left:10px;
+}
+
+.modal-header i {
+    display: inline-block;
+    vertical-align: text-top;
+    padding: 0 5px 0 0;
+}
+.popup-text {
+        color: #333333;
+}
+
+.modal-footer{
+    padding: 8px 20px 6px;
+    margin-top: 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+.modal-content-alert{
+        margin-bottom: -16px;
 }

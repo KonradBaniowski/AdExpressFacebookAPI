@@ -169,5 +169,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
+
+        public UserUniversGroup GetUserSavedUnivers(string webSessionId)
+        {
+            return new UserUniversGroup();
+        }
     }
 }

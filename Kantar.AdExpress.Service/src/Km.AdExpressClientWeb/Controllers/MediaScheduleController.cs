@@ -83,7 +83,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Presentation
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
             #endregion
-            var marketNode = new VM.MediaPlanNavigationNode { Position = 1 };
+            var marketNode = new VM.NavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);
         }
@@ -99,31 +99,30 @@ namespace Km.AdExpressClientWeb.Controllers
             
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var media = _mediaService.GetMedia(idWebSession);
-            var _webSession = (WebSession)WebSession.Load(idWebSession);
+            var result = _mediaService.GetMedia(idWebSession);          
 
             #region model data
             var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var model = new VM.MediaSelectionViewModel()
             {
                 Multiple = true,
-                Medias =media,
+                Medias = result.Media,
                 IdMediasCommon = idMediasCommon
             };
-            model.Presentation = LoadPresentationBar(_webSession.SiteLanguage);
+            model.Presentation = LoadPresentationBar(result.SiteLanguage);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();            
-            var mediaNode = new VM.MediaPlanNavigationNode { Position = 2 };
+            var mediaNode = new VM.NavigationNode { Position = 2 };
             model.NavigationBar = LoadNavBar(mediaNode.Position);
             model.ErrorMessage= new VM.ErrorMessage
             {
-                EmptySelection= GestionWeb.GetWebWord(1052, _webSession.SiteLanguage),
-                SearchErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage),
-                SocialErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage),
-                UnitErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage)
+                EmptySelection= GestionWeb.GetWebWord(1052, result.SiteLanguage),
+                SearchErrorMessage = GestionWeb.GetWebWord(3011, result.SiteLanguage),
+                SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
+                UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             #endregion
             return View(model);
@@ -147,7 +146,7 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.StartYear = string.Format("{0}-01-01", startYear);
             periodModel.EndYear = string.Format("{0}-12-31", endYear);
 
-            VM.MediaPlanNavigationNode periodeNode = new VM.MediaPlanNavigationNode { Position = 3 };
+            VM.NavigationNode periodeNode = new VM.NavigationNode { Position = 3 };
             var navBarModel = LoadNavBar(periodeNode.Position);
 
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
@@ -217,7 +216,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            var resultNode = new VM.MediaPlanNavigationNode { Position = 4 };
+            var resultNode = new VM.NavigationNode { Position = 4 };
             var model = new VM.ResultsViewModel
             {
                 NavigationBar = LoadNavBar(resultNode.Position),
@@ -257,7 +256,7 @@ namespace Km.AdExpressClientWeb.Controllers
             
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var response = _webSessionService.SaveMarketSelection( idWebSession);
+                var response = _webSessionService.SaveMarketSelection( idWebSession); 
             
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             string url = context.Action(nextStep, _controller);
@@ -265,12 +264,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
         #region Private methodes
-        private List< VM.MediaPlanNavigationNode> LoadNavBar(int currentPosition)
+        private List< VM.NavigationNode> LoadNavBar(int currentPosition)
         {
-            var model = new List<VM.MediaPlanNavigationNode>();
+            var model = new List<VM.NavigationNode>();
             //TODO Update Navbar according to the country selection
             #region Hardcoded  nav Bar.
-            var market = new VM.MediaPlanNavigationNode
+            var market = new VM.NavigationNode
             {
                 Id = 1,
                 IsActive = false,
@@ -281,7 +280,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-file-text"
             };
             model.Add(market);
-            var media = new VM.MediaPlanNavigationNode
+            var media = new VM.NavigationNode
             {
                 Id = 2,
                 IsActive = false,
@@ -292,7 +291,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-eye"
             };
             model.Add(media);
-            var dates = new VM.MediaPlanNavigationNode
+            var dates = new VM.NavigationNode
             {
                 Id = 3,
                 IsActive = false,
@@ -303,7 +302,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-calendar"
             };
             model.Add(dates);
-            var result = new VM.MediaPlanNavigationNode
+            var result = new VM.NavigationNode
             {
                 Id = 4,
                 IsActive = false,
@@ -347,8 +346,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 MediaScheduleCode = MediaScheduleCode,
                 SaveUniversCode = SaveUniversCode,
                 SiteLanguage = siteLanguage,
-                SavedUnivers = new List<Models.MediaSchedule.SavedUnivers>(),
-                UserUniversCode = UserUniversCode
+                UserUniversGroups = new List<Models.MediaSchedule.UserUniversGroup>(),
+                UserUniversCode = UserUniversCode,
+                ErrorMsgCode =ErrorMsgCode
             };
             return result;
         }
