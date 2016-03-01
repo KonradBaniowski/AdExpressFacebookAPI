@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
+    <Compile Include="Controllers\PortfolioController.cs" />
     <Compile Include="Controllers\TestExportController.cs" />
     <Compile Include="Controllers\UniverseController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
@@ -1446,6 +1447,7 @@
     <Content Include="Views\MediaSchedule\Results.cshtml" />
     <Content Include="Views\MediaSchedule\NavigationBar.cshtml" />
     <Content Include="Views\TestExport\Index.cshtml" />
+    <Content Include="Views\Portfolio\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
