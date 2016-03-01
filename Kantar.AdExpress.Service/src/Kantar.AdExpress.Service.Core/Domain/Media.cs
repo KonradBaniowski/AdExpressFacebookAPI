@@ -15,4 +15,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public string Label { get; set; }
         public bool Disabled { get; set; }
     }
+
+    public class MediaResponse
+    {
+        public List<Media> Media { get; set; }
+        public int SiteLanguage { get; set; }
+    }
 }

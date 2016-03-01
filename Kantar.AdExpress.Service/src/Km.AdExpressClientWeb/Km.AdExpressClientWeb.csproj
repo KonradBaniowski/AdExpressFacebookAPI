@@ -1449,6 +1449,7 @@
     <Content Include="Views\MediaSchedule\NavigationBar.cshtml" />
     <Content Include="Views\TestExport\Index.cshtml" />
     <Content Include="Views\Portfolio\Index.cshtml" />
+    <Content Include="Views\Portfolio\MediaSelection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
