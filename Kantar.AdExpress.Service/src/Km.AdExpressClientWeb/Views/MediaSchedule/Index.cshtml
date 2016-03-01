@@ -55,7 +55,7 @@
                     <div id="branch@(item.Id)" class="universes" style="display:none">
                         @foreach (var level in item.UniversLevels)
                         {
-                            <div id="groupSelectable@(level.Id)" data-label="@(level.Label)" data-universe="@(level.Id)"class="panel panel-default"></div>
+                            <div id="groupSelectable@(level.Id)" data-label="@(level.Label)" data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default"></div>
                         }
                     </div>
                 }
