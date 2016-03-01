@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
-    class IPortfolioService
+    public interface IPortfolioService
     {
     }
 }
