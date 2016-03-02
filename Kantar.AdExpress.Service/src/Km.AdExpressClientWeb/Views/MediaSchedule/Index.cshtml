@@ -33,7 +33,7 @@
                                 }
                                 else
                                 {
-                                <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                                    <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
                                 }
                             }
                         </ul>
@@ -55,7 +55,18 @@
                     <div id="branch@(item.Id)" class="universes" style="display:none">
                         @foreach (var level in item.UniversLevels)
                         {
-                            <div id="groupSelectable@(level.Id)" data-label="@(level.Label)" data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default"></div>
+                            <div id="groupSelectable@(level.Id)" data-label="@(level.Label)" 
+                                 data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default">
+                                @*<div class="panel-heading">
+                                    <h6 class="famille blue uppercase">
+                                        @(level.Label)
+                                        <span class="badge bg-blue"></span>
+                                    </h6>
+                                </div>
+                                <div class="panel-body">
+                                    
+                                </div>*@
+                            </div>
                         }
                     </div>
                 }
