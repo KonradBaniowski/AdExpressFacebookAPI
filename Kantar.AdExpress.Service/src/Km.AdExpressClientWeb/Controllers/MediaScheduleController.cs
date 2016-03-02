@@ -324,12 +324,13 @@ namespace Km.AdExpressClientWeb.Controllers
             Models.MediaSchedule.PresentationModel result=new Models.MediaSchedule.PresentationModel
             {
                 LoadUniversCode = LanguageConstantes.LoadUniversCode,
-                MediaScheduleCode = LanguageConstantes.MediaScheduleCode,
+                ModuleCode = LanguageConstantes.MediaScheduleCode,
                 SaveUniversCode = LanguageConstantes.SaveUniversCode,
                 SiteLanguage = siteLanguage,
                 UserUniversGroups = new List<Models.MediaSchedule.UserUniversGroup>(),
                 UserUniversCode = LanguageConstantes.UserUniversCode,
-                ErrorMsgCode = LanguageConstantes.ErrorMsgCode
+                ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
+                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode
             };
             var userGroups = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
             return result;

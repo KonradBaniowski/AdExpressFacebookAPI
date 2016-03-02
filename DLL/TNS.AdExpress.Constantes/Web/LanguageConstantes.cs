@@ -10,6 +10,7 @@ namespace TNS.AdExpress.Constantes.Web
 
         #region CODES OF MARKET'S LABELS
         public const long MediaScheduleCode = 150;
+        public const long MediaScheduleDescriptionCode = 2200;
         public const long SaveUniversCode = 769;
         public const long LoadUniversCode = 770;
         public const long UserUniversCode = 875;
@@ -26,6 +27,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SecurityMsg = 2285;
         public const long OverLimitMsgCode = 2286;
         public const long KeyWordDescriptionCode = 2287;
+        public const long PortfolioCode = 2170;
+        public const long PortfolioDescriptionCode = 2199;
         #endregion
     }
 }

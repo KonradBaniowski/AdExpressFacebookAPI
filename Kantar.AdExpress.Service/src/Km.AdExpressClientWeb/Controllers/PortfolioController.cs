@@ -163,7 +163,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Include = GestionWeb.GetWebWord(LanguageConstantes.IncludeCode, siteLanguage),
                 Exclude = GestionWeb.GetWebWord(LanguageConstantes.ExcludeCode, siteLanguage),
                 LoadUnivers = GestionWeb.GetWebWord(LanguageConstantes.LoadUniversCode, siteLanguage),
-                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage)
+                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage)               
             };
             return result;
         }
@@ -172,12 +172,13 @@ namespace Km.AdExpressClientWeb.Controllers
             Models.MediaSchedule.PresentationModel result = new Models.MediaSchedule.PresentationModel
             {
                 LoadUniversCode = LanguageConstantes.LoadUniversCode,
-                MediaScheduleCode = LanguageConstantes.MediaScheduleCode,
+                ModuleCode = LanguageConstantes.PortfolioCode,
                 SaveUniversCode = LanguageConstantes.SaveUniversCode,
                 SiteLanguage = siteLanguage,
                 UserUniversGroups = new List<Models.MediaSchedule.UserUniversGroup>(),
                 UserUniversCode = LanguageConstantes.UserUniversCode,
-                ErrorMsgCode = LanguageConstantes.ErrorMsgCode
+                ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
+                ModuleDecriptionCode = LanguageConstantes.PortfolioDescriptionCode
             };
             return result;
         }
