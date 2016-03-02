@@ -1454,6 +1454,7 @@
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Portfolio\MediaSelection.cshtml" />
     <Content Include="Views\Shared\UserUniversGroups.cshtml" />
+    <Content Include="Views\Shared\UserUniversGroupsContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

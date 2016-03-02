@@ -22,4 +22,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public string ParentDescription { get; set; }
         public List<UniversLevel> Levels { get; set; }
     }
+
+    public class UniversGroupsResponse
+    {
+        public List<UserUniversGroup> UniversGroups { get; set; }
+        public int SiteLanguage { get; set; }
+    }
 }
