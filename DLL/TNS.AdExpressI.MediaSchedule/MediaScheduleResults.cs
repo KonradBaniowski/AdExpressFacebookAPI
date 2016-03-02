@@ -1763,7 +1763,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             schemaFields.Add(new { name = "ID_PRODUCT" });
             columns.Add(new { headerText = GestionWeb.GetWebWord(804, _session.SiteLanguage), key = "PRODUCT", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "PRODUCT" });
-            columnsFixed.Add(new { columnKey = "PRODUCT", isFixed = true, allowFixing = true });
+            columnsFixed.Add(new { columnKey = "PRODUCT", isFixed = true, allowFixing = false });
             tableWidth = 20;
             
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)

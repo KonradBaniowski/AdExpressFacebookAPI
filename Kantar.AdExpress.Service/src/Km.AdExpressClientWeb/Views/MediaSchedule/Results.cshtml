@@ -129,7 +129,8 @@
                     if (success) {
                         
                         $("#grid").igTreeGrid("destroy");
-
+                        $("#gridLoader").addClass("hide");
+                        $("#grid").removeClass("hide");
                         if (needFixedColumns) {
                             $("#grid").igTreeGrid({
                                 dataSource: ds.dataView(),
@@ -177,8 +178,7 @@
                     } else {
                         alert(error);
                     }
-                    $("#gridLoader").addClass("hide");
-                    $("#grid").removeClass("hide");
+                    
                 }
 
                 $.ajax({
