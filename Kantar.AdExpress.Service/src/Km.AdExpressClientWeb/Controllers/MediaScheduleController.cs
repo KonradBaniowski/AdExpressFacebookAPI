@@ -38,26 +38,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaScheduleService _mediaSchedule;
         private IUniverseService _universService;
         private const string _controller = "MediaSchedule";
-        #region CODES OF MARKET'S LABELS
-        //private const long MediaScheduleCode = 150;
-        //private const long SaveUniversCode = 769;
-        //private const long LoadUniversCode = 770;
-        //private const long UserUniversCode = 875;
-        //private const long UserSavedUniversCode = 893;        
-        //private const long ExceptionMsg = 922;
-        //private const long ErrorMsgCode = 930;
-        //private const long NoSavedUniversCode = 930;
-        //private const long KeyWordLabelCode = 972;
-        //private const long Capacity = 1000;
-        //private const long ExcludeCode = 2269;
-        //private const long IncludeCode = 2270;
-        //private const long BranchLabelCode = 2272;
-        //private const long ElementLabelCode = 2278;
-        //private const long SecurityMsg = 2285;
-        //private const long OverLimitMsgCode = 2286;
-        //private const long KeyWordDescriptionCode = 2287;        
-        #endregion
-
+       
         private string icon;
         public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService)
         {

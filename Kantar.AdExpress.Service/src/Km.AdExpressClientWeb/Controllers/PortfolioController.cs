@@ -12,6 +12,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using VM = Km.AdExpressClientWeb.Models.Portfolio;
 using KM.AdExpress.Framework.MediaSelection;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -36,10 +37,10 @@ namespace Km.AdExpressClientWeb.Controllers
             return View();
         }
 
-        //public ActionResult Presentation()
-        //{
-        //    return View();
-        //}
+        public ActionResult Presentation()
+        {
+            return View();
+        }
 
         public ActionResult MediaSelection()
         {
@@ -72,6 +73,23 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             #endregion
             return View(model);
+        }
+
+        public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)
+        {
+            string url = string.Empty;
+            var response = new Domain.WebSessionResponse();
+            if (selectedMedia != null)
+            {
+                var claim = new ClaimsPrincipal(User.Identity);
+                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
+            }
+            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+            if (response.Success)
+                url = context.Action(nextStep, _controller);
+            JsonResult jsonModel = Json(new { RedirectUrl = url });
+            return jsonModel;
         }
 
         #region Private methodes
