@@ -6,7 +6,7 @@
 
 <div class="row">
     @*PRESENTATION*@
-    @Html.Partial("Presentation")
+    @Html.Partial("Presentation", Model.Presentation)
 
     @*BREADCRUM*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
@@ -21,13 +21,20 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="input-group">
-                    <input type="text" class="form-control recherche" placeholder="Recherche" aria-describedby="basic-addon2">
+                    <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
                     <div class="input-group-btn dropdown" dropdown="">
-                        <button type="button" class="btn btn-default select-recherche" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
+                        <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
                         <ul class="dropdown-menu bg-blue pull-right">
-                            @foreach (var item in Model.Branches.Where(p => !p.IsSelected))
+                            @foreach (var item in Model.Branches)
                             {
-                                <li><a href="" data-id="@item.Id">@item.Label</a></li>
+                                if (item.IsSelected)
+                                {
+                                    <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
+                                }
+                                else
+                                {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                                }
                             }
                         </ul>
                         <button class="btn btn-default btn-recherche" type="button"><i class="fa fa-search blue "></i></button>
@@ -41,33 +48,19 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <div class="panel  panel-marche">
                 <div class="panel-heading-choix">
-                    <span class="badge blue bg-light pull-right">122</span>
                     <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; Résultats</h4>
                 </div>
-
-                
-
                 @foreach (var item in Model.Branches)
                 {
-                    <div id="@item.Id" style="display:none">
+                    <div id="branch@(item.Id)" class="universes" style="display:none">
                         @foreach (var level in item.UniversLevels)
                         {
-                            <div id="@level.Id" class="panel panel-default"></div>
-                            @*<div  class="head-famille"><h5 class="famille blue">@level.Label<span class="badge bg-blue black">36</span></h5></div>
-                            <div class="panel-body">
-                                TRY
-                            </div>*@
+                            <div id="groupSelectable@(level.Id)" data-label="@(level.Label)" data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default"></div>
                         }
                     </div>
                 }
             </div>
         </div>
-        @*<div class="head-famille"><h5 class="famille blue">ANNONCEURS<span class="badge bg-blue black">36</span></h5></div>
-            <div class="panel-body">
-                TRY
-            </div>*@
-
-
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <div class="btn-marche text-center">
                 <a class="btn btn-green2 btn-circle btn-xl">

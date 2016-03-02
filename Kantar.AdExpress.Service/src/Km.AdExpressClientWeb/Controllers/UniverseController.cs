@@ -30,7 +30,7 @@ namespace Km.AdExpressClientWeb.Controllers
         /// <param name="keyWord"></param>
         /// <param name="branchId"></param>
         /// <returns></returns>
-        public JsonResult GetBranches(string keyWord, int universeId)
+        public JsonResult GetUniverses(string keyWord, int universeId)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();

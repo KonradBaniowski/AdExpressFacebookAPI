@@ -22,9 +22,8 @@ using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.FrameWork.Results;
-using ExcelFunction = TNS.AdExpress.Web.UI.ExcelWebPage;
 
-using WebFunctions = TNS.AdExpress.Web.Functions;
+
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
@@ -191,8 +190,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			// Selection recall
 			if (_excel) {
-				t.Append(ExcelFunction.GetLogo(_webSession));
-				t.Append(ExcelFunction.GetExcelHeader(_webSession, GestionWeb.GetWebWord(1379, _webSession.SiteLanguage)));
+                //TODO: Commnter pur la nouvelle version , pensez à mettre dans l'export excel infragisitcs
+				//t.Append(ExcelFunction.GetLogo(_webSession));
+				//t.Append(ExcelFunction.GetExcelHeader(_webSession, GestionWeb.GetWebWord(1379, _webSession.SiteLanguage)));
 			}
 
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
@@ -230,7 +230,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					else t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>&nbsp;</td>");
                     UnitInformation unitInformation = UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion);
                     if (dr[unitInformation.Id.ToString()] != null) {
-                        t.Append("\r\n\t<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr[unitInformation.Id.ToString()], unitInformation.Id, false, fp) + "</td>");
+                        t.Append("\r\n\t<td align=\"right\" class=\"" + classCss + "\" nowrap>" + Units.ConvertUnitValueAndPdmToString(dr[unitInformation.Id.ToString()], unitInformation.Id, false, fp) + "</td>");
 					}
 					else t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>&nbsp;</td>");
 					t.Append("</tr>");
@@ -241,7 +241,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			}
 			else t.Append(GetNoDataMessageHtml());
 			if (_excel) {
-				t.Append(ExcelFunction.GetFooter(_webSession));
+                //TODO : Commenter pour la nouvelle version, pensez à la générer via infragistics
+				//t.Append(ExcelFunction.GetFooter(_webSession));
 			}
 			return t.ToString();
 		}
@@ -284,8 +285,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             // Selection recall
             if (_excel)
             {
-                t.Append(ExcelFunction.GetLogo(_webSession));
-                t.Append(ExcelFunction.GetExcelHeader(_webSession, GestionWeb.GetWebWord(1379, _webSession.SiteLanguage)));
+                //TODO : Commenter pour la nouvelle version, a mettre dans les excel via Infragistics
+                //t.Append(ExcelFunction.GetLogo(_webSession));
+                //t.Append(ExcelFunction.GetExcelHeader(_webSession, GestionWeb.GetWebWord(1379, _webSession.SiteLanguage)));
             }
 
 			if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
@@ -329,7 +331,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     }
                     if (!_excel || unitInformationList[i].Id != WebCst.CustomerSessions.Unit.duration)
                     {
-                        t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(totalUnit, unitInformationList[i].Id, false, fp) + "</td>");
+                        t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + Units.ConvertUnitValueAndPdmToString(totalUnit, unitInformationList[i].Id, false, fp) + "</td>");
                     }
                     else
                     {
@@ -352,7 +354,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     for (int i = 0; i < unitInformationList.Count; i++) {
                         if (!_excel || unitInformationList[i].Id != WebCst.CustomerSessions.Unit.duration)
                         {
-                            t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()], unitInformationList[i].Id, false, fp) + "</td>");
+                            t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()], unitInformationList[i].Id, false, fp) + "</td>");
                         }
                         else
                         {
@@ -379,7 +381,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             if (_excel)
             {
-                t.Append(ExcelFunction.GetFooter(_webSession));
+                //TODO : commenter pour la nouvelle version , pensez à la rajouter via infragfistics
+                //t.Append(ExcelFunction.GetFooter(_webSession));
             }
 			return t.ToString();
 		}

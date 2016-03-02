@@ -19,7 +19,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
-using WebFunctions = TNS.AdExpress.Web.Functions;
+
 using TNS.AdExpress.Constantes.FrameWork.Results;
 
 using TNS.AdExpress.Domain.Exceptions;
