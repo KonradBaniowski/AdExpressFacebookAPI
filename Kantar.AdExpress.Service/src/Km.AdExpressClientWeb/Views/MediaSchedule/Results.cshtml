@@ -12,13 +12,17 @@
      </div>
 </div>
 <div class="row">
-    <div>
-        <h1 id="changeColSett" style="cursor:pointer">Result</h1>
-    </div>
-    <div id="grid"></div>
+    <center>
+        <div id="grid" class="hide">
+        </div>
+        <div id="gridLoader">
+            <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+        </div>
+    </center>
     <div>&nbsp;</div>
 </div>
 @section Scripts {
+<script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
 <script src="~/IgniteUI/js/infragistics.core.js"></script>
 <script src="~/IgniteUI/js/infragistics.lob.js"></script>
     <script>
@@ -71,27 +75,28 @@
                              {
                                  headerText: "01",
                                  group: [
-                                     { headerText: "L", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
-                                    { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
-                                    { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
-                                    { headerText: "J", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
-                                    { headerText: "V", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
-                                    { headerText: "S", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" },
-                                    { headerText: "D", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
+                                     { headerText: "L", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+                                    { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+                                    { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+                                    { headerText: "J", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+                                    { headerText: "V", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+                                    { headerText: "S", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+                                    { headerText: "D", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" }
                                  ]
-                             },
-                              {
-                                  headerText: "02",
-                                  group: [
-                                      { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
-                                  ]
-                              },
-                               {
-                                   headerText: "03",
-                                   group: [
-                                       { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
-                                   ]
-                               }
+                             }
+                             //,
+                             // {
+                             //     headerText: "02",
+                             //     group: [
+                             //         { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
+                             //     ]
+                             // },
+                             //  {
+                             //      headerText: "03",
+                             //      group: [
+                             //          { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
+                             //      ]
+                             //  }
                         ],
                         dataRendered: function (evt, ui) {
                             ui.owner.element.find("tr td:nth-child(4)").css("text-align", "center");
@@ -113,7 +118,69 @@
 
 
 
-            $("#changeColSett").click(function () {
+            //$("#changeColSett").click(function () {
+
+                var ds;
+                var cols;
+                var colsFixed;
+                var needFixedColumns = false;
+
+                var renderGrid = function (success, error) {
+                    if (success) {
+                        
+                        $("#grid").igTreeGrid("destroy");
+
+                        if (needFixedColumns) {
+                            $("#grid").igTreeGrid({
+                                dataSource: ds.dataView(),
+                                columns: cols,
+                                autoGenerateColumns: false,
+                                primaryKey: "ID_PRODUCT",
+                                foreignKey: "PID",
+                                width: "1000px",
+                                features: [
+                                   {
+                                       name: "MultiColumnHeaders"
+                                   },
+                                   {
+                                       name: "Paging",
+                                       mode: "allLevels",
+                                       pageSize: 25
+                                   },
+                                   {
+                                       name: "ColumnFixing",
+                                       fixingDirection: "left",
+                                       columnSettings: colsFixed
+                                   }
+                                ]
+                            })
+                        }
+                        else {
+                            $("#grid").igTreeGrid({
+                                dataSource: ds.dataView(),
+                                columns: cols,
+                                autoGenerateColumns: false,
+                                primaryKey: "ID_PRODUCT",
+                                foreignKey: "PID",
+                                features: [
+                                   {
+                                       name: "MultiColumnHeaders"
+                                   },
+                                   {
+                                       name: "Paging",
+                                       mode: "allLevels",
+                                       pageSize: 25
+                                   }
+                                ]
+                            })
+                        }
+                    } else {
+                        alert(error);
+                    }
+                    $("#gridLoader").addClass("hide");
+                    $("#grid").removeClass("hide");
+                }
+
                 $.ajax({
                     url: '@Url.Action("MediaScheduleResult", "MediaSchedule")',
                     contentType: "application/x-www-form-urlencoded",
@@ -123,54 +190,75 @@
                     },
                     success: function (data) {
                         if (data != null) {
-                            document.location = data.RedirectUrl;
+                            dataTreeGrid = data.datagrid;
+                            cols = data.columns;
+                            colsFixed = data.columnsfixed;
+                            needFixedColumns = data.needfixedcolumns;
+
+                            var schema = new $.ig.DataSchema("array", {
+                                fields: data.schema
+                            });
+
+                            //cols = cols.replace(/\"([^(\")"]+)\":/g, "$1:");
+                            //This code creates an $.ig.DataSource from the HTML Table DOM data
+                            ds = new $.ig.DataSource({
+                                type: "json",
+                                schema: schema,
+                                dataSource: dataTreeGrid,
+                                callback: renderGrid
+                            });
+
+                            // Binds to the underlying data
+                            ds.dataBind();
                         }
                     }
                 });
 
-                /*for (var key1 in data[0]) {
+                //for (var key1 in data[0]) {
 
-                    if (data[0][key1].group != null) {
-                        cols.push({
-                            headerText: data[0][key1].headerText,
-                            group: data[0][key1].group
+                //    if (data[0][key1].group != null) {
+                //        cols.push({
+                //            headerText: data[0][key1].headerText,
+                //            group: data[0][key1].group
 
-                        })
-                    } else {
-                        cols.push({
-                            headerText: data[0][key1].headerText,
-                            key: data[0][key1].key,
-                            width: data[0][key1].width,
-                            dataType: data[0][key1].dataType,
-                            allowHiding: data[0][key1].allowHiding,
-                            hidden: data[0][key1].hidden,
-                            template: data[0][key1].template,
+                //        })
+                //    } else {
+                //        cols.push({
+                //            headerText: data[0][key1].headerText,
+                //            key: data[0][key1].key,
+                //            width: data[0][key1].width,
+                //            dataType: data[0][key1].dataType,
+                //            allowHiding: data[0][key1].allowHiding,
+                //            hidden: data[0][key1].hidden,
+                //            template: data[0][key1].template,
 
-                        })
-                    }
+                //        })
+                //    }
 
-                }
+                //}
 
-                $("#grid").igTreeGrid("destroy");
-                $("#grid").igTreeGrid({
-                    dataSource: data[1],
-                    primaryKey: "ClassifId",
-                    foreignKey: "PID",
-                    autoGenerateColumns: false,
-                    columns: cols,
-                    features: [
-                       {
-                           name: "MultiColumnHeaders"
-                       },
-                       {
-                           name: "Paging",
-                           mode: "allLevels",
-                           pageSize: 10
-                       }
-                    ]
-                })*/
+                //$("#grid").igTreeGrid("destroy");
+                //$("#grid").igTreeGrid({
+                //    dataSource: data[1],
+                //    primaryKey: "ClassifId",
+                //    foreignKey: "PID",
+                //    autoGenerateColumns: false,
+                //    columns: cols,
+                //    features: [
+                //       {
+                //           name: "MultiColumnHeaders"
+                //       },
+                //       {
+                //           name: "Paging",
+                //           mode: "allLevels",
+                //           pageSize: 10
+                //       }
+                //    ]
+                //})
+
+              
             });
 
-        });
+        //});
     </script>
 }

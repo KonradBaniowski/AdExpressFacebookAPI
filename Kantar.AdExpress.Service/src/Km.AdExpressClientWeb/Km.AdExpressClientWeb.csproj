@@ -179,13 +179,16 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
+    <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MediaSchedule\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
     <Compile Include="Models\MediaSchedule\PresentationModel.cs" />
     <Compile Include="Models\MediaSchedule\ResultsViewModel.cs" />
+    <Compile Include="Models\NavigationNode.cs" />
     <Compile Include="Models\PeriodSelectionViewModel.cs" />
     <Compile Include="Models\PeriodViewModel.cs" />
+    <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1443,13 +1446,14 @@
     <Content Include="Views\MediaSchedule\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutOther.cshtml" />
     <Content Include="Views\MediaSchedule\MediaSelection.cshtml" />
-    <Content Include="Views\MediaSchedule\Presentation.cshtml" />
+    <Content Include="Views\Shared\Presentation.cshtml" />
     <Content Include="Views\MediaSchedule\PeriodSelection.cshtml" />
     <Content Include="Views\MediaSchedule\Results.cshtml" />
-    <Content Include="Views\MediaSchedule\NavigationBar.cshtml" />
+    <Content Include="Views\Shared\NavigationBar.cshtml" />
     <Content Include="Views\TestExport\Index.cshtml" />
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Portfolio\MediaSelection.cshtml" />
+    <Content Include="Views\Shared\UserUniversGroups.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,9 +13,12 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 
         public long SaveUniversCode { get; set; }
         public long LoadUniversCode { get; set; }
-        public long MediaScheduleCode { get; set; }
+        public long ModuleCode { get; set; }
         public long UserUniversCode { get; set; }
         public long ErrorMsgCode { get; set; }
+        public long ModuleDecriptionCode { get; set; }
+        public bool ShowUserSavedGroups { get; set; }
+        public bool ShowCurrentSelection { get; set; }        
     }
 
     public class UserUniversGroup
@@ -24,6 +27,8 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public int Count { get; set; }
         public string Description { get; set; }
         public List<ClientUnivers> ClientUnivers { get; set; }
+        public int FirstColumnSize { get; set; }
+        public int SecondeColumnSize { get; set; }
     }
 
     public class ClientUnivers

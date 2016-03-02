@@ -80,66 +80,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage = true)
         {
+            var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
             var result = new UniversBranchResult
             {
-                Branches = new List<UniversBranch>()
+                Branches = new List<UniversBranch>(),
+                SiteLanguage = tuple.Item4,
+                DefaultBranchId =tuple.Item5
             };
-            webSession = (WebSession)WebSession.Load(webSessionId);
-            result.SiteLanguage = webSession.SiteLanguage;
-            string listUniverseClientDescription = "";
-            ILevelsRules levelsRules = null;
-            List<int> tempBranchIds = new List<int>();
-            List<UniverseLevel> tempLevels = new List<UniverseLevel>();
-            List<long> _forbiddenLevelsId = new List<long>();
-            List<int> _allowedBranchesIds = new List<int>();
-            List<long> _allowedLevelsId = new List<long>();
-            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
-            DomainWebNavigation.Module currentModuleDescription = DomainWebNavigation.ModulesList.GetModule(webSession.CurrentModule);
-            if (selectionPage)
+            var allowedBranchesIds = tuple.Item2;
+            if (allowedBranchesIds.Any())
             {
-                //Apply rigth Rules for getting levels and branches
-                DomainWebNavigation.SelectionPageInformation currentPage = currentModuleDescription.SelectionsPages.Cast<DomainWebNavigation.SelectionPageInformation>().ToList().FirstOrDefault(p => p.Id == MarketSelectionPageId);///Private/Helps/UniverseProductSelectionHelp.aspx
-
-                if (currentPage != null)
-                {
-                    listUniverseClientDescription += currentPage.LoadableUniversString;
-                    result.DefaultBranchId = currentPage.DefaultBranchId;
-                    levelsRules = new AdExpressLevelsRules(webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), dimension);
-                    tempBranchIds = levelsRules.GetAuthorizedBranches();
-                    tempLevels = levelsRules.GetAuthorizedLevels();
-                    if (tempBranchIds.Count > 0)
-                        _allowedBranchesIds = tempBranchIds;
-                    if (tempLevels.Count > 0)
-                    {
-                        for (int i = 0; i < tempLevels.Count; i++)
-                        {
-                            if (_forbiddenLevelsId == null || _forbiddenLevelsId.Count == 0 || !_forbiddenLevelsId.Contains(tempLevels[i].ID))
-                                _allowedLevelsId.Add(tempLevels[i].ID);
-                        }
-                    }
-                }
-            }
-            //else {
-            //TODO  For Optional Selection
-            //listUniverseClientDescription += currentPage.LoadableUniversString;
-            ////Apply rigth Rules for getting levels and branches
-            //levelsRules = new AdExpressLevelsRules(webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), _dimension);
-            //tempBranchIds = levelsRules.GetAuthorizedBranches();
-            //tempLevels = levelsRules.GetAuthorizedLevels();
-            //if (tempBranchIds != null && tempBranchIds.Count > 0)
-            //    _allowedBranchesIds = tempBranchIds;
-            //if (tempLevels != null && tempLevels.Count > 0)
-            //{
-            //    for (int i = 0; i < tempLevels.Count; i++)
-            //    {
-            //        if (_forbiddenLevelsId == null || _forbiddenLevelsId.Count == 0 || !_forbiddenLevelsId.Contains(tempLevels[i].ID))
-            //            _allowedLevelsId.Add(tempLevels[i].ID);
-            //    }
-            //}      
-            //}
-            if (_allowedBranchesIds.Any())
-            {
-                foreach (var id in _allowedBranchesIds)
+                foreach (var id in allowedBranchesIds)
                 {
                     var domainBranch = UniverseBranches.Get(id);
                     var branch = new UniversBranch
@@ -160,7 +111,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             BranchId = branch.Id,
                             OverLimitMessage = GestionWeb.GetWebWord(OverLimitMsgCode, result.SiteLanguage),
                             SecurityMessage = GestionWeb.GetWebWord(SecurityMsg, result.SiteLanguage),
-                            ExceptionMessage= GestionWeb.GetWebWord(ExceptionMsg, result.SiteLanguage)
+                            ExceptionMessage = GestionWeb.GetWebWord(ExceptionMsg, result.SiteLanguage)
                         };
                         branch.UniversLevels.Add(level);
                     }
@@ -170,9 +121,87 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public UserUniversGroup GetUserSavedUnivers(string webSessionId)
+        public List<UserUniversGroup> GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage = true)
         {
-            return new UserUniversGroup();
+            List<UserUniversGroup> result = new List<UserUniversGroup>();
+            var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
+            var allowedLevels = tuple.Item1;
+            var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
+            var branch = TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString();//To review how the vaule is set with Dédé.
+            var data= TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
+            List<ClientUnivers> clientUniversList = new List<ClientUnivers>();
+            if (data !=null && data.Rows.Count>0)
+            {
+                foreach (DataRow row in data.Rows)
+                {
+                    ClientUnivers clientUnivers = new ClientUnivers
+                    {
+                        ParentId = (long)row[0],
+                        ParentDescription = row[1].ToString(),
+                        Id = (long)row[2],
+                        Description = row[3].ToString()
+                    };
+                    clientUniversList.Add(clientUnivers);
+                }
+                var groupedUniversList= clientUniversList.GroupBy(p => p.ParentId);
+                foreach(var item in groupedUniversList)
+                {
+                    UserUniversGroup universGroup = new UserUniversGroup
+                    {
+                        Id = item.Key,
+                        Description = item.FirstOrDefault().ParentDescription,
+                        ClientUnivers = item.ToList(),
+                        Count = item.Count()
+                    };
+                    result.Add(universGroup);
+                }
+            }
+            return result;
         }
+
+        private Tuple<List<long>, List<int>, WebSession,int, int> GetAllowedIds(string webSessionId, Dimension dimension, bool selectionPage = true)
+        {
+            webSession = (WebSession)WebSession.Load(webSessionId);
+            var siteLanguage = webSession.SiteLanguage;
+            string listUniverseClientDescription = "";
+            ILevelsRules levelsRules = null;
+            List<int> tempBranchIds = new List<int>();
+            List<UniverseLevel> tempLevels = new List<UniverseLevel>();
+            List<long> _forbiddenLevelsId = new List<long>();
+            List<int> _allowedBranchesIds = new List<int>();
+            List<long> _allowedLevelsId = new List<long>();
+            int defaultBranchId = 0;
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+            DomainWebNavigation.Module currentModuleDescription = DomainWebNavigation.ModulesList.GetModule(webSession.CurrentModule);
+            if (selectionPage)
+            {
+                //Apply rigth Rules for getting levels and branches
+                DomainWebNavigation.SelectionPageInformation currentPage = currentModuleDescription.SelectionsPages.Cast<DomainWebNavigation.SelectionPageInformation>().ToList().FirstOrDefault(p => p.Id == MarketSelectionPageId);///Private/Helps/UniverseProductSelectionHelp.aspx
+
+                if (currentPage != null)
+                {
+                    listUniverseClientDescription += currentPage.LoadableUniversString;
+                    defaultBranchId = currentPage.DefaultBranchId;
+                    levelsRules = new AdExpressLevelsRules(webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), dimension);
+                    tempBranchIds = levelsRules.GetAuthorizedBranches();
+                    tempLevels = levelsRules.GetAuthorizedLevels();
+                    if (tempBranchIds.Count > 0)
+                        _allowedBranchesIds = tempBranchIds;
+                    if (tempLevels.Count > 0)
+                    {
+                        foreach (var item in tempLevels)
+                        {
+                            if (_forbiddenLevelsId.Count == 0 || !_forbiddenLevelsId.Contains(item.ID))
+                            {
+                                _allowedLevelsId.Add(item.ID);
+                            }
+                        }
+                    }
+                }
+            }
+            var result = new Tuple<List<long>, List<int>,WebSession, int, int>(_allowedLevelsId, _allowedBranchesIds, webSession, siteLanguage, defaultBranchId);
+            return result;
+        }
+
     }
 }
