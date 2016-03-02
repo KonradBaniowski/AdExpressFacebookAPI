@@ -27,6 +27,7 @@ using TNS.AdExpressI.MediaSchedule;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain;
+using Newtonsoft.Json;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -270,7 +271,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var model = new VM.ResultsViewModel
             {
                 NavigationBar = LoadNavBar(resultNode.Position)
-            };            
+            };
+
             return View(model);
         }
 
@@ -278,9 +280,13 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
+            var gridResult = _mediaSchedule.GetGridResult(idWebSession);
 
-            return null;
+            string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+
+            JsonResult jsonModel = Json(new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+
+            return jsonModel;
         }
 
         public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)

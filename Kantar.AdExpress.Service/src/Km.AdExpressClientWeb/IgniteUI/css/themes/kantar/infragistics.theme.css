@@ -808,6 +808,16 @@ input.ui-button,input.ui-igbutton{border-radius:0!important}
     overflow:auto;
 }
 
+.orangeExtendedTg{
+    background-color:#F3D161;
+    opacity: 1;
+    margin:-10px;
+    height:150%;
+    width:auto;
+    display:block;
+    overflow:auto;
+}
+
 /*tr[aria-level="1"] td .orange{
     background-color: #ff9617;
 }
@@ -871,7 +881,8 @@ tr[aria-level="0"] td{
 
 tr[aria-level="1"] td{
      background-color: rgba(0,0,0,0.4);
-     color:#ff8c00;
+     color: #ffffff;
+     /*color:#ff8c00;*/
 }
 
 tr[aria-level="2"] td{
