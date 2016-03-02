@@ -321,22 +321,31 @@ namespace Km.AdExpressClientWeb.Controllers
         }
         private Models.MediaSchedule.PresentationModel LoadPresentationBar(int siteLanguage,string webSessionId, bool showUserSavedGroups, bool showCurrentSelection)
         {
-            Models.MediaSchedule.PresentationModel result=new Models.MediaSchedule.PresentationModel
+            Models.MediaSchedule.PresentationModel result = new Models.MediaSchedule.PresentationModel
             {
                 LoadUniversCode = LanguageConstantes.LoadUniversCode,
                 ModuleCode = LanguageConstantes.MediaScheduleCode,
                 SaveUniversCode = LanguageConstantes.SaveUniversCode,
                 SiteLanguage = siteLanguage,
-                UserUniversGroups = new List<Models.MediaSchedule.UserUniversGroup>(),
+                UserUniversGroups = new List<VM.UserUniversGroup>(),
                 UserUniversCode = LanguageConstantes.UserUniversCode,
                 ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
                 ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
                 ShowCurrentSelection = showCurrentSelection,
                 ShowUserSavedGroups = showUserSavedGroups
             };
-            //if(showUserSavedGroups)
-            //result.UserUniversGroups = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
-            return result;
+            if (showUserSavedGroups)
+            {
+                var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+                result.UserUniversGroups = Mapper.Map<List<VM.UserUniversGroup>>(data);
+                foreach (var group in result.UserUniversGroups)
+                {
+                    int count = group.Count;
+                    group.FirstColumnSize = (count % 2==0)? count / 2: (count/2) + 1;
+                    group.SecondeColumnSize = count - group.FirstColumnSize;
+                }
+            }
+                return result;
         }
         #endregion
 

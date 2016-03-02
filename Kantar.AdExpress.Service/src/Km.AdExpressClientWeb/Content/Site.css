@@ -1425,3 +1425,6 @@ ul.ui-selectable li{
 .modal-content-alert{
         margin-bottom: -16px;
 }
+.modal-radio{
+        margin-left: 10px;
+}

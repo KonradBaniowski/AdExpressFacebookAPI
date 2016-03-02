@@ -28,53 +28,64 @@
                             <div class="panel panel-primary panel-univers-select">
                                 <div class="panel-heading head-univers-select">
                                     <h6 class="panel-title famille">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                            @item.Description <span class="badge bg-orange white">12</span>
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)">
+                                            @item.Description <span class="badge bg-orange white">@item.Count</span>
                                             <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
                                         </a>
                                     </h6>
                                 </div>
-                                @foreach (var level in item.ClientUnivers)
-                                {
-                                    <div id="collapse1" class="panel-collapse collapse">
-                                    <div class="panel-body no-padder">
-                                    <div class="col-sm-4 no-padder">
-                                        <div class="radio">
-                                            <label class="popup-text">
-                                                <input type="radio" name="universOpt">
-                                                <i></i>
-                                                @level.Description
-                                            </label>
-                                        </div>
+                                <div id="collapse@(item.Id)" class="panel-collapse collapse">
+                                    <div class="col-sm-6 no-padder">
+                                            @foreach (var level in item.ClientUnivers.Take(item.FirstColumnSize))
+                                                {
+                                                        <div class="radio modal-radio">
+                                                                <label class="popup-text">
+                                                                    <input type="radio" name="universOpt">
+                                                                    <i></i>
+                                                                    @level.Description
+                                                                </label>
+                                                           </div>
+                                                }           
                                     </div>
-                                    <div>
-                                        @*<div class="col-sm-4 no-padder">
-                <div class="radio">
-                    <label class="popup-text">
-                        <input type="radio" name="universOpt">
-                        <i></i>
-                        Univers 4
-                    </label>
-                </div>
-                <div class="radio">
-                    <label class="popup-text">
-                        <input type="radio" name="universOpt">
-                        <i></i>
-                        Univers 5
-                    </label>
-                </div>
-                <div class="radio">
-                    <label class="popup-text">
-                        <input type="radio" name="universOpt">
-                        <i></i>
-                        Univers 6
-                    </label>
-                </div>
-            </div>*@
+                                    <div class="col-sm-6 no-padder">
+                                        @foreach (var level in item.ClientUnivers.GetRange(item.FirstColumnSize,item.SecondeColumnSize))
+                                        {
+                                            <div class="radio modal-radio">
+                                                <label class="popup-text">
+                                                    <input type="radio" name="universOpt">
+                                                    <i></i>
+                                                    @level.Description
+                                                </label>
+                                            </div>
+                                        }
                                     </div>
-                                </div>
-                            </div>
-                                }
+
+                                 </div>
+
+                        @*<div class="col-sm-4 no-padder">
+        <div class="radio">
+            <label class="popup-text">
+                <input type="radio" name="universOpt">
+                <i></i>
+                Univers 4
+            </label>
+        </div>
+        <div class="radio">
+            <label class="popup-text">
+                <input type="radio" name="universOpt">
+                <i></i>
+                Univers 5
+            </label>
+        </div>
+        <div class="radio">
+            <label class="popup-text">
+                <input type="radio" name="universOpt">
+                <i></i>
+                Univers 6
+            </label>
+        </div>
+    </div>*@
+
                             </div>
                         </div>                    
                     }

@@ -123,12 +123,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public List<UserUniversGroup> GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage = true)
         {
+            List<UserUniversGroup> result = new List<UserUniversGroup>();
             var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
             var branch = TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString();//To review how the vaule is set with Dédé.
             var data= TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
-            return new List<UserUniversGroup>();
+            List<ClientUnivers> clientUniversList = new List<ClientUnivers>();
+            if (data !=null && data.Rows.Count>0)
+            {
+                foreach (DataRow row in data.Rows)
+                {
+                    ClientUnivers clientUnivers = new ClientUnivers
+                    {
+                        ParentId = (long)row[0],
+                        ParentDescription = row[1].ToString(),
+                        Id = (long)row[2],
+                        Description = row[3].ToString()
+                    };
+                    clientUniversList.Add(clientUnivers);
+                }
+                var groupedUniversList= clientUniversList.GroupBy(p => p.ParentId);
+                foreach(var item in groupedUniversList)
+                {
+                    UserUniversGroup universGroup = new UserUniversGroup
+                    {
+                        Id = item.Key,
+                        Description = item.FirstOrDefault().ParentDescription,
+                        ClientUnivers = item.ToList(),
+                        Count = item.Count()
+                    };
+                    result.Add(universGroup);
+                }
+            }
+            return result;
         }
 
         private Tuple<List<long>, List<int>, WebSession,int, int> GetAllowedIds(string webSessionId, Dimension dimension, bool selectionPage = true)

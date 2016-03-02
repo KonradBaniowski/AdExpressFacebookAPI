@@ -8,7 +8,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
 {
     public class UserUniversGroup
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int Count { get; set; }
         public string Description { get; set; }
         public List<ClientUnivers> ClientUnivers { get; set; }
@@ -16,8 +16,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
     public class ClientUnivers
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Description { get; set; }
+        public long ParentId { get; set; }
+        public string ParentDescription { get; set; }
         public List<UniversLevel> Levels { get; set; }
     }
 }
