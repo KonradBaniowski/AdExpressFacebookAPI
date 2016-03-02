@@ -165,6 +165,7 @@
     <Compile Include="Web\Constantes.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Web\LanguageConstantes.cs" />
     <Compile Include="Web\UI.cs">
       <SubType>Code</SubType>
     </Compile>

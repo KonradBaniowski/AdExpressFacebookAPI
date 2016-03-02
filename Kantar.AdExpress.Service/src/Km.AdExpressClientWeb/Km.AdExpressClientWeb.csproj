@@ -179,11 +179,13 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
+    <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MediaSchedule\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
     <Compile Include="Models\MediaSchedule\PresentationModel.cs" />
     <Compile Include="Models\MediaSchedule\ResultsViewModel.cs" />
+    <Compile Include="Models\NavigationNode.cs" />
     <Compile Include="Models\PeriodSelectionViewModel.cs" />
     <Compile Include="Models\PeriodViewModel.cs" />
     <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />

@@ -31,27 +31,6 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public bool Disabled { get; set; }
     }
 
-    public class NavigationNode
-    {
-        public int Id { get; set; }
-
-        public bool IsActive { get; set; }
-
-        public int Position { get; set; }
-
-        public string Title { get; set; }
-
-        public string Description { get; set; }
-
-        public string Action { get; set; }
-
-        public string Controller { get; set; }
-
-        public string IconCssClass { get; set; }
-
-
-
-    }
 
     public class ErrorMessage
     {
