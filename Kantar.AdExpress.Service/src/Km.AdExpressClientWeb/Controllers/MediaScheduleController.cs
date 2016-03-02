@@ -62,7 +62,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);
             #endregion
             #region Presentation
-            model.Presentation = LoadPresentationBar(result.SiteLanguage, webSessionId);
+            model.Presentation = LoadPresentationBar(result.SiteLanguage, webSessionId,true,true);
             #endregion
             var marketNode = new NavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
@@ -90,7 +90,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Medias = result.Media,
                 IdMediasCommon = idMediasCommon
             };
-            model.Presentation = LoadPresentationBar(result.SiteLanguage, idWebSession);
+            model.Presentation = LoadPresentationBar(result.SiteLanguage, idWebSession,false,true);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
@@ -133,7 +133,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
-            model.Presentation = LoadPresentationBar(CustomerSession.SiteLanguage, idSession);
+            model.Presentation = LoadPresentationBar(CustomerSession.SiteLanguage, idSession,false,true);
 
             return View(model);
         }
@@ -201,7 +201,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var model = new VM.ResultsViewModel
             {
                 NavigationBar = LoadNavBar(resultNode.Position),
-                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage, idSession)
+                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage, idSession,false,true)
         };            
             return View(model);
         }
@@ -319,7 +319,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             return result;
         }
-        private Models.MediaSchedule.PresentationModel LoadPresentationBar(int siteLanguage,string webSessionId)
+        private Models.MediaSchedule.PresentationModel LoadPresentationBar(int siteLanguage,string webSessionId, bool showUserSavedGroups, bool showCurrentSelection)
         {
             Models.MediaSchedule.PresentationModel result=new Models.MediaSchedule.PresentationModel
             {
@@ -330,9 +330,12 @@ namespace Km.AdExpressClientWeb.Controllers
                 UserUniversGroups = new List<Models.MediaSchedule.UserUniversGroup>(),
                 UserUniversCode = LanguageConstantes.UserUniversCode,
                 ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
-                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode
+                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
+                ShowCurrentSelection = showCurrentSelection,
+                ShowUserSavedGroups = showUserSavedGroups
             };
-            var userGroups = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+            //if(showUserSavedGroups)
+            //result.UserUniversGroups = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
             return result;
         }
         #endregion

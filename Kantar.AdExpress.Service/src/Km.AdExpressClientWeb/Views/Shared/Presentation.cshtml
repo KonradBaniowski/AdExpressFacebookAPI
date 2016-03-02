@@ -8,7 +8,9 @@
     <h1 class=""><i class="icon-chart blue"></i> @GestionWeb.GetWebWord(Model.ModuleCode, Model.SiteLanguage)</h1>
     <small class="">@GestionWeb.GetWebWord(Model.ModuleDecriptionCode, Model.SiteLanguage)</small>
 </div>
-<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+@if (Model.ShowUserSavedGroups)
+{
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">    
     <h3 class="univ text-right"><a href="#monunivers" data-toggle="modal"><i class="icon-star blue"></i></a></h3>
     <div id="monunivers" class="modal fade">
         <div class="modal-dialog">
@@ -81,13 +83,16 @@
                 </div>
                 }
                 else
-                {                    
+                {
                     <div class="modal-content-alert popup-text alert alert-warning center-block" role="alert">@GestionWeb.GetWebWord(Model.ErrorMsgCode, Model.SiteLanguage)</div>
                 }                
             </div>
         </div>
-    </div>
+    </div>  
 </div>
+}
+@if (Model.ShowCurrentSelection)
+{
 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
     <h3 class="tools text-right pull-right">
         <a href="#myModal" data-toggle="modal"><i class="icon-eyeglass  blue"></i> </a>
@@ -110,4 +115,5 @@
         </div>
     </div>
 </div>
+}
 
