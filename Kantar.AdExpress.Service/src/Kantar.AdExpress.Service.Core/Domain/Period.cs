@@ -9,6 +9,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
     public class PeriodResponse
     {
         public int StartYear { get; set; }
+        public int EndYear { get; set; }
         public int SiteLanguage { get; set; }
     }
 }
