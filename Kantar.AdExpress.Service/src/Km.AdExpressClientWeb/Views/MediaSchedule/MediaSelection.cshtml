@@ -93,7 +93,7 @@
                         elem.attr("data-grp", "B");
                 });
 
-                $(':checkbox').on('change', preselection)
+                $(':checkbox').on('change',  
 
                 //FOCUS
                 $('[data-grp]').on('mouseenter', highlight);
@@ -145,7 +145,6 @@
                 else {
                     $.each(idCommon, function (index, value) {
                         $('.tuile-medias[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
-                        var id = $('.tuile-medias-active[data-attr-id="' + value + '"]').attr('data-attr-id');
                     });
                     $(this).attr("checked", "");
                 }
@@ -161,6 +160,7 @@
                         idList.push(data);
                     }
                 });
+
                 var index = $.inArray(searchId, idList);
                 if(idList ==null ||idList.length==0)
                 {
@@ -185,8 +185,7 @@
                 if (!isValide) {//mycondition
                     alert(msg);
                 }
-                else
-                {
+                else {
                 var params = {
                     selectedMedia: idList,
                     nextStep: "PeriodSelection"
