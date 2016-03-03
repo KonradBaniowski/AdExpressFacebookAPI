@@ -128,10 +128,16 @@
                 var id = $(this).attr("data-attr-id");
                 var index = $.inArray(id, idList);
                 if (index == -1) {
-                    idList.push(id);
+                    //idList.push(id);
                 } else {
                     idList.splice(index, 1);
                 }
+                //var index = $.inArray(id, idList);
+                //if (index == -1) {
+                //    //idList.push(id);
+                //} else {
+                //    idList.splice(index, 1);
+                //}
             }
 
             function preselection() {
