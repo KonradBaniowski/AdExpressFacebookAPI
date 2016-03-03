@@ -180,20 +180,12 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
-            globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
 
-            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
-            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
-
-            if (selectedValue == 0) throw new Exception(GestionWeb.GetWebWord(885, CustomerSession.SiteLanguage));
-            date.SetDate(ref CustomerSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedPeriod, selectedValue);
-
-            CustomerSession.Save();
-
+            string url = string.Empty;
+            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue);
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-            string url = context.Action("Results", "MediaSchedule");
+            if (response.Success)
+                 url = context.Action("Results", "MediaSchedule");
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 

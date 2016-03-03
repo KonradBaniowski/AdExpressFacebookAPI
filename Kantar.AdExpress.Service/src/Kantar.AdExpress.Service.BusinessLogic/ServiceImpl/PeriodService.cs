@@ -11,7 +11,8 @@ using System.Reflection;
 using TNS.AdExpressI.Date.DAL;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Constantes.Web;
-
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpressI.Date;
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class PeriodService : IPeriodService
@@ -66,7 +67,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 int startYear = dateDAL.GetCalendarStartDate();
                 int endYear = DateTime.Now.Year;
-                 result = new PeriodResponse
+                result = new PeriodResponse
                 {
                     StartYear = startYear,
                     EndYear = endYear,
@@ -79,7 +80,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 result.Success = false;
 
                 result.ErrorMessage = "Une erreur est survenue. Impossible de recupérer la date de début du calendrier";//TODO : a mettre dans ressources
-            }           
+            }
+            return result;
+        }
+
+        public PeriodResponse SlidingDateValidation(string idWebSession, int selectedPeriod, int selectedValue)
+        {
+            var result = new PeriodResponse();
+            try
+            {
+                WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
+                globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
+                globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
+
+                CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
+                IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+
+                if (selectedValue == 0)
+                {
+                    result.Success = false;
+                    result.ErrorMessage = GestionWeb.GetWebWord(885, CustomerSession.SiteLanguage);
+                    return result;
+                }
+                date.SetDate(ref CustomerSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedPeriod, selectedValue);
+
+                CustomerSession.Save();
+                result.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+
+                result.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
+            }
             return result;
         }
     }
