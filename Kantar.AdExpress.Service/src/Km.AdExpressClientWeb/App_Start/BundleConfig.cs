@@ -31,7 +31,8 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/moment.js",
                         "~/Scripts/moment-with-locales.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
-                        "~/Scripts/bootstrap-select.js"));
+                        "~/Scripts/bootstrap-select.js",
+                        "~/Scripts/spin.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/period-selector").Include(
                       "~/Scripts/period-selector.js"));
