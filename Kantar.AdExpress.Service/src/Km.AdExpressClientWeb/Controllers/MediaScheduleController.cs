@@ -28,6 +28,7 @@ using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain;
 using Newtonsoft.Json;
+using Kantar.AdExpress.Service.Core;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -38,15 +39,17 @@ namespace Km.AdExpressClientWeb.Controllers
         private IWebSessionService _webSessionService;
         private IMediaScheduleService _mediaSchedule;
         private IUniverseService _universService;
+        private IPeriodService _periodService;
         private const string _controller = "MediaSchedule";
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
             _mediaSchedule = mediaSchedule;
             _universService = universService;
+            _periodService = periodService;
         }
         public ActionResult Index()
         {
@@ -121,19 +124,13 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
-            object[] param = new object[1];
-            param[0] = CustomerSession;
-            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-            int startYear = dateDAL.GetCalendarStartDate();
-            int endYear = DateTime.Now.Year;
-
+           
+            var result = _periodService.GetPeriod(idSession);
+          
             PeriodViewModel periodModel = new PeriodViewModel();
-
-            periodModel.SiteLanguage = CustomerSession.SiteLanguage;
-            periodModel.StartYear = string.Format("{0}-01-01", startYear);
-            periodModel.EndYear = string.Format("{0}-12-31", endYear);
+            periodModel.SiteLanguage = result.SiteLanguage;
+            periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
+            periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
 
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
             var navBarModel = LoadNavBar(periodeNode.Position);
@@ -141,7 +138,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
-            model.Presentation = LoadPresentationBar(CustomerSession.SiteLanguage);
+            model.Presentation = LoadPresentationBar(result.SiteLanguage);
 
             return View(model);
         }
@@ -215,11 +212,11 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult MediaScheduleResult()
+        public JsonResult MediaScheduleResult(string selectedPeriodType)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var gridResult = _mediaSchedule.GetGridResult(idWebSession);
+            var gridResult = _mediaSchedule.GetGridResult(idWebSession, selectedPeriodType);
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
