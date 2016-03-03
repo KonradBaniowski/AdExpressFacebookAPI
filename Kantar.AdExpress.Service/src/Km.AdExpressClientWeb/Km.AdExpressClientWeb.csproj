@@ -492,7 +492,6 @@
     <Content Include="Configuration\ErrorMail.xml" />
     <Content Include="Configuration\WebParameters.xml" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
-    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -506,6 +505,7 @@
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
+    <Content Include="Content\options-control.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -1456,6 +1456,7 @@
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Portfolio\MediaSelection.cshtml" />
     <Content Include="Views\Shared\UserUniversGroups.cshtml" />
+    <Content Include="Views\Shared\UserUniversGroupsContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

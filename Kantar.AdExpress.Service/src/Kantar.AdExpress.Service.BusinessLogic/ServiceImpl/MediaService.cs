@@ -11,6 +11,7 @@ using System.Data;
 using TNS.AdExpress.Domain.Classification;
 using System.Linq;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -24,8 +25,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var result = new MediaResponse
             {
                 Media = new List<Core.Domain.Media>(),
-                SiteLanguage = _webSession.SiteLanguage
+                SiteLanguage = _webSession.SiteLanguage,
+                MediaCommon = new List<int>()
             };
+            result.MediaCommon= Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var vehiclesInfos = VehiclesInformation.GetAll();
             var myMedia = GetMyMedia(_webSession);
             string ids = vehiclesInfos.Select(p => p.Value.DatabaseId.ToString()).Aggregate((c,n)=>c+","+n);
@@ -41,6 +44,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 media.Label = levels[item.DatabaseId];
                 result.Media.Add(media);
              }
+
             return result;
         }
 

@@ -121,10 +121,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<UserUniversGroup> GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage = true)
+        public UniversGroupsResponse GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage = true)
         {
-            List<UserUniversGroup> result = new List<UserUniversGroup>();
             var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
+            UniversGroupsResponse result = new UniversGroupsResponse
+            {
+                UniversGroups = new List<UserUniversGroup>(),
+                SiteLanguage =tuple.Item4
+            };            
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
             var branch = TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString();//To review how the vaule is set with Dédé.
@@ -153,9 +157,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         ClientUnivers = item.ToList(),
                         Count = item.Count()
                     };
-                    result.Add(universGroup);
+                    result.UniversGroups.Add(universGroup);
                 }
-            }
+            }            
             return result;
         }
 

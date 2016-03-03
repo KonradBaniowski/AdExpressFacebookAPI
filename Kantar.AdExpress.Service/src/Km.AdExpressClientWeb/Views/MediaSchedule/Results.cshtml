@@ -12,14 +12,320 @@
      </div>
 </div>
 <div class="row">
-    <center>
-        <div id="grid" class="hide">
+    <div class="col-md-3">
+        <div class="panel-sans text-left options-control">
+            <div class="panel-heading text-left">
+                <i class="fa fa-cog text-lg orange "></i>
+                <h4 class="font-normal m-t-none m-b-md orange">Options d'analyse</h4>
+            </div>
+            <div class="padder-v bg-dark">
+                <div class="panel-group panel-options-results" id="accordion">
+                    <div class="panel-primary panel-options-results">
+                        <div class="panel-heading head-options-results">
+                            <p class="panel-title options ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Unité
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse">
+                            <div class="panel-body mi-padder">
+                                <div class="dropdown select-options">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        Euro
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Unité 1</a></li>
+                                        <li><a href>Unité 2</a></li>
+                                        <li><a href>Unité 3</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-primary panel-options-results">
+                        <div class="panel-heading head-options-results">
+                            <p class="panel-title options ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                    Insertion
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body mi-padder">
+                                <div class="dropdown select-options">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        Total
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Insertion 1</a></li>
+                                        <li><a href>Insertion 2</a></li>
+                                        <li><a href>Insertion 3</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-primary panel-options-results">
+                        <div class="panel-heading head-options-results">
+                            <p class="panel-title options ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTree">
+                                    Auto promo
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseTree" class="panel-collapse collapse">
+                            <div class="panel-body mi-padder">
+                                <div class="dropdown select-options">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        Total
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Auto promo 1</a></li>
+                                        <li><a href>Auto promo 2</a></li>
+                                        <li><a href>Auto promo 3</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-primary panel-options-results">
+                        <div class="panel-heading head-options-results">
+                            <p class="panel-title options ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                    Période détaillée par
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse">
+                            <div class="panel-body mi-padder">
+                                <div class="selectdatecontainer">
+                                    <select id="period-display-type" class="selectdatepicker">
+                                        <option>Mois</option>
+                                        <option>Semaine</option>
+                                        <option>Jour</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-primary panel-options-results">
+                        <div class="panel-heading head-options-results">
+                            <p class="panel-title options ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                                    Format
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse">
+                            <div class="panel-body mi-padder">
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm">
+                                        <input type="checkbox" name="a">
+                                        <i></i>
+                                        Option 1
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm">
+                                        <input type="checkbox" name="a">
+                                        <i></i>
+                                        Option 2
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm">
+                                        <input type="checkbox">
+                                        <i></i>
+                                        Option 3
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-primary panel-options-results">
+                        <div class="panel-heading head-options-results">
+                            <p class="panel-title options ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                    Mode de vente
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse">
+                            <div class="panel-body mi-padder">
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm">
+                                        <input type="checkbox" name="a">
+                                        <i></i>
+                                        Option 1
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm">
+                                        <input type="checkbox" name="a">
+                                        <i></i>
+                                        Option 2
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm">
+                                        <input type="checkbox">
+                                        <i></i>
+                                        Option 3
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-primary panel-options-results">
+                        <div class="panel-heading head-options-results">
+                            <p class="panel-title options ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseHeight">
+                                    Niveaux détaillées par
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseHeight" class="panel-collapse collapse">
+                            <div class="panel-body mi-padder">
+                                <div class="dropdown select-options">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        Médias / Catégories
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Niveaux 1</a></li>
+                                        <li><a href>Niveaux 2</a></li>
+                                        <li><a href>Niveaux 3</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-primary panel-options-results">
+                        <div class="panel-heading head-options-results">
+                            <p class="panel-title options ">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseNine">
+                                    Niveaux personnalisés
+                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div id="collapseNine" class="panel-collapse collapse">
+                            <div class="panel-body mi-padder">
+                                <small class="pader-v-mi orange">Niveaux enregistrés</small><button class="btn btn-sans pull-right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></button>
+                                <div class="dropdown select-options padder-v-mi">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        Niveaux 1
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Niveaux 1</a></li>
+                                        <li><a href>Niveaux 2</a></li>
+                                        <li><a href>Niveaux 3</a></li>
+                                    </ul>
+                                </div>
+                                <small class="pader-v-mi orange">Construction</small><button class="btn btn-sans pull-right" title="Sauvegarder"><i class="glyphicon glyphicon-floppy-save"></i></button>
+                                <div class="dropdown select-options padder-v-mi">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        N.1
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Construction 1</a></li>
+                                        <li><a href>Construction 2</a></li>
+                                        <li><a href>Construction 3</a></li>
+                                        <li><a href>Construction 4</a></li>
+                                        <li><a href>Construction 5</a></li>
+                                        <li><a href>Construction 6</a></li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown select-options padder-v-mi">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        N.2
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Construction 1</a></li>
+                                        <li><a href>Construction 2</a></li>
+                                        <li><a href>Construction 3</a></li>
+                                        <li><a href>Construction 4</a></li>
+                                        <li><a href>Construction 5</a></li>
+                                        <li><a href>Construction 6</a></li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown select-options padder-v-mi">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        N.3
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Construction 1</a></li>
+                                        <li><a href>Construction 2</a></li>
+                                        <li><a href>Construction 3</a></li>
+                                        <li><a href>Construction 4</a></li>
+                                        <li><a href>Construction 5</a></li>
+                                        <li><a href>Construction 6</a></li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown select-options padder-v-mi">
+                                    <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
+                                        N.4
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-orange">
+                                        <li><a href>Construction 1</a></li>
+                                        <li><a href>Construction 2</a></li>
+                                        <li><a href>Construction 3</a></li>
+                                        <li><a href>Construction 4</a></li>
+                                        <li><a href>Construction 5</a></li>
+                                        <li><a href>Construction 6</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox padder">
+                        <label class="i-checks i-checks-sm">
+                            <input type="checkbox" name="a">
+                            <i></i>
+                            Étude comparative
+                        </label>
+                    </div>
+                    <div class="checkbox padder orange">
+                        <label class="i-checks i-checks-sm">
+                            <input type="checkbox" name="a">
+                            <i></i>
+                            Annuler la séléction supports
+                        </label>
+                    </div>
+                    <div class="padder btn-options">
+                        <button id="validate-options" class="btn btn-valider">Appliquer&nbsp;<i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="gridLoader">
-            <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
-        </div>
-    </center>
-    <div>&nbsp;</div>
+    </div>
+    <div class="col-md-9">
+        <center>
+            <div id="grid" class="hide">
+            </div>
+            <div id="gridLoader">
+                <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+            </div>
+        </center>
+    </div>
 </div>
 @section Scripts {
 <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
@@ -30,85 +336,9 @@
 
         if (typeof jQuery === "undefined") { throw new Error("jQuery") }
         $(function () {
-            var cols = [];
-            var data = [];
-            //Mock Data
-            data[1] = [
-                //Level 1
-                { "ClassifId": 0, "PID": -1, "Level": "PRESSE", "Period": "2653400", "Pdm": "-", "j": "1", "F": "2", "M": "0" },
-                { "ClassifId": 1, "PID": -1, "Level": "TELEVISION", "Period": "455", "Pdm": "-", "j": "1", "F": "1", "M": "1" },
-
-                //Level 2
-                { "ClassifId": 4, "PID": 0, "Level": "MAGAZINES", "Period": "4444", "Pdm": "0", "j": "0", "F": "1", "M": "0" },
-                { "ClassifId": 5, "PID": 1, "Level": "TV NATIONALE", "Period": "524545", "Pdm": "0", "j": "1", "F": "1", "M": "1" },
-
-                //Level 3
-                { "ClassifId": 8, "PID": 4, "Level": " AUTO JOURNAL", "Period": "45442", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-                { "ClassifId": 9, "PID": 4, "Level": "EXPRESS", "Period": "455765", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-
-               { "ClassifId": 10, "PID": 5, "Level": "TF1", "Period": "585454", "Pdm": "4", "j": "1", "F": "2", "M": "1" },
-               { "ClassifId": 11, "PID": 5, "Level": "FRANCE 2", "Period": "4572", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-
-                //Level 4
-                { "ClassifId": 12, "PID": 8, "Level": "444444", "Period": "43434", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
-                { "ClassifId": 13, "PID": 8, "Level": "555555", "Period": "424", "Pdm": "2", "j": "1", "F": "1", "M": "0" },
-                { "ClassifId": 14, "PID": 9, "Level": "666666", "Period": "45454", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
-
-                { "ClassifId": 15, "PID": 10, "Level": "777777", "Period": "4554", "Pdm": "3", "j": "1", "F": "2", "M": "0" },
-                { "ClassifId": 16, "PID": 11, "Level": "888888", "Period": "5454", "Pdm": "3", "j": "1", "F": "2", "M": "0" }
-
-            ];
-
-
-            data[0] =
-            [
-                    { headerText: "Id", key: "ClassifId", width: "200px", dataType: "number", allowHiding: false, hidden: true, template: "" },
-                    { headerText: "SUPPORTS", key: "Level", width: "220px", dataType: "string", template: "" },
-                    { headerText: "01/01/2016 - 31/01/2016", key: "Period", width: "220px", dataType: "number", template: "" },
-                    { headerText: "PDM", key: "Pdm", width: "130px", dataType: "number", template: "" },
-                    { headerText: "Version", key: "Version", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
-                    { headerText: "Insertion", key: "Insertion", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
-
-                    {
-                        headerText: "Janvier 2016",
-                        group: [
-                             {
-                                 headerText: "01",
-                                 group: [
-                                     { headerText: "L", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-                                    { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-                                    { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-                                    { headerText: "J", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-                                    { headerText: "V", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-                                    { headerText: "S", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-                                    { headerText: "D", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" }
-                                 ]
-                             }
-                             //,
-                             // {
-                             //     headerText: "02",
-                             //     group: [
-                             //         { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
-                             //     ]
-                             // },
-                             //  {
-                             //      headerText: "03",
-                             //      group: [
-                             //          { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
-                             //      ]
-                             //  }
-                        ],
-                        dataRendered: function (evt, ui) {
-                            ui.owner.element.find("tr td:nth-child(4)").css("text-align", "center");
-                            ui.owner.element.find("tr td:nth-child(5)").css("text-align", "center");
-                        }
-                    }
-
-            ];
-
 
             $("#grid").igTreeGrid({
-                dataSource: data,
+                //dataSource: data,
                 primaryKey: "ClassifId",
                 width: "100%",
                 defaultColumnWidth: 200,
@@ -116,20 +346,21 @@
                 autoGenerateColumns: true
             });
 
-
-
             //$("#changeColSett").click(function () {
 
+                $('#period-display-type').selectpicker();
                 var ds;
                 var cols;
                 var colsFixed;
                 var needFixedColumns = false;
+                var periodType = "Mois";
 
                 var renderGrid = function (success, error) {
                     if (success) {
                         
                         $("#grid").igTreeGrid("destroy");
-
+                        $("#gridLoader").addClass("hide");
+                        $("#grid").removeClass("hide");
                         if (needFixedColumns) {
                             $("#grid").igTreeGrid({
                                 dataSource: ds.dataView(),
@@ -177,88 +408,182 @@
                     } else {
                         alert(error);
                     }
-                    $("#gridLoader").addClass("hide");
-                    $("#grid").removeClass("hide");
+                    
                 }
 
-                $.ajax({
-                    url: '@Url.Action("MediaScheduleResult", "MediaSchedule")',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "POST",
-                    datatype: "json",
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        if (data != null) {
-                            dataTreeGrid = data.datagrid;
-                            cols = data.columns;
-                            colsFixed = data.columnsfixed;
-                            needFixedColumns = data.needfixedcolumns;
+                function CallMediaScheduleResult() {
+                    var params = {
+                        selectedPeriodType: periodType
+                    };
 
-                            var schema = new $.ig.DataSchema("array", {
-                                fields: data.schema
-                            });
 
-                            //cols = cols.replace(/\"([^(\")"]+)\":/g, "$1:");
-                            //This code creates an $.ig.DataSource from the HTML Table DOM data
-                            ds = new $.ig.DataSource({
-                                type: "json",
-                                schema: schema,
-                                dataSource: dataTreeGrid,
-                                callback: renderGrid
-                            });
+                    $.ajax({
+                        url: '@Url.Action("MediaScheduleResult", "MediaSchedule")',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: "POST",
+                        datatype: "json",
+                        data: params,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                        },
+                        success: function (data) {
+                            if (data != null) {
+                                dataTreeGrid = data.datagrid;
+                                cols = data.columns;
+                                colsFixed = data.columnsfixed;
+                                needFixedColumns = data.needfixedcolumns;
 
-                            // Binds to the underlying data
-                            ds.dataBind();
+                                var schema = new $.ig.DataSchema("array", {
+                                    fields: data.schema
+                                });
+
+                                ds = new $.ig.DataSource({
+                                    type: "json",
+                                    schema: schema,
+                                    dataSource: dataTreeGrid,
+                                    callback: renderGrid
+                                });
+
+                                ds.dataBind();
+                            }
                         }
-                    }
-                });
+                    });
+                }
 
-                //for (var key1 in data[0]) {
-
-                //    if (data[0][key1].group != null) {
-                //        cols.push({
-                //            headerText: data[0][key1].headerText,
-                //            group: data[0][key1].group
-
-                //        })
-                //    } else {
-                //        cols.push({
-                //            headerText: data[0][key1].headerText,
-                //            key: data[0][key1].key,
-                //            width: data[0][key1].width,
-                //            dataType: data[0][key1].dataType,
-                //            allowHiding: data[0][key1].allowHiding,
-                //            hidden: data[0][key1].hidden,
-                //            template: data[0][key1].template,
-
-                //        })
-                //    }
-
-                //}
-
-                //$("#grid").igTreeGrid("destroy");
-                //$("#grid").igTreeGrid({
-                //    dataSource: data[1],
-                //    primaryKey: "ClassifId",
-                //    foreignKey: "PID",
-                //    autoGenerateColumns: false,
-                //    columns: cols,
-                //    features: [
-                //       {
-                //           name: "MultiColumnHeaders"
-                //       },
-                //       {
-                //           name: "Paging",
-                //           mode: "allLevels",
-                //           pageSize: 10
-                //       }
-                //    ]
-                //})
-
+            CallMediaScheduleResult();
               
+            $('#period-display-type').on('change', function (e) {
+                periodType = $('#period-display-type').val();
             });
 
+            $('#validate-options').on('click', function (e) {
+                $("#grid").addClass("hide");
+                $("#gridLoader").removeClass("hide");
+                CallMediaScheduleResult();
+            });
+
+            });
+            
+
         //});
+
+/***************************************** Old script ********************************************/
+
+    //var cols = [];
+    //var data = [];
+    ////Mock Data
+    //data[1] = [
+    //    //Level 1
+    //    { "ClassifId": 0, "PID": -1, "Level": "PRESSE", "Period": "2653400", "Pdm": "-", "j": "1", "F": "2", "M": "0" },
+    //    { "ClassifId": 1, "PID": -1, "Level": "TELEVISION", "Period": "455", "Pdm": "-", "j": "1", "F": "1", "M": "1" },
+
+    //    //Level 2
+    //    { "ClassifId": 4, "PID": 0, "Level": "MAGAZINES", "Period": "4444", "Pdm": "0", "j": "0", "F": "1", "M": "0" },
+    //    { "ClassifId": 5, "PID": 1, "Level": "TV NATIONALE", "Period": "524545", "Pdm": "0", "j": "1", "F": "1", "M": "1" },
+
+    //    //Level 3
+    //    { "ClassifId": 8, "PID": 4, "Level": " AUTO JOURNAL", "Period": "45442", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
+    //    { "ClassifId": 9, "PID": 4, "Level": "EXPRESS", "Period": "455765", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
+
+    //   { "ClassifId": 10, "PID": 5, "Level": "TF1", "Period": "585454", "Pdm": "4", "j": "1", "F": "2", "M": "1" },
+    //   { "ClassifId": 11, "PID": 5, "Level": "FRANCE 2", "Period": "4572", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
+
+    //    //Level 4
+    //    { "ClassifId": 12, "PID": 8, "Level": "444444", "Period": "43434", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
+    //    { "ClassifId": 13, "PID": 8, "Level": "555555", "Period": "424", "Pdm": "2", "j": "1", "F": "1", "M": "0" },
+    //    { "ClassifId": 14, "PID": 9, "Level": "666666", "Period": "45454", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
+
+    //    { "ClassifId": 15, "PID": 10, "Level": "777777", "Period": "4554", "Pdm": "3", "j": "1", "F": "2", "M": "0" },
+    //    { "ClassifId": 16, "PID": 11, "Level": "888888", "Period": "5454", "Pdm": "3", "j": "1", "F": "2", "M": "0" }
+
+    //];
+
+
+    //data[0] =
+    //[
+    //        { headerText: "Id", key: "ClassifId", width: "200px", dataType: "number", allowHiding: false, hidden: true, template: "" },
+    //        { headerText: "SUPPORTS", key: "Level", width: "220px", dataType: "string", template: "" },
+    //        { headerText: "01/01/2016 - 31/01/2016", key: "Period", width: "220px", dataType: "number", template: "" },
+    //        { headerText: "PDM", key: "Pdm", width: "130px", dataType: "number", template: "" },
+    //        { headerText: "Version", key: "Version", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
+    //        { headerText: "Insertion", key: "Insertion", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
+
+    //        {
+    //            headerText: "Janvier 2016",
+    //            group: [
+    //                 {
+    //                     headerText: "01",
+    //                     group: [
+    //                         { headerText: "L", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+    //                        { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+    //                        { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+    //                        { headerText: "J", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+    //                        { headerText: "V", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+    //                        { headerText: "S", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+    //                        { headerText: "D", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" }
+    //                     ]
+    //                 }
+    //                 //,
+    //                 // {
+    //                 //     headerText: "02",
+    //                 //     group: [
+    //                 //         { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
+    //                 //     ]
+    //                 // },
+    //                 //  {
+    //                 //      headerText: "03",
+    //                 //      group: [
+    //                 //          { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
+    //                 //      ]
+    //                 //  }
+    //            ],
+    //            dataRendered: function (evt, ui) {
+    //                ui.owner.element.find("tr td:nth-child(4)").css("text-align", "center");
+    //                ui.owner.element.find("tr td:nth-child(5)").css("text-align", "center");
+    //            }
+    //        }
+
+    //];
+
+        //for (var key1 in data[0]) {
+
+        //    if (data[0][key1].group != null) {
+        //        cols.push({
+        //            headerText: data[0][key1].headerText,
+        //            group: data[0][key1].group
+
+        //        })
+        //    } else {
+        //        cols.push({
+        //            headerText: data[0][key1].headerText,
+        //            key: data[0][key1].key,
+        //            width: data[0][key1].width,
+        //            dataType: data[0][key1].dataType,
+        //            allowHiding: data[0][key1].allowHiding,
+        //            hidden: data[0][key1].hidden,
+        //            template: data[0][key1].template,
+
+        //        })
+        //    }
+
+        //}
+
+        //$("#grid").igTreeGrid("destroy");
+        //$("#grid").igTreeGrid({
+        //    dataSource: data[1],
+        //    primaryKey: "ClassifId",
+        //    foreignKey: "PID",
+        //    autoGenerateColumns: false,
+        //    columns: cols,
+        //    features: [
+        //       {
+        //           name: "MultiColumnHeaders"
+        //       },
+        //       {
+        //           name: "Paging",
+        //           mode: "allLevels",
+        //           pageSize: 10
+        //       }
+        //    ]
+        //})
     </script>
 }

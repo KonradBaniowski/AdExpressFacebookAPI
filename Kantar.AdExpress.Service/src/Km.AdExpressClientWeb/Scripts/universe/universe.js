@@ -1,6 +1,20 @@
 ﻿$(function () {
 
-
+    //$.get('@Url.Action("LoadUserUniversGroups","MediaSchedule", new { siteLanguage = Model.SiteLanguage, webSessionId= Model.WebSessionId, showUserSavedGroups=true} )', function (data) {
+    //     $('#monunivers').html(data);
+    //});
+   
+    $.ajax({
+        url: '/MediaSchedule/LoadUserUniversGroups',
+        type: 'GET',
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            alert("error");
+        },
+        success: function (response) {
+            $('#monunivers .modal-content').append(response);
+            }
+        
+    });
 
     $(".dropdown-menu.bg-blue.pull-right li > a").on('click', function (e) {
         e.preventDefault();
@@ -15,8 +29,6 @@
         //CLEAN PANEL ON CHANGE BRANCH
         $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
     });
-
-
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
         var branchId = $('#branch').attr("data-branch");
@@ -61,6 +73,7 @@
 
                 }
             });
+            
         });
     });
 

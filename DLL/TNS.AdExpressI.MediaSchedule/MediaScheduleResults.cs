@@ -1746,7 +1746,17 @@ namespace TNS.AdExpressI.MediaSchedule {
             bool isExport = _isExcelReport || _isPDFReport;
             int labColSpan = (isExport && !_allowTotal) ? 2 : 1;
             UnitInformation unit = UnitsInformation.Get(_session.Unit);
-            object[,] gridData = new object[data.GetLength(0), data.GetLength(1)];
+
+            int nbLineGrid = 0;
+            for (int r = 1; r < nbline; r++)
+            {
+                if (data[r, 0] != null && data[r, 0].GetType() == typeof(MemoryArrayEnd))
+                    break;
+
+                nbLineGrid++;
+            }
+
+            object[,] gridData = new object[nbLineGrid, data.GetLength(1)];
             #endregion
 
             #region Colonnes
@@ -1763,7 +1773,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             schemaFields.Add(new { name = "ID_PRODUCT" });
             columns.Add(new { headerText = GestionWeb.GetWebWord(804, _session.SiteLanguage), key = "PRODUCT", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "PRODUCT" });
-            columnsFixed.Add(new { columnKey = "PRODUCT", isFixed = true, allowFixing = true });
+            columnsFixed.Add(new { columnKey = "PRODUCT", isFixed = true, allowFixing = false });
             tableWidth = 20;
             
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
