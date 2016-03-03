@@ -91,12 +91,12 @@ namespace Km.AdExpressClientWeb.Controllers
             var result = _mediaService.GetMedia(idWebSession);
 
             #region model data
-            var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
+            //var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var model = new VM.MediaSelectionViewModel()
             {
                 Multiple = true,
                 Medias = result.Media,
-                IdMediasCommon = idMediasCommon
+                IdMediasCommon = result.MediaCommon
             };
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
             foreach (var e in model.Medias)

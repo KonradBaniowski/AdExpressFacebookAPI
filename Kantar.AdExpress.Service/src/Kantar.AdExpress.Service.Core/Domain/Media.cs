@@ -20,5 +20,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public List<Media> Media { get; set; }
         public int SiteLanguage { get; set; }
+
+        public List<int> MediaCommon { get; set; }
     }
 }
