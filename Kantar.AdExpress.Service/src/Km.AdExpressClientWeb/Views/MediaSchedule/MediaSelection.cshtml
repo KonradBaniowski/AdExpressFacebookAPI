@@ -127,6 +127,10 @@
                 $(this).toggleClass("tuile-medias tuile-medias-active")
                 var id = $(this).attr("data-attr-id");
                 
+                var index = $.inArray(id, idList);
+                if (index > -1) {
+                    idList.splice(index, 1);
+                }
             }
 
             function preselection() {
@@ -152,7 +156,10 @@
                 var message = "";
                 $('.tuile-medias-active').each(function (index) {
                     var data = $(this).attr('data-attr-id');
-                    idList.push(data);
+                    var dataIndex = $.inArray(data, idList);
+                    if (dataIndex == -1) {
+                        idList.push(data);
+                    }
                 });
                 var index = $.inArray(searchId, idList);
                 if(idList ==null ||idList.length==0)
