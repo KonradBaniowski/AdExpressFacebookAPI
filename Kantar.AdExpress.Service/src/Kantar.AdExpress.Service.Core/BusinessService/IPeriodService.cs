@@ -10,5 +10,7 @@ namespace Kantar.AdExpress.Service.Core
    public interface IPeriodService
     {
         PeriodResponse GetPeriod(string idWebSession);
+
+        PeriodResponse CalendarValidation(string idWebSession,string selectedStartDate, string selectedEndDate);
     }
 }
