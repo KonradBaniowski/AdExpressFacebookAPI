@@ -54,7 +54,12 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult Index()
         {
             #region Init
-            var model = new VM.MarketViewModel();
+            var model = new VM.MarketViewModel
+            {
+                Trees = new List<VM.Tree>(),
+                Branches = new List<VM.UniversBranch>(),
+                UniversGroups = new VM.UserUniversGroupsModel()
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
@@ -64,6 +69,17 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
             model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);
+            foreach ( var item in result.Trees)
+            {
+                VM.Tree tree = new VM.Tree
+                {
+                    Id = item.Id,
+                    LabelId = item.LabelId,
+                    AccessType = item.AccessType,
+                    UniversLevels = Mapper.Map<List<VM.UniversLevel>>(item.UniversLevels)
+                };
+                model.Trees.Add(tree);
+            }            
             #endregion
             #region Presentation
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
