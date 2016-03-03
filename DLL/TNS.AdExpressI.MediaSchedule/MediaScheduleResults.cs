@@ -1746,7 +1746,17 @@ namespace TNS.AdExpressI.MediaSchedule {
             bool isExport = _isExcelReport || _isPDFReport;
             int labColSpan = (isExport && !_allowTotal) ? 2 : 1;
             UnitInformation unit = UnitsInformation.Get(_session.Unit);
-            object[,] gridData = new object[data.GetLength(0), data.GetLength(1)];
+
+            int nbLineGrid = 0;
+            for (int r = 1; r < nbline; r++)
+            {
+                if (data[r, 0] != null && data[r, 0].GetType() == typeof(MemoryArrayEnd))
+                    break;
+
+                nbLineGrid++;
+            }
+
+            object[,] gridData = new object[nbLineGrid, data.GetLength(1)];
             #endregion
 
             #region Colonnes

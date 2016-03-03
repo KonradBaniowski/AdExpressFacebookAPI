@@ -1,0 +1,296 @@
+﻿.options-control .panel-sans {
+  background-color: none;
+}
+.options-control .text-left {
+  text-align: left;
+}
+.options-control .panel-heading {
+  border-radius: 2px 2px 0 0;
+  border-bottom:0px solid #edf1f2;
+  background-color:rgba(0,0,0,0.7);
+  padding:15px !important;
+}
+.options-control .panel-heading > .badge {
+    margin-right: 0;
+    float: right;
+}
+.options-control .panel-heading h4{
+ display:inline;
+}
+.options-control .panel-heading.no-border {
+  margin: -1px -1px 0 -1px;
+  border: none;
+}
+.options-control .panel-heading .nav {
+  margin: -10px -15px;
+}
+.options-control .panel-heading .list-group {
+  background: transparent;
+}
+.options-control .panel-group .panel-heading + .panel-collapse .panel-body {
+  border-top: 0px solid #eaedef;
+}
+.options-control .padder-v {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.options-control .bg-dark {
+  color: #a6a8b1;
+  background-color: #242424;
+}
+.options-control .bg-dark.lt,
+.options-control .bg-dark .lt {
+  background-color: #474c5e;
+}
+.options-control .bg-dark.lter,
+.options-control .bg-dark .lter {
+  background-color: #54596a;
+}
+.options-control .bg-dark.dk,
+.options-control .bg-dark .dk {
+  background-color: #313131;
+}
+.options-control .bg-dark.dker,
+.options-control .bg-dark .dker {
+  background-color: #232735;
+}
+.options-control .bg-dark.bg,
+.options-control .bg-dark .bg {
+  background-color: #3a3f51;
+}
+.options-control .bg-dark a {
+  color: #c1c3c9;
+}
+.options-control .bg-dark a:hover {
+  color: #ffffff;
+  background-color: none !important;
+}
+.options-control .bg-dark a.list-group-item:hover,
+.options-control .bg-dark a.list-group-item:focus {
+  background-color: inherit;
+}
+.options-control .bg-dark .nav > li:hover > a,
+.options-control .bg-dark .nav > li:focus > a,
+.options-control .bg-dark .nav > li.active > a {
+  color:#fff;
+  background-color: none !important;
+}
+.options-control .bg-dark .nav > li > a {
+  color: #e3e3e3;
+}
+.options-control .bg-dark .nav > li > a:hover,
+.options-control .bg-dark .nav > li > a:focus {
+  background-color: rgba(255,255,255,0);
+}
+.options-control .bg-dark .nav .open > a {
+  background-color: #2e3344;
+}
+.options-control .bg-dark .caret {
+  border-top-color: #a6a8b1;
+  border-bottom-color: #a6a8b1;
+}
+.options-control .bg-dark.navbar .nav > li.active > a {
+  color: #ffffff;
+  background-color: #2e3344;
+}
+.options-control .bg-dark .open > a,
+.options-control .bg-dark .open > a:hover,
+.options-control .bg-dark .open > a:focus {
+  color: #ffffff;
+}
+.options-control .bg-dark .text-muted {
+  color: #8b8e99 !important;
+}
+.options-control .bg-dark .text-lt {
+  color: #eaebed !important;
+}
+.options-control .bg-dark.auto .list-group-item,
+.options-control .bg-dark .auto .list-group-item {
+  background-color: transparent;
+  border-color: #2f3342 !important;
+}
+.options-control .bg-dark.auto .list-group-item:hover,
+.options-control .bg-dark .auto .list-group-item:hover,
+.options-control .bg-dark.auto .list-group-item:focus,
+.options-control .bg-dark .auto .list-group-item:focus,
+.options-control .bg-dark.auto .list-group-item:active,
+.options-control .bg-dark .auto .list-group-item:active,
+.options-control .bg-dark.auto .list-group-item.active,
+.options-control .bg-dark .auto .list-group-item.active {
+  background-color: #2e3344 !important;
+}
+.options-control .bg-dark {
+  background-color: rgba(0,0,0,0.7);
+}
+.options-control .bg-dark li a{
+  color: #fff;
+}
+.options-control .bg-dark li a:hover{
+  color: #fff !important;
+}
+.options-control a.bg-dark:hover {
+  background-color: #2f3342;
+}
+.options-control .panel-options-results{
+  border-radius:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+box-shadow:none  !important;
+}
+.options-control .panel-options-results .actives a{ 
+  color:#ff8c00 !important;
+box-shadow:none  !important;
+} 
+.options-control .panel-options-results .i-checks input:checked + i {
+  border-color: #ff8c00;
+  border-radius: 50%;
+}
+.options-control .panel-options-results .i-checks input:checked + i:before {
+  top: 3px;
+  left: 3px;
+  width: 7px;
+  height: 7px;
+  background-color: #ff8c00;
+  border-radius:50%;
+}
+.options-control .panel-options-results .i-checks > i {
+  position: relative;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-top: -2px;
+  margin-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+  vertical-align: middle;
+  background-color: none !important;
+  border: 1px solid #ff8c00;
+  border-radius:50px;
+}
+.options-control .panel.no-borders .panel-heading,
+.options-control .panel.no-borders .panel-footer {
+  border-width: 0;
+}
+.options-control .head-options-results{
+ background:none !important;
+ padding: 10px 15px !important;
+ border-bottom:1px solid rgba(0,0,0,0.2) !important;
+ border-radius: 0 !important;
+}
+.options-control .head-options-results h6{
+ color:#fff ;
+}
+.options-control .panel .accordion-toggle {
+  display: block;
+  font-size: 14px;
+  cursor: pointer;
+}
+.options-control .indicator{
+    font-size: 10px;
+    top: 3px;
+}
+.options-control .mi-padder {
+  padding: 5px 15px !important;
+}
+.options-control .select-options{
+  width:100%;
+  display: inline-block;
+}
+.options-control .select-options button{
+  width:100%;
+  text-align:left;
+}
+.options-control .select-options button span{
+  float:right;
+  margin-top: 6px;
+}
+.options-control .selecteur{
+  background:none !important;
+  border:1px solid rgba(255,255,255,0.2);
+  color:#fff;
+  font-size:12px;
+}
+.options-control .selecteur:hover, .selecteur:focus{
+  color:#fff;
+}
+.options-control .i-checks {
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+.options-control .i-checks input {
+  position: absolute;
+  margin-left: -20px;
+  opacity: 0;
+}
+
+.options-control .i-checks input:checked + i {
+  border-color: #23b7e5;
+}
+.options-control .i-checks input:checked + i:before {
+  top: 4px;
+  left: 4px;
+  width: 10px;
+  height: 10px;
+  background-color: #23b7e5;
+}
+.options-control .i-checks input:checked + span .active {
+  display: inherit;
+}
+
+.options-control .i-checks input[type="radio"] + i,
+.options-control .i-checks input[type="radio"] + i:before {
+  border-radius: 50%;
+}
+
+.options-control .i-checks input[disabled] + i,
+.options-control fieldset[disabled] .i-checks input + i {
+  border-color: #dee5e7;
+}
+
+.options-control .i-checks input[disabled] + i:before,
+.options-control fieldset[disabled] .i-checks input + i:before {
+  background-color: #dee5e7;
+}
+
+.options-control .i-checks > i {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-top: -2px;
+  margin-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+  vertical-align: middle;
+  background-color: none !important;
+  border: 1px solid #ccc;
+  border-radius:50px;
+}
+.options-control .i-checks-sm input:checked + i:before {
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+}
+
+.options-control .i-checks-sm > i {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  margin-left: -18px;
+}
+
+.options-control .padder {
+  padding-right: 15px;
+  padding-left: 15px ;
+}
+
+.options-control .btn-options button{
+  width:100%;
+}
+
+.options-control .selectdatepicker {
+        width: 100% !important;
+        float: left !important;
+}

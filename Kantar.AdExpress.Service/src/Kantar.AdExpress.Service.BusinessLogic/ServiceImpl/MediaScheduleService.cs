@@ -24,19 +24,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public object[,] GetMediaScheduleData(string idWebSession)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "");
             
             return mediaScheduleResult.ComputeData();
         }
 
-        public GridResult GetGridResult(string idWebSession)
+        public GridResult GetGridResult(string idWebSession, string periodType)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, periodType);
 
             return mediaScheduleResult.GetGridResult();
         }
 
-        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession)
+        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string periodType)
         {
             //CustomerSession = (WebSession)WebSession.Load("201603021047501084");
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
@@ -57,13 +57,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             MediaScheduleData result = null;
             MediaSchedulePeriod period = null;
             Int64 moduleId = CustomerSession.CurrentModule;
-            ConstantePeriod.DisplayLevel periodDisplay = CustomerSession.DetailPeriod;
+            
             WebConstantes.CustomerSessions.Unit oldUnit = CustomerSession.Unit;
             // TODO : Commented temporarily for new AdExpress
             //if (UseCurrentUnit) webSession.Unit = CurrentUnit;
             object[] param = null;
             long oldCurrentTab = CustomerSession.CurrentTab;
             System.Windows.Forms.TreeNode oldReferenceUniversMedia = CustomerSession.ReferenceUniversMedia;
+
+            if(!String.IsNullOrEmpty(periodType))
+            {
+                switch (periodType)
+                {
+                    case "Mois": CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly; break;
+                    case "Semaine": CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.weekly; break;
+                    case "Jour": CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly; break;
+                }
+            }
+            ConstantePeriod.DisplayLevel periodDisplay = CustomerSession.DetailPeriod;
 
             #region Period Detail
             DateTime begin;

@@ -208,11 +208,11 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult MediaScheduleResult()
+        public JsonResult MediaScheduleResult(string selectedPeriodType)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var gridResult = _mediaSchedule.GetGridResult(idWebSession);
+            var gridResult = _mediaSchedule.GetGridResult(idWebSession, selectedPeriodType);
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
