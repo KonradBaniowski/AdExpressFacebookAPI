@@ -204,7 +204,7 @@ body .ui-tooltip{border-width:2px}
 .ui-state-disabled,.ui-widget-content .ui-state-disabled,.ui-widget-header .ui-state-disabled{opacity:.35;nowhitespace:afterproperty;filter:alpha(opacity=35);cursor:default!important}
 .ui-state-highlight p,.ui-state-error p{font-size:.8em;line-height:16px}
 .ui-icon{width:16px;height:16px;background-position:16px 16px}
-.ui-icon,.ui-widget-content .ui-icon,.ui-state-default .ui-icon,.ui-widget-header .ui-state-default .ui-icon,.ui-iggrid-paging-item.ui-state-default .ui-icon{background-image:url(images/ui-icons_888888_256x240.png)}
+/*.ui-icon,.ui-widget-content .ui-icon,.ui-state-default .ui-icon,.ui-widget-header .ui-state-default .ui-icon,.ui-iggrid-paging-item.ui-state-default .ui-icon{background-image:url(images/ui-icons_888888_256x240.png)}*/
 .ui-widget-header .ui-icon,.ui-state-default .ui-widget-header.ui-icon{background-image:url(images/ui-icons_ffffff_256x240.png)}
 .ui-state-focus .ui-icon,.ui-igcombo.ui-state-focus .ui-igcombo-button .ui-icon,.ui-igedit.ui-state-focus .ui-igcombo-button .ui-icon,.ui-iggrid .ui-igcombo.ui-state-focus .ui-igcombo-button .ui-icon,.ui-widget-header .ui-state-focus.ui-state-hover .ui-icon,.ui-igcombo-button-focus .ui-icon,.ui-state-focus.ui-state-hover .ui-icon{background-image:url(images/ui-icons_888888_256x240.png)}
 .ui-state-hover .ui-icon,.ui-state-hover.ui-state-default .ui-icon,.ui-igedit.ui-state-hover .ui-igedit-button-common.ui-state-hover .ui-icon,.ui-igedit.ui-state-focus .ui-igedit-button-common.ui-state-hover .ui-icon,.ui-igedit.ui-state-active .ui-igedit-button-common.ui-state-hover .ui-icon,.ui-state-default.ui-state-hover.ui-igedit-button .ui-icon,.ui-state-default.ui-state-hover.ui-igcombo-button .ui-icon,.ui-igdialog-header.ui-state-focus .ui-igdialog-headerimage.ui-icon{background-image:url(images/ui-icons_ffffff_256x240.png)}
@@ -446,9 +446,9 @@ input.ui-button,input.ui-igbutton{border-radius:0!important}
 .ui-iggrid-groupedcolumnlabel{box-shadow:0 0 2em 0 rgba(218,218,218,0.15) inset}
 .ui-iggrid-groupbylabelrightedgeend{border-color:#fff #ffffff #fff transparent!important}
 .ui-iggrid-pagelist li{padding:.2em .5em!important}
-.ui-iggrid .ui-iggrid-paging .ui-iggrid-firstpage,.ui-iggrid .ui-iggrid-paging .ui-iggrid-prevpage,.ui-iggrid .ui-iggrid-paging .ui-iggrid-nextpage,.ui-iggrid .ui-iggrid-paging .ui-iggrid-lastpage,.ui-iggrid-pagedropdownlabels{padding-top:.2em!important;padding-bottom:.2em!important}
-.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging-item.ui-state-default,.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging-item .ui-iggrid-page.ui-state-default{border:1px solid #bcbcbc;background-color:#e8e8e8;color:#444}
-.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging .ui-iggrid-page.ui-state-hover,.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging .ui-iggrid-paging-item:hover{border:1px solid #999;background-color:#ccc;color:#444}
+/*.ui-iggrid .ui-iggrid-paging .ui-iggrid-firstpage,.ui-iggrid .ui-iggrid-paging .ui-iggrid-prevpage,.ui-iggrid .ui-iggrid-paging .ui-iggrid-nextpage,.ui-iggrid .ui-iggrid-paging .ui-iggrid-lastpage,.ui-iggrid-pagedropdownlabels{padding-top:.2em!important;padding-bottom:.2em!important}*/
+/*.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging-item.ui-state-default,.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging-item .ui-iggrid-page.ui-state-default{border:1px solid #bcbcbc;background-color:#e8e8e8;color:#444}*/
+/*.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging .ui-iggrid-page.ui-state-hover,.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging .ui-iggrid-paging-item:hover{border:1px solid #999;background-color:#ccc;color:#444}*/
 .ui-iggrid-paging .ui-iggrid-pagelist{background:none!important;border:none!important}
 .ui-iggrid tbody>tr>th.ui-iggrid-rowselector-class{border-right:1px solid transparent}
 .ui-iggrid th.ui-iggrid-rowselector-class>.ui-icon{margin-right:0!important;margin-top:.2em}
@@ -480,7 +480,7 @@ input.ui-button,input.ui-igbutton{border-radius:0!important}
 .ui-iggrid thead th.ui-state-active{border-top:0!important;border-left:0!important;border-bottom:0!important}
 .ui-iggrid th.ui-state-focus{background:#4897aa}
 .ui-iggrid .ui-iggrid-footer,.ui-iggrid .ui-iggrid-toolbar{background-color:#ccc;font-weight:normal;text-align:left;color:#444;border-top:0;display:block}
-.ui-iggrid .ui-iggrid-footer .ui-state-default,.ui-iggrid .ui-iggrid-toolbar .ui-state-default,.ui-iggrid .ui-iggrid-addrow td,.ui-iggrid .ui-iggrid-addrow th,.ui-iggrid .ui-iggrid-footer .ui-state-hover{background-color:#ccc;color:#444;text-decoration:none}
+/*.ui-iggrid .ui-iggrid-footer .ui-state-default,.ui-iggrid .ui-iggrid-toolbar .ui-state-default,.ui-iggrid .ui-iggrid-addrow td,.ui-iggrid .ui-iggrid-addrow th,.ui-iggrid .ui-iggrid-footer .ui-state-hover{background-color:#ccc;color:#444;text-decoration:none}*/
 .ui-iggrid .ui-iggrid-footer .ui-state-default a,.ui-iggrid .ui-iggrid-toolbar .ui-state-default a,.ui-iggrid .ui-iggrid-addrow td a,.ui-iggrid .ui-iggrid-footer .ui-state-active a{color:#444;text-decoration:none}
 .ui-iggrid tbody .ui-icon,.ui-iggrid .ui-iggrid-addrow td .ui-icon{background-image:url(images/ui-icons_ffffff_256x240.png)}
 .ui-iggrid .ui-igedit-button .ui-icon,.ui-igpivot-metadataitem .ui-icon-close{background-image:url(images/ui-icons_888888_256x240.png)}
@@ -905,7 +905,7 @@ tr[aria-level="3"] td{
     border:1px solid rgba(0,0,0,0.3);
 }
 
-.ui-iggrid .ui-iggrid-footer, .ui-iggrid .ui-iggrid-toolbar, .ui-iggrid-fixedcontainer  {
+.ui-iggrid .ui-iggrid-footer, .ui-iggrid .ui-iggrid-toolbar {
     background-color: transparent !important;
     border: none !important;
     color: white !important;
@@ -915,4 +915,41 @@ tr[aria-level="3"] td{
 .ui-iggrid table tbody td,.ui-iggrid .ui-iggrid-header,.ui-iggrid table th{
     padding-top:0px !important;
     padding-bottom:0px !important;
+}
+
+
+/** Footer pagination **/
+.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging-item.ui-state-default,
+.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging-item .ui-iggrid-page.ui-state-default
+{
+    background-color: #00c1ff;
+    margin:1px;
+    border:none;
+    padding: 10px 18px;
+    border-radius: 1px;
+    
+}
+
+.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging .ui-iggrid-page.ui-state-hover,
+.ui-iggrid .ui-iggrid-footer .ui-iggrid-paging .ui-iggrid-paging-item:hover
+{
+    background-color: #21c9ff;
+}
+
+.ui-iggrid-pagelist > li.ui-iggrid-pagecurrent, li.ui-iggrid-page{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    border-radius:1px;
+
+}
+
+
+.ui-iggrid .ui-iggrid-footer .ui-state-default,
+.ui-iggrid .ui-iggrid-toolbar .ui-state-default,
+.ui-iggrid .ui-iggrid-addrow td,.ui-iggrid .ui-iggrid-addrow th,
+.ui-iggrid .ui-iggrid-footer .ui-state-hover
+{
+    background-color:#00c1ff;
+    color:#444;
+    text-decoration:none
 }
