@@ -9,14 +9,14 @@
     @*PRESENTATION*@
     <div>
         @Html.Partial("Presentation", Model.Presentation)
-        @Html.Partial("UserUniversGroups",Model.UniversGroups)
+        @Html.Partial("UserUniversGroups", Model.UniversGroups)
     </div>
     @*BREADCRUM*@
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
     @*SEARCH*@
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 ">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         <div class="row  bg-black-only">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading ">
                 <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp; @Model.Labels.KeyWordLabel </h4>
@@ -46,8 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <div class="panel  panel-marche">
                 <div class="panel-heading-choix">
@@ -58,7 +57,7 @@
                     <div id="branch@(item.Id)" class="universes" style="display:none">
                         @foreach (var level in item.UniversLevels)
                         {
-                            <div id="groupSelectable@(level.Id)" data-label="@(level.Label)" 
+                            <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"
                                  data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default">
                             </div>
                         }
@@ -71,12 +70,7 @@
                 <a class="btn btn-green2 btn-circle btn-xl">
                     <i class="fa fa-arrow-right"></i>
                 </a>
-                <p class="lead">@Model.Labels.Include</p>
-                <div class="clearfix"></div>
-                <a class="btn btn-red btn-circle btn-xl ">
-                    <i class="fa fa-arrow-right"></i>
-                </a>
-                <p class="lead">@Model.Labels.Exclude</p>
+                <p class="lead">@Model.Labels.Include (D&eacute;placer)</p>
             </div>
         </div>
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
@@ -87,468 +81,70 @@
                             Éléments inclus
                         </a>
                     </li>
-                    <li class="">
-                        <a data-target="#tab-2" role="tab" data-toggle="tab" aria-expanded="false">
-                            Éléments exclus
-                        </a>
-                    </li>
-                    <li class="">
-                        <a data-target="#tab-3" role="tab" data-toggle="tab" aria-expanded="false">
-                            Et / Ou
-                        </a>
-                    </li>
                 </ul>
             </div>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane in active" id="tab-1">
-                    <div class="panel-body resultats-marche">
-                        <div class="panel-group panel-group-results" id="accordion">
-                            <div class="panel panel-primary panel-results">
-                                <div class="panel-heading head-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                            Famille
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                    <div class="panel-group panel-group-results"
+                         id="tree"
+                         role="tablist"
+                         aria-multiselectable="true">
+                        <div class="panel panel-primary panel-results">
+                            <div class="panel-heading head-results"
+                                 role="tab"
+                                 id="headingOne">
+                                <h6 class="panel-title famille">
+                                    <a role="button"
+                                       data-toggle="collapse"
+                                       data-parent="#tree"
+                                       href="#collapseOne"
+                                       aria-expanded="true"
+                                       aria-controls="collapseOne">
+                                        Famille
+                                        <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                    </a>
+                                </h6>
                             </div>
-                            <div class="panel panel-primary panel-results">
-                                <div class="panel-heading head-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                            Classe
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
+                            <div id="collapseOne"
+                                 class="panel-collapse collapse in"
+                                 role="tabpanel"
+                                 aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <ul class="items-famille"></ul>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-results">
-                                <div class="panel-heading head-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTree">
-                                            Groupe
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseTree" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pull-right">
-                                <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="tab-2">
-                    <div class="panel-body resultats-marche">
-                        <div class="panel-group panel-group-results" id="accordion">
-                            <div class="panel panel-primary panel-results">
-                                <div class="panel-heading head-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                            Famille
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                        <div class="panel panel-primary panel-results">
+                            <div class="panel-heading head-results" role="tab" id="headingTwo">
+                                <h6 class="panel-title famille">
+                                    <a role="button"
+                                       class="collapsed"
+                                       data-toggle="collapse"
+                                       data-parent="#tree"
+                                       href="#collapseTwo"
+                                       aria-expanded="true"
+                                       aria-controls="collapseTwo">
+                                        Classe
+                                        <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                    </a>
+                                </h6>
                             </div>
-                            <div class="panel panel-primary panel-results">
-                                <div class="panel-heading head-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                            Classe
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
+                            <div id="collapseTwo"
+                                 class="panel-collapse collapse"
+                                 role="tabpanel"
+                                 aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <ul class="items-famille"></ul>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-results">
-                                <div class="panel-heading head-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTree">
-                                            Groupe
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseTree" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                                            Variété
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseFour" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                                            Groupe de sociétés
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseFive" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                                            Annonceurs
-                                            <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseSix" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
-                                            Marques
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseSeven" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseHeight">
-                                            Produits
-                                            <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseHeight" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pull-right">
-                                <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="tab-3">
-                    <div class="panel-body resultats-marche">
-                        <div class="panel-group panel-marche-results" id="accordion">
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                            Famille
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                            Classe
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTree">
-                                            Groupe
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseTree" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                                            Variété
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseFour" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                                            Groupe de sociétés
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseFive" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                                            Annonceurs
-                                            <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseSix" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
-                                            Marques
-                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseSeven" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary panel-marche-results">
-                                <div class="panel-heading head-famille-results">
-                                    <h6 class="panel-title famille ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseHeight">
-                                            Produits
-                                            <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="collapseHeight" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="items-famille">
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Lorem ipsum <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Consectitur <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                            <li>Adipiscing <button class="pull-right"> <i class="fa fa-times-circle black text-base "></i></button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pull-right">
-                                <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
-                            </div>
+                        <div class="pull-right">
+                            <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
         <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">

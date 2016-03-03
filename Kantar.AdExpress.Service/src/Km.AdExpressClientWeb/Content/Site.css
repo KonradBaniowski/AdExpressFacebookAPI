@@ -687,6 +687,10 @@ input {
     margin-top: 30px;
 }
 
+.margin-top-10 {
+    margin-top: 10px;
+}
+
 .margin-bot-30 {
     margin-bottom: 30px;
 }
@@ -833,7 +837,7 @@ input {
 
 .btn-marche {
     width: 100%;
-    padding-top: 250px;
+    padding-top: 150px;
 }
 
 .margin-auto {
@@ -1051,7 +1055,7 @@ input {
 
 .padder-v {
     padding: 15px;
-    min-height: 140px;
+    min-height: 100px;
 }
 
 .top {
