@@ -136,11 +136,12 @@
     color: #ffffff;
     background-size: cover;
 }
+
 .header-kantar-popup {
-    padding:10px 15px;
+    padding: 10px 15px;
     border-bottom: 1px solid transparent;
-    border-top-right-radius:3px;
-    border-top-left-radius:3px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
     background-color: rgba(0,0,0,0.7);
 }
 
@@ -216,6 +217,7 @@
     font-weight: bolder;
     padding: 10px 15px;
 }
+
 .btn-blue, .btn-blue:hover {
     background-color: #00c1ff;
     color: white;
@@ -289,6 +291,7 @@ input {
 .red {
     color: #de000d;
 }
+
 .orange {
     color: #ff8c00 !important;
 }
@@ -720,7 +723,7 @@ input {
     background: rgba(0,0,0,0.2);
     padding: 10px 15px;
     border-color: rgba(0,0,0,0.2);
-    border-bottom:none;
+    border-bottom: none;
 }
 
 
@@ -1054,8 +1057,8 @@ input {
 }
 
 .padder-v {
-    padding: 15px;
-    min-height: 100px;
+    padding: 10px 5px;
+    min-height: 115px;
 }
 
 .top {
@@ -1388,27 +1391,27 @@ input[type=checkbox].with-font {
 
 /******************************************************************/
 
-.uppercase{
+.uppercase {
     text-transform: uppercase;
 }
 
 
 /**************PANEL MARCHE***********************/
-.ui-selectable li.ui-selected,.ui-selectable li.ui-selecting {
+.ui-selectable li.ui-selected, .ui-selectable li.ui-selecting {
     color: #ff8c00;
     font-weight: bolder;
 }
 
-ul.ui-selectable{
+ul.ui-selectable {
     padding-left: 10px;
 }
 
-ul.ui-selectable li{
-   list-style:none;
-}
+    ul.ui-selectable li {
+        list-style: none;
+    }
 
 .select-recherche .caret {
-    margin-left:10px;
+    margin-left: 10px;
 }
 
 .modal-header i {
@@ -1416,19 +1419,22 @@ ul.ui-selectable li{
     vertical-align: text-top;
     padding: 0 5px 0 0;
 }
+
 .popup-text {
-        color: #333333;
+    color: #333333;
 }
 
-.modal-footer{
+.modal-footer {
     padding: 8px 20px 6px;
     margin-top: 15px;
     text-align: right;
     border-top: 1px solid #e5e5e5;
 }
-.modal-content-alert{
-        margin-bottom: -16px;
+
+.modal-content-alert {
+    margin-bottom: -16px;
 }
-.modal-radio{
-        margin-left: 10px;
+
+.modal-radio {
+    margin-left: 10px;
 }
