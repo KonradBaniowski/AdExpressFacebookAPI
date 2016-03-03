@@ -24,7 +24,7 @@
         $("#branch" + branchId).show();
 
         var branchUpdate = $("[id^='groupSelectable'] [id^='selectable']").length;
-        $("#branch" + branchId + " .panel-body").html('');
+        
         $("#branch" + branchId + "> div").each(function () {
             var DIS = $(this);
             var univerIndex = parseFloat($(this).attr('data-universe'))
@@ -33,6 +33,7 @@
                 keyWord: keyword,
                 universeId: univerIndex
             };
+          
             $.ajax({
                 url: '/Universe/GetUniverses',
                 contentType: 'application/json',
@@ -43,14 +44,15 @@
                     alert("error");
                 },
                 success: function (response) {
+                    //spinner.stop();
                     if (branchUpdate > 0) {
                         console.log(DIS);
                         var panel = DIS.find('.panel-body');
-                        panel.fillSelectable(response.data, undefined, univerIndex );
+                        panel.html('');
+                        panel.fillSelectable(response.data, undefined, univerIndex);
                     }
                     else {
                         DIS.fillGroupSelectable(univerLabel, response.data, 'panel-heading', 'panel-body', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
-                        
                     }
                     $('#selectable' + univerIndex).selectable(
                         {
@@ -72,8 +74,9 @@
         var universeIdCalling = $(this).closest('.panel').attr('data-universe');
         var branchId = $(this).closest('.panel').attr('data-branch');
         var universesToUpdate = $("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
-
+        var spinner = new Spinner().spin(DIS);
         $.each(universesToUpdate, function (index, elem) {
+          
             var universe = $(elem).attr('data-universe');
             var params = {
                 levelId: universe,
@@ -82,7 +85,7 @@
             };
             var univerIndex = parseFloat($(elem).attr('data-universe'));
             var univerLabel = $(elem).attr('data-label') + "\{NB_ELEM\}";
-            $("#containerSelectable" + universe).html('');
+
             $.ajax({
                 url: '/Universe/GetClassification',
                 contentType: 'application/json',
@@ -93,8 +96,10 @@
                     alert("error");
                 },
                 success: function (response) {
+                    spinner.stop();
+                    $("#containerSelectable" + universe).html('');
                     $("#containerSelectable" + universe).fillSelectable(response.data, undefined, univerIndex);
-                        //fillGroupSelectable(univerLabel, response.data, 'panel-heading', 'panel-body', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+                    //fillGroupSelectable(univerLabel, response.data, 'panel-heading', 'panel-body', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
                     $('#selectable' + univerIndex).selectable(
                     {
                         stop: SelectedItems
