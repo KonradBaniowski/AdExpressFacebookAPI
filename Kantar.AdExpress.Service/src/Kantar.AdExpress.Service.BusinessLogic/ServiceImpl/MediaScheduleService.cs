@@ -15,6 +15,8 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using System.Reflection;
 using Kantar.AdExpress.Service.Core.Domain;
+using System.Collections;
+using TNS.AdExpress.Domain.Level;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -45,11 +47,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //TODO : Mock selection marché : a supprimer dès que page marché terminée
             TNS.AdExpress.Classification.AdExpressUniverse universe = new TNS.AdExpress.Classification.AdExpressUniverse("test", TNS.Classification.Universe.Dimension.product);
             var group = new TNS.Classification.Universe.NomenclatureElementsGroup("Annonceur", 0, TNS.Classification.Universe.AccessType.includes);
-            group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410");
+            group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410,34466,7798,50270,71030");
             universe.AddGroup(universe.Count(), group);
             var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
             universeDictionary.Add(universeDictionary.Count, universe);
             CustomerSession.PrincipalProductUniverses = universeDictionary;
+            ArrayList levels = new ArrayList();
+            // Media/catégorie/Support/Annonceur
+            levels.Add(1);
+            levels.Add(2);
+            levels.Add(3);
+            levels.Add(8);
+            CustomerSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 #endif
 
 
