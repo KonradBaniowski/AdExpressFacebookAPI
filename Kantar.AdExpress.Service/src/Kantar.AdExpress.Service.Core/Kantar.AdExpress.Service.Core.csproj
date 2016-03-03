@@ -84,6 +84,7 @@
     <Compile Include="Domain\Module.cs" />
     <Compile Include="Domain\UniverseItem.cs" />
     <Compile Include="Domain\WebSessionResponse.cs" />
+    <Compile Include="BusinessService\IPeriodService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

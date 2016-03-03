@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kantar.AdExpress.Service.Core.Domain
+namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
 {
     public class PeriodResponse
     {
