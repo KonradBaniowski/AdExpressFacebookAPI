@@ -167,17 +167,13 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             return result;
         }
-        private Models.MediaSchedule.PresentationModel LoadPresentationBar(int siteLanguage)
+        private Models.MediaSchedule.PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection=true)
         {
             Models.MediaSchedule.PresentationModel result = new Models.MediaSchedule.PresentationModel
             {
-                LoadUniversCode = LanguageConstantes.LoadUniversCode,
-                ModuleCode = LanguageConstantes.PortfolioCode,
-                SaveUniversCode = LanguageConstantes.SaveUniversCode,
+                ModuleCode = LanguageConstantes.MediaScheduleCode,
                 SiteLanguage = siteLanguage,
-                UserUniversGroups = new List<Models.MediaSchedule.UserUniversGroup>(),
-                UserUniversCode = LanguageConstantes.UserUniversCode,
-                ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
+                ShowCurrentSelection = showCurrentSelection,
                 ModuleDecriptionCode = LanguageConstantes.PortfolioDescriptionCode
             };
             return result;
