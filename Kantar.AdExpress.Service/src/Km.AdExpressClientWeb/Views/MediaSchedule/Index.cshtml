@@ -82,7 +82,8 @@
                     @foreach (var tree in Model.Trees)
                     {
                         <li @(tree == Model.Trees.First() ? "class=active" : "" )>
-                            <a data-target="#tab-@(tree.Id)" 
+                            <a data-target="#tab-@(tree.Id)"
+                               data-tab="@(tree.Id)" 
                                role="tab" 
                                data-toggle="tab" 
                                aria-expanded="true">
@@ -127,7 +128,7 @@
                                          class="panel-collapse @(level == tree.UniversLevels.First() ? "in" : "collapse")"
                                          role="tabpanel"
                                          aria-labelledby="heading-@(level.Id)">
-                                        <div class="panel-body">
+                                        <div class="panel-body" data-tree="@(tree.Id)" data-level="@(level.Id)">
                                             <ul class="items-famille">
 
                                             </ul>

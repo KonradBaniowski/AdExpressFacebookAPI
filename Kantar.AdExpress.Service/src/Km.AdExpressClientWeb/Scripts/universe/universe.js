@@ -3,7 +3,7 @@
     //$.get('@Url.Action("LoadUserUniversGroups","MediaSchedule", new { siteLanguage = Model.SiteLanguage, webSessionId= Model.WebSessionId, showUserSavedGroups=true} )', function (data) {
     //     $('#monunivers').html(data);
     //});
-   
+
     $.ajax({
         url: '/MediaSchedule/LoadUserUniversGroups',
         type: 'GET',
@@ -12,8 +12,8 @@
         },
         success: function (response) {
             $('#monunivers .modal-content').append(response);
-            }
-        
+        }
+
     });
 
     $(".dropdown-menu.bg-blue.pull-right li > a").on('click', function (e) {
@@ -36,7 +36,7 @@
         $("#branch" + branchId).show();
 
         var branchUpdate = $("[id^='groupSelectable'] [id^='selectable']").length;
-        
+
         $("#branch" + branchId + "> div").each(function () {
             var DIS = $(this);
             var univerIndex = parseFloat($(this).attr('data-universe'))
@@ -45,7 +45,7 @@
                 keyWord: keyword,
                 universeId: univerIndex
             };
-          
+
             $.ajax({
                 url: '/Universe/GetUniverses',
                 contentType: 'application/json',
@@ -73,8 +73,31 @@
 
                 }
             });
-            
+
         });
+    });
+
+    //Déplacer un élement marché
+    $('.btn-green2.btn-circle').on('click', function () {
+        var levelSrc = $('.panel-marche .ui-selectee.ui-selected');
+        console.log(levelSrc);
+        if (levelSrc.length >= 1) {
+            var universSrc = $('.ui-selectee.ui-selected').closest('.panel-default').attr('data-universe');
+            var tabSelected = $('ul > li[class="active"] > a').attr('data-tab');
+            var universDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul');
+            var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li')
+            $.each(levelSrc, function (index, value) {
+                var item = $(value).clone()
+                var find = false;
+                $.each(levelDst, function (index, value) {
+                    
+                    if (item.val() == $(value).val())
+                        find = true;
+                });
+                if (!find)
+                    universDst.append(item);
+            });
+        }
     });
 
     function SelectedItems(event, ui) {
@@ -89,7 +112,7 @@
         var universesToUpdate = $("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
         var spinner = new Spinner().spin(DIS);
         $.each(universesToUpdate, function (index, elem) {
-          
+
             var universe = $(elem).attr('data-universe');
             var params = {
                 levelId: universe,
