@@ -183,7 +183,7 @@ body .ui-tooltip{border-width:2px}
 .ui-widget-content a{color:white}
 .ui-widget-header{background:#888;border-bottom:1px solid #777;color:#fff;font-weight:normal}
 .ui-widget-header a{color:#fff}
-.ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default{border:1px solid #bcbcbc;background-color:#e8e8e8;color:#444}
+/*.ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default{border:1px solid #bcbcbc;background-color:#e8e8e8;color:#444}*/
 .ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited{color:#fff}
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover{background:#444;color:#fff}
 .ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #4897aa;background-color:#e8e8e8;color:#444}
@@ -863,6 +863,7 @@ tr[aria-level] td {
     font-weight: bolder;
     font-size:12px;
     height:20px;
+    white-space: nowrap;
 }
 
 tr[aria-level="0"] td{
@@ -873,17 +874,17 @@ tr[aria-level="0"] td{
 }
 
 tr[aria-level="1"] td{
-     background-color: rgba(0,0,0,0.4);
+     background-color: rgba(0,0,0,0.5);
      color: #ffffff;
      /*color:#ff8c00;*/
 }
 
 tr[aria-level="2"] td{
-     background-color: rgba(0,0,0,0.2);
+     background-color: rgba(0,0,0,0.3);
 }
 
 tr[aria-level="3"] td{
-     background-color: rgba(0,0,0,0.0);
+     background-color: rgba(0,0,0,0.1);
 }
 
 .ui-iggrid tbody .ui-icon,.ui-iggrid .ui-iggrid-addrow td .ui-icon{
@@ -903,8 +904,8 @@ tr[aria-level="3"] td{
     color:black;
     background:white;
     border:1px solid rgba(0,0,0,0.3);
-    font-weight:bold !important;
-    padding:0px;
+    padding-left:3px;
+    font-weight:bolder;
 }
 
 .ui-iggrid td.ui-state-hover .glyphicon:hover, .ui-iggrid td.ui-state-hover .glyphicon:focus {
@@ -917,7 +918,7 @@ tr[aria-level="3"] td{
 .ui-iggrid .ui-iggrid-footer, .ui-iggrid .ui-iggrid-toolbar {
     background-color: transparent !important;
     border: none !important;
-    color: black ;
+    color: black;
 }
 
 
@@ -957,13 +958,18 @@ tr[aria-level="3"] td{
     font-size:14px;
 }
 
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: black;
+    border: none;
+}
+
 .ui-iggrid .ui-iggrid-footer .ui-iggrid-pagerrecordslabel{
     font-size:14px;
 }
 
 
 /** Header pagination **/
-.ui-iggrid .ui-iggrid-toolbar .ui-state-default .ui-igedit-dropdown-button
+.ui-iggrid .ui-state-default .ui-igedit-dropdown-button
 {
     background-color:#00c1ff;
     color:#444;
