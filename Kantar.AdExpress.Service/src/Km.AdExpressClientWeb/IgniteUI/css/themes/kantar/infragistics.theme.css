@@ -205,11 +205,11 @@ body .ui-tooltip{border-width:2px}
 .ui-state-highlight p,.ui-state-error p{font-size:.8em;line-height:16px}
 .ui-icon{width:16px;height:16px;background-position:16px 16px}
 /*.ui-icon,.ui-widget-content .ui-icon,.ui-state-default .ui-icon,.ui-widget-header .ui-state-default .ui-icon,.ui-iggrid-paging-item.ui-state-default .ui-icon{background-image:url(images/ui-icons_888888_256x240.png)}*/
-.ui-widget-header .ui-icon,.ui-state-default .ui-widget-header.ui-icon{background-image:url(images/ui-icons_ffffff_256x240.png)}
+.ui-widget-header .ui-icon,.ui-state-default .ui-widget-header.ui-icon{background-image:url(images/ui-icons_222222_256x240.png)}
 .ui-state-focus .ui-icon,.ui-igcombo.ui-state-focus .ui-igcombo-button .ui-icon,.ui-igedit.ui-state-focus .ui-igcombo-button .ui-icon,.ui-iggrid .ui-igcombo.ui-state-focus .ui-igcombo-button .ui-icon,.ui-widget-header .ui-state-focus.ui-state-hover .ui-icon,.ui-igcombo-button-focus .ui-icon,.ui-state-focus.ui-state-hover .ui-icon{background-image:url(images/ui-icons_888888_256x240.png)}
 .ui-state-hover .ui-icon,.ui-state-hover.ui-state-default .ui-icon,.ui-igedit.ui-state-hover .ui-igedit-button-common.ui-state-hover .ui-icon,.ui-igedit.ui-state-focus .ui-igedit-button-common.ui-state-hover .ui-icon,.ui-igedit.ui-state-active .ui-igedit-button-common.ui-state-hover .ui-icon,.ui-state-default.ui-state-hover.ui-igedit-button .ui-icon,.ui-state-default.ui-state-hover.ui-igcombo-button .ui-icon,.ui-igdialog-header.ui-state-focus .ui-igdialog-headerimage.ui-icon{background-image:url(images/ui-icons_ffffff_256x240.png)}
 .ui-state-hover.ui-state-default .ui-igcombo-clearicon.ui-icon,.ui-state-hover .ui-state-default>.ui-icon{background-image:url(images/ui-icons_888888_256x240.png)}
-.ui-state-active .ui-icon,.ui-state-active.ui-state-hover .ui-icon,.ui-igcombo-button.ui-state-active .ui-icon,.ui-igedit-button.ui-state-active .ui-icon,.ui-iggrid .ui-igcombo-button.ui-state-active .ui-icon,.ui-igedit.ui-state-focus .ui-igedit-button-common .ui-icon,.ui-igedit.ui-state-active .ui-igedit-button-common .ui-icon,.ui-state-hover.ui-state-highlight.ui-igedit-button .ui-icon,.ui-state-hover.ui-state-highlight.ui-igcombo-button .ui-icon{background-image:url(images/ui-icons_228ef1_256x240.png)}
+.ui-state-active .ui-icon,.ui-state-active.ui-state-hover .ui-icon,.ui-igcombo-button.ui-state-active .ui-icon,.ui-igedit-button.ui-state-active .ui-icon,.ui-iggrid .ui-igcombo-button.ui-state-active .ui-icon,.ui-igedit.ui-state-focus .ui-igedit-button-common .ui-icon,.ui-igedit.ui-state-active .ui-igedit-button-common .ui-icon,.ui-state-hover.ui-state-highlight.ui-igedit-button .ui-icon,.ui-state-hover.ui-state-highlight.ui-igcombo-button .ui-icon{background-image:url(images/ui-icons_222222_256x240.png)}
 .ui-iggrid-header.ui-state-active .ui-icon{background-image:url(images/ui-icons_ffffff_256x240.png)}
 .ui-state-highlight .ui-icon,.ui-state-highlight.ui-igedit-button .ui-icon,.ui-state-highlight.ui-igcombo-button .ui-icon{background-image:url(images/ui-icons_228ef1_256x240.png)}
 .ui-state-error .ui-icon,.ui-state-error-text .ui-icon{background-image:url(images/ui-icons_222222_256x240.png)}
@@ -481,8 +481,7 @@ input.ui-button,input.ui-igbutton{border-radius:0!important}
 .ui-iggrid th.ui-state-focus{background:#4897aa}
 .ui-iggrid .ui-iggrid-footer,.ui-iggrid .ui-iggrid-toolbar{background-color:#ccc;font-weight:normal;text-align:left;color:#444;border-top:0;display:block}
 /*.ui-iggrid .ui-iggrid-footer .ui-state-default,.ui-iggrid .ui-iggrid-toolbar .ui-state-default,.ui-iggrid .ui-iggrid-addrow td,.ui-iggrid .ui-iggrid-addrow th,.ui-iggrid .ui-iggrid-footer .ui-state-hover{background-color:#ccc;color:#444;text-decoration:none}*/
-.ui-iggrid .ui-iggrid-footer .ui-state-default a,.ui-iggrid .ui-iggrid-toolbar .ui-state-default a,.ui-iggrid .ui-iggrid-addrow td a,.ui-iggrid .ui-iggrid-footer .ui-state-active a{color:#444;text-decoration:none}
-.ui-iggrid tbody .ui-icon,.ui-iggrid .ui-iggrid-addrow td .ui-icon{background-image:url(images/ui-icons_ffffff_256x240.png)}
+/*.ui-iggrid .ui-iggrid-footer .ui-state-default a,.ui-iggrid .ui-iggrid-toolbar .ui-state-default a,.ui-iggrid .ui-iggrid-addrow td a,.ui-iggrid .ui-iggrid-footer .ui-state-active a{color:#444;text-decoration:none}*/
 .ui-iggrid .ui-igedit-button .ui-icon,.ui-igpivot-metadataitem .ui-icon-close{background-image:url(images/ui-icons_888888_256x240.png)}
 .ui-igpivot-metadataitem{outline:red!important}
 .ui-iggrid th .ui-icon,.ui-iggrid th.ui-widget-header .ui-icon{background-image:url(images/ui-icons_ffffff_256x240.png)}
@@ -841,13 +840,6 @@ tr[aria-level="3"] td .orange {
     overflow:auto;
 }
 
-.mouth{
-    width:20px;
-    border-collapse: collapse;
-    padding: 0 !important;
-    text-align:center !important;
-}
-
 .ui-widget-content{
     background-color:transparent !important;
 }
@@ -870,6 +862,7 @@ tr[aria-level] td {
     padding: 1px 10px;
     font-weight: bolder;
     font-size:12px;
+    height:20px;
 }
 
 tr[aria-level="0"] td{
@@ -893,6 +886,13 @@ tr[aria-level="3"] td{
      background-color: rgba(0,0,0,0.0);
 }
 
+.ui-iggrid tbody .ui-icon,.ui-iggrid .ui-iggrid-addrow td .ui-icon{
+    background-image:url(images/ui-icons_ffffff_256x240.png)
+}
+.ui-iggrid td.ui-state-hover .ui-icon, .ui-iggrid td.ui-state-hover .ui-iggrid-addrow td .ui-icon{
+    background-image:url(images/ui-icons_222222_256x240.png)
+}
+
 .ui-iggrid td.ui-state-hover,.ui-iggrid .ui-ig-altrecord td.ui-state-hover,
 .ui-iggrid .ui-ig-altrecord td.ui-state-default.ui-state-hover,
 .ui-iggrid th.ui-iggrid-rowselector-class.ui-state-hover,
@@ -903,12 +903,21 @@ tr[aria-level="3"] td{
     color:black;
     background:white;
     border:1px solid rgba(0,0,0,0.3);
+    font-weight:bold !important;
+    padding:0px;
+}
+
+.ui-iggrid td.ui-state-hover .glyphicon:hover, .ui-iggrid td.ui-state-hover .glyphicon:focus {
+  	color: #ff8c00;
+}
+.ui-iggrid td.ui-state-hover .fa:hover, .ui-iggrid td.ui-state-hover .fa:focus {
+  	color: #ff8c00;
 }
 
 .ui-iggrid .ui-iggrid-footer, .ui-iggrid .ui-iggrid-toolbar {
     background-color: transparent !important;
     border: none !important;
-    color: white !important;
+    color: black ;
 }
 
 
@@ -922,34 +931,43 @@ tr[aria-level="3"] td{
 .ui-iggrid .ui-iggrid-footer .ui-iggrid-paging-item.ui-state-default,
 .ui-iggrid .ui-iggrid-footer .ui-iggrid-paging-item .ui-iggrid-page.ui-state-default
 {
+    font-size:14px;
     background-color: #00c1ff;
     margin:1px;
     border:none;
-    padding: 10px 18px;
+    padding: 3px 12px;
     border-radius: 1px;
-    
 }
-
 .ui-iggrid .ui-iggrid-footer .ui-iggrid-paging .ui-iggrid-page.ui-state-hover,
 .ui-iggrid .ui-iggrid-footer .ui-iggrid-paging .ui-iggrid-paging-item:hover
 {
     background-color: #21c9ff;
 }
+.ui-iggrid .ui-iggrid-footer .ui-state-default a,
+.ui-iggrid .ui-iggrid-toolbar .ui-state-default a,
+.ui-iggrid .ui-iggrid-addrow td a,
+.ui-iggrid .ui-iggrid-footer .ui-state-active a
+{
+    color:black;
+    text-decoration:none;
+}
 
 .ui-iggrid-pagelist > li.ui-iggrid-pagecurrent, li.ui-iggrid-page{
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
     border-radius:1px;
+    font-size:14px;
+}
 
+.ui-iggrid .ui-iggrid-footer .ui-iggrid-pagerrecordslabel{
+    font-size:14px;
 }
 
 
-.ui-iggrid .ui-iggrid-footer .ui-state-default,
-.ui-iggrid .ui-iggrid-toolbar .ui-state-default,
-.ui-iggrid .ui-iggrid-addrow td,.ui-iggrid .ui-iggrid-addrow th,
-.ui-iggrid .ui-iggrid-footer .ui-state-hover
+/** Header pagination **/
+.ui-iggrid .ui-iggrid-toolbar .ui-state-default .ui-igedit-dropdown-button
 {
     background-color:#00c1ff;
     color:#444;
-    text-decoration:none
+    text-decoration:none;
+    border:none;
 }
+
