@@ -59,6 +59,8 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public int Id { get; set; }
         public AccessType AccessType { get; set; }
         public List<UniversLevel> UniversLevels { get; set; }
+
+        public string Label { get; set; }
     }
 
 }

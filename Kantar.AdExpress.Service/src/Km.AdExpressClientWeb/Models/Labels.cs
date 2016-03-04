@@ -21,5 +21,8 @@ namespace Km.AdExpressClientWeb.Models
         public string Save { get; set; }
         public string Submit { get; set; }
         public string CleanSelectionMsg { get; set; }
+        public string IncludedElements { get; set; }
+        public string ExcludedElements { get; set; }
+
     }
 }

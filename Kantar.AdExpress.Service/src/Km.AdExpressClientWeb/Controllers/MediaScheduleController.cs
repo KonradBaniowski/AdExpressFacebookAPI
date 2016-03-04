@@ -78,6 +78,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     AccessType = item.AccessType,
                     UniversLevels = Mapper.Map<List<VM.UniversLevel>>(item.UniversLevels)
                 };
+                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
                 model.Trees.Add(tree);
             }            
             #endregion
@@ -341,7 +342,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 Include = GestionWeb.GetWebWord(LanguageConstantes.IncludeCode, siteLanguage),
                 Exclude = GestionWeb.GetWebWord(LanguageConstantes.ExcludeCode, siteLanguage),
                 LoadUnivers = GestionWeb.GetWebWord(LanguageConstantes.LoadUniversCode, siteLanguage),
-                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage)
+                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
+                IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
+                ExcludedElements=GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements,siteLanguage)
             };
             return result;
         }
