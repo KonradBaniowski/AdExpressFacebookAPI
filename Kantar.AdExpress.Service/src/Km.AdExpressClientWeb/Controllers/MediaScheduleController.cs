@@ -54,7 +54,12 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult Index()
         {
             #region Init
-            var model = new VM.MarketViewModel();
+            var model = new VM.MarketViewModel
+            {
+                Trees = new List<VM.Tree>(),
+                Branches = new List<VM.UniversBranch>(),
+                UniversGroups = new VM.UserUniversGroupsModel()
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
@@ -64,6 +69,18 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
             model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);
+            foreach ( var item in result.Trees)
+            {
+                VM.Tree tree = new VM.Tree
+                {
+                    Id = item.Id,
+                    LabelId = item.LabelId,
+                    AccessType = item.AccessType,
+                    UniversLevels = Mapper.Map<List<VM.UniversLevel>>(item.UniversLevels)
+                };
+                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                model.Trees.Add(tree);
+            }            
             #endregion
             #region Presentation
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
@@ -147,26 +164,13 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            DateTime lastDayEnable = DateTime.Now;
-
-            DateTime startDate = new DateTime(Convert.ToInt32(selectedStartDate.Substring(6, 4)), Convert.ToInt32(selectedStartDate.Substring(3, 2)), Convert.ToInt32(selectedStartDate.Substring(0, 2)));
-            DateTime endDate = new DateTime(Convert.ToInt32(selectedEndDate.Substring(6, 4)), Convert.ToInt32(selectedEndDate.Substring(3, 2)), Convert.ToInt32(selectedEndDate.Substring(0, 2)));
-
-            CustomerSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
-            CustomerSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
-            CustomerSession.PeriodBeginningDate = startDate.ToString("yyyyMMdd");
-            CustomerSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
-
-            if (endDate < DateTime.Now || DateTime.Now < startDate)
-                CustomerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodEndDate);
-            else
-                CustomerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(CustomerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
-
-            CustomerSession.Save();
+           
+            string url = string.Empty;
+            var response = _periodService.CalendarValidation(idSession, selectedStartDate, selectedEndDate);
 
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-            string url = context.Action("Results", "MediaSchedule");
+            if (response.Success)
+                 url = context.Action("Results", "MediaSchedule");
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 
@@ -177,20 +181,12 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
-            globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
 
-            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
-            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
-
-            if (selectedValue == 0) throw new Exception(GestionWeb.GetWebWord(885, CustomerSession.SiteLanguage));
-            date.SetDate(ref CustomerSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedPeriod, selectedValue);
-
-            CustomerSession.Save();
-
+            string url = string.Empty;
+            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue);
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-            string url = context.Action("Results", "MediaSchedule");
+            if (response.Success)
+                 url = context.Action("Results", "MediaSchedule");
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 
@@ -325,7 +321,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 Include = GestionWeb.GetWebWord(LanguageConstantes.IncludeCode, siteLanguage),
                 Exclude = GestionWeb.GetWebWord(LanguageConstantes.ExcludeCode, siteLanguage),
                 LoadUnivers = GestionWeb.GetWebWord(LanguageConstantes.LoadUniversCode, siteLanguage),
-                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage)
+                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
+                IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
+                ExcludedElements=GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements,siteLanguage)
             };
             return result;
         }

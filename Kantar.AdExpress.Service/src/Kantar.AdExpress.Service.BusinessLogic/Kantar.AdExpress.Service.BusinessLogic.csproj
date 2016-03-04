@@ -87,6 +87,10 @@
       <Project>{8889ed07-01ce-4f3a-a296-3a2c4b21989c}</Project>
       <Name>TNS.AdExpressI.Date.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date\TNS.AdExpressI.Date.csproj">
+      <Project>{d24531cc-e000-4aef-8218-56885d87dfcb}</Project>
+      <Name>TNS.AdExpressI.Date</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23e7e071-0fb0-43d4-b19d-b964ec3082f6}</Project>
       <Name>TNS.AdExpressI.MediaSchedule</Name>
@@ -112,7 +116,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,6 +10,12 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
     {
         public int StartYear { get; set; }
         public int EndYear { get; set; }
+
         public int SiteLanguage { get; set; }
+
+        public bool Success { get; set; }
+
+        public string ErrorMessage { get; set; }
+
     }
 }

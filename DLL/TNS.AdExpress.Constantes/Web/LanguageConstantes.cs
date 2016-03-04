@@ -24,11 +24,14 @@ namespace TNS.AdExpress.Constantes.Web
         public const long IncludeCode = 2270;
         public const long BranchLabelCode = 2272;
         public const long ElementLabelCode = 2278;
+        public const long IncludedElements = 2281;
+        public const long ExcludedElements = 2282;
         public const long SecurityMsg = 2285;
         public const long OverLimitMsgCode = 2286;
         public const long KeyWordDescriptionCode = 2287;
         public const long PortfolioCode = 2170;
         public const long PortfolioDescriptionCode = 2199;
+        public const long TreeLabelcode = 2278;
         #endregion
     }
 }

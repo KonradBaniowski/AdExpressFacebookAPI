@@ -17,9 +17,9 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 
         public UserUniversGroupsModel UniversGroups { get; set; }
 
-    }
+        public List<Tree> Trees { get; set; }
 
-   
+    }   
 
     public class UniversBranch
     {
@@ -52,6 +52,15 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public int LabelId { get; set; }
         public string Label { get; set; }
 
+    }
+    public class Tree
+    {
+        public long LabelId { get; set; }
+        public int Id { get; set; }
+        public AccessType AccessType { get; set; }
+        public List<UniversLevel> UniversLevels { get; set; }
+
+        public string Label { get; set; }
     }
 
 }
