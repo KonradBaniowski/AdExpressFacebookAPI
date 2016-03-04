@@ -29,6 +29,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain;
 using Newtonsoft.Json;
 using Kantar.AdExpress.Service.Core;
+using TNS.Classification.Universe;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -250,6 +251,46 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel = Json(new { RedirectUrl = url });
             return jsonModel;
         }
+        public ActionResult LoadUserUniversGroups()
+        {
+            bool showUserSavedGroups = true;
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            VM.UserUniversGroupsModel result = new VM.UserUniversGroupsModel
+            {
+                LoadUniversCode = LanguageConstantes.LoadUniversCode,
+                ModuleCode = LanguageConstantes.MediaScheduleCode,
+                SaveUniversCode = LanguageConstantes.SaveUniversCode,
+                UserUniversGroups = new List<VM.UserUniversGroup>(),
+                UserUniversCode = LanguageConstantes.UserUniversCode,
+                ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
+                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
+                ShowUserSavedGroups = showUserSavedGroups
+            };
+            if (showUserSavedGroups)
+            {
+                var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+                result.SiteLanguage = data.SiteLanguage;
+                result.UserUniversGroups = Mapper.Map<List<VM.UserUniversGroup>>(data.UniversGroups);
+                foreach (var group in result.UserUniversGroups)
+                {
+                    int count = group.Count;
+                    group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                    group.SecondeColumnSize = count - group.FirstColumnSize;
+                }
+            }
+            return PartialView("UserUniversGroupsContent", result);
+        }
+
+        public ActionResult GetUserUnivers(int id)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var result = _universService.GetTreesByUserUnivers(id, idWebSession,Dimension.product);
+            return View();
+        }
+
         #region Private methodes
         private List<NavigationNode> LoadNavBar(int currentPosition)
         {
@@ -338,37 +379,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             return result;
         }
-        public ActionResult LoadUserUniversGroups()
-        {
-            bool showUserSavedGroups = true;
-            var claim = new ClaimsPrincipal(User.Identity);
-            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-
-            VM.UserUniversGroupsModel result = new VM.UserUniversGroupsModel
-            {
-                LoadUniversCode = LanguageConstantes.LoadUniversCode,
-                ModuleCode = LanguageConstantes.MediaScheduleCode,
-                SaveUniversCode = LanguageConstantes.SaveUniversCode,
-                UserUniversGroups = new List<VM.UserUniversGroup>(),
-                UserUniversCode = LanguageConstantes.UserUniversCode,
-                ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
-                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
-                ShowUserSavedGroups = showUserSavedGroups
-            };
-            if (showUserSavedGroups)
-            {
-                var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
-                result.SiteLanguage = data.SiteLanguage;
-                result.UserUniversGroups = Mapper.Map<List<VM.UserUniversGroup>>(data.UniversGroups);
-                foreach (var group in result.UserUniversGroups)
-                {
-                    int count = group.Count;
-                    group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
-                    group.SecondeColumnSize = count - group.FirstColumnSize;
-                }
-            }
-            return PartialView("UserUniversGroupsContent", result);
-        }
+        
         #endregion
 
     }

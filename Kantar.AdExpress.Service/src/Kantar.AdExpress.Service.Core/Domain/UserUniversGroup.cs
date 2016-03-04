@@ -28,4 +28,5 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<UserUniversGroup> UniversGroups { get; set; }
         public int SiteLanguage { get; set; }
     }
+    
 }
