@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kantar.AdExpress.Service.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
-    interface IInsertionsService
+   public interface IInsertionsService
     {
+        GridResult GetGridResult(string idWebSession, Int64 moduleId);
     }
 }
