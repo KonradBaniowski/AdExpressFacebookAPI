@@ -155,15 +155,19 @@
 
 });
 
-
+//clean l element selectionnée
 $(document).on('click',  '.tab-content li', function () {
     this.remove();
 });
 
+
+//Clean l'ensemble des elements du tableau
 $(document).on('click', 'button.tout-suppr', function () {
     var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
+    var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
+    console.log(idTree);
     test.find('li').remove();
-    $("[id^='collapse'].in").collapse('hide');
+    $("#" +idTree + " [id^='collapse'].in").collapse('hide');
 });
 
 //function SelectedItems(event, ui) {
