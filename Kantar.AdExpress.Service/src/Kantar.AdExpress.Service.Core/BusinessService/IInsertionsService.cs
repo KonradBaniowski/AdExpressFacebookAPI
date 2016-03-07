@@ -10,6 +10,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
    public interface IInsertionsService
     {
-        GridResult GetGridResult(string idWebSession, Int64 moduleId);
+        GridResult GetGridResult(string idWebSession,string ids, string zoomDate, string idUnivers, long moduleId);
     }
 }
