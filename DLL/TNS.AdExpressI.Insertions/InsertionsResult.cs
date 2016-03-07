@@ -26,7 +26,7 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Layers;
-
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.Insertions
 {
@@ -1852,6 +1852,11 @@ namespace TNS.AdExpressI.Insertions
         virtual protected string GetCreativePathTv(string file)
         {
             return file;
+        }
+
+        public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

@@ -19,12 +19,12 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         // GET: Insertions
-        public ActionResult Index(string ids, string zoomDate, string idUnivers, long moduleId)
+        public ActionResult Index(string ids, string zoomDate, int idUnivers, long moduleId)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var gridResult = _insertionsService.GetGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId);
+            var gridResult = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId);
             
 
             return View();
