@@ -14,7 +14,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.MediaSchedule;
 using Aspose.Cells;
 using TNS.FrameWork.WebTheme;
-using Kantar.AdExpress.Service.Core.Domain;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.MediaSchedule{
     

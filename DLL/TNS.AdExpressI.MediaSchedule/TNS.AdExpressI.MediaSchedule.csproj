@@ -101,10 +101,6 @@
     <Compile Include="Style\MediaScheduleStyle.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Kantar.AdExpress.Service\src\Kantar.AdExpress.Service.Core\Kantar.AdExpress.Service.Core.csproj">
-      <Project>{1d6fbd14-eee6-45db-88b9-d99386d23e53}</Project>
-      <Name>Kantar.AdExpress.Service.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Name>TNS.AdExpress.Constantes</Name>

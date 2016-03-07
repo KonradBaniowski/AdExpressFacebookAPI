@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Kantar.AdExpress.Service.Core.Domain
+namespace TNS.AdExpress.Domain.Results
 {
+
     public class GridResult
     {
         public object[,] Data { get; set; }
