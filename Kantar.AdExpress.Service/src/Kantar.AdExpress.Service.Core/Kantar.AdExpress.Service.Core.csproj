@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
     <Compile Include="BusinessService\IApplicationUserManager.cs" />
+    <Compile Include="BusinessService\IInsertionsService.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
     <Compile Include="BusinessService\IMediaScheduleService.cs" />
     <Compile Include="BusinessService\IPortfolioService.cs" />
@@ -61,7 +62,6 @@
     <Compile Include="DataAccess\Repository\IGenericRepository.cs" />
     <Compile Include="DataAccess\Repository\Mau\ILoginRepository.cs" />
     <Compile Include="Domain\Address.cs" />
-    <Compile Include="Domain\GridResult.cs" />
     <Compile Include="Domain\Identity\ApplicationAuthenticationDescription.cs" />
     <Compile Include="Domain\Identity\ApplicationExternalLoginInfo.cs" />
     <Compile Include="Domain\Identity\ApplicationIdentityResult.cs" />

@@ -8,9 +8,8 @@ using TNS.AdExpress.Domain.Results;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
-    public interface IMediaScheduleService
+   public interface IInsertionsService
     {
-        object[,] GetMediaScheduleData(string idWebSession);
-        GridResult GetGridResult(string idWebSession, string periodType);
+        GridResult GetGridResult(string idWebSession,string ids, string zoomDate, string idUnivers, long moduleId);
     }
 }

@@ -43,7 +43,7 @@ using TNS.AdExpressI.MediaSchedule.Functions;
 using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.WebTheme;
 using TNS.AdExpress.Web.Core.Utilities;
-using Kantar.AdExpress.Service.Core.Domain;
+
 
 #endregion
 
@@ -2445,11 +2445,12 @@ namespace TNS.AdExpressI.MediaSchedule {
         {
             if (data[line, level] != null)
             {
-                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:OpenInsertion('{0}','{1}','{2}','-1','{3}');'><span class='glyphicon glyphicon-search'></span></a></center>"
+                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:window.open(\"/Insertions?ids={1}&zoomDate={2}&idUnivers=-1&moduleId={3}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                     , _session.IdSession
                     , GetLevelFilter(data, line, level)
                     , _zoom
-                    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA, "");
+                    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
+                    , "");
             }
             else
             {
@@ -2470,7 +2471,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         {
             if (data[line, level] != null)
             {
-                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:OpenCreatives('{0}','{1}','{2}','-1','{3}');'><span class='glyphicon glyphicon-search'></span></a></center>"
+                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:OpenCreatives('{0}','{1}','{2}','-1','{3}');'><span class='fa fa-search-plus'></span></a></center>"
                     , _session.IdSession
                     , GetLevelFilter(data, line, level)
                     , _zoom

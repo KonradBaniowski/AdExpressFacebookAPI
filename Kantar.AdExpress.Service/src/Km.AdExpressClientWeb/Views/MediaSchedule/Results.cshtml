@@ -3,6 +3,9 @@
     ViewBag.Title = "Results";
 }
 
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
+
 <div class="row">
     @Html.Partial("Presentation",Model.Presentation)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
@@ -365,6 +368,7 @@
                             $("#grid").igTreeGrid({
                                 dataSource: ds.dataView(),
                                 columns: cols,
+                                height: "530px",
                                 autoGenerateColumns: false,
                                 primaryKey: "ID_PRODUCT",
                                 foreignKey: "PID",
@@ -390,6 +394,7 @@
                             $("#grid").igTreeGrid({
                                 dataSource: ds.dataView(),
                                 columns: cols,
+                                height: "530px",
                                 autoGenerateColumns: false,
                                 primaryKey: "ID_PRODUCT",
                                 foreignKey: "PID",

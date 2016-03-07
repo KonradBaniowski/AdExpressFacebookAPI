@@ -18,12 +18,12 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public int Id { get; set; }
         public int Count { get; set; }
         public string Description { get; set; }
-        public List<ClientUnivers> ClientUnivers { get; set; }
+        public List<UserUnivers> UserUnivers { get; set; }
         public int FirstColumnSize { get; set; }
         public int SecondeColumnSize { get; set; }
     }
 
-    public class ClientUnivers
+    public class UserUnivers
     {
         public int Id { get; set; }
         public string Description { get; set; }
