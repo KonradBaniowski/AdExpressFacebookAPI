@@ -2445,7 +2445,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         {
             if (data[line, level] != null)
             {
-                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:OpenInsertion('{0}','{1}','{2}','-1','{3}');'><span class='fa fa-search-plus'></span></a></center>"
+                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:window.open(\"/Insertions\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                     , _session.IdSession
                     , GetLevelFilter(data, line, level)
                     , _zoom
