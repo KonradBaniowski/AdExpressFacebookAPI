@@ -28,5 +28,17 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<UserUniversGroup> UniversGroups { get; set; }
         public int SiteLanguage { get; set; }
     }
-    
+
+    public class UniversGroupSaveResponse
+    {
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; }
+        public int? UniversGroupId { get; set; }
+    }
+    public class UniversGroupSaveRequest
+    {
+        public int? UniversGroupId { get; set; }
+        List<Tree> Trees { get; set;}
+    }
+
 }
