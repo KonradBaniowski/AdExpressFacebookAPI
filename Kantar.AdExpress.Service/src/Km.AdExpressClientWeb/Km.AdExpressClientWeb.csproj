@@ -190,6 +190,7 @@
     <Compile Include="Models\PeriodSelectionViewModel.cs" />
     <Compile Include="Models\PeriodViewModel.cs" />
     <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />
+    <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
