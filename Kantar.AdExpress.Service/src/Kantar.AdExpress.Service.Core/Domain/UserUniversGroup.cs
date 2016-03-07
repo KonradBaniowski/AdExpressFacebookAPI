@@ -34,7 +34,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public bool Success { get; set; }
         public string ErrorMessage { get; set; }
-        public int UniversGroupId { get; set; }
+        public int UserUniversId { get; set; }
     }
     public class UniversGroupSaveRequest
     {
