@@ -283,12 +283,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return PartialView("UserUniversGroupsContent", result);
         }
 
-        public ActionResult GetUserUnivers(int id)
+        public List<Domain.Tree> GetUserUnivers(int id)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var result = _universService.GetTreesByUserUnivers(id, idWebSession,Dimension.product);
-            return View();
+            return result;
         }
 
         #region Private methodes
