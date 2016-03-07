@@ -39,11 +39,11 @@
 
         $("#branch" + branchId + "> div").each(function () {
             var DIS = $(this);
-            var univerIndex = parseFloat($(this).attr('data-universe'))
+            var universe = parseFloat($(this).attr('data-universe'))
             var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
             var params = {
                 keyWord: keyword,
-                universeId: univerIndex
+                universeId: universe
             };
 
             $.ajax({
@@ -56,17 +56,15 @@
                     alert("error");
                 },
                 success: function (response) {
-                    //spinner.stop();
                     if (branchUpdate > 0) {
                         console.log(DIS);
-                        var panel = DIS.find('.panel-body');
-                        panel.html('');
-                        panel.fillSelectable(response.data, undefined, univerIndex);
+                        DIS.updateGroup(univerLabel, response.data, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                     }
                     else {
-                        DIS.fillGroupSelectable(univerLabel, response.data, 'panel-heading', 'panel-body', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+                    
+                        DIS.fillGroupSelectable(univerLabel, response.data, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
                     }
-                    $('#selectable' + univerIndex).selectable(
+                    $('#selectable' + universe).selectable(
                         {
                             stop: SelectedItems
                         });
@@ -86,16 +84,27 @@
             var tabSelected = $('ul > li[class="active"] > a').attr('data-tab');
             var universDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul');
             var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li')
+            $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
             $.each(levelSrc, function (index, value) {
-                var item = $(value).clone()
+                var item = $(value).clone();
                 var find = false;
                 $.each(levelDst, function (index, value) {
                     
                     if (item.val() == $(value).val())
                         find = true;
                 });
-                if (!find)
+                if (!find) {
+                    var buttonSupp = $('<button/>');
+                    buttonSupp.addClass('pull-right');
+
+                    var icon = $('<i/>');
+                    icon.addClass('fa fa-times-circle black text-base');
+                    
+                    buttonSupp.append(icon);
+
+                    item.append(buttonSupp);
                     universDst.append(item);
+                }
             });
         }
     });
@@ -134,8 +143,7 @@
                 success: function (response) {
                     spinner.stop();
                     $("#containerSelectable" + universe).html('');
-                    $("#containerSelectable" + universe).fillSelectable(response.data, undefined, univerIndex);
-                    //fillGroupSelectable(univerLabel, response.data, 'panel-heading', 'panel-body', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+                    $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                     $('#selectable' + univerIndex).selectable(
                     {
                         stop: SelectedItems
@@ -145,6 +153,17 @@
         });
     };
 
+});
+
+
+$(document).on('click',  '.tab-content li', function () {
+    this.remove();
+});
+
+$(document).on('click', 'button.tout-suppr', function () {
+    var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
+    test.find('li').remove();
+    $("[id^='collapse'].in").collapse('hide');
 });
 
 //function SelectedItems(event, ui) {

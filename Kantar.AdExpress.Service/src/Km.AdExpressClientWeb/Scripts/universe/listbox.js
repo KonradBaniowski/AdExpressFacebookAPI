@@ -17,20 +17,9 @@ function GetHtmlSelectableFromObject(datas, classNameSelection, idSelection) {
 }
 
 jQuery.fn.extend({
-    fillSelectable: function (datas, classNameSelection, idSelection) {
-        var html = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
-        if (html != undefined)
-            html.appendTo(this);
-        else
-            this.html('');
-    },
-    fillGroupSelectable: function (titleText, datas, classNameTitle, classNameDivSelection, idSelection, classNameSelection, nbElemMax, nbElemMaxText) {
-        var divHtmlList = $('<div/>');
-
-        if (classNameDivSelection != undefined)
-            divHtmlList.addClass(classNameDivSelection);
-        divHtmlList.attr('id', 'containerSelectable' + idSelection);
-
+    updateGroup: function (titleText, datas, classNameTitle, idSelection, classNameSelection, nbElemMax, nbElemMaxText, divHtmlList, divTitleHtml) {
+        divHtmlList.html('');
+        divTitleHtml.html('');
         var nbElemHtml = $('<span/>');
         nbElemHtml.addClass('badge bg-blue');
         var listElem = undefined;
@@ -51,21 +40,38 @@ jQuery.fn.extend({
 
         titleText = titleText.replace('{NB_ELEM}', $("<div>").append(nbElemHtml.clone()).html());
 
-        var divTitleHtml = $('<div/>');
         var headerTitle = $('<h6/>');
 
-        if (classNameTitle != undefined)
-            divTitleHtml.addClass(classNameTitle);
+      
         divTitleHtml.append(headerTitle.addClass('famille blue uppercase').append(titleText));
 
         if (warningHtml != undefined)
             divTitleHtml.append(warningHtml);
-        divTitleHtml.appendTo(this);
-
+        
         if (listElem != undefined) {
             listElem.appendTo(divHtmlList);
         }
+    },
+    fillSelectable: function (datas, classNameSelection, idSelection, nbElemMax, nbElemMaxText) {
+        var html = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
+        if (html != undefined)
+            html.appendTo(this);
+        else
+            this.html('');
 
+    },
+    fillGroupSelectable: function (titleText, datas, classNameTitle, classNameDivSelection, idSelection, classNameSelection, nbElemMax, nbElemMaxText) {
+        var divHtmlList = $('<div/>');
+
+        if (classNameDivSelection != undefined)
+            divHtmlList.addClass(classNameDivSelection);
+        divHtmlList.attr('id', 'containerSelectable' + idSelection);
+
+        var divTitleHtml = $('<div/>');
+        if (classNameTitle != undefined)
+            divTitleHtml.addClass(classNameTitle);
+        divTitleHtml.appendTo(this);
+        this.updateGroup(titleText, datas, classNameTitle, idSelection, classNameSelection, nbElemMax, nbElemMaxText, divHtmlList, divTitleHtml);
         divHtmlList.appendTo(this);
     },
     getSelectableSelectedItems: function () {

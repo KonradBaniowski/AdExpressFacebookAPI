@@ -112,20 +112,21 @@
                                     <div class="panel-heading head-results"
                                          role="tab"
                                          id="heading-@(level.Id)">
-                                        <h6 class="panel-title famille">
+                                        <h6 class="panel-title famille ">
                                             <a role="button"
                                                data-toggle="collapse"
                                                data-parent="#tree-@(tree.Id)"
                                                href="#collapse-@(level.Id)-@(tree.Id)"
                                                aria-expanded="true"
                                                aria-controls="collapse-@(level.Id)">
-                                                @level.Label @(level.Id) - @(tree.Id)
+                                                @level.Label
                                                 <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
                                             </a>
                                         </h6>
                                     </div>
                                     <div id="collapse-@(level.Id)-@(tree.Id)"
-                                         class="panel-collapse @(level == tree.UniversLevels.First() ? "in" : "collapse")"
+                                         @*class="panel-collapse @(level == tree.UniversLevels.First() ? "in" : "collapse")"*@
+                                         class="panel-collapse collapse"
                                          role="tabpanel"
                                          aria-labelledby="heading-@(level.Id)">
                                         <div class="panel-body" data-tree="@(tree.Id)" data-level="@(level.Id)">
