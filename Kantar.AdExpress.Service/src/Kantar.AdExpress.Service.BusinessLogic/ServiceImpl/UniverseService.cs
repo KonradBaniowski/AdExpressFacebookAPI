@@ -320,5 +320,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             
             return result;
         }
+
+        public UniversGroupSaveResponse SaveUserUnivers(UniversGroupSaveRequest request)
+        {
+            UniversGroupSaveResponse result = new UniversGroupSaveResponse();
+            return result;
+        }
     }
 }
