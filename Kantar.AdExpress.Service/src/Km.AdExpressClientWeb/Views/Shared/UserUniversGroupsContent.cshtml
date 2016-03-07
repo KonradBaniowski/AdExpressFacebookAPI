@@ -17,7 +17,7 @@
                 </div>
                 <div id="collapse@(item.Id)" class="panel-collapse collapse">
                     <div class="col-sm-6 no-padder">
-                        @foreach (var level in item.ClientUnivers.Take(item.FirstColumnSize))
+                        @foreach (var level in item.UserUnivers.Take(item.FirstColumnSize))
                         {
                             <div class="radio modal-radio">
                                 <label class="popup-text">
@@ -29,7 +29,7 @@
                         }
                     </div>
                     <div class="col-sm-6 no-padder">
-                        @foreach (var level in item.ClientUnivers.GetRange(item.FirstColumnSize, item.SecondeColumnSize))
+                        @foreach (var level in item.UserUnivers.GetRange(item.FirstColumnSize, item.SecondeColumnSize))
                         {
                             <div class="radio modal-radio">
                                 <label class="popup-text">
