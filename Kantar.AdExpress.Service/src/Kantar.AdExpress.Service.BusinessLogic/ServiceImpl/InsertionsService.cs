@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kantar.AdExpress.Service.Core.Domain;
+using TNS.AdExpress.Domain.Results;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {

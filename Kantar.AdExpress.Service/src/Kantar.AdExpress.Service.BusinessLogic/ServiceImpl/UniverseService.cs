@@ -240,32 +240,34 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             List<Tree> result = new List<Tree>();
             try
             {
-                #region groups
+                #region try block
+                #region Get AdExpressUniverse
                 int index = 0;
-                var adExpressUniverse = webSession.PrincipalProductUniverses[index];
+                webSession = (WebSession)WebSession.Load(webSessionId);
+                Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)
+                TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(userUniversId, webSession);
+                var adExpressUniverse = Universes[index];
+                #endregion
+                #region Iterate by Access Type
+                if (adExpressUniverse !=null && adExpressUniverse.Count() > 0)
+                { 
                 foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
                 {
                     List<NomenclatureElementsGroup> elementsGroups = new List<NomenclatureElementsGroup>();
                     
                         elementsGroups = (type == AccessType.excludes)?adExpressUniverse.GetExludes(): adExpressUniverse.GetIncludes();
-
-                        //Build exclude tree
                         if (elementsGroups != null && elementsGroups.Count > 0)
                         {
-                            for (int j = 0; j < elementsGroups.Count; j++)
+                            #region Repository 
+                            foreach (NomenclatureElementsGroup elementGroup in elementsGroups)
                             {
-                            Tree tree = new Tree
-                            {
-                                AccessType =type,
-                                UniversLevels = new List<UniversLevel>()                                
-                            };
-                                //BuildUniverseLevelTreeView(html, ref treeviewId, elementsGroups[j].AccessType, elementsGroups[j], listId, ref nbCurrentTree, nbTotalTree);
-                                //coutTree++;
-                                #region Repository
-                                webSession = (WebSession)WebSession.Load(webSessionId);
+                                Tree tree = new Tree
+                                {
+                                    AccessType = type,
+                                    UniversLevels = new List<UniversLevel>()
+                                };                                                              
                                 DataSet ds = null;
                                 List<long> oldLevelsId = new List<long>();
-                                NomenclatureElementsGroup groups = null;//TODO
                                 CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
                                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
                                 object[] param = new object[2];
@@ -274,51 +276,45 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 ClassificationDAL classficationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                                 classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
                                 var tuple = GetAllowedIds(webSessionId, dimension, true);
-
                                 foreach (var currentLevel in tuple.Item1)
                                 {
                                     if (!oldLevelsId.Contains(currentLevel))
                                     {
-                                        if (groups != null && groups.Contains(currentLevel))
+                                        if (elementGroup != null && elementGroup.Contains(currentLevel))
                                         {
                                             var table = UniverseLevels.Get(currentLevel).TableName;
-                                            ds = classficationDAL.GetSelectedItems(table, groups.GetAsString(currentLevel));
+                                            ds = classficationDAL.GetSelectedItems(table, elementGroup.GetAsString(currentLevel));
                                             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                                             {
                                                 foreach (DataRow dr in ds.Tables[0].Rows)
                                                 {
-                                                UniversLevel level = new UniversLevel();
-                                                level.Id = (Int64)dr[0];
-                                                level.Label = dr[1].ToString();
-                                                tree.UniversLevels.Add(level);
-                                                    //childId = userUniversId + "_" + currentLevel + "_" + dr[0].ToString();
-                                                    //nodeCurrentText = dr[1].ToString();
-                                                    //nodeCurrentText += userUniversId + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel + "' , '" + dr[0].ToString() + "');ob_t2_Remove('" + childId + "');\" ><img src=\"" + _deleteImage + "\" border=0></a></div>";
-                                                    //hiddenFieldIds += dr[0].ToString() + ",";
-                                                    //oTree.Add("t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID.ToString(), childId, nodeCurrentText, false, null, null);
+                                                    UniversLevel level = new UniversLevel();
+                                                    level.Id = (Int64)dr[0];
+                                                    level.Label = dr[1].ToString();
+                                                    tree.UniversLevels.Add(level);                                                                                                      
                                                 }
+                                                tree.Id = (int)currentLevel;
                                             }
                                         }
                                         oldLevelsId.Add(currentLevel);
-                                        //levelIds = levelIds + "t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID.ToString() + ",";
                                     }
                                 }
-                                //if (levelIds != null && levelIds.Length > 0) levelIds = levelIds.Substring(0, levelIds.Length - 1);
-
                                 cl = null;
-                                classficationDAL = null;
-                            #endregion
-                            result.Add(tree);
+                                classficationDAL = null;                                
+                                result.Add(tree);
+                                #endregion
+                            }
                         }
-
                     }
-                    
                 }
-            }             
                 #endregion
-                
+                #endregion
+            }
+
+
             catch (System.Exception err)
             {
+                //TODO
                 //throw (new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible de construire le Treeview Obout", err));
             }
             
