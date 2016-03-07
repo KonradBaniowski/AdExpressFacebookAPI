@@ -190,6 +190,7 @@
     <Compile Include="Models\PeriodSelectionViewModel.cs" />
     <Compile Include="Models\PeriodViewModel.cs" />
     <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />
+    <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1459,6 +1460,7 @@
     <Content Include="Views\Shared\UserUniversGroups.cshtml" />
     <Content Include="Views\Shared\UserUniversGroupsContent.cshtml" />
     <Content Include="Views\Insertions\Index.cshtml" />
+    <Content Include="Views\Shared\SaveUserUnivers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

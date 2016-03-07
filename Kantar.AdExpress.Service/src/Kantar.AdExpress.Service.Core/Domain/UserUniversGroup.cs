@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.Classification.Universe;
 
 namespace Kantar.AdExpress.Service.Core.Domain
 {
@@ -11,10 +12,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public long Id { get; set; }
         public int Count { get; set; }
         public string Description { get; set; }
-        public List<ClientUnivers> ClientUnivers { get; set; }
+        public List<UserUnivers> UserUnivers { get; set; }
     }
 
-    public class ClientUnivers
+    public class UserUnivers
     {
         public long Id { get; set; }
         public string Description { get; set; }
@@ -33,12 +34,17 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public bool Success { get; set; }
         public string ErrorMessage { get; set; }
-        public int? UniversGroupId { get; set; }
+        public int UserUniversId { get; set; }
     }
     public class UniversGroupSaveRequest
     {
-        public int? UniversGroupId { get; set; }
-        List<Tree> Trees { get; set;}
+        public long UniversGroupId { get; set; }
+        public long? UserUniversId { get; set; }
+        public List<Tree> Trees { get; set;}
+        public string Name { get; set; }
+        public Dimension Dimension { get; set; }
+        public string WebSessionId { get; set; }
+        public long IdUniverseClientDescription { get; set; }
     }
 
 }
