@@ -11,14 +11,22 @@ namespace Km.AdExpressClientWeb.Controllers
 {
     public class InsertionsController : Controller
     {
+        private IInsertionsService _insertionsService;
 
-        private IWebSessionService _webSessionService;
-        private IUniverseService _universService;
+        public InsertionsController(IInsertionsService insertionsService)
+        {
+            _insertionsService = insertionsService;
+        }
 
         // GET: Insertions
-        public ActionResult Index()
+        public ActionResult Index(string ids, string zoomDate, string idUnivers, long moduleId)
         {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var gridResult = _insertionsService.GetGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId);
             
+
             return View();
         }
 

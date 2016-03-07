@@ -27,6 +27,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using FrameWorkCsts = TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Domain.Layers;
+using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -754,6 +755,80 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
             return false;
 
+        }
+        #endregion
+
+        #region Date de début d'un zoom en fonction d'un type de période
+        /// <summary>
+        /// Foction qui extrait à partir d'un zoom et d'un type de période la date de début de cette période zoom
+        /// </summary>
+        /// <param name="period">Zoom dont on veut la date de début</param>
+        /// <param name="periodType">Type de période considérée</param>
+        /// <returns>Date de début de zoom</returns>
+        /// <remarks>
+        /// Utilise la classe:
+        ///		public TNS.FrameWork.Date.AtomicPeriodWeek
+        /// </remarks>
+        public static DateTime getZoomBeginningDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
+        {
+            AtomicPeriodWeek tmpWeek;
+            switch (periodType)
+            {
+                case CstCustomerSession.Period.Type.dateToDateWeek:
+                case CstCustomerSession.Period.Type.nLastWeek:
+                case CstCustomerSession.Period.Type.previousWeek:
+                case CstCustomerSession.Period.Type.LastLoadedWeek:
+                    tmpWeek = new AtomicPeriodWeek(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)));
+                    return tmpWeek.FirstDay;
+                case CstCustomerSession.Period.Type.dateToDateMonth:
+                case CstCustomerSession.Period.Type.nLastMonth:
+                case CstCustomerSession.Period.Type.LastLoadedMonth:
+                case CstCustomerSession.Period.Type.nLastYear:
+                case CstCustomerSession.Period.Type.previousMonth:
+                case CstCustomerSession.Period.Type.previousYear:
+                case CstCustomerSession.Period.Type.nextToLastYear:
+                case CstCustomerSession.Period.Type.currentYear:
+                case CstCustomerSession.Period.Type.previousDay:
+                case CstCustomerSession.Period.Type.nLastDays:
+                default:
+                    return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), 1);
+            }
+        }
+        #endregion
+
+        #region Date de fin d'un zoom en fonction d'un type de période
+        /// <summary>
+        /// Fonction qui extrait à partir d'un zoom et d'un type de période la date de fin de cette période
+        /// </summary>
+        /// <param name="period">Zoom dont on veut la date de fin</param>
+        /// <param name="periodType">Type de période considérée</param>
+        /// <returns>Date de fin de zoom</returns>
+        /// <remarks>
+        /// Utilise la classe:
+        ///		public TNS.FrameWork.Date.AtomicPeriodWeek
+        /// </remarks>
+        public static DateTime getZoomEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
+        {
+            switch (periodType)
+            {
+                case CstCustomerSession.Period.Type.dateToDateWeek:
+                case CstCustomerSession.Period.Type.nLastWeek:
+                case CstCustomerSession.Period.Type.previousWeek:
+                case CstCustomerSession.Period.Type.LastLoadedWeek:
+                    return (new AtomicPeriodWeek(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)))).LastDay;
+                case CstCustomerSession.Period.Type.dateToDateMonth:
+                case CstCustomerSession.Period.Type.LastLoadedMonth:
+                case CstCustomerSession.Period.Type.nLastMonth:
+                case CstCustomerSession.Period.Type.nLastYear:
+                case CstCustomerSession.Period.Type.previousMonth:
+                case CstCustomerSession.Period.Type.previousYear:
+                case CstCustomerSession.Period.Type.nextToLastYear:
+                case CstCustomerSession.Period.Type.currentYear:
+                default:
+                case CstCustomerSession.Period.Type.nLastDays:
+                case CstCustomerSession.Period.Type.previousDay:
+                    return (new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), 1)).AddMonths(1).AddDays(-1);
+            }
         }
         #endregion
 
