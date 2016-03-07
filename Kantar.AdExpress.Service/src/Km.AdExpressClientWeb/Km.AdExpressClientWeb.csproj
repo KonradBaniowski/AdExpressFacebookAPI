@@ -169,6 +169,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InsertionsController.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
     <Compile Include="Controllers\TestExportController.cs" />
@@ -1457,6 +1458,7 @@
     <Content Include="Views\Portfolio\MediaSelection.cshtml" />
     <Content Include="Views\Shared\UserUniversGroups.cshtml" />
     <Content Include="Views\Shared\UserUniversGroupsContent.cshtml" />
+    <Content Include="Views\Insertions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
