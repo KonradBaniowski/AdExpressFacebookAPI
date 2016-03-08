@@ -1856,6 +1856,10 @@ namespace TNS.AdExpressI.Insertions
 
         public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
+
+            ResultTable rt = GetInsertions(vehicle,fromDate,toDate,filters,universId,zoomDate);
+            var test = 0;
+
             throw new NotImplementedException();
         }
         #endregion
