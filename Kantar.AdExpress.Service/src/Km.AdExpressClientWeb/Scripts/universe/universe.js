@@ -108,6 +108,7 @@ $(function () {
         }
     });
 
+
     //VALIDER 
     $('#btnSubmitMarketSelection').on('click', function (e) {
         e.preventDefault();
@@ -240,6 +241,45 @@ $(function () {
             });
         }
     });
+
+    $('.btn.btn-save-univers').on('click', function (event) {
+        event.preventDefault();
+        var spinner = new Spinner().spin(this);
+        $('.btn.btn-save-univers').off("click");
+        $.ajax({
+            url: '/MediaSchedule/SaveUserUnivers',
+            type: 'GET',                
+            success: function (response) {
+                spinner.stop();
+                $('#saveunivers').append(response);
+                $('#saveunivers').modal('show');
+            }
+        });
+    });
+
+    
+
+    $(document).on('change',  '#ddlGroup', function (event) {
+        event.preventDefault();        
+        var idGroup = $("#ddlGroup").val();
+        var local =$(this);
+        var spinner = new Spinner().spin(this);
+        $.ajax({
+            url: '/MediaSchedule/GetUniversByGroup',
+            type: 'GET',
+            data:{id:idGroup},
+            success: function (response) {
+                $('#ddlUnivers').empty();
+                $.each(response, function (i, item) {
+                    spinner.stop();
+                    $("#ddlUnivers").append('<option value="' + item.Value + '">' +
+                         item.Text + '</option>'); 
+                    });
+                //$('#ddlUnivers').html(response);
+            }
+        });
+    });    
+
 
     function SelectedItems(event, ui) {
         var itemIds = [];

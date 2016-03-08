@@ -163,7 +163,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
             var branch = TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString();//To review how the vaule is set with Dédé.
-            var data = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
+            var data = UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
             List<UserUnivers> UserUniversList = new List<UserUnivers>();
             if (data != null && data.Rows.Count > 0)
             {
@@ -408,6 +408,54 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             #endregion
             #endregion
+            return result;
+        }
+
+        public UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, long idGroup=0)
+        {
+            var tuple = GetAllowedIds(webSessionId, dimension);
+            UniversGroupsResponse result = new UniversGroupsResponse
+            {
+                UniversGroups = new List<UserUniversGroup>(),
+                SiteLanguage = tuple.Item4
+            };
+            List<UserUnivers> UserUniversList = new List<UserUnivers>();
+            var data = UniversListDataAccess.GetData(tuple.Item3, string.Empty, string.Empty);
+            if (data != null && data.Tables[0].AsEnumerable().Any())
+            {
+                var list = data.Tables[0].AsEnumerable().Select(p => new
+                {
+                    GroupID = p.Field<long?>("ID_GROUP_UNIVERSE_CLIENT"),
+                    GroupDescription = p.Field<string>("GROUP_UNIVERSE_CLIENT"),
+                    UniversID = p.Field<long?>("ID_UNIVERSE_CLIENT"),
+                    UniversDescription = p.Field<string>("UNIVERSE_CLIENT"),
+                }).ToList();
+                if (idGroup>0)
+                    list =list.Where(p =>p.GroupID == idGroup).ToList();
+                foreach (var item in list)
+                {
+                    UserUnivers UserUnivers = new UserUnivers
+                    {
+                        ParentId = item.GroupID??0,
+                        ParentDescription = item.GroupDescription,
+                        Id = item.UniversID??0,
+                        Description = item.UniversDescription
+                    };
+                    UserUniversList.Add(UserUnivers);
+                }
+                var groupedUniversList = UserUniversList.GroupBy(p => p.ParentId);
+                foreach (var item in groupedUniversList)
+                {
+                    UserUniversGroup universGroup = new UserUniversGroup
+                    {
+                        Id = item.Key,
+                        Description = item.FirstOrDefault().ParentDescription,
+                        UserUnivers = item.ToList(),
+                        Count = item.Count()
+                    };
+                    result.UniversGroups.Add(universGroup);
+                }
+            }
             return result;
         }
 
