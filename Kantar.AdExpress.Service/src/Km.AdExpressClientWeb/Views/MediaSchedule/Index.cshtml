@@ -1,4 +1,5 @@
 ﻿@model  Km.AdExpressClientWeb.Models.MediaSchedule.MarketViewModel
+
 @using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "MarketSelection";
@@ -104,6 +105,7 @@
                          id="tab-@(tree.Id)">
                         <div class="panel-group panel-group-results"
                              id="tree-@(tree.Id)"
+                             @*data-access-type="@(tree.AccessType)"*@
                              role="tablist"
                              aria-multiselectable="true">
                             @foreach (var level in tree.UniversLevels)
@@ -125,7 +127,6 @@
                                         </h6>
                                     </div>
                                     <div id="collapse-@(level.Id)-@(tree.Id)"
-                                         @*class="panel-collapse @(level == tree.UniversLevels.First() ? "in" : "collapse")"*@
                                          class="panel-collapse collapse"
                                          role="tabpanel"
                                          aria-labelledby="heading-@(level.Id)">

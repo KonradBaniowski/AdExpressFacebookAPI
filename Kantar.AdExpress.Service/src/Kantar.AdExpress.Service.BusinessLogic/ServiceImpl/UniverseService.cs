@@ -30,7 +30,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public const int MaxIncludeNbr = 2;
         public const int MaxExcludeNbr = 1;
 
-        public List<UniverseItem> GetItems(int universeLevelId, string keyWord, string idSession)
+        public List<UniverseItem> GetItems(int universeLevelId, string keyWord, string idSession, out int nbItems)
         {
             webSession = (WebSession)WebSession.Load(idSession);
             //CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
@@ -54,11 +54,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 };
                 result.Add(UItem);
             }
-            return result;
+            nbItems = result.Count;
+            return result.Take(1000).ToList();
         }
 
 
-        public List<UniverseItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession)
+        public List<UniverseItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession, out int nbItems)
         {
             webSession = (WebSession)WebSession.Load(idSession);
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
@@ -80,7 +81,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 };
                 result.Add(UItem);
             }
-            return result;
+            nbItems = result.Count;
+            return result.Take(1000).ToList();
         }
         public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage = true)
         {
