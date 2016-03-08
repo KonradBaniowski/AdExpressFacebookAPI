@@ -5747,7 +5747,12 @@ a.list-group-item.active:focus .list-group-item-text {
 }
 
 .panel-group .panel {
-  margin-bottom: 0;
+  margin-bottom:0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.panel-group .panel-univers-select {
+  margin-bottom: -30px;
   overflow: hidden;
   border-radius: 4px;
 }

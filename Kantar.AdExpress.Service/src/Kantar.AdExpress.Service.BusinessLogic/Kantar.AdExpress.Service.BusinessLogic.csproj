@@ -58,8 +58,11 @@
     <Compile Include="App_Start\AutoMapperConfigBL.cs" />
     <Compile Include="Identity\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceImpl\InsertionsService.cs" />
     <Compile Include="ServiceImpl\MediaScheduleService.cs" />
     <Compile Include="ServiceImpl\MediaService.cs" />
+    <Compile Include="ServiceImpl\PeriodService.cs" />
+    <Compile Include="ServiceImpl\PortfolioService.cs" />
     <Compile Include="ServiceImpl\RightService.cs" />
     <Compile Include="ServiceImpl\UniverseService.cs" />
     <Compile Include="ServiceImpl\WebSessionService.cs" />
@@ -84,6 +87,14 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
       <Project>{8889ed07-01ce-4f3a-a296-3a2c4b21989c}</Project>
       <Name>TNS.AdExpressI.Date.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date\TNS.AdExpressI.Date.csproj">
+      <Project>{d24531cc-e000-4aef-8218-56885d87dfcb}</Project>
+      <Name>TNS.AdExpressI.Date</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
+      <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
+      <Name>TNS.AdExpressI.Insertions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23e7e071-0fb0-43d4-b19d-b964ec3082f6}</Project>
@@ -110,7 +121,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

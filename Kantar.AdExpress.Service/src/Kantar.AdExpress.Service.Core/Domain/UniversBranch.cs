@@ -18,6 +18,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<UniversBranch> Branches { get; set; }
         public int SiteLanguage { get; set; }
         public int DefaultBranchId { get; set; }
+        public List<Tree> Trees { get; set; }
     }
 
     public class UniversLevel
@@ -26,12 +27,17 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public int LabelId { get; set; }
         public string Label { get; set; }
         public long Capacity { get; set; }
-        public string OverLimitMessage { get; set; }//2286
-        public string SecurityMessage { get; set; }//2285
-        public string ExceptionMessage { get; set; }//922
-
+        public string OverLimitMessage { get; set; }
+        public string SecurityMessage { get; set; }
+        public string ExceptionMessage { get; set; }
         public long BranchId { get; set; }
+    }
 
-        //public List<UniversItem> UniversItems { get; set; }
+    public class Tree
+    {
+        public long LabelId { get; set; }
+        public int Id { get; set; }
+        public AccessType AccessType { get; set; }
+        public List<UniversLevel> UniversLevels { get; set; }
     }
 }

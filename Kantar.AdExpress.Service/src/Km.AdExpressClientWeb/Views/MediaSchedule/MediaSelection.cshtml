@@ -5,66 +5,66 @@
     var array = @Html.Raw(Json.Encode(Model.ErrorMessage));
 }
 <div class="row">
-    @Html.Partial("Presentation")
+    @Html.Partial("Presentation", Model.Presentation)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-    <div class="row center-block"> 
-    @Html.Partial("NavigationBar", Model.NavigationBar)
+        <div class="row center-block">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
 
-    <div class="clearfix"></div>
-    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
-        <h4 class=""><i class="fa fa-eye"></i> Sélection des médias</h4>
-    </div>
-    @Html.HiddenFor(e => e.Multiple)
-   
-        @foreach (int i in Model.IdMediasCommon)
-        {
-            <input type="hidden" name="HiddenIntList" value="@i" />
-        }
-    @if (Model.Multiple)
-    {
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-            <div class="pull-right">
-                <small class="v-super">Pré-sélection &nbsp; </small>
-                <label class="i-switch" id="switch">
-                    <input type="checkbox" for="switch" id="preselection">
-                    <i></i>
-                </label>
+            <div class="clearfix"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                <h4 class=""><i class="fa fa-eye"></i> Sélection des médias</h4>
+            </div>
+            @Html.HiddenFor(e => e.Multiple)
+
+            @foreach (int i in Model.IdMediasCommon)
+            {
+                <input type="hidden" name="HiddenIntList" value="@i" />
+            }
+            @if (Model.Multiple)
+            {
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                    <div class="pull-right">
+                        <small class="v-super">Pré-sélection &nbsp; </small>
+                        <label class="i-switch" id="switch">
+                            <input type="checkbox" for="switch" id="preselection">
+                            <i></i>
+                        </label>
+                    </div>
+                </div>
+            }
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                @foreach (var item in Model.Medias)
+                {
+
+                    if (!item.Disabled)
+                    {
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                            <div class="block panel padder-v bg-black-only tuile-medias text-center" data-attr-id="@item.Id">
+                                <div class="top text-center w-full">
+                                    <i class="fa @item.icon m-r-sm"></i>
+                                </div>
+                                <div class="h5 font-normal h5">@item.Label</div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                            <div class="block panel padder-v bg-black-only tuile-medias text-center disabled-effect">
+                                <div class="top text-center w-full">
+                                    <i class="fa @item.icon m-r-sm"></i>
+                                </div>
+                                <div class="h5 font-normal h5">@item.Label</div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+                <input id="btnSubmitMediaSelection" type="submit" value="Valider" class="btn btn-default btn-valider pull-right" />
             </div>
         </div>
-    }
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            @foreach (var item in Model.Medias)
-            {
-
-            if (!item.Disabled)
-                {
-                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                    <div class="block panel padder-v bg-black-only tuile-medias text-center" data-attr-id="@item.Id">
-                        <div class="top text-center w-full">
-                            <i class="fa @item.icon m-r-sm"></i>
-                        </div>
-                        <div class="h5 font-normal h5">@item.Label</div>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                    <div class="block panel padder-v bg-black-only tuile-medias text-center disabled-effect">
-                        <div class="top text-center w-full">
-                            <i class="fa @item.icon m-r-sm"></i>
-                        </div>
-                        <div class="h5 font-normal h5">@item.Label</div>
-                    </div>
-                </div>
-            }
-            }            
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-            <input id="btnSubmitMediaSelection" type="submit" value="Valider" class="btn btn-default btn-valider pull-right"/>
-         </div>
-        </div>
-</div>
+    </div>
 </div>
 
 @section scripts {
@@ -93,7 +93,7 @@
                         elem.attr("data-grp", "B");
                 });
 
-                $(':checkbox').on('change', preselection)
+                $(':checkbox').on('change', preselection);
 
                 //FOCUS
                 $('[data-grp]').on('mouseenter', highlight);
@@ -126,10 +126,9 @@
             function selectMultiple(e) {
                 $(this).toggleClass("tuile-medias tuile-medias-active")
                 var id = $(this).attr("data-attr-id");
+
                 var index = $.inArray(id, idList);
-                if (index == -1) {
-                    idList.push(id);
-                } else {
+                if (index > -1) {
                     idList.splice(index, 1);
                 }
             }
@@ -154,6 +153,14 @@
             function validate()
             {
                 var message = "";
+                $('.tuile-medias-active').each(function (index) {
+                    var data = $(this).attr('data-attr-id');
+                    var dataIndex = $.inArray(data, idList);
+                    if (dataIndex == -1) {
+                        idList.push(data);
+                    }
+                });
+
                 var index = $.inArray(searchId, idList);
                 if(idList ==null ||idList.length==0)
                 {
@@ -162,7 +169,7 @@
                 else if (idList.length > 1 && index>-1)
                 {
                     message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SearchErrorMessage))';//search
-                   
+
                 }
                 @*else if (idList.length>1 && $.inArray(socialId,idList))   //TBD
                 {
@@ -179,25 +186,25 @@
                     alert(msg);
                 }
                 else {
-                var params = {
-                    selectedMedia: idList,
-                    nextStep: "PeriodSelection"
-                };           
-                $.ajax({
-                    url: '/MediaSchedule/SaveMediaSelection',
-                    contentType: 'application/json',
-                    type: 'POST',
-                    datatype: 'JSON',
-                    data: JSON.stringify(params),
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        if (data != null) {
-                            document.location = data.RedirectUrl;
+                    var params = {
+                        selectedMedia: idList,
+                        nextStep: "PeriodSelection"
+                    };
+                    $.ajax({
+                        url: '/MediaSchedule/SaveMediaSelection',
+                        contentType: 'application/json',
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: JSON.stringify(params),
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                        },
+                        success: function (data) {
+                            if (data != null) {
+                                document.location = data.RedirectUrl;
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
             });
 
             $('#Market').on('click', function (e) {
@@ -238,7 +245,8 @@
                 if (!isValide) {//mycondition
                     alert(msg);
                 }
-                else {
+                else
+                {
                     var action = "SaveMediaSelection";
                     var params = {
                         selectedMedia: idList,
@@ -267,7 +275,7 @@
                 var msg = validate();
                 var isValide = !msg || msg.lentgh === 0;
                 if (!isValide) {//mycondition
-                    alert(msg);                 
+                    alert(msg);
                 }
                 else {
                     action = "SaveMediaSelection";
@@ -291,7 +299,7 @@
                         }
                     });
                 }
-                });
-           });
-</script>
+            });
+        });
+    </script>
 }

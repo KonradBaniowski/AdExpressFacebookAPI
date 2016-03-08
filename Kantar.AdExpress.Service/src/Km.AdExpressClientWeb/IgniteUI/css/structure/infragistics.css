@@ -264,7 +264,7 @@ li.ui-igcombo-listitem.ui-igcombo-item-in-focus+li.ui-igcombo-listitem.ui-state-
 .ui-iggrid table th,.ui-iggrid table td{overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
 .ui-iggrid .ui-iggrid-headertable,.ui-iggrid .ui-iggrid-content,.ui-iggrid .ui-widget-content,.ui-iggrid-scrolldiv table{border-width:0}
 .ui-iggrid .ui-iggrid-content{width:100%}
-.ui-iggrid>.ui-widget-header.ui-helper-reset{border-width:0}
+.ui-iggrid>.ui-widget-header.ui-helper-reset{border-width:0;background: transparent;margin-right:1px;}
 .ui-widget-content.ui-iggrid-filterddlist,.ui-widget-content.ui-iggrid-hiding-dropdown-list,.ui-widget-content.ui-iggrid-columnmoving-dropdown-list,.ui-widget-content.ui-iggrid-featurechooser-list,.ui-iggrid-summaries-dropdown-listcontainer{border:0;margin:0;padding:0;list-style-type:none}
 .ui-iggrid .ui-iggrid-headercaption,.ui-iggrid .ui-iggrid-footer,.ui-iggrid .ui-iggrid-toolbar{padding:.6em .4em;text-align:center;cursor:default}
 .ui-iggrid th.ui-state-default,.ui-iggrid th.ui-state-hover,.ui-iggrid th.ui-state-active,.ui-iggrid th.ui-state-default a,.ui-iggrid th.ui-state-hover a,.ui-iggrid th.ui-state-active a{font-weight:normal;text-align:left}
@@ -274,13 +274,13 @@ li.ui-igcombo-listitem.ui-igcombo-item-in-focus+li.ui-igcombo-listitem.ui-state-
 .ui-iggrid table tbody td,.ui-iggrid .ui-iggrid-header,.ui-iggrid table th{padding:4px}
 .ui-iggrid .ui-iggrid-tablebody td{border-width:1px}
 .ui-iggrid table thead a{text-decoration:none}
-.ui-iggrid td.ui-state-default,.ui-iggrid td.ui-state-highlight,.ui-iggrid td.ui-state-hover{border-width:1px;font-weight:normal}
+.ui-iggrid td.ui-state-default,.ui-iggrid td.ui-state-highlight,.ui-iggrid td.ui-state-hover{border-width:1px;}
 .ui-iggrid .ui-iggrid-footer .ui-state-default,.ui-iggrid .ui-iggrid-toolbar .ui-state-default,.ui-iggrid .ui-iggrid-footer .ui-state-default a,.ui-iggrid .ui-iggrid-toolbar .ui-state-default a{text-decoration:none}
 .ui-iggrid .ui-iggrid-toolbar .ui-iggrid-results{float:right}
 .ui-iggrid .ui-iggrid-footer .ui-iggrid-results{float:left;line-height:1.9em}
 .ui-iggrid .ui-iggrid-paging,.ui-iggrid th .ui-iggrid-indicatorcontainer,.ui-iggrid th .ui-iggrid-indicatorcontainer .ui-icon{float:right}
-.ui-iggrid .ui-iggrid-paging>div,.ui-iggrid .ui-iggrid-paging .ui-iggrid-paging-item span,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdownlabels,.ui-iggrid .ui-iggrid-paging li,.ui-iggrid .ui-iggrid-results span{float:left;padding:0 .3em;line-height:1.4em}
-.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer .ui-igedit-container,.ui-iggrid .ui-iggrid-results .ui-igedit-container,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer{float:left}
+.ui-iggrid .ui-iggrid-paging>div,.ui-iggrid .ui-iggrid-paging .ui-iggrid-paging-item span,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdownlabels,.ui-iggrid .ui-iggrid-paging li,.ui-iggrid .ui-iggrid-results span{float:left;padding:0 .3em;line-height:1.4em;color:black;font-weight:bolder;}
+/*.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer .ui-igedit-container,.ui-iggrid .ui-iggrid-results .ui-igedit-container,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer{float:left}*/
 .ui-iggrid .ui-iggrid-results .ui-igedit-input,.ui-iggrid .ui-iggrid-paging .ui-igedit-input{line-height:1.7em}
 .ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer .ui-igedit-input{height:100%}
 .ui-iggrid .ui-iggrid-paging .ui-iggrid-paging-item span.ui-icon,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer,.ui-iggrid .ui-iggrid-results .ui-iggrid-pagesizedropdown{padding:0}
@@ -293,7 +293,7 @@ a.ui-iggrid-pagelink,a.ui-iggrid-pagelinkcurrent{line-height:1.4em}
 .ui-iggrid .ui-iggrid-paging-item{position:relative;height:1.4em;box-sizing:content-box}
 .ui-iggrid .ui-iggrid-paging-item span{cursor:pointer;-moz-user-select:none;-webkit-user-select:none;user-select:none}
 .ui-iggrid .ui-iggrid-paging-item a:active,.ui-iggrid .ui-iggrid-paging-item a:focus{outline:0 none}
-.ui-iggrid .ui-iggrid-paging-item span.ui-icon{margin-top:-8px;position:absolute;top:50%}
+.ui-iggrid .ui-iggrid-paging-item span.ui-icon{margin-top:-8px;position:absolute;top:53%}
 .ui-iggrid .ui-iggrid-pager *{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}
 .ui-iggrid-firstpage .ui-icon,.ui-iggrid-prevpage .ui-icon{left:3px}
 .ui-iggrid-nextpage .ui-icon,.ui-iggrid-lastpage .ui-icon{right:3px}
@@ -322,7 +322,7 @@ a.ui-iggrid-pagelink,a.ui-iggrid-pagelinkcurrent{line-height:1.4em}
 .ui-iggrid-indicatorcontainer{margin-top:.25em\9;margin-top:calc(0.8em - 8px)}
 .ui-iggrid-layout-helper>tbody>tr>td{padding:0!important;background:none transparent!important;vertical-align:top}
 .ui-iggrid .ui-igedit-fieldincontainer,.ui-iggrid .ui-igedit-button{height:1.4em}
-.ui-iggrid .ui-iggrid-results span,.ui-iggrid .ui-iggrid-pagedropdownlabels{line-height:1.9em}
+/*.ui-iggrid .ui-iggrid-results span,.ui-iggrid .ui-iggrid-pagedropdownlabels{line-height:1.9em;}*/
 .ui-iggrid .ui-igedit-button,.ui-iggrid-filtercell .ui-iggrid-indicatorcontainer a{float:left;position:relative;height:1.4em}
 .ui-iggrid .ui-igedit-buttonimage,.ui-iggrid-filtercell .ui-iggrid-filterbutton{position:absolute;top:50%;left:50%;margin-top:-8px!important;margin-left:-8px!important}
 .ui-igedit-dropdown .ui-igedit-listitem{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;width:100%}
@@ -358,7 +358,7 @@ body[dir="rtl"] .ui-iggrid-filtericoncontainer,body[dir="rtl"] .ui-iggrid-featur
 .ui-iggrid td.ui-iggrid-filtercell{padding:0;margin:0;border:0 none;border-top:0;height:1.6em}
 .ui-iggrid-filtercell input{border-top:1px solid #FFF;border-bottom:1px solid #FFF;padding:0;margin:0}
 .ui-iggrid-filterdialogclearall{text-decoration:underline;background:0;border:0;font-size:13px;color:inherit}
-.ui-iggrid .ui-iggrid-pagesizedropdown.ui-state-default,.ui-iggrid .ui-iggrid-pagedropdowncontainer.ui-state-default{background:#fff none;-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box}
+/*.ui-iggrid .ui-iggrid-pagesizedropdown.ui-state-default,.ui-iggrid .ui-iggrid-pagedropdowncontainer.ui-state-default{background:#fff none;-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box}*/
 .ui-iggrid .ui-igedit .ui-igedit-field{background:#fff none;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 .ui-iggrid .ui-igedit-list .ui-igedit-listitem{font-size:1em;line-height:1.4em}
 .ui-iggrid .ui-igedit-field{padding:0 0 0 2px!important}
@@ -1226,3 +1226,26 @@ td.ui-iggrid-addrow{text-align:left;position:relative;cursor:default;font-weight
 .ui-igzoombar-scrollbar-thumb:after{content:"\0131\0131\0131";font-size:11px;cursor:default}
 .ui-igzoombar-scrollbar-thumb,.ui-igzoombar-window-handle{background-color:#F9F9F9;background-image:none;background-repeat:no-repeat;border:1px solid #B9B9B9;color:#4B4B4B;font-weight:normal}
 .ui-igzoombar-scrollbar-thumb.ui-state-hover,.ui-igzoombar-window-handle.ui-state-hover{background-color:#E8E8E8}
+
+
+/** Header pagination **/
+.ui-iggrid .ui-iggrid-results span,.ui-iggrid .ui-iggrid-pagedropdownlabels{
+    line-height:1.9em;
+    font-size:14px;
+    font-weight:normal;
+}
+
+.ui-iggrid .ui-iggrid-pagesizedropdown.ui-state-default,.ui-iggrid .ui-iggrid-pagedropdowncontainer.ui-state-default{
+    background:#fff none;
+    -webkit-background-clip:padding-box;
+    -moz-background-clip:padding;
+    background-clip:padding-box;
+    height:26px;
+    border:none;
+}
+
+.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer .ui-igedit-container,.ui-iggrid .ui-iggrid-results .ui-igedit-container,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer
+{
+    float:left;
+    height:26px;
+}

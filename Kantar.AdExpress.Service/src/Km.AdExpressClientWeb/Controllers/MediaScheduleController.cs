@@ -27,6 +27,10 @@ using TNS.AdExpressI.MediaSchedule;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain;
+using Newtonsoft.Json;
+using Kantar.AdExpress.Service.Core;
+using TNS.Classification.Universe;
+using Km.AdExpressClientWeb.Models.Shared;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -37,38 +41,27 @@ namespace Km.AdExpressClientWeb.Controllers
         private IWebSessionService _webSessionService;
         private IMediaScheduleService _mediaSchedule;
         private IUniverseService _universService;
+        private IPeriodService _periodService;
         private const string _controller = "MediaSchedule";
-        #region CODES OF MARKET'S LABELS  
-        private const long SaveUniversCode = 769;
-        private const long LoadUniversCode = 770;
-        private const long UserSavedUniversCode = 893;        
-        private const long ExceptionMsg = 922;
-        private const long ErrorMsgCode = 930;
-        private const long NoSavedUniversCode = 930;
-        private const long KeyWordLabelCode = 972;
-        private const long Capacity = 1000;
-        private const long ExcludeCode = 2269;
-        private const long IncludeCode = 2270;
-        private const long BranchLabelCode = 2272;
-        private const long ElementLabelCode = 2278;
-        private const long SecurityMsg = 2285;
-        private const long OverLimitMsgCode = 2286;
-        private const long KeyWordDescriptionCode = 2287;
-       
-        #endregion
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
             _mediaSchedule = mediaSchedule;
             _universService = universService;
+            _periodService = periodService;
         }
         public ActionResult Index()
         {
             #region Init
-            var model = new VM.MarketViewModel();
+            var model = new VM.MarketViewModel
+            {
+                Trees = new List<VM.Tree>(),
+                Branches = new List<VM.UniversBranch>(),
+                UniversGroups = new VM.UserUniversGroupsModel()
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
@@ -77,10 +70,31 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);           
+            model.Branches = Mapper.Map<List<VM.UniversBranch>>(result.Branches);
+            foreach ( var item in result.Trees)
+            {
+                VM.Tree tree = new VM.Tree
+                {
+                    Id = item.Id,
+                    LabelId = item.LabelId,
+                    AccessType = item.AccessType,
+                    UniversLevels = Mapper.Map<List<VM.UniversLevel>>(item.UniversLevels)
+                };
+                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                model.Trees.Add(tree);
+            }            
             #endregion
-            
-            var marketNode = new VM.MediaPlanNavigationNode { Position = 1 };
+            #region Presentation
+            model.Presentation = LoadPresentationBar(result.SiteLanguage);
+            model.UniversGroups = new VM.UserUniversGroupsModel
+            {
+                ShowUserSavedGroups = true,
+                UserUniversGroups = new List<VM.UserUniversGroup>(),
+                UserUniversCode = LanguageConstantes.UserUniversCode,
+                SiteLanguage = result.SiteLanguage
+            };
+            #endregion
+            var marketNode = new NavigationNode { Position = 1 };
             model.NavigationBar = LoadNavBar(marketNode.Position);
             return View(model);
         }
@@ -93,34 +107,33 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult MediaSelection()
         {
             //var model = new MediaSelectionViewModel();
-            
+
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var media = _mediaService.GetMedia(idWebSession);
-            var _webSession = (WebSession)WebSession.Load(idWebSession);
+            var result = _mediaService.GetMedia(idWebSession);
 
             #region model data
-            var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
+            //var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var model = new VM.MediaSelectionViewModel()
             {
                 Multiple = true,
-                Medias =media,
-                IdMediasCommon = idMediasCommon
+                Medias = result.Media,
+                IdMediasCommon = result.MediaCommon
             };
-
+            model.Presentation = LoadPresentationBar(result.SiteLanguage);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
             }
-            model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();            
-            var mediaNode = new VM.MediaPlanNavigationNode { Position = 2 };
+            model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
+            var mediaNode = new NavigationNode { Position = 2 };
             model.NavigationBar = LoadNavBar(mediaNode.Position);
-            model.ErrorMessage= new VM.ErrorMessage
+            model.ErrorMessage = new VM.ErrorMessage
             {
-                EmptySelection= GestionWeb.GetWebWord(1052, _webSession.SiteLanguage),
-                SearchErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage),
-                SocialErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage),
-                UnitErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage)
+                EmptySelection = GestionWeb.GetWebWord(1052, result.SiteLanguage),
+                SearchErrorMessage = GestionWeb.GetWebWord(3011, result.SiteLanguage),
+                SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
+                UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             #endregion
             return View(model);
@@ -130,26 +143,21 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
-            object[] param = new object[1];
-            param[0] = CustomerSession;
-            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-            int startYear = dateDAL.GetCalendarStartDate();
-            int endYear = DateTime.Now.Year;
-
+           
+            var result = _periodService.GetPeriod(idSession);
+          
             PeriodViewModel periodModel = new PeriodViewModel();
+            periodModel.SiteLanguage = result.SiteLanguage;
+            periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
+            periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
 
-            periodModel.SiteLanguage = CustomerSession.SiteLanguage;
-            periodModel.StartYear = string.Format("{0}-01-01", startYear);
-            periodModel.EndYear = string.Format("{0}-12-31", endYear);
-
-            VM.MediaPlanNavigationNode periodeNode = new VM.MediaPlanNavigationNode { Position = 3 };
+            NavigationNode periodeNode = new NavigationNode { Position = 3 };
             var navBarModel = LoadNavBar(periodeNode.Position);
 
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
+            model.Presentation = LoadPresentationBar(result.SiteLanguage);
 
             return View(model);
         }
@@ -158,50 +166,29 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            DateTime lastDayEnable = DateTime.Now;
+           
+            string url = string.Empty;
+            var response = _periodService.CalendarValidation(idSession, selectedStartDate, selectedEndDate);
 
-            DateTime startDate = new DateTime(Convert.ToInt32(selectedStartDate.Substring(6, 4)), Convert.ToInt32(selectedStartDate.Substring(3, 2)), Convert.ToInt32(selectedStartDate.Substring(0, 2)));
-            DateTime endDate = new DateTime(Convert.ToInt32(selectedEndDate.Substring(6, 4)), Convert.ToInt32(selectedEndDate.Substring(3, 2)), Convert.ToInt32(selectedEndDate.Substring(0, 2)));
+            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+            if (response.Success)
+                 url = context.Action("Results", "MediaSchedule");
 
-            CustomerSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
-            CustomerSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
-            CustomerSession.PeriodBeginningDate = startDate.ToString("yyyyMMdd");
-            CustomerSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+            JsonResult jsonModel = Json(new { RedirectUrl = url });
 
-            if (endDate < DateTime.Now || DateTime.Now < startDate)
-                CustomerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodEndDate);
-            else
-                CustomerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(CustomerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
-
-             CustomerSession.Save();
-
-             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-             string url = context.Action("Results", "MediaSchedule");
-
-             JsonResult jsonModel = Json(new { RedirectUrl = url });
-
-             return jsonModel;
+            return jsonModel;
         }
 
         public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
-            globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
 
-            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
-            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
-           
-            if (selectedValue == 0) throw new Exception(GestionWeb.GetWebWord(885, CustomerSession.SiteLanguage));
-            date.SetDate(ref CustomerSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedPeriod, selectedValue);
-
-            CustomerSession.Save();
-
+            string url = string.Empty;
+            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue);
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-            string url = context.Action("Results", "MediaSchedule");
+            if (response.Success)
+                 url = context.Action("Results", "MediaSchedule");
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 
@@ -210,32 +197,41 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult Results()
         {
-            var resultNode = new VM.MediaPlanNavigationNode { Position = 4 };
+            var cla = new ClaimsPrincipal(User.Identity);
+            string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
+            var resultNode = new NavigationNode { Position = 4 };
             var model = new VM.ResultsViewModel
             {
-                NavigationBar = LoadNavBar(resultNode.Position)
-            };            
+                NavigationBar = LoadNavBar(resultNode.Position),
+                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage)
+            };
+
             return View(model);
         }
 
-        public JsonResult MediaScheduleResult()
+        public JsonResult MediaScheduleResult(string selectedPeriodType)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
+            var gridResult = _mediaSchedule.GetGridResult(idWebSession, selectedPeriodType);
 
-            return null;
+            string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+
+            JsonResult jsonModel = Json(new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+
+            return jsonModel;
         }
 
         public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)
         {
             string url = string.Empty;
             var response = new Domain.WebSessionResponse();
-            if ( selectedMedia !=null)
+            if (selectedMedia != null)
             {
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response =_webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
             }
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
@@ -246,23 +242,103 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public JsonResult SaveMarketSelection(string nextStep)
         {
-            
-                var claim = new ClaimsPrincipal(User.Identity);
-                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var response = _webSessionService.SaveMarketSelection( idWebSession);
-            
+
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var response = _webSessionService.SaveMarketSelection(idWebSession);
+
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             string url = context.Action(nextStep, _controller);
             JsonResult jsonModel = Json(new { RedirectUrl = url });
             return jsonModel;
         }
-        #region Private methodes
-        private List< VM.MediaPlanNavigationNode> LoadNavBar(int currentPosition)
+        public ActionResult LoadUserUniversGroups()
         {
-            var model = new List<VM.MediaPlanNavigationNode>();
+            bool showUserSavedGroups = true;
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            VM.UserUniversGroupsModel result = new VM.UserUniversGroupsModel
+            {
+                LoadUniversCode = LanguageConstantes.LoadUniversCode,
+                ModuleCode = LanguageConstantes.MediaScheduleCode,
+                SaveUniversCode = LanguageConstantes.SaveUniversCode,
+                UserUniversGroups = new List<VM.UserUniversGroup>(),
+                UserUniversCode = LanguageConstantes.UserUniversCode,
+                ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
+                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
+                ShowUserSavedGroups = showUserSavedGroups
+            };
+            if (showUserSavedGroups)
+            {
+                var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+                result.SiteLanguage = data.SiteLanguage;
+                result.UserUniversGroups = Mapper.Map<List<VM.UserUniversGroup>>(data.UniversGroups);
+                foreach (var group in result.UserUniversGroups)
+                {
+                    int count = group.Count;
+                    group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                    group.SecondeColumnSize = count - group.FirstColumnSize;
+                }
+            }
+            return PartialView("UserUniversGroupsContent", result);
+        }
+
+        public List<Domain.Tree> GetUserUnivers(int id)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var result = _universService.GetTreesByUserUnivers(id, idWebSession,Dimension.product);
+            return result;
+        }
+
+        [HttpGet]
+        public PartialViewResult SaveUserUnivers()
+        {            
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+            SaveUserUniversViewModel model = new SaveUserUniversViewModel
+            {
+                Title = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, data.SiteLanguage),
+                SelectUniversGroup= GestionWeb.GetWebWord(LanguageConstantes.SelectUniversGroup, data.SiteLanguage),
+                SelectUnivers =GestionWeb.GetWebWord(LanguageConstantes.SelectUnivers,data.SiteLanguage),
+                UniversLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversLabel,data.SiteLanguage),
+                UserGroups = new List<SelectListItem>(),
+                UserUnivers= new List<SelectListItem>()
+            };
+            if (data.UniversGroups.Any())
+            {
+                var items = data.UniversGroups.Select(p => new SelectListItem()
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Description
+                }).ToList();
+                items.FirstOrDefault().Selected = true;
+                model.UserGroups = items;
+                model.UserUnivers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m =>new SelectListItem()
+                {
+                    Value = m.Id.ToString(),
+                    Text = m.Description
+                }).ToList();
+                model.UserUnivers.FirstOrDefault().Selected = true;
+            }
+            return PartialView(model);
+        }
+
+        public JsonResult GetUniversByGroup(string groupId)
+        {
+            List<SelectListItem> univers = new List<SelectListItem>();
+            return Json(new SelectList(univers, "Value", "Text"));
+        }
+
+        #region Private methodes
+        private List<NavigationNode> LoadNavBar(int currentPosition)
+        {
+            var model = new List<NavigationNode>();
             //TODO Update Navbar according to the country selection
             #region Hardcoded  nav Bar.
-            var market = new VM.MediaPlanNavigationNode
+            var market = new NavigationNode
             {
                 Id = 1,
                 IsActive = false,
@@ -273,7 +349,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-file-text"
             };
             model.Add(market);
-            var media = new VM.MediaPlanNavigationNode
+            var media = new NavigationNode
             {
                 Id = 2,
                 IsActive = false,
@@ -284,7 +360,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-eye"
             };
             model.Add(media);
-            var dates = new VM.MediaPlanNavigationNode
+            var dates = new NavigationNode
             {
                 Id = 3,
                 IsActive = false,
@@ -295,7 +371,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-calendar"
             };
             model.Add(dates);
-            var result = new VM.MediaPlanNavigationNode
+            var result = new NavigationNode
             {
                 Id = 4,
                 IsActive = false,
@@ -306,7 +382,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IconCssClass = "fa fa-check"
             };
             model.Add(result);
-            foreach( var nav in model)
+            foreach (var nav in model)
             {
                 nav.IsActive = (nav.Id > currentPosition) ? false : true;
             }
@@ -314,23 +390,37 @@ namespace Km.AdExpressClientWeb.Controllers
             return model;
         }
 
-        private VM.Labels LoadPageLabels (int siteLanguage)
+        private Labels LoadPageLabels(int siteLanguage)
         {
-            var result = new VM.Labels
+            var result = new Labels
             {
-                KeyWordLabel = GestionWeb.GetWebWord(KeyWordLabelCode, siteLanguage),
-                KeyWordDescription = GestionWeb.GetWebWord(KeyWordDescriptionCode, siteLanguage),
-                ErrorMessage = GestionWeb.GetWebWord(ErrorMsgCode, siteLanguage),
-                BranchLabel = GestionWeb.GetWebWord(BranchLabelCode, siteLanguage),
-                NoSavedUnivers = GestionWeb.GetWebWord(NoSavedUniversCode, siteLanguage),
-                UserSavedUniversLabel = GestionWeb.GetWebWord(UserSavedUniversCode, siteLanguage),
-                Include = GestionWeb.GetWebWord(IncludeCode,siteLanguage),
-                Exclude = GestionWeb.GetWebWord(ExcludeCode,siteLanguage),
-                LoadUnivers = GestionWeb.GetWebWord(LoadUniversCode,siteLanguage),
-                Save =GestionWeb.GetWebWord(SaveUniversCode,siteLanguage)
+                KeyWordLabel = GestionWeb.GetWebWord(LanguageConstantes.KeyWordLabelCode, siteLanguage),
+                KeyWordDescription = GestionWeb.GetWebWord(LanguageConstantes.KeyWordDescriptionCode, siteLanguage),
+                ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgCode, siteLanguage),
+                BranchLabel = GestionWeb.GetWebWord(LanguageConstantes.BranchLabelCode, siteLanguage),
+                NoSavedUnivers = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage),
+                UserSavedUniversLabel = GestionWeb.GetWebWord(LanguageConstantes.UserSavedUniversCode, siteLanguage),
+                Include = GestionWeb.GetWebWord(LanguageConstantes.IncludeCode, siteLanguage),
+                Exclude = GestionWeb.GetWebWord(LanguageConstantes.ExcludeCode, siteLanguage),
+                LoadUnivers = GestionWeb.GetWebWord(LanguageConstantes.LoadUniversCode, siteLanguage),
+                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
+                IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
+                ExcludedElements=GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements,siteLanguage)
             };
             return result;
         }
+        private Models.MediaSchedule.PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
+        {
+            Models.MediaSchedule.PresentationModel result = new Models.MediaSchedule.PresentationModel
+            {
+                ModuleCode = LanguageConstantes.MediaScheduleCode,
+                SiteLanguage = siteLanguage,
+                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
+                ShowCurrentSelection = showCurrentSelection
+            };
+            return result;
+        }
+        
         #endregion
 
     }

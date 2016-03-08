@@ -7,6 +7,8 @@ namespace Km.AdExpressClientWeb
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //BundleTable.EnableOptimizations = true;
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js"));
@@ -31,7 +33,8 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/moment.js",
                         "~/Scripts/moment-with-locales.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
-                        "~/Scripts/bootstrap-select.js"));
+                        "~/Scripts/bootstrap-select.js",
+                        "~/Scripts/spin.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/period-selector").Include(
                       "~/Scripts/period-selector.js"));
@@ -49,13 +52,8 @@ namespace Km.AdExpressClientWeb
                       "~/Content/themes/base/base.css",
                       "~/Content/themes/base/theme.css",
                       "~/Content/bootstrap-select.css",
-                      "~/Content/treegrid.css"));
-
-            bundles.Add(new StyleBundle("~/IgniteUI/css").Include(
-                     "~/IgniteUI/css/themes/kantar/infragistics.theme.css",
-                     "~/IgniteUI/css/structure/infragistics.css"));
-
-
+                      "~/Content/treegrid.css",
+                      "~/Content/options-control.css"));
         }
     }
 }

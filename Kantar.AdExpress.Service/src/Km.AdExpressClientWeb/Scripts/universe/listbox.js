@@ -1,96 +1,99 @@
-function GetHtmlSelectableFromObject(datas, id, className){
+function GetHtmlSelectableFromObject(datas, classNameSelection, idSelection) {
+    var grp = $('<ul/>');
+    grp.attr('id', 'selectable' + idSelection)
+    if (classNameSelection != undefined)
+        grp.addClass(classNameSelection);
 
-		var sublist = '';
-		
-		if(datas.length>0){
-			var grp = $('<ul/>');
-			grp.attr('id',id);
-			if(className!=undefined)
-				grp.addClass(className);
-			for(var i=0; i<datas.length; i++){
-				var item = $('<li/>');
-				item.addClass('ui-widget-content');
-				item.val(datas[i].Id);
-				item.text(datas[i].Text);
-				
-				item.appendTo(grp);
-			}
-			return grp;
-		}
-		else{
-			return undefined;
-		}
-	  }
-	  
-	  jQuery.fn.extend({
-		fillSelectable:function(datas, id, className) {
-			var html = GetHtmlSelectableFromObject(datas, id, className);
-			if(html!=undefined)
-				html.appendTo(this);
-			else
-				this.html('');
-		},
-		fillGroupSelectable:function(titleText, datas, classNameTitle, classNameDivSelection, idSelection, classNameSelection, nbElemMax, nbElemMaxText) {
+    if (datas.length > 0) {
+        for (var i = 0; i < datas.length; i++) {
+            var item = $('<li/>');
+            item.val(datas[i].IdItem);
+            item.attr('data-id', datas[i].IdItem)
+            item.text(datas[i].Label);
+            item.appendTo(grp);
+        }
+    }
+    return grp;
+}
 
-			var divHtmlList = $('<div/>');
-			if(classNameDivSelection!=undefined)
-				divHtmlList.addClass(classNameDivSelection);
-			
-			var nbElemHtml = $('<span/>');
+jQuery.fn.extend({
+    updateGroup: function (titleText, datas, total, classNameTitle, idSelection, classNameSelection, nbElemMax, nbElemMaxText, divHtmlList, divTitleHtml) {
+        divHtmlList.html('');
+        divTitleHtml.html('');
+        var nbElemHtml = $('<span/>');
+        nbElemHtml.addClass('badge bg-blue');
+        var listElem = undefined;
+        var warningHtml = undefined;
 
-			var listElem = undefined;
-			var warningHtml = undefined;
-			if(datas.length>nbElemMax)
-			{
-				listElem = GetHtmlSelectableFromObject(datas.slice(0, nbElemMax), idSelection, classNameSelection);
-				nbElemHtml.text(nbElemMax);
-				if(nbElemMaxText!=undefined){
-					warningHtml = $('<small/>');
-					warningHtml.text(nbElemMaxText.replace('{NB_ELEM_MAX}', nbElemMax).replace('{NB_ELEM}', datas.length));
-				}
-			}	
-			else{
-				nbElemHtml.text(datas.length);
-				listElem = GetHtmlSelectableFromObject(datas, idSelection, classNameSelection);
-			}	
-			
-			titleText = titleText.replace('{NB_ELEM}', $("<div>").append(nbElemHtml.clone()).html());
-			
-			var divTitleHtml = $('<div/>');
-			if(classNameTitle!=undefined)
-				divTitleHtml.addClass(classNameTitle);
-			divTitleHtml.append(titleText);
-			
-			if(warningHtml!=undefined)
-				divTitleHtml.append(warningHtml);
-			divTitleHtml.appendTo(this);
+        if (total > nbElemMax) {
+            //listElem = GetHtmlSelectableFromObject(datas.slice(0, nbElemMax), classNameSelection, idSelection);
+            listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
+            nbElemHtml.text(nbElemMax);
+            if (nbElemMaxText != undefined) {
+                warningHtml = $('<small/>');
+                warningHtml.text(nbElemMaxText.replace('{NB_ELEM_MAX}', nbElemMax).replace('{NB_ELEM}', total));
+            }
+        }
+        else {
+            nbElemHtml.text(total);
+            listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
+        }
 
-			if(listElem!=undefined)
-			{
-				listElem.appendTo(divHtmlList);
-			}
-			
-			divHtmlList.appendTo(this);
-		},
-		getSelectableSelectedItems:function(){
-			var result = [];
-			$( ".ui-selected", this ).each(function() {
-					var val = $(this).val();
-					var text = $(this).text();
-					result.push({Value:$(this).val() , Text:$(this).text()})
-				});
-			return result;
-		
-		},
-		getSelectableSelectedItems2:function(){
-			var result = [];
-			var items = this[0].getElementsByTagName("li");
+        titleText = titleText.replace('{NB_ELEM}', $("<div>").append(nbElemHtml.clone()).html());
 
-			for (var i = items.length; i--;) {
-				if((' ' + items[i].className + ' ').indexOf(' ui-selected ') > -1){
-					result.push({Value:items[i].value , Text:items[i].innerHTML})
-				}
-			}
-			return result;
-		}
-	  });
+        var headerTitle = $('<h6/>');
+
+      
+        divTitleHtml.append(headerTitle.addClass('famille blue uppercase').append(titleText));
+
+        if (warningHtml != undefined)
+            divTitleHtml.append(warningHtml);
+        
+        if (listElem != undefined) {
+            listElem.appendTo(divHtmlList);
+        }
+    },
+    fillSelectable: function (datas, classNameSelection, idSelection, nbElemMax, nbElemMaxText) {
+        var html = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
+        if (html != undefined)
+            html.appendTo(this);
+        else
+            this.html('');
+
+    },
+    fillGroupSelectable: function (titleText, datas, total, classNameTitle, classNameDivSelection, idSelection, classNameSelection, nbElemMax, nbElemMaxText) {
+        var divHtmlList = $('<div/>');
+
+        if (classNameDivSelection != undefined)
+            divHtmlList.addClass(classNameDivSelection);
+        divHtmlList.attr('id', 'containerSelectable' + idSelection);
+
+        var divTitleHtml = $('<div/>');
+        if (classNameTitle != undefined)
+            divTitleHtml.addClass(classNameTitle);
+        divTitleHtml.appendTo(this);
+        this.updateGroup(titleText, datas, total, classNameTitle, idSelection, classNameSelection, nbElemMax, nbElemMaxText, divHtmlList, divTitleHtml);
+        divHtmlList.appendTo(this);
+    },
+    getSelectableSelectedItems: function () {
+        var result = [];
+        $(".ui-selected", this).each(function () {
+            var val = $(this).val();
+            var text = $(this).text();
+            result.push({ Value: $(this).val(), Text: $(this).text() })
+        });
+        return result;
+
+    },
+    getSelectableSelectedItems2: function () {
+        var result = [];
+        var items = this[0].getElementsByTagName("li");
+
+        for (var i = items.length; i--;) {
+            if ((' ' + items[i].className + ' ').indexOf(' ui-selected ') > -1) {
+                result.push({ Value: items[i].value, Text: items[i].innerHTML })
+            }
+        }
+        return result;
+    }
+});

@@ -14,6 +14,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.MediaSchedule;
 using Aspose.Cells;
 using TNS.FrameWork.WebTheme;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.MediaSchedule{
     
@@ -46,6 +47,11 @@ namespace TNS.AdExpressI.MediaSchedule{
 		/// </summary>
 		/// <returns>HTML Code</returns>
         MediaScheduleData GetHtml();
+        /// <summary>
+        /// Get Data for Ignite UI Grid
+        /// </summary>
+        /// <returns></returns>
+        GridResult GetGridResult();
         /// <summary>
         /// Get HTML code for the media schedule dedicated to Creative Division
 		/// </summary>

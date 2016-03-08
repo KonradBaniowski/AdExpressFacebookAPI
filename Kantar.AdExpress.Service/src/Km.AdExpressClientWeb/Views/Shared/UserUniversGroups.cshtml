@@ -1,0 +1,19 @@
+﻿@model Km.AdExpressClientWeb.Models.MediaSchedule.UserUniversGroupsModel
+@using TNS.AdExpress.Domain.Translation;
+@if (Model.ShowUserSavedGroups)
+{
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+        <h3 class="univ text-right"><a href="#monunivers" data-toggle="modal"><i class="icon-star blue"></i></a></h3>
+        <div id="monunivers" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header header-kantar-popup">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <i class="fa icon-star orange"></i>
+                        <h8>@GestionWeb.GetWebWord(Model.UserUniversCode, Model.SiteLanguage)</h8>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

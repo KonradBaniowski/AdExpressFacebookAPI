@@ -173,7 +173,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InsertionsController.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
+    <Compile Include="Controllers\PortfolioController.cs" />
     <Compile Include="Controllers\TestExportController.cs" />
     <Compile Include="Controllers\UniverseController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
@@ -182,12 +184,17 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
+    <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MediaSchedule\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
+    <Compile Include="Models\MediaSchedule\PresentationModel.cs" />
     <Compile Include="Models\MediaSchedule\ResultsViewModel.cs" />
+    <Compile Include="Models\NavigationNode.cs" />
     <Compile Include="Models\PeriodSelectionViewModel.cs" />
     <Compile Include="Models\PeriodViewModel.cs" />
+    <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />
+    <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -491,7 +498,6 @@
     <Content Include="Configuration\ErrorMail.xml" />
     <Content Include="Configuration\WebParameters.xml" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
-    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -505,6 +511,7 @@
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
+    <Content Include="Content\options-control.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -1418,6 +1425,8 @@
     <Content Include="Scripts\period-selector.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\spin.js" />
+    <Content Include="Scripts\spin.min.js" />
     <Content Include="Scripts\universe\listbox.js" />
     <Content Include="Scripts\universe\universe.js" />
     <Content Include="Scripts\_references.js" />
@@ -1446,11 +1455,17 @@
     <Content Include="Views\MediaSchedule\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutOther.cshtml" />
     <Content Include="Views\MediaSchedule\MediaSelection.cshtml" />
-    <Content Include="Views\MediaSchedule\Presentation.cshtml" />
+    <Content Include="Views\Shared\Presentation.cshtml" />
     <Content Include="Views\MediaSchedule\PeriodSelection.cshtml" />
     <Content Include="Views\MediaSchedule\Results.cshtml" />
-    <Content Include="Views\MediaSchedule\NavigationBar.cshtml" />
+    <Content Include="Views\Shared\NavigationBar.cshtml" />
     <Content Include="Views\TestExport\Index.cshtml" />
+    <Content Include="Views\Portfolio\Index.cshtml" />
+    <Content Include="Views\Portfolio\MediaSelection.cshtml" />
+    <Content Include="Views\Shared\UserUniversGroups.cshtml" />
+    <Content Include="Views\Shared\UserUniversGroupsContent.cshtml" />
+    <Content Include="Views\Insertions\Index.cshtml" />
+    <Content Include="Views\Shared\SaveUserUnivers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

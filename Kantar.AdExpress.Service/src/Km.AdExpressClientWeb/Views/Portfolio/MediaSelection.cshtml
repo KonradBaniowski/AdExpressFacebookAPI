@@ -1,0 +1,297 @@
+﻿@model Km.AdExpressClientWeb.Models.Portfolio.MediaSelectionViewModel
+
+@{
+    ViewBag.Title = "MediaSelection";
+    var array = @Html.Raw(Json.Encode(Model.ErrorMessage));
+}
+<div class="row">
+    @Html.Partial("Presentation", Model.Presentation)
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+        <div class="row center-block">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
+
+            <div class="clearfix"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                <h4 class=""><i class="fa fa-eye"></i> Sélection des médias</h4>
+            </div>
+            @Html.HiddenFor(e => e.Multiple)
+
+            @foreach (int i in Model.IdMediasCommon)
+            {
+                <input type="hidden" name="HiddenIntList" value="@i" />
+            }
+            @if (Model.Multiple)
+            {
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                    <div class="pull-right">
+                        <small class="v-super">Pré-sélection &nbsp; </small>
+                        <label class="i-switch" id="switch">
+                            <input type="checkbox" for="switch" id="preselection">
+                            <i></i>
+                        </label>
+                    </div>
+                </div>
+            }
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                @foreach (var item in Model.Medias)
+                {
+
+                    if (!item.Disabled)
+                    {
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                            <div class="block panel padder-v bg-black-only tuile-medias text-center" data-attr-id="@item.Id">
+                                <div class="top text-center w-full">
+                                    <i class="fa @item.icon m-r-sm"></i>
+                                </div>
+                                <div class="h5 font-normal h5">@item.Label</div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                            <div class="block panel padder-v bg-black-only tuile-medias text-center disabled-effect">
+                                <div class="top text-center w-full">
+                                    <i class="fa @item.icon m-r-sm"></i>
+                                </div>
+                                <div class="h5 font-normal h5">@item.Label</div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+                <input id="btnSubmitMediaSelection" type="submit" value="Valider" class="btn btn-default btn-valider pull-right" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (typeof jQuery === "undefined") { throw new Error("Media Client selector requires jQuery") }
+            var idList = [];
+            var searchId = '18';
+            //var socialId=TBD
+            if ($('#Multiple').val() == "True") {
+
+                $('.tuile-medias[data-attr-id]').on('click', selectMultiple)
+
+                //CHECKBOX
+                var idCommon = [];
+                $('[name="HiddenIntList"]').each(function (index) {
+                    idCommon.push($(this).attr("value"));
+                });
+                $('.tuile-medias[data-attr-id]').each(function (i, e) {
+                    var elem = $(e);
+                    var indexElem = elem.attr('data-attr-id');
+                    var index = $.inArray(indexElem, idCommon);
+                    if (index == -1)
+                        elem.attr("data-grp", "A");
+                    else
+                        elem.attr("data-grp", "B");
+                });
+
+                $(':checkbox').on('change', preselection)
+
+                //FOCUS
+                $('[data-grp]').on('mouseenter', highlight);
+                $('[data-grp]').on('mouseleave', unhighlight);
+            }
+            else {
+                var idList;
+                $('.tuile-medias[data-attr-id]').on('click', selectUnique)
+            }
+
+            function highlight() {
+                var grp = $(this).attr('data-grp');
+                $('[data-grp="' + grp + '"]').addClass('highlight');
+            }
+
+            function unhighlight() {
+                var grp = $(this).attr('data-grp');
+                $('[data-grp="' + grp + '"]').removeClass('highlight');
+            }
+
+            function selectUnique() {
+                $(this).toggleClass("tuile-medias tuile-medias-active")
+                var id = $(this).attr("data-attr-id");
+                if (idList !== null && idList !== undefined) {
+                    $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
+                }
+                idList = id;
+            }
+
+            function selectMultiple(e) {
+                $(this).toggleClass("tuile-medias tuile-medias-active")
+                var id = $(this).attr("data-attr-id");
+                var index = $.inArray(id, idList);
+                if (index == -1) {
+                    idList.push(id);
+                } else {
+                    idList.splice(index, 1);
+                }
+            }
+
+            function preselection() {
+                $('.tuile-medias-active').toggleClass("tuile-medias tuile-medias-active")
+                var attr = $(this).attr('checked');
+                if (typeof attr !== typeof undefined && attr !== false) {
+                    $.each(idCommon, function (index, value) {
+                        $('.tuile-medias-active[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
+                    });
+                    $(this).removeAttr("checked");
+                }
+                else {
+                    $.each(idCommon, function (index, value) {
+                        $('.tuile-medias[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
+                    });
+                    $(this).attr("checked", "");
+                }
+            }
+
+            function validate()
+            {
+                var message = "";
+                var index = $.inArray(searchId, idList);
+                if(idList ==null ||idList.length==0)
+                {
+                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection))';
+                }
+                else if (idList.length > 1 && index>-1)
+                {
+                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SearchErrorMessage))';//search
+
+                }
+                @*else if (idList.length>1 && $.inArray(socialId,idList))   //TBD
+                {
+                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SocialErrorMessage))';//search
+                }*@
+                return message;
+            }
+
+            $('#btnSubmitMediaSelection').on('click', function (e) {
+                e.preventDefault();
+                var msg = validate();
+                var isValide = !msg || msg.lentgh === 0;
+                if (!isValide) {//mycondition
+                    alert(msg);
+                }
+                else {
+                var params = {
+                    selectedMedia: idList,
+                    nextStep: "PeriodSelection"
+                };
+                $.ajax({
+                    url: '/MediaSchedule/SaveMediaSelection',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    datatype: 'JSON',
+                    data: JSON.stringify(params),
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null) {
+                            document.location = data.RedirectUrl;
+                        }
+                    }
+                });
+            }
+            });
+
+            $('#Market').on('click', function (e) {
+                e.preventDefault();
+                var msg = validate();
+                var isValide = !msg || msg.lentgh===0;
+                if (!isValide) {//mycondition
+                    alert(msg);
+                }
+                else {
+                    var action = "SaveMediaSelection";
+                    var params = {
+                        selectedMedia: idList,
+                        nextStep: "Index"
+                    };
+
+                    $.ajax({
+                        url: '/MediaSchedule/' + action,
+                        contentType: 'application/json',
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: JSON.stringify(params),
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+
+                        },
+                        success: function (data) {
+                            if (data != null) {
+                                document.location = data.RedirectUrl;
+                            }
+                        }
+                    });
+                }
+            });
+            $('#Dates').on('click', function (e) {
+                e.preventDefault();
+                var msg = validate();
+                var isValide = !msg || msg.lentgh === 0;
+                if (!isValide) {//mycondition
+                    alert(msg);
+                }
+                else {
+                    var action = "SaveMediaSelection";
+                    var params = {
+                        selectedMedia: idList,
+                        nextStep: "PeriodSelection"
+                    };
+
+                    $.ajax({
+                        url: '/MediaSchedule/' + action,
+                        contentType: 'application/json',
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: JSON.stringify(params),
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+
+                        },
+                        success: function (data) {
+                            if (data != null) {
+                                document.location = data.RedirectUrl;
+                            }
+                        }
+                    });
+                }
+            });
+            $('#Results').on('click', function (e) {
+                e.preventDefault();
+                var msg = validate();
+                var isValide = !msg || msg.lentgh === 0;
+                if (!isValide) {//mycondition
+                    alert(msg);
+                }
+                else {
+                    action = "SaveMediaSelection";
+                    params = {
+                        selectedMedia: idList,
+                        nextStep: "Results"
+                    };
+                    $.ajax({
+                        url: '/MediaSchedule/' + action,
+                        contentType: 'application/json',
+                        type: 'POST',
+                        datatype: 'JSON',
+
+                        data: JSON.stringify(params),
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                        },
+                        success: function (data) {
+                            if (data != null) {
+                                document.location = data.RedirectUrl;
+                            }
+                        }
+                    });
+                }
+                });
+           });
+    </script>
+}
