@@ -22,19 +22,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private WebSession _customerWebSession = null;
         private int _fromDate;
         private int _toDate;
-        private long _idVehicle = long.MinValue;
+        private long? _idVehicle = long.MinValue;
 
 
-        public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId)
+        public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
         {
             InsertionResponse insertionResponse = new InsertionResponse();
             try
             {
 
+                IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
+
+                insertionResponse.Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, false);
+                if (insertionResponse.Vehicles.Count <= 0)
+                {
+                    return insertionResponse;
+                }
+
                 _customerWebSession = (WebSession)WebSession.Load(idWebSession);
 
                 //TODO : TROUVER OU IL EST CHARGE
-                VehicleInformation vehicle = VehiclesInformation.Get(_idVehicle);
+                if (idVehicle.HasValue)
+                {
+                    _idVehicle = idVehicle;
+                }
+                VehicleInformation vehicle = VehiclesInformation.Get(_idVehicle.Value);
 
               
 
@@ -56,8 +68,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
 
                 if (string.IsNullOrEmpty(insertionResponse.Message)) return insertionResponse;
-
-                IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
 
                 if ((vehicle.Id == CstDBClassif.Vehicles.names.internet
                    || vehicle.Id == CstDBClassif.Vehicles.names.czinternet) && !insertionResult.CanShowInsertion(vehicle))
