@@ -58,11 +58,11 @@
                 success: function (response) {
                     if (branchUpdate > 0) {
                         console.log(DIS);
-                        DIS.updateGroup(univerLabel, response.data, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
+                        DIS.updateGroup(univerLabel, response.data, response.total, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                     }
                     else {
                     
-                        DIS.fillGroupSelectable(univerLabel, response.data, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+                        DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
                     }
                     $('#selectable' + universe).selectable(
                         {
@@ -156,7 +156,7 @@
                 success: function (response) {
                     spinner.stop();
                     $("#containerSelectable" + universe).html('');
-                    $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
+                    $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                     $('#selectable' + univerIndex).selectable(
                     {
                         stop: SelectedItems
@@ -168,15 +168,19 @@
 
 });
 
-
+//clean l element selectionnée
 $(document).on('click',  '.tab-content li', function () {
     this.remove();
 });
 
+
+//Clean l'ensemble des elements du tableau
 $(document).on('click', 'button.tout-suppr', function () {
     var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
+    var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
+    console.log(idTree);
     test.find('li').remove();
-    $("[id^='collapse'].in").collapse('hide');
+    $("#" +idTree + " [id^='collapse'].in").collapse('hide');
 });
 
 //function SelectedItems(event, ui) {

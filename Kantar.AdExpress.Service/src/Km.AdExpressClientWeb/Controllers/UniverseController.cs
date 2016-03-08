@@ -34,8 +34,9 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var model = _universeService.GetItems(universeId, keyWord, idSession);
-            return Json(new { data = model } , JsonRequestBehavior.AllowGet);
+            int totalItems = 0;
+            var model = _universeService.GetItems(universeId, keyWord, idSession, out totalItems);
+            return Json(new { data = model, total = totalItems } , JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -49,8 +50,9 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var model = _universeService.GetItems(levelId, selectedClassification,selectedLevelId, idSession);
-            return Json(new { data = model }, JsonRequestBehavior.AllowGet);
+            int totalItems = 0;
+            var model = _universeService.GetItems(levelId, selectedClassification,selectedLevelId, idSession, out totalItems);
+            return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
     }
 }
