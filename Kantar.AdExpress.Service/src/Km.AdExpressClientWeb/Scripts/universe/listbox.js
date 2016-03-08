@@ -17,7 +17,7 @@ function GetHtmlSelectableFromObject(datas, classNameSelection, idSelection) {
 }
 
 jQuery.fn.extend({
-    updateGroup: function (titleText, datas, classNameTitle, idSelection, classNameSelection, nbElemMax, nbElemMaxText, divHtmlList, divTitleHtml) {
+    updateGroup: function (titleText, datas, total, classNameTitle, idSelection, classNameSelection, nbElemMax, nbElemMaxText, divHtmlList, divTitleHtml) {
         divHtmlList.html('');
         divTitleHtml.html('');
         var nbElemHtml = $('<span/>');
@@ -25,16 +25,17 @@ jQuery.fn.extend({
         var listElem = undefined;
         var warningHtml = undefined;
 
-        if (datas.length > nbElemMax) {
-            listElem = GetHtmlSelectableFromObject(datas.slice(0, nbElemMax), classNameSelection, idSelection);
+        if (total > nbElemMax) {
+            //listElem = GetHtmlSelectableFromObject(datas.slice(0, nbElemMax), classNameSelection, idSelection);
+            listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
             nbElemHtml.text(nbElemMax);
             if (nbElemMaxText != undefined) {
                 warningHtml = $('<small/>');
-                warningHtml.text(nbElemMaxText.replace('{NB_ELEM_MAX}', nbElemMax).replace('{NB_ELEM}', datas.length));
+                warningHtml.text(nbElemMaxText.replace('{NB_ELEM_MAX}', nbElemMax).replace('{NB_ELEM}', total));
             }
         }
         else {
-            nbElemHtml.text(datas.length);
+            nbElemHtml.text(total);
             listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
         }
 
@@ -60,7 +61,7 @@ jQuery.fn.extend({
             this.html('');
 
     },
-    fillGroupSelectable: function (titleText, datas, classNameTitle, classNameDivSelection, idSelection, classNameSelection, nbElemMax, nbElemMaxText) {
+    fillGroupSelectable: function (titleText, datas, total, classNameTitle, classNameDivSelection, idSelection, classNameSelection, nbElemMax, nbElemMaxText) {
         var divHtmlList = $('<div/>');
 
         if (classNameDivSelection != undefined)
@@ -71,7 +72,7 @@ jQuery.fn.extend({
         if (classNameTitle != undefined)
             divTitleHtml.addClass(classNameTitle);
         divTitleHtml.appendTo(this);
-        this.updateGroup(titleText, datas, classNameTitle, idSelection, classNameSelection, nbElemMax, nbElemMaxText, divHtmlList, divTitleHtml);
+        this.updateGroup(titleText, datas, total, classNameTitle, idSelection, classNameSelection, nbElemMax, nbElemMaxText, divHtmlList, divTitleHtml);
         divHtmlList.appendTo(this);
     },
     getSelectableSelectedItems: function () {
