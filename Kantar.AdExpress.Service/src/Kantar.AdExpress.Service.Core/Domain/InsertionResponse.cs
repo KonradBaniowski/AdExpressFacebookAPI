@@ -15,6 +15,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
         public string Message { get; set; }
 
+        public long IdVehicle { get; set; }
+
         protected IList<VehicleInformation> _vehicles = new List<VehicleInformation>();
 
         public IList<VehicleInformation> Vehicles
@@ -30,6 +32,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
                 foreach (VehicleInformation v in value)
                 {
                     ids.Add(v.DatabaseId);
+                }
+                if (IdVehicle <= 0 && Vehicles.Count > 0)
+                {
+                    IdVehicle = Vehicles[0].DatabaseId;
                 }
             }
         }
