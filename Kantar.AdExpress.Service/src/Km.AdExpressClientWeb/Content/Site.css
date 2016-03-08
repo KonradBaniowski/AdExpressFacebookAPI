@@ -1,4 +1,13 @@
 ﻿
+.bb-alert {
+    position: fixed;
+    bottom: 25%;
+    right: 0;
+    margin-bottom: 0;
+    font-size: 1.2em;
+    padding: 1em 1.3em;
+    z-index: 2000;
+}
 
 .highlight {
     -moz-box-shadow: 1px 1px 5px 1px #0042ff;

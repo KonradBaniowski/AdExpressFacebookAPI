@@ -1,8 +1,6 @@
-﻿$(function () {
+﻿
 
-    //$.get('@Url.Action("LoadUserUniversGroups","MediaSchedule", new { siteLanguage = Model.SiteLanguage, webSessionId= Model.WebSessionId, showUserSavedGroups=true} )', function (data) {
-    //     $('#monunivers').html(data);
-    //});
+$(function () {
 
     $.ajax({
         url: '/MediaSchedule/LoadUserUniversGroups',
@@ -15,7 +13,7 @@
         }
 
     });
-
+    //CHANGER DE SECTEUR
     $(".dropdown-menu.bg-blue.pull-right li > a").on('click', function (e) {
         e.preventDefault();
         var selText = $(this).text();
@@ -29,6 +27,7 @@
         //CLEAN PANEL ON CHANGE BRANCH
         $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
     });
+
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
         var branchId = $('#branch').attr("data-branch");
@@ -61,7 +60,7 @@
                         DIS.updateGroup(univerLabel, response.data, response.total, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                     }
                     else {
-                    
+
                         DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
                     }
                     $('#selectable' + universe).selectable(
@@ -89,7 +88,7 @@
                 var item = $(value).clone();
                 var find = false;
                 $.each(levelDst, function (index, value) {
-                    
+
                     if (item.val() == $(value).val())
                         find = true;
                 });
@@ -99,11 +98,144 @@
 
                     var icon = $('<i/>');
                     icon.addClass('fa fa-times-circle black text-base');
-                    
+
                     buttonSupp.append(icon);
 
                     item.append(buttonSupp);
                     universDst.append(item);
+                }
+            });
+        }
+    });
+
+    //VALIDER 
+    $('#btnSubmitMarketSelection').on('click', function (e) {
+        e.preventDefault();
+        //bootbox.alert("Hello world!");
+        var things = [];
+        $.each($('.nav.nav-tabs > li a'), function (index, elem) {
+            var itemContainer = $(elem).attr('data-target');
+            var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
+            var idUnivers = [];
+            $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
+                var id= $(elem).attr('data-id');
+                idUnivers.push(id);
+            });
+            var item = {
+                AccessType: accessType,
+                UniversLevels: idUnivers
+            };
+            things.push(item);
+        });
+        var params = {
+            tree: things,
+            nextStep: "PeriodSelection"
+        };
+        //    $.ajax({
+        //        url: '/MediaSchedule/SaveMediaSelection',
+        //        contentType: 'application/json',
+        //        type: 'POST',
+        //        datatype: 'JSON',
+        //        data: JSON.stringify(params),
+        //        error: function (xmlHttpRequest, errorText, thrownError) {
+        //        },
+        //        success: function (data) {
+        //            if (data != null) {
+        //                document.location = data.RedirectUrl;
+        //            }
+        //        }
+        //    });
+        //}
+    });
+
+    $('#Market').on('click', function (e) {
+        e.preventDefault();
+        var msg = validate();
+        var isValide = !msg || msg.lentgh === 0;
+        if (!isValide) {//mycondition
+            alert(msg);
+        }
+        else {
+            var action = "SaveMediaSelection";
+            var params = {
+                selectedMedia: idList,
+                nextStep: "Index"
+            };
+
+            $.ajax({
+                url: '/MediaSchedule/' + action,
+                contentType: 'application/json',
+                type: 'POST',
+                datatype: 'JSON',
+                data: JSON.stringify(params),
+                error: function (xmlHttpRequest, errorText, thrownError) {
+
+                },
+                success: function (data) {
+                    if (data != null) {
+                        document.location = data.RedirectUrl;
+                    }
+                }
+            });
+        }
+    });
+    $('#Dates').on('click', function (e) {
+        e.preventDefault();
+        var msg = validate();
+        var isValide = !msg || msg.lentgh === 0;
+        if (!isValide) {//mycondition
+            alert(msg);
+        }
+        else {
+            var action = "SaveMediaSelection";
+            var params = {
+                selectedMedia: idList,
+                nextStep: "PeriodSelection"
+            };
+
+            $.ajax({
+                url: '/MediaSchedule/' + action,
+                contentType: 'application/json',
+                type: 'POST',
+                datatype: 'JSON',
+                data: JSON.stringify(params),
+                error: function (xmlHttpRequest, errorText, thrownError) {
+
+                },
+                success: function (data) {
+                    if (data != null) {
+                        document.location = data.RedirectUrl;
+                    }
+                }
+            });
+        }
+    });
+    $('#Results').on('click', function (e) {
+        e.preventDefault();
+        var msg = validate();
+        var isValide = !msg || msg.lentgh === 0;
+        if (!isValide) {//mycondition
+            alert(msg);
+        }
+        else {
+            action = "SaveMediaSelection";
+            params = {
+                selectedMedia: idList,
+                nextStep: "Results"
+            };
+            $.ajax({
+                url: '/MediaSchedule/' + action,
+                contentType: 'application/json',
+                type: 'POST',
+                datatype: 'JSON',
+
+                data: JSON.stringify(params),
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                        document.location = data.RedirectUrl;
+                    }
                 }
             });
         }
@@ -153,10 +285,39 @@
         });
     };
 
+
+
+});
+
+var Example = (function () {
+    "use strict";
+
+    var elem,
+        hideHandler,
+        that = {};
+
+    that.init = function (options) {
+        elem = $(options.selector);
+    };
+
+    that.show = function (text) {
+        clearTimeout(hideHandler);
+
+        elem.find("span").html(text);
+        elem.delay(200).fadeIn().delay(4000).fadeOut();
+    };
+
+    return that;
+}());
+
+$(function () {
+    Example.init({
+        "selector": ".bb-alert"
+    });
 });
 
 //clean l element selectionnée
-$(document).on('click',  '.tab-content li', function () {
+$(document).on('click', '.tab-content li', function () {
     this.remove();
 });
 
@@ -167,49 +328,8 @@ $(document).on('click', 'button.tout-suppr', function () {
     var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
     console.log(idTree);
     test.find('li').remove();
-    $("#" +idTree + " [id^='collapse'].in").collapse('hide');
+    $("#" + idTree + " [id^='collapse'].in").collapse('hide');
 });
-
-//function SelectedItems(event, ui) {
-//    itemIds = [];
-//    $(".ui-selected").each(function (index, elem) {
-//        itemIds.push($(elem).attr('data-id'));
-//    });
-
-//    var universeIdCalling = $(this).closest('.panel').attr('data-universe');
-//    var branchId = $(this).closest('.panel').attr('data-branch');
-//    var universesToUpdate = $("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
-
-//    universesToUpdate.each(function (index, elem, itemsIds) {
-//        console.log(elem);
-//        console.log(itemsIds);
-//        var levelId = $(elem).attr('data-universe');
-//        //var params = {
-//        //    levelId: levelId,
-//        //    selectedClassification: $(itemsIds).join(),
-//        //    selectedLevelId: universeIdCalling
-//        //};
-//    });
-
-
-//    //$.ajax({
-//    //    url: '/Universe/GetClassification',
-//    //    contentType: 'application/json',
-//    //    type: 'POST',
-//    //    datatype: 'JSON',
-//    //    data: JSON.stringify(params),
-//    //    error: function (xmlHttpRequest, errorText, thrownError) {
-//    //        alert("error");
-//    //    },
-//    //    success: function (response) {
-//    //        DIS.fillGroupSelectable(univerLabel, response.data, 'panel-heading', 'panel-body', 'containerSelectable' + univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
-//    //        $('#containerSelectable' + univerIndex).selectable(
-//    //        {
-//    //            stop: SelectedItems
-//    //        });
-//    //    }
-//    //});
-//};
 
 function ShowSelection(elem) {
     var selectedItems = elem.getSelectableSelectedItems();
