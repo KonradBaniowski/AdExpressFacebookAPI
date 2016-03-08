@@ -30,6 +30,7 @@ using TNS.AdExpress.Domain;
 using Newtonsoft.Json;
 using Kantar.AdExpress.Service.Core;
 using TNS.Classification.Universe;
+using Km.AdExpressClientWeb.Models.Shared;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -289,6 +290,46 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var result = _universService.GetTreesByUserUnivers(id, idWebSession,Dimension.product);
             return result;
+        }
+
+        [HttpGet]
+        public PartialViewResult SaveUserUnivers()
+        {            
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+            SaveUserUniversViewModel model = new SaveUserUniversViewModel
+            {
+                Title = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, data.SiteLanguage),
+                SelectUniversGroup= GestionWeb.GetWebWord(LanguageConstantes.SelectUniversGroup, data.SiteLanguage),
+                SelectUnivers =GestionWeb.GetWebWord(LanguageConstantes.SelectUnivers,data.SiteLanguage),
+                UniversLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversLabel,data.SiteLanguage),
+                UserGroups = new List<SelectListItem>(),
+                UserUnivers= new List<SelectListItem>()
+            };
+            if (data.UniversGroups.Any())
+            {
+                var items = data.UniversGroups.Select(p => new SelectListItem()
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Description
+                }).ToList();
+                items.FirstOrDefault().Selected = true;
+                model.UserGroups = items;
+                model.UserUnivers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m =>new SelectListItem()
+                {
+                    Value = m.Id.ToString(),
+                    Text = m.Description
+                }).ToList();
+                model.UserUnivers.FirstOrDefault().Selected = true;
+            }
+            return PartialView(model);
+        }
+
+        public JsonResult GetUniversByGroup(string groupId)
+        {
+            List<SelectListItem> univers = new List<SelectListItem>();
+            return Json(new SelectList(univers, "Value", "Text"));
         }
 
         #region Private methodes

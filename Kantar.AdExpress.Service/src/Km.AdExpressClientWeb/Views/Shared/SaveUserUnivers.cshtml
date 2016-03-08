@@ -1,1 +1,59 @@
 ﻿@model Km.AdExpressClientWeb.Models.Shared.SaveUserUniversViewModel
+@using TNS.AdExpress.Domain.Translation;
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header header-kantar-popup">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="font-normal">@Model.Title</h4>
+        </div>
+        <div class="modal-body panel-group panel-univers-select">
+            @*<div id="ddlUniversGroup" class="popup-text">
+                    @Model.SelectUniversGroup
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"> @Model.UserGroups.FirstOrDefault(p=>p.Selected).Text
+                         <span class="caret"></span>
+                        </button>
+                        @foreach (var item in Model.UserGroups)
+                        {
+                        <ul class="dropdown-menu">
+                            <li> @item.Text</li>
+                        </ul>
+                        }
+                    </div>
+                    @Html.DropDownListFor(p => p.SelectedUserGroupId, Model.UserGroups)
+                </div>*@
+            <ul>
+                <li>
+                    <div id="ddlUniversGroup" class="form-group">
+                        <label class="control-label col-sm-6 col-sm-6 popup-text" for="universGroup">@Model.SelectUniversGroup</label>
+                        <div class="col-sm-6 col-md-6">
+                            @Html.DropDownListFor(p => p.SelectedUserGroupId, Model.UserGroups, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                    <div id="ddlUnivers" class="form-group">
+                        <label class="control-label col-sm-6 col-sm-6 popup-text" for="univers">@Model.SelectUnivers</label>
+                        <div class="col-sm-6 col-md-6">
+                            @Html.DropDownListFor(p => p.SelectedUserGroupId, Model.UserUnivers, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                    <div id="ddlUniversName" class="form-group">
+                        <label class="control-label col-sm-6 col-sm-6 popup-text" for="univers">@Model.UniversLabel</label>
+                        <div class="col-sm-6 col-md-6">
+                            @Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </li>
+</ul>
+        </div>
+        <div class="modal-save-univers-footer">
+            <button type="button" class="btn btn-submit" data-dismiss="modal">Valider</button>
+        </div>
+    </div>
+</div>

@@ -15,11 +15,16 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LoadUniversCode = 770;
         public const long UserUniversCode = 875;
         public const long UserSavedUniversCode = 893;
+        public const long SelectUniversGroup = 917;
         public const long ExceptionMsg = 922;
         public const long ErrorMsgCode = 930;
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
         public const long Capacity = 1000;
+        public const long PortfolioCode = 2170;
+        public const long PortfolioDescriptionCode = 2199;
+        public const long SelectUnivers = 2261;
+        public const long UniversLabel = 2268;
         public const long ExcludeCode = 2269;
         public const long IncludeCode = 2270;
         public const long BranchLabelCode = 2272;
@@ -29,9 +34,9 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SecurityMsg = 2285;
         public const long OverLimitMsgCode = 2286;
         public const long KeyWordDescriptionCode = 2287;
-        public const long PortfolioCode = 2170;
-        public const long PortfolioDescriptionCode = 2199;
         public const long TreeLabelcode = 2278;
+        public const long Cancel = 000;
+        public const long Submit = 000;
         #endregion
     }
 }

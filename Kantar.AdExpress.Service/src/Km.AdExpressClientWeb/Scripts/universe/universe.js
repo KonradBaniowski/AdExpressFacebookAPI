@@ -109,6 +109,19 @@
         }
     });
 
+    $('.btn.btn-save-univers').on('click', function (event) {
+        event.preventDefault();        
+        $.ajax({
+            url: '/MediaSchedule/SaveUserUnivers',
+            type: 'GET',                
+            success: function (response) {
+                $('#saveunivers').append(response);
+                $('#saveunivers').modal('show');
+            }
+        });
+        $('.btn.btn-save-univers').off("click");
+    });
+
     function SelectedItems(event, ui) {
         var itemIds = [];
         $(".ui-selected").each(function (index, elem) {
