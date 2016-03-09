@@ -30,6 +30,7 @@ using TNS.AdExpress.Domain;
 using Newtonsoft.Json;
 using Kantar.AdExpress.Service.Core;
 using TNS.Classification.Universe;
+using Km.AdExpressClientWeb.Models.Shared;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -291,6 +292,67 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var result = _universService.GetTreesByUserUnivers(id, idWebSession,Dimension.product);
             return result;
+        }
+
+        [HttpGet]
+        public PartialViewResult SaveUserUnivers()
+        {            
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+            SaveUserUniversViewModel model = new SaveUserUniversViewModel
+            {
+                Title = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, data.SiteLanguage),
+                SelectUniversGroup= GestionWeb.GetWebWord(LanguageConstantes.SelectUniversGroup, data.SiteLanguage),
+                SelectUnivers =GestionWeb.GetWebWord(LanguageConstantes.SelectUnivers,data.SiteLanguage),
+                UniversLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversLabel,data.SiteLanguage),
+                UserGroups = new List<SelectListItem>(),
+                UserUnivers= new List<SelectListItem>()
+            };
+            if (data.UniversGroups.Any())
+            {
+                var items = data.UniversGroups.Select(p => new SelectListItem()
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Description
+                }).ToList();
+                items.FirstOrDefault().Selected = true;
+                model.UserGroups = items;
+                if (data.UniversGroups.FirstOrDefault().UserUnivers.Any())
+                {
+                    model.UserUnivers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
+                    {
+                        Value = m.Id.ToString(),
+                        Text = m.Description
+                    }).ToList();
+                    model.UserUnivers.FirstOrDefault().Selected = true;
+                }
+            }
+            return PartialView(model);
+        }
+        [HttpGet]
+        public JsonResult GetUniversByGroup(string id)
+        {
+            List<SelectListItem> univers = new List<SelectListItem>();
+            if (!string.IsNullOrEmpty(id))
+            {
+                long groupId = long.Parse(id);
+                var claim = new ClaimsPrincipal(User.Identity);
+                string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product,groupId);
+                univers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
+                {
+                    Value = m.Id.ToString(),
+                    Text = m.Description
+                }).ToList();
+            }
+            return Json(new SelectList(univers, "Value", "Text"),JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SaveUserUnivers(List<VM.Tree> trees,string groupId, string universId, string name)
+        {
+            return View();
         }
 
         #region Private methodes

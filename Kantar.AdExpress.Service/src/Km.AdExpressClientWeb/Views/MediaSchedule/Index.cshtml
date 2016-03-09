@@ -1,10 +1,12 @@
 ﻿@model  Km.AdExpressClientWeb.Models.MediaSchedule.MarketViewModel
+
 @using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "MarketSelection";
 }
 
 <div class="row">
+   
     <input type="hidden" id="siteLanguage" value="@Model.Presentation.SiteLanguage" />
     @*PRESENTATION*@
     <div>
@@ -104,6 +106,7 @@
                          id="tab-@(tree.Id)">
                         <div class="panel-group panel-group-results"
                              id="tree-@(tree.Id)"
+                             data-access-type="@((int)tree.AccessType)"
                              role="tablist"
                              aria-multiselectable="true">
                             @foreach (var level in tree.UniversLevels)
@@ -125,7 +128,6 @@
                                         </h6>
                                     </div>
                                     <div id="collapse-@(level.Id)-@(tree.Id)"
-                                         @*class="panel-collapse @(level == tree.UniversLevels.First() ? "in" : "collapse")"*@
                                          class="panel-collapse collapse"
                                          role="tabpanel"
                                          aria-labelledby="heading-@(level.Id)">
@@ -150,11 +152,20 @@
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
         <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
-            @Html.ActionLink("Valider", "MediaSelection", null, new { @class = "btn btn-default btn-valider pull-right" })
+           <a data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">Enregistrer l'univers <i class="fa fa-bookmark-o"></i></a>
+            @Html.ActionLink("Valider", "MediaSelection", null, new { id = "btnSubmitMarketSelection", @class = "btn btn-default btn-valider pull-right" })
+
         </div>
     </div>
 </div>
 
+<!-- Modal -->
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+
+        <div id="saveunivers" class="modal fade">
+            
+        </div>
+    </div>
 
 @section scripts {
     @Scripts.Render("~/bundles/universe")

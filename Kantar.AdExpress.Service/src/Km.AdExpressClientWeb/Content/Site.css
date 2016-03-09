@@ -1,4 +1,13 @@
 ﻿
+.bb-alert {
+    position: fixed;
+    bottom: 25%;
+    right: 0;
+    margin-bottom: 0;
+    font-size: 1.2em;
+    padding: 1em 1.3em;
+    z-index: 2000;
+}
 
 .highlight {
     -moz-box-shadow: 1px 1px 5px 1px #0042ff;
@@ -1437,4 +1446,26 @@ ul.ui-selectable {
 
 .modal-radio {
     margin-left: 10px;
+}
+.btn-save-univers {
+    color: #ff8c00;
+    background-color: rgba(0,0,0,0.6);
+    border: 0;
+    font-weight: bolder;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.modal-save-univers-footer {
+    padding: 8px 20px 6px;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.btn-submit {
+    color: #fff;
+    background-color: #ff8c00;
+    border: 0;
+    font-weight: bolder;
+    cursor: pointer;
 }
