@@ -1,4 +1,18 @@
-﻿
+﻿#media-accordion.panel-group > .panel {
+    background-color: transparent;
+    /*border-color: #ff8c00;*/
+    border-color:rgba(0,0,0,0.4);
+    /*border:none;*/
+}
+
+#media-accordion.panel-group .panel > .panel-heading {
+    /*background-color: #ff8c00;*/
+    background-color: rgba(0,0,0,0.4);
+    /*border-color: #ff8c00;*/
+    color: white;
+}
+
+
 .bb-alert {
     position: fixed;
     bottom: 25%;
@@ -985,7 +999,7 @@ input {
 }
 
     .i-switch input {
-        position: absolute;
+        position: relative;
         opacity: 0;
         filter: alpha(opacity=0);
     }
@@ -1447,6 +1461,7 @@ ul.ui-selectable {
 .modal-radio {
     margin-left: 10px;
 }
+
 .btn-save-univers {
     color: #ff8c00;
     background-color: rgba(0,0,0,0.6);

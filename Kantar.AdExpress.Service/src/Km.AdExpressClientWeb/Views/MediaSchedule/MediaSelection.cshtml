@@ -6,22 +6,92 @@
 }
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-        <div class="row center-block">
-            @Html.Partial("NavigationBar", Model.NavigationBar)
-
-            <div class="clearfix"></div>
-            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
+        @Html.Partial("NavigationBar", @Model.NavigationBar)
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
+        @Html.HiddenFor(e => e.Multiple)
+        @foreach (int i in Model.IdMediasCommon)
+        {
+            <input type="hidden" name="HiddenIntList" value="@i" />
+        }
+        <div class="panel-group" id="media-accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h3 class="panel-title pull-left">
+                        <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fa fa-eye"></i> Sélection des médias
+                        </a>
+                    </h3>
+                    @if (Model.Multiple)
+                    {
+                        @*<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">*@
+                        <span class="pull-right">
+                            <small class="v-super">Pré-sélection &nbsp; </small>
+                            <label class="i-switch" id="switch">
+                                <input type="checkbox" for="switch" id="preselection">
+                                <i></i>
+                            </label>
+                        </span>
+                            @*</div>*@
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        @foreach (var item in Model.Medias)
+                        {
+                            if (!item.Disabled)
+                            {
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                                    <div class="block margin-b-20 padder-v bg-black-only tuile-medias text-center" data-attr-id="@item.Id">
+                                        <div class="top text-center w-full">
+                                            <i class="fa @item.icon m-r-sm"></i>
+                                        </div>
+                                        <div class="h5 font-normal h5">@item.Label</div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                                    <div class="block margin-b-20 padder-v bg-black-only tuile-medias text-center disabled-effect">
+                                        <div class="top text-center w-full">
+                                            <i class="fa @item.icon m-r-sm"></i>
+                                        </div>
+                                        <div class="h5 font-normal h5">@item.Label</div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Affiner la recherche
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
                 <h4 class=""><i class="fa fa-eye"></i> Sélection des médias</h4>
             </div>
             @Html.HiddenFor(e => e.Multiple)
-
             @foreach (int i in Model.IdMediasCommon)
-            {
+                {
                 <input type="hidden" name="HiddenIntList" value="@i" />
             }
             @if (Model.Multiple)
-            {
+                {
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                     <div class="pull-right">
                         <small class="v-super">Pré-sélection &nbsp; </small>
@@ -59,11 +129,11 @@
                         </div>
                     }
                 }
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-                <input id="btnSubmitMediaSelection" type="submit" value="Valider" class="btn btn-default btn-valider pull-right" />
-            </div>
+            </div>*@
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+            <input id="btnSubmitMediaSelection" type="submit" value="Valider" class="btn btn-default btn-valider pull-right" />
         </div>
+
     </div>
 </div>
 
@@ -150,8 +220,7 @@
                 }
             }
 
-            function validate()
-            {
+            function validate() {
                 var message = "";
                 $('.tuile-medias-active').each(function (index) {
                     var data = $(this).attr('data-attr-id');
@@ -162,12 +231,10 @@
                 });
 
                 var index = $.inArray(searchId, idList);
-                if(idList ==null ||idList.length==0)
-                {
+                if (idList == null || idList.length == 0) {
                     message = '@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection))';
                 }
-                else if (idList.length > 1 && index>-1)
-                {
+                else if (idList.length > 1 && index > -1) {
                     message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SearchErrorMessage))';//search
 
                 }
@@ -210,7 +277,7 @@
             $('#Market').on('click', function (e) {
                 e.preventDefault();
                 var msg = validate();
-                var isValide = !msg || msg.lentgh===0;
+                var isValide = !msg || msg.lentgh === 0;
                 if (!isValide) {//mycondition
                     alert(msg);
                 }
@@ -245,8 +312,7 @@
                 if (!isValide) {//mycondition
                     alert(msg);
                 }
-                else
-                {
+                else {
                     var action = "SaveMediaSelection";
                     var params = {
                         selectedMedia: idList,
