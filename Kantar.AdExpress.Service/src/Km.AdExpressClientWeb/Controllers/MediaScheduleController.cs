@@ -347,6 +347,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return Json(new SelectList(univers, "Value", "Text"),JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult SaveUserUnivers(List<VM.Tree> trees,string groupId, string universId, string name)
+        {
+            return View();
+        }
+
         #region Private methodes
         private List<NavigationNode> LoadNavBar(int currentPosition)
         {

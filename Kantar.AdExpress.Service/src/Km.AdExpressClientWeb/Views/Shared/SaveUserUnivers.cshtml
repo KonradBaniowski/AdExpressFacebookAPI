@@ -31,14 +31,14 @@
                     <div id="ddlUniversName" class="form-group">
                         <label class="control-label col-sm-6 col-sm-6 popup-text" for="univers">@Model.UniversLabel</label>
                         <div class="col-sm-6 col-md-6">
-                            @Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
+                            @Html.TextBoxFor(p => p.Name, new { @class = "form-control",@id="universName" })
                         </div>
                     </div>
                 </li>
 </ul>
         </div>
         <div class="modal-save-univers-footer">
-            <button type="button" class="btn btn-submit" data-dismiss="modal">Valider</button>
+            <button id="btnSaveUnivers" type="button" class="btn btn-submit" data-dismiss="modal">Valider</button>
         </div>
     </div>
 </div>

@@ -1,5 +1,4 @@
 ﻿
-
 $(function () {
 
     $.ajax({
@@ -119,7 +118,7 @@ $(function () {
             var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
             var idUnivers = [];
             $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
-                var id= $(elem).attr('data-id');
+                var id = $(elem).attr('data-id');
                 idUnivers.push(id);
             });
             var item = {
@@ -248,7 +247,7 @@ $(function () {
         $('.btn.btn-save-univers').off("click");
         $.ajax({
             url: '/MediaSchedule/SaveUserUnivers',
-            type: 'GET',                
+            type: 'GET',
             success: function (response) {
                 spinner.stop();
                 $('#saveunivers').append(response);
@@ -256,30 +255,6 @@ $(function () {
             }
         });
     });
-
-    
-
-    $(document).on('change',  '#ddlGroup', function (event) {
-        event.preventDefault();        
-        var idGroup = $("#ddlGroup").val();
-        var local =$(this);
-        var spinner = new Spinner().spin(this);
-        $.ajax({
-            url: '/MediaSchedule/GetUniversByGroup',
-            type: 'GET',
-            data:{id:idGroup},
-            success: function (response) {
-                $('#ddlUnivers').empty();
-                $.each(response, function (i, item) {
-                    spinner.stop();
-                    $("#ddlUnivers").append('<option value="' + item.Value + '">' +
-                         item.Text + '</option>'); 
-                    });
-                //$('#ddlUnivers').html(response);
-            }
-        });
-    });    
-
 
     function SelectedItems(event, ui) {
         var itemIds = [];
@@ -324,9 +299,6 @@ $(function () {
             });
         });
     };
-
-
-
 });
 
 var Example = (function () {
@@ -361,6 +333,62 @@ $(document).on('click', '.tab-content li', function () {
     this.remove();
 });
 
+$(document).on('click', '#btnSaveUnivers', function (event) {
+    event.preventDefault();
+    var groupId = $('#ddlGroup').val();
+    var universId = $('#ddlUnivers').val();
+    var name = $('#universName').val();
+    var spinner = new Spinner().spin(this);
+    $('#btnSaveUnivers').off('click');
+    var trees = [];
+    $.each($('.nav.nav-tabs > li a'), function (index, elem) {
+        var itemContainer = $(elem).attr('data-target');
+        var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
+        var idUnivers = [];
+        $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
+            var id = $(elem).attr('data-id');
+            var level = {
+              id: id
+            };
+            idUnivers.push(level);
+        });
+        var item = {
+            AccessType: accessType,
+            UniversLevels: idUnivers
+        };
+        trees.push(item);
+    });
+    $.ajax({
+        url: '/MediaSchedule/SaveUserUnivers',
+        type: 'POST',
+        data: { trees: data, groupId: groupId, universId: universId, name: name },
+        success: function (response) {
+            spinner.stop();
+            $('#saveunivers').modal('hide');
+        }
+    });
+});
+
+$(document).on('change', '#ddlGroup', function (event) {
+    event.preventDefault();
+    var idGroup = $("#ddlGroup").val();
+    var local = $(this);
+    var spinner = new Spinner().spin(this);
+    $.ajax({
+        url: '/MediaSchedule/GetUniversByGroup',
+        type: 'GET',
+        data: { id: idGroup },
+        success: function (response) {
+            $('#ddlUnivers').empty();
+            $.each(response, function (i, item) {
+                spinner.stop();
+                $("#ddlUnivers").append('<option value="' + item.Value + '">' +
+                     item.Text + '</option>');
+            });
+            //$('#ddlUnivers').html(response);
+        }
+    });
+});
 
 //Clean l'ensemble des elements du tableau
 $(document).on('click', 'button.tout-suppr', function () {
