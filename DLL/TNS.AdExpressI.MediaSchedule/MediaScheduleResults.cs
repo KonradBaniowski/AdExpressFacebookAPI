@@ -1766,7 +1766,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
             int tableWidth = 0;
-            string periodLabe = string.Empty;
+            string periodLabel = string.Empty;
 
             // Product Column
             columns.Add(new { headerText = "ID_PRODUCT", key = "ID_PRODUCT", dataType = "number", width = "40px", hidden = true });
@@ -1774,18 +1774,18 @@ namespace TNS.AdExpressI.MediaSchedule {
             columns.Add(new { headerText = GestionWeb.GetWebWord(804, _session.SiteLanguage), key = "PRODUCT", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "PRODUCT" });
             columnsFixed.Add(new { columnKey = "PRODUCT", isFixed = true, allowFixing = false });
-            tableWidth = 20;
+            tableWidth = 250;
             
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
             {
                 if (_allowTotal)
                 {
                     MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
-                    periodLabe = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)+ " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
-                    columns.Add(new { headerText = periodLabe, key = "PERIOD_COMP", dataType = "string", width = "*" });
+                    periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
+                    columns.Add(new { headerText = periodLabel, key = "PERIOD_COMP", dataType = "string", width = "*" });
                     schemaFields.Add(new { name = "PERIOD_COMP" });
                     columnsFixed.Add(new { columnKey = "PERIOD_COMP", isFixed = true, allowFixing = true });
-                    tableWidth += 20;
+                    tableWidth += 82;
                 }
                 //PDM
                 if (_allowPdm)
@@ -1793,7 +1793,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                     columns.Add(new { headerText = GestionWeb.GetWebWord(806, _session.SiteLanguage), key = "PDM_COMP", dataType = "string", width = "*" });
                     schemaFields.Add(new { name = "PDM_COMP" });
                     columnsFixed.Add(new { columnKey = "PDM_COMP", isFixed = true, allowFixing = true });
-                    tableWidth += 20;
+                    tableWidth += 52;
                 }
             }
 
@@ -1803,18 +1803,18 @@ namespace TNS.AdExpressI.MediaSchedule {
             {
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                 {
-                    periodLabe = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
-                    columns.Add(new { headerText = periodLabe, key = "PERIOD", dataType = "string", width = "*" });
+                    periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
+                    columns.Add(new { headerText = periodLabel, key = "PERIOD", dataType = "string", width = "*" });
                     schemaFields.Add(new { name = "PERIOD" });
                     columnsFixed.Add(new { columnKey = "PERIOD", isFixed = true, allowFixing = true });
-                    tableWidth += 20;
+                    tableWidth += 82;
                 }
                 else
                 {
                     columns.Add(new { headerText = GestionWeb.GetWebWord(805, _session.SiteLanguage), key = "PERIOD", dataType = "string", width = "*" });
                     schemaFields.Add(new { name = "PERIOD" });
                     columnsFixed.Add(new { columnKey = "PERIOD", isFixed = true, allowFixing = true });
-                    tableWidth += 20;
+                    tableWidth += 82;
                 }
             }
             //PDM
@@ -1823,7 +1823,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 columns.Add(new { headerText = GestionWeb.GetWebWord(806, _session.SiteLanguage), key = "PDM", dataType = "string", width = "*" });
                 schemaFields.Add(new { name = "PDM" });
                 columnsFixed.Add(new { columnKey = "PDM", isFixed = true, allowFixing = true });
-                tableWidth += 20;
+                tableWidth += 52;
             }
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
             {
@@ -1831,7 +1831,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 columns.Add(new { headerText = GestionWeb.GetWebWord(1212, _session.SiteLanguage), key = "EVOL", dataType = "string", width = "*" });
                 schemaFields.Add(new { name = "EVOL" });
                 columnsFixed.Add(new { columnKey = "EVOL", isFixed = true, allowFixing = true });
-                tableWidth += 20;
+                tableWidth += 50;
             }
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
@@ -1841,7 +1841,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 columns.Add(new { headerText = GestionWeb.GetWebWord(1994, _session.SiteLanguage), key = "VERSION", dataType = "string", width = "*" });
                 schemaFields.Add(new { name = "VERSION" });
                 columnsFixed.Add(new { columnKey = "VERSION", isFixed = true, allowFixing = true });
-                tableWidth += 20;
+                tableWidth += 54;
             }
             // Insertions
             if (_allowInsertions)
@@ -1850,16 +1850,17 @@ namespace TNS.AdExpressI.MediaSchedule {
                 columns.Add(new { headerText = insertionLabel, key = "INSERTION", dataType = "string", width = "*" });
                 schemaFields.Add(new { name = "INSERTION" });
                 columnsFixed.Add(new { columnKey = "INSERTION", isFixed = true, allowFixing = true });
-                tableWidth += 20;
+                tableWidth += 54;
             }
-            if (!WebApplicationParameters.UseComparativeMediaSchedule)
-            {
-                // Years necessary if the period consists of several years
-                for (int k = firstPeriodIndex - nbColYear; k < firstPeriodIndex && _allowTotal; k++)
-                {
-                    //columns.Add(new { headerText = data[0, k], key = data[0, k], dataType = "string", width = "*" });
-                }
-            }
+            // TODO : Remove commented code for countries that don't use Comparative study
+            //if (!WebApplicationParameters.UseComparativeMediaSchedule)
+            //{
+            //    // Years necessary if the period consists of several years
+            //    for (int k = firstPeriodIndex - nbColYear; k < firstPeriodIndex && _allowTotal; k++)
+            //    {
+            //        //columns.Add(new { headerText = data[0, k], key = data[0, k], dataType = "string", width = "*" });
+            //    }
+            //}
             #endregion
 
             #region Period
@@ -1869,6 +1870,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             StringBuilder headers = new StringBuilder();
             string periodClass;
             string link = string.Empty;
+            // TODO : Commented temporarily for new AdExpress
             //System.Uri uri = new Uri(_session.LastWebPage);
             //link = uri.AbsolutePath;
             link = "";
@@ -1908,10 +1910,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 #endregion
 
                                 string monthLabel = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
-                                string monthKey = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), 4);
-                                periodColumnsL1.Add(new { headerText = monthLabel, key = monthKey, dataType = "string", width = "20" });
+                                string monthKey = "m" + data[0, j].ToString();
+                                periodColumnsL1.Add(new { headerText = monthLabel, key = monthKey, dataType = "string", width = "20", template = "<span {{if ${" + monthKey + "} == 1 }} class='orangeTg' {{elseif ${" + monthKey + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
                                 schemaFields.Add(new { name = monthKey });
-                                tableWidth += 20;
+                                tableWidth += 30;
                                 break;
                             case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
 
@@ -1923,18 +1925,19 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     periodClass = _style.CellPeriodIncomplete;
                                 }
                                 #endregion
+
                                 string weekLabel = data[0, j].ToString().Substring(4, 2);
                                 if (!IsCreativeDivisionMS)
                                 {
-                                    periodColumnsL1.Add(new { headerText = weekLabel, key = weekLabel, dataType = "string", width = "*" });
+                                    periodColumnsL1.Add(new { headerText = weekLabel, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
                                     schemaFields.Add(new { name = weekLabel });
                                 }
                                 else
                                 {
-                                    periodColumnsL1.Add(new { headerText = data[0, j].ToString().Substring(4, 2), key = weekLabel, dataType = "string", width = "30px" });
+                                    periodColumnsL1.Add(new { headerText = weekLabel, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
                                     schemaFields.Add(new { name = weekLabel });
                                 }
-                                tableWidth += 20;
+                                tableWidth += 30;
                                 break;
 
                         }
@@ -1953,6 +1956,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                     DateTime currentDay = DateString.YYYYMMDDToDateTime((string)data[0, firstPeriodIndex]);
                     prevPeriod = currentDay.Month;
                     currentDay = currentDay.AddDays(-1);
+                    string periodDayLabel = string.Empty;
                     for (int j = firstPeriodIndex; j < nbColTab; j++)
                     {
                         currentDay = currentDay.AddDays(1);
@@ -1960,8 +1964,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                         {
                             if (nbPeriod >= 8)
                             {
-                                string periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
-                                columns.Add(new { headerText = periodLabel, group = periodColumnsL1 });
+                                periodDayLabel = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
+                                columns.Add(new { headerText = periodDayLabel, group = periodColumnsL1 });
                             }
                             else
                                 columns.Add(new { headerText = "", group = periodColumnsL1 });
@@ -1979,20 +1983,20 @@ namespace TNS.AdExpressI.MediaSchedule {
                         string dayKey = dayLabel + currentDay.ToString("dd");
                         if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
                         {
-                            periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "*" });
+                            periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "*", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
                             schemaFields.Add(new { name = dayKey });
                         }
                         else
                         {
-                            periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "*" });
+                            periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "*", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
                             schemaFields.Add(new { name = dayKey });
                         }
-                        tableWidth += 20;
+                        tableWidth += 30;
                     }
                     if (nbPeriod >= 8)
                     {
-                        string periodLabel = TNS.FrameWork.Convertion.ToHtmlString(TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.ToString("yyyyMM")));
-                        columns.Add(new { headerText = periodLabel, group = periodColumnsL1 });
+                        periodDayLabel = TNS.FrameWork.Convertion.ToHtmlString(TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.ToString("yyyyMM")));
+                        columns.Add(new { headerText = periodDayLabel, group = periodColumnsL1 });
                     }
                     else
                     {
@@ -2085,13 +2089,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         }
                                     }
                                     //Totals
-                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                    {
-                                        for (int k = 1; k <= nbColYear; k++)
-                                        {
-                                            //SetYearsTotal(data, ref gridData, i, cssClasseNb, (j + firstPeriodIndex - nbColYear - 1) + k, ref gridColumnId, fp, unit);
-                                        }
-                                    }
+                                    // TODO : Remove commented code for countries that don't use Comparative study
+                                    //if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    //{
+                                    //    for (int k = 1; k <= nbColYear; k++)
+                                    //    {
+                                    //        //SetYearsTotal(data, ref gridData, i, cssClasseNb, (j + firstPeriodIndex - nbColYear - 1) + k, ref gridColumnId, fp, unit);
+                                    //    }
+                                    //}
                                     j = j + (firstPeriodIndex - nbColYear - 1) + nbColYear;
                                 }
                                 break;
@@ -2114,13 +2119,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         if (!IsAgencyLevelType(L2_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL2, j);
                                         else gridData[i - 1, gridColumnId++] = string.Empty;
                                     }
-                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                    {
-                                        for (int k = 1; k <= nbColYear; k++)
-                                        {
-                                            //SetYearsTotal(data, ref gridData, i, _style.CellLevelL2Nb, j + (firstPeriodIndex - nbColYear - 2) + k, ref gridColumnId, fp, unit);
-                                        }
-                                    }
+                                    // TODO : Remove commented code for countries that don't use Comparative study
+                                    //if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    //{
+                                    //    for (int k = 1; k <= nbColYear; k++)
+                                    //    {
+                                    //        //SetYearsTotal(data, ref gridData, i, _style.CellLevelL2Nb, j + (firstPeriodIndex - nbColYear - 2) + k, ref gridColumnId, fp, unit);
+                                    //    }
+                                    //}
                                     j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
                                 }
                                 break;
@@ -2143,13 +2149,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         if (!IsAgencyLevelType(L3_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL3, j);
                                         else gridData[i - 1, gridColumnId++] = string.Empty;
                                     }
-                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                    {
-                                        for (int k = 1; k <= nbColYear; k++)
-                                        {
-                                            //SetYearsTotal(data, ref gridData, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear - 3) + k, ref gridColumnId, fp, unit);
-                                        }
-                                    }
+                                    // TODO : Remove commented code for countries that don't use Comparative study
+                                    //if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    //{
+                                    //    for (int k = 1; k <= nbColYear; k++)
+                                    //    {
+                                    //        //SetYearsTotal(data, ref gridData, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear - 3) + k, ref gridColumnId, fp, unit);
+                                    //    }
+                                    //}
                                     j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
                                 }
                                 break;
@@ -2170,13 +2177,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     if (!IsAgencyLevelType(L4_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
                                     else gridData[i - 1, gridColumnId++] = string.Empty;
                                 }
-                                if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                {
-                                    for (int k = 1; k <= nbColYear; k++)
-                                    {
-                                        //SetYearsTotal(data, ref gridData, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear - 4) + k, ref gridColumnId, fp, unit);
-                                    }
-                                }
+                                // TODO : Remove commented code for countries that don't use Comparative study
+                                //if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                //{
+                                //    for (int k = 1; k <= nbColYear; k++)
+                                //    {
+                                //        //SetYearsTotal(data, ref gridData, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear - 4) + k, ref gridColumnId, fp, unit);
+                                //    }
+                                //}
                                 j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
                                 break;
                             #endregion
@@ -2206,7 +2214,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                             }
                                             else
                                             {
-                                                gridData[i - 1, gridColumnId++] = string.Format("<span class=\"orangeTg\">{0}</span>", stringItem);
+                                                gridData[i - 1, gridColumnId++] = 1; // string.Format("<span class=\"orangeTg\">{0}</span>", stringItem);
                                             }
                                             //if (string.IsNullOrEmpty(_zoom) && data[0, j] != null && !_activePeriods.Contains(Convert.ToString(data[0, j]).Trim()))
                                             //{
@@ -2214,10 +2222,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                                             //}
                                             break;
                                         case DetailledMediaPlan.graphicItemType.extended:
-                                            gridData[i - 1, gridColumnId++] = string.Format("<span class=\"orangeExtendedTg\">&nbsp;</span>", cssExtendedClass);
+                                            gridData[i - 1, gridColumnId++] = 2; //string.Format("<span class=\"orangeExtendedTg\">&nbsp;</span>", cssExtendedClass);
                                             break;
                                         default:
-                                            gridData[i - 1, gridColumnId++] = string.Format("<span class=\"blackTg\">&nbsp;</span>");
+                                            gridData[i - 1, gridColumnId++] = 3; //string.Format("<span class=\"blackTg\">&nbsp;</span>");
                                             break;
                                     }
                                 }
@@ -2236,7 +2244,19 @@ namespace TNS.AdExpressI.MediaSchedule {
             }
             #endregion
 
-            if (tableWidth > 1000)
+            //gridData = new object[6000, 171];
+            //int peoductIdentifier = 99999999;
+
+            //for (int ii = nbLineGrid; ii < nbLineGrid + 20000; ii++)
+            //    for (int jj = 0; jj < 171; jj++)
+            //    {
+            //        if (jj == 0)
+            //            gridData[ii, jj] = peoductIdentifier++;
+            //        else
+            //            gridData[ii, jj] = gridData[nbLineGrid-1, jj];
+            //    }
+
+            if (tableWidth > 846)
                 gridResult.NeedFixedColumns = true;
 
             gridResult.HasData = true;
@@ -2249,42 +2269,6 @@ namespace TNS.AdExpressI.MediaSchedule {
         }
 
         #region Table Building Functions
-        /// <summary>
-        /// Append Total for a specific year
-        /// </summary>
-        /// <param name="data">Data Source</param>
-        /// <param name="t">StringBuilder to fill</param>
-        /// <param name="line">Current line</param>
-        /// <param name="cssClasseNb">Line syle</param>
-        /// <param name="tmpCol">Year column in data source</param>
-        protected virtual void SetYearsTotal(object[,] data, ref object[,] gridData, int line,
-            string cssClasseNb, int tmpCol, ref int gridColumnId, IFormatProvider fp, UnitInformation unit)
-        {
-            if (_allowTotal)
-            {
-                string s = string.Empty;
-                if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
-                {
-                    s = Units.ConvertUnitValueToString(data[line, tmpCol], _session.Unit, fp).Trim();
-                }
-                else
-                {
-                    s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, tmpCol])).Trim();
-                }
-                if (Convert.ToDouble(data[line, tmpCol].ToString()) == 0 || s.Length <= 0)
-                {
-                    s = Units.ConvertUnitValueToString(data[line, tmpCol], _session.Unit, fp).Trim();
-                    if (Convert.ToDouble(data[line, tmpCol].ToString()) == 0 || s.Length <= 0)
-                    {
-                        s = "&nbsp;";
-                    }
-
-                }
-
-                gridData[line, gridColumnId++] = s;
-            }
-        }
-
         /// <summary>
         /// Append Label, Total and PDM
         /// </summary>
@@ -2445,12 +2429,13 @@ namespace TNS.AdExpressI.MediaSchedule {
         {
             if (data[line, level] != null)
             {
-                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:window.open(\"/Insertions?ids={1}&zoomDate={2}&idUnivers=-1&moduleId={3}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
-                    , _session.IdSession
-                    , GetLevelFilter(data, line, level)
-                    , _zoom
-                    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
-                    , "");
+                gridData[line - 1, gridColumnId++] = "";
+                //gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:window.open(\"/Insertions?ids={1}&zoomDate={2}&idUnivers=-1&moduleId={3}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                //    , _session.IdSession
+                //    , GetLevelFilter(data, line, level)
+                //    , _zoom
+                //    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
+                //    , "");
             }
             else
             {
@@ -2471,11 +2456,12 @@ namespace TNS.AdExpressI.MediaSchedule {
         {
             if (data[line, level] != null)
             {
-                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:OpenCreatives('{0}','{1}','{2}','-1','{3}');'><span class='fa fa-search-plus'></span></a></center>"
-                    , _session.IdSession
-                    , GetLevelFilter(data, line, level)
-                    , _zoom
-                    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA, "");
+                gridData[line - 1, gridColumnId++] = "";
+                //gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:OpenCreatives('{0}','{1}','{2}','-1','{3}');'><span class='fa fa-search-plus'></span></a></center>"
+                //    , _session.IdSession
+                //    , GetLevelFilter(data, line, level)
+                //    , _zoom
+                //    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA, "");
             }
             else
             {
