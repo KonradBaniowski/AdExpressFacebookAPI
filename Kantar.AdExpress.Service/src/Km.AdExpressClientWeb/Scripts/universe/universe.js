@@ -251,7 +251,7 @@ $(function () {
             success: function (response) {
                 spinner.stop();
                 $('#saveunivers').append(response);
-                $('#saveunivers').modal('show');
+                $('#saveunivers').modal('show');               
             }
         });
     });
@@ -381,7 +381,18 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         success: function (response) {
             spinner.stop();
             $('#saveunivers').modal('hide');
-            bootbox.alert(response);
+            $.ajax({
+                url: '/MediaSchedule/LoadUserUniversGroups',
+                type: 'GET',
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("error");
+                },
+                success: function (response) {
+                    $('#monunivers .modal-content').empty();
+                    $('#monunivers .modal-content').append(response);
+                }
+
+            });
         }
     });
 });
