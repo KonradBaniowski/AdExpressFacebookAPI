@@ -48,40 +48,41 @@
         </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-            <div class="panel  panel-marche">
-                <div class="panel-heading-choix">
-                    <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; Résultats</h4>
-                </div>
-                @foreach (var item in Model.Branches)
-                {
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <div class="panel  panel-marche">
+                    <div class="panel-heading-choix">
+                        <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; Résultats</h4>
+                    </div>
+                    @foreach (var item in Model.Branches)
+                    {
                     <div id="branch@(item.Id)" class="universes" style="display:none">
                         @foreach (var level in item.UniversLevels)
-                        {
+                            {
                             <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"
                                  data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default">
                             </div>
-                        }
+                            }
                     </div>
-                }
+                    }
+                </div>
             </div>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <div class="btn-marche text-center">
-                <a class="btn btn-green2 btn-circle btn-xl">
-                    <i class="fa fa-arrow-right"></i>
-                </a>
-                <p class="lead">@Model.Labels.Include (D&eacute;placer)</p>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="btn-marche text-center">
+                    <a class="btn btn-green2 btn-circle btn-xl">
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                    <p class="lead">@Model.Labels.Include (D&eacute;placer)</p>
+                </div>
             </div>
-        </div>
 
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
 
 
-            <div class="panel-heading-choix nav-tabs-alt">
-                <ul class="nav nav-tabs" role="tablist">
-                    @foreach (var tree in Model.Trees)
-                    {
+                <div class="panel-heading-choix nav-tabs-alt">
+                    <ul class="nav nav-tabs" role="tablist">
+                        @foreach (var tree in Model.Trees)
+                        {
                         <li @(tree == Model.Trees.First() ? "class=active" : "" )>
                             <a data-target="#tab-@(tree.Id)"
                                data-tab="@(tree.Id)"
@@ -91,15 +92,15 @@
                                 @tree.Label
                             </a>
                         </li>
+                        }
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    @{
+                        var multi = "active in";
                     }
-                </ul>
-            </div>
-            <div class="tab-content">
-                @{
-                    var multi = "active in";
-                }
-                @foreach (var tree in Model.Trees)
-                {
+                    @foreach (var tree in Model.Trees)
+                    {
                     <div role="tabpanel"
                          class="tab-pane @(tree == Model.Trees.First() ? multi : "")"
                          id="tab-@(tree.Id)">
@@ -109,7 +110,7 @@
                              role="tablist"
                              aria-multiselectable="true">
                             @foreach (var level in tree.UniversLevels)
-                            {
+                                {
                                 <div class="panel panel-primary panel-results">
                                     <div class="panel-heading head-results"
                                          role="tab"
@@ -135,16 +136,17 @@
                                         </div>
                                     </div>
                                 </div>
-                            }
+                                }
                         </div>
                         <div class="pull-right">
                             <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
                         </div>
                     </div>
-                }
+                    }
+                </div>
+
+
             </div>
-
-
         </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
