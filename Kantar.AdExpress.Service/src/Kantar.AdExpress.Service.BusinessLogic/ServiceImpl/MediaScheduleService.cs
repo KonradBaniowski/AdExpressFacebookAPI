@@ -60,6 +60,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             levels.Add(3);
             levels.Add(8);
             CustomerSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+            CustomerSession.Save();
 #endif
 
 

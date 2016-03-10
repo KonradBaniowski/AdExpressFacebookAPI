@@ -47,4 +47,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public long IdUniverseClientDescription { get; set; }
     }
 
+    public class UniversResponse
+    {
+        public List<Tree> Trees { get; set; }
+        public string Message { get; set; }
+    }
+
 }

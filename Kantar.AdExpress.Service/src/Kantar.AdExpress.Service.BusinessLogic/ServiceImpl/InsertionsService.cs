@@ -189,7 +189,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 insertionResponse.GridResult = insertionResult.GetInsertionsGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 insertionResponse.Message = GestionWeb.GetWebWord(959,_customerWebSession.SiteLanguage);
             }

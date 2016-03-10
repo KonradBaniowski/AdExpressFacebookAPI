@@ -30,7 +30,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public const int MaxIncludeNbr = 2;
         public const int MaxExcludeNbr = 1;
 
-        public List<UniverseItem> GetItems(int universeLevelId, string keyWord, string idSession, out int nbItems)
+        public List<UniversItem> GetItems(int universeLevelId, string keyWord, string idSession, out int nbItems)
         {
             webSession = (WebSession)WebSession.Load(idSession);
             //CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
@@ -44,12 +44,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.
             GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
             DataTable data = classficationDAL.GetItems(universeLevelId, keyWord).Tables[0];
-            var result = new List<UniverseItem>();
+            var result = new List<UniversItem>();
             foreach (var item in data.AsEnumerable())
             {
-                var UItem = new UniverseItem
+                var UItem = new UniversItem
                 {
-                    IdItem = int.Parse(item.ItemArray[0].ToString()),
+                    Id = int.Parse(item.ItemArray[0].ToString()),
                     Label = item.ItemArray[1].ToString()
                 };
                 result.Add(UItem);
@@ -59,7 +59,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public List<UniverseItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession, out int nbItems)
+        public List<UniversItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession, out int nbItems)
         {
             webSession = (WebSession)WebSession.Load(idSession);
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
@@ -71,12 +71,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
               cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
             DataTable data = classficationDAL.GetItems(levelId, selectedClassificationItemsIds, selectedLevelId).Tables[0];
-            var result = new List<UniverseItem>();
+            var result = new List<UniversItem>();
             foreach (var item in data.AsEnumerable())
             {
-                var UItem = new UniverseItem
+                var UItem = new UniversItem
                 {
-                    IdItem = int.Parse(item.ItemArray[0].ToString()),
+                    Id = int.Parse(item.ItemArray[0].ToString()),
                     Label = item.ItemArray[1].ToString()
                 };
                 result.Add(UItem);
@@ -93,7 +93,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 Branches = new List<UniversBranch>(),
                 SiteLanguage = tuple.Item4,
                 DefaultBranchId = tuple.Item5,
-                Trees = new List<Tree>(MaxIncludeNbr+ MaxExcludeNbr)
+                Trees = new List<Tree>(MaxIncludeNbr + MaxExcludeNbr)
             };
             var allowedBranchesIds = tuple.Item2;
             var allUnivers = new List<UniversLevel>();
@@ -122,7 +122,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             SecurityMessage = GestionWeb.GetWebWord(SecurityMsg, result.SiteLanguage),
                             ExceptionMessage = GestionWeb.GetWebWord(ExceptionMsg, result.SiteLanguage)
                         };
-                        if (!allUnivers.Any(p=>p.Id==level.Id))
+                        if (!allUnivers.Any(p => p.Id == level.Id))
                         {
                             allUnivers.Add(level);
                         }
@@ -139,7 +139,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         var tree = new Tree
                         {
-                            Id= idTree,
+                            Id = idTree,
                             LabelId = ElementLabelCode,
                             UniversLevels = allUnivers,
                             AccessType = type
@@ -147,7 +147,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         idTree++;
                         result.Trees.Add(tree);
                     }
-                }               
+                }
             }
             return result;
         }
@@ -163,7 +163,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
             var branch = TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString();//To review how the vaule is set with Dédé.
-            var data = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
+            var data = UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
             List<UserUnivers> UserUniversList = new List<UserUnivers>();
             if (data != null && data.Rows.Count > 0)
             {
@@ -193,10 +193,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
-        
-        public List<Tree> GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension)
+
+        public UniversResponse GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension)
         {
-            List<Tree> result = new List<Tree>();
+            UniversResponse result = new UniversResponse
+            {
+                Trees = new List<Tree>()
+            };
             try
             {
                 #region try block
@@ -208,23 +211,25 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 var adExpressUniverse = Universes[index];
                 #endregion
                 #region Iterate by Access Type
-                if (adExpressUniverse !=null && adExpressUniverse.Count() > 0)
-                { 
-                foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
+                if (adExpressUniverse != null && adExpressUniverse.Count() > 0)
                 {
-                    List<NomenclatureElementsGroup> elementsGroups = new List<NomenclatureElementsGroup>();
-                    
-                        elementsGroups = (type == AccessType.excludes)?adExpressUniverse.GetExludes(): adExpressUniverse.GetIncludes();
+                    foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
+                    {
+                        List<NomenclatureElementsGroup> elementsGroups = new List<NomenclatureElementsGroup>();
+
+                        elementsGroups = (type == AccessType.excludes) ? adExpressUniverse.GetExludes() : adExpressUniverse.GetIncludes();
                         if (elementsGroups != null && elementsGroups.Count > 0)
                         {
                             #region Repository 
+                            int id = 0;
                             foreach (NomenclatureElementsGroup elementGroup in elementsGroups)
                             {
                                 Tree tree = new Tree
                                 {
                                     AccessType = type,
-                                    UniversLevels = new List<UniversLevel>()
-                                };                                                              
+                                    UniversLevels = new List<UniversLevel>(),
+                                    Id= id
+                                };
                                 DataSet ds = null;
                                 List<long> oldLevelsId = new List<long>();
                                 CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
@@ -235,6 +240,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 ClassificationDAL classficationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                                 classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
                                 var tuple = GetAllowedIds(webSessionId, dimension, true);
+                                #region
                                 foreach (var currentLevel in tuple.Item1)
                                 {
                                     if (!oldLevelsId.Contains(currentLevel))
@@ -245,22 +251,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                             ds = classficationDAL.GetSelectedItems(table, elementGroup.GetAsString(currentLevel));
                                             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                                             {
+                                                UniversLevel level = new UniversLevel
+                                                {
+                                                    Id = currentLevel,
+                                                    UniversItems = new List<UniversItem>()
+                                                };
                                                 foreach (DataRow dr in ds.Tables[0].Rows)
                                                 {
-                                                    UniversLevel level = new UniversLevel();
-                                                    level.Id = (Int64)dr[0];
-                                                    level.Label = dr[1].ToString();
-                                                    tree.UniversLevels.Add(level);                                                                                                      
+                                                    UniversItem item = new UniversItem();
+                                                    item.Id = (Int64)dr[0];
+                                                    item.Label = dr[1].ToString();
+                                                    item.IdLevelUniverse = currentLevel;
+                                                    level.UniversItems.Add(item);
+                                                    
                                                 }
-                                                tree.Id = (int)currentLevel;
+                                                tree.UniversLevels.Add(level);
                                             }
                                         }
-                                        oldLevelsId.Add(currentLevel);
                                     }
                                 }
+                                #endregion
                                 cl = null;
-                                classficationDAL = null;                                
-                                result.Add(tree);
+                                classficationDAL = null;
+                                result.Trees.Add(tree);
+                                id++;
                                 #endregion
                             }
                         }
@@ -274,9 +288,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (System.Exception err)
             {
                 //TODO
+                result.Message = String.Format("Impossible de construire votre univers {0}", userUniversId);
                 //throw (new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible de construire le Treeview Obout", err));
             }
-            
+
             return result;
         }
 
@@ -297,7 +312,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     TNS.AdExpress.Constantes.Classification.Branch.type branchType = GetBrancheType(request.Dimension);
 
                     //Get universe to save
-                    TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = null;// TODO //GetUniverseToSave();
+                    TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = GetUniverseToSave(request);
 
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
                     {
@@ -309,7 +324,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         #region Sauvegarde de l'univers
                         string universeName = request.Name;
 
-                        if (String.IsNullOrEmpty(request.Name)&& idSelectedUniverse !=0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
+                        if (String.IsNullOrEmpty(request.Name) && idSelectedUniverse != 0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
                         {
 
                             //Add AdExpress universe to collection
@@ -337,7 +352,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                                 //Add AdExpress universe to collection
                                 universes.Add(universes.Count, adExpressUniverse);
-                                if (idSelectedDirectory>0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession))
+                                if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession))
                                 //if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession))
                                 {
                                     // Validation : confirmation d'enregistrement de l'univers
@@ -347,7 +362,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 }
                                 else {
                                     // Erreur : Echec de l'enregistrement de l'univers
-                                    webSession.Source.Close(); 
+                                    webSession.Source.Close();
                                     result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
                                     result.Success = false;
                                 }
@@ -408,6 +423,54 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             #endregion
             #endregion
+            return result;
+        }
+
+        public UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, long idGroup = 0)
+        {
+            var tuple = GetAllowedIds(webSessionId, dimension);
+            UniversGroupsResponse result = new UniversGroupsResponse
+            {
+                UniversGroups = new List<UserUniversGroup>(),
+                SiteLanguage = tuple.Item4
+            };
+            List<UserUnivers> UserUniversList = new List<UserUnivers>();
+            var data = UniversListDataAccess.GetData(tuple.Item3, string.Empty, string.Empty);
+            if (data != null && data.Tables[0].AsEnumerable().Any())
+            {
+                var list = data.Tables[0].AsEnumerable().Select(p => new
+                {
+                    GroupID = p.Field<long?>("ID_GROUP_UNIVERSE_CLIENT"),
+                    GroupDescription = p.Field<string>("GROUP_UNIVERSE_CLIENT"),
+                    UniversID = p.Field<long?>("ID_UNIVERSE_CLIENT"),
+                    UniversDescription = p.Field<string>("UNIVERSE_CLIENT"),
+                }).ToList();
+                if (idGroup > 0)
+                    list = list.Where(p => p.GroupID == idGroup).ToList();
+                foreach (var item in list)
+                {
+                    UserUnivers UserUnivers = new UserUnivers
+                    {
+                        ParentId = item.GroupID ?? 0,
+                        ParentDescription = item.GroupDescription,
+                        Id = item.UniversID ?? 0,
+                        Description = item.UniversDescription
+                    };
+                    UserUniversList.Add(UserUnivers);
+                }
+                var groupedUniversList = UserUniversList.GroupBy(p => p.ParentId);
+                foreach (var item in groupedUniversList)
+                {
+                    UserUniversGroup universGroup = new UserUniversGroup
+                    {
+                        Id = item.Key,
+                        Description = item.FirstOrDefault().ParentDescription,
+                        UserUnivers = item.ToList(),
+                        Count = item.Count()
+                    };
+                    result.UniversGroups.Add(universGroup);
+                }
+            }
             return result;
         }
 
@@ -475,6 +538,73 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return 0;
 
             };
+        }
+
+        private TNS.AdExpress.Classification.AdExpressUniverse GetUniverseToSave(UniversGroupSaveRequest request)
+        {
+            TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(request.Dimension);
+
+            int groupIndex = 0;
+            Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
+            foreach (var tree in request.Trees)
+            {
+                NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, tree.AccessType);//tree=NomenclatureelementGroup
+                //elementGroup.AccessType = tree.AccessType;
+                foreach (var univers in tree.UniversLevels)
+                {
+                    Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
+                    List<long> idUniversItems = new List<long>();
+                    foreach (var item in univers.UniversItems)
+                    {
+                        idUniversItems.Add(item.Id);
+                    }
+                    //elementGroup.Add(univers.Id, idUniversItems);
+                    if (idUniversItems.Any())
+                        treeNomenclatureEG.AddItems(univers.Id, idUniversItems);
+                }
+                adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
+                groupIndex++;
+            }
+            return adExpressUniverse;
+
+            //foreach (string currentKey in Page.Request.Form.AllKeys)
+            //{
+            //        string[] levelsIdsHiddenField = Page.Request.Form.GetValues(currentKey);
+
+            //        if (levelsIdsHiddenField != null && levelsIdsHiddenField[0] != null && levelsIdsHiddenField[0].ToString().Trim().Length > 0)
+            //        {
+
+            //            string[] levelsArr = levelsIdsHiddenField[0].Split('|');
+
+            //            for (int i = 0; i < levelsArr.Length; i++)
+            //            {
+            //                string[] tempArr = levelsArr[i].Split(':');
+            //                string[] levelParams = tempArr[0].Split('_');
+            //                string[] tempArr2 = null;
+            //                //Create a new group
+            //                if (!oldGroupIdList.Contains(long.Parse(levelParams[0])))
+            //                {
+            //                    if (!first && oGroup != null && oGroup.Count() > 0) adExpressUniverse.AddGroup(adExpressUniverse.Count(), oGroup);
+            //                    oGroup = new NomenclatureElementsGroup(groupIndex, (AccessType)long.Parse(levelParams[1]));
+            //                    first = false;
+            //                }
+
+            //                if (oGroup != null && tempArr[1] != null && tempArr[1].Length > 0)
+            //                {
+            //                    tempArr2 = tempArr[1].Split(',');
+            //                    if (tempArr2 != null && tempArr2.Length > _nbMaxItemByLevel) throw new TNS.Classification.Universe.CapacityException("Dépassement du nombre d'éléments autorisés pour un niveau");
+
+            //                    oGroup.AddItems(long.Parse(levelParams[2]), tempArr[1]);
+            //                }
+            //                if (!oldGroupIdList.Contains(long.Parse(levelParams[0])))
+            //                    oldGroupIdList.Add(long.Parse(levelParams[0]));
+            //            }
+            //            if (!first) adExpressUniverse.AddGroup(adExpressUniverse.Count(), oGroup);
+            //        }
+            //    }
+            //}
+
+
         }
         #endregion
     }

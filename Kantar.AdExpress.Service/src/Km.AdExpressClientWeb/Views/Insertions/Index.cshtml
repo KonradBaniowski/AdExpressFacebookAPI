@@ -1,18 +1,158 @@
-﻿
-@{
+﻿@model List<string>
+
+@{ 
     Layout = null;
 }
 
-<!DOCTYPE html>
+<form>
+    <input name="ids" id="ids" type="hidden" value="@Model[0]"/>
+    <input name= "zoomDate" id = "zoomDate" type ="hidden"  value="@Model[1]"/>
+    <input name= "idUnivers" id = "idUnivers" type ="hidden" value="@Model[2]"/>
+    <input name= "moduleId" id = "moduleId" type ="hidden" value="@Model[3]"/>
+    <input name= "idVehicle" id = "idVehicle" type ="hidden" value="@Model[4]"/>
+</form>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
-        Insertions
-    </div>
-</body>
-</html>
+
+<div class="col-md-9">
+    <center>
+        <div id="grid" class="hide">
+        </div>
+        <div id="gridLoader">
+            <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+        </div>
+    </center>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+<script src="~/IgniteUI/js/infragistics.core.js"></script>
+<script src="~/IgniteUI/js/infragistics.lob.js"></script>
+<script>
+    //{columnKey: 'Address', allowHiding: false, hidden: true}
+
+    if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+    $(function () {
+
+        $("#grid").igTreeGrid({
+            //dataSource: data,
+            primaryKey: "Id",
+            width: "100%",
+            defaultColumnWidth: 200,
+            avgRowHeight: 60,
+            autoGenerateColumns: true
+        });
+
+
+        $('#period-display-type').selectpicker();
+        var ds;
+        var cols;
+        var colsFixed;
+        var needFixedColumns = false;
+        var periodType = "Mois";
+
+        var renderGrid = function (success, error) {
+            if (success) {
+
+                $("#grid").igTreeGrid("destroy");
+                $("#gridLoader").addClass("hide");
+                $("#grid").removeClass("hide");
+                if (needFixedColumns) {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: "530px",
+                        autoGenerateColumns: false,
+                        primaryKey: "ID_PRODUCT",
+                        foreignKey: "PID",
+                        width: "1000px",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 25
+                            },
+                            {
+                                name: "ColumnFixing",
+                                fixingDirection: "left",
+                                columnSettings: colsFixed
+                            }
+                        ]
+                    })
+                }
+                else {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: "530px",
+                        autoGenerateColumns: true,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 25
+                            }
+                        ]
+                    })
+                }
+            } else {
+                alert(error);
+            }
+
+        }
+
+
+        var parameters = {
+            ids: $('#ids').val(),
+            zoomDate: $('#zoomDate').val(),
+            idUnivers: $('#idUnivers').val(),
+            moduleId: $('#moduleId').val(),
+            idVehicle: $('#idVehicle').val()
+        };
+
+        function CallInsertionsResult() {
+            $.ajax({
+                url: '@Url.Action("InsertionsResult", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("alert");
+                },
+                success: function (data) {
+                    if (data != null) {
+                        dataTreeGrid = data.datagrid;
+                        cols = data.columns;
+                        colsFixed = data.columnsfixed;
+                        needFixedColumns = data.needfixedcolumns;
+
+                        var schema = new $.ig.DataSchema("array", {
+                            fields: data.schema
+                        });
+
+                        ds = new $.ig.DataSource({
+                            type: "json",
+                            schema: schema,
+                            dataSource: dataTreeGrid,
+                            callback: renderGrid
+                        });
+
+                        ds.dataBind();
+                    }
+                }
+            });
+        }
+
+        CallInsertionsResult();
+
+    });
+
+</script>
