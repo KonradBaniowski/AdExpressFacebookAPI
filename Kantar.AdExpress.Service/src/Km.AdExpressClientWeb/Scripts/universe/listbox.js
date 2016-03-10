@@ -7,8 +7,8 @@ function GetHtmlSelectableFromObject(datas, classNameSelection, idSelection) {
     if (datas.length > 0) {
         for (var i = 0; i < datas.length; i++) {
             var item = $('<li/>');
-            item.val(datas[i].IdItem);
-            item.attr('data-id', datas[i].IdItem)
+            item.val(datas[i].Id);
+            item.attr('data-id', datas[i].Id)
             item.text(datas[i].Label);
             item.appendTo(grp);
         }

@@ -344,66 +344,87 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
     $.each($('.nav.nav-tabs > li a'), function (index, elem) {
         var itemContainer = $(elem).attr('data-target');
         var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
-        var idUnivers = [];
-        $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
-            var id = $(elem).attr('data-id');
-            var level = {
-              id: id
+        var UniversLvl = [];
+        $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
+            var idLevel = $(elem).attr('data-level');
+            console.log(this);
+            var UniLvl = [];
+            $.each($(this).find('ul > li'), function (index, elem) {
+                var itemUniver = $(elem).attr('data-id');
+                var universItems = {
+                    Id : itemUniver
+                }
+                UniLvl.push(universItems);
+            });
+            var UnisLvl = {
+                Id : idLevel,
+                UniversItems: UniLvl
             };
-            idUnivers.push(level);
+            UniversLvl.push(UnisLvl);
         });
-        var item = {
-            AccessType: accessType,
-            UniversLevels: idUnivers
+        var stuff = {
+            Id: itemContainer,
+            UniversLevels: UniversLvl
         };
-        trees.push(item);
+        trees.push(stuff);
     });
+
+
+
+    var params = {
+        trees:  trees,
+        groupId: groupId,
+        universId: universId,
+        name: name
+    };
     $.ajax({
         url: '/MediaSchedule/SaveUserUnivers',
         type: 'POST',
-        data: { trees: data, groupId: groupId, universId: universId, name: name },
+        data: params,
         success: function (response) {
             spinner.stop();
             $('#saveunivers').modal('hide');
+            bootbox.alert(response);
         }
     });
 });
 
-$(document).on('change', '#ddlGroup', function (event) {
-    event.preventDefault();
-    var idGroup = $("#ddlGroup").val();
-    var local = $(this);
-    var spinner = new Spinner().spin(this);
-    $.ajax({
-        url: '/MediaSchedule/GetUniversByGroup',
-        type: 'GET',
-        data: { id: idGroup },
-        success: function (response) {
-            $('#ddlUnivers').empty();
-            $.each(response, function (i, item) {
-                spinner.stop();
-                $("#ddlUnivers").append('<option value="' + item.Value + '">' +
-                     item.Text + '</option>');
-            });
-            //$('#ddlUnivers').html(response);
-        }
-    });
-});
 
-//Clean l'ensemble des elements du tableau
-$(document).on('click', 'button.tout-suppr', function () {
-    var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
-    var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
-    console.log(idTree);
-    test.find('li').remove();
-    $("#" + idTree + " [id^='collapse'].in").collapse('hide');
-});
-
-function ShowSelection(elem) {
-    var selectedItems = elem.getSelectableSelectedItems();
-    var result = '';
-    selectedItems.forEach(function (item) {
-        result += ' #' + item.Value + ';' + item.Text + '\n';
+    $(document).on('change', '#ddlGroup', function (event) {
+        event.preventDefault();
+        var idGroup = $("#ddlGroup").val();
+        var local = $(this);
+        var spinner = new Spinner().spin(this);
+        $.ajax({
+            url: '/MediaSchedule/GetUniversByGroup',
+            type: 'GET',
+            data: { id: idGroup },
+            success: function (response) {
+                $('#ddlUnivers').empty();
+                $.each(response, function (i, item) {
+                    spinner.stop();
+                    $("#ddlUnivers").append('<option value="' + item.Value + '">' +
+                         item.Text + '</option>');
+                });
+                //$('#ddlUnivers').html(response);
+            }
+        });
     });
-    alert('Selection : \n' + result);
-};
+
+    //Clean l'ensemble des elements du tableau
+    $(document).on('click', 'button.tout-suppr', function () {
+        var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
+        var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
+        console.log(idTree);
+        test.find('li').remove();
+        $("#" + idTree + " [id^='collapse'].in").collapse('hide');
+    });
+
+    function ShowSelection(elem) {
+        var selectedItems = elem.getSelectableSelectedItems();
+        var result = '';
+        selectedItems.forEach(function (item) {
+            result += ' #' + item.Value + ';' + item.Text + '\n';
+        });
+        alert('Selection : \n' + result);
+    };

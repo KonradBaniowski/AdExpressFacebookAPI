@@ -1432,6 +1432,9 @@ ul.ui-selectable {
 .popup-text {
     color: #333333;
 }
+.bootbox-body {
+    color: #333333;
+}
 
 .modal-footer {
     padding: 8px 20px 6px;

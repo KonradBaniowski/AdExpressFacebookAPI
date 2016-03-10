@@ -31,6 +31,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public string SecurityMessage { get; set; }
         public string ExceptionMessage { get; set; }
         public long BranchId { get; set; }
+
+        public List<UniversItem> UniversItems { get; set; }
     }
 
     public class Tree
