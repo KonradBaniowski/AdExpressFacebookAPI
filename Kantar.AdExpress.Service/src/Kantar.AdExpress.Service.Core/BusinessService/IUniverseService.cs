@@ -15,7 +15,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 
         UniversGroupsResponse GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage=true);
 
-        List<Tree> GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension);
+        UniversResponse GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension);
 
         UniversGroupSaveResponse SaveUserUnivers(UniversGroupSaveRequest request);
         UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, long idGroup=0);

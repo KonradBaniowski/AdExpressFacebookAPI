@@ -284,12 +284,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return PartialView("UserUniversGroupsContent", result);
         }
 
-        public List<Domain.Tree> GetUserUnivers(int id)
+        public JsonResult GetUserUnivers(int id)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var result = _universService.GetTreesByUserUnivers(id, idWebSession,Dimension.product);
-            return result;
+            return Json(result);
         }
 
         [HttpGet]

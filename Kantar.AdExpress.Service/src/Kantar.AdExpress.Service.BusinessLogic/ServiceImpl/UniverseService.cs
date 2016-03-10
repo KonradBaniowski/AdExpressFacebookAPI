@@ -194,9 +194,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
         
-        public List<Tree> GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension)
+        public UniversResponse GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension)
         {
-            List<Tree> result = new List<Tree>();
+            UniversResponse result = new UniversResponse
+            {
+                Trees = new List<Tree>()
+            };
             try
             {
                 #region try block
@@ -260,7 +263,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 }
                                 cl = null;
                                 classficationDAL = null;                                
-                                result.Add(tree);
+                                result.Trees.Add(tree);
                                 #endregion
                             }
                         }
@@ -274,6 +277,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (System.Exception err)
             {
                 //TODO
+                result.Message = String.Format("Impossible de construire votre univers {0}", userUniversId);
                 //throw (new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible de construire le Treeview Obout", err));
             }
             

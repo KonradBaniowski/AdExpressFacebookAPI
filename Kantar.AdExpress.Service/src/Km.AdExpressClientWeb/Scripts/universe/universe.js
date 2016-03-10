@@ -368,9 +368,6 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         };
         trees.push(stuff);
     });
-
-
-
     var params = {
         trees:  trees,
         groupId: groupId,
@@ -418,6 +415,34 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         console.log(idTree);
         test.find('li').remove();
         $("#" + idTree + " [id^='collapse'].in").collapse('hide');
+    });
+
+    $(document).on('click', '#LoadUnivers', function (event)
+    {
+        event.preventDefault();
+        var spinner = new Spinner().spin(this);
+        $('.btn.btn-valider').off('click');
+        var universId = $('input[name="universOpt"]:checked').val();
+         var params = {
+        id:universId
+    };
+    $.ajax({
+        url: '/MediaSchedule/GetUserUnivers',
+        type: 'POST',
+        data: params,
+        success: function (response) {
+            spinner.stop();
+            $('#monunivers').modal('hide');
+            var trees = response.Trees
+            $.each(trees, function (index, tree) {
+            });
+        },
+        error: function(response)
+        {
+            spinner.stop();
+            bootbox.alert("Error has been occured!");
+        }
+    });
     });
 
     function ShowSelection(elem) {
