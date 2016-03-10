@@ -1,4 +1,27 @@
-﻿
+﻿#media-accordion.panel-group > .panel {
+    background-color: transparent;
+    /*border-color: #ff8c00;*/
+    border-color:rgba(0,0,0,0.4);
+    /*border:none;*/
+}
+
+#media-accordion.panel-group .panel > .panel-heading {
+    /*background-color: #ff8c00;*/
+    background-color: rgba(0,0,0,0.4);
+    /*border-color: #ff8c00;*/
+    color: white;
+}
+
+
+.bb-alert {
+    position: fixed;
+    bottom: 25%;
+    right: 0;
+    margin-bottom: 0;
+    font-size: 1.2em;
+    padding: 1em 1.3em;
+    z-index: 2000;
+}
 
 .highlight {
     -moz-box-shadow: 1px 1px 5px 1px #0042ff;
@@ -571,7 +594,7 @@ input {
 
 
 .row.bg-black-only {
-    margin: 15px;
+    margin: 0px;
     padding-bottom: 15px;
 }
 
@@ -976,7 +999,7 @@ input {
 }
 
     .i-switch input {
-        position: absolute;
+        position: relative;
         opacity: 0;
         filter: alpha(opacity=0);
     }
@@ -1423,6 +1446,9 @@ ul.ui-selectable {
 .popup-text {
     color: #333333;
 }
+.bootbox-body {
+    color: #333333;
+}
 
 .modal-footer {
     padding: 8px 20px 6px;
@@ -1438,6 +1464,7 @@ ul.ui-selectable {
 .modal-radio {
     margin-left: 10px;
 }
+
 .btn-save-univers {
     color: #ff8c00;
     background-color: rgba(0,0,0,0.6);

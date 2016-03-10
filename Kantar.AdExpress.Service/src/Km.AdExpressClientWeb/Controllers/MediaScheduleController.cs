@@ -218,7 +218,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
-            JsonResult jsonModel = Json(new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            jsonModel.MaxJsonLength = Int32.MaxValue;
 
             return jsonModel;
         }
@@ -284,12 +286,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return PartialView("UserUniversGroupsContent", result);
         }
 
-        public List<Domain.Tree> GetUserUnivers(int id)
+        public JsonResult GetUserUnivers(int id)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var result = _universService.GetTreesByUserUnivers(id, idWebSession,Dimension.product);
-            return result;
+            return Json(result);
         }
 
         [HttpGet]
@@ -297,7 +299,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {            
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+            var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
             SaveUserUniversViewModel model = new SaveUserUniversViewModel
             {
                 Title = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, data.SiteLanguage),
@@ -316,20 +318,65 @@ namespace Km.AdExpressClientWeb.Controllers
                 }).ToList();
                 items.FirstOrDefault().Selected = true;
                 model.UserGroups = items;
-                model.UserUnivers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m =>new SelectListItem()
+                if (data.UniversGroups.FirstOrDefault().UserUnivers.Any())
+                {
+                    model.UserUnivers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
+                    {
+                        Value = m.Id.ToString(),
+                        Text = m.Description
+                    }).ToList();
+                    model.UserUnivers.FirstOrDefault().Selected = true;
+                }
+            }
+            return PartialView(model);
+        }
+        [HttpGet]
+        public JsonResult GetUniversByGroup(string id)
+        {
+            List<SelectListItem> univers = new List<SelectListItem>();
+            if (!string.IsNullOrEmpty(id))
+            {
+                long groupId = long.Parse(id);
+                var claim = new ClaimsPrincipal(User.Identity);
+                string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product,groupId);
+                univers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
                 {
                     Value = m.Id.ToString(),
                     Text = m.Description
                 }).ToList();
-                model.UserUnivers.FirstOrDefault().Selected = true;
             }
-            return PartialView(model);
+            return Json(new SelectList(univers, "Value", "Text"),JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetUniversByGroup(string groupId)
+        [HttpPost]
+        public string SaveUserUnivers(List<VM.Tree> trees,string groupId, string universId, string name)
         {
-            List<SelectListItem> univers = new List<SelectListItem>();
-            return Json(new SelectList(univers, "Value", "Text"));
+            string error = "";
+            if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && !String.IsNullOrEmpty(groupId) && (!String.IsNullOrEmpty(universId) || !String.IsNullOrEmpty(name)) )
+            {
+                var claim = new ClaimsPrincipal(User.Identity);
+                string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                List<VM.Tree> validTrees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems !=null).Any()).ToList();
+                var data = Mapper.Map<List<Domain.Tree>>(validTrees);
+                Domain.UniversGroupSaveRequest request = new Domain.UniversGroupSaveRequest
+                {
+                    Dimension = Dimension.product,
+                    Name = name,
+                    UniversGroupId = long.Parse(groupId),
+                    UserUniversId = long.Parse(universId),
+                    WebSessionId = webSessionId,
+                    Trees = Mapper.Map<List<Domain.Tree>>(validTrees),
+                    IdUniverseClientDescription=16
+                };
+                var result = _universService.SaveUserUnivers(request);
+                error = result.ErrorMessage;
+            }
+            else
+            {
+                error = "Invalid Selection";
+            }
+            return error;
         }
 
         #region Private methodes
