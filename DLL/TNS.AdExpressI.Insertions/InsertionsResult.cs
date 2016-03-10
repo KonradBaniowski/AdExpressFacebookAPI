@@ -27,6 +27,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Results;
+using System.Text;
 
 namespace TNS.AdExpressI.Insertions
 {
@@ -1857,10 +1858,88 @@ namespace TNS.AdExpressI.Insertions
         public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
 
-            ResultTable rt = GetInsertions(vehicle,fromDate,toDate,filters,universId,zoomDate);
-            var test = 0;
+            ResultTable _data = GetInsertions(vehicle,fromDate,toDate,filters,universId,zoomDate);
 
-            throw new NotImplementedException();
+            //ResultTable _data = new ResultTable(20, new Headers());
+            //try {
+
+            //    _data.NewHeaders.Root[0].Key = "0";
+            //    _data.NewHeaders.Root[0].Label = "lab0";
+            //    _data.NewHeaders.Root[1].Key = "1";
+            //    _data.NewHeaders.Root[1].Label = "lab1";
+            //    _data.NewHeaders.Root[2].Key = "2";
+            //    _data.NewHeaders.Root[2].Label = "lab2";
+            //    _data.NewHeaders.Root[3].Key = "3";
+            //    _data.NewHeaders.Root[3].Label = "lab3";
+            //    _data.NewHeaders.Root[4].Key = "4";
+            //    _data.NewHeaders.Root[4].Label = "lab4";
+            //    _data.NewHeaders.Root[5].Key = "5";
+            //    _data.NewHeaders.Root[5].Label = "lab5";
+            //    _data.NewHeaders.Root[6].Key = "6";
+            //    _data.NewHeaders.Root[6].Label = "lab6";
+            //}
+            //catch (Exception err)
+            //{
+            //    throw (new Exception(err.Message));
+            //}
+
+
+            int k;
+            GridResult gridResult = new GridResult();
+            object[,] gridData = new object[_data.LinesNumber, _data.ColumnsNumber];
+
+            if (_data != null)
+            {
+                List<object> columns = new List<object>();
+                List<object> schemaFields = new List<object>();
+                List<object> columnsFixed = new List<object>();
+
+
+                if (_data.NewHeaders != null)
+                {
+                    for (int j = 0; j < _data.NewHeaders.Root.Count ; j++)
+                    {
+                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "40px" });
+                        schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
+                    }
+                }
+
+
+                try
+                {
+                    for (int i = 0; i < _data.LinesNumber; i++)
+                    {
+                        for (k = 1; k < _data.ColumnsNumber - 1; k++)
+                        {
+                            if (k == _data.LevelColumn)
+                            {
+                                gridData[i, k] = _data[i, k].ToString();
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception err)
+                {
+                    throw (new Exception(err.Message));
+                }
+
+                gridResult.HasData = true;
+                gridResult.Columns = columns;
+                gridResult.Schema = schemaFields;
+                gridResult.ColumnsFixed = columnsFixed;
+                gridResult.Data = gridData;
+
+            }
+            else
+            {
+                gridResult.HasData = false;
+                return (gridResult);
+            }
+
+
+            return gridResult;
+
         }
         #endregion
 

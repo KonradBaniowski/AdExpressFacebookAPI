@@ -11,6 +11,6 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public long Id { get; set; }
         public string Label { get; set; }
         //TODO USEFULL?
-        public int IdLevelUniverse { get; set; }
+        public long IdLevelUniverse { get; set; }
     }
 }
