@@ -915,7 +915,7 @@ tr[aria-level="3"] td{
   	color: #ff8c00;
 }
 
-.ui-iggrid .ui-iggrid-footer, .ui-iggrid .ui-iggrid-toolbar {
+.ui-iggrid .ui-iggrid-footer, .ui-iggrid .ui-iggrid-toolbar, .ui-iggrid .ui-iggrid-fixedcontainer {
     background-color: transparent !important;
     border: none !important;
     color: black;

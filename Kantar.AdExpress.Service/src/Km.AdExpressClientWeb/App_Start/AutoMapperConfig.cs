@@ -23,6 +23,10 @@ namespace Km.AdExpressClientWeb.App_Start
             Mapper.CreateMap<Domain.UserUniversGroup, VM.UserUniversGroup>();
             Mapper.CreateMap<AccessType, AccessType>();
             Mapper.CreateMap<Domain.Tree, VM.Tree>();  //Error while mapping enum      
+            Mapper.CreateMap<VM.Tree,Domain.Tree>();
+            Mapper.CreateMap<VM.UniversLevel, Domain.UniversLevel>();
+            Mapper.CreateMap<VM.UniversItem, Domain.UniversItem>();
+            Mapper.CreateMap<Domain.UniversItem, VM.UniversItem>();
         }
     }
 }

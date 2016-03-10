@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kantar.AdExpress.Service.Core.Domain
 {
-    public class UniverseItem
+    public class UniversItem
     {
-        public int IdItem { get; set; }
+        public long Id { get; set; }
         public string Label { get; set; }
         //TODO USEFULL?
         public int IdLevelUniverse { get; set; }
