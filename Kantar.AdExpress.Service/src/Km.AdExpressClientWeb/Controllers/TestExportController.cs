@@ -114,13 +114,45 @@ namespace Km.AdExpressClientWeb.Controllers
         #endregion
 
         #region Couleurs
-        Color Orange = Color.FromArgb(255, 140, 0);
-        Color DarkGray = Color.FromArgb(64, 68, 79);
-        Color MiddleGray = Color.FromArgb(67, 73, 95);
-        Color LightGray = Color.FromArgb(110, 117, 136);
-        Color Cyan = Color.FromArgb(38, 202, 255);
-        Color White = Color.White;
-        Color Black = Color.Black;
+        //Color Orange = Color.FromArgb(255, 140, 0);
+        //Color DarkGray = Color.FromArgb(64, 68, 79);
+        //Color MiddleGray = Color.FromArgb(67, 73, 95);
+        //Color LightGray = Color.FromArgb(110, 117, 136);
+        //Color Cyan = Color.FromArgb(38, 202, 255);
+        //Color White = Color.White;
+        //Color Black = Color.Black;
+
+        Color HeaderTabBackground = Color.FromArgb(105, 112, 129);
+        Color HeaderTabText = Color.White;
+        Color HeaderBorderTab = Color.White;
+
+        Color L1Background = Color.FromArgb(64, 68, 79);
+        Color L1Text = Color.FromArgb(0, 193, 255);
+
+        Color L2Background = Color.FromArgb(120, 120, 120);
+        Color L2Text = Color.White;
+
+        Color L3Background = Color.FromArgb(105, 112, 129);
+        Color L3Text = Color.White;
+
+        Color L4Background = Color.FromArgb(231, 231, 231);
+        Color L4Text = Color.Black;
+
+        Color LTotalBackground = Color.FromArgb(0, 193, 255);
+        Color LTotalText = Color.White;
+
+        Color TabBackground = Color.FromArgb(64, 68, 79);
+        Color TabText = Color.White;
+        Color BorderTab = Color.Black;
+
+        Color PresentText = Color.Black;
+        Color PresentBackground = Color.FromArgb(255, 150, 23);
+
+        Color NotPresentText = Color.FromArgb(64, 68, 79);
+        Color NotPresentBackground = Color.FromArgb(64, 68, 79);
+
+        Color ExtendedText = Color.Black;
+        Color ExtendedBackground = Color.FromArgb(243, 209, 97);
         #endregion
 
         private string icon;
@@ -181,8 +213,14 @@ namespace Km.AdExpressClientWeb.Controllers
             //Workbook document = new Workbook(excelFormat);
 
 
-            var styleExcel = new TNS.AdExpressI.MediaSchedule.Style.ExcelMediaScheduleStyle();
-            Workbook document = new Workbook(FileFormatType.Excel97To2003);
+            //var styleExcel = new TNS.AdExpressI.MediaSchedule.Style.ExcelMediaScheduleStyle();
+
+            License licence = new License();
+            licence.SetLicense("Aspose.Cells.lic");
+
+            Workbook document = new Workbook(FileFormatType.Excel2003XML);
+
+            document.Worksheets.Clear();
 
             Worksheet sheet = document.Worksheets.Add("WorkSheet1");
 
@@ -2048,7 +2086,7 @@ namespace Km.AdExpressClientWeb.Controllers
             //                                    sheet.Rows[cellRow].Cells[colPdm].CellFormat.Font.ColorInfo = new WorkbookColorInfo(Cyan);
             //                                    sheet.Rows[cellRow].Cells[colPdm].CellFormat.Fill = CellFill.CreateSolidFill(MiddleGray);
             //                                    BorderStyle(sheet, cellRow, colPdm, CellBorderLineStyle.Thin, DarkGray);
-            //                                }                                            
+            //                                }
             //                            }
 
 
@@ -2363,6 +2401,45 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Aspose
             if (data.GetLength(0) != 0)
             {
+
+                //document.ChangePalette(LightGray, 25);
+                //document.ChangePalette(MiddleGray, 24);
+                //document.ChangePalette(DarkGray, 23);
+                //document.ChangePalette(Orange, 22);
+                //document.ChangePalette(Cyan, 21);
+
+                document.ChangePalette(HeaderTabBackground, 25);
+                document.ChangePalette(HeaderTabText, 24);
+                document.ChangePalette(HeaderBorderTab, 23);
+
+                document.ChangePalette(L1Background, 22);
+                document.ChangePalette(L1Text, 21);
+
+                document.ChangePalette(L2Background, 20);
+                document.ChangePalette(L2Text, 19);
+
+                document.ChangePalette(L3Background, 18);
+                document.ChangePalette(L3Text, 17);
+
+                document.ChangePalette(L4Background, 16);
+                document.ChangePalette(L4Text, 15);
+
+                document.ChangePalette(LTotalBackground, 14);
+                document.ChangePalette(LTotalText, 13);
+
+                document.ChangePalette(TabBackground, 12);
+                document.ChangePalette(TabText, 11);
+                document.ChangePalette(BorderTab, 10);
+
+                document.ChangePalette(PresentText, 9);
+                document.ChangePalette(PresentBackground, 8);
+
+                document.ChangePalette(NotPresentText, 7);
+                document.ChangePalette(NotPresentBackground, 6);
+
+                document.ChangePalette(ExtendedText, 5);
+                document.ChangePalette(ExtendedBackground, 4);
+
                 bool _allowTotal = true;
                 bool _allowPdm = true;
                 bool _showValues = false;
@@ -2383,16 +2460,16 @@ namespace Km.AdExpressClientWeb.Controllers
                 string formatPdm = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo.GetExcelFormatPattern(EXCEL_PATTERN_NAME_PERCENTAGE);
 
                 bool premier = true;
-                int header = 1;
+                //int header = 1;
                 string prevYearString = string.Empty;
-                int nbMaxRowByPage = 42;
-                int s = 1;
+                //int nbMaxRowByPage = 42;
+                //int s = 1;
                 int cellRow = 5;
                 int startIndex = cellRow;
-                int upperLeftColumn = 10;
-                string vPageBreaks = "";
-                double columnWidth = 0, indexLogo = 0, index;
-                bool verif = true;
+                //int upperLeftColumn = 10;
+                //string vPageBreaks = "";
+                //double columnWidth = 0, indexLogo = 0, index;
+                //bool verif = true;
                 int colSupport = 1;
                 int colTotal = 2;
                 int colPdm = 2;
@@ -2406,11 +2483,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 int sloganIndex = GetSloganIdIndex();
                 Int64 sloganId = long.MinValue;
                 string stringItem = "";
-                string presentstyle = string.Empty;
-                string extendedStyle = string.Empty;
-                string style = string.Empty;
-                string styleNb = string.Empty;
-                string stylePdmNb = string.Empty;
+                //string presentstyle = string.Empty;
+                //string extendedStyle = string.Empty;
+                //string style = string.Empty;
+                //string styleNb = string.Empty;
+                //string stylePdmNb = string.Empty;
                 #endregion
 
                 int yearBegin = _period.Begin.Year;
@@ -2489,8 +2566,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 sheet.Cells.Merge(cellRow - 1, colSupport, rowSpanNb, labColSpan);
                 Range range = sheet.Cells.CreateRange(cellRow - 1, colSupport, rowSpanNb, labColSpan);
                 sheet.Cells[cellRow - 1, colSupport].Value = GestionWeb.GetWebWord(804, _session.SiteLanguage);
-                TextStyle(sheet.Cells[cellRow - 1, colSupport], TextAlignmentType.Center, TextAlignmentType.Center, White, Black);
-                BorderStyle(sheet, range, CellBorderType.Thin, LightGray);
+                TextStyle(sheet.Cells[cellRow - 1, colSupport], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
                 //TODO
                 //styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colSupport);
@@ -2514,8 +2591,8 @@ namespace Km.AdExpressClientWeb.Controllers
                     range = sheet.Cells.CreateRange(cellRow - 1, colTotal, rowSpanNb, labColSpan);
                     sheet.Cells[cellRow - 1, colTotal].Value = GestionWeb.GetWebWord(805, _session.SiteLanguage);
 
-                    TextStyle(sheet.Cells[cellRow - 1, colTotal], TextAlignmentType.Center, TextAlignmentType.Center, White, Black);
-                    BorderStyle(sheet, range, CellBorderType.Thin, LightGray);
+                    TextStyle(sheet.Cells[cellRow - 1, colTotal], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
                     //TODO
                     //styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colSupport);
@@ -2546,14 +2623,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     colInsertion++;
                     colFirstMediaPlan++;
                     colTotalYears++;
-                                        
+
                     sheet.Cells.Merge(cellRow - 1, colPdm, rowSpanNb, labColSpan);
                     range = sheet.Cells.CreateRange(cellRow - 1, colPdm, rowSpanNb, labColSpan);
 
                     sheet.Cells[cellRow - 1, colPdm].Value = GestionWeb.GetWebWord(806, _session.SiteLanguage);
 
-                    TextStyle(sheet.Cells[cellRow - 1, colPdm], TextAlignmentType.Center, TextAlignmentType.Center, White, Black);
-                    BorderStyle(sheet,range, CellBorderType.Thin, LightGray);
+                    TextStyle(sheet.Cells[cellRow - 1, colPdm], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
                     //TODO
                     //styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colPdm);
@@ -2590,8 +2667,8 @@ namespace Km.AdExpressClientWeb.Controllers
                         //}
                         sheet.Cells[cellRow - 1, colTotalYears + l].Value = data[0, k];
 
-                        TextStyle(sheet.Cells[cellRow - 1, colTotalYears + 1], TextAlignmentType.Center, TextAlignmentType.Center, White, Black);
-                        BorderStyle(sheet, range, CellBorderType.Thin, LightGray);
+                        TextStyle(sheet.Cells[cellRow - 1, colTotalYears + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
                         nbColTabFirst++;
                     }
@@ -2608,7 +2685,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 int prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
                 int lastPeriod = prevPeriod;
                 bool first = true;
-                string periodStyle = string.Empty;
+
                 switch (_period.PeriodDetailLEvel)
                 {
                     case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
@@ -2617,7 +2694,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         for (int j = firstPeriodIndex, currentColMediaPlan = colFirstMediaPlan; j < nbColTab; j++, currentColMediaPlan++)
                         {
                             if (prevPeriod != int.Parse(data[0, j].ToString().Substring(0, 4)))
-                            {   
+                            {
                                 sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
 
                                 if (nbPeriod < 3)
@@ -2626,8 +2703,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                 else
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
-                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], White, Black);
-                                BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, LightGray);
+                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                                BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                                 //TODO
                                 //styleExcel.GetTag("MediaPlanCellYear1").SetStyleExcel(excel, cells, startIndex - 1, nbColTabFirst + nbPeriod);
@@ -2641,37 +2718,18 @@ namespace Km.AdExpressClientWeb.Controllers
                             {
                                 case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
 
-                                    #region Period Color Management
-                                    // First Period or last period is incomplete
-                                    periodStyle = "MediaPlanCellPeriod";
-                                    if ((j == firstPeriodIndex && _period.Begin.Day != 1)
-                                       || (j == (nbColTab - 1) && _period.End.Day != _period.End.AddDays(1 - _period.End.Day).AddMonths(1).AddDays(-1).Day))
-                                    {
-                                        periodStyle = "MediaPlanCellPeriodIncomplete";
-                                    }
-                                    #endregion
-
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
 
-                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], White, Black);
-                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], HeaderTabText, HeaderTabBackground);
+                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
 
                                     break;
                                 case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
 
-                                    #region Period Color Management
-                                    periodStyle = "MediaPlanCellPeriod";
-                                    if ((j == firstPeriodIndex && _period.Begin.DayOfWeek != DayOfWeek.Monday)
-                                       || (j == (nbColTab - 1) && _period.End.DayOfWeek != DayOfWeek.Sunday))
-                                    {
-                                        periodStyle = "MediaPlanCellPeriodIncomplete";
-                                    }
-                                    #endregion
-
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = int.Parse(data[0, j].ToString().Substring(4, 2));
 
-                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], White, Black);
-                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], HeaderTabText, HeaderTabBackground);
+                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
 
                                     break;
 
@@ -2688,17 +2746,8 @@ namespace Km.AdExpressClientWeb.Controllers
                         else
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
-                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], White, Black);
-                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, LightGray);
-
-                        //TODO
-                        //for (int k = colFirstMediaPlan; k < (nbPeriodTotal + colFirstMediaPlan); k++)
-                        //{
-                        //    //TODO
-                        //    //cells[startIndex - 1, k].Style.Number = 1;
-                        //    //if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.weekly)
-                        //    //    cells[startIndex, k].Style.Number = 1;
-                        //}
+                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                         break;
                     case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
@@ -2709,7 +2758,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         {
                             currentDay = currentDay.AddDays(1);
                             if (currentDay.Month != prevPeriod)
-                            {                                
+                            {
                                 sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
                                 range = sheet.Cells.CreateRange(startIndex - 1, nbColTabFirst + 1, startIndex - 1 + 1 - 1, nbColTabFirst + 1 + nbPeriod - 1);
 
@@ -2718,11 +2767,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                 else
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
-                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], White, Black);
-                                BorderStyle(sheet, range, CellBorderType.Thin, LightGray);
+                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                                BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
-                                //TODO
-                                //styleExcel.GetTag("MediaPlanCellYear1").SetStyleExcel(excel, cells, startIndex - 1, nbColTabFirst + nbPeriod);
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
                                 prevPeriod = currentDay.Month;
@@ -2732,40 +2779,28 @@ namespace Km.AdExpressClientWeb.Controllers
                             //Period Number
                             sheet.Cells[startIndex, currentColMediaPlan].Value = currentDay.ToString("dd");
 
-                            TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, White, Black);
-                            BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                            TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                            BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
 
-                            //WorkSheet.PutCellValue(excel, cells, currentDay.ToString("dd"), startIndex, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellPeriod", null, styleExcel);
                             //Period day
                             if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
                                 sheet.Cells[startIndex + 1, currentColMediaPlan].Value = DayString.GetCharacters(currentDay, cultureInfo, 1);
-                            //WorkSheet.PutCellValue(excel, cells, DayString.GetCharacters(currentDay, cultureInfo, 1), startIndex + 1, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellDayWE", null, styleExcel);
                             else
                                 sheet.Cells[startIndex + 1, currentColMediaPlan].Value = DayString.GetCharacters(currentDay, cultureInfo, 1);
-                            //WorkSheet.PutCellValue(excel, cells, DayString.GetCharacters(currentDay, cultureInfo, 1), startIndex + 1, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellDay", null, styleExcel);
 
-                            TextStyle(sheet.Cells[startIndex + 1, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, White, Black);
-                            BorderStyle(sheet, startIndex + 1, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                            TextStyle(sheet.Cells[startIndex + 1, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                            BorderStyle(sheet, startIndex + 1, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
                         }
-                                                                        
+
                         sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
 
                         if (nbPeriod >= 8)
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
-                        //WorkSheet.PutCellValue(excel, cells, TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
                         else
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
-                        //WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
 
-                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], White, Black);
-                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, LightGray);
-
-                        //TODO
-                        //for (int k = colFirstMediaPlan; k < (nbPeriodTotal + colFirstMediaPlan); k++)
-                        //{
-                        //    cells[startIndex, k].Style.Number = 1;
-                        //}
-
+                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                         break;
 
@@ -2780,6 +2815,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                     cellRow++;
                 #endregion
+
+                // Fige les entêtes de lignes et de colonnes
+                sheet.FreezePanes(cellRow, colFirstMediaPlan, cellRow, colFirstMediaPlan);
 
                 #region Media Schedule
                 int i = -1;
@@ -2804,14 +2842,10 @@ namespace Km.AdExpressClientWeb.Controllers
                                 colorItemIndex++;
                             }
 
-                            presentstyle = _session.SloganColors[sloganId].ToString();
-                            extendedStyle = _session.SloganColors[sloganId].ToString();
                             stringItem = "x";
                         }
                         else
                         {
-                            presentstyle = "MediaPlanCellPresent";
-                            extendedStyle = "MediaPlanCellExtended";
                             stringItem = "";
                         }
                         #endregion
@@ -2834,34 +2868,19 @@ namespace Km.AdExpressClientWeb.Controllers
                                             break;
                                         }
 
-                                        #region Style define
-                                        if (i == TOTAL_LINE_INDEX)
-                                        {
-                                            style = "MediaPlanCellLevelTotal";
-                                            styleNb = "MediaPlanCellLevelTotalNb";
-                                            stylePdmNb = "MediaPlanCellLevelTotalPdmNb";
-                                        }
-                                        else
-                                        {
-                                            style = "MediaPlanCellLevelL1";
-                                            styleNb = "MediaPlanCellLevelL1Nb";
-                                            stylePdmNb = "MediaPlanCellLevelL1PdmNb";
-                                        }
-                                        #endregion
-
                                         #region Label
                                         sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
 
 
                                         if (i == TOTAL_LINE_INDEX)
                                         {
-                                            TextStyle(sheet.Cells[cellRow, colSupport], White, Cyan);
-                                            BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, DarkGray);
+                                            TextStyle(sheet.Cells[cellRow, colSupport], LTotalText, LTotalBackground);
+                                            BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
                                         }
                                         else
                                         {
-                                            TextStyle(sheet.Cells[cellRow, colSupport], Cyan, MiddleGray);
-                                            BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, DarkGray);
+                                            TextStyle(sheet.Cells[cellRow, colSupport], LTotalText, LTotalBackground);
+                                            BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -2869,16 +2888,18 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
                                             if (i == TOTAL_LINE_INDEX)
                                             {
-                                                TextStyle(sheet.Cells[cellRow, colTotal], White, Cyan);
-                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, DarkGray);
+                                                TextStyle(sheet.Cells[cellRow, colTotal], LTotalText, LTotalBackground);
+                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
                                             }
                                             else
                                             {
-                                                TextStyle(sheet.Cells[cellRow, colTotal], Cyan, MiddleGray);
-                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, DarkGray);
+                                                TextStyle(sheet.Cells[cellRow, colTotal], LTotalText, LTotalBackground);
+                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -2886,17 +2907,19 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region PDM
                                         if (_allowPdm)
                                         {
-                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]);
+                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+                                            SetPercentFormat(sheet.Cells[cellRow, colPdm]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
                                             if (i == TOTAL_LINE_INDEX)
                                             {
-                                                TextStyle(sheet.Cells[cellRow, colPdm], White, Cyan);
-                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, DarkGray);
+                                                TextStyle(sheet.Cells[cellRow, colPdm], LTotalText, LTotalBackground);
+                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
                                             }
                                             else
                                             {
-                                                TextStyle(sheet.Cells[cellRow, colPdm], Cyan, MiddleGray);
-                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, DarkGray);
+                                                TextStyle(sheet.Cells[cellRow, colPdm], LTotalText, LTotalBackground);
+                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
                                             }
                                         }
 
@@ -2908,8 +2931,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                         {
                                             sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 1) + k]);
 
-                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], Cyan, MiddleGray);
-                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, DarkGray);
+                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L1Text, L1Background);
+                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -2922,46 +2945,35 @@ namespace Km.AdExpressClientWeb.Controllers
                                 case L2_COLUMN_INDEX:
                                     if (data[i, j] != null)
                                     {
-
-                                        #region Style define
-                                        if (premier)
-                                        {
-                                            style = "MediaPlanCellLevelL2_1";
-                                            styleNb = "MediaPlanCellLevelL2_1Nb";
-                                            stylePdmNb = "MediaPlanCellLevelL2_1PdmNb";
-                                        }
-                                        else
-                                        {
-                                            style = "MediaPlanCellLevelL2_2";
-                                            styleNb = "MediaPlanCellLevelL2_2Nb";
-                                            stylePdmNb = "MediaPlanCellLevelL2_2PdmNb";
-                                        }
-                                        #endregion
-
                                         #region Label
                                         sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
 
-                                        TextStyle(sheet.Cells[cellRow, colSupport], Cyan, MiddleGray);
-                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, DarkGray);
+                                        TextStyle(sheet.Cells[cellRow, colSupport], L2Text, L2Background);
+                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                        SetIndentLevel(sheet.Cells[cellRow, colSupport], 1);
                                         #endregion
 
                                         #region Total
                                         if (_allowTotal)
                                         {
                                             sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
-                                            TextStyle(sheet.Cells[cellRow, colTotal], Cyan, MiddleGray);
-                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, DarkGray);
+                                            TextStyle(sheet.Cells[cellRow, colTotal], L2Text, L2Background);
+                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
                                         #region PDM
                                         if (_allowPdm)
                                         {
-                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]);
+                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+                                            SetPercentFormat(sheet.Cells[cellRow, colPdm]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
-                                            TextStyle(sheet.Cells[cellRow, colPdm], Cyan, MiddleGray);
-                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, DarkGray);
+                                            TextStyle(sheet.Cells[cellRow, colPdm], L2Text, L2Background);
+                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -2970,8 +2982,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                         {
                                             sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
 
-                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], Cyan, MiddleGray);
-                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, DarkGray);
+                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L2Text, L2Background);
+                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -2979,6 +2991,38 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                         j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
                                     }
+                                    //else
+                                    //{
+                                    //    //#region Label
+                                    //    //TextStyle(sheet.Cells[cellRow, colSupport], L2Text, L2Background);
+                                    //    //BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                    //    //#endregion
+
+                                    //    #region Total
+                                    //    if (_allowTotal)
+                                    //    {
+                                    //        sheet.Cells[cellRow, colTotal].Value = "toto";
+                                    //        TextStyle(sheet.Cells[cellRow, colTotal], L2Text, L2Background);
+                                    //        BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                    //    }
+                                    //    #endregion
+
+                                    //    #region PDM
+                                    //    if (_allowPdm)
+                                    //    {
+                                    //        TextStyle(sheet.Cells[cellRow, colPdm], L2Text, L2Background);
+                                    //        BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                    //    }
+                                    //    #endregion
+
+                                    //    #region Totals years
+                                    //    for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                    //    {
+                                    //        TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L2Text, L2Background);
+                                    //        BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                    //    }
+                                    //    #endregion
+                                    //}
                                     break;
                                 #endregion
 
@@ -2988,21 +3032,61 @@ namespace Km.AdExpressClientWeb.Controllers
                                     {
                                         sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
 
-                                        TextStyle(sheet.Cells[cellRow, colSupport], Cyan, MiddleGray);
-                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, DarkGray);
+                                        TextStyle(sheet.Cells[cellRow, colSupport], L3Text, L3Background);
+                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                        SetIndentLevel(sheet.Cells[cellRow, colSupport], 2);
+
+                                        #region Total
+                                        if (_allowTotal)
+                                        {
+                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
+
+                                            TextStyle(sheet.Cells[cellRow, colTotal], L3Text, L3Background);
+                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                        }
+                                        #endregion
+
+                                        #region PDM
+                                        if (_allowPdm)
+                                        {
+                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+                                            SetPercentFormat(sheet.Cells[cellRow, colPdm]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
+
+                                            TextStyle(sheet.Cells[cellRow, colPdm], L3Text, L3Background);
+                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                        }
+                                        #endregion
+
+                                        #region Totals years
+                                        for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                        {
+                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+
+                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L3Text, L3Background);
+                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                        }
+                                        #endregion
 
                                         /*
                                         AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan);
                                         */
-                                        if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                        {
-                                            for (int k = 1; k <= nbColYear; k++)
-                                            {
-                                                //AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear-3) + k);
-                                            }
-                                        }
+                                        //if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                        //{
+                                        //    for (int k = 1; k <= nbColYear; k++)
+                                        //    {
+                                        //        //AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear-3) + k);
+                                        //    }
+                                        //}
                                         j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
                                     }
+                                    //else
+                                    //{
+                                    //    //TextStyle(sheet.Cells[cellRow, colSupport], L3Text, L3Background);
+                                    //    //BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                    //}
                                     break;
                                 #endregion
 
@@ -3010,17 +3094,52 @@ namespace Km.AdExpressClientWeb.Controllers
                                 case L4_COLUMN_INDEX:
                                     sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
 
-                                    TextStyle(sheet.Cells[cellRow, colSupport], Cyan, MiddleGray);
-                                    BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, DarkGray);
+                                    TextStyle(sheet.Cells[cellRow, colSupport], L4Text, L4Background);
+                                    BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                    SetIndentLevel(sheet.Cells[cellRow, colSupport], 3);
+
+                                    #region Total
+                                    if (_allowTotal)
+                                    {
+                                        sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                        SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
+                                        SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
+
+                                        TextStyle(sheet.Cells[cellRow, colTotal], L4Text, L4Background);
+                                        BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                    }
+                                    #endregion
+
+                                    #region PDM
+                                    if (_allowPdm)
+                                    {
+                                        sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+                                        SetPercentFormat(sheet.Cells[cellRow, colPdm]);
+                                        SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
+
+                                        TextStyle(sheet.Cells[cellRow, colPdm], L4Text, L4Background);
+                                        BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                    }
+                                    #endregion
+
+                                    #region Totals years
+                                    for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                    {
+                                        sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+
+                                        TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L4Text, L4Background);
+                                        BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                    }
+                                    #endregion
 
                                     //AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan);
-                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                    {
-                                        for (int k = 1; k <= nbColYear; k++)
-                                        {
-                                            //AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear-4) + k);
-                                        }
-                                    }
+                                    //if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    //{
+                                    //    for (int k = 1; k <= nbColYear; k++)
+                                    //    {
+                                    //        //AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear-4) + k);
+                                    //    }
+                                    //}
                                     j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
                                     break;
                                 #endregion
@@ -3031,8 +3150,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                     {
                                         sheet.Cells[cellRow, currentColMediaPlan].Value = "";
 
-                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], White, DarkGray);
-                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
+                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
 
                                         currentColMediaPlan++;
                                         break;
@@ -3045,16 +3164,17 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (_showValues)
                                                 {
                                                     sheet.Cells[cellRow, currentColMediaPlan].Value = ((MediaPlanItem)data[i, j]).Unit;
+                                                    SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
 
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {
-                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], Cyan, White);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
                                                     }
                                                     else
                                                     {
-                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], Black, Orange);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
                                                     }
                                                 }
                                                 else
@@ -3063,13 +3183,13 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {
-                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], Cyan, White);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
                                                     }
                                                     else
                                                     {
-                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], Black, Orange);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
                                                     }
                                                 }
                                                 break;
@@ -3078,29 +3198,28 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
-                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], White, Cyan);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText, ExtendedBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
                                                 }
                                                 else
                                                 {
-                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], White, DarkGray);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText, ExtendedBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
                                                 }
 
                                                 break;
                                             default:
                                                 sheet.Cells[cellRow, currentColMediaPlan].Value = "";
-                                                //WorkSheet.PutCellValue(excel, cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellNotPresent", null, styleExcel);
 
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
-                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], White, Cyan);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText, NotPresentBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
                                                 }
                                                 else
                                                 {
-                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], White, DarkGray);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, LightGray);
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText, NotPresentBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
                                                 }
 
                                                 break;
@@ -3129,24 +3248,32 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 //#region Mise en forme de la page
 
-                #region Ajustement de la taile des cellules en fonction du contenu                
+                #region Ajustement de la taile des cellules en fonction du contenu 
+
+                sheet.AutoFitColumns();
                 //sheet.AutoFitColumn(colSupport);
-                AutoFit(sheet, colSupport, startIndex, data.GetLength(0));
+                //AutoFit(sheet, colSupport, startIndex, data.GetLength(0));
 
-                if (_allowTotal)
-                    AutoFit(sheet, colTotal, startIndex, data.GetLength(0));
+                //if (_allowTotal)
+                //    AutoFit(sheet, colTotal, startIndex, data.GetLength(0));
 
-                if (_allowPdm)
-                    AutoFit(sheet, colPdm, startIndex, data.GetLength(0));
+                //if (_allowPdm)
+                //    AutoFit(sheet, colPdm, startIndex, data.GetLength(0));
 
-                if (_showValues)
-                {
-                    for (int c = colFirstMediaPlan; c <= (nbColTabCell + 1 - colFirstMediaPlan); c++)
-                    {
-                        AutoFit(sheet, c, startIndex, data.GetLength(0));
-                    }
-                }
+                //if (_showValues)
+                //{
+                //    for (int c = colFirstMediaPlan; c <= (nbColTabCell + 1 - colFirstMediaPlan); c++)
+                //    {
+                //        AutoFit(sheet, c, startIndex, data.GetLength(0));
+                //    }
+                //}
                 #endregion
+
+
+
+                //sheet.PageSetup.Orientation = PageOrientationType.Landscape;
+                //sheet.PageSetup.FitToPagesWide = 1;
+                //sheet.PageSetup.FitToPagesTall = 1;
 
                 //if (_session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.monthly)
                 //{
@@ -3200,13 +3327,11 @@ namespace Km.AdExpressClientWeb.Controllers
             //document.SetCurrentFormat(excelFormat);
             //document.Save(Response.OutputStream);
 
-            //document.SaveToStream(Response.OutputStream);
 
-            document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Excel97To2003));
 
-            //document.Save(this.Response, "Report.xls", ContentDisposition.Inline, new XlsSaveOptions());
+            document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
 
-            //document.Save(Response.OutputStream, documentFileNameRoot, ContentDisposition.Inline, new XlsSaveOptions());
+
 
             Response.End();
 
@@ -3215,6 +3340,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
         private void AutoFit(Worksheet Sheet, int Column, int StartRow, int NbRows)
         {
+
+            Sheet.AutoFitColumns();
+
             //int maxSize = 0;
             //for (int idxRow = StartRow; idxRow < NbRows + StartRow; idxRow++)
             //{
@@ -3250,18 +3378,19 @@ namespace Km.AdExpressClientWeb.Controllers
 
         private void BorderStyle(Worksheet sheet, int idxRow, int idxCol, CellBorderType borderLineStyle, Color color)
         {
+            Style style = sheet.Cells[idxRow, idxCol].GetStyle();
 
-            sheet.Cells[idxRow, idxCol].GetStyle().Borders[BorderType.LeftBorder].LineStyle = borderLineStyle;
-            sheet.Cells[idxRow, idxCol].GetStyle().Borders[BorderType.TopBorder].LineStyle = borderLineStyle;
-            sheet.Cells[idxRow, idxCol].GetStyle().Borders[BorderType.RightBorder].LineStyle = borderLineStyle;
-            sheet.Cells[idxRow, idxCol].GetStyle().Borders[BorderType.BottomBorder].LineStyle = borderLineStyle;
+            style.Borders[BorderType.LeftBorder].LineStyle = borderLineStyle;
+            style.Borders[BorderType.TopBorder].LineStyle = borderLineStyle;
+            style.Borders[BorderType.RightBorder].LineStyle = borderLineStyle;
+            style.Borders[BorderType.BottomBorder].LineStyle = borderLineStyle;
 
-            sheet.Cells[idxRow, idxCol].GetStyle().Borders[BorderType.LeftBorder].Color = color;
-            sheet.Cells[idxRow, idxCol].GetStyle().Borders[BorderType.TopBorder].Color = color;
-            sheet.Cells[idxRow, idxCol].GetStyle().Borders[BorderType.RightBorder].Color = color;
-            sheet.Cells[idxRow, idxCol].GetStyle().Borders[BorderType.BottomBorder].Color = color;
+            style.Borders[BorderType.LeftBorder].Color = color;
+            style.Borders[BorderType.TopBorder].Color = color;
+            style.Borders[BorderType.RightBorder].Color = color;
+            style.Borders[BorderType.BottomBorder].Color = color;
 
-
+            sheet.Cells[idxRow, idxCol].SetStyle(style);
         }
 
         //private void BorderStyle(WorksheetMergedCellsRegion region, CellBorderLineStyle borderLineStyle, Color color)
@@ -3307,26 +3436,116 @@ namespace Km.AdExpressClientWeb.Controllers
             //Implment border attributes.
             flag1.Borders = true;
             //Set the Range style.
+
+
+            //style.ForegroundColor = Color.Aqua;
+
+            ////style.BackgroundColor = Color.Red;
+
+            //style.Pattern = BackgroundType.Solid;
+
+
+
             range.ApplyStyle(style, flag1);
         }
 
-        private void TextStyle(Cell cell, TextAlignmentType horizontalAlignment, TextAlignmentType verticalAlignment, Color foregroundColor, Color backgroundColor)
+        private void TextStyle(Cell cell, TextAlignmentType horizontalAlignment, TextAlignmentType verticalAlignment, Color fontColor, Color foregroundColor)
         {
-            TextStyle(cell, foregroundColor, backgroundColor);
+            TextStyle(cell, fontColor, foregroundColor);
             TextStyle(cell, horizontalAlignment, verticalAlignment);
         }
         private void TextStyle(Cell cell, TextAlignmentType horizontalAlignment, TextAlignmentType verticalAlignment)
         {
+            Style style = cell.GetStyle();
 
-            cell.GetStyle().HorizontalAlignment = horizontalAlignment;
-            cell.GetStyle().VerticalAlignment = verticalAlignment;
+            style.HorizontalAlignment = horizontalAlignment;
+            style.VerticalAlignment = verticalAlignment;
+
+            cell.SetStyle(style);
         }
 
-        private void TextStyle(Cell cell, Color foregroundColor, Color backgroundColor)
+        private void TextStyle(Cell cell, Color fontColor, Color foregroundColor)
         {
+            Style style = cell.GetStyle();
 
-            cell.GetStyle().ForegroundColor = foregroundColor;
-            cell.GetStyle().BackgroundColor = backgroundColor;
+            style.ForegroundColor = foregroundColor;
+            //style.BackgroundColor = backgroundColor;
+            style.Pattern = BackgroundType.Solid;
+
+            style.Font.Color = fontColor;
+
+            cell.SetStyle(style);
         }
+
+        #region AsposeFormat
+        //Value Type    Format String
+        //0	General General
+        //1	Decimal	0
+        //2	Decimal	0.00
+        //3	Decimal	#,##0
+        //4	Decimal	#,##0.00
+        //5	Currency	$#,##0;$-#,##0
+        //6	Currency	$#,##0;[Red]$-#,##0
+        //7	Currency	$#,##0.00;$-#,##0.00
+        //8	Currency	$#,##0.00;[Red]$-#,##0.00
+        //9	Percentage	0%
+        //10	Percentage	0.00%
+        //11	Scientific	0.00E+00
+        //12	Fraction	# ?/?
+        //13	Fraction	# /
+        //14	Date m/d/yy
+        //15	Date d-mmm-yy
+        //16	Date d-mmm
+        //17	Date mmm-yy
+        //18	Time h:mm AM/PM
+        //19	Time h:mm:ss AM/PM
+        //20	Time h:mm
+        //21	Time h:mm:ss
+        //22	Time m/d/yy h:mm
+        //37	Currency	#,##0;-#,##0
+        //38	Currency	#,##0;[Red]-#,##0
+        //39	Currency	#,##0.00;-#,##0.00
+        //40	Currency	#,##0.00;[Red]-#,##0.00
+        //41	Accounting _ * #,##0_ ;_ * "_ ;_ @_
+        //42	Accounting _ $* #,##0_ ;_ $* "_ ;_ @_
+        //43	Accounting _ * #,##0.00_ ;_ * "??_ ;_ @_
+        //44	Accounting _ $* #,##0.00_ ;_ $* "??_ ;_ @_
+        //45	Time mm:ss
+        //46	Time h :mm:ss
+        //47	Time mm:ss.0
+        //48	Scientific	##0.0E+00
+        //49	Text	@
+        #endregion
+
+        private void SetDecimalFormat(Cell cell)
+        {
+            Style style = cell.GetStyle();
+
+            style.Number = 3;
+
+            cell.SetStyle(style);
+        }
+
+        private void SetPercentFormat(Cell cell)
+        {
+            Style style = cell.GetStyle();
+
+            style.Number = 10;
+
+            cell.SetStyle(style);
+        }
+
+        private void SetIndentLevel(Cell cell, int indentLevel, bool isRight = false)
+        {
+            Style style = cell.GetStyle();
+
+            if (isRight == true)
+                style.HorizontalAlignment = TextAlignmentType.Right;
+
+            style.IndentLevel = indentLevel;
+
+            cell.SetStyle(style);
+        }
+
     }
 }
