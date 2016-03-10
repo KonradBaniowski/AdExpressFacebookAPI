@@ -218,7 +218,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
-            JsonResult jsonModel = Json(new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            jsonModel.MaxJsonLength = Int32.MaxValue;
 
             return jsonModel;
         }
