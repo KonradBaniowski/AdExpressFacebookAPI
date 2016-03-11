@@ -379,7 +379,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return error;
         }
         [HttpPost]
-        public JsonResult SaveMarketSelection(List<VM.Tree> trees)
+        public JsonResult SaveMarketSelection(List<VM.Tree> trees, string nextStep)
         {
             string errorMessage = string.Empty;
             if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any())
@@ -391,8 +391,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 var result = _webSessionService.SaveMarketSelection(webSessionId, data,Dimension.product,Security.full);
                 if (result.Success)
                 {
-                    RedirectToAction("MediaSelection");
-                   
+                    UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+                    var redirectUrl = context.Action(nextStep, _controller);
+                    return Json(new { ErrorMessage = errorMessage, RedirectUrl= redirectUrl });
                 }
                 else
                     errorMessage = result.ErrorMessage;                 
