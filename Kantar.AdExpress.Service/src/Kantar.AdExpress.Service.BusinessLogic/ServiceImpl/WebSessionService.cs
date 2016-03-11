@@ -153,6 +153,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     universDictionary = new Dictionary<int, AdExpressUniverse>();
                             universDictionary.Add(universDictionary.Count, univers);
                             _webSession.PrincipalProductUniverses = universDictionary;
+                            response.Success = true;
                             _webSession.Save();
                             _webSession.Source.Close();
                             if (IsValidUniverseLevels(univers, _webSession))
@@ -631,7 +632,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private bool MustSelectIncludeItems(WebSession webSession)
         {
-            switch (_webSession.CurrentModule)
+            switch (webSession.CurrentModule)
             {
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                 case CstWeb.Module.Name.ALERTE_PLAN_MEDIA:
