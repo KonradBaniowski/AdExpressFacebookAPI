@@ -159,20 +159,25 @@ $(function () {
             trees.push(stuff);
         });
         var params = {
-            trees: trees
+            trees: trees,
+            nextStep: "MediaSelection"
         };
             $.ajax({
                 url: '/MediaSchedule/SaveMarketSelection',
                 type: 'POST',
                 //datatype: 'JSON',
                 data: params,
-                error: function (xmlHttpRequest, errorText, thrownError) {
+                error: function (data) {
                     spinner.stop();
+                    bootbox.alert(data.ErrorMessage);
                 },
                 success: function (data) {
                     spinner.stop();
-                    if (data.ErrorMessage != null) {                        
+                    if (data.ErrorMessage != null && data.ErrorMessage !="") {
                         bootbox.alert(data.ErrorMessage);
+                    }
+                    if (data.RedirectUrl!=null && data.RedirectUrl !="") {
+                        document.location = data.RedirectUrl;
                     }
                 }
             });
