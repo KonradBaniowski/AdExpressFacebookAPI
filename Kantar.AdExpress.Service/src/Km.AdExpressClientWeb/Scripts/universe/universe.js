@@ -111,41 +111,77 @@ $(function () {
     //VALIDER 
     $('#btnSubmitMarketSelection').on('click', function (e) {
         e.preventDefault();
-        //bootbox.alert("Hello world!");
+
         var things = [];
+        //$.each($('.nav.nav-tabs > li a'), function (index, elem) {
+        //    var itemContainer = $(elem).attr('data-target');
+        //    var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
+        //    var idUnivers = [];
+        //    $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
+        //        var id = $(elem).attr('data-id');
+        //        idUnivers.push(id);
+        //    });
+        //    var item = {
+        //        AccessType: accessType,
+        //        UniversLevels: idUnivers
+        //    };
+        //    things.push(item);
+        //});
+        var spinner = new Spinner().spin(this);
+        $('#btnSubmitMarketSelection').off('click');
+        var trees = [];
         $.each($('.nav.nav-tabs > li a'), function (index, elem) {
             var itemContainer = $(elem).attr('data-target');
             var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
-            var idUnivers = [];
-            $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
-                var id = $(elem).attr('data-id');
-                idUnivers.push(id);
+            var UniversLvl = [];
+            $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
+                var idLevel = $(elem).attr('data-level');
+                console.log(this);
+                var UniLvl = [];
+                $.each($(this).find('ul > li'), function (index, elem) {
+                    var itemUniver = $(elem).attr('data-id');
+                    var universItems = {
+                        Id: itemUniver
+                    }
+                    UniLvl.push(universItems);
+                });
+                var UnisLvl = {
+                    Id: idLevel,
+                    UniversItems: UniLvl
+                };
+                UniversLvl.push(UnisLvl);
             });
-            var item = {
+            var stuff = {
+                Id: itemContainer,
                 AccessType: accessType,
-                UniversLevels: idUnivers
+                UniversLevels: UniversLvl
             };
-            things.push(item);
+            trees.push(stuff);
         });
         var params = {
-            tree: things,
-            nextStep: "PeriodSelection"
+            trees: trees,
+            nextStep: "MediaSelection"
         };
-        //    $.ajax({
-        //        url: '/MediaSchedule/SaveMediaSelection',
-        //        contentType: 'application/json',
-        //        type: 'POST',
-        //        datatype: 'JSON',
-        //        data: JSON.stringify(params),
-        //        error: function (xmlHttpRequest, errorText, thrownError) {
-        //        },
-        //        success: function (data) {
-        //            if (data != null) {
-        //                document.location = data.RedirectUrl;
-        //            }
-        //        }
-        //    });
-        //}
+
+        $.ajax({
+            url: '/MediaSchedule/SaveMarketSelection',
+            type: 'POST',
+            //datatype: 'JSON',
+            data: params,
+            error: function (data) {
+                spinner.stop();
+                bootbox.alert(data.ErrorMessage);
+            },
+            success: function (data) {
+                spinner.stop();
+                if (data.ErrorMessage != null && data.ErrorMessage !="") {
+                    bootbox.alert(data.ErrorMessage);
+                }
+                if (data.RedirectUrl!=null && data.RedirectUrl !="") {
+                    document.location = data.RedirectUrl;
+                }
+            }
+        });
     });
 
     $('#Market').on('click', function (e) {
@@ -352,24 +388,25 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
             $.each($(this).find('ul > li'), function (index, elem) {
                 var itemUniver = $(elem).attr('data-id');
                 var universItems = {
-                    Id : itemUniver
+                    Id: itemUniver
                 }
                 UniLvl.push(universItems);
             });
             var UnisLvl = {
-                Id : idLevel,
+                Id: idLevel,
                 UniversItems: UniLvl
             };
             UniversLvl.push(UnisLvl);
         });
         var stuff = {
             Id: itemContainer,
+            AccessType: accessType,
             UniversLevels: UniversLvl
         };
         trees.push(stuff);
     });
     var params = {
-        trees:  trees,
+        trees: trees,
         groupId: groupId,
         universId: universId,
         name: name
@@ -381,50 +418,60 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         success: function (response) {
             spinner.stop();
             $('#saveunivers').modal('hide');
+            $.ajax({
+                url: '/MediaSchedule/LoadUserUniversGroups',
+                type: 'GET',
+                error: function (data) {
+                    bootbox.alert(data);
+                },
+                success: function (data) {
+                    $('#monunivers .modal-content').empty();
+                    $('#monunivers .modal-content').append(data);
+                }
+            });
             bootbox.alert(response);
         }
     });
 });
 
 
-    $(document).on('change', '#ddlGroup', function (event) {
-        event.preventDefault();
-        var idGroup = $("#ddlGroup").val();
-        var local = $(this);
-        var spinner = new Spinner().spin(this);
-        $.ajax({
-            url: '/MediaSchedule/GetUniversByGroup',
-            type: 'GET',
-            data: { id: idGroup },
-            success: function (response) {
-                $('#ddlUnivers').empty();
-                $.each(response, function (i, item) {
-                    spinner.stop();
-                    $("#ddlUnivers").append('<option value="' + item.Value + '">' +
-                         item.Text + '</option>');
-                });
-                //$('#ddlUnivers').html(response);
-            }
-        });
+$(document).on('change', '#ddlGroup', function (event) {
+    event.preventDefault();
+    var idGroup = $("#ddlGroup").val();
+    var local = $(this);
+    var spinner = new Spinner().spin(this);
+    $.ajax({
+        url: '/MediaSchedule/GetUniversByGroup',
+        type: 'GET',
+        data: { id: idGroup },
+        success: function (response) {
+            $('#ddlUnivers').empty();
+            $.each(response, function (i, item) {
+                spinner.stop();
+                $("#ddlUnivers").append('<option value="' + item.Value + '">' +
+                     item.Text + '</option>');
+            });
+            //$('#ddlUnivers').html(response);
+        }
     });
+});
 
-    //Clean l'ensemble des elements du tableau
-    $(document).on('click', 'button.tout-suppr', function () {
-        var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
-        var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
-        console.log(idTree);
-        test.find('li').remove();
-        $("#" + idTree + " [id^='collapse'].in").collapse('hide');
-    });
+//Clean l'ensemble des elements du tableau
+$(document).on('click', 'button.tout-suppr', function () {
+    var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
+    var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
+    console.log(idTree);
+    test.find('li').remove();
+    $("#" + idTree + " [id^='collapse'].in").collapse('hide');
+});
 
-    $(document).on('click', '#LoadUnivers', function (event)
-    {
-        event.preventDefault();
-        var spinner = new Spinner().spin(this);
-        $('.btn.btn-valider').off('click');
-        var universId = $('input[name="universOpt"]:checked').val();
-         var params = {
-        id:universId
+$(document).on('click', '#LoadUnivers', function (event) {
+    event.preventDefault();
+    var spinner = new Spinner().spin(this);
+    $('.btn.btn-valider').off('click');
+    var universId = $('input[name="universOpt"]:checked').val();
+    var params = {
+        id: universId
     };
     $.ajax({
         url: '/MediaSchedule/GetUserUnivers',
@@ -433,23 +480,44 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         success: function (response) {
             spinner.stop();
             $('#monunivers').modal('hide');
-            var trees = response.Trees
+            var trees = response.Trees;
             $.each(trees, function (index, tree) {
+                var id = tree.Id + 1;
+                var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
+                $.each($(tree.UniversLevels), function (index, uniLvl) {
+                    console.log(uniLvl);
+                    var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
+                    panel.html('');
+                    $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
+                    SetUniversItems(uniLvl, panel);
+                });
+
             });
         },
-        error: function(response)
-        {
+        error: function (response) {
             spinner.stop();
             bootbox.alert("Error has been occured!");
         }
     });
-    });
+});
 
-    function ShowSelection(elem) {
-        var selectedItems = elem.getSelectableSelectedItems();
-        var result = '';
-        selectedItems.forEach(function (item) {
-            result += ' #' + item.Value + ';' + item.Text + '\n';
-        });
-        alert('Selection : \n' + result);
-    };
+function SetUniversItems(data, panel) {
+    if (data.UniversItems.length > 0) {
+        for (var i = 0; i < data.UniversItems.length; i++) {
+            var item = $('<li/>');
+            item.val(data.UniversItems[i].Id);
+            item.attr('data-id', data.UniversItems[i].Id)
+            item.text(data.UniversItems[i].Label);
+            item.appendTo(panel);
+        }
+    }
+}
+
+function ShowSelection(elem) {
+    var selectedItems = elem.getSelectableSelectedItems();
+    var result = '';
+    selectedItems.forEach(function (item) {
+        result += ' #' + item.Value + ';' + item.Text + '\n';
+    });
+    alert('Selection : \n' + result);
+};
