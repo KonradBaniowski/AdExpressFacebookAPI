@@ -1860,30 +1860,6 @@ namespace TNS.AdExpressI.Insertions
 
             ResultTable _data = GetInsertions(vehicle,fromDate,toDate,filters,universId,zoomDate);
 
-            //ResultTable _data = new ResultTable(20, new Headers());
-            //try {
-
-            //    _data.NewHeaders.Root[0].Key = "0";
-            //    _data.NewHeaders.Root[0].Label = "lab0";
-            //    _data.NewHeaders.Root[1].Key = "1";
-            //    _data.NewHeaders.Root[1].Label = "lab1";
-            //    _data.NewHeaders.Root[2].Key = "2";
-            //    _data.NewHeaders.Root[2].Label = "lab2";
-            //    _data.NewHeaders.Root[3].Key = "3";
-            //    _data.NewHeaders.Root[3].Label = "lab3";
-            //    _data.NewHeaders.Root[4].Key = "4";
-            //    _data.NewHeaders.Root[4].Label = "lab4";
-            //    _data.NewHeaders.Root[5].Key = "5";
-            //    _data.NewHeaders.Root[5].Label = "lab5";
-            //    _data.NewHeaders.Root[6].Key = "6";
-            //    _data.NewHeaders.Root[6].Label = "lab6";
-            //}
-            //catch (Exception err)
-            //{
-            //    throw (new Exception(err.Message));
-            //}
-
-
             int k;
             GridResult gridResult = new GridResult();
             object[,] gridData = new object[_data.LinesNumber, _data.ColumnsNumber];
@@ -1936,6 +1912,50 @@ namespace TNS.AdExpressI.Insertions
                 gridResult.HasData = false;
                 return (gridResult);
             }
+
+
+            //TODO : A Retirer (Pour Test) **********************************************
+            object[,] gridDataTest = new object[30, 5];
+            //object[,] gridDataTest = new object[30, 7];
+            List<object> columnsTest = new List<object>();
+            List<object> schemaFieldsTest = new List<object>();
+            Random rnd = new Random();
+            //columnsTest.Add(new { headerText = "PID", key = "PID", dataType = "string" });
+            //schemaFieldsTest.Add(new { name = "PID" });
+            //columnsTest.Add(new { headerText = "ID", key = "ID", dataType = "string" });
+            //schemaFieldsTest.Add(new { name = "ID" });
+            columnsTest.Add(new { headerText = "Spot", key = "Spot", dataType = "string" });
+            schemaFieldsTest.Add(new { name = "Spot" });
+            columnsTest.Add(new { headerText = "Annonceur", key = "Annonceur", dataType = "string" });
+            schemaFieldsTest.Add(new { name = "Annonceur" });
+            columnsTest.Add(new { headerText = "Produit", key = "Produit", dataType = "string" });
+            schemaFieldsTest.Add(new { name = "Produit" });
+            columnsTest.Add(new { headerText = "Version", key = "Version", dataType = "string" });
+            schemaFieldsTest.Add(new { name = "Version" });
+            columnsTest.Add(new { headerText = "Regie", key = "Regie", dataType = "string" });
+            schemaFieldsTest.Add(new { name = "Régie" });
+            for (int l = 0; l < 30; l++) {
+                for (int m = 0; m < 5; m++)
+                {
+                    if (m < 2)
+                        gridDataTest[l, m] = rnd.Next(1, 4).ToString();
+                    else
+                        gridDataTest[l, m] = "Test";
+                }
+                //for (int m = 0; m < 7; m++){
+                //    if (m < 2)
+                //        gridDataTest[l, m] = rnd.Next(1, 4).ToString();
+                //    else
+                //        gridDataTest[l, m] = "Test";
+                //}
+            }
+            gridResult.HasData = true;
+            gridResult.Columns = columnsTest;
+            gridResult.Schema = schemaFieldsTest;
+            gridResult.ColumnsFixed = null;
+            gridResult.Data = gridDataTest;
+            /***************************************************************************/
+
 
 
             return gridResult;
