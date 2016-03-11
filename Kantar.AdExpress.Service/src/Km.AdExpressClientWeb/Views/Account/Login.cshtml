@@ -6,40 +6,42 @@
 }
 
 <div class="row">
-    <div class="col-md-8 col-sm-8 col-xs-12">
-        <div class="col-md-10" style="padding:40px 0 0 40px;">
-            <div class="page-header-custom">
-                <h1><strong>AdExpress </strong>c'est lorem ipsum dolor sit amet adipiscing lorem</h1>
-                <p>&nbsp;</p>
-            </div>
-            <div class="text-center">
-                <h3><strong>AdExpress </strong>en quelques chiffres</h3>
-                <p>&nbsp;</p>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                <a class="fig">
-                    1347
-                    <span><br />MARQUES</span>
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                <a class="fig">
-                    2400
-                    <span><br />PRODUITS</span>
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                <a class="fig">
-                    170
-                    <span><br />PLAN M&Eacute;DIA</span>
-                </a>
+    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header-custom">
+                    <h1><strong>AdExpress </strong>c'est lorem ipsum dolor sit amet adipiscing lorem</h1>
+                    <p>&nbsp;</p>
+                </div>
+                <div class="text-center">
+                    <h3><strong>AdExpress </strong>en quelques chiffres</h3>
+                    <p>&nbsp;</p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <a class="fig">
+                        1347
+                        <span><br />MARQUES</span>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <a class="fig">
+                        2400
+                        <span><br />PRODUITS</span>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <a class="fig">
+                        170
+                        <span><br />PLAN M&Eacute;DIA</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-12 ">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3  col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
         <div class="panel panel-default login">
             <div class="panel-heading">
-                <img src="../Content/img/logo_kantarmedia.png" class="img-responsive" alt="Ad Express - Kantar Media">
+                <h3><i class="fa fa-user"></i>&nbsp;Connexion</h3>
             </div>
             <div class="panel-body">
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -52,7 +54,7 @@
                                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Utilisateur" })
                                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "mot de passe" })
@@ -67,17 +69,26 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group padding-top-15">
-                        <div class="col-sm-12">
-                            <h5>+ Pas encore client?</h5>
-                        </div>
-                        <div class="col-sm-12">
-                            @Html.ActionLink("Demander votre accès", "ForgotPassword", null, new { @class = "btn btn-blue btn-sm btn-block" })
-                        </div>
-                    </div>
+                    @*<div class="form-group padding-top-15">
+                            <div class="col-sm-12">
+                                <h5>+ Pas encore client?</h5>
+                            </div>
+                            <div class="col-sm-12">
+                                @Html.ActionLink("Demander votre accès", "ForgotPassword", null, new { @class = "btn btn-blue btn-sm btn-block" })
+                            </div>
+                        </div>*@
                 }
             </div>
         </div>
+    </div>
+</div>
+<div class="row fixed-brand">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <img src="../Content/img/logo_kantarmedia.png" class="img-responsive" alt="Ad Express - Kantar Media">
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3  col-lg-offset-6 col-md-offset-6 col-sm-offset-6 col-xs-offset-6">
+        <img src="../Content/img/KM_BP3_Storm_Grey.png" class="img-responsive-promise" alt="Ad Express - Kantar Media">
     </div>
 </div>
 
