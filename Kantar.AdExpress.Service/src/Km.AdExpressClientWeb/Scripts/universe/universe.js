@@ -412,19 +412,19 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         data: params,
         success: function (response) {
             spinner.stop();
-            $('#saveunivers').modal('hide');
+            $('#saveunivers').modal('hide');            
             $.ajax({
                 url: '/MediaSchedule/LoadUserUniversGroups',
                 type: 'GET',
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                    alert("error");
+                error: function (data) {
+                    bootbox.alert(data);
                 },
-                success: function (response) {
+                success: function (data) {
                     $('#monunivers .modal-content').empty();
-                    $('#monunivers .modal-content').append(response);
+                    $('#monunivers .modal-content').append(data);
                 }
-
             });
+            bootbox.alert(response);
         }
     });
 });
