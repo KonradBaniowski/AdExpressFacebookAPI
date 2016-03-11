@@ -111,7 +111,7 @@ $(function () {
     //VALIDER 
     $('#btnSubmitMarketSelection').on('click', function (e) {
         e.preventDefault();
-        
+
         var things = [];
         //$.each($('.nav.nav-tabs > li a'), function (index, elem) {
         //    var itemContainer = $(elem).attr('data-target');
@@ -161,21 +161,21 @@ $(function () {
         var params = {
             trees: trees
         };
-            $.ajax({
-                url: '/MediaSchedule/SaveMarketSelection',
-                type: 'POST',
-                //datatype: 'JSON',
-                data: params,
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                    spinner.stop();
-                },
-                success: function (data) {
-                    spinner.stop();
-                    if (data.ErrorMessage != null) {                        
-                        bootbox.alert(data.ErrorMessage);
-                    }
+        $.ajax({
+            url: '/MediaSchedule/SaveMarketSelection',
+            type: 'POST',
+            //datatype: 'JSON',
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                spinner.stop();
+            },
+            success: function (data) {
+                spinner.stop();
+                if (data.ErrorMessage != null) {
+                    bootbox.alert(data.ErrorMessage);
                 }
-            });
+            }
+        });
         //}
     });
 
@@ -412,7 +412,7 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         data: params,
         success: function (response) {
             spinner.stop();
-            $('#saveunivers').modal('hide');            
+            $('#saveunivers').modal('hide');
             $.ajax({
                 url: '/MediaSchedule/LoadUserUniversGroups',
                 type: 'GET',
@@ -477,21 +477,15 @@ $(document).on('click', '#LoadUnivers', function (event) {
             $('#monunivers').modal('hide');
             var trees = response.Trees;
             $.each(trees, function (index, tree) {
-                var tab = $('.panel-group.panel-group-results[data-access-type=' + tree.AccessType + ']');
-                var access = tree.AccessType;
-                if (tab.length > 1) {
-
-                }
-                else {
-                    $.each($(tree.UniversLevels), function (index, uniLvl) {
-                        console.log(uniLvl);
-                        console.log(access);
-                        var panel = $('.panel-group.panel-group-results[data-access-type=' + tree.AccessType + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
-                        panel.html('');
-                        SetUniversItems(uniLvl, panel);
-
-                    });
-                }
+                var id = tree.Id + 1;
+                var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
+                $.each($(tree.UniversLevels), function (index, uniLvl) {
+                    console.log(uniLvl);
+                    var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
+                    panel.html('');
+                    $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
+                    SetUniversItems(uniLvl, panel);
+                });
 
             });
         },
@@ -502,8 +496,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
     });
 });
 
-function SetUniversItems(data, panel)
-{
+function SetUniversItems(data, panel) {
     if (data.UniversItems.length > 0) {
         for (var i = 0; i < data.UniversItems.length; i++) {
             var item = $('<li/>');

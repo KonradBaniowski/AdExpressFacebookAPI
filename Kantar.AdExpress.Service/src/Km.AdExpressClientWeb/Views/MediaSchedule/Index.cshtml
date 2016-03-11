@@ -83,7 +83,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         @foreach (var tree in Model.Trees)
                         {
-                        <li @(tree == Model.Trees.First() ? "class=active" : "" )>
+                        <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
                             <a data-target="#tab-@(tree.Id)"
                                data-tab="@(tree.Id)"
                                role="tab"
@@ -102,7 +102,7 @@
                     @foreach (var tree in Model.Trees)
                     {
                     <div role="tabpanel"
-                         class="tab-pane @(tree == Model.Trees.First() ? multi : "")"
+                         class="tab-pane @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? multi : "")"
                          id="tab-@(tree.Id)">
                         <div class="panel-group panel-group-results"
                              id="tree-@(tree.Id)"
