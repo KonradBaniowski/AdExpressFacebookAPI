@@ -1,34 +1,47 @@
 ﻿@model List<string>
-
-@{ 
-    Layout = null;
+@{
+    ViewBag.Title = "Insertions";
+    Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
 }
 
-<form>
-    <input name="ids" id="ids" type="hidden" value="@Model[0]"/>
-    <input name= "zoomDate" id = "zoomDate" type ="hidden"  value="@Model[1]"/>
-    <input name= "idUnivers" id = "idUnivers" type ="hidden" value="@Model[2]"/>
-    <input name= "moduleId" id = "moduleId" type ="hidden" value="@Model[3]"/>
-    <input name= "idVehicle" id = "idVehicle" type ="hidden" value="@Model[4]"/>
-</form>
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/flatly/infragistics.theme.css" rel="stylesheet" />
+
+<div class="row">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+        <form>
+            <input name="ids" id="ids" type="hidden" value="@Model[0]" />
+            <input name="zoomDate" id="zoomDate" type="hidden" value="@Model[1]" />
+            <input name="idUnivers" id="idUnivers" type="hidden" value="@Model[2]" />
+            <input name="moduleId" id="moduleId" type="hidden" value="@Model[3]" />
+            <input name="idVehicle" id="idVehicle" type="hidden" value="@Model[4]" />
+        </form>
 
 
-<div class="col-md-9">
-    <center>
-        <div id="grid" class="hide">
-        </div>
-        <div id="gridLoader">
-            <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
-        </div>
-    </center>
+        <center>
+            <div class="panel-heading nav-tabs-alt">
+                <ul id="PresentVehicles" class="nav nav-tabs" role="tablist"></ul>
+            </div>
+            <div id="PresentVehiclesLoader">
+                <img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" />
+            </div>
+
+            <div id="grid" class="hide">
+            </div>
+            <div id="gridLoader" class="hide">
+                <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+            </div>
+        </center>
+
+    </div>
 </div>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
+
+@section Scripts {
 <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
 <script src="~/IgniteUI/js/infragistics.core.js"></script>
 <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 <script>
-    //{columnKey: 'Address', allowHiding: false, hidden: true}
 
     if (typeof jQuery === "undefined") { throw new Error("jQuery") }
     $(function () {
@@ -108,16 +121,17 @@
 
         }
 
+        function CallInsertionsResult(idVehicle) {
 
-        var parameters = {
-            ids: $('#ids').val(),
-            zoomDate: $('#zoomDate').val(),
-            idUnivers: $('#idUnivers').val(),
-            moduleId: $('#moduleId').val(),
-            idVehicle: $('#idVehicle').val()
-        };
+            var parameters = {
+                ids: $('#ids').val(),
+                zoomDate: $('#zoomDate').val(),
+                idUnivers: $('#idUnivers').val(),
+                moduleId: $('#moduleId').val(),
+                idVehicle: idVehicle
+            };
 
-        function CallInsertionsResult() {
+
             $.ajax({
                 url: '@Url.Action("InsertionsResult", "Insertions")',
                 contentType: "application/x-www-form-urlencoded",
@@ -125,7 +139,7 @@
                 datatype: "json",
                 data: parameters,
                 error: function (xmlHttpRequest, errorText, thrownError) {
-                    alert("alert");
+                    alert("Erreur");
                 },
                 success: function (data) {
                     if (data != null) {
@@ -151,8 +165,72 @@
             });
         }
 
-        CallInsertionsResult();
 
+        function CallGetPresentVehicles() {
+
+            var parameters = {
+                ids: $('#ids').val(),
+                idUnivers: $('#idUnivers').val(),
+                moduleId: $('#moduleId').val(),
+            };
+
+            $.ajax({
+                url: '@Url.Action("GetPresentVehicles", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("Erreur");
+                },
+                success: function (response) {
+                    var active = false;
+
+                    if (response != null) {
+                        var data = JSON.parse(response);
+                        var strHTML = "";
+                        $.each(data, function (i, item) {
+                            
+                            //if ((!idVehicle || 0 === idVehicle.length) && !active) {
+                            //    active = true;
+                            //    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>';
+                            //}
+                            //else {
+                            //    if (idVehicle == item[0]) {
+                            //        strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>';
+                            //    }
+                            //    else {
+                            //        strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                            //    }
+                            //}
+
+
+                            if (!active && (!$('#idVehicle').val() || 0 === $('#idVehicle').val())) {
+                                active = item[0];
+                            }
+
+                            if (active == item[i]) {
+                                strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                            } else {
+                                strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                            }
+
+                            $('#PresentVehicles').append(strHTML);
+                        });
+
+                        $("#PresentVehiclesLoader").addClass("hide");
+                        $("#PresentVehicles").removeClass("hide");
+
+                        $("#gridLoader").removeClass("hide");
+                        CallInsertionsResult(active);
+                    }
+                }
+            });
+        }
+
+
+        CallGetPresentVehicles();
     });
 
 </script>
+}

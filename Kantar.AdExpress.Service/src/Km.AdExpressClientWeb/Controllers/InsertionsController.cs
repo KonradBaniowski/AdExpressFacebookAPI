@@ -52,5 +52,21 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
 
+        public JsonResult GetPresentVehicles(string ids, int idUnivers, long moduleId)
+        {
+            string jsonData = "";
+
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var reponse = _insertionsService.GetPresentVehicles(idWebSession, ids, idUnivers, moduleId);
+
+            jsonData = JsonConvert.SerializeObject(reponse);
+            JsonResult jsonModel = Json(jsonData, JsonRequestBehavior.AllowGet);
+
+            return jsonModel;
+        }
+
+
     }
 }
