@@ -159,8 +159,7 @@ $(function () {
             trees.push(stuff);
         });
         var params = {
-            trees: trees,
-            nextUrl: "MediaSelection"
+            trees: trees
         };
             $.ajax({
                 url: '/MediaSchedule/SaveMarketSelection',
@@ -171,9 +170,9 @@ $(function () {
                     spinner.stop();
                 },
                 success: function (data) {
-                    if (data != null) {
-                        spinner.stop();
-                        document.location = data.RedirectUrl;
+                    spinner.stop();
+                    if (data.ErrorMessage != null) {                        
+                        bootbox.alert(data.ErrorMessage);
                     }
                 }
             });

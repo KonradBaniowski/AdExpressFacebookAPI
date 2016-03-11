@@ -379,17 +379,29 @@ namespace Km.AdExpressClientWeb.Controllers
             return error;
         }
         [HttpPost]
-        public ActionResult SaveMarketSelection(List<VM.Tree> trees, string nextUrl)
+        public JsonResult SaveMarketSelection(List<VM.Tree> trees)
         {
-            if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && !String.IsNullOrEmpty(nextUrl))
+            string errorMessage = string.Empty;
+            if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any())
             {
                 var claim = new ClaimsPrincipal(User.Identity);
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 List<VM.Tree> validTrees = trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var data = Mapper.Map<List<Domain.Tree>>(validTrees);
                 var result = _webSessionService.SaveMarketSelection(webSessionId, data,Dimension.product,Security.full);
+                if (result.Success)
+                {
+                    RedirectToAction("MediaSelection");
+                   
+                }
+                else
+                    errorMessage = result.ErrorMessage;                 
             }
-            return View();
+            else
+            {
+                 errorMessage = "Invalid Selection";
+            }
+            return Json(new { ErrorMessage = errorMessage });
         }
 
         #region Private methodes
