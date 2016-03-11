@@ -111,40 +111,71 @@ $(function () {
     //VALIDER 
     $('#btnSubmitMarketSelection').on('click', function (e) {
         e.preventDefault();
-        //bootbox.alert("Hello world!");
+        
         var things = [];
+        //$.each($('.nav.nav-tabs > li a'), function (index, elem) {
+        //    var itemContainer = $(elem).attr('data-target');
+        //    var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
+        //    var idUnivers = [];
+        //    $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
+        //        var id = $(elem).attr('data-id');
+        //        idUnivers.push(id);
+        //    });
+        //    var item = {
+        //        AccessType: accessType,
+        //        UniversLevels: idUnivers
+        //    };
+        //    things.push(item);
+        //});
+        var spinner = new Spinner().spin(this);
+        $('#btnSubmitMarketSelection').off('click');
+        var trees = [];
         $.each($('.nav.nav-tabs > li a'), function (index, elem) {
             var itemContainer = $(elem).attr('data-target');
             var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
-            var idUnivers = [];
-            $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
-                var id = $(elem).attr('data-id');
-                idUnivers.push(id);
+            var UniversLvl = [];
+            $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
+                var idLevel = $(elem).attr('data-level');
+                console.log(this);
+                var UniLvl = [];
+                $.each($(this).find('ul > li'), function (index, elem) {
+                    var itemUniver = $(elem).attr('data-id');
+                    var universItems = {
+                        Id: itemUniver
+                    }
+                    UniLvl.push(universItems);
+                });
+                var UnisLvl = {
+                    Id: idLevel,
+                    UniversItems: UniLvl
+                };
+                UniversLvl.push(UnisLvl);
             });
-            var item = {
+            var stuff = {
+                Id: itemContainer,
                 AccessType: accessType,
-                UniversLevels: idUnivers
+                UniversLevels: UniversLvl
             };
-            things.push(item);
+            trees.push(stuff);
         });
         var params = {
-            tree: things,
-            nextStep: "PeriodSelection"
+            trees: trees
         };
-        //    $.ajax({
-        //        url: '/MediaSchedule/SaveMediaSelection',
-        //        contentType: 'application/json',
-        //        type: 'POST',
-        //        datatype: 'JSON',
-        //        data: JSON.stringify(params),
-        //        error: function (xmlHttpRequest, errorText, thrownError) {
-        //        },
-        //        success: function (data) {
-        //            if (data != null) {
-        //                document.location = data.RedirectUrl;
-        //            }
-        //        }
-        //    });
+            $.ajax({
+                url: '/MediaSchedule/SaveMarketSelection',
+                type: 'POST',
+                //datatype: 'JSON',
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    spinner.stop();
+                },
+                success: function (data) {
+                    spinner.stop();
+                    if (data.ErrorMessage != null) {                        
+                        bootbox.alert(data.ErrorMessage);
+                    }
+                }
+            });
         //}
     });
 
@@ -364,6 +395,7 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         });
         var stuff = {
             Id: itemContainer,
+            AccessType: accessType,
             UniversLevels: UniversLvl
         };
         trees.push(stuff);
