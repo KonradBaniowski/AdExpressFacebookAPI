@@ -211,17 +211,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 var adExpressUniverse = Universes[index];
                 #endregion
                 #region Iterate by Access Type
+                int id = 0;
                 if (adExpressUniverse != null && adExpressUniverse.Count() > 0)
                 {
                     foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
                     {
                         List<NomenclatureElementsGroup> elementsGroups = new List<NomenclatureElementsGroup>();
-
+                        
                         elementsGroups = (type == AccessType.excludes) ? adExpressUniverse.GetExludes() : adExpressUniverse.GetIncludes();
                         if (elementsGroups != null && elementsGroups.Count > 0)
                         {
                             #region Repository 
-                            int id = 0;
+                            
                             foreach (NomenclatureElementsGroup elementGroup in elementsGroups)
                             {
                                 Tree tree = new Tree
