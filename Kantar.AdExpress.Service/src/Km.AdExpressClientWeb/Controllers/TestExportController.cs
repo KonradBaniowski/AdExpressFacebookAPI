@@ -190,31 +190,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             _session = (WebSession)WebSession.Load(idWebSession);
 
-            //DateTime begin = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);            
-            //DateTime end = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
-
-            //MediaSchedulePeriod _period = new MediaSchedulePeriod(begin, end, _session.DetailPeriod);
             MediaSchedulePeriod _period = new MediaSchedulePeriod(_session.PeriodBeginningDate, _session.PeriodEndDate, _session.DetailPeriod);
-
-            var _style = new TNS.AdExpressI.MediaSchedule.Style.DefaultMediaScheduleStyle();
-            //var _style = new TNS.AdExpressI.MediaSchedule.Style.PDFMediaScheduleStyle();
-
-            //MediaScheduleService mediaSchedule = _mediaSchedule as MediaScheduleService;
-
-            //IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfoExcel;
-
-            //WorkbookFormat excelFormat;
-
-            //if (exportFormat)
-            //excelFormat = WorkbookFormat.Excel2007;
-            //else
-            //    excelFormat = WorkbookFormat.Excel97To2003;
-
-            //Workbook document = new Workbook(excelFormat);
-
-
-            //var styleExcel = new TNS.AdExpressI.MediaSchedule.Style.ExcelMediaScheduleStyle();
-
+            
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
 
@@ -2401,13 +2378,6 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Aspose
             if (data.GetLength(0) != 0)
             {
-
-                //document.ChangePalette(LightGray, 25);
-                //document.ChangePalette(MiddleGray, 24);
-                //document.ChangePalette(DarkGray, 23);
-                //document.ChangePalette(Orange, 22);
-                //document.ChangePalette(Cyan, 21);
-
                 document.ChangePalette(HeaderTabBackground, 25);
                 document.ChangePalette(HeaderTabText, 24);
                 document.ChangePalette(HeaderBorderTab, 23);
@@ -2460,16 +2430,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 string formatPdm = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo.GetExcelFormatPattern(EXCEL_PATTERN_NAME_PERCENTAGE);
 
                 bool premier = true;
-                //int header = 1;
                 string prevYearString = string.Empty;
-                //int nbMaxRowByPage = 42;
-                //int s = 1;
                 int cellRow = 5;
                 int startIndex = cellRow;
-                //int upperLeftColumn = 10;
-                //string vPageBreaks = "";
-                //double columnWidth = 0, indexLogo = 0, index;
-                //bool verif = true;
                 int colSupport = 1;
                 int colTotal = 2;
                 int colPdm = 2;
@@ -2478,16 +2441,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 int colInsertion = 2;
                 int colFirstMediaPlan = 2;
 
-                int colorItemIndex = 1;
-                int colorNumberToUse = 0;
                 int sloganIndex = GetSloganIdIndex();
-                Int64 sloganId = long.MinValue;
                 string stringItem = "";
-                //string presentstyle = string.Empty;
-                //string extendedStyle = string.Empty;
-                //string style = string.Empty;
-                //string styleNb = string.Empty;
-                //string stylePdmNb = string.Empty;
                 #endregion
 
                 int yearBegin = _period.Begin.Year;
@@ -2524,9 +2479,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 int nbline = data.GetLength(0);
                 int nbColTabFirst = 0;
                 int nbColTabCell = 0;
-
-                try { _session.SloganColors.Add((Int64)0, _style.VersionCell0); }
-                catch (System.Exception) { }
+                                
                 oMediaScheduleData.PeriodNb = (Int64)Math.Round((double)(nbColTab - firstPeriodIndex) / 7);
 
                 int labColSpan = 1;
@@ -2569,12 +2522,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 TextStyle(sheet.Cells[cellRow - 1, colSupport], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                 BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
-                //TODO
-                //styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colSupport);
-                //if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
-                //{
-                //    styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow + 1, colSupport);
-                //}
                 nbColTabFirst++;
                 #endregion
 
@@ -2594,12 +2541,6 @@ namespace Km.AdExpressClientWeb.Controllers
                     TextStyle(sheet.Cells[cellRow - 1, colTotal], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
-                    //TODO
-                    //styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colSupport);
-                    //if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
-                    //{
-                    //    styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow + 1, colTotal);
-                    //}
                     int nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                     int nbSpace = (nbtot - 1) / 3;
                     int nbCharTotal = nbtot + nbSpace - 5;
@@ -2632,12 +2573,6 @@ namespace Km.AdExpressClientWeb.Controllers
                     TextStyle(sheet.Cells[cellRow - 1, colPdm], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
-                    //TODO
-                    //styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colPdm);
-                    //if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
-                    //{
-                    //    styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow + 1, colPdm);
-                    //}
                     nbColTabFirst++;
                 }
                 else
@@ -2659,12 +2594,6 @@ namespace Km.AdExpressClientWeb.Controllers
                         sheet.Cells.Merge(cellRow - 1, colTotalYears + l, rowSpanNb, labColSpan);
                         range = sheet.Cells.CreateRange(cellRow - 1, colTotalYears + l, rowSpanNb, labColSpan);
 
-                        //TODO
-                        //styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colTotalYears + l);
-                        //if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
-                        //{
-                        //    styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow + 1, colTotalYears + l);
-                        //}
                         sheet.Cells[cellRow - 1, colTotalYears + l].Value = data[0, k];
 
                         TextStyle(sheet.Cells[cellRow - 1, colTotalYears + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
@@ -2706,8 +2635,6 @@ namespace Km.AdExpressClientWeb.Controllers
                                 TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
                                 BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
-                                //TODO
-                                //styleExcel.GetTag("MediaPlanCellYear1").SetStyleExcel(excel, cells, startIndex - 1, nbColTabFirst + nbPeriod);
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
                                 prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
@@ -2834,14 +2761,6 @@ namespace Km.AdExpressClientWeb.Controllers
                             ((_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == _session.GenericMediaDetailLevel.GetNbLevels) ||
                             (_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < _session.GenericMediaDetailLevel.GetNbLevels && data[i, sloganIndex + 1] == null)))
                         {
-                            sloganId = Convert.ToInt64(data[i, sloganIndex]);
-                            if (!_session.SloganColors.ContainsKey(sloganId))
-                            {
-                                colorNumberToUse = (colorItemIndex % _style.CellVersions.Count) + 1;
-                                _session.SloganColors.Add(sloganId, "MediaPlanCellVersions" + colorNumberToUse);
-                                colorItemIndex++;
-                            }
-
                             stringItem = "x";
                         }
                         else
@@ -2990,39 +2909,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         premier = !premier;
 
                                         j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
-                                    }
-                                    //else
-                                    //{
-                                    //    //#region Label
-                                    //    //TextStyle(sheet.Cells[cellRow, colSupport], L2Text, L2Background);
-                                    //    //BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
-                                    //    //#endregion
-
-                                    //    #region Total
-                                    //    if (_allowTotal)
-                                    //    {
-                                    //        sheet.Cells[cellRow, colTotal].Value = "toto";
-                                    //        TextStyle(sheet.Cells[cellRow, colTotal], L2Text, L2Background);
-                                    //        BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
-                                    //    }
-                                    //    #endregion
-
-                                    //    #region PDM
-                                    //    if (_allowPdm)
-                                    //    {
-                                    //        TextStyle(sheet.Cells[cellRow, colPdm], L2Text, L2Background);
-                                    //        BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
-                                    //    }
-                                    //    #endregion
-
-                                    //    #region Totals years
-                                    //    for (int k = 1; k <= nbColYear && _allowTotal; k++)
-                                    //    {
-                                    //        TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L2Text, L2Background);
-                                    //        BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
-                                    //    }
-                                    //    #endregion
-                                    //}
+                                    }                                    
                                     break;
                                 #endregion
 
@@ -3081,12 +2968,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         //    }
                                         //}
                                         j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
-                                    }
-                                    //else
-                                    //{
-                                    //    //TextStyle(sheet.Cells[cellRow, colSupport], L3Text, L3Background);
-                                    //    //BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
-                                    //}
+                                    }                                    
                                     break;
                                 #endregion
 
@@ -3251,22 +3133,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 #region Ajustement de la taile des cellules en fonction du contenu 
 
                 sheet.AutoFitColumns();
-                //sheet.AutoFitColumn(colSupport);
-                //AutoFit(sheet, colSupport, startIndex, data.GetLength(0));
-
-                //if (_allowTotal)
-                //    AutoFit(sheet, colTotal, startIndex, data.GetLength(0));
-
-                //if (_allowPdm)
-                //    AutoFit(sheet, colPdm, startIndex, data.GetLength(0));
-
-                //if (_showValues)
-                //{
-                //    for (int c = colFirstMediaPlan; c <= (nbColTabCell + 1 - colFirstMediaPlan); c++)
-                //    {
-                //        AutoFit(sheet, c, startIndex, data.GetLength(0));
-                //    }
-                //}
+                
                 #endregion
 
 
@@ -3436,15 +3303,6 @@ namespace Km.AdExpressClientWeb.Controllers
             //Implment border attributes.
             flag1.Borders = true;
             //Set the Range style.
-
-
-            //style.ForegroundColor = Color.Aqua;
-
-            ////style.BackgroundColor = Color.Red;
-
-            //style.Pattern = BackgroundType.Solid;
-
-
 
             range.ApplyStyle(style, flag1);
         }
