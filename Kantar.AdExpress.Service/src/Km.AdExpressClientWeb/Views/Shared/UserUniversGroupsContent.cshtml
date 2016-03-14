@@ -21,7 +21,7 @@
                         {
                             <div class="radio modal-radio">
                                 <label class="popup-text">
-                                    <input type="radio" name="universOpt">
+                                    <input type="radio" name="universOpt" value="@level.Id">
                                     <i></i>
                                     @level.Description
                                 </label>
@@ -33,7 +33,7 @@
                         {
                             <div class="radio modal-radio">
                                 <label class="popup-text">
-                                    <input type="radio" name="universOpt">
+                                    <input type="radio" name="universOpt" value="@level.Id">
                                     <i></i>
                                     @level.Description
                                 </label>
@@ -46,7 +46,7 @@
         </div>
     }
     <div class="modal-footer">
-        <button type="button" class="btn btn-valider" data-dismiss="modal">@GestionWeb.GetWebWord(Model.LoadUniversCode, Model.SiteLanguage)</button>
+        <button type="button" id="LoadUnivers"class="btn btn-valider" data-dismiss="modal">@GestionWeb.GetWebWord(Model.LoadUniversCode, Model.SiteLanguage)</button>
     </div>
 }
 else

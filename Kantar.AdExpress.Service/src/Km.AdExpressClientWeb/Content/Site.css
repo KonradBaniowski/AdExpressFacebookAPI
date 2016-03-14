@@ -1,4 +1,25 @@
-﻿
+﻿#media-accordion.panel-group > .panel {
+    background-color: transparent;
+    /*border-color: #ff8c00;*/
+    border-color: rgba(0,0,0,0.4);
+    /*border:none;*/
+}
+
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#media-accordion.panel-group .panel > .panel-heading {
+    /*background-color: #ff8c00;*/
+    background-color: rgba(0,0,0,0.4);
+    /*border-color: #ff8c00;*/
+    color: white;
+}
+
+
 .bb-alert {
     position: fixed;
     bottom: 25%;
@@ -240,28 +261,6 @@ form[role] input {
     color: white;
 }
 
-.fig {
-    color: #ffffff;
-    font-weight: 200;
-    font-size: 21px;
-    text-align: center;
-    border-radius: 30px;
-    display: inline-block;
-    padding: 10px;
-    width: 150px;
-    border-left: 1px solid #ffffff;
-    border-right: 1px solid #ffffff;
-    -webkit-transition: all 1s ease;
-    transition: all 1s ease;
-}
-
-    .fig:hover {
-        border-radius: 0px;
-        color: #333;
-        background: #ffffff;
-        opacity: 0.3;
-        text-decoration: none;
-    }
 
 input {
     background-color: #ffffff;
@@ -580,7 +579,7 @@ input {
 
 
 .row.bg-black-only {
-    margin: 15px;
+    margin: 0px;
     padding-bottom: 15px;
 }
 
@@ -985,7 +984,7 @@ input {
 }
 
     .i-switch input {
-        position: absolute;
+        position: relative;
         opacity: 0;
         filter: alpha(opacity=0);
     }
@@ -1433,6 +1432,10 @@ ul.ui-selectable {
     color: #333333;
 }
 
+.bootbox-body {
+    color: #333333;
+}
+
 .modal-footer {
     padding: 8px 20px 6px;
     margin-top: 15px;
@@ -1447,6 +1450,7 @@ ul.ui-selectable {
 .modal-radio {
     margin-left: 10px;
 }
+
 .btn-save-univers {
     color: #ff8c00;
     background-color: rgba(0,0,0,0.6);
@@ -1470,6 +1474,41 @@ ul.ui-selectable {
     cursor: pointer;
 }
 
+.row.fixed-brand {
+    position: fixed;
+    top: 85%;
+    margin-right: -30px;
+    margin-left: -30px;
+}
+
+.img-responsive-promise {
+    max-width: 50%;
+    margin-top: -10%;
+}
+
 .h20 {
     height: 20px;
 }
+
+/*.fig {
+    color: #ffffff;
+    font-weight: 200;
+    font-size: 21px;
+    text-align: center;
+    border-radius: 30px;
+    display: inline-block;
+    padding: 10px;
+    width: 150px;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+    .fig:hover {
+        border-radius: 0px;
+        color: #333;
+        background: #ffffff;
+        opacity: 0.3;
+        text-decoration: none;
+    }*/
