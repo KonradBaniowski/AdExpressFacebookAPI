@@ -230,6 +230,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             options.UnitOption = unitOption;
             #endregion
 
+            #region InsertionOption
+            InsertionOption insertionOption = new InsertionOption();
+
+            insertionOption.Insertion = new SelectControl();
+            insertionOption.Insertion.Id = "insertion";
+            insertionOption.Insertion.Items = new List<SelectItem>();
+
+            List<ConstantesSession.Insert> inserts = WebCore.Utilities.Units.getInserts();
+            for (int j = 0; j < inserts.Count; j++)
+            {
+                insertionOption.Insertion.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.InsertsTraductionCodes[(ConstantesSession.Insert)inserts[j]], CustomerSession.SiteLanguage), Value = ((int)(ConstantesSession.Insert)inserts[j]).ToString() });
+            }
+
+            insertionOption.Insertion.SelectedId = CustomerSession.Insert.GetHashCode().ToString();
+
+            options.InsertionOption = insertionOption;
+            #endregion
+
             return options;
         }
 
@@ -296,6 +314,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             #region UnitFilter
             CustomerSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
+            #endregion
+
+            #region InsertionFilter
+            CustomerSession.Insert = (ConstantesSession.Insert)userFilter.InsertionFilter.Insertion;
             #endregion
 
             CustomerSession.Save();

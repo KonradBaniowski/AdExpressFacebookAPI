@@ -13,5 +13,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public PeriodDetailOption PeriodDetail { get; set; }
 
         public UnitOption UnitOption { get; set; }
+
+        public InsertionOption InsertionOption { get; set; }
     }
 }

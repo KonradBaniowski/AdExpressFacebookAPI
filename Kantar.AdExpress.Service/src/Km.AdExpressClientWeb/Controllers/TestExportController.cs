@@ -1063,12 +1063,17 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
+<<<<<<< HEAD
         void Export()
+=======
+        public ActionResult ResultValue()
+>>>>>>> mvc5
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
 
+<<<<<<< HEAD
             _session = (WebSession)WebSession.Load(idWebSession);
 
             MediaSchedulePeriod _period = new MediaSchedulePeriod(_session.PeriodBeginningDate, _session.PeriodEndDate, _session.DetailPeriod);
@@ -4317,5 +4322,18 @@ namespace Km.AdExpressClientWeb.Controllers
         //        );
         //}
 
+=======
+            return View();
+        }
+
+        public ActionResult ResultBrut()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
+
+            return View();
+        }
+>>>>>>> mvc5
     }
 }

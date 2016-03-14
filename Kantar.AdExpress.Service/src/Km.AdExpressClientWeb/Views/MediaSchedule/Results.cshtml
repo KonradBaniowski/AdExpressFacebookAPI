@@ -17,6 +17,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="pull-right custom-button">
+            <button class="btn btn-save" id="btn-value">Valeurs&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-valider">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
         </div> 
@@ -58,7 +60,7 @@
 
         //$("#changeColSett").click(function () {
 
-        $('#periodDetailType').selectpicker();
+        
         var ds;
         var cols;
         var colsFixed;
@@ -81,10 +83,15 @@
             this.Unit = $('#unit').val();
         }
 
+        function InsertionFilter() {
+            this.Insertion = $('#insertion').val();
+        }
+
         function UserFilter() {
             this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
             this.PeriodDetailFilter = new PeriodDetailFilter();
             this.UnitFilter = new UnitFilter();
+            this.InsertionFilter = new InsertionFilter();
         }
 
         var userFilter = new UserFilter();
@@ -196,12 +203,22 @@
 
             CallMediaScheduleResult();
 
+            $('#periodDetailType').selectpicker();
+
             $('#periodDetailType').on('change', function (e) {
                 userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
             });
 
             $('#btn-export').on('click', function (e) {
                 window.open('@Url.Action("Index", "TestExport")', "_blank");
+            });
+
+            $('#btn-value').on('click', function (e) {
+                window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
+            });
+
+            $('#btn-brut').on('click', function (e) {
+                window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
             });
 
             $('#validate-options').on('click', function (e) {
@@ -214,6 +231,12 @@
 
             $('#unit').on('change', function (e) {
                 userFilter.UnitFilter.Unit = $('#unit').val();
+            });
+
+            $('#insertion').selectpicker();
+
+            $('#insertion').on('change', function (e) {
+                userFilter.InsertionFilter.Insertion = $('#insertion').val();
             });
 
             $('#defaultDetail').selectpicker();
