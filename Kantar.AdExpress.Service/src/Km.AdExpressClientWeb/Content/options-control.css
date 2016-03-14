@@ -290,7 +290,157 @@ box-shadow:none  !important;
   width:100%;
 }
 
-.options-control .selectdatepicker {
-        width: 100% !important;
-        float: left !important;
+.options-control .btn {
+  font-weight: 500;
+  border-radius: 2px;
+  outline: 0!important;
+  -webkit-transition: all 0.2s ease-in-out 0s;
+  transition: all 0.2s ease-in-out 0s;
+}
+
+.options-control .btn-sans{
+ background:none !important;
+ border:0 !important;
+ cursor: pointer;
+ margin: 0;
+ padding: 3px 0;
+ color: inherit;
+}
+
+.options-control .options{
+  font-size:14px;
+  color:#ffffff !important;
+}
+
+.custom-button .btn-save {
+  color: #ff8c00;
+  background-color: rgba(0,0,0,0.4);
+  border:0;
+  font-weight:bolder;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.custom-button .btn-save:hover,
+.custom-button .btn-save:focus,
+.custom-button .btn-save:active,
+.custom-button .btn-save.active,
+.custom-button .open .dropdown-toggle.btn-save {
+  color: #ff8c00 !important;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.custom-button .btn-save:active,
+.custom-button .btn-save.active,
+.custom-button .open .dropdown-toggle.btn-save {
+  background-image: none;
+}
+
+.custom-button .btn-save > i {
+ font-size: 10px;
+ padding: 0;
+ margin: 0;
+ vertical-align: middle;
+}
+
+.custom-button .btn-valider {
+  color: #fff;
+  background-color: #ff8c00;
+  border:0;
+  font-weight:bolder;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.custom-button .btn-valider:hover,
+.custom-button .btn-valider:focus,
+.custom-button .btn-valider:active,
+.custom-button .btn-valider.active,
+.custom-button .open .dropdown-toggle.btn-valider {
+  color: #fff !important;
+  background-color: #ff9617;
+}
+
+.custom-button .btn-valider:active,
+.custom-button .btn-valider.active,
+.custom-button .open .dropdown-toggle.btn-valider {
+  background-image: none;
+}
+
+.custom-button .btn-valider > i {
+ font-size: 10px;
+ padding: 0;
+ margin: 0;
+}
+
+.selectoptioncontainer {
+    height: 36px !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.selectoptioncontainer button {
+    /*outline: none;*/
+    height: 21px;
+    padding: 0px 12px;
+    background-image: none !important;
+    outline: 0 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size:12px !important;
+}
+
+.selectoptioncontainer.form-control:focus {
+    box-shadow: none;
+}
+
+.selectoptioncontainer .bootstrap-select .btn.selectpicker {
+    background-color: transparent !important;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+.selectoptioncontainer .bootstrap-radio > .btn.btn-link {
+    color: #fff;
+}
+
+.selectoptioncontainer .selectdatepicker {
+    width: 100% !important;
+    float: left !important;
+}
+
+.selectoptioncontainer .dropdown-menu > li > a {
+    color: #fff;
+    background-color: #FF6600;
+    font-size:12px !important;
+}
+
+.selectoptioncontainer .bootstrap-select.btn-group .dropdown-menu {
+    background-color: #CC5200 !important;
+    border: 1px solid #CC5200; /* @beegray*/
+    padding: 0;
+}
+
+.selectoptioncontainer .dropdown-menu > li > a:hover,
+.selectoptioncontainer .dropdown-menu > li > a:focus {
+    text-decoration: none;
+    color: #fff;
+    background-color: transparent !important;
+    outline: none !important;
+}
+
+.selectoptioncontainer .dropdown-menu > li.selected > a {
+    color: #fff;
+    outline: none !important;
+}
+
+.selectoptioncontainer .glyphicon {
+    font-size: 10px;
+}
+
+.selectoptioncontainer .bootstrap-select .dropdown-toggle:focus {
+    background-image: none !important;
+    outline: 0 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }

@@ -1470,6 +1470,7 @@
     <Content Include="Views\Insertions\Index.cshtml" />
     <Content Include="Views\Shared\SaveUserUnivers.cshtml" />
     <Content Include="Views\Shared\_LayoutInsertionVersion.cshtml" />
+    <Content Include="Views\MediaSchedule\_ResultOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

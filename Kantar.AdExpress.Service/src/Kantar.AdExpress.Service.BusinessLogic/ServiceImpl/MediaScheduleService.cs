@@ -27,19 +27,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public object[,] GetMediaScheduleData(string idWebSession)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "");
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession);
             
             return mediaScheduleResult.ComputeData();
         }
 
-        public GridResult GetGridResult(string idWebSession, string periodType)
+        public GridResult GetGridResult(string idWebSession)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, periodType);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession);
 
             return mediaScheduleResult.GetGridResult();
         }
 
-        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string periodType)
+        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession)
         {
             //CustomerSession = (WebSession)WebSession.Load("201603021047501084");
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
@@ -53,13 +53,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
             universeDictionary.Add(universeDictionary.Count, universe);
             CustomerSession.PrincipalProductUniverses = universeDictionary;
-            ArrayList levels = new ArrayList();
-            // Media/catégorie/Support/Annonceur
-            levels.Add(1);
-            levels.Add(2);
-            levels.Add(3);
-            levels.Add(8);
-            CustomerSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+            //ArrayList levels = new ArrayList();
+            //// Media/catégorie/Support/Annonceur
+            //levels.Add(1);
+            //levels.Add(2);
+            //levels.Add(3);
+            //levels.Add(8);
+            //CustomerSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
             CustomerSession.Save();
 #endif
 
@@ -76,16 +76,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             long oldCurrentTab = CustomerSession.CurrentTab;
             System.Windows.Forms.TreeNode oldReferenceUniversMedia = CustomerSession.ReferenceUniversMedia;
 
-            if(!String.IsNullOrEmpty(periodType))
-            {
-                switch (periodType)
-                {
-                    case "Mois": CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly; break;
-                    case "Semaine": CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.weekly; break;
-                    case "Jour": CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly; break;
-                }
-            }
-            ConstantePeriod.DisplayLevel periodDisplay = CustomerSession.DetailPeriod;
+            
 
             #region Period Detail
             DateTime begin;
