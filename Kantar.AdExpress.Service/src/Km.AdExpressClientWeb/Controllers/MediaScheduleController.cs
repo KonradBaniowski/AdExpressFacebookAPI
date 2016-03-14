@@ -31,6 +31,7 @@ using Newtonsoft.Json;
 using Kantar.AdExpress.Service.Core;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -42,16 +43,18 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaScheduleService _mediaSchedule;
         private IUniverseService _universService;
         private IPeriodService _periodService;
+        private IOptionService _optionService;
         private const string _controller = "MediaSchedule";
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
             _mediaSchedule = mediaSchedule;
             _universService = universService;
             _periodService = periodService;
+            _optionService = optionService;
         }
         public ActionResult Index()
         {
@@ -210,11 +213,11 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult MediaScheduleResult(string selectedPeriodType)
+        public JsonResult MediaScheduleResult()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var gridResult = _mediaSchedule.GetGridResult(idWebSession, selectedPeriodType);
+            var gridResult = _mediaSchedule.GetGridResult(idWebSession);
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
@@ -223,6 +226,22 @@ namespace Km.AdExpressClientWeb.Controllers
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
             return jsonModel;
+        }
+
+        public ActionResult ResultOptions()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            Options options = _optionService.GetOptions(idWebSession);
+            return PartialView("_ResultOptions", options);
+        }
+
+        public void SetResultOptions(UserFilter userFilter)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            _optionService.SetOptions(idWebSession, userFilter);
         }
 
         public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)

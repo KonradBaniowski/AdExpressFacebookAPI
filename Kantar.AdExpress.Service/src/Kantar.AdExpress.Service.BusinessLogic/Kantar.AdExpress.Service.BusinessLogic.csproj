@@ -61,6 +61,7 @@
     <Compile Include="ServiceImpl\InsertionsService.cs" />
     <Compile Include="ServiceImpl\MediaScheduleService.cs" />
     <Compile Include="ServiceImpl\MediaService.cs" />
+    <Compile Include="ServiceImpl\OptionService.cs" />
     <Compile Include="ServiceImpl\PeriodService.cs" />
     <Compile Include="ServiceImpl\PortfolioService.cs" />
     <Compile Include="ServiceImpl\RightService.cs" />
