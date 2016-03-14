@@ -509,6 +509,7 @@
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
     <Content Include="Content\options-control.css" />
@@ -1468,6 +1469,7 @@
     <Content Include="Views\Shared\UserUniversGroupsContent.cshtml" />
     <Content Include="Views\Insertions\Index.cshtml" />
     <Content Include="Views\Shared\SaveUserUnivers.cshtml" />
+    <Content Include="Views\Shared\_LayoutInsertionVersion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

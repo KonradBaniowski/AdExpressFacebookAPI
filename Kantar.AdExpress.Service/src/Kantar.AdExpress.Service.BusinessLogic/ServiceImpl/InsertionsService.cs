@@ -78,7 +78,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 _idVehicle = insertionResponse.IdVehicle;
                 VehicleInformation vehicle = VehiclesInformation.Get(insertionResponse.IdVehicle);
 
-              
+                
 
                 string message = string.Empty;
                 if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor &&
@@ -196,6 +196,105 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             return insertionResponse;
 
+        }
+
+
+        public List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId)
+        {
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+            IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
+
+            List<VehicleInformation> Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, false);
+
+            List<List<string>> ListRetour = new List<List<string>>();
+            string vehicle = string.Empty;
+            for (int i = 0; i < Vehicles.Count; i++)
+            {
+                switch (Vehicles[i].Id)
+                {
+                    case CstDBClassif.Vehicles.names.newspaper:
+                        vehicle = GestionWeb.GetWebWord(2620, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.magazine:
+                        vehicle = GestionWeb.GetWebWord(2621, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.press:
+                        vehicle = GestionWeb.GetWebWord(1298, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.pressClipping:
+                        vehicle = GestionWeb.GetWebWord(2955, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.internationalPress:
+                        vehicle = GestionWeb.GetWebWord(646, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.radio:
+                        vehicle = GestionWeb.GetWebWord(644, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.radioGeneral:
+                        vehicle = GestionWeb.GetWebWord(2630, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.radioSponsorship:
+                        vehicle = GestionWeb.GetWebWord(2632, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.radioMusic:
+                        vehicle = GestionWeb.GetWebWord(2631, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.tv:
+                        vehicle = GestionWeb.GetWebWord(1300, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.tvGeneral:
+                        vehicle = GestionWeb.GetWebWord(2633, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.tvClipping:
+                        vehicle = GestionWeb.GetWebWord(2956, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.tvSponsorship:
+                        vehicle = GestionWeb.GetWebWord(2634, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.tvAnnounces:
+                        vehicle = GestionWeb.GetWebWord(2635, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.tvNonTerrestrials:
+                        vehicle = GestionWeb.GetWebWord(2636, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.others:
+                        vehicle = GestionWeb.GetWebWord(647, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.outdoor:
+                        vehicle = GestionWeb.GetWebWord(1302, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.instore:
+                        vehicle = GestionWeb.GetWebWord(2665, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.indoor:
+                        vehicle = GestionWeb.GetWebWord(2644, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.adnettrack:
+                        vehicle = GestionWeb.GetWebWord(648, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.directMarketing:
+                    case CstDBClassif.Vehicles.names.mailValo:
+                        vehicle = GestionWeb.GetWebWord(2989, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.internet:
+                    case CstDBClassif.Vehicles.names.czinternet:
+                        vehicle = GestionWeb.GetWebWord(1301, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.evaliantMobile:
+                        vehicle = GestionWeb.GetWebWord(2577, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.cinema:
+                        vehicle = GestionWeb.GetWebWord(2726, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.editorial:
+                        vehicle = GestionWeb.GetWebWord(2801, _customerWebSession.SiteLanguage);
+                        break;
+                }
+
+                ListRetour.Add(new List<string> { Vehicles[i].DatabaseId.ToString(), vehicle });
+            }
+
+            return ListRetour;
         }
 
 
