@@ -47,16 +47,20 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse">
                     <div class="panel-body mi-padder">
-                        <div class="dropdown select-options">
-                            <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
-                                Total
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu bg-orange">
-                                <li><a href>Insertion 1</a></li>
-                                <li><a href>Insertion 2</a></li>
-                                <li><a href>Insertion 3</a></li>
-                            </ul>
+                        <div class="selectoptioncontainer">
+                            <select id="@Model.InsertionOption.Insertion.Id" class="selectdatepicker">
+                                @foreach (var item in Model.InsertionOption.Insertion.Items)
+                                {
+                                    if (item.Value == Model.InsertionOption.Insertion.SelectedId)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
                         </div>
                     </div>
                 </div>

@@ -1466,6 +1466,8 @@
     <Content Include="Views\Shared\SaveUserUnivers.cshtml" />
     <Content Include="Views\Shared\_LayoutInsertionVersion.cshtml" />
     <Content Include="Views\MediaSchedule\_ResultOptions.cshtml" />
+    <Content Include="Views\TestExport\ResultValue.cshtml" />
+    <Content Include="Views\TestExport\ResultBrut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

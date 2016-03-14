@@ -82,6 +82,8 @@
     <Compile Include="Domain\Period.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelFilter.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelOption.cs" />
+    <Compile Include="Domain\ResultOptions\InsertionFilter.cs" />
+    <Compile Include="Domain\ResultOptions\InsertionOption.cs" />
     <Compile Include="Domain\ResultOptions\Options.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailFilter.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailOption.cs" />
