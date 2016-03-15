@@ -32,5 +32,23 @@ namespace Km.AdExpressClientWeb.Controllers
 
             return View();
         }
+
+        public ActionResult ResultValue()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
+
+            return View();
+        }
+
+        public ActionResult ResultBrut()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
+
+            return View();
+        }
     }
 }

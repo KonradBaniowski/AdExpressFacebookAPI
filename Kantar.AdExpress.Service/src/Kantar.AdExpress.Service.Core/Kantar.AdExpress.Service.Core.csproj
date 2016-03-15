@@ -52,6 +52,7 @@
     <Compile Include="BusinessService\IInsertionsService.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
     <Compile Include="BusinessService\IMediaScheduleService.cs" />
+    <Compile Include="BusinessService\IOptionService.cs" />
     <Compile Include="BusinessService\IPortfolioService.cs" />
     <Compile Include="BusinessService\IUniverseService.cs" />
     <Compile Include="BusinessService\IMediaService.cs" />
@@ -79,6 +80,18 @@
     <Compile Include="Domain\Mau\RightAssignment.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
     <Compile Include="Domain\Period.cs" />
+    <Compile Include="Domain\ResultOptions\GenericDetailLevelFilter.cs" />
+    <Compile Include="Domain\ResultOptions\GenericDetailLevelOption.cs" />
+    <Compile Include="Domain\ResultOptions\InsertionFilter.cs" />
+    <Compile Include="Domain\ResultOptions\InsertionOption.cs" />
+    <Compile Include="Domain\ResultOptions\Options.cs" />
+    <Compile Include="Domain\ResultOptions\PeriodDetailFilter.cs" />
+    <Compile Include="Domain\ResultOptions\PeriodDetailOption.cs" />
+    <Compile Include="Domain\ResultOptions\SelectControl.cs" />
+    <Compile Include="Domain\ResultOptions\SelectItem.cs" />
+    <Compile Include="Domain\ResultOptions\UnitFilter.cs" />
+    <Compile Include="Domain\ResultOptions\UnitOption.cs" />
+    <Compile Include="Domain\ResultOptions\UserFilter.cs" />
     <Compile Include="Domain\UserUniversGroup.cs" />
     <Compile Include="Domain\UniversBranch.cs" />
     <Compile Include="Domain\Media.cs" />
@@ -102,6 +115,7 @@
       <Name>Kantar.AdExpress.Service.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
