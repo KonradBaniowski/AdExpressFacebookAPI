@@ -18,7 +18,12 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 
         public ErrorMessage ErrorMessage { get; set; }
 
+        public List<UniversBranch> Branches { get; set; }
+
+        public List<Tree> Trees { get; set; }
+
         public PresentationModel Presentation { get; set; }
+        public Labels Labels { get; set; }
 
     }
 
