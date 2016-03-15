@@ -194,6 +194,7 @@
     <Compile Include="Models\PeriodSelectionViewModel.cs" />
     <Compile Include="Models\PeriodViewModel.cs" />
     <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />
+    <Compile Include="Models\Portfolio\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1475,6 +1476,7 @@
     <Content Include="Views\MediaSchedule\_ResultOptions.cshtml" />
     <Content Include="Views\TestExport\ResultValue.cshtml" />
     <Content Include="Views\TestExport\ResultBrut.cshtml" />
+    <Content Include="Views\Portfolio\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
