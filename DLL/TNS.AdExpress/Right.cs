@@ -713,7 +713,9 @@ namespace TNS.AdExpress
                 {
                     foreach (DataRow row in ds.Tables[0].Rows)
                     {
-                        _modulesRights.Add((Int64)row[1], ModulesList.GetModule((Int64)row[1]));
+                        var index = (Int64)row[1];
+                        var i = ModulesList.GetModule((Int64)row[1]);
+                        _modulesRights.Add(index, i);
                     }
                 }
             }
