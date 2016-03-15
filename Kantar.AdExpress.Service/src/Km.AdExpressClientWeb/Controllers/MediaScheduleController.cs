@@ -523,7 +523,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 LoadUnivers = GestionWeb.GetWebWord(LanguageConstantes.LoadUniversCode, siteLanguage),
                 Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
-                ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage)
+                ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
+                Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
+                Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage)
             };
             return result;
         }

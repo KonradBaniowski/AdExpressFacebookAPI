@@ -69,7 +69,7 @@
                 <div class="panel-heading" role="tab" id="headingTwo">
                     <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <i class="fa fa-search"></i> Affiner la recherche
+                            <i class="fa fa-search"></i> @Model.Labels.Refine
                         </a>
                     </h4>
                 </div>
@@ -79,8 +79,8 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="row bg-black-only">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading">
-                                        <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp;bla</h4>
-                                        <h4 class="pull-right"> bla2</h4>
+                                        <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp;@Model.Labels.KeyWordLabel </h4>
+                                        <h5 class="pull-right"> @Model.Labels.KeyWordDescription</h5>
                                         <div class="clearfix"></div>
                                         <div class="input-group">
                                             <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">

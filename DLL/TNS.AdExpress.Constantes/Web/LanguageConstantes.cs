@@ -13,6 +13,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MediaScheduleDescriptionCode = 2200;
         public const long SaveUniversCode = 769;
         public const long LoadUniversCode = 770;
+        public const long ResultsCode = 829;
         public const long UserUniversCode = 875;
         public const long UserSavedUniversCode = 893;
         public const long SelectUniversGroup = 917;
@@ -21,6 +22,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
         public const long Capacity = 1000;
+        public const long RefineCode = 1130;
         public const long PortfolioCode = 2170;
         public const long PortfolioDescriptionCode = 2199;
         public const long SelectUnivers = 2261;
