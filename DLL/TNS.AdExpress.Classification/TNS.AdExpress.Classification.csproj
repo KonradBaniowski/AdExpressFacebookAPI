@@ -98,9 +98,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Oracle.DataAccess, Version=2.102.2.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+    <Reference Include="Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Oracle.DataAccess.dll</HintPath>
+      <HintPath>..\..\Libs\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

@@ -53,12 +53,14 @@ namespace Km.AdExpressClientWeb
                 //throw (error);
             }
 
-            AreaRegistration.RegisterAllAreas();
+            
+            // AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.Configure();
             LoadConfigurations();
+
         }
 
         protected static void LoadConfigurations()
