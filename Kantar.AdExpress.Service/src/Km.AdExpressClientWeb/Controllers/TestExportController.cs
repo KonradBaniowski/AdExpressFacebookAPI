@@ -184,12 +184,38 @@ namespace Km.AdExpressClientWeb.Controllers
         // GET: TestExport
         public ActionResult Index()
         {
-            Export1();
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
+
+            Export();
 
             return View();
         }
 
-        void Export1()
+        public ActionResult ResultValue()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
+
+            Export(true);
+
+            return View();
+        }
+
+        public ActionResult ResultBrut()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
+
+            ExportBrut();
+
+            return View();
+        }
+
+        void ExportBrut()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -245,7 +271,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 bool _allowTotal = true;
                 bool _allowPdm = true;
-                bool _showValues = false;
+                bool _showValues = true;
 
                 #region Init Variables
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
@@ -347,7 +373,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 #region Total Column
                 if (_allowTotal)
                 {
-                    colTotal = 2 + nbColTabFirst;
+                    colTotal = 2 + nbColTabFirst - 1;
                     colPdm = colPdm + nbColTabFirst;
                     colVersion = colVersion + nbColTabFirst;
                     colInsertion = colInsertion + nbColTabFirst;
@@ -703,24 +729,23 @@ namespace Km.AdExpressClientWeb.Controllers
                                     if (data[i, j] != null)
                                     {
                                         #region Label
-                                        sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
+                                        //sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
                                         classifLabels[1] = data[i, j].ToString();
 
                                         for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
                                         {
 
-                                            if (level < 2)
+                                            if (level <= 1)
                                             {
                                                 sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
                                             }
-                                            else if (level > 2)
+                                            else if (level > 1)
                                             {
                                                 sheet.Cells[cellRow, colLevel].Value = GestionWeb.GetWebWord(1401, _session.SiteLanguage);
                                             }
 
                                             TextStyle(sheet.Cells[cellRow, colLevel], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
-                                            SetIndentLevel(sheet.Cells[cellRow, colLevel], 1);
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);                                            
                                         }
                                         #endregion
 
@@ -771,11 +796,24 @@ namespace Km.AdExpressClientWeb.Controllers
                                 case L3_COLUMN_INDEX:
                                     if (data[i, j] != null)
                                     {
-                                        sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
+                                        //sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
+                                        classifLabels[2] = data[i, j].ToString();
 
-                                        TextStyle(sheet.Cells[cellRow, colSupport], L3Text, L3Background);
-                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
-                                        SetIndentLevel(sheet.Cells[cellRow, colSupport], 2);
+                                        for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
+                                        {
+
+                                            if (level <= 2)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
+                                            }
+                                            else if (level > 2)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = GestionWeb.GetWebWord(1401, _session.SiteLanguage);
+                                            }
+
+                                            TextStyle(sheet.Cells[cellRow, colLevel], L3Text, L3Background);
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);                                            
+                                        }
 
                                         #region Total
                                         if (_allowTotal)
@@ -830,11 +868,25 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                 #region Level 4
                                 case L4_COLUMN_INDEX:
-                                    sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
+                                    //sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
 
-                                    TextStyle(sheet.Cells[cellRow, colSupport], L4Text, L4Background);
-                                    BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
-                                    SetIndentLevel(sheet.Cells[cellRow, colSupport], 3);
+                                    classifLabels[3] = data[i, j].ToString();
+
+                                    for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
+                                    {
+
+                                        if (level <= 3)
+                                        {
+                                            sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
+                                        }
+                                        else if (level > 3)
+                                        {
+                                            sheet.Cells[cellRow, colLevel].Value = GestionWeb.GetWebWord(1401, _session.SiteLanguage);
+                                        }
+
+                                        TextStyle(sheet.Cells[cellRow, colLevel], L4Text, L4Background);
+                                        BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);                                        
+                                    }
 
                                     #region Total
                                     if (_allowTotal)
@@ -905,6 +957,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 {
                                                     sheet.Cells[cellRow, currentColMediaPlan].Value = ((MediaPlanItem)data[i, j]).Unit;
                                                     SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
+                                                    SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
 
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {
@@ -1063,17 +1116,12 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-<<<<<<< HEAD
-        void Export()
-=======
-        public ActionResult ResultValue()
->>>>>>> mvc5
+        void Export(bool _showValues = false)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
 
-<<<<<<< HEAD
             _session = (WebSession)WebSession.Load(idWebSession);
 
             MediaSchedulePeriod _period = new MediaSchedulePeriod(_session.PeriodBeginningDate, _session.PeriodEndDate, _session.DetailPeriod);
@@ -3298,7 +3346,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 bool _allowTotal = true;
                 bool _allowPdm = true;
-                bool _showValues = false;
+                //bool _showValues = false;
 
                 #region Init Variables
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
@@ -3943,6 +3991,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 {
                                                     sheet.Cells[cellRow, currentColMediaPlan].Value = ((MediaPlanItem)data[i, j]).Unit;
                                                     SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
+                                                    SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
 
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {
@@ -4322,18 +4371,5 @@ namespace Km.AdExpressClientWeb.Controllers
         //        );
         //}
 
-=======
-            return View();
-        }
-
-        public ActionResult ResultBrut()
-        {
-            var claim = new ClaimsPrincipal(User.Identity);
-            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _mediaSchedule.GetMediaScheduleData(idWebSession);
-
-            return View();
-        }
->>>>>>> mvc5
     }
 }
