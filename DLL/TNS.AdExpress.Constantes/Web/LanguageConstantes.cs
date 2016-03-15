@@ -22,7 +22,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
         public const long Capacity = 1000;
-        public const long RefineCode = 1130;
+        public const long RefineCode = 2053;
         public const long PortfolioCode = 2170;
         public const long PortfolioDescriptionCode = 2199;
         public const long SelectUnivers = 2261;
