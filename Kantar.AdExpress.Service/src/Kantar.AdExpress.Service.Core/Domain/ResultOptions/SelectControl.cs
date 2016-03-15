@@ -13,5 +13,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public string SelectedId { get; set; }
 
         public List<SelectItem> Items { get; set; }
+
+        public bool Visible { get; set; }
     }
 }

@@ -80,6 +80,10 @@
     <Compile Include="Domain\Mau\RightAssignment.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
     <Compile Include="Domain\Period.cs" />
+    <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />
+    <Compile Include="Domain\ResultOptions\AutoPromoOption.cs" />
+    <Compile Include="Domain\ResultOptions\FormatFilter.cs" />
+    <Compile Include="Domain\ResultOptions\FormatOption.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelFilter.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelOption.cs" />
     <Compile Include="Domain\ResultOptions\InsertionFilter.cs" />
@@ -87,6 +91,8 @@
     <Compile Include="Domain\ResultOptions\Options.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailFilter.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailOption.cs" />
+    <Compile Include="Domain\ResultOptions\PurchaseModeFilter.cs" />
+    <Compile Include="Domain\ResultOptions\PurchaseModeOption.cs" />
     <Compile Include="Domain\ResultOptions\SelectControl.cs" />
     <Compile Include="Domain\ResultOptions\SelectItem.cs" />
     <Compile Include="Domain\ResultOptions\UnitFilter.cs" />

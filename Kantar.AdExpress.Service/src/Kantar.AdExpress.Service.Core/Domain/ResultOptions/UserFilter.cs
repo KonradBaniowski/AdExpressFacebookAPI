@@ -15,5 +15,11 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public UnitFilter UnitFilter { get; set; }
 
         public InsertionFilter InsertionFilter { get; set; }
+
+        public AutoPromoFilter AutoPromoFilter { get; set; }
+
+        public FormatFilter FormatFilter { get; set; }
+
+        public PurchaseModeFilter PurchaseModeFilter { get; set; }
     }
 }
