@@ -19,8 +19,12 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using ConstantesSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
+using TNS.AdExpress.Constantes.Customer;
 using ConstantesDB = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -230,11 +234,36 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             options.UnitOption = unitOption;
             #endregion
 
+            #region Options by Vehicle
+            string vehicleListId = CustomerSession.GetSelection(CustomerSession.SelectionUniversMedia, Right.type.vehicleAccess);
+            string[] vehicles = vehicleListId.Split(',');
+            bool autopromoEvaliantOption = false;
+            bool insertOption = false;
+            foreach (string cVehicle in vehicles)
+            {
+                switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)))
+                {
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mms:
+                        autopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
+                        break;
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+                        insertOption = true;
+                        break;
+                }
+            }
+            #endregion
+
             #region InsertionOption
             InsertionOption insertionOption = new InsertionOption();
 
             insertionOption.Insertion = new SelectControl();
             insertionOption.Insertion.Id = "insertion";
+            insertionOption.Insertion.Visible = insertOption;
             insertionOption.Insertion.Items = new List<SelectItem>();
 
             List<ConstantesSession.Insert> inserts = WebCore.Utilities.Units.getInserts();
@@ -248,6 +277,88 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             options.InsertionOption = insertionOption;
             #endregion
 
+            #region AutoPromoOption
+            AutoPromoOption autoPromoOption = new AutoPromoOption();
+
+            autoPromoOption.AutoPromo = new SelectControl();
+            autoPromoOption.AutoPromo.Id = "autoPromo";
+            autoPromoOption.AutoPromo.Visible = autopromoEvaliantOption;
+            autoPromoOption.AutoPromo.Items = new List<SelectItem>();
+
+            ArrayList autoPromoItems = new ArrayList();
+            autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.total], CustomerSession.SiteLanguage),  Value = "0" });
+            autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.exceptAutoPromoAdvertiser], CustomerSession.SiteLanguage), Value = "1" });
+            autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.exceptAutoPromoHoldingCompany], CustomerSession.SiteLanguage), Value = "2" });
+
+            autoPromoOption.AutoPromo.SelectedId = CustomerSession.AutoPromo.GetHashCode().ToString();
+
+            options.AutoPromoOption = autoPromoOption;
+            #endregion
+
+            #region FormatOption
+            FormatOption formatOption = new FormatOption();
+
+            formatOption.Format = new SelectControl();
+            formatOption.Format.Id = "format";
+            formatOption.Format.Visible = autopromoEvaliantOption;
+            formatOption.Format.Items = new List<SelectItem>();
+
+            var activeBannersFormatList = new List<FilterItem>(CustomerSession.GetValidFormatList(CustomerSession.GetVehiclesSelected()).Values);
+            if (activeBannersFormatList.Count > 0)
+            {
+                foreach (FilterItem item in activeBannersFormatList)
+                {
+                    formatOption.Format.Items.Add(new SelectItem { Text = item.Label, Value = item.Id.ToString() });
+                }
+
+                if (string.IsNullOrEmpty(CustomerSession.SelectedBannersFormatList))
+                    formatOption.Format.SelectedId = string.Join(",", activeBannersFormatList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                else formatOption.Format.SelectedId = CustomerSession.SelectedBannersFormatList;
+            }
+            else
+            {
+                formatOption.Format.Visible = false;
+            }
+
+            options.FormatOption = formatOption;
+            #endregion
+
+            #region PurchaseModeOption
+            PurchaseModeOption purchaseModeOption = new PurchaseModeOption();
+
+            purchaseModeOption.PurchaseMode = new SelectControl();
+            purchaseModeOption.PurchaseMode.Id = "purchaseMode";
+            purchaseModeOption.PurchaseMode.Visible = autopromoEvaliantOption;
+            purchaseModeOption.PurchaseMode.Items = new List<SelectItem>();
+
+            Dictionary<Int64, VehicleInformation> VehicleInformationList = CustomerSession.GetVehiclesSelected();
+            if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId))
+            {
+                var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                if (purchaseModeList.Count > 0)
+                {
+                    foreach (FilterItem item in purchaseModeList)
+                    {
+                        purchaseModeOption.PurchaseMode.Items.Add(new SelectItem { Text = item.Label, Value = item.Id.ToString() });
+                    }
+
+                    if (string.IsNullOrEmpty(CustomerSession.SelectedPurchaseModeList))
+                        purchaseModeOption.PurchaseMode.SelectedId = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                    else purchaseModeOption.PurchaseMode.SelectedId = CustomerSession.SelectedPurchaseModeList;
+                }
+                else
+                {
+                    purchaseModeOption.PurchaseMode.Visible = false;
+                }
+            }
+            else
+            {
+                purchaseModeOption.PurchaseMode.Visible = false;
+            }
+
+            options.PurchaseModeOption = purchaseModeOption;
+            #endregion
+
             return options;
         }
 
@@ -255,7 +366,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
             CurrentModule = WebNavigation.ModulesList.GetModule(CustomerSession.CurrentModule);
-
+            
             #region GenericDetailLevelFilter
             ArrayList levels = new ArrayList();
 
@@ -316,8 +427,48 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             CustomerSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
             #endregion
 
+            #region Options by Vehicle
+            string vehicleListId = CustomerSession.GetSelection(CustomerSession.SelectionUniversMedia, Right.type.vehicleAccess);
+            string[] vehicles = vehicleListId.Split(',');
+            bool autopromoEvaliantOption = false;
+            bool insertOption = false;
+            foreach (string cVehicle in vehicles)
+            {
+                switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)))
+                {
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mms:
+                        autopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
+                        break;
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+                        insertOption = true;
+                        break;
+                }
+            }
+            #endregion
+
             #region InsertionFilter
-            CustomerSession.Insert = (ConstantesSession.Insert)userFilter.InsertionFilter.Insertion;
+            if (insertOption)
+                CustomerSession.Insert = (ConstantesSession.Insert)userFilter.InsertionFilter.Insertion;
+            #endregion
+
+            #region AutoPromoFilter
+            if (autopromoEvaliantOption)
+                CustomerSession.AutoPromo = (ConstantesSession.AutoPromo)userFilter.AutoPromoFilter.AutoPromo;
+            #endregion
+
+            #region FormatFilter
+            if (autopromoEvaliantOption)
+                CustomerSession.SelectedBannersFormatList = userFilter.FormatFilter.Formats;
+            #endregion
+
+            #region PurchaseModeFilter
+            if (autopromoEvaliantOption)
+                CustomerSession.SelectedPurchaseModeList = userFilter.PurchaseModeFilter.PurchaseModes;
             #endregion
 
             CustomerSession.Save();

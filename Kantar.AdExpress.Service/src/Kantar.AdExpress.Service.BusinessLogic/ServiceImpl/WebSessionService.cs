@@ -653,13 +653,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             if ( webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
             {
-                string eventArg = string.Empty;
-                var vehiclesSelected = _webSession.GetVehiclesSelected();
+                var vehiclesSelected = webSession.GetVehiclesSelected();
                 //if (Page.Request.Form.GetValues("__EVENTARGUMENT") != null &&
                 //    Page.Request.Form.GetValues("__EVENTARGUMENT")[0] != null)
                 //    eventArg = Page.Request.Form.GetValues("__EVENTARGUMENT")[0];
 
-                if (vehiclesSelected.Count > 0)// && (eventArg.Equals("4") || eventArg.Equals("9999")))
+                if (vehiclesSelected!=null && vehiclesSelected.Count > 0)// && (eventArg.Equals("4") || eventArg.Equals("9999")))
                 {
                     var param = new object[1];
                     param[0] = _webSession;

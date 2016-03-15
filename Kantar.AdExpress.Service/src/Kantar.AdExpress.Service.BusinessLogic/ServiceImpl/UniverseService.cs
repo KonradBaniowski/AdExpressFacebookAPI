@@ -21,7 +21,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     public class UniverseService : IUniverseService
     {
         private WebSession webSession = null;
-        private const int MarketSelectionPageId = 2;// /Private/Helps/UniverseProductSelectionHelp.aspx
+        //private const int MarketSelectionPageId = 2;// /Private/Helps/UniverseProductSelectionHelp.aspx
         private const long Capacity = 1000;
         private const long ExceptionMsg = 922;
         private const long SecurityMsg = 2285;
@@ -84,9 +84,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             nbItems = result.Count;
             return result.Take(1000).ToList();
         }
-        public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage = true)
+        public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, int pageId, bool selectionPage = true)
         {
-            var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
+            var tuple = GetAllowedIds(webSessionId, dimension, pageId, selectionPage);
 
             var result = new UniversBranchResult
             {
@@ -152,9 +152,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public UniversGroupsResponse GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage = true)
+        public UniversGroupsResponse GetUserSavedUniversGroups(string webSessionId, Dimension dimension, int pageId, bool selectionPage = true)
         {
-            var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
+            var tuple = GetAllowedIds(webSessionId, dimension, pageId, selectionPage);
             UniversGroupsResponse result = new UniversGroupsResponse
             {
                 UniversGroups = new List<UserUniversGroup>(),
@@ -194,7 +194,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public UniversResponse GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension)
+        public UniversResponse GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension, int pageId)
         {
             UniversResponse result = new UniversResponse
             {
@@ -240,7 +240,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 param[1] = dimension;
                                 ClassificationDAL classficationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                                 classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
-                                var tuple = GetAllowedIds(webSessionId, dimension, true);
+                                var tuple = GetAllowedIds(webSessionId, dimension, pageId, true);
                                 #region
                                 foreach (var currentLevel in tuple.Item1)
                                 {
@@ -427,9 +427,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, long idGroup = 0)
+        public UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, int pageId, long idGroup = 0)
         {
-            var tuple = GetAllowedIds(webSessionId, dimension);
+            var tuple = GetAllowedIds(webSessionId, dimension, pageId);
             UniversGroupsResponse result = new UniversGroupsResponse
             {
                 UniversGroups = new List<UserUniversGroup>(),
@@ -476,7 +476,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
         #region private methods
-        private Tuple<List<long>, List<int>, WebSession, int, int> GetAllowedIds(string webSessionId, Dimension dimension, bool selectionPage = true)
+        private Tuple<List<long>, List<int>, WebSession, int, int> GetAllowedIds(string webSessionId, Dimension dimension, int pageId, bool selectionPage = true)
         {
             webSession = (WebSession)WebSession.Load(webSessionId);
             var siteLanguage = webSession.SiteLanguage;
@@ -493,7 +493,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (selectionPage)
             {
                 //Apply rigth Rules for getting levels and branches
-                DomainWebNavigation.SelectionPageInformation currentPage = currentModuleDescription.SelectionsPages.Cast<DomainWebNavigation.SelectionPageInformation>().ToList().FirstOrDefault(p => p.Id == MarketSelectionPageId);///Private/Helps/UniverseProductSelectionHelp.aspx
+                DomainWebNavigation.SelectionPageInformation currentPage = currentModuleDescription.SelectionsPages.Cast<DomainWebNavigation.SelectionPageInformation>().ToList().FirstOrDefault(p => p.Id == pageId);///Private/Helps/UniverseProductSelectionHelp.aspx
 
                 if (currentPage != null)
                 {
