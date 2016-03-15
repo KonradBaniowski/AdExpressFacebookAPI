@@ -66,6 +66,14 @@
         var colsFixed;
         var needFixedColumns = false;
 
+        function GetItems(idItems) {
+            var items = '';
+            for (var i in idItems) {
+                items += idItems[i] + ",";
+            }
+            return items.substring(0, items.length - 1);
+        }
+
         function GenericDetailLevelFilter() {
             this.DefaultDetailValue = $('#defaultDetail').val();
             this.CustomDetailValue = -1;
@@ -87,11 +95,26 @@
             this.Insertion = $('#insertion').val();
         }
 
+        function AutoPromoFilter() {
+            this.AutoPromo = $('#autoPromo').val();
+        }
+
+        function FormatFilter() {
+            this.Formats = GetItems($('#format').val());
+        }
+
+        function PurchaseModeFilter() {
+            this.PurchaseModes = GetItems($('#purchaseMode').val());
+        }
+
         function UserFilter() {
             this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
             this.PeriodDetailFilter = new PeriodDetailFilter();
             this.UnitFilter = new UnitFilter();
             this.InsertionFilter = new InsertionFilter();
+            this.AutoPromoFilter = new AutoPromoFilter();
+            this.FormatFilter = new FormatFilter();
+            this.PurchaseModeFilter = new PurchaseModeFilter();
         }
 
         var userFilter = new UserFilter();
@@ -237,6 +260,24 @@
 
             $('#insertion').on('change', function (e) {
                 userFilter.InsertionFilter.Insertion = $('#insertion').val();
+            });
+
+            $('#autoPromo').selectpicker();
+
+            $('#autoPromo').on('change', function (e) {
+                userFilter.AutoPromoFilter.AutoPromo = $('#autoPromo').val();
+            });
+
+            $('#format').selectpicker();
+
+            $('#format').on('change', function (e) {
+                userFilter.FormatFilter.Formats = GetItems($('#format').val());
+            });
+
+            $('#purchaseMode').selectpicker();
+
+            $('#purchaseMode').on('change', function (e) {
+                userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
             });
 
             $('#defaultDetail').selectpicker();

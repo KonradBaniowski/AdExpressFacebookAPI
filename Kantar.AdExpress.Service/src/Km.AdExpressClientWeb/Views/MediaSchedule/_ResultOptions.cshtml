@@ -36,60 +36,68 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-primary panel-options-results">
-                <div class="panel-heading head-options-results">
-                    <p class="panel-title options ">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            Insertion
-                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                        </a>
-                    </p>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                    <div class="panel-body mi-padder">
-                        <div class="selectoptioncontainer">
-                            <select id="@Model.InsertionOption.Insertion.Id" class="selectdatepicker">
-                                @foreach (var item in Model.InsertionOption.Insertion.Items)
-                                {
-                                    if (item.Value == Model.InsertionOption.Insertion.SelectedId)
+            @if (@Model.InsertionOption.Insertion.Visible) { 
+                <div class="panel-primary panel-options-results">
+                    <div class="panel-heading head-options-results">
+                        <p class="panel-title options ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                Insertion
+                                <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                            </a>
+                        </p>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body mi-padder">
+                            <div class="selectoptioncontainer">
+                                <select id="@Model.InsertionOption.Insertion.Id" class="selectdatepicker">
+                                    @foreach (var item in Model.InsertionOption.Insertion.Items)
                                     {
-                                        <option value="@item.Value" selected>@item.Text</option>
+                                        if (item.Value == Model.InsertionOption.Insertion.SelectedId)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                }
-                            </select>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-primary panel-options-results">
-                <div class="panel-heading head-options-results">
-                    <p class="panel-title options ">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTree">
-                            Auto promo
-                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                        </a>
-                    </p>
-                </div>
-                <div id="collapseTree" class="panel-collapse collapse">
-                    <div class="panel-body mi-padder">
-                        <div class="dropdown select-options">
-                            <button type="button" class="btn btn-rounded selecteur" data-toggle="dropdown">
-                                Total
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu bg-orange">
-                                <li><a href>Auto promo 1</a></li>
-                                <li><a href>Auto promo 2</a></li>
-                                <li><a href>Auto promo 3</a></li>
-                            </ul>
+            }
+            @if (@Model.AutoPromoOption.AutoPromo.Visible) { 
+                <div class="panel-primary panel-options-results">
+                    <div class="panel-heading head-options-results">
+                        <p class="panel-title options ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTree">
+                                Auto promo
+                                <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                            </a>
+                        </p>
+                    </div>
+                    <div id="collapseTree" class="panel-collapse collapse">
+                        <div class="panel-body mi-padder">
+                            <div class="selectoptioncontainer">
+                                <select id="@Model.AutoPromoOption.AutoPromo.Id" class="selectdatepicker">
+                                    @foreach (var item in Model.AutoPromoOption.AutoPromo.Items)
+                                    {
+                                        if (item.Value == Model.AutoPromoOption.AutoPromo.SelectedId)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
             <div class="panel-primary panel-options-results">
                 <div class="panel-heading head-options-results">
                     <p class="panel-title options ">
@@ -119,78 +127,68 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-primary panel-options-results">
-                <div class="panel-heading head-options-results">
-                    <p class="panel-title options ">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                            Format
-                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                        </a>
-                    </p>
-                </div>
-                <div id="collapseFive" class="panel-collapse collapse">
-                    <div class="panel-body mi-padder">
-                        <div class="checkbox">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox" name="a">
-                                <i></i>
-                                Option 1
-                            </label>
+            @if (@Model.FormatOption.Format.Visible) { 
+                <div class="panel-primary panel-options-results">
+                    <div class="panel-heading head-options-results">
+                        <p class="panel-title options ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                                Format
+                                <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                            </a>
+                        </p>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse collapse">
+                        <div class="panel-body mi-padder">
+                            <div class="selectoptioncontainer">
+                                <select id="@Model.FormatOption.Format.Id" class="selectdatepicker" multiple>
+                                    @foreach (var item in Model.FormatOption.Format.Items)
+                                    {
+                                        if (Model.FormatOption.Format.SelectedId.Contains(item.Value))
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
                         </div>
-                        <div class="checkbox">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox" name="a">
-                                <i></i>
-                                Option 2
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox">
-                                <i></i>
-                                Option 3
-                            </label>
-                        </div>
-
                     </div>
                 </div>
-            </div>
-            <div class="panel-primary panel-options-results">
-                <div class="panel-heading head-options-results">
-                    <p class="panel-title options ">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                            Mode de vente
-                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                        </a>
-                    </p>
-                </div>
-                <div id="collapseSix" class="panel-collapse collapse">
-                    <div class="panel-body mi-padder">
-                        <div class="checkbox">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox" name="a">
-                                <i></i>
-                                Option 1
-                            </label>
+            }
+            @if (@Model.PurchaseModeOption.PurchaseMode.Visible) { 
+                <div class="panel-primary panel-options-results">
+                    <div class="panel-heading head-options-results">
+                        <p class="panel-title options ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                Mode de vente
+                                <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                            </a>
+                        </p>
+                    </div>
+                    <div id="collapseSix" class="panel-collapse collapse">
+                        <div class="panel-body mi-padder">
+                            <div class="selectoptioncontainer">
+                                <select id="@Model.PurchaseModeOption.PurchaseMode.Id" class="selectdatepicker" multiple>
+                                    @foreach (var item in Model.PurchaseModeOption.PurchaseMode.Items)
+                                    {
+                                        if (Model.PurchaseModeOption.PurchaseMode.SelectedId.Contains(item.Value))
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
                         </div>
-                        <div class="checkbox">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox" name="a">
-                                <i></i>
-                                Option 2
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox">
-                                <i></i>
-                                Option 3
-                            </label>
-                        </div>
-
                     </div>
                 </div>
-            </div>
+            }
             <div class="panel-primary panel-options-results">
                 <div class="panel-heading head-options-results">
                     <p class="panel-title options ">

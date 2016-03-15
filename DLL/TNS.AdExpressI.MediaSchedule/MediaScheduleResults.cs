@@ -2026,6 +2026,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 string cssExtendedClass = string.Empty;
                 string cssClasse = string.Empty;
                 string cssClasseNb = string.Empty;
+                Int64 idLv2 = 0, idLv3 = 0, idLv4 = 0;
                 GenericDetailLevel detailLevel = null;
                 detailLevel = GetDetailsLevelSelected();
                 _activePeriods = new List<string>();
@@ -2106,7 +2107,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                             case L2_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
-                                    gridData[i - 1, gridColumnId++] = data[i, L2_ID_COLUMN_INDEX];
+                                    idLv2 = (Int64)data[i, L2_ID_COLUMN_INDEX] + (Int64)data[i, L1_ID_COLUMN_INDEX];
+                                    gridData[i - 1, gridColumnId++] = idLv2;
                                     SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, ref gridColumnId, fp, unit);
                                     gridData[i - 1, gridColumnId++] = data[i, L1_ID_COLUMN_INDEX];
                                     if (_allowVersion)
@@ -2136,9 +2138,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                             case L3_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
-                                    gridData[i - 1, gridColumnId++] = data[i, L3_ID_COLUMN_INDEX];
+                                    idLv3 = (Int64)data[i, L3_ID_COLUMN_INDEX] + idLv2;
+                                    gridData[i - 1, gridColumnId++] = idLv3;
                                     SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, ref gridColumnId, fp, unit);
-                                    gridData[i - 1, gridColumnId++] = data[i, L2_ID_COLUMN_INDEX];
+                                    gridData[i - 1, gridColumnId++] = idLv2;
                                     if (_allowVersion)
                                     {
                                         if (!IsAgencyLevelType(L3_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL3, j);
@@ -2164,9 +2167,10 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                             #region Level 4
                             case L4_COLUMN_INDEX:
-                                gridData[i - 1, gridColumnId++] = data[i, L4_ID_COLUMN_INDEX];
+                                idLv4 = (Int64)data[i, L4_ID_COLUMN_INDEX] + idLv3;
+                                gridData[i - 1, gridColumnId++] = idLv4;
                                 SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, ref gridColumnId, fp, unit);
-                                gridData[i - 1, gridColumnId++] = data[i, L3_ID_COLUMN_INDEX];
+                                gridData[i - 1, gridColumnId++] = idLv3;
                                 if (_allowVersion)
                                 {
                                     if (!IsAgencyLevelType(L4_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);

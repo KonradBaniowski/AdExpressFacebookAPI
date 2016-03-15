@@ -15,5 +15,11 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public UnitOption UnitOption { get; set; }
 
         public InsertionOption InsertionOption { get; set; }
+
+        public AutoPromoOption AutoPromoOption { get; set; }
+
+        public FormatOption FormatOption { get; set; }
+
+        public PurchaseModeOption PurchaseModeOption { get; set; }
     }
 }
