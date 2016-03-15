@@ -32,6 +32,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private IPeriodService _periodService;
         private IOptionService _optionService;
         private const string _controller = "Portfolio";
+        private const int MarketPageId = 2;
+        private const int MediaPageId = 6;
 
         public PortfolioController(IPortfolioService portofolioService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {
@@ -56,7 +58,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, MarketPageId, true);
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
@@ -99,16 +101,17 @@ namespace Km.AdExpressClientWeb.Controllers
             //var model = new MediaSelectionViewModel();
 
             var claim = new ClaimsPrincipal(User.Identity);
-            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _mediaService.GetMedia(idWebSession);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var result = _mediaService.GetMedia(webSessionId);
 
             #region model data
-            //var idMediasCommon = Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var model = new VM.MediaSelectionViewModel()
             {
-                Multiple = true,
+                Multiple = false,
                 Medias = result.Media,
-                IdMediasCommon = result.MediaCommon
+                IdMediasCommon = result.MediaCommon,
+                Branches = new List<Models.MediaSchedule.UniversBranch>(),
+                Trees = new List<Models.MediaSchedule.Tree>()
             };
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
             foreach (var e in model.Medias)
@@ -125,6 +128,21 @@ namespace Km.AdExpressClientWeb.Controllers
                 SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
+            model.Labels = LoadPageLabels(result.SiteLanguage);
+            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, MediaPageId, true);
+            model.Branches = Mapper.Map<List<VM.UniversBranch>>(response.Branches);
+            foreach (var item in response.Trees)
+            {
+                VM.Tree tree = new VM.Tree
+                {
+                    Id = item.Id,
+                    LabelId = item.LabelId,
+                    AccessType = item.AccessType,
+                    UniversLevels = Mapper.Map<List<VM.UniversLevel>>(item.UniversLevels)
+                };
+                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                model.Trees.Add(tree);
+            }
             #endregion
             return View(model);
         }
@@ -151,7 +169,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
             return View(model);
         }
-
         public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate)
         {
             var cla = new ClaimsPrincipal(User.Identity);
@@ -229,6 +246,23 @@ namespace Km.AdExpressClientWeb.Controllers
 
             _optionService.SetOptions(idWebSession, userFilter);
         }
+        public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)
+        {
+            string url = string.Empty;
+            var response = new Domain.WebSessionResponse();
+            if (selectedMedia != null)
+            {
+                var claim = new ClaimsPrincipal(User.Identity);
+                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
+            }
+            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+            if (response.Success)
+                url = context.Action(nextStep, _controller);
+            JsonResult jsonModel = Json(new { RedirectUrl = url });
+            return jsonModel;
+        }
+
         public JsonResult SaveMarketSelection(string nextStep)
         {
 
@@ -241,13 +275,52 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel = Json(new { RedirectUrl = url });
             return jsonModel;
         }
+        public ActionResult LoadUserUniversGroups()
+        {
+            bool showUserSavedGroups = true;
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            VM.UserUniversGroupsModel result = new VM.UserUniversGroupsModel
+            {
+                LoadUniversCode = LanguageConstantes.LoadUniversCode,
+                ModuleCode = LanguageConstantes.MediaScheduleCode,
+                SaveUniversCode = LanguageConstantes.SaveUniversCode,
+                UserUniversGroups = new List<VM.UserUniversGroup>(),
+                UserUniversCode = LanguageConstantes.UserUniversCode,
+                ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
+                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
+                ShowUserSavedGroups = showUserSavedGroups
+            };
+            if (showUserSavedGroups)
+            {
+                var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product, MarketPageId);
+                result.SiteLanguage = data.SiteLanguage;
+                result.UserUniversGroups = Mapper.Map<List<VM.UserUniversGroup>>(data.UniversGroups);
+                foreach (var group in result.UserUniversGroups)
+                {
+                    int count = group.Count;
+                    group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                    group.SecondeColumnSize = count - group.FirstColumnSize;
+                }
+            }
+            return PartialView("UserUniversGroupsContent", result);
+        }
+
+        public JsonResult GetUserUnivers(int id)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var result = _universService.GetTreesByUserUnivers(id, idWebSession, Dimension.product, MarketPageId);
+            return Json(result);
+        }
 
         [HttpGet]
         public PartialViewResult SaveUserUnivers()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product);
+            var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product, MarketPageId);
             SaveUserUniversViewModel model = new SaveUserUniversViewModel
             {
                 Title = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, data.SiteLanguage),
@@ -287,7 +360,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 long groupId = long.Parse(id);
                 var claim = new ClaimsPrincipal(User.Identity);
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product, groupId);
+                var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product, MarketPageId, groupId);
                 univers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
                 {
                     Value = m.Id.ToString(),
@@ -351,6 +424,14 @@ namespace Km.AdExpressClientWeb.Controllers
                 errorMessage = "Invalid Selection";
             }
             return Json(new { ErrorMessage = errorMessage });
+        }
+
+        public JsonResult GetMediaSupport()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var result = _universService.GetBranches(webSessionId, Dimension.media, MediaPageId, true);
+            return Json(result);
         }
 
         #region Private methodes

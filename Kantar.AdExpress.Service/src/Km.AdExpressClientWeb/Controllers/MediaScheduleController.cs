@@ -193,7 +193,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
-                url = context.Action("Results", "MediaSchedule");
+                url = context.Action("Results", _controller);
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 
