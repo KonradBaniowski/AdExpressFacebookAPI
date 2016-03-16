@@ -1,4 +1,4 @@
-﻿@model List<string>
+﻿@model Km.AdExpressClientWeb.Models.Insertions.InsertionViewModel
 @{
     ViewBag.Title = "Insertions";
     Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
@@ -7,15 +7,108 @@
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
 <link href="~/IgniteUI/css/themes/flatly/infragistics.theme.css" rel="stylesheet" />
 
+
+<div class="row">
+    <div class="panel panel-default panel-cotes">
+        <div class="panel-heading">
+            <h3><i class="fa fa-search-plus blue"></i>&nbsp;Insertions</h3>
+            <span class="pull-right">
+                <ul class="nav panel-tabs" role="tablist">
+                    @{
+                        var multi = "active";
+                    }
+                    @foreach (var item in Model.Medias)
+                    {
+                    <li role="presentation" class="@(item == Model.Medias.First() ? multi : "")">
+                        <a href="#@(item.Label)" aria-controls="@item.Label" role="tab" data-toggle="tab">@item.Label</a>
+                    </li>
+                    }
+                </ul>
+            </span>
+        </div>
+        <div class="panel-heading second">
+            <h5>
+                Navigation par mois: Du
+                <strong>@Model.DateBegin.ToString("dd/MM/yyy")</strong>
+                au
+                <strong>@Model.DateEnd.ToString("dd/MM/yyy")</strong>
+            </h5>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">1</button>
+                <button type="button" class="btn btn-default">2</button>
+                <button type="button" class="btn btn-default">3</button>
+                <button type="button" class="btn btn-default">1</button>
+                <button type="button" class="btn btn-default">2</button>
+                <button type="button" class="btn btn-default">3</button>
+                <button type="button" class="btn btn-default">1</button>
+                <button type="button" class="btn btn-default">2</button>
+                <button type="button" class="btn btn-default">3</button>
+                <button type="button" class="btn btn-default">1</button>
+                <button type="button" class="btn btn-default">2</button>
+                <button type="button" class="btn btn-default">3</button>
+                <button type="button" class="btn btn-default">TOUS</button>
+            </div>
+        </div>
+
+        <div class="panel panel-default third">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h5 class="panel-title"  data-toggle="collapse" data-target="#lvlperso">
+                    Niveaux personnalisés
+                </h5>
+            </div>
+            <div id="lvlperso" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Construction</label>
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                            <br>
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                            <br />
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                @foreach (var item in Model.Medias)
+                {
+                    <div role="tabpanel" class="tab-pane @(item == Model.Medias.First() ? multi : "")"
+                         id="@(item.Label)">
+                        HERE I AM@(item.Label)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <form>
-            <input name="ids" id="ids" type="hidden" value="@Model[0]" />
-            <input name="zoomDate" id="zoomDate" type="hidden" value="@Model[1]" />
-            <input name="idUnivers" id="idUnivers" type="hidden" value="@Model[2]" />
-            <input name="moduleId" id="moduleId" type="hidden" value="@Model[3]" />
-            <input name="idVehicle" id="idVehicle" type="hidden" value="@Model[4]" />
+            <input name="ids" id="ids" type="hidden" value="@Model.datas[0]" />
+            <input name="zoomDate" id="zoomDate" type="hidden" value="@Model.datas[1]" />
+            <input name="idUnivers" id="idUnivers" type="hidden" value="@Model.datas[2]" />
+            <input name="moduleId" id="moduleId" type="hidden" value="@Model.datas[3]" />
+            <input name="idVehicle" id="idVehicle" type="hidden" value="@Model.datas[4]" />
         </form>
 
 
@@ -38,199 +131,204 @@
 </div>
 
 @section Scripts {
-<script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
-<script src="~/IgniteUI/js/infragistics.core.js"></script>
-<script src="~/IgniteUI/js/infragistics.lob.js"></script>
-<script>
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script>
 
-    if (typeof jQuery === "undefined") { throw new Error("jQuery") }
-    $(function () {
+        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+        $(function () {
 
-        $("#grid").igTreeGrid({
-            //dataSource: data,
-            primaryKey: "Id",
-            width: "100%",
-            defaultColumnWidth: 200,
-            avgRowHeight: 60,
-            autoGenerateColumns: true
-        });
+            //GESTION DES ACTIVES CSS
+            $(".btn-group > .btn").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+            });
+
+            $("#grid").igTreeGrid({
+                //dataSource: data,
+                primaryKey: "Id",
+                width: "100%",
+                defaultColumnWidth: 200,
+                avgRowHeight: 60,
+                autoGenerateColumns: true
+            });
 
 
-        $('#period-display-type').selectpicker();
-        var ds;
-        var cols;
-        var colsFixed;
-        var needFixedColumns = false;
-        var periodType = "Mois";
+            $('#period-display-type').selectpicker();
+            var ds;
+            var cols;
+            var colsFixed;
+            var needFixedColumns = false;
+            var periodType = "Mois";
 
-        var renderGrid = function (success, error) {
-            if (success) {
+            var renderGrid = function (success, error) {
+                if (success) {
 
-                $("#grid").igTreeGrid("destroy");
-                $("#gridLoader").addClass("hide");
-                $("#grid").removeClass("hide");
-                if (needFixedColumns) {
-                    $("#grid").igTreeGrid({
-                        dataSource: ds.dataView(),
-                        columns: cols,
-                        height: "530px",
-                        autoGenerateColumns: false,
-                        primaryKey: "ID",
-                        foreignKey: "PID",
-                        width: "1000px",
-                        features: [
-                            {
-                                name: "MultiColumnHeaders"
-                            },
-                            {
-                                name: "Paging",
-                                mode: "allLevels",
-                                pageSize: 25
-                            },
-                            {
-                                name: "ColumnFixing",
-                                fixingDirection: "left",
-                                columnSettings: colsFixed
-                            }
-                        ]
-                    })
+                    $("#grid").igTreeGrid("destroy");
+                    $("#gridLoader").addClass("hide");
+                    $("#grid").removeClass("hide");
+                    if (needFixedColumns) {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID",
+                            foreignKey: "PID",
+                            width: "1000px",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 25
+                                },
+                                {
+                                    name: "ColumnFixing",
+                                    fixingDirection: "left",
+                                    columnSettings: colsFixed
+                                }
+                            ]
+                        })
+                    }
+                    else {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: true,
+                            primaryKey: "ID",
+                            foreignKey: "PID",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 25
+                                }
+                            ]
+                        })
+                    }
+                } else {
+                    alert(error);
                 }
-                else {
-                    $("#grid").igTreeGrid({
-                        dataSource: ds.dataView(),
-                        columns: cols,
-                        height: "530px",
-                        autoGenerateColumns: true,
-                        primaryKey: "ID",
-                        foreignKey: "PID",
-                        features: [
-                            {
-                                name: "MultiColumnHeaders"
-                            },
-                            {
-                                name: "Paging",
-                                mode: "allLevels",
-                                pageSize: 25
-                            }
-                        ]
-                    })
-                }
-            } else {
-                alert(error);
+
             }
 
-        }
+            function CallInsertionsResult(idVehicle) {
 
-        function CallInsertionsResult(idVehicle) {
-
-            var parameters = {
-                ids: $('#ids').val(),
-                zoomDate: $('#zoomDate').val(),
-                idUnivers: $('#idUnivers').val(),
-                moduleId: $('#moduleId').val(),
-                idVehicle: idVehicle
-            };
+                var parameters = {
+                    ids: $('#ids').val(),
+                    zoomDate: $('#zoomDate').val(),
+                    idUnivers: $('#idUnivers').val(),
+                    moduleId: $('#moduleId').val(),
+                    idVehicle: idVehicle
+                };
 
 
-            $.ajax({
-                url: '@Url.Action("InsertionsResult", "Insertions")',
-                contentType: "application/x-www-form-urlencoded",
-                type: "POST",
-                datatype: "json",
-                data: parameters,
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                    alert("Erreur");
-                },
-                success: function (data) {
-                    if (data != null) {
-                        dataTreeGrid = data.datagrid;
-                        cols = data.columns;
-                        colsFixed = data.columnsfixed;
-                        needFixedColumns = data.needfixedcolumns;
+                $.ajax({
+                    url: '@Url.Action("InsertionsResult", "Insertions")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: parameters,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                        alert("Erreur");
+                    },
+                    success: function (data) {
+                        if (data != null) {
+                            dataTreeGrid = data.datagrid;
+                            cols = data.columns;
+                            colsFixed = data.columnsfixed;
+                            needFixedColumns = data.needfixedcolumns;
 
-                        var schema = new $.ig.DataSchema("array", {
-                            fields: data.schema
-                        });
+                            var schema = new $.ig.DataSchema("array", {
+                                fields: data.schema
+                            });
 
-                        ds = new $.ig.DataSource({
-                            type: "json",
-                            schema: schema,
-                            dataSource: dataTreeGrid,
-                            callback: renderGrid
-                        });
+                            ds = new $.ig.DataSource({
+                                type: "json",
+                                schema: schema,
+                                dataSource: dataTreeGrid,
+                                callback: renderGrid
+                            });
 
-                        ds.dataBind();
+                            ds.dataBind();
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
 
-        function CallGetPresentVehicles() {
+            function CallGetPresentVehicles() {
 
-            var parameters = {
-                ids: $('#ids').val(),
-                idUnivers: $('#idUnivers').val(),
-                moduleId: $('#moduleId').val(),
-            };
+                var parameters = {
+                    ids: $('#ids').val(),
+                    idUnivers: $('#idUnivers').val(),
+                    moduleId: $('#moduleId').val(),
+                };
 
-            $.ajax({
-                url: '@Url.Action("GetPresentVehicles", "Insertions")',
-                contentType: "application/x-www-form-urlencoded",
-                type: "POST",
-                datatype: "json",
-                data: parameters,
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                    alert("Erreur");
-                },
-                success: function (response) {
-                    var active = false;
+                $.ajax({
+                    url: '@Url.Action("GetPresentVehicles", "Insertions")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: parameters,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                        alert("Erreur");
+                    },
+                    success: function (response) {
+                        var active = false;
 
-                    if (response != null) {
-                        var data = JSON.parse(response);
-                        var strHTML = "";
-                        $.each(data, function (i, item) {
-                            
-                            //if ((!idVehicle || 0 === idVehicle.length) && !active) {
-                            //    active = true;
-                            //    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>';
-                            //}
-                            //else {
-                            //    if (idVehicle == item[0]) {
-                            //        strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>';
-                            //    }
-                            //    else {
-                            //        strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            //    }
-                            //}
+                        if (response != null) {
+                            var data = JSON.parse(response);
+                            var strHTML = "";
+                            $.each(data, function (i, item) {
+
+                                //if ((!idVehicle || 0 === idVehicle.length) && !active) {
+                                //    active = true;
+                                //    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>';
+                                //}
+                                //else {
+                                //    if (idVehicle == item[0]) {
+                                //        strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>';
+                                //    }
+                                //    else {
+                                //        strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                //    }
+                                //}
 
 
-                            if (!active && (!$('#idVehicle').val() || 0 === $('#idVehicle').val())) {
-                                active = item[0];
-                            }
+                                if (!active && (!$('#idVehicle').val() || 0 === $('#idVehicle').val())) {
+                                    active = item[0];
+                                }
 
-                            if (active == item[i]) {
-                                strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            } else {
-                                strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            }
+                                if (active == item[i]) {
+                                    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                } else {
+                                    strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                }
 
-                            $('#PresentVehicles').append(strHTML);
-                        });
+                                $('#PresentVehicles').append(strHTML);
+                            });
 
-                        $("#PresentVehiclesLoader").addClass("hide");
-                        $("#PresentVehicles").removeClass("hide");
+                            $("#PresentVehiclesLoader").addClass("hide");
+                            $("#PresentVehicles").removeClass("hide");
 
-                        $("#gridLoader").removeClass("hide");
-                        CallInsertionsResult(active);
+                            $("#gridLoader").removeClass("hide");
+                            CallInsertionsResult(active);
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
 
-        CallGetPresentVehicles();
-    });
+            CallGetPresentVehicles();
+        });
 
-</script>
+    </script>
 }

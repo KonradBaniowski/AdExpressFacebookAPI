@@ -155,8 +155,11 @@ namespace TNS.AdExpress.Web.Core.Selection {
                 else
                 {
                     //When a vehicle is not checked but one or more category, this get the vehicle correspondly
-                    Int64 Vehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-                    vehicleList.Add(Vehicle);
+                    if (_webSession.SelectionUniversMedia.Nodes.Count >0)
+                    {
+                        Int64 Vehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+                        vehicleList.Add(Vehicle);
+                    }
                 }
                 for (int j = 0; j < vehicleList.Count; j++)
                 {

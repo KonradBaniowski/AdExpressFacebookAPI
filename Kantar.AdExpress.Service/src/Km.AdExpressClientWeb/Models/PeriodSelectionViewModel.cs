@@ -1,4 +1,5 @@
 ﻿using Km.AdExpressClientWeb.Models.MediaSchedule;
+using Km.AdExpressClientWeb.Models.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

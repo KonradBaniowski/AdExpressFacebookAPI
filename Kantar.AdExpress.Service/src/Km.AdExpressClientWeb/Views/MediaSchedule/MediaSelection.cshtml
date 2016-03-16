@@ -1,8 +1,9 @@
-﻿@model Km.AdExpressClientWeb.Models.MediaSchedule.MediaSelectionViewModel
+﻿@model Km.AdExpressClientWeb.Models.Shared.MediaSelectionViewModel
 
 @{
     ViewBag.Title = "MediaSelection";
     var array = @Html.Raw(Json.Encode(Model.ErrorMessage));
+    var _controller = Model.NavigationBar.First().Controller;
 }
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
@@ -69,7 +70,7 @@
                 <div class="panel-heading" role="tab" id="headingTwo">
                     <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <i class="fa fa-search"></i> Affiner la recherche
+                            <i class="fa fa-search"></i> @Model.Labels.Refine
                         </a>
                     </h4>
                 </div>
@@ -79,31 +80,30 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="row bg-black-only">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading">
-                                        <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp;bla</h4>
-                                        <h4 class="pull-right"> bla2</h4>
+                                        <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp;@Model.Labels.KeyWordLabel </h4>
+                                        <h5 class="pull-right"> @Model.Labels.KeyWordDescription</h5>
                                         <div class="clearfix"></div>
                                         <div class="input-group">
                                             <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
                                             <div class="input-group-btn dropdown" dropdown="">
                                                 <button id="branch" type="button" class="btn btn-default select-recherche"
-                                                        @*data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id"
-                                        data-toggle="dropdown"*@>
-                                                    @*@Model.Branches.FirstOrDefault(p => p.IsSelected).Label*@
-                                                    BLA
+                                                        data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id"
+                                                        data-toggle="dropdown">
+                                                    @Model.Branches.FirstOrDefault(p => p.IsSelected).Label
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu bg-blue pull-right">
-                                                    @*@foreach (var item in Model.Branches)
-                                    {
-                                        if (item.IsSelected)
-                                        {
-                                            <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
-                                        }
-                                    }*@
+                                                    @foreach (var item in Model.Branches)
+                                                    {
+                                                        if (item.IsSelected)
+                                                        {
+                                                            <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                                                        }
+                                                    }
                                                 </ul>
                                                 <button class="btn btn-default btn-recherche" type="button"><i class="fa fa-search blue "></i></button>
                                             </div>
@@ -116,19 +116,19 @@
                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                                         <div class="panel  panel-marche">
                                             <div class="panel-heading-choix">
-                                                <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; Résultats</h4>
+                                                <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; @Model.Labels.Results</h4>
                                             </div>
-                                            @*@foreach (var item in Model.Branches)
-                            {
-                                <div id="branch@(item.Id)" class="universes" style="display:none">
-                                    @foreach (var level in item.UniversLevels)
-                                    {
-                                        <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"
-                                             data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default">
-                                        </div>
-                                    }
-                                </div>
-                            }*@
+                                            @foreach (var item in Model.Branches)
+                                            {
+                                                <div id="branch@(item.Id)" class="universes" style="display:none">
+                                                    @foreach (var level in item.UniversLevels)
+                                                    {
+                                                        <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"
+                                                             data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default">
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -148,68 +148,68 @@
 
                                         <div class="panel-heading-choix nav-tabs-alt">
                                             <ul class="nav nav-tabs" role="tablist">
-                                                @*@foreach (var tree in Model.Trees)
-                                {
-                                    <li @(tree == Model.Trees.First() ? "class=active" : "" )>
-                                        <a data-target="#tab-@(tree.Id)"
-                                           data-tab="@(tree.Id)"
-                                           role="tab"
-                                           data-toggle="tab"
-                                           aria-expanded="true">
-                                            @tree.Label
-                                        </a>
-                                    </li>
-                                }*@
+                                                @foreach (var tree in Model.Trees)
+                                                {
+                                                    <li @(tree == Model.Trees.First() ? "class=active" : "" )>
+                                                        <a data-target="#tab-@(tree.Id)"
+                                                           data-tab="@(tree.Id)"
+                                                           role="tab"
+                                                           data-toggle="tab"
+                                                           aria-expanded="true">
+                                                            @tree.Label
+                                                        </a>
+                                                    </li>
+                                                }
                                             </ul>
                                         </div>
                                         <div class="tab-content">
-                                            @*@{
-                                var multi = "active in";
-                            }
-                            @foreach (var tree in Model.Trees)
-                            {
-                                <div role="tabpanel"
-                                     class="tab-pane @(tree == Model.Trees.First() ? multi : "")"
-                                     id="tab-@(tree.Id)">
-                                    <div class="panel-group panel-group-results"
-                                         id="tree-@(tree.Id)"
-                                         data-access-type="@((int)tree.AccessType)"
-                                         role="tablist"
-                                         aria-multiselectable="true">
-                                        @foreach (var level in tree.UniversLevels)
-                                        {
-                                            <div class="panel panel-primary panel-results">
-                                                <div class="panel-heading head-results"
-                                                     role="tab"
-                                                     id="heading-@(level.Id)">
-                                                    <h6 class="panel-title famille ">
-                                                        <a role="button"
-                                                           data-toggle="collapse"
-                                                           data-parent="#tree-@(tree.Id)"
-                                                           href="#collapse-@(level.Id)-@(tree.Id)"
-                                                           aria-expanded="true"
-                                                           aria-controls="collapse-@(level.Id)">
-                                                            @level.Label
-                                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                                        </a>
-                                                    </h6>
-                                                </div>
-                                                <div id="collapse-@(level.Id)-@(tree.Id)"
-                                                     class="panel-collapse collapse"
-                                                     role="tabpanel"
-                                                     aria-labelledby="heading-@(level.Id)">
-                                                    <div class="panel-body" data-tree="@(tree.Id)" data-level="@(level.Id)">
-                                                        <ul class="items-famille"></ul>
+                                            @{
+                                                var multi = "active in";
+                                            }
+                                            @foreach (var tree in Model.Trees)
+                                            {
+                                                <div role="tabpanel"
+                                                     class="tab-pane @(tree == Model.Trees.First() ? multi : "")"
+                                                     id="tab-@(tree.Id)">
+                                                    <div class="panel-group panel-group-results"
+                                                         id="tree-@(tree.Id)"
+                                                         data-access-type="@((int)tree.AccessType)"
+                                                         role="tablist"
+                                                         aria-multiselectable="true">
+                                                        @foreach (var level in tree.UniversLevels)
+                                                        {
+                                                            <div class="panel panel-primary panel-results">
+                                                                <div class="panel-heading head-results"
+                                                                     role="tab"
+                                                                     id="heading-@(level.Id)">
+                                                                    <h6 class="panel-title famille ">
+                                                                        <a role="button"
+                                                                           data-toggle="collapse"
+                                                                           data-parent="#tree-@(tree.Id)"
+                                                                           href="#collapse-@(level.Id)-@(tree.Id)"
+                                                                           aria-expanded="true"
+                                                                           aria-controls="collapse-@(level.Id)">
+                                                                            @level.Label
+                                                                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                                                        </a>
+                                                                    </h6>
+                                                                </div>
+                                                                <div id="collapse-@(level.Id)-@(tree.Id)"
+                                                                     class="panel-collapse collapse"
+                                                                     role="tabpanel"
+                                                                     aria-labelledby="heading-@(level.Id)">
+                                                                    <div class="panel-body" data-tree="@(tree.Id)" data-level="@(level.Id)">
+                                                                        <ul class="items-famille"></ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
-                                    </div>
-                                    <div class="pull-right">
-                                        <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
-                                    </div>
-                                </div>
-                            }*@
+                                            }
                                         </div>
 
 
@@ -396,7 +396,7 @@
                 var msg = validate();
                 var isValide = !msg || msg.lentgh === 0;
                 if (!isValide) {//mycondition
-                    alert(msg);
+                    bootbox.alert(msg);
                 }
                 else {
                     var params = {
@@ -404,7 +404,7 @@
                         nextStep: "PeriodSelection"
                     };
                     $.ajax({
-                        url: '/MediaSchedule/SaveMediaSelection',
+                        url: '/@_controller/SaveMediaSelection',
                         contentType: 'application/json',
                         type: 'POST',
                         datatype: 'JSON',
@@ -425,7 +425,7 @@
                 var msg = validate();
                 var isValide = !msg || msg.lentgh === 0;
                 if (!isValide) {//mycondition
-                    alert(msg);
+                    bootbox.alert(msg);
                 }
                 else {
                     var action = "SaveMediaSelection";
@@ -435,7 +435,7 @@
                     };
 
                     $.ajax({
-                        url: '/MediaSchedule/' + action,
+                        url: '/@_controller/' + action,
                         contentType: 'application/json',
                         type: 'POST',
                         datatype: 'JSON',
@@ -456,7 +456,7 @@
                 var msg = validate();
                 var isValide = !msg || msg.lentgh === 0;
                 if (!isValide) {//mycondition
-                    alert(msg);
+                    bootbox.alert(msg);
                 }
                 else {
                     var action = "SaveMediaSelection";
@@ -466,7 +466,7 @@
                     };
 
                     $.ajax({
-                        url: '/MediaSchedule/' + action,
+                        url: '/@_controller/' + action,
                         contentType: 'application/json',
                         type: 'POST',
                         datatype: 'JSON',
@@ -487,7 +487,7 @@
                 var msg = validate();
                 var isValide = !msg || msg.lentgh === 0;
                 if (!isValide) {//mycondition
-                    alert(msg);
+                    bootbox.alert(msg);
                 }
                 else {
                     action = "SaveMediaSelection";
@@ -496,7 +496,7 @@
                         nextStep: "Results"
                     };
                     $.ajax({
-                        url: '/MediaSchedule/' + action,
+                        url: '/@_controller/' + action,
                         contentType: 'application/json',
                         type: 'POST',
                         datatype: 'JSON',
@@ -511,6 +511,65 @@
                         }
                     });
                 }
+            });
+
+            //PART TWO
+            $(".dropdown-menu.bg-blue.pull-right li > a").on('click', function (e) {
+                e.preventDefault();
+                var selText = $(this).text();
+                var selValue = $(this).attr("data-id");
+                $("#default").show();
+                $("#default").removeAttr("id");
+                $(this).attr("id", "default");
+                $("#default").hide();
+                $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').html(selText + '<span class="caret"></span>');
+                $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').attr("data-branch", selValue);
+                //CLEAN PANEL ON CHANGE BRANCH
+                $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
+            });
+
+            $(".btn-recherche").on('click', function (event) {
+                var keyword = $('#keyword').val();
+                var branchId = $('#branch').attr("data-branch");
+                $(".universes").hide();
+                $("#branch" + branchId).show();
+                var branchUpdate = $("[id^='groupSelectable'] [id^='selectable']").length;
+
+                $("#branch" + branchId + "> div").each(function () {
+                    var DIS = $(this);
+                    var universe = parseFloat($(this).attr('data-universe'))
+                    var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
+                    var params = {
+                        keyWord: keyword,
+                        universeId: universe
+                    };
+                    //$.ajax({
+                    //    url: '/Universe/GetUniverses',
+                    //    contentType: 'application/json',
+                    //    type: 'POST',
+                    //    datatype: 'JSON',
+                    //    data: JSON.stringify(params),
+                    //    error: function (xmlHttpRequest, errorText, thrownError) {
+                    //        alert("error");
+                    //    },
+                    //    success: function (response) {
+                    //        if (branchUpdate > 0) {
+                    //            console.log(DIS);
+                    //            DIS.updateGroup(univerLabel, response.data, response.total, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
+                    //        }
+                    //        else {
+
+                    //            DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+                    //        }
+                    //        $('#selectable' + universe).selectable(
+                    //            {
+                    //                stop: SelectedItems
+                    //            });
+
+                    //    }
+                    //});
+
+                });
             });
         });
     </script>
