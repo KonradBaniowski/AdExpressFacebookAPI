@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
+    <Compile Include="Controllers\PortfolioExportController.cs" />
     <Compile Include="Models\Insertions\InsertionViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
@@ -1479,6 +1480,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\PortfolioExport\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
