@@ -23,7 +23,7 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult Index(string ids, string zoomDate, string idUnivers, string moduleId, string idVehicle)
         {
             DateTime today = DateTime.Today;
-            DateTime past = DateTime.Today.AddDays(-30);
+            DateTime past = DateTime.Today.AddDays(-30).Date;
 
             InsertionViewModel model = new InsertionViewModel();
             var mediasTabs = new List<Medias> {
