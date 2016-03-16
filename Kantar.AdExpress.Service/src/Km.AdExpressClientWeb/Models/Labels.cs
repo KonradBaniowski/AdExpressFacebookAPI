@@ -23,6 +23,8 @@ namespace Km.AdExpressClientWeb.Models
         public string CleanSelectionMsg { get; set; }
         public string IncludedElements { get; set; }
         public string ExcludedElements { get; set; }
+        public string Results { get; set; }
+        public string Refine { get; set; }
 
     }
 }

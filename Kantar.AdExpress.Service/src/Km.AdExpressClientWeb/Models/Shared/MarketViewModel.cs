@@ -1,11 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 
-namespace Km.AdExpressClientWeb.Models.MediaSchedule
+namespace Km.AdExpressClientWeb.Models.Shared
 {
     public class MarketViewModel
     {
@@ -20,6 +21,52 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
         public List<Tree> Trees { get; set; }
 
     }   
+
+   
+    public class Tree
+    {
+        public long LabelId { get; set; }
+        public int Id { get; set; }
+        public TNS.Classification.Universe.AccessType AccessType { get; set; }
+        public List<UniversLevel> UniversLevels { get; set; }
+
+        public TNS.FrameWork.DB.Constantes.Activation MyProperty { get; set; }
+
+        public string Label { get; set; }
+    }
+
+
+    public class UserUniversGroup
+    {
+        public int Id { get; set; }
+        public int Count { get; set; }
+        public string Description { get; set; }
+        public List<UserUnivers> UserUnivers { get; set; }
+        public int FirstColumnSize { get; set; }
+        public int SecondeColumnSize { get; set; }
+    }
+
+    public class UserUnivers
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public List<UniversLevel> Levels { get; set; }
+    }
+
+    public class UserUniversGroupsModel
+    {
+        public int SiteLanguage { get; set; }
+
+        public List<UserUniversGroup> UserUniversGroups { get; set; }
+
+        public long SaveUniversCode { get; set; }
+        public long LoadUniversCode { get; set; }
+        public long ModuleCode { get; set; }
+        public long UserUniversCode { get; set; }
+        public long ErrorMsgCode { get; set; }
+        public long ModuleDecriptionCode { get; set; }
+        public bool ShowUserSavedGroups { get; set; }
+    }
 
     public class UniversBranch
     {
@@ -47,22 +94,12 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
 
     public class UniversItem
     {
-        
+
         public long Id { get; set; }
         public int LabelId { get; set; }
         public string Label { get; set; }
 
     }
-    public class Tree
-    {
-        public long LabelId { get; set; }
-        public int Id { get; set; }
-        public TNS.Classification.Universe.AccessType AccessType { get; set; }
-        public List<UniversLevel> UniversLevels { get; set; }
 
-        public TNS.FrameWork.DB.Constantes.Activation MyProperty { get; set; }
-
-        public string Label { get; set; }
-    }
 
 }

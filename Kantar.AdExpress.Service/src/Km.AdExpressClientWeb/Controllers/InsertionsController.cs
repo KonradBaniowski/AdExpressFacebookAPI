@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Km.AdExpressClientWeb.Models.Insertions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,14 +22,32 @@ namespace Km.AdExpressClientWeb.Controllers
         // GET: Insertions
         public ActionResult Index(string ids, string zoomDate, string idUnivers, string moduleId, string idVehicle)
         {
+            DateTime today = DateTime.Today;
+            DateTime past = DateTime.Today.AddDays(-30);
+
+            InsertionViewModel model = new InsertionViewModel();
+            var mediasTabs = new List<Medias> {
+                new Medias {
+                    Label = "Press",
+                    LabelID = 989
+                },
+                new Medias  {
+                    Label = "Television",
+                    LabelID = 999
+                }
+            };
+            model.Medias = mediasTabs;
+            model.DateBegin = past;
+            model.DateEnd = today;
+
             List<string> datas = new List<string>();
             datas.Add(ids);
             datas.Add(zoomDate);
             datas.Add(idUnivers);
             datas.Add(moduleId);
             datas.Add(idVehicle);
-
-            return View(datas);
+            model.datas = datas;
+            return View(model);
         }
 
         [HttpPost]
