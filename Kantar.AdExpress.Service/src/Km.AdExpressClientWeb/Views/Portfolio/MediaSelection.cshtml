@@ -116,7 +116,7 @@
                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                                         <div class="panel  panel-marche">
                                             <div class="panel-heading-choix">
-                                                <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; Résultats</h4>
+                                                <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; @Model.Labels.Results</h4>
                                             </div>
                                             @foreach (var item in Model.Branches)
                                             {
@@ -144,8 +144,6 @@
                                     </div>
 
                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-
-
                                         <div class="panel-heading-choix nav-tabs-alt">
                                             <ul class="nav nav-tabs" role="tablist">
                                                 @foreach (var tree in Model.Trees)
@@ -211,8 +209,6 @@
                                                 </div>
                                             }
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -227,55 +223,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        @*<div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
-                <h4 class=""><i class="fa fa-eye"></i> Sélection des médias</h4>
-            </div>
-            @Html.HiddenFor(e => e.Multiple)
-            @foreach (int i in Model.IdMediasCommon)
-                {
-                <input type="hidden" name="HiddenIntList" value="@i" />
-            }
-            @if (Model.Multiple)
-                {
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                    <div class="pull-right">
-                        <small class="v-super">Pré-sélection &nbsp; </small>
-                        <label class="i-switch" id="switch">
-                            <input type="checkbox" for="switch" id="preselection">
-                            <i></i>
-                        </label>
-                    </div>
-                </div>
-            }
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                @foreach (var item in Model.Medias)
-                {
-
-                    if (!item.Disabled)
-                    {
-                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                            <div class="block panel padder-v bg-black-only tuile-medias text-center" data-attr-id="@item.Id">
-                                <div class="top text-center w-full">
-                                    <i class="fa @item.icon m-r-sm"></i>
-                                </div>
-                                <div class="h5 font-normal h5">@item.Label</div>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                            <div class="block panel padder-v bg-black-only tuile-medias text-center disabled-effect">
-                                <div class="top text-center w-full">
-                                    <i class="fa @item.icon m-r-sm"></i>
-                                </div>
-                                <div class="h5 font-normal h5">@item.Label</div>
-                            </div>
-                        </div>
-                    }
-                }
-            </div>*@
+        </div>        
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
             <input id="btnSubmitMediaSelection" type="submit" value="Valider" class="btn btn-default btn-valider pull-right" />
         </div>
@@ -511,6 +459,67 @@
                         }
                     });
                 }
+            });
+
+            // PART TWO
+            $(".input-group-btn.dropdown.dropdown-menu.bg-blue.pull-right li > a").on('click', function (e) {
+                e.preventDefault();
+                var selText = $(this).text();
+                var selValue = $(this).attr("data-id");
+                $("#default").show();
+                $("#default").removeAttr("id");
+                $(this).attr("id", "default");
+                $("#default").hide();
+                $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').html(selText + '<span class="caret"></span>');
+                $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').attr("data-branch", selValue);
+                //CLEAN PANEL ON CHANGE BRANCH
+                $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
+            });
+
+            $(".btn-recherche").on('click', function (event) {
+                var keyword = $('#keyword').val();
+                var branchId = $('#branch').attr("data-branch");
+                $(".universes").hide();
+                $("#branch" + branchId).show();
+
+                var branchUpdate = $("[id^='groupSelectable'] [id^='selectable']").length;
+
+                $("#branch" + branchId + "> div").each(function () {
+                    var DIS = $(this);
+                    var universe = parseFloat($(this).attr('data-universe'))
+                    var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
+                    var params = {
+                        keyWord: keyword,
+                        universeId: universe
+                    };
+                    bootbox.Alert(universe);
+                    //$.ajax({
+                    //    url: '/Universe/GetUniverses',
+                    //    contentType: 'application/json',
+                    //    type: 'POST',
+                    //    datatype: 'JSON',
+                    //    data: JSON.stringify(params),
+                    //    error: function (xmlHttpRequest, errorText, thrownError) {
+                    //        alert("error");
+                    //    },
+                    //    success: function (response) {
+                    //        if (branchUpdate > 0) {
+                    //            console.log(DIS);
+                    //            DIS.updateGroup(univerLabel, response.data, response.total, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
+                    //        }
+                    //        else {
+
+                    //            DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+                    //        }
+                    //        $('#selectable' + universe).selectable(
+                    //            {
+                    //                stop: SelectedItems
+                    //            });
+
+                    //    }
+                    //});
+
+                });
             });
         });
     </script>

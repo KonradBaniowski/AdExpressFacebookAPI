@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using TNS.Classification.Universe;
 
 namespace Km.AdExpressClientWeb.Models.Shared
 {
     public class MarketViewModel
     {
         public Labels Labels { get; set; }
-        public TNS.Classification.Universe.Dimension Dimension { get; set; }
+        public Dimension Dimension { get; set; }
         public List<UniversBranch> Branches { get; set; }
         public List<NavigationNode> NavigationBar { get; set; }
         public PresentationModel Presentation { get; set; }
