@@ -1465,7 +1465,7 @@
     <Content Include="Views\Shared\_LayoutOther.cshtml" />
     <Content Include="Views\MediaSchedule\MediaSelection.cshtml" />
     <Content Include="Views\Shared\Presentation.cshtml" />
-    <Content Include="Views\MediaSchedule\PeriodSelection.cshtml" />
+    <Content Include="Views\Shared\PeriodSelection.cshtml" />
     <Content Include="Views\MediaSchedule\Results.cshtml" />
     <Content Include="Views\Shared\NavigationBar.cshtml" />
     <Content Include="Views\TestExport\Index.cshtml" />
