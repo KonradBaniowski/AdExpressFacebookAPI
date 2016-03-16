@@ -24,7 +24,13 @@
         </div> 
     </div>
 </div>
-<div class="row h20"></div>
+<div class="row h20">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+        <span id="leave-zoom" class="orange link-cursor hide">Sortir du mode zoom</span>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-3">
         @Html.Action("ResultOptions", "MediaSchedule")
@@ -43,7 +49,8 @@
 <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
 <script src="~/IgniteUI/js/infragistics.core.js"></script>
 <script src="~/IgniteUI/js/infragistics.lob.js"></script>
-    <script>
+
+<script>
     //{columnKey: 'Address', allowHiding: false, hidden: true}
     $(document).ready(function () {
 
@@ -60,11 +67,12 @@
 
         //$("#changeColSett").click(function () {
 
-        
+
         var ds;
         var cols;
         var colsFixed;
         var needFixedColumns = false;
+        var zoomDate = '';
 
         function GetItems(idItems) {
             var items = '';
@@ -171,18 +179,28 @@
                         ]
                     })
                 }
+                $(".open-media-schedule").on('click', function (e) {
+                    $("#grid").addClass("hide");
+                    $("#gridLoader").removeClass("hide");
+                    $("#leave-zoom").removeClass("hide");
+                    CallMediaScheduleResult('' + $(this).attr("date"));
+                });
             } else {
                 alert(error);
             }
 
         }
 
-        function CallMediaScheduleResult() {
+        function CallMediaScheduleResult(zoomDate) {
+            var params = {
+                zoomDate: zoomDate
+            };
             $.ajax({
                 url: '@Url.Action("MediaScheduleResult", "MediaSchedule")',
                 contentType: "application/x-www-form-urlencoded",
                 type: "POST",
                 datatype: "json",
+                data: params,
                 error: function (xmlHttpRequest, errorText, thrownError) {
                 },
                 success: function (data) {
@@ -212,147 +230,155 @@
         function CallSetOptions() {
             $.ajax({
                 url: '@Url.Action("SetResultOptions", "MediaSchedule")',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "POST",
-                    datatype: "json",
-                    data: userFilter,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        CallMediaScheduleResult();
-                    }
-                });
-            }
-
-            CallMediaScheduleResult();
-
-            $('#periodDetailType').selectpicker();
-
-            $('#periodDetailType').on('change', function (e) {
-                userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: userFilter,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    CallMediaScheduleResult(zoomDate);
+                }
             });
+        }
 
-            $('#btn-export').on('click', function (e) {
-                window.open('@Url.Action("Index", "TestExport")', "_blank");
-            });
+        CallMediaScheduleResult(zoomDate);
 
-            $('#btn-value').on('click', function (e) {
-                window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
-            });
-
-            $('#btn-brut').on('click', function (e) {
-                window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
-            });
-
-            $('#validate-options').on('click', function (e) {
-                $("#grid").addClass("hide");
-                $("#gridLoader").removeClass("hide");
-                CallSetOptions();
-            });
-
-            $('#unit').selectpicker();
-
-            $('#unit').on('change', function (e) {
-                userFilter.UnitFilter.Unit = $('#unit').val();
-            });
-
-            $('#insertion').selectpicker();
-
-            $('#insertion').on('change', function (e) {
-                userFilter.InsertionFilter.Insertion = $('#insertion').val();
-            });
-
-            $('#autoPromo').selectpicker();
-
-            $('#autoPromo').on('change', function (e) {
-                userFilter.AutoPromoFilter.AutoPromo = $('#autoPromo').val();
-            });
-
-            $('#format').selectpicker();
-
-            $('#format').on('change', function (e) {
-                userFilter.FormatFilter.Formats = GetItems($('#format').val());
-            });
-
-            $('#purchaseMode').selectpicker();
-
-            $('#purchaseMode').on('change', function (e) {
-                userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
-            });
-
-            $('#defaultDetail').selectpicker();
-            $('#customDetail').selectpicker();
-            $('#l1Detail').selectpicker();
-            $('#l2Detail').selectpicker();
-            $('#l3Detail').selectpicker();
-            $('#l4Detail').selectpicker();
-
-            $('#defaultDetail').on('change', function (e) {
-                $('#customDetail').selectpicker('val', '-1');
-                $('#l1Detail').selectpicker('val', '-1');
-                $('#l2Detail').selectpicker('val', '-1');
-                $('#l3Detail').selectpicker('val', '-1');
-                $('#l4Detail').selectpicker('val', '-1');
-                InitGenericDetailLevelFilter();
-                userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
-            });
-
-            $('#customDetail').on('change', function (e) {
-                $('#defaultDetail').selectpicker('val', '-1');
-                $('#l1Detail').selectpicker('val', '-1');
-                $('#l2Detail').selectpicker('val', '-1');
-                $('#l3Detail').selectpicker('val', '-1');
-                $('#l4Detail').selectpicker('val', '-1');
-                InitGenericDetailLevelFilter();
-                userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
-            });
-
-            $('#l1Detail').on('change', function (e) {
-                $('#customDetail').selectpicker('val', '-1');
-                $('#defaultDetail').selectpicker('val', '-1');
-                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
-            });
-
-            $('#l2Detail').on('change', function (e) {
-                $('#customDetail').selectpicker('val', '-1');
-                $('#defaultDetail').selectpicker('val', '-1');
-                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
-            });
-
-            $('#l3Detail').on('change', function (e) {
-                $('#customDetail').selectpicker('val', '-1');
-                $('#defaultDetail').selectpicker('val', '-1');
-                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
-            });
-
-            $('#l4Detail').on('change', function (e) {
-                $('#customDetail').selectpicker('val', '-1');
-                $('#defaultDetail').selectpicker('val', '-1');
-                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L4DetailValue = $('#l4Detail').val();
-            });
-
-            function InitGenericDetailLevelFilter() {
-                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.CustomDetailValue =-1;
-                userFilter.GenericDetailLevelFilter.L1DetailValue =-1;
-                userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
-            }
-
+        $('#leave-zoom').on('click', function (e) {
+            $("#leave-zoom").addClass("hide");
+            $("#grid").addClass("hide");
+            $("#gridLoader").removeClass("hide");
+            zoomDate = '';
+            CallMediaScheduleResult(zoomDate);
         });
 
-        //});
+        $('#periodDetailType').selectpicker();
 
-/***************************************** Old script ********************************************/
+        $('#periodDetailType').on('change', function (e) {
+            userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
+        });
+
+        $('#btn-export').on('click', function (e) {
+            window.open('@Url.Action("Index", "TestExport")', "_blank");
+        });
+
+        $('#btn-value').on('click', function (e) {
+            window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
+        });
+
+        $('#btn-brut').on('click', function (e) {
+            window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
+        });
+
+        $('#validate-options').on('click', function (e) {
+            $("#grid").addClass("hide");
+            $("#gridLoader").removeClass("hide");
+            CallSetOptions();
+        });
+
+        $('#unit').selectpicker();
+
+        $('#unit').on('change', function (e) {
+            userFilter.UnitFilter.Unit = $('#unit').val();
+        });
+
+        $('#insertion').selectpicker();
+
+        $('#insertion').on('change', function (e) {
+            userFilter.InsertionFilter.Insertion = $('#insertion').val();
+        });
+
+        $('#autoPromo').selectpicker();
+
+        $('#autoPromo').on('change', function (e) {
+            userFilter.AutoPromoFilter.AutoPromo = $('#autoPromo').val();
+        });
+
+        $('#format').selectpicker();
+
+        $('#format').on('change', function (e) {
+            userFilter.FormatFilter.Formats = GetItems($('#format').val());
+        });
+
+        $('#purchaseMode').selectpicker();
+
+        $('#purchaseMode').on('change', function (e) {
+            userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
+        });
+
+        $('#defaultDetail').selectpicker();
+        $('#customDetail').selectpicker();
+        $('#l1Detail').selectpicker();
+        $('#l2Detail').selectpicker();
+        $('#l3Detail').selectpicker();
+        $('#l4Detail').selectpicker();
+
+        $('#defaultDetail').on('change', function (e) {
+            $('#customDetail').selectpicker('val', '-1');
+            $('#l1Detail').selectpicker('val', '-1');
+            $('#l2Detail').selectpicker('val', '-1');
+            $('#l3Detail').selectpicker('val', '-1');
+            $('#l4Detail').selectpicker('val', '-1');
+            InitGenericDetailLevelFilter();
+            userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
+        });
+
+        $('#customDetail').on('change', function (e) {
+            $('#defaultDetail').selectpicker('val', '-1');
+            $('#l1Detail').selectpicker('val', '-1');
+            $('#l2Detail').selectpicker('val', '-1');
+            $('#l3Detail').selectpicker('val', '-1');
+            $('#l4Detail').selectpicker('val', '-1');
+            InitGenericDetailLevelFilter();
+            userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
+        });
+
+        $('#l1Detail').on('change', function (e) {
+            $('#customDetail').selectpicker('val', '-1');
+            $('#defaultDetail').selectpicker('val', '-1');
+            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+        });
+
+        $('#l2Detail').on('change', function (e) {
+            $('#customDetail').selectpicker('val', '-1');
+            $('#defaultDetail').selectpicker('val', '-1');
+            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+        });
+
+        $('#l3Detail').on('change', function (e) {
+            $('#customDetail').selectpicker('val', '-1');
+            $('#defaultDetail').selectpicker('val', '-1');
+            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
+        });
+
+        $('#l4Detail').on('change', function (e) {
+            $('#customDetail').selectpicker('val', '-1');
+            $('#defaultDetail').selectpicker('val', '-1');
+            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.L4DetailValue = $('#l4Detail').val();
+        });
+
+        function InitGenericDetailLevelFilter() {
+            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+            userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
+            userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
+            userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
+            userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
+        }
+
+    });
+
+    //});
+
+    /***************************************** Old script ********************************************/
 
     //var cols = [];
     //var data = [];
@@ -430,46 +456,46 @@
 
     //];
 
-        //for (var key1 in data[0]) {
+    //for (var key1 in data[0]) {
 
-        //    if (data[0][key1].group != null) {
-        //        cols.push({
-        //            headerText: data[0][key1].headerText,
-        //            group: data[0][key1].group
+    //    if (data[0][key1].group != null) {
+    //        cols.push({
+    //            headerText: data[0][key1].headerText,
+    //            group: data[0][key1].group
 
-        //        })
-        //    } else {
-        //        cols.push({
-        //            headerText: data[0][key1].headerText,
-        //            key: data[0][key1].key,
-        //            width: data[0][key1].width,
-        //            dataType: data[0][key1].dataType,
-        //            allowHiding: data[0][key1].allowHiding,
-        //            hidden: data[0][key1].hidden,
-        //            template: data[0][key1].template,
+    //        })
+    //    } else {
+    //        cols.push({
+    //            headerText: data[0][key1].headerText,
+    //            key: data[0][key1].key,
+    //            width: data[0][key1].width,
+    //            dataType: data[0][key1].dataType,
+    //            allowHiding: data[0][key1].allowHiding,
+    //            hidden: data[0][key1].hidden,
+    //            template: data[0][key1].template,
 
-        //        })
-        //    }
+    //        })
+    //    }
 
-        //}
+    //}
 
-        //$("#grid").igTreeGrid("destroy");
-        //$("#grid").igTreeGrid({
-        //    dataSource: data[1],
-        //    primaryKey: "ClassifId",
-        //    foreignKey: "PID",
-        //    autoGenerateColumns: false,
-        //    columns: cols,
-        //    features: [
-        //       {
-        //           name: "MultiColumnHeaders"
-        //       },
-        //       {
-        //           name: "Paging",
-        //           mode: "allLevels",
-        //           pageSize: 10
-        //       }
-        //    ]
-        //})
-    </script>
+    //$("#grid").igTreeGrid("destroy");
+    //$("#grid").igTreeGrid({
+    //    dataSource: data[1],
+    //    primaryKey: "ClassifId",
+    //    foreignKey: "PID",
+    //    autoGenerateColumns: false,
+    //    columns: cols,
+    //    features: [
+    //       {
+    //           name: "MultiColumnHeaders"
+    //       },
+    //       {
+    //           name: "Paging",
+    //           mode: "allLevels",
+    //           pageSize: 10
+    //       }
+    //    ]
+    //})
+</script>
 }
