@@ -9,40 +9,88 @@
 
 
 <div class="row">
-        <div class="panel panel-default panel-cotes">
-            <div class="panel-heading">
-                <h3><i class="fa fa-search-plus blue"></i>&nbsp;Insertions</h3>
-                <span class="pull-right">
-                    <ul class="nav panel-tabs" role="tablist">
-                        @{
-                            var multi = "active";
-                        }
-                        @foreach (var item in Model.Medias)
-                        {
-                            <li role="presentation" class="@(item == Model.Medias.First() ? multi : "")">
-                                <a href="#@(item.Label)" aria-controls="@item.Label" role="tab" data-toggle="tab">@item.Label</a>
-                            </li>
-                        }
-                    </ul>
-                </span>
+    <div class="panel panel-default panel-cotes">
+        <div class="panel-heading">
+            <h3><i class="fa fa-search-plus blue"></i>&nbsp;Insertions</h3>
+            <span class="pull-right">
+                <ul class="nav panel-tabs" role="tablist">
+                    @{
+                        var multi = "active";
+                    }
+                    @foreach (var item in Model.Medias)
+                    {
+                    <li role="presentation" class="@(item == Model.Medias.First() ? multi : "")">
+                        <a href="#@(item.Label)" aria-controls="@item.Label" role="tab" data-toggle="tab">@item.Label</a>
+                    </li>
+                    }
+                </ul>
+            </span>
+        </div>
+        <div class="panel-heading second">
+            <h5>
+                Navigation par mois: Du
+                <strong>@Model.DateBegin.ToString("dd/MM/yyy")</strong>
+                au
+                <strong>@Model.DateEnd.ToString("dd/MM/yyy")</strong>
+            </h5>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">1</button>
+                <button type="button" class="btn btn-default">2</button>
+                <button type="button" class="btn btn-default">3</button>
+                <button type="button" class="btn btn-default">TOUS</button>
             </div>
-            <div class="panel-heading second">
-                <h5>
-                    Navigation par mois: 
+        </div>
+
+        <div class="panel panel-default third">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h5 class="panel-title"  data-toggle="collapse" data-target="#lvlperso">
+                    Niveaux personnalisés
                 </h5>
             </div>
+            <div id="lvlperso" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
-                    <div class="tab-content">
-                        @foreach (var item in Model.Medias)
-            {
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Construction</label>
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                            <br>
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                            <br />
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
 
-                            <div role="tabpanel" class="tab-pane @(item == Model.Medias.First() ? multi : "")"
-                                 id="@(item.Label)">HERE I AM@(item.Label)</div>
-                        }
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                @foreach (var item in Model.Medias)
+                {
+                    <div role="tabpanel" class="tab-pane @(item == Model.Medias.First() ? multi : "")"
+                         id="@(item.Label)">
+                        HERE I AM@(item.Label)
+                    </div>
+                }
+            </div>
+        </div>
     </div>
+</div>
 <div class="row">
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
@@ -81,6 +129,11 @@
 
         if (typeof jQuery === "undefined") { throw new Error("jQuery") }
         $(function () {
+
+            //GESTION DES ACTIVES CSS
+            $(".btn-group > .btn").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+            });
 
             $("#grid").igTreeGrid({
                 //dataSource: data,
