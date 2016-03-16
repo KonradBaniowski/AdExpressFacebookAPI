@@ -65,7 +65,8 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 Trees = new List<Tree>(),
                 Branches = new List<UniversBranch>(),
-                UniversGroups = new UserUniversGroupsModel()
+                UniversGroups = new UserUniversGroupsModel(),
+                Dimension = Dimension.product
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -124,7 +125,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 Medias = result.Media,
                 IdMediasCommon = result.MediaCommon,
                 Branches = new List<Models.Shared.UniversBranch>(),
-                Trees = new List<Models.Shared.Tree>()
+                Trees = new List<Models.Shared.Tree>(),
+                Dimension = Dimension.media
             };
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
             foreach (var e in model.Medias)
@@ -278,19 +280,7 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel = Json(new { RedirectUrl = url });
             return jsonModel;
         }
-
-        public JsonResult SaveMarketSelection(string nextStep)
-        {
-
-            var claim = new ClaimsPrincipal(User.Identity);
-            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            //var response = _webSessionService.SaveMarketSelection(idWebSession);
-
-            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-            string url = context.Action(nextStep, _controller);
-            JsonResult jsonModel = Json(new { RedirectUrl = url });
-            return jsonModel;
-        }
+        
         public ActionResult LoadUserUniversGroups()
         {
             bool showUserSavedGroups = true;

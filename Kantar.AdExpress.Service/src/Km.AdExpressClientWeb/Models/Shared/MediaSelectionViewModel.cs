@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.Classification.Universe;
 
 namespace Km.AdExpressClientWeb.Models.Shared
 {
@@ -23,6 +24,8 @@ namespace Km.AdExpressClientWeb.Models.Shared
 
         public PresentationModel Presentation { get; set; }
         public Labels Labels { get; set; }
+
+        public Dimension Dimension { get; set; }
     }
 
     public class Media
