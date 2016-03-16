@@ -264,15 +264,16 @@ namespace Km.AdExpressClientWeb.Controllers
             _optionService.SetOptions(idWebSession, userFilter);
         }
 
-        public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)
+        public JsonResult SaveMediaSelection(List<long> selectedMedia, List<Domain.Tree> userTrees, string nextStep)
         {
             string url = string.Empty;
             var response = new Domain.WebSessionResponse();
             if (selectedMedia != null)
             {
+                List<Domain.Tree> trees = (userTrees.Any()) ? userTrees : new List<Domain.Tree>();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees);
             }
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
