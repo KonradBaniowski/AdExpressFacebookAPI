@@ -51,5 +51,7 @@ namespace Km.AdExpressClientWeb.Models
         public string StartYear { get; set; }
 
         public string EndYear { get; set; }
+
+     
     }
 }

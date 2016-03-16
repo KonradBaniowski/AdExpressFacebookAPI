@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "PeriodSelection";
+    var _controller = Model.NavigationBar.First().Controller;
 }
 
 <div class="row">
@@ -266,7 +267,7 @@
             };
 
             $.ajax({
-                url: '@Url.Action("CalendarValidation", "MediaSchedule")',
+                url: '@Url.Action("CalendarValidation", _controller)',
                 contentType: "application/x-www-form-urlencoded",
                 type: "POST",
                 datatype: "json",
@@ -292,7 +293,7 @@
             };
 
             $.ajax({
-                url: '@Url.Action("SlidingDateValidation", "MediaSchedule")',
+                url: '@Url.Action("SlidingDateValidation", _controller)',
                 contentType: "application/x-www-form-urlencoded",
                 type: "POST",
                 datatype: "json",

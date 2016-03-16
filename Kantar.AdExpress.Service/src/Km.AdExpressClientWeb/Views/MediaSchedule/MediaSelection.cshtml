@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "MediaSelection";
     var array = @Html.Raw(Json.Encode(Model.ErrorMessage));
+    var _controller = Model.NavigationBar.First().Controller;
 }
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
@@ -403,7 +404,7 @@
                         nextStep: "PeriodSelection"
                     };
                     $.ajax({
-                        url: '/MediaSchedule/SaveMediaSelection',
+                        url: '/@_controller/SaveMediaSelection',
                         contentType: 'application/json',
                         type: 'POST',
                         datatype: 'JSON',
@@ -434,7 +435,7 @@
                     };
 
                     $.ajax({
-                        url: '/MediaSchedule/' + action,
+                        url: '/@_controller/' + action,
                         contentType: 'application/json',
                         type: 'POST',
                         datatype: 'JSON',
@@ -465,7 +466,7 @@
                     };
 
                     $.ajax({
-                        url: '/MediaSchedule/' + action,
+                        url: '/@_controller/' + action,
                         contentType: 'application/json',
                         type: 'POST',
                         datatype: 'JSON',
@@ -495,7 +496,7 @@
                         nextStep: "Results"
                     };
                     $.ajax({
-                        url: '/MediaSchedule/' + action,
+                        url: '/@_controller/' + action,
                         contentType: 'application/json',
                         type: 'POST',
                         datatype: 'JSON',
