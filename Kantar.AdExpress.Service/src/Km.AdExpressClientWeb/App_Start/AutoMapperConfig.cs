@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using VM = Km.AdExpressClientWeb.Models.MediaSchedule;
+using VM = Km.AdExpressClientWeb.Models.Shared;
 using TNS.Classification.Universe;
 
 namespace Km.AdExpressClientWeb.App_Start

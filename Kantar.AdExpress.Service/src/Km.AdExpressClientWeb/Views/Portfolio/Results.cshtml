@@ -1,17 +1,311 @@
-﻿
+﻿@model Km.AdExpressClientWeb.Models.Portfolio.ResultsViewModel
 @{
-    Layout = null;
+    ViewBag.Title = "Results";
+    var _controller = Model.NavigationBar.First().Controller;
 }
 
-<!DOCTYPE html>
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Results</title>
-</head>
-<body>
-    <div> 
+<div class="row">
+    @Html.Partial("Presentation", Model.Presentation)
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+        <div class="row row-sm">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
+        </div>
     </div>
-</body>
-</html>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right custom-button">
+            <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            <button class="btn btn-valider">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
+        </div>
+    </div>
+</div>
+<div class="row h20"></div>
+<div class="row">
+    <div class="col-md-3">
+        @Html.Action("ResultOptions", _controller)
+    </div>
+    <div class="col-md-9">
+        <center>
+            <div id="grid" class="hide">
+            </div>
+            <div id="gridLoader">
+                <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+            </div>
+        </center>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+
+            $("#grid").igTreeGrid({
+                //dataSource: data,
+                primaryKey: "ClassifId",
+                width: "100%",
+                defaultColumnWidth: 200,
+                avgRowHeight: 60,
+                autoGenerateColumns: true
+            });
+
+            //$("#changeColSett").click(function () {
+
+
+            var ds;
+            var cols;
+            var colsFixed;
+            var needFixedColumns = false;
+
+            function GenericDetailLevelFilter() {
+                this.DefaultDetailValue = $('#defaultDetail').val();
+                this.CustomDetailValue = -1;
+                this.L1DetailValue = -1;
+                this.L2DetailValue = -1;
+                this.L3DetailValue = -1;
+                this.L4DetailValue = -1;
+            }
+
+            function PeriodDetailFilter() {
+                this.PeriodDetailType = $('#periodDetailType').val();
+            }
+
+            function UnitFilter() {
+                this.Unit = $('#unit').val();
+            }
+
+            function InsertionFilter() {
+                this.Insertion = $('#insertion').val();
+            }
+
+            function UserFilter() {
+                this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
+                this.PeriodDetailFilter = new PeriodDetailFilter();
+                this.UnitFilter = new UnitFilter();
+                this.InsertionFilter = new InsertionFilter();
+            }
+
+            var userFilter = new UserFilter();
+
+            var renderGrid = function (success, error) {
+                if (success) {
+
+                    $("#grid").igTreeGrid("destroy");
+                    $("#gridLoader").addClass("hide");
+                    $("#grid").removeClass("hide");
+                    if (needFixedColumns) {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID_PRODUCT",
+                            foreignKey: "PID",
+                            width: "846px",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 25
+                                },
+                                {
+                                    name: "ColumnFixing",
+                                    fixingDirection: "left",
+                                    columnSettings: colsFixed
+                                }
+                            ]
+                        })
+                    }
+                    else {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID_PRODUCT",
+                            foreignKey: "PID",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 25
+                                }
+                            ]
+                        })
+                    }
+                } else {
+                    alert(error);
+                }
+
+            }
+
+            function CallMediaScheduleResult() {
+                $.ajax({
+                    url: '@Url.Action("PortfolioResult", _controller)',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null) {
+                            dataTreeGrid = data.datagrid;
+                            cols = data.columns;
+                            colsFixed = data.columnsfixed;
+                            needFixedColumns = data.needfixedcolumns;
+
+                            var schema = new $.ig.DataSchema("array", {
+                                fields: data.schema
+                            });
+
+                            ds = new $.ig.DataSource({
+                                type: "json",
+                                schema: schema,
+                                dataSource: dataTreeGrid,
+                                callback: renderGrid
+                            });
+
+                            ds.dataBind();
+                        }
+                    }
+                });
+            }
+
+            function CallSetOptions() {
+                $.ajax({
+                    url: '@Url.Action("SetResultOptions", _controller)',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: userFilter,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        CallMediaScheduleResult();
+                    }
+                });
+            }
+
+            CallMediaScheduleResult();
+
+            $('#periodDetailType').selectpicker();
+
+            $('#periodDetailType').on('change', function (e) {
+                userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                window.open('@Url.Action("Index", "TestExport")', "_blank");
+            });
+
+            $('#btn-value').on('click', function (e) {
+                window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
+            });
+
+            $('#btn-brut').on('click', function (e) {
+                window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
+            });
+
+            $('#validate-options').on('click', function (e) {
+                $("#grid").addClass("hide");
+                $("#gridLoader").removeClass("hide");
+                CallSetOptions();
+            });
+
+            $('#unit').selectpicker();
+
+            $('#unit').on('change', function (e) {
+                userFilter.UnitFilter.Unit = $('#unit').val();
+            });
+
+            $('#insertion').selectpicker();
+
+            $('#insertion').on('change', function (e) {
+                userFilter.InsertionFilter.Insertion = $('#insertion').val();
+            });
+
+            $('#defaultDetail').selectpicker();
+            $('#customDetail').selectpicker();
+            $('#l1Detail').selectpicker();
+            $('#l2Detail').selectpicker();
+            $('#l3Detail').selectpicker();
+            $('#l4Detail').selectpicker();
+
+            $('#defaultDetail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#l1Detail').selectpicker('val', '-1');
+                $('#l2Detail').selectpicker('val', '-1');
+                $('#l3Detail').selectpicker('val', '-1');
+                $('#l4Detail').selectpicker('val', '-1');
+                InitGenericDetailLevelFilter();
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
+            });
+
+            $('#customDetail').on('change', function (e) {
+                $('#defaultDetail').selectpicker('val', '-1');
+                $('#l1Detail').selectpicker('val', '-1');
+                $('#l2Detail').selectpicker('val', '-1');
+                $('#l3Detail').selectpicker('val', '-1');
+                $('#l4Detail').selectpicker('val', '-1');
+                InitGenericDetailLevelFilter();
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
+            });
+
+            $('#l1Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+            });
+
+            $('#l2Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+            });
+
+            $('#l3Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
+            });
+
+            $('#l4Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L4DetailValue = $('#l4Detail').val();
+            });
+
+            function InitGenericDetailLevelFilter() {
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
+            }
+
+        });
+    </script>
+}
