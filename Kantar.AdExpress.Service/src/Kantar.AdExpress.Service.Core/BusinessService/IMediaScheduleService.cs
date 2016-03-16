@@ -11,6 +11,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     public interface IMediaScheduleService
     {
         object[,] GetMediaScheduleData(string idWebSession);
-        GridResult GetGridResult(string idWebSession);
+        GridResult GetGridResult(string idWebSession, string zoomDate);
     }
 }
