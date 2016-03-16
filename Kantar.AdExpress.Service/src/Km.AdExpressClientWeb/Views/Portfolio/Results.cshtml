@@ -1,6 +1,7 @@
 ﻿@model Km.AdExpressClientWeb.Models.Portfolio.ResultsViewModel
 @{
     ViewBag.Title = "Results";
+    var _controller = Model.NavigationBar.First().Controller;
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -26,7 +27,7 @@
 <div class="row h20"></div>
 <div class="row">
     <div class="col-md-3">
-        @Html.Action("ResultOptions", "Portfolio")
+        @Html.Action("ResultOptions", _controller)
     </div>
     <div class="col-md-9">
         <center>
@@ -154,7 +155,7 @@
 
             function CallMediaScheduleResult() {
                 $.ajax({
-                    url: '@Url.Action("PortfolioResult", "Portfolio")',
+                    url: '@Url.Action("PortfolioResult", _controller)',
                     contentType: "application/x-www-form-urlencoded",
                     type: "POST",
                     datatype: "json",
@@ -186,7 +187,7 @@
 
             function CallSetOptions() {
                 $.ajax({
-                    url: '@Url.Action("SetResultOptions", "Portfolio")',
+                    url: '@Url.Action("SetResultOptions", _controller)',
                     contentType: "application/x-www-form-urlencoded",
                     type: "POST",
                     datatype: "json",

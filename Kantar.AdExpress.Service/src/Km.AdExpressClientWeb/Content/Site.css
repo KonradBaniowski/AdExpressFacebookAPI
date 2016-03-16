@@ -1495,16 +1495,75 @@ ul.ui-selectable {
 .panel.panel-default.panel-cotes > .panel-heading {
     background-color: rgba(0,0,0,0.7);
     border: none;
+    border-radius: unset;
 }
 
     .panel.panel-default.panel-cotes > .panel-heading.second {
-        background-color: rgba(0,0,0,0.2);
+        background-color: rgba(0,0,0,0.6);
         border: none;
-    }
-
-    .panel.panel-default.panel-cotes > .panel-heading > h3 {
+        border-radius: unset;
         color: white;
     }
+
+        .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group {
+            display: inline-flex;
+            overflow-x: scroll;
+            width: 350px;
+        }
+
+            .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn {
+                background-color: rgba(0,0,0,0.4);
+                color: white;
+                border: 1px solid transparent;
+            }
+
+.panel.panel-default.panel-cotes > .panel-default.third {
+    border: none;
+}
+
+    .panel.panel-default.panel-cotes > .panel-default.third > .panel-heading {
+        background-color: #ff8c00;
+        color: white;
+        /*border: 1px solid transparent;*/
+        border-radius: unset;
+        border: none;
+        cursor: pointer;
+    }
+
+    .panel.panel-default.panel-cotes > .panel-default.third .panel-body {
+        background-color: #ff8c00;
+    }
+
+    .panel.panel-default.panel-cotes > .panel-default.third .form-group {
+        background-color: #ff8c00;
+        color: white;
+    }
+
+    .panel.panel-default.panel-cotes > .panel-default.third .form-control {
+        background-color: #ff8c00;
+        color: white;
+        border-radius: 15px;
+        border-color: white;
+    }
+
+
+
+
+
+.panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:active,
+.panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:hover,
+.panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn.active {
+    background-color: #00c1ff;
+}
+
+
+.panel.panel-default.panel-cotes > .panel-heading > h3 {
+    color: white;
+}
+
+.panel.panel-default.panel-cotes > .panel-heading > h5 {
+    display: inline-block;
+}
 
 .panel-tabs {
     position: relative;
