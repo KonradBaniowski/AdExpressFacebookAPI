@@ -73,7 +73,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product,MarketPageId, true);
+            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
@@ -127,7 +127,15 @@ namespace Km.AdExpressClientWeb.Controllers
                 IdMediasCommon = result.MediaCommon,
                 Branches = new List<Models.Shared.UniversBranch>(),
                 Trees = new List<Models.Shared.Tree>(),
-                Dimension = Dimension.media
+                Dimension = Dimension.media,
+                UniversGroups = new UserUniversGroupsModel()
+            };
+            model.UniversGroups = new UserUniversGroupsModel
+            {
+                ShowUserSavedGroups = true,
+                UserUniversGroups = new List<UserUniversGroup>(),
+                UserUniversCode = LanguageConstantes.UserUniversCode,
+                SiteLanguage = result.SiteLanguage
             };
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
             foreach (var e in model.Medias)
@@ -145,7 +153,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, MediaPageId, true);
+            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {
@@ -296,7 +304,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
         
-        public ActionResult LoadUserUniversGroups()
+        public ActionResult LoadUserUniversGroups(Dimension dimension)
         {
             bool showUserSavedGroups = true;
             var claim = new ClaimsPrincipal(User.Identity);
@@ -315,7 +323,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             if (showUserSavedGroups)
             {
-                var data = _universService.GetUserSavedUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product, MarketPageId);
+                var data = _universService.GetUserSavedUniversGroups(webSessionId, dimension);
                 result.SiteLanguage = data.SiteLanguage;
                 result.UserUniversGroups = Mapper.Map<List<UserUniversGroup>>(data.UniversGroups);
                 foreach (var group in result.UserUniversGroups)
@@ -332,7 +340,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _universService.GetTreesByUserUnivers(id, idWebSession, Dimension.product, MarketPageId);
+            var result = _universService.GetTreesByUserUnivers(id, idWebSession, Dimension.product);
             return Json(result);
         }
 
@@ -451,7 +459,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _universService.GetBranches(webSessionId, Dimension.media, MediaPageId, true);
+            var result = _universService.GetBranches(webSessionId, Dimension.media, true);
             return Json(result);
         }
 

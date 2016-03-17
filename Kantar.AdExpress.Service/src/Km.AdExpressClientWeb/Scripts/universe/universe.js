@@ -2,13 +2,18 @@
 $(function () {
     
     var dimension = $('#Dimension').val();
+    var params = {
+        dimension: dimension
+    };
     $.ajax({
         url: '/MediaSchedule/LoadUserUniversGroups',
         type: 'GET',
+        data: params,
         error: function (xmlHttpRequest, errorText, thrownError) {
             alert("error");
         },
         success: function (response) {
+            $('#monunivers .modal-content').empty();
             $('#monunivers .modal-content').append(response);
         }
 
