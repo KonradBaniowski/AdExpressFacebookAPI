@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<License>
+  <Data>
+    <LicensedTo>tns secodip</LicensedTo>
+    <LicenseType>Site Enterprise Subscription</LicenseType>
+    <LicenseNote>Limited to 10 physical sites, not to exceed 10 developers</LicenseNote>
+    <OrderID>100507100256</OrderID>
+    <OEM>Not to exceed 10 deployments</OEM>
+    <Products>
+      <Product>Aspose.Cells for .NET</Product>
+    </Products>
+    <EditionType>Enterprise</EditionType>
+    <SerialNumber>dd0ad6ac-a12b-4fc8-b914-511a713a4649</SerialNumber>
+    <SubscriptionExpiry>20110723</SubscriptionExpiry>
+    <LicenseVersion>2.2</LicenseVersion>
+  </Data>
+  <Signature>KF9UtRAkFQ/yDcjnOr8rIF/vD9Yp3VQb8dgyqEb0xP37Tz8K7QnWaFlJGv4ENpqSn2BYUbGZBXHEz7V9RKJ1RYUkKops5uskkQMTBHKkQTSlC165++hiTzFCPqdqNzOQDgaMdGpL+asWkl2yULjLt5qjGog8guAttgdbD9etBKU=</Signature>
+</License>
