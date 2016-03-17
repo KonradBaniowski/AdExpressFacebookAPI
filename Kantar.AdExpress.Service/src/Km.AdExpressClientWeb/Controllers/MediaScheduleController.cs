@@ -276,7 +276,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var response = new Domain.WebSessionResponse();
             if (selectedMedia != null)
             {
-                List<Domain.Tree> trees = (userTrees.Any()) ? userTrees : new List<Domain.Tree>();
+                List<Domain.Tree> trees =  new List<Domain.Tree>();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees);
