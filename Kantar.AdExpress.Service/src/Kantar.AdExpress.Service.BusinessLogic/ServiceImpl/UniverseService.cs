@@ -30,15 +30,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public const int MaxIncludeNbr = 2;
         public const int MaxExcludeNbr = 1;
 
-        public List<UniversItem> GetItems(int universeLevelId, string keyWord, string idSession, Dimension dimension, out int nbItems)
+        public List<UniversItem> GetItems(int universeLevelId, string keyWord, string idSession, Dimension dimension, List<int> idMedias, out int nbItems)
         {
             webSession = (WebSession)WebSession.Load(idSession);
             //CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
-            object[] param = new object[2];
+            object[] param = new object[3];
             param[0] = webSession;
             param[1] = dimension;
+            if (idMedias != null)
+                param[2] = string.Join(",", idMedias.Select(e => e));
             IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
                 string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
               cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
@@ -60,14 +62,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public List<UniversItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession, Dimension dimension, out int nbItems)
+        public List<UniversItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession, Dimension dimension, List<int> idMedias, out int nbItems)
         {
             webSession = (WebSession)WebSession.Load(idSession);
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
-            object[] param = new object[2];
+            object[] param = new object[3];
             param[0] = webSession;
             param[1] = dimension;
+            if (idMedias != null)
+                param[2] = string.Join(",", idMedias.Select(e => e));
             IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
                 string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
               cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);

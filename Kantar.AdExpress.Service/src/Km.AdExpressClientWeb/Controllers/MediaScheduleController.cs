@@ -270,13 +270,13 @@ namespace Km.AdExpressClientWeb.Controllers
             _optionService.SetOptions(idWebSession, userFilter);
         }
 
-        public JsonResult SaveMediaSelection(List<long> selectedMedia, List<Domain.Tree> userTrees, string nextStep)
+        public JsonResult SaveMediaSelection(List<long> selectedMedia, List<Domain.Tree> mediaSupport, string nextStep)
         {
             string url = string.Empty;
             var response = new Domain.WebSessionResponse();
             if (selectedMedia != null)
             {
-                List<Domain.Tree> trees =  new List<Domain.Tree>();
+                List<Domain.Tree> trees = (mediaSupport !=null)? mediaSupport: new List<Domain.Tree>();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees);
