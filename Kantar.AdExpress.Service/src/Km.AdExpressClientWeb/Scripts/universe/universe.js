@@ -1,6 +1,7 @@
 ﻿
 $(function () {
-
+    
+    var dimension = $('#Dimension').val();
     $.ajax({
         url: '/MediaSchedule/LoadUserUniversGroups',
         type: 'GET',
@@ -27,6 +28,8 @@ $(function () {
         $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
     });
 
+   
+
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
         var branchId = $('#branch').attr("data-branch");
@@ -41,7 +44,8 @@ $(function () {
             var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
             var params = {
                 keyWord: keyword,
-                universeId: universe
+                universeId: universe,
+                dimension: dimension
             };
 
             $.ajax({
@@ -113,20 +117,6 @@ $(function () {
         e.preventDefault();
 
         var things = [];
-        //$.each($('.nav.nav-tabs > li a'), function (index, elem) {
-        //    var itemContainer = $(elem).attr('data-target');
-        //    var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
-        //    var idUnivers = [];
-        //    $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
-        //        var id = $(elem).attr('data-id');
-        //        idUnivers.push(id);
-        //    });
-        //    var item = {
-        //        AccessType: accessType,
-        //        UniversLevels: idUnivers
-        //    };
-        //    things.push(item);
-        //});
         var spinner = new Spinner().spin(this);
         $('#btnSubmitMarketSelection').off('click');
         var trees = [];
@@ -309,7 +299,8 @@ $(function () {
             var params = {
                 levelId: universe,
                 selectedClassification: DIS.itemIds.join(","),
-                selectedLevelId: universeIdCalling
+                selectedLevelId: universeIdCalling,
+                dimension: dimension
             };
             var univerIndex = parseFloat($(elem).attr('data-universe'));
             var univerLabel = $(elem).attr('data-label') + "\{NB_ELEM\}";
@@ -335,6 +326,14 @@ $(function () {
             });
         });
     };
+});
+$('#keyword').off('keyup');
+
+$('#keyword').on('keyup', function () {
+    if (event.keyCode == 13) {
+        $(".btn-recherche").click();
+        console.log('Enter was pressed');
+    }
 });
 
 var Example = (function () {
