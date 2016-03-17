@@ -1,5 +1,6 @@
 ﻿
 $(function () {
+    
     var dimension = $('#Dimension').val();
     $.ajax({
         url: '/MediaSchedule/LoadUserUniversGroups',
@@ -26,6 +27,8 @@ $(function () {
         //CLEAN PANEL ON CHANGE BRANCH
         $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
     });
+
+   
 
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
@@ -323,6 +326,14 @@ $(function () {
             });
         });
     };
+});
+$('#keyword').off('keyup');
+
+$('#keyword').on('keyup', function () {
+    if (event.keyCode == 13) {
+        $(".btn-recherche").click();
+        console.log('Enter was pressed');
+    }
 });
 
 var Example = (function () {
