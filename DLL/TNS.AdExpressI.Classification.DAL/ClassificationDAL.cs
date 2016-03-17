@@ -126,6 +126,21 @@ namespace TNS.AdExpressI.Classification.DAL
         /// Default Constructor
         /// </summary>
         /// <param name="session">User session</param>
+        /// <param name="dimension">Product or vehicle classification brand</param>
+        public ClassificationDAL(WebSession session, TNS.Classification.Universe.Dimension dimension, string vehicleList)
+            : this(session)
+        {
+            //Set  Current classification brand (product or vehicle)
+            _dimension = dimension;
+            //Get data source
+            _dataSource = GetDataSource();
+            _toLowerCase = true;
+            _vehicleList = vehicleList;
+        }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="session">User session</param>
         /// <param name="genericDetailLevel">Generic detail level selected by the customer (ex. Sub Media\Vehicle)</param>
         /// <param name="vehicleList">List of vehicles selected by the user</param>
         public ClassificationDAL(WebSession session, GenericDetailLevel genericDetailLevel, string vehicleList)
@@ -443,6 +458,7 @@ namespace TNS.AdExpressI.Classification.DAL
             engineDal.Filters = _filters;
             engineDal.FilterWithProductSelection = _filterWithProductSelection;
             engineDal.DataSource = _dataSource;
+            engineDal.VehiclesId = _vehicleList;
             return engineDal.GetItems(classificationLevelLabel, wordToSearch);
         }
 
@@ -534,6 +550,7 @@ namespace TNS.AdExpressI.Classification.DAL
             engineDal.Filters = _filters;
             engineDal.FilterWithProductSelection = _filterWithProductSelection;
             engineDal.DataSource = _dataSource;
+            engineDal.VehiclesId = _vehicleList;
             return engineDal.GetItems(classificationLevelLabel, selectedClassificationItemsIds, selectedClassificationLevelLabel);
         }
 
@@ -601,6 +618,7 @@ namespace TNS.AdExpressI.Classification.DAL
             engineDal.DBSchema = _dBSchema;
             engineDal.FilterWithProductSelection = _filterWithProductSelection;
             engineDal.DataSource = _dataSource;
+            engineDal.VehiclesId = _vehicleList;
             return engineDal.GetSelectedItems(classificationLevelLabel, idList);
         }
 
@@ -661,6 +679,7 @@ namespace TNS.AdExpressI.Classification.DAL
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
             engineDal.DataSource = _dataSource;
+            engineDal.VehiclesId = _vehicleList;
             return engineDal.GetRecapItems(classificationLevelLabel, customerRightType);
         }
         #endregion

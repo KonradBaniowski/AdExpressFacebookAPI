@@ -19,31 +19,32 @@
     </div>
     @*SEARCH*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10 ">
+        @Html.HiddenFor(e => e.Dimension)
         <div class="row bg-black-only">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading">
                 <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp; @Model.Labels.KeyWordLabel </h4>
                 <h5 class="pull-right"> @Model.Labels.KeyWordDescription</h5>
                 <div class="clearfix"></div>
-                <div class="input-group">
-                    <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
-                    <div class="input-group-btn dropdown" dropdown="">
-                        <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
-                        <ul class="dropdown-menu bg-blue pull-right">
-                            @foreach (var item in Model.Branches)
-                            {
-                                if (item.IsSelected)
+                    <div class="input-group">
+                        <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
+                        <div class="input-group-btn dropdown" dropdown="">
+                            <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
+                            <ul class="dropdown-menu bg-blue pull-right">
+                                @foreach (var item in Model.Branches)
                                 {
-                                    <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
+                                    if (item.IsSelected)
+                                    {
+                                        <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                                    }
                                 }
-                                else
-                                {
-                                    <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
-                                }
-                            }
-                        </ul>
-                        <button class="btn btn-default btn-recherche" type="button"><i class="fa fa-search blue "></i></button>
+                            </ul>
+                            <button type="submit" class="btn btn-default btn-recherche" ><i class="fa fa-search blue "></i></button>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -72,7 +73,6 @@
                     <a class="btn btn-green2 btn-circle btn-xl">
                         <i class="fa fa-arrow-right"></i>
                     </a>
-                    <p class="lead">@Model.Labels.Include (D&eacute;placer)</p>
                 </div>
             </div>
 

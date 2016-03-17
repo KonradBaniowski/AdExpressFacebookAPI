@@ -50,6 +50,10 @@
       <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Aspose.Cells, Version=5.1.3.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
@@ -1412,6 +1416,7 @@
     <Content Include="IgniteUI\css\themes\ios\infragistics.theme.less" />
     <Content Include="IgniteUI\mobile\css\themes\ios6\infragistics.mobile.theme.less" />
     <Content Include="IgniteUI\mobile\css\themes\ios\infragistics.mobile.theme.less" />
+    <EmbeddedResource Include="Aspose.Cells.lic" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datepicker-fr.js" />
