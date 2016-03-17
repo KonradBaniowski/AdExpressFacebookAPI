@@ -255,7 +255,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 List<Domain.Tree> trees = new List<Domain.Tree>();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees);
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees,Dimension.media, Security.full);
             }
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
