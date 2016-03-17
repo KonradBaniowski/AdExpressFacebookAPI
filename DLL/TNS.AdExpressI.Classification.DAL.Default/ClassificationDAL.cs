@@ -47,11 +47,21 @@ namespace TNS.AdExpressI.Classification.DAL.Default {
 		public ClassificationDAL(WebSession session, TNS.Classification.Universe.Dimension dimension)
 			: base(session,dimension) {
 		}
-		/// <summary>
-		/// Default Constructor
-		/// </summary>
-		/// <param name="session">User session</param>
-		/// <param name="genericDetailLevel">generic detail level selected by the user</param>
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="session">User session</param>
+        /// <param name="dimension">Product or vehicle classification brand</param>
+        public ClassificationDAL(WebSession session, TNS.Classification.Universe.Dimension dimension, string vehicleList)
+            : base(session, dimension, vehicleList)
+        {            
+        }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="session">User session</param>
+        /// <param name="genericDetailLevel">generic detail level selected by the user</param>
         /// <param name="vehicleList">List of media selected by the user</param>
         public ClassificationDAL(WebSession session, GenericDetailLevel genericDetailLevel, string vehicleList)
             : base(session, genericDetailLevel, vehicleList)
