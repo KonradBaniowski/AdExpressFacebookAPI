@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define Debug
+using System;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -9,6 +10,8 @@ using TNS.AdExpressI.Portofolio;
 using System.Reflection;
 using TNS.Classification.Universe;
 using System.Collections.Generic;
+using TNS.AdExpress.Domain.Level;
+using System.Collections;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -38,7 +41,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             ResultTable data = null;
             var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
             _customerSession = (WebSession)WebSession.Load(idWebSession);
-#if DEBUG
+#if Debug
             //TODO : Resultat pour calendrier d'actiion : a enlever apres tests
             _customerSession.CurrentTab = 6;
 
@@ -56,7 +59,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
             universes.Add(universes.Count, adExpressUniverse);
             _customerSession.PrincipalMediaUniverses = universes;
+
+            ArrayList levelIds = new ArrayList();
+            levelIds.Add(11);
+            levelIds.Add(12);
+            levelIds.Add(10);            
+            _customerSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+
+            _customerSession.Save();
 #endif
+
 
 
             if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
