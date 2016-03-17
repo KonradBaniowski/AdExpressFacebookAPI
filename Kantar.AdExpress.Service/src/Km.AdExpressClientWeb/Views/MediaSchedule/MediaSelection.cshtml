@@ -17,9 +17,9 @@
         {
             <input type="hidden" name="HiddenIntList" value="@i" />
         }
-        <div class="panel-group" id="media-accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
+        <div class="panel-group panel-group-results" id="media-accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-primary panel-results">
+                <div class="panel-heading head-results" role="tab" id="headingOne">
                     <h3 class="panel-title pull-left">
                         <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             <i class="fa fa-eye"></i> Sélection des médias
@@ -67,8 +67,8 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
+            <div class="panel panel-primary panel-results" >
+                <div class="panel-heading head-results" role="tab" id="headingTwo">
                     <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             <i class="fa fa-search"></i> @Model.Labels.Refine
