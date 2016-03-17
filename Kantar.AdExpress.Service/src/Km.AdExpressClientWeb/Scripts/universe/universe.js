@@ -37,6 +37,8 @@ $(function () {
 
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
+        if (keyword.length < 2)
+            return;
         var branchId = $('#branch').attr("data-branch");
         $(".universes").hide();
         $("#branch" + branchId).show();
