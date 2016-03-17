@@ -161,6 +161,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.34756, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -1482,10 +1486,11 @@
     <Content Include="Views\TestExport\ResultBrut.cshtml" />
     <Content Include="Views\Portfolio\Results.cshtml" />
     <Content Include="Views\Portfolio\_ResultOptions.cshtml" />
+    <Content Include="Views\PortfolioExport\Index.cshtml" />
+    <Content Include="Views\PortfolioExport\ResultBrut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PortfolioExport\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>

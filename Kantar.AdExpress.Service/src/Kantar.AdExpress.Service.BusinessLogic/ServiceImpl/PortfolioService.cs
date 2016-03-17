@@ -1,14 +1,72 @@
 ﻿using System;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.FrameWork.WebResultUI;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpressI.Portofolio;
+using System.Reflection;
+using TNS.Classification.Universe;
+using System.Collections.Generic;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class PortfolioService : IPortfolioService
     {
+        private WebSession _customerSession = null;
+
         public GridResult GetGridResult(string idWebSession)
         {
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+
+            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+            var parameters = new object[1];
+            parameters[0] = _customerSession;
+            var portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+
             throw new NotImplementedException();
+        }
+
+
+        public ResultTable GetResultTable(string idWebSession)
+        {
+            ResultTable data = null;
+            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+#if DEBUG
+            //TODO : Resultat pour calendrier d'actiion : a enlever apres tests
+            _customerSession.CurrentTab = 6;
+
+            //TODO :  selection support :  : a enlever apres tests
+            TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
+            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+
+            int groupIndex = 0;
+            Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
+            NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
+            Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
+            List<long> idUniversItems = new List<long>();
+            idUniversItems.Add(2003);//EUROPE 1
+            treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
+            adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
+            universes.Add(universes.Count, adExpressUniverse);
+            _customerSession.PrincipalMediaUniverses = universes;
+#endif
+
+
+            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+            var parameters = new object[1];
+            parameters[0] = _customerSession;
+            var portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            data = portofolioResult.GetResultTable();
+            return data;
         }
     }
 }
