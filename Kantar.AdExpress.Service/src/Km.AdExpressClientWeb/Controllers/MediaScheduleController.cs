@@ -32,6 +32,7 @@ using Kantar.AdExpress.Service.Core;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
+using TNS.AdExpress.Domain.Results;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -233,11 +234,16 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult MediaScheduleResult()
+        public JsonResult MediaScheduleResult(string zoomDate)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var gridResult = _mediaSchedule.GetGridResult(idWebSession);
+            GridResult gridResult;
+
+            if (string.IsNullOrEmpty(zoomDate))
+                gridResult = _mediaSchedule.GetGridResult(idWebSession, "");
+            else
+                gridResult = _mediaSchedule.GetGridResult(idWebSession, zoomDate);
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
@@ -264,15 +270,16 @@ namespace Km.AdExpressClientWeb.Controllers
             _optionService.SetOptions(idWebSession, userFilter);
         }
 
-        public JsonResult SaveMediaSelection(List<long> selectedMedia, string nextStep)
+        public JsonResult SaveMediaSelection(List<long> selectedMedia, List<Domain.Tree> userTrees, string nextStep)
         {
             string url = string.Empty;
             var response = new Domain.WebSessionResponse();
             if (selectedMedia != null)
             {
+                List<Domain.Tree> trees =  new List<Domain.Tree>();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession);
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees);
             }
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)

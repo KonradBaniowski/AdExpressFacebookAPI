@@ -1604,6 +1604,10 @@ ul.ui-selectable {
     border-bottom-color: transparent;
 }
 
+.link-cursor {
+    cursor: pointer;
+}
+
 /*.fig {
     color: #ffffff;
     font-weight: 200;

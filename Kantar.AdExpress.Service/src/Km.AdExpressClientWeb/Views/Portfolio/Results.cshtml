@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Results";
     var _controller = Model.NavigationBar.First().Controller;
+    var _exportController = "PortfolioExport";
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -153,7 +154,7 @@
 
             }
 
-            function CallMediaScheduleResult() {
+            function CallPortfolioResult() {
                 $.ajax({
                     url: '@Url.Action("PortfolioResult", _controller)',
                     contentType: "application/x-www-form-urlencoded",
@@ -195,12 +196,12 @@
                     error: function (xmlHttpRequest, errorText, thrownError) {
                     },
                     success: function (data) {
-                        CallMediaScheduleResult();
+                        CallPortfolioResult();
                     }
                 });
             }
 
-            CallMediaScheduleResult();
+            CallPortfolioResult();
 
             $('#periodDetailType').selectpicker();
 
@@ -209,15 +210,11 @@
             });
 
             $('#btn-export').on('click', function (e) {
-                window.open('@Url.Action("Index", "TestExport")', "_blank");
-            });
-
-            $('#btn-value').on('click', function (e) {
-                window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
+                window.open('@Url.Action("Index", _exportController)', "_blank");
             });
 
             $('#btn-brut').on('click', function (e) {
-                window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
+                window.open('@Url.Action("ResultBrut", _exportController)', "_blank");
             });
 
             $('#validate-options').on('click', function (e) {

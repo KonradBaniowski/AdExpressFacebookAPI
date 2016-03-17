@@ -199,6 +199,29 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         }
         #endregion
 
+        #region GetMediatSelection
+        /// <summary>
+        /// Get media selection
+        /// </summary>
+        /// <remarks>
+        /// Must beginning by AND
+        /// </remarks>
+        /// <param name="dataTablePrefixe">data table prefixe</param>
+        /// <returns>media selection to add as condition into a sql query</returns>
+        protected virtual string GetMediaSelection(string dataTablePrefixe)
+        {
+            StringBuilder sql = new StringBuilder();
+            if (_webSession.SecondaryMediaUniverses != null && _webSession.SecondaryMediaUniverses.Count > 0)
+                sql.Append( _webSession.SecondaryMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true));
+
+            //TODO: A tester rajouté pour la nouvelle version
+            if (_webSession.PrincipalMediaUniverses != null && _webSession.PrincipalMediaUniverses.Count > 0)
+                sql.Append(_webSession.PrincipalMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true));
+
+            return sql.ToString();
+        }
+        #endregion
+
         protected virtual string GetBannerGroupby()
         {
             return string.Format(",{0}.id_banners", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);

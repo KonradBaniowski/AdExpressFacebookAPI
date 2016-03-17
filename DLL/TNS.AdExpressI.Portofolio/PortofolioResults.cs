@@ -28,6 +28,8 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpressI.Portofolio.VehicleView;
 using TNS.AdExpress.Web.Core.Utilities;
+using TNS.Classification.Universe;
+using System.Linq;
 
 namespace TNS.AdExpressI.Portofolio {
     /// <summary>
@@ -623,7 +625,14 @@ namespace TNS.AdExpressI.Portofolio {
         /// <returns>Media Id</returns>
         protected Int64 GetMediaId() {
             try {
-                return (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);
+                //TODO: A tester partout car le support es tmaintenant mis dans _webSession.PrincipalMediaUniverses.
+              if(_webSession.ReferenceUniversMedia != null && _webSession.ReferenceUniversMedia.Nodes.Count > 0)
+                    return (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);              
+                else {
+                    var adExpressUniverse = _webSession.PrincipalMediaUniverses[0];
+                    return adExpressUniverse.GetIncludes()[0].Get(TNSClassificationLevels.MEDIA).First();
+                }          
+            
             }
             catch (System.Exception err) {
                 throw (new PortofolioException("Impossible to retrieve media id",err));

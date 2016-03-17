@@ -27,32 +27,32 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public object[,] GetMediaScheduleData(string idWebSession)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "");
             
             return mediaScheduleResult.ComputeData();
         }
 
-        public GridResult GetGridResult(string idWebSession)
+        public GridResult GetGridResult(string idWebSession, string zoomDate)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate);
 
             return mediaScheduleResult.GetGridResult();
         }
 
-        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession)
+        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate)
         {
-            //CustomerSession = (WebSession)WebSession.Load("201603021047501084");
+           
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
 
 #if DEBUG
             //TODO : Mock selection marché : a supprimer dès que page marché terminée
-            TNS.AdExpress.Classification.AdExpressUniverse universe = new TNS.AdExpress.Classification.AdExpressUniverse("test", TNS.Classification.Universe.Dimension.product);
-            var group = new TNS.Classification.Universe.NomenclatureElementsGroup("Annonceur", 0, TNS.Classification.Universe.AccessType.includes);
-            group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410,34466,7798,50270,71030");
-            universe.AddGroup(universe.Count(), group);
-            var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            universeDictionary.Add(universeDictionary.Count, universe);
-            CustomerSession.PrincipalProductUniverses = universeDictionary;
+           //TNS.AdExpress.Classification.AdExpressUniverse universe = new TNS.AdExpress.Classification.AdExpressUniverse("test", TNS.Classification.Universe.Dimension.product);
+            //var group = new TNS.Classification.Universe.NomenclatureElementsGroup("Annonceur", 0, TNS.Classification.Universe.AccessType.includes);
+            //group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410,34466,7798,50270,71030");
+            //universe.AddGroup(universe.Count(), group);
+            //var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            //universeDictionary.Add(universeDictionary.Count, universe);
+            //CustomerSession.PrincipalProductUniverses = universeDictionary;
             //ArrayList levels = new ArrayList();
             //// Media/catégorie/Support/Annonceur
             //levels.Add(1);
@@ -60,7 +60,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //levels.Add(3);
             //levels.Add(8);
             //CustomerSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-            CustomerSession.Save();
+            //CustomerSession.Save();
 #endif
 
 
@@ -81,18 +81,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Period Detail
             DateTime begin;
             DateTime end;
-            string _zoomDate = string.Empty;
-            if (!string.IsNullOrEmpty(_zoomDate))
+            if (!string.IsNullOrEmpty(zoomDate))
             {
                 if (CustomerSession.DetailPeriod == ConstantePeriod.DisplayLevel.weekly)
                 {
-                    begin = Dates.getPeriodBeginningDate(_zoomDate, ConstantePeriod.Type.dateToDateWeek);
-                    end = Dates.getPeriodEndDate(_zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    begin = Dates.getPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    end = Dates.getPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
                 }
                 else
                 {
-                    begin = Dates.getPeriodBeginningDate(_zoomDate, ConstantePeriod.Type.dateToDateMonth);
-                    end = Dates.getPeriodEndDate(_zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    begin = Dates.getPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    end = Dates.getPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
                 }
                 begin = Dates.Max(begin,
                     Dates.getPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType));
@@ -125,10 +124,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             #endregion
 
-            if (_zoomDate.Length > 0)
+            if (zoomDate.Length > 0)
             {
                 param = new object[3];
-                param[2] = _zoomDate;
+                param[2] = zoomDate;
             }
             else
             {

@@ -30,7 +30,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession _webSession = null;
         private const int _nbMaxItemByLevel = 1000;
-        public WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId)
+        public WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees)
         {
             WebSessionResponse response = new WebSessionResponse
             {
