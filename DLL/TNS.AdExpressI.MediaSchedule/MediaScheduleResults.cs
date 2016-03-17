@@ -1911,7 +1911,8 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                 string monthLabel = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
                                 string monthKey = "m" + data[0, j].ToString();
-                                periodColumnsL1.Add(new { headerText = monthLabel, key = monthKey, dataType = "string", width = "20", template = "<span {{if ${" + monthKey + "} == 1 }} class='orangeTg' {{elseif ${" + monthKey + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
+                                string monthLabelHtml = "<span class=\"open-media-schedule\" date=\"" + data[0, j].ToString() + "\" style=\"cursor:pointer;\">" + monthLabel + "</span>";
+                                periodColumnsL1.Add(new { headerText = monthLabelHtml, key = monthKey, dataType = "string", width = "20", template = "<span {{if ${" + monthKey + "} == 1 }} class='orangeTg' {{elseif ${" + monthKey + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
                                 schemaFields.Add(new { name = monthKey });
                                 tableWidth += 30;
                                 break;

@@ -27,19 +27,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public object[,] GetMediaScheduleData(string idWebSession)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "");
             
             return mediaScheduleResult.ComputeData();
         }
 
-        public GridResult GetGridResult(string idWebSession)
+        public GridResult GetGridResult(string idWebSession, string zoomDate)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate);
 
             return mediaScheduleResult.GetGridResult();
         }
 
-        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession)
+        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate)
         {
            
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
@@ -81,18 +81,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Period Detail
             DateTime begin;
             DateTime end;
-            string _zoomDate = string.Empty;
-            if (!string.IsNullOrEmpty(_zoomDate))
+            if (!string.IsNullOrEmpty(zoomDate))
             {
                 if (CustomerSession.DetailPeriod == ConstantePeriod.DisplayLevel.weekly)
                 {
-                    begin = Dates.getPeriodBeginningDate(_zoomDate, ConstantePeriod.Type.dateToDateWeek);
-                    end = Dates.getPeriodEndDate(_zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    begin = Dates.getPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    end = Dates.getPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
                 }
                 else
                 {
-                    begin = Dates.getPeriodBeginningDate(_zoomDate, ConstantePeriod.Type.dateToDateMonth);
-                    end = Dates.getPeriodEndDate(_zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    begin = Dates.getPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    end = Dates.getPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
                 }
                 begin = Dates.Max(begin,
                     Dates.getPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType));
@@ -125,10 +124,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             #endregion
 
-            if (_zoomDate.Length > 0)
+            if (zoomDate.Length > 0)
             {
                 param = new object[3];
-                param[2] = _zoomDate;
+                param[2] = zoomDate;
             }
             else
             {
