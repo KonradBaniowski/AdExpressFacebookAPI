@@ -351,7 +351,17 @@ namespace TNS.AdExpressI.Classification.DAL
             {
                 case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
                     if (_dimension == Dimension.media)
-                        sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
+                    {
+                        string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
+                        if (!string.IsNullOrEmpty(vehicles))
+                        {
+                            sql.AppendFormat(" and wp.id_vehicle in ({0}) ", vehicles);
+                        }
+                        else if (!string.IsNullOrEmpty(VehiclesId))
+                        {
+                            sql.AppendFormat(" and wp.id_vehicle in ({0}) ", VehiclesId);
+                        }
+                    }
                     break;
                 case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
                 case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
