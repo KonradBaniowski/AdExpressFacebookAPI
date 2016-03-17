@@ -45,6 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\TNS.Classification.dll</HintPath>
     </Reference>
+    <Reference Include="TNS.FrameWork.WebResultUI">
+      <HintPath>..\..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
