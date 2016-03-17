@@ -448,8 +448,12 @@
                         error: function (xmlHttpRequest, errorText, thrownError) {
                         },
                         success: function (data) {
-                            if (data != null) {
+                            if (data.RedirectUrl != null) {
                                 document.location = data.RedirectUrl;
+                            }
+                            if (data.ErrorMessage!=null)
+                            {
+                                bootbox.alert(data.ErrorMessage);
                             }
                         }
                     });

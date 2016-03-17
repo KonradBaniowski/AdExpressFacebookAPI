@@ -274,17 +274,25 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             string url = string.Empty;
             var response = new Domain.WebSessionResponse();
+            var errorMsg = String.Empty;
             if (selectedMedia != null)
             {
                 List<Domain.Tree> trees = (mediaSupport !=null)? mediaSupport: new List<Domain.Tree>();
+                trees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees);
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees,Dimension.media,Security.full);
+                UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+                if (response.Success)
+                    url = context.Action(nextStep, _controller);
+                else
+                {
+                    errorMsg = response.ErrorMessage;
+                }
             }
-            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-            if (response.Success)
-                url = context.Action(nextStep, _controller);
-            JsonResult jsonModel = Json(new { RedirectUrl = url });
+           
+            
+            JsonResult jsonModel = Json(new { RedirectUrl = url, ErrorMessage= errorMsg });
             return jsonModel;
         }
         

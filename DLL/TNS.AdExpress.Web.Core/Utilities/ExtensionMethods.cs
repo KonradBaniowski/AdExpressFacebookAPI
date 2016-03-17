@@ -40,6 +40,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         levels.Add(DetailLevelItemInformation.Levels.brand); break;
                     case TNSClassificationLevels.PRODUCT: 
                         levels.Add(DetailLevelItemInformation.Levels.product); break;
+                    case TNSClassificationLevels.MEDIA:
+                        levels.Add(DetailLevelItemInformation.Levels.media); break;
+                    case TNSClassificationLevels.TITLE:
+                        levels.Add(DetailLevelItemInformation.Levels.title); break;
+                    case TNSClassificationLevels.MEDIA_SELLER:
+                        levels.Add(DetailLevelItemInformation.Levels.mediaSeller); break;
+                    case TNSClassificationLevels.INTEREST_CENTER:
+                        levels.Add(DetailLevelItemInformation.Levels.interestCenter); break;
+                    case TNSClassificationLevels.CATEGORY:
+                        levels.Add(DetailLevelItemInformation.Levels.category); break;
+                    case TNSClassificationLevels.VEHICLE:
+                        levels.Add(DetailLevelItemInformation.Levels.vehicle); break;
                     default:
                         throw (new Exception("Unknown classification identifier"));
                 }
