@@ -54,6 +54,7 @@
     <Compile Include="BusinessService\IMediaScheduleService.cs" />
     <Compile Include="BusinessService\IOptionService.cs" />
     <Compile Include="BusinessService\IPortfolioService.cs" />
+    <Compile Include="BusinessService\ISubPeriodService.cs" />
     <Compile Include="BusinessService\IUniverseService.cs" />
     <Compile Include="BusinessService\IMediaService.cs" />
     <Compile Include="BusinessService\IWebSessionService.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="Domain\ResultOptions\UnitFilter.cs" />
     <Compile Include="Domain\ResultOptions\UnitOption.cs" />
     <Compile Include="Domain\ResultOptions\UserFilter.cs" />
+    <Compile Include="Domain\SubPeriod.cs" />
+    <Compile Include="Domain\SubPeriodItem.cs" />
     <Compile Include="Domain\UserUniversGroup.cs" />
     <Compile Include="Domain\UniversBranch.cs" />
     <Compile Include="Domain\Media.cs" />
