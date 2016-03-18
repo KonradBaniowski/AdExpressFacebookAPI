@@ -235,7 +235,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             #region Repository 
                             
                             foreach (NomenclatureElementsGroup elementGroup in elementsGroups)
-                            {                               
+                            {
+                                #region looping inside elementsgroups                         
                                 DataSet ds = null;
                                 List<long> oldLevelsId = new List<long>();
                                 CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
@@ -246,7 +247,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 ClassificationDAL classficationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                                 classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
                                 var tuple = GetAllowedIds(webSessionId, dimension,  true);
-                                #region
+                                
                                 foreach (var currentLevel in tuple.Item1)
                                 {
                                     if (!oldLevelsId.Contains(currentLevel))
@@ -290,9 +291,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                         Id = id
                                     };
                                 }
-                                
-                                #endregion
                             }
+                            #endregion
                         }
                         if (elementsGroups.Count==0)
                         {
