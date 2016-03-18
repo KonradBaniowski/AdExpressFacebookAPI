@@ -153,7 +153,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {
