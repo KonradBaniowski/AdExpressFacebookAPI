@@ -188,7 +188,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     universDictionary = new Dictionary<int, AdExpressUniverse>();
                             universDictionary.Add(universDictionary.Count, univers);
                             
-                            if (IsValidUniverseLevels(univers, _webSession))
+                            if (!IsValidUniverseLevels(univers, _webSession))
                             {
                                 response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
                             }

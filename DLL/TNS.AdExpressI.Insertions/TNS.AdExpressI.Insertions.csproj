@@ -73,7 +73,8 @@
     <Reference Include="TNS.FrameWork.DB">
       <HintPath>..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.31200, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>

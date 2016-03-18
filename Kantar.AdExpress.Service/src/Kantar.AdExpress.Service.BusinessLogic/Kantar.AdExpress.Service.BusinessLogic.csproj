@@ -52,6 +52,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.dll</HintPath>
     </Reference>
+    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
@@ -73,6 +77,7 @@
     <Compile Include="ServiceImpl\PeriodService.cs" />
     <Compile Include="ServiceImpl\PortfolioService.cs" />
     <Compile Include="ServiceImpl\RightService.cs" />
+    <Compile Include="ServiceImpl\SubPeriodService.cs" />
     <Compile Include="ServiceImpl\UniverseService.cs" />
     <Compile Include="ServiceImpl\WebSessionService.cs" />
   </ItemGroup>

@@ -26,6 +26,8 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public Labels Labels { get; set; }
 
         public Dimension Dimension { get; set; }
+
+        public UserUniversGroupsModel UniversGroups { get; set; }
     }
 
     public class Media

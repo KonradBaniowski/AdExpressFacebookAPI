@@ -3,13 +3,18 @@ $(function () {
     
     var dimension = $('#Dimension').val();
 
+    var params = {
+        dimension: dimension
+    };
     $.ajax({
         url: '/MediaSchedule/LoadUserUniversGroups',
         type: 'GET',
+        data: params,
         error: function (xmlHttpRequest, errorText, thrownError) {
             alert("error");
         },
         success: function (response) {
+            $('#monunivers .modal-content').empty();
             $('#monunivers .modal-content').append(response);
         }
 
@@ -283,6 +288,7 @@ $(function () {
         $.ajax({
             url: '/MediaSchedule/SaveUserUnivers',
             type: 'GET',
+            data: params,
             success: function (response) {
                 spinner.stop();
                 $('#saveunivers').append(response);
@@ -379,6 +385,7 @@ $(document).on('click', '.tab-content li', function () {
 
 $(document).on('click', '#btnSaveUnivers', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var groupId = $('#ddlGroup').val();
     var universId = $('#ddlUnivers').val();
     var name = $('#universName').val();
@@ -417,7 +424,8 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         trees: trees,
         groupId: groupId,
         universId: universId,
-        name: name
+        name: name,
+        dimension:dimension
     };
     $.ajax({
         url: '/MediaSchedule/SaveUserUnivers',
@@ -445,13 +453,18 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
 
 $(document).on('change', '#ddlGroup', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var idGroup = $("#ddlGroup").val();
+    var params = {
+        id: idGroup,
+        dimension: dimension
+    };
     var local = $(this);
     var spinner = new Spinner().spin(this);
     $.ajax({
         url: '/MediaSchedule/GetUniversByGroup',
         type: 'GET',
-        data: { id: idGroup },
+        data: params,
         success: function (response) {
             $('#ddlUnivers').empty();
             $.each(response, function (i, item) {
@@ -474,11 +487,13 @@ $(document).on('click', 'button.tout-suppr', function () {
 
 $(document).on('click', '#LoadUnivers', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var spinner = new Spinner().spin(this);
     $('.btn.btn-valider').off('click');
     var universId = $('input[name="universOpt"]:checked').val();
     var params = {
-        id: universId
+        id: universId,
+        dimension:dimension
     };
     $.ajax({
         url: '/MediaSchedule/GetUserUnivers',
