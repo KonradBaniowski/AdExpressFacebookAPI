@@ -1488,6 +1488,7 @@
     <Content Include="Views\Portfolio\_ResultOptions.cshtml" />
     <Content Include="Views\PortfolioExport\Index.cshtml" />
     <Content Include="Views\PortfolioExport\ResultBrut.cshtml" />
+    <Content Include="Views\MediaSchedule\_SubPeriodSelection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

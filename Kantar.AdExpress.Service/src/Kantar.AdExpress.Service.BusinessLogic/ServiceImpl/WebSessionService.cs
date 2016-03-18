@@ -30,26 +30,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession _webSession = null;
         private const int _nbMaxItemByLevel = 1000;
-        public WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees)
+        public WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees, Dimension dimension, Security security)
         {
             WebSessionResponse response = new WebSessionResponse
             {
                 MediaScheduleStep = MediaScheduleStep.Media
             };
+            bool success = false;
             try
             {
                 var _webSession = (WebSession)WebSession.Load(webSessionId);
+                #region Save Media Selection in WebSession
                 WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
-                _webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
+                _webSession.Insert = CstWeb.CustomerSessions.Insert.total;
                 List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
                 System.Windows.Forms.TreeNode tmpNode;
                 bool containsSearch = false;
                 bool containsSocial = false;
                 foreach (var item in mediaIds)
                 {
-
                     tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
-                    tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, item, item.ToString());
+                    tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
                     tmpNode.Checked = true;
                     levelsSelected.Add(tmpNode);
                     if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.search)
@@ -115,9 +116,43 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     else
                     {
-                        _webSession.Save();
-                        response.Success = true;
+                        success = true;
                     }
+                }
+                #endregion
+
+                #region Save Media support if any
+                if (trees.Any())
+                {
+                    AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
+                    if (univers != null && univers.Count() > 0)
+                    {
+                        bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
+                        List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
+                        if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
+                        {
+                            Dictionary<int, AdExpressUniverse>
+                                    universDictionary = new Dictionary<int, AdExpressUniverse>();
+                            universDictionary.Add(universDictionary.Count, univers);
+                            _webSession.PrincipalMediaUniverses = universDictionary;
+                            success = true;
+                        }
+                        else
+                        {
+                            response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                        }
+                    }
+                    else
+                    {
+                        response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
+                    }
+                }
+                #endregion
+                 if (success)
+                {
+                    _webSession.Save();
+                    _webSession.Source.Close();
+                    response.Success = success;
                 }
             }
             catch (System.Exception exc)
@@ -152,14 +187,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             Dictionary<int, AdExpressUniverse>
                                     universDictionary = new Dictionary<int, AdExpressUniverse>();
                             universDictionary.Add(universDictionary.Count, univers);
-                            _webSession.PrincipalProductUniverses = universDictionary;
-                            response.Success = true;
-                            _webSession.Save();
-                            _webSession.Source.Close();
-                            if (IsValidUniverseLevels(univers, _webSession))
+                            
+                            if (!IsValidUniverseLevels(univers, _webSession))
                             {
                                 response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
-
+                            }
+                            else
+                            {
+                                _webSession.PrincipalProductUniverses = universDictionary;
+                                response.Success = true;
+                                _webSession.Save();
+                                _webSession.Source.Close();
                             }
                         }
                         else
@@ -605,7 +643,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     group = new NomenclatureElementsGroup(index, tree.AccessType);
                     if (tree.UniversLevels.Any())
                     {
-                        foreach (var level in tree.UniversLevels)
+                        foreach (var level in tree.UniversLevels.Where(x=>x.UniversItems !=null))
                         {
                             if (level.UniversItems != null && level.UniversItems.Count > _nbMaxItemByLevel)
                                 throw new CapacityException("Dépassement du nombre d'éléments autorisés pour un niveau");
@@ -654,11 +692,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if ( webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
             {
                 var vehiclesSelected = webSession.GetVehiclesSelected();
-                //if (Page.Request.Form.GetValues("__EVENTARGUMENT") != null &&
-                //    Page.Request.Form.GetValues("__EVENTARGUMENT")[0] != null)
-                //    eventArg = Page.Request.Form.GetValues("__EVENTARGUMENT")[0];
 
-                if (vehiclesSelected!=null && vehiclesSelected.Count > 0)// && (eventArg.Equals("4") || eventArg.Equals("9999")))
+                if (vehiclesSelected!=null && vehiclesSelected.Count > 0)
                 {
                     var param = new object[1];
                     param[0] = _webSession;
@@ -675,7 +710,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                                         null);
 
                     var activeVehicles =
-                        mediaDetailLevelUtilities.GetAllowedVehicles(_webSession.GetVehiclesSelected().Keys.ToList(),
+                        mediaDetailLevelUtilities.GetAllowedVehicles(webSession.GetVehiclesSelected().Keys.ToList(),
                                                                      universe);
                     return (activeVehicles.Count == vehiclesSelected.Count);
 

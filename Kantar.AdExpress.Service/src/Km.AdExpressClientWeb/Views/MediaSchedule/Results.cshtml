@@ -24,12 +24,7 @@
         </div> 
     </div>
 </div>
-<div class="row h20">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-9">
-        <span id="leave-zoom" class="orange link-cursor hide">Sortir du mode zoom</span>
-    </div>
+<div id="subPeriodSelection" class="h20">
 </div>
 <div class="row">
     <div class="col-md-3">
@@ -73,6 +68,7 @@
         var colsFixed;
         var needFixedColumns = false;
         var zoomDate = '';
+        var previousSubPeriodLabel;
 
         function GetItems(idItems) {
             var items = '';
@@ -180,9 +176,10 @@
                     })
                 }
                 $(".open-media-schedule").on('click', function (e) {
+                    $("#perioddetailTypeContainer").removeClass("show").addClass("hide");
+                    GetSubPeriodSelection('' + $(this).attr("date"));
                     $("#grid").addClass("hide");
                     $("#gridLoader").removeClass("hide");
-                    $("#leave-zoom").removeClass("hide");
                     CallMediaScheduleResult('' + $(this).attr("date"));
                 });
             } else {
@@ -191,9 +188,10 @@
 
         }
 
-        function CallMediaScheduleResult(zoomDate) {
+        function CallMediaScheduleResult(zoomDateParam) {
+            zoomDate = zoomDateParam;
             var params = {
-                zoomDate: zoomDate
+                zoomDate: zoomDateParam
             };
             $.ajax({
                 url: '@Url.Action("MediaScheduleResult", "MediaSchedule")',
@@ -244,13 +242,49 @@
 
         CallMediaScheduleResult(zoomDate);
 
-        $('#leave-zoom').on('click', function (e) {
-            $("#leave-zoom").addClass("hide");
-            $("#grid").addClass("hide");
-            $("#gridLoader").removeClass("hide");
-            zoomDate = '';
-            CallMediaScheduleResult(zoomDate);
-        });
+        function GetSubPeriodSelection(zoomDateParam) {
+            var params = {
+                zoomDate: zoomDateParam
+            };
+            $.ajax({
+                url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                        $('#subPeriodSelection').html(data);
+                        $('#leave-zoom').on('click', function (e) {
+                            $("#perioddetailTypeContainer").removeClass("hide").addClass("show");
+                            $("#leave-zoom").addClass("hide");
+                            $("#sub-period-container").addClass("hide");
+                            $("#grid").addClass("hide");
+                            $("#gridLoader").removeClass("hide");
+                            zoomDate = '';
+                            CallMediaScheduleResult(zoomDate);
+                        });
+                        $(".sub-period-btn").on('click', function (e) {
+                            $(".btn-default-sub-period").prop('disabled', false);
+                            $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+                            $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+                            $(this).prop('disabled', true);
+                            $("#grid").addClass("hide");
+                            $("#gridLoader").removeClass("hide");
+                            CallMediaScheduleResult($(this).attr("period"));
+                        });
+                        $(".sub-period-btn").on('mouseenter', function (e) {
+                            previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+                            $("#subPeriodLabel").text($(this).attr("periodlabel"));
+                        });
+                        $(".sub-period-btn").on('mouseleave', function (e) {
+                            $("#subPeriodLabel").text(previousSubPeriodLabel);
+                        });
+                    }
+                }
+            });
+        }
 
         $('#periodDetailType').selectpicker();
 
