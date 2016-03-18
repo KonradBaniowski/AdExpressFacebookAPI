@@ -129,7 +129,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product,  true);
+            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media,  true);
             model.Branches = Mapper.Map<List<Models.Shared.UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {
@@ -353,7 +353,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return PartialView(model);
         }
         [HttpGet]
-        public JsonResult GetUniversByGroup(string id)
+        public JsonResult GetUniversByGroup(string id, Dimension dimension)
         {
             List<SelectListItem> univers = new List<SelectListItem>();
             if (!string.IsNullOrEmpty(id))
@@ -361,7 +361,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 long groupId = long.Parse(id);
                 var claim = new ClaimsPrincipal(User.Identity);
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product, MarketPageId, groupId);
+                var data = _universService.GetUserUniversGroups(webSessionId, dimension, groupId);
                 univers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
                 {
                     Value = m.Id.ToString(),

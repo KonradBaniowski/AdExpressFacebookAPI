@@ -223,20 +223,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
                     {
                         List<NomenclatureElementsGroup> elementsGroups = new List<NomenclatureElementsGroup>();
-                        
+                        Tree tree = new Tree
+                        {
+                            AccessType = type,
+                            UniversLevels = new List<UniversLevel>(),
+                            Id = id
+                        };
                         elementsGroups = (type == AccessType.excludes) ? adExpressUniverse.GetExludes() : adExpressUniverse.GetIncludes();
                         if (elementsGroups != null && elementsGroups.Count > 0)
                         {
                             #region Repository 
                             
                             foreach (NomenclatureElementsGroup elementGroup in elementsGroups)
-                            {
-                                Tree tree = new Tree
-                                {
-                                    AccessType = type,
-                                    UniversLevels = new List<UniversLevel>(),
-                                    Id= id
-                                };
+                            {                               
                                 DataSet ds = null;
                                 List<long> oldLevelsId = new List<long>();
                                 CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
@@ -279,12 +278,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 }
                                 #endregion
                                 cl = null;
-                                classficationDAL = null;
-                                result.Trees.Add(tree);
-                                id++;
+                                classficationDAL = null;                                
                                 #endregion
-                            }
                         }
+                        }
+                        result.Trees.Add(tree);
+                        id++;
                     }
                 }
                 #endregion
@@ -433,7 +432,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, int pageId, long idGroup = 0)
+        public UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, long idGroup = 0)
         {
             var tuple = GetAllowedIds(webSessionId, dimension);
             UniversGroupsResponse result = new UniversGroupsResponse
@@ -442,7 +441,37 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 SiteLanguage = tuple.Item4
             };
             List<UserUnivers> UserUniversList = new List<UserUnivers>();
-            var data = UniversListDataAccess.GetData(tuple.Item3, string.Empty, string.Empty);
+            var allowedLevels = tuple.Item1;
+            var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
+            var branch = (dimension == Dimension.product) ? TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString() : TNS.AdExpress.Constantes.Classification.Branch.type.media.GetHashCode().ToString();
+            var data = UniversListDataAccess.GetData(tuple.Item3, branch, string.Empty);
+            //var data = UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
+            //if (data != null && data.Rows.Count > 0)
+            //{
+            //    foreach (DataRow row in data.Rows)
+            //    {
+            //        UserUnivers UserUnivers = new UserUnivers
+            //        {
+            //            ParentId = (long)row[0],
+            //            ParentDescription = row[1].ToString(),
+            //            Id = (long)row[2],
+            //            Description = row[3].ToString()
+            //        };
+            //        UserUniversList.Add(UserUnivers);
+            //    }
+            //    var groupedUniversList = UserUniversList.GroupBy(p => p.ParentId);
+            //    foreach (var item in groupedUniversList)
+            //    {
+            //        UserUniversGroup universGroup = new UserUniversGroup
+            //        {
+            //            Id = item.Key,
+            //            Description = item.FirstOrDefault().ParentDescription,
+            //            UserUnivers = item.ToList(),
+            //            Count = item.Count()
+            //        };
+            //        result.UniversGroups.Add(universGroup);
+            //    }
+            //}
             if (data != null && data.Tables[0].AsEnumerable().Any())
             {
                 var list = data.Tables[0].AsEnumerable().Select(p => new
