@@ -31,23 +31,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     public class OptionService : IOptionService
     {
         private WebSession CustomerSession = null;
-        private WebConstantes.GenericDetailLevel.ComponentProfile ComponentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
+        private WebConstantes.GenericDetailLevel.ComponentProfile _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
         private WebNavigation.Module CurrentModule;
         private int NbDetailLevelItemList = 4;
         private Hashtable GenericDetailLevelsSaved = new Hashtable();
         private GenericDetailLevel CustomerGenericDetailLevel = null;
 
-        public Options GetOptions(string idWebSession)
+        public Options GetOptions(string idWebSession, WebConstantes.GenericDetailLevel.ComponentProfile componentProfile)
         {
-            CustomerSession = (WebSession)WebSession.Load(idWebSession);
-
-            TNS.AdExpress.Classification.AdExpressUniverse universe = new TNS.AdExpress.Classification.AdExpressUniverse("test", TNS.Classification.Universe.Dimension.product);
-            var group = new TNS.Classification.Universe.NomenclatureElementsGroup("Annonceur", 0, TNS.Classification.Universe.AccessType.includes);
-            group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410,34466,7798,50270,71030");
-            universe.AddGroup(universe.Count(), group);
-            var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            universeDictionary.Add(universeDictionary.Count, universe);
-            CustomerSession.PrincipalProductUniverses = universeDictionary;
+            _componentProfile = componentProfile;
+            CustomerSession = (WebSession)WebSession.Load(idWebSession); 
+                      
             CurrentModule = WebNavigation.ModulesList.GetModule(CustomerSession.CurrentModule);
 
             Options options = new Options();
@@ -57,7 +51,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             #region on vérifie que le niveau sélectionné à le droit d'être utilisé
             bool canAddDetail = false;
-            switch (ComponentProfile)
+            switch (_componentProfile)
             {
                 case WebConstantes.GenericDetailLevel.ComponentProfile.media:
                     try
@@ -408,7 +402,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 CustomerGenericDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
             }
 
-            switch (ComponentProfile)
+            switch (_componentProfile)
             {
                 case WebConstantes.GenericDetailLevel.ComponentProfile.media:
                     CustomerSession.GenericMediaDetailLevel = CustomerGenericDetailLevel;
@@ -483,7 +477,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
             object[] param = new object[2];
             param[0] = CustomerSession;
-            param[1] = ComponentProfile;
+            param[1] = _componentProfile;
             WebCore.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (WebCore.Utilities.MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
                 + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
@@ -504,7 +498,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             ArrayList allowedDetailLevelList;
             ArrayList list = new ArrayList();
 
-            switch (ComponentProfile)
+            switch (_componentProfile)
             {
                 case WebConstantes.GenericDetailLevel.ComponentProfile.adnettrack:
                     return GetModuleAllowedDetailLevelItems();
@@ -523,7 +517,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private ArrayList GetModuleAllowedDetailLevelItems()
         {
-            switch (ComponentProfile)
+            switch (_componentProfile)
             {
                 case WebConstantes.GenericDetailLevel.ComponentProfile.media:
                     return (CurrentModule.AllowedMediaDetailLevelItems);
@@ -565,7 +559,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private ArrayList GetDefaultDetailLevels()
         {
-            switch (ComponentProfile)
+            switch (_componentProfile)
             {
                 case WebConstantes.GenericDetailLevel.ComponentProfile.media:
                     return (CurrentModule.DefaultMediaDetailLevels);
@@ -621,7 +615,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
             object[] param = new object[2];
             param[0] = CustomerSession;
-            param[1] = ComponentProfile;
+            param[1] = _componentProfile;
             WebCore.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (WebCore.Utilities.MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
                 + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
