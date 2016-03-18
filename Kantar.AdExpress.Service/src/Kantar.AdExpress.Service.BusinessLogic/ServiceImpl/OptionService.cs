@@ -3,10 +3,7 @@ using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TNS.AdExpress.Domain.Level;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -32,19 +29,34 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession CustomerSession = null;
         private WebConstantes.GenericDetailLevel.ComponentProfile _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
-        private WebNavigation.Module CurrentModule;
-        private int NbDetailLevelItemList = 4;
-        private Hashtable GenericDetailLevelsSaved = new Hashtable();
-        private GenericDetailLevel CustomerGenericDetailLevel = null;
+        private WebNavigation.Module _currentModule;
+        private int _nbDetailLevelItemList = 4;
+        private Hashtable _genericDetailLevelsSaved = new Hashtable();
+        private GenericDetailLevel _customerGenericDetailLevel = null;
 
-        public Options GetOptions(string idWebSession, WebConstantes.GenericDetailLevel.ComponentProfile componentProfile)
+        public Options GetOptions(string idWebSession)
         {
-            _componentProfile = componentProfile;
-            CustomerSession = (WebSession)WebSession.Load(idWebSession); 
-                      
-            CurrentModule = WebNavigation.ModulesList.GetModule(CustomerSession.CurrentModule);
+           
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            _currentModule = WebNavigation.ModulesList.GetModule(CustomerSession.CurrentModule);
 
             Options options = new Options();
+
+
+            switch (CustomerSession.CurrentModule)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
+                    _nbDetailLevelItemList = 4;
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
+                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
+                    _nbDetailLevelItemList = 3;
+                    break;
+            }
 
             #region GenericDetailLevelOption
             GenericDetailLevelOption genericDetailLevelOption = new GenericDetailLevelOption();
@@ -122,10 +134,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
             foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
             {
-                if (CanAddDetailLevel(currentGenericLevel, CustomerSession.CurrentModule) && currentGenericLevel.GetNbLevels <= NbDetailLevelItemList)
+                if (CanAddDetailLevel(currentGenericLevel, CustomerSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
                 {
                     genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = currentGenericLevel.GetLabel(CustomerSession.SiteLanguage), Value = currentGenericLevel.Id.ToString() });
-                    GenericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
+                    _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
                 }
             }
             #endregion
@@ -133,28 +145,28 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Niveau de détaille par défaut
 
             #region L1
-            if (NbDetailLevelItemList >= 1)
+            if (_nbDetailLevelItemList >= 1)
             {
                 genericDetailLevelOption.L1Detail = DetailLevelItemInit(1);
             }
             #endregion
 
             #region L2
-            if (NbDetailLevelItemList >= 2)
+            if (_nbDetailLevelItemList >= 2)
             {
                 genericDetailLevelOption.L2Detail = DetailLevelItemInit( 2);
             }
             #endregion
 
             #region L3
-            if (NbDetailLevelItemList >= 3)
+            if (_nbDetailLevelItemList >= 3)
             {
                 genericDetailLevelOption.L3Detail = DetailLevelItemInit(3);
             }
             #endregion
 
             #region L4
-            if (NbDetailLevelItemList >= 4)
+            if (_nbDetailLevelItemList >= 4)
             {
                 genericDetailLevelOption.L4Detail = DetailLevelItemInit(4);
             }
@@ -359,59 +371,77 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public void SetOptions(string idWebSession, UserFilter userFilter)
         {
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
-            CurrentModule = WebNavigation.ModulesList.GetModule(CustomerSession.CurrentModule);
-            
+            _currentModule = WebNavigation.ModulesList.GetModule(CustomerSession.CurrentModule);
+          
+            switch (CustomerSession.CurrentModule)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
+                    _nbDetailLevelItemList = 4;
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
+                    _nbDetailLevelItemList = 3;
+                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
+                    break;
+            }
             #region GenericDetailLevelFilter
             ArrayList levels = new ArrayList();
 
             ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
             foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
             {
-                if (CanAddDetailLevel(currentGenericLevel, CustomerSession.CurrentModule) && currentGenericLevel.GetNbLevels <= NbDetailLevelItemList)
+                if (CanAddDetailLevel(currentGenericLevel, CustomerSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
                 {
-                    GenericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
+                    _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
                 }
             }
 
             if (userFilter.GenericDetailLevelFilter.DefaultDetailValue >= 0)
             {
-                CustomerGenericDetailLevel = (GenericDetailLevel)GetDefaultDetailLevels()[userFilter.GenericDetailLevelFilter.DefaultDetailValue];
+                _customerGenericDetailLevel = (GenericDetailLevel)GetDefaultDetailLevels()[userFilter.GenericDetailLevelFilter.DefaultDetailValue];
             }
             if (userFilter.GenericDetailLevelFilter.CustomDetailValue >= 0)
             {
-                CustomerGenericDetailLevel = (GenericDetailLevel)GenericDetailLevelsSaved[(Int64)userFilter.GenericDetailLevelFilter.CustomDetailValue];
+                _customerGenericDetailLevel = (GenericDetailLevel)_genericDetailLevelsSaved[(Int64)userFilter.GenericDetailLevelFilter.CustomDetailValue];
             }
-            if (NbDetailLevelItemList >= 1 && userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
+            if (_nbDetailLevelItemList >= 1 && userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
             {
                 levels.Add(userFilter.GenericDetailLevelFilter.L1DetailValue);
             }
-            if (NbDetailLevelItemList >= 2 && userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
+            if (_nbDetailLevelItemList >= 2 && userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
             {
                 levels.Add(userFilter.GenericDetailLevelFilter.L2DetailValue);
             }
-            if (NbDetailLevelItemList >= 3 && userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
+            if (_nbDetailLevelItemList >= 3 && userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
             {
                 levels.Add(userFilter.GenericDetailLevelFilter.L3DetailValue);
             }
-            if (NbDetailLevelItemList >= 4 && userFilter.GenericDetailLevelFilter.L4DetailValue >= 0)
+            if (_nbDetailLevelItemList >= 4 && userFilter.GenericDetailLevelFilter.L4DetailValue >= 0)
             {
                 levels.Add(userFilter.GenericDetailLevelFilter.L4DetailValue);
             }
             if (levels.Count > 0)
             {
-                CustomerGenericDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
+                _customerGenericDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
             }
 
-            switch (_componentProfile)
+
+            #endregion
+
+            switch (CustomerSession.CurrentModule)
             {
-                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-                    CustomerSession.GenericMediaDetailLevel = CustomerGenericDetailLevel;
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    CustomerSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
                     break;
-                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
-                    CustomerSession.GenericProductDetailLevel = CustomerGenericDetailLevel;
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
+                    CustomerSession.GenericProductDetailLevel = _customerGenericDetailLevel;
                     break;
             }
-            #endregion
+
 
             #region PeriodDetailFilter
             CustomerSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
@@ -520,9 +550,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             switch (_componentProfile)
             {
                 case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-                    return (CurrentModule.AllowedMediaDetailLevelItems);
+                    return (_currentModule.AllowedMediaDetailLevelItems);
                 case WebConstantes.GenericDetailLevel.ComponentProfile.product:
-                    return (CurrentModule.AllowedProductDetailLevelItems);
+                    return (_currentModule.AllowedProductDetailLevelItems);
                 case WebConstantes.GenericDetailLevel.ComponentProfile.adnettrack:
                     return (WebCore.AdNetTrackDetailLevelsDescription.AllowedAdNetTrackLevelItems);
                 default:
@@ -562,9 +592,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             switch (_componentProfile)
             {
                 case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-                    return (CurrentModule.DefaultMediaDetailLevels);
+                    return (_currentModule.DefaultMediaDetailLevels);
                 case WebConstantes.GenericDetailLevel.ComponentProfile.product:
-                    return (CurrentModule.DefaultProductDetailLevels);
+                    return (_currentModule.DefaultProductDetailLevels);
                 case WebConstantes.GenericDetailLevel.ComponentProfile.adnettrack:
                     return (WebCore.AdNetTrackDetailLevelsDescription.DefaultAdNetTrackDetailLevels);
                 default:
