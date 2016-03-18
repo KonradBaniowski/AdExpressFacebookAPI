@@ -104,9 +104,9 @@
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 
 
-    <script id="colSpotTmpl" type="text/template">
+    @*<script id="colSpotTmpl" type="text/template">
         <i class="glyphicon glyphicon-music text-5x"></i>
-    </script>
+    </script>*@
 
 
     <script>
@@ -225,7 +225,7 @@
 
                             for (var i = 0; i < data.columns.length; i++) {
                                 if (data.columns[i].headerText == "Spot")
-                                    data.columns[i].template = $("#colSpotTmpl").html()
+                                    data.columns[i].template = "{{if ${Spot} != '' }} ${Spot} {{else}} <i class=\"glyphicon glyphicon-music text-5x\"></i> {{/if}}"
                             }
 
                             cols = data.columns
