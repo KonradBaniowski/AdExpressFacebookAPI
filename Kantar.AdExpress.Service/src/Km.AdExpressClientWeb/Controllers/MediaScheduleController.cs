@@ -530,7 +530,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
                 ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
                 Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
-                Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage)
+                Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
+                ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
+                ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
             };
             return result;
         }
