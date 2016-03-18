@@ -278,12 +278,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 }
                                 #endregion
                                 cl = null;
-                                classficationDAL = null;                                
+                                classficationDAL = null;
+                                result.Trees.Add(tree);
+                                id++;
+                                if (elementsGroups.Count>1 && elementsGroups.Count+1>id)
+                                {                                    
+                                    tree = new Tree
+                                    {
+                                        AccessType = type,
+                                        UniversLevels = new List<UniversLevel>(),
+                                        Id = id
+                                    };
+                                }
+                                
                                 #endregion
+                            }
                         }
+                        if (elementsGroups.Count==0)
+                        {
+                            result.Trees.Add(tree);
+                            id++;
                         }
-                        result.Trees.Add(tree);
-                        id++;
                     }
                 }
                 #endregion
