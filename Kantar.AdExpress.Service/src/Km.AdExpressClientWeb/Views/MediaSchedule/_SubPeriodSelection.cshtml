@@ -1,0 +1,31 @@
+﻿@model Kantar.AdExpress.Service.Core.Domain.SubPeriod
+
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9 panel-sub-period">
+        <span id="leave-zoom" class="orange link-cursor"><i class="fa fa-arrow-left"></i> Sortir du mode zoom</span>
+        <div id="sub-period-container" class="panel panel-default panel-cotes">
+            <div class="panel-heading second">
+                <div class="sub-period-info">
+                    <h5>
+                        <strong>Navigation par @Model.PeriodLabel:</strong><span id="subPeriodLabel" class="sub-period-label">@Model.FirstPeriodLabel</span>
+                    </h5>
+                </div>
+                <div class="btn-group btn-group-margin" role="group" aria-label="...">
+                    @foreach (var item in Model.Items)
+                    {
+                        if (item.IsSelected)
+                        {
+                            <button type="button" disabled class="btn btn-default-sub-period sub-period-btn" period="@item.Period" periodlabel="@item.PeriodLabel">@item.Label</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-default sub-period-btn" period="@item.Period" periodlabel="@item.PeriodLabel">@item.Label</button>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

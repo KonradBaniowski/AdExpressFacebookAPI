@@ -45,12 +45,13 @@ namespace Km.AdExpressClientWeb.Controllers
         private IUniverseService _universService;
         private IPeriodService _periodService;
         private IOptionService _optionService;
+        private ISubPeriodService _subPeriodService;
         private const string _controller = "MediaSchedule";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionService optionService, ISubPeriodService subPeriodService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
@@ -58,6 +59,7 @@ namespace Km.AdExpressClientWeb.Controllers
             _universService = universService;
             _periodService = periodService;
             _optionService = optionService;
+            _subPeriodService = subPeriodService;
         }
         public ActionResult Index()
         {
@@ -260,6 +262,16 @@ namespace Km.AdExpressClientWeb.Controllers
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
             return jsonModel;
+        }
+
+        public ActionResult SubPeriodSelection(string zoomDate)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var subPeriod = _subPeriodService.GetSubPeriod(idWebSession, zoomDate);
+
+            return PartialView("_SubPeriodSelection", subPeriod);
         }
 
         public ActionResult ResultOptions()
