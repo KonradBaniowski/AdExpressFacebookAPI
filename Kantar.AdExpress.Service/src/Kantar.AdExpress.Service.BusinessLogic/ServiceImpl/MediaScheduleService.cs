@@ -41,18 +41,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate)
         {
-            //CustomerSession = (WebSession)WebSession.Load("201603021047501084");
+           
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
 
 #if DEBUG
             //TODO : Mock selection marché : a supprimer dès que page marché terminée
-            TNS.AdExpress.Classification.AdExpressUniverse universe = new TNS.AdExpress.Classification.AdExpressUniverse("test", TNS.Classification.Universe.Dimension.product);
-            var group = new TNS.Classification.Universe.NomenclatureElementsGroup("Annonceur", 0, TNS.Classification.Universe.AccessType.includes);
-            group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410,34466,7798,50270,71030");
-            universe.AddGroup(universe.Count(), group);
-            var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            universeDictionary.Add(universeDictionary.Count, universe);
-            CustomerSession.PrincipalProductUniverses = universeDictionary;
+           //TNS.AdExpress.Classification.AdExpressUniverse universe = new TNS.AdExpress.Classification.AdExpressUniverse("test", TNS.Classification.Universe.Dimension.product);
+            //var group = new TNS.Classification.Universe.NomenclatureElementsGroup("Annonceur", 0, TNS.Classification.Universe.AccessType.includes);
+            //group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410,34466,7798,50270,71030");
+            //universe.AddGroup(universe.Count(), group);
+            //var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            //universeDictionary.Add(universeDictionary.Count, universe);
+            //CustomerSession.PrincipalProductUniverses = universeDictionary;
             //ArrayList levels = new ArrayList();
             //// Media/catégorie/Support/Annonceur
             //levels.Add(1);
@@ -60,7 +60,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //levels.Add(3);
             //levels.Add(8);
             //CustomerSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-            CustomerSession.Save();
+            //CustomerSession.Save();
 #endif
 
 

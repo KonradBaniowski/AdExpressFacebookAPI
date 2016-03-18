@@ -1875,22 +1875,32 @@ namespace TNS.AdExpressI.Insertions
                 {
                     for (int j = 0; j < _data.NewHeaders.Root.Count ; j++)
                     {
-                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "40px" });
+                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "100px" });
                         schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
                     }
                 }
 
-
                 try
                 {
-                    for (int i = 0; i < _data.LinesNumber; i++)
+                    for (int i = 0; i < 200; i++)  //_data.LinesNumber
                     {
-                        for (k = 1; k < _data.ColumnsNumber - 1; k++)
+                        for (k = 1; k < _data.ColumnsNumber - 1; k++)//_data.ColumnsNumber
                         {
-                            if (k == _data.LevelColumn)
-                            {
-                                gridData[i, k] = _data[i, k].ToString();
+                            try {
+                                gridData[i, k - 1] = _data[i, k].ToString();
                             }
+                            catch
+                            {
+                                gridData[i, k - 1] = string.Empty;
+                            }
+                            //if (k == _data.LevelColumn)
+                            //{
+                            //    gridData[i, k] += _data[i, k].ToString();
+                            //}
+                            //else
+                            //{
+                            //    gridData[i, k] += _data[i, k].ToString();
+                            //}
                         }
                     }
 
@@ -1914,47 +1924,47 @@ namespace TNS.AdExpressI.Insertions
             }
 
 
-            //TODO : A Retirer (Pour Test) **********************************************
-            object[,] gridDataTest = new object[30, 5];
-            //object[,] gridDataTest = new object[30, 7];
-            List<object> columnsTest = new List<object>();
-            List<object> schemaFieldsTest = new List<object>();
-            Random rnd = new Random();
-            //columnsTest.Add(new { headerText = "PID", key = "PID", dataType = "string" });
-            //schemaFieldsTest.Add(new { name = "PID" });
-            //columnsTest.Add(new { headerText = "ID", key = "ID", dataType = "string" });
-            //schemaFieldsTest.Add(new { name = "ID" });
-            columnsTest.Add(new { headerText = "Spot", key = "Spot", dataType = "string" });
-            schemaFieldsTest.Add(new { name = "Spot" });
-            columnsTest.Add(new { headerText = "Annonceur", key = "Annonceur", dataType = "string" });
-            schemaFieldsTest.Add(new { name = "Annonceur" });
-            columnsTest.Add(new { headerText = "Produit", key = "Produit", dataType = "string" });
-            schemaFieldsTest.Add(new { name = "Produit" });
-            columnsTest.Add(new { headerText = "Version", key = "Version", dataType = "string" });
-            schemaFieldsTest.Add(new { name = "Version" });
-            columnsTest.Add(new { headerText = "Regie", key = "Regie", dataType = "string" });
-            schemaFieldsTest.Add(new { name = "Régie" });
-            for (int l = 0; l < 30; l++) {
-                for (int m = 0; m < 5; m++)
-                {
-                    if (m < 2)
-                        gridDataTest[l, m] = rnd.Next(1, 4).ToString();
-                    else
-                        gridDataTest[l, m] = "Test";
-                }
-                //for (int m = 0; m < 7; m++){
-                //    if (m < 2)
-                //        gridDataTest[l, m] = rnd.Next(1, 4).ToString();
-                //    else
-                //        gridDataTest[l, m] = "Test";
-                //}
-            }
-            gridResult.HasData = true;
-            gridResult.Columns = columnsTest;
-            gridResult.Schema = schemaFieldsTest;
-            gridResult.ColumnsFixed = null;
-            gridResult.Data = gridDataTest;
-            /***************************************************************************/
+            ////TODO : A Retirer (Pour Test) **********************************************
+            //object[,] gridDataTest = new object[30, 5];
+            ////object[,] gridDataTest = new object[30, 7];
+            //List<object> columnsTest = new List<object>();
+            //List<object> schemaFieldsTest = new List<object>();
+            //Random rnd = new Random();
+            ////columnsTest.Add(new { headerText = "PID", key = "PID", dataType = "string" });
+            ////schemaFieldsTest.Add(new { name = "PID" });
+            ////columnsTest.Add(new { headerText = "ID", key = "ID", dataType = "string" });
+            ////schemaFieldsTest.Add(new { name = "ID" });
+            //columnsTest.Add(new { headerText = "Spot", key = "Spot", dataType = "string" });
+            //schemaFieldsTest.Add(new { name = "Spot" });
+            //columnsTest.Add(new { headerText = "Annonceur", key = "Annonceur", dataType = "string" });
+            //schemaFieldsTest.Add(new { name = "Annonceur" });
+            //columnsTest.Add(new { headerText = "Produit", key = "Produit", dataType = "string" });
+            //schemaFieldsTest.Add(new { name = "Produit" });
+            //columnsTest.Add(new { headerText = "Version", key = "Version", dataType = "string" });
+            //schemaFieldsTest.Add(new { name = "Version" });
+            //columnsTest.Add(new { headerText = "Regie", key = "Regie", dataType = "string" });
+            //schemaFieldsTest.Add(new { name = "Régie" });
+            //for (int l = 0; l < 30; l++) {
+            //    for (int m = 0; m < 5; m++)
+            //    {
+            //        if (m < 2)
+            //            gridDataTest[l, m] = rnd.Next(1, 4).ToString();
+            //        else
+            //            gridDataTest[l, m] = "Test";
+            //    }
+            //    //for (int m = 0; m < 7; m++){
+            //    //    if (m < 2)
+            //    //        gridDataTest[l, m] = rnd.Next(1, 4).ToString();
+            //    //    else
+            //    //        gridDataTest[l, m] = "Test";
+            //    //}
+            //}
+            //gridResult.HasData = true;
+            //gridResult.Columns = columnsTest;
+            //gridResult.Schema = schemaFieldsTest;
+            //gridResult.ColumnsFixed = null;
+            //gridResult.Data = gridDataTest;
+            ///***************************************************************************/
 
 
 

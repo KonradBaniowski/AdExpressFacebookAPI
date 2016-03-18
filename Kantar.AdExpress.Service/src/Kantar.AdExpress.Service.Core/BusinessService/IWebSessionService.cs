@@ -6,7 +6,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IWebSessionService
     {
-        WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId);
+        WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees, Dimension dimension, Security security);
 
         WebSessionResponse SaveMarketSelection(string webSessionId, List<Tree> trees, Dimension dimension, Security security);
 

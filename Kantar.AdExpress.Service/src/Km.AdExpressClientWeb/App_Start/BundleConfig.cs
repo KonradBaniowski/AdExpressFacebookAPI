@@ -17,6 +17,7 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/media-selection").Include(
+                        "~/Scripts/universe/listbox.js",
                         "~/Scripts/media-selection/media.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(

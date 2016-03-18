@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using TNS.Classification.Universe;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -30,12 +31,12 @@ namespace Km.AdExpressClientWeb.Controllers
         /// <param name="keyWord"></param>
         /// <param name="branchId"></param>
         /// <returns></returns>
-        public JsonResult GetUniverses(string keyWord, int universeId)
+        public JsonResult GetUniverses(string keyWord, int universeId, Dimension dimension, List<int> idMedias = null)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
-            var model = _universeService.GetItems(universeId, keyWord, idSession, out totalItems);
+            var model = _universeService.GetItems(universeId, keyWord, idSession, dimension, idMedias, out totalItems);
             return Json(new { data = model, total = totalItems } , JsonRequestBehavior.AllowGet);
         }
 
@@ -46,12 +47,12 @@ namespace Km.AdExpressClientWeb.Controllers
         /// <param name="selectedClassification"></param>
         /// <param name="selectedLevelId"></param>
         /// <returns></returns>
-        public JsonResult GetClassification(int levelId, string selectedClassification, int selectedLevelId)
+        public JsonResult GetClassification(int levelId, string selectedClassification, int selectedLevelId, List<int> idMedias, Dimension dimension)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
-            var model = _universeService.GetItems(levelId, selectedClassification,selectedLevelId, idSession, out totalItems);
+            var model = _universeService.GetItems(levelId, selectedClassification,selectedLevelId, idSession, dimension, idMedias, out totalItems);
             return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
     }

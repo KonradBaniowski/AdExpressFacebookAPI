@@ -1,13 +1,19 @@
 ﻿
 $(function () {
-
+    
+    var dimension = $('#Dimension').val();
+    var params = {
+        dimension: dimension
+    };
     $.ajax({
         url: '/MediaSchedule/LoadUserUniversGroups',
         type: 'GET',
+        data: params,
         error: function (xmlHttpRequest, errorText, thrownError) {
             alert("error");
         },
         success: function (response) {
+            $('#monunivers .modal-content').empty();
             $('#monunivers .modal-content').append(response);
         }
 
@@ -27,8 +33,12 @@ $(function () {
         $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
     });
 
+   
+
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
+        if (keyword.length < 2)
+            return;
         var branchId = $('#branch').attr("data-branch");
         $(".universes").hide();
         $("#branch" + branchId).show();
@@ -41,7 +51,8 @@ $(function () {
             var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
             var params = {
                 keyWord: keyword,
-                universeId: universe
+                universeId: universe,
+                dimension: dimension
             };
 
             $.ajax({
@@ -113,20 +124,6 @@ $(function () {
         e.preventDefault();
 
         var things = [];
-        //$.each($('.nav.nav-tabs > li a'), function (index, elem) {
-        //    var itemContainer = $(elem).attr('data-target');
-        //    var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
-        //    var idUnivers = [];
-        //    $.each($(itemContainer + ' .panel-group .panel-body > ul > li'), function (index, elem) {
-        //        var id = $(elem).attr('data-id');
-        //        idUnivers.push(id);
-        //    });
-        //    var item = {
-        //        AccessType: accessType,
-        //        UniversLevels: idUnivers
-        //    };
-        //    things.push(item);
-        //});
         var spinner = new Spinner().spin(this);
         $('#btnSubmitMarketSelection').off('click');
         var trees = [];
@@ -284,6 +281,7 @@ $(function () {
         $.ajax({
             url: '/MediaSchedule/SaveUserUnivers',
             type: 'GET',
+            data: params,
             success: function (response) {
                 spinner.stop();
                 $('#saveunivers').append(response);
@@ -309,7 +307,8 @@ $(function () {
             var params = {
                 levelId: universe,
                 selectedClassification: DIS.itemIds.join(","),
-                selectedLevelId: universeIdCalling
+                selectedLevelId: universeIdCalling,
+                dimension: dimension
             };
             var univerIndex = parseFloat($(elem).attr('data-universe'));
             var univerLabel = $(elem).attr('data-label') + "\{NB_ELEM\}";
@@ -335,6 +334,14 @@ $(function () {
             });
         });
     };
+});
+$('#keyword').off('keyup');
+
+$('#keyword').on('keyup', function () {
+    if (event.keyCode == 13) {
+        $(".btn-recherche").click();
+        console.log('Enter was pressed');
+    }
 });
 
 var Example = (function () {
@@ -371,6 +378,7 @@ $(document).on('click', '.tab-content li', function () {
 
 $(document).on('click', '#btnSaveUnivers', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var groupId = $('#ddlGroup').val();
     var universId = $('#ddlUnivers').val();
     var name = $('#universName').val();
@@ -409,7 +417,8 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         trees: trees,
         groupId: groupId,
         universId: universId,
-        name: name
+        name: name,
+        dimension:dimension
     };
     $.ajax({
         url: '/MediaSchedule/SaveUserUnivers',
@@ -437,13 +446,18 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
 
 $(document).on('change', '#ddlGroup', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var idGroup = $("#ddlGroup").val();
+    var params = {
+        id: idGroup,
+        dimension: dimension
+    };
     var local = $(this);
     var spinner = new Spinner().spin(this);
     $.ajax({
         url: '/MediaSchedule/GetUniversByGroup',
         type: 'GET',
-        data: { id: idGroup },
+        data: params,
         success: function (response) {
             $('#ddlUnivers').empty();
             $.each(response, function (i, item) {
@@ -467,11 +481,13 @@ $(document).on('click', 'button.tout-suppr', function () {
 
 $(document).on('click', '#LoadUnivers', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var spinner = new Spinner().spin(this);
     $('.btn.btn-valider').off('click');
     var universId = $('input[name="universOpt"]:checked').val();
     var params = {
-        id: universId
+        id: universId,
+        dimension:dimension
     };
     $.ajax({
         url: '/MediaSchedule/GetUserUnivers',

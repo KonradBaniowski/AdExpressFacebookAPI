@@ -30,13 +30,15 @@ using TNS.Classification.Universe;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core.Utilities;
 
-namespace TNS.AdExpressI.Classification.DAL {
-	/// <summary>
+namespace TNS.AdExpressI.Classification.DAL
+{
+    /// <summary>
     /// This class generates search SQL queries on a classification brand. Allow customer to view and select the items 
     /// found in the different hierarchical levels of the chosen brand.
     /// The items displayed depend on user classification rights.  
-	/// </summary>
-	public class ClassificationItemsDAL : EngineDAL {
+    /// </summary>
+    public class ClassificationItemsDAL : EngineDAL
+    {
 
         /// <summary>
         /// Current classification brand (product or vehicle)
@@ -57,20 +59,23 @@ namespace TNS.AdExpressI.Classification.DAL {
             set { _filterWithProductSelection = value; }
         }
 
-		#region Constructor
+        public string VehiclesId { get; set; }
 
-		/// <summary>
-		/// Default Constructor
-		/// </summary>
-		/// <param name="session">User session</param>
+        #region Constructor
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="session">User session</param>
         public ClassificationItemsDAL(WebSession session, TNS.Classification.Universe.Dimension dimension)
-			: base(session) {
-                _dimension = dimension;
-		}
+            : base(session)
+        {
+            _dimension = dimension;
+        }
 
-		#endregion
+        #endregion
 
-		#region GetItems
+        #region GetItems
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
         ///  with customer classification rights. It means product or media restriction.
@@ -126,13 +131,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         public virtual DataSet GetItems(string classificationLevelLabel, string wordToSearch)
         {
 
-			#region Tables initilization
-			View oView = null;
-			string classificationRight = "";
-			bool useView = true;
-          
+            #region Tables initilization
+            View oView = null;
+            string classificationRight = "";
+            bool useView = true;
 
-			try {
+
+            try
+            {
                 /* The search of classification items is done on a View of product or vehicle classification.
                  * In fact, if the dimension (classification brand) is product, the search will be done on a view called "ADEXPR03.ALL_PRODUCT_33".
                  * ADEXPR03 corresponds to the scheme of the view and ALL_PRODUCT_33 the label of the view. 
@@ -142,27 +148,28 @@ namespace TNS.AdExpressI.Classification.DAL {
                 oView = GetView(_dimension);
 
                 /* Obtains customer's rights for product brand classification   */
-				classificationRight = GetRights(_dimension);
+                classificationRight = GetRights(_dimension);
 
                 /*To improve the performance of research. The target table varies according to the rights 
                  * of clients. For example, for a given classification level, if no rights is applied, 
                  * the corresponding table  of classification will be targeted instead of view. */
                 useView = CanUseView(_dimension, classificationRight);
-			}
-			catch (System.Exception err) {
-				throw (new Exceptions.ClassificationItemsDALException("Impossible to get view names or rights", err));
-			}
-			#endregion
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exceptions.ClassificationItemsDALException("Impossible to get view names or rights", err));
+            }
+            #endregion
 
-			#region Building sql query 
-			StringBuilder sql = new StringBuilder(1000);
+            #region Building sql query 
+            StringBuilder sql = new StringBuilder(1000);
 
             /*SELECT Clause : 
             * The variable "classificationLevelLabel" correspond to the table of level brand classification.
              * The first column is the identifier of the classification level item.
              * Th seconde column is the label of trhe classification level item.*/
             sql.AppendFormat(" select distinct wp.id_{0} as id_item, wp.{0} as item ", classificationLevelLabel);
-			
+
             /*FROM clause : Obtains the targets tables of the query*/
             GetFromClause(sql, oView, classificationLevelLabel, useView);
 
@@ -193,18 +200,20 @@ namespace TNS.AdExpressI.Classification.DAL {
 
             /*Query orders fields by items' labels */
             sql.AppendFormat(" order by  {0}", classificationLevelLabel);
-			#endregion
+            #endregion
 
-			#region Excuting sql query
-			try {
+            #region Excuting sql query
+            try
+            {
                 //Excuting sql query
-				return GetSource().Fill(sql.ToString());
-			}
-			catch (System.Exception e) {
-				throw new Exceptions.ClassificationItemsDALException(e.Message, e);
-			}
-			#endregion
-		}
+                return GetSource().Fill(sql.ToString());
+            }
+            catch (System.Exception e)
+            {
+                throw new Exceptions.ClassificationItemsDALException(e.Message, e);
+            }
+            #endregion
+        }
 
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
@@ -280,15 +289,16 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-         public virtual DataSet GetItems(string classificationLevelLabel, string selectedClassificationLevelIds, string selectedItemTableName)
+        public virtual DataSet GetItems(string classificationLevelLabel, string selectedClassificationLevelIds, string selectedItemTableName)
         {
 
-			#region Tables initilization
-			View oView = null;
-			string classificationRight = "";
-			StringBuilder sql = new StringBuilder(1000);
-         
-			try {
+            #region Tables initilization
+            View oView = null;
+            string classificationRight = "";
+            StringBuilder sql = new StringBuilder(1000);
+
+            try
+            {
                 /* The search of classification items is done on a View of product or vehicle classification.
                  * In fact, if the dimension (classification brand) is product, the search will be done on a view called "ADEXPR03.ALL_PRODUCT_33".
                  * ADEXPR03 corresponds to the scheme of the view and ALL_PRODUCT_33 the label of the view. 
@@ -298,67 +308,84 @@ namespace TNS.AdExpressI.Classification.DAL {
                 oView = GetView(_dimension);
 
                 /* Obtains customer's rights for product brand classification   */
-				classificationRight = GetRights(_dimension);
-			}
-			catch (System.Exception err) {
-				throw (new Exceptions.ClassificationItemsDALException("Impossible to get view names or rights", err));
-			}
-			#endregion
+                classificationRight = GetRights(_dimension);
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exceptions.ClassificationItemsDALException("Impossible to get view names or rights", err));
+            }
+            #endregion
 
-			#region Building sql query
+            #region Building sql query
             /*SELECT Clause : 
             * The variable "table" correspond to the table of level brand classification.
              * The first column is the identifier of the classification level item.
              * Th seconde column is the label of trhe classification level item.*/
             sql.AppendFormat(" select distinct wp.id_{0} as id_item, wp.{0} as item ", classificationLevelLabel);
 
-             /*FROM clause : Obtains the targets tables of the query according to the web site data language*/
-			 sql.AppendFormat(" from {0}{1} wp", oView.Sql,_session.DataLanguage.ToString());
+            /*FROM clause : Obtains the targets tables of the query according to the web site data language*/
+            sql.AppendFormat(" from {0}{1} wp", oView.Sql, _session.DataLanguage.ToString());
 
-             /*Query conditions */ 
+            /*Query conditions */
             /* Restriction on the classification items selected by the customer*/
-             //sql.AppendFormat(" where wp.id_{0} in ( {1} ) ", selectedItemTableName, selectedClassificationLevelIds);
-            sql.Append( " where " + TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("wp.id_" + selectedItemTableName, selectedClassificationLevelIds));
-			
-                 //Defines customer classification's rihts
-			if (classificationRight != null && classificationRight.Length > 0) {
-				sql.Append(classificationRight);
-			}
+            //sql.AppendFormat(" where wp.id_{0} in ( {1} ) ", selectedItemTableName, selectedClassificationLevelIds);
+            sql.Append(" where " + TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("wp.id_" + selectedItemTableName, selectedClassificationLevelIds));
 
-            foreach (int filterId in Filters.Keys) {
-               if (UniverseLevels.Get(filterId).TableName.ToUpper() == classificationLevelLabel.ToUpper()){
+            //Defines customer classification's rihts
+            if (classificationRight != null && classificationRight.Length > 0)
+            {
+                sql.Append(classificationRight);
+            }
+
+            foreach (int filterId in Filters.Keys)
+            {
+                if (UniverseLevels.Get(filterId).TableName.ToUpper() == classificationLevelLabel.ToUpper())
+                {
                     sql.AppendFormat(" and wp.id_{0} not in ( {1} ) ", classificationLevelLabel, Filters[filterId]);
                 }
             }
-			
+
             /*If the current module is Media Schedule the data must be filtered 
              * on the medias selected by the customer*/
-			switch (_module.Id) {
-				case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-					if (_dimension == Dimension.media)
-						sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
-					break;
+            switch (_module.Id)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    if (_dimension == Dimension.media)
+                    {
+                        string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
+                        if (!string.IsNullOrEmpty(vehicles))
+                        {
+                            sql.AppendFormat(" and wp.id_vehicle in ({0}) ", vehicles);
+                        }
+                        else if (!string.IsNullOrEmpty(VehiclesId))
+                        {
+                            sql.AppendFormat(" and wp.id_vehicle in ({0}) ", VehiclesId);
+                        }
+                    }
+                    break;
                 case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
                 case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
                     if (_filterWithProductSelection) sql.Append(GetProductSelection("wp", true));
                     break;
-			}
-            
+            }
+
             /*Query orders fields by items' labels */
             sql.AppendFormat(" order by {0} ", classificationLevelLabel);
-			#endregion
+            #endregion
 
-			#region Excution of query
-			try {
+            #region Excution of query
+            try
+            {
                 //Excuting sql query
-				return GetSource().Fill(sql.ToString());
-			}
-			catch (System.Exception e) {
-				throw new Exceptions.ClassificationItemsDALException(e.Message, e);
-			}
-			#endregion
+                return GetSource().Fill(sql.ToString());
+            }
+            catch (System.Exception e)
+            {
+                throw new Exceptions.ClassificationItemsDALException(e.Message, e);
+            }
+            #endregion
 
-		}
+        }
 
 
         /// <summary>
@@ -418,12 +445,13 @@ namespace TNS.AdExpressI.Classification.DAL {
         public virtual DataSet GetSelectedItems(string classificationLevelLabel, string idList)
         {
 
-			#region Tables initilization
-			View oView = null;
-			string classificationRight = "";
-			bool useView = true;
+            #region Tables initilization
+            View oView = null;
+            string classificationRight = "";
+            bool useView = true;
 
-			try {
+            try
+            {
                 /* The search of classification items is done on a View of product or vehicle classification.
                * In fact, if the dimension (classification brand) is product, the search will be done on a view called "ADEXPR03.ALL_PRODUCT_33".
                * ADEXPR03 corresponds to the scheme of the view and ALL_PRODUCT_33 the label of the view. 
@@ -433,33 +461,34 @@ namespace TNS.AdExpressI.Classification.DAL {
                 oView = GetView(_dimension);
 
                 /* Obtains customer's rights for product brand classification   */
-				classificationRight = GetRights(_dimension);
+                classificationRight = GetRights(_dimension);
 
                 /*To improve the performance of research. The target table varies according to the rights 
                * of clients. For example, for a given classification level, if no rights is applied, 
                * the corresponding table  of classification will be targeted instead of view. */
-				useView = CanUseView(_dimension, classificationRight);
-			}
-			catch (System.Exception err) {
-				throw (new Exceptions.ClassificationItemsDALException("Impossible to get view names or rights", err));
-			}
-			#endregion
+                useView = CanUseView(_dimension, classificationRight);
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exceptions.ClassificationItemsDALException("Impossible to get view names or rights", err));
+            }
+            #endregion
 
-			#region Buildind sql query
-			StringBuilder sql = new StringBuilder();
+            #region Buildind sql query
+            StringBuilder sql = new StringBuilder();
 
             /*SELECT Clause : 
           * The variable "classificationLevelLabel" correspond to the table of level brand classification.
            * The first column is the identifier of the classification level item.
            * Th seconde column is the label of trhe classification level item.*/
             sql.AppendFormat("select distinct wp.id_{0} as id_item, wp.{0} as item ", classificationLevelLabel);
-            
+
             /*FROM clause : Obtains the targets tables of the query*/
             GetFromClause(sql, oView, classificationLevelLabel, useView);
 
             /*Query conditions */
             /* Restriction on the classification items selected by the customer*/
-           // sql.AppendFormat(" where wp.id_{0} in ({1})", classificationLevelLabel, idList);
+            // sql.AppendFormat(" where wp.id_{0} in ({1})", classificationLevelLabel, idList);
             sql.Append(" where " + TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("wp.id_" + classificationLevelLabel, idList));
 
             /*Query tables joins */
@@ -467,19 +496,21 @@ namespace TNS.AdExpressI.Classification.DAL {
 
             /*Query orders fields by items' labels */
             sql.AppendFormat(" order by  {0}", classificationLevelLabel);
-			#endregion
+            #endregion
 
-			#region Execute sql query
-			try {
+            #region Execute sql query
+            try
+            {
                 //Excuting sql query
-				return GetSource().Fill(sql.ToString());
-			}
-			catch (System.Exception e) {
-				throw new Exceptions.ClassificationItemsDALException(e.Message, e);
-			}
-			#endregion
+                return GetSource().Fill(sql.ToString());
+            }
+            catch (System.Exception e)
+            {
+                throw new Exceptions.ClassificationItemsDALException(e.Message, e);
+            }
+            #endregion
 
-		}
+        }
 
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
@@ -532,8 +563,8 @@ namespace TNS.AdExpressI.Classification.DAL {
         public virtual DataSet GetRecapItems(string classificationLevelLabel, CustomerRightConstante.type customerRightType)
         {
 
-			#region Building sql query
-			StringBuilder sql = new StringBuilder(1000);
+            #region Building sql query
+            StringBuilder sql = new StringBuilder(1000);
 
             /*SELECT Clause : 
           * The variable "table" correspond to the table of level brand classification.
@@ -543,90 +574,95 @@ namespace TNS.AdExpressI.Classification.DAL {
 
             /*FROM clause : Obtains the targets tables of the query*/
             sql.AppendFormat(" from {0}.{1} wp ", _dBSchema, classificationLevelLabel);
-           
+
             /*Query conditions */
             /* Restriction on the data language*/
-			sql.AppendFormat( " where wp.id_language = {0} ",_session.DataLanguage);			
-			
+            sql.AppendFormat(" where wp.id_language = {0} ", _session.DataLanguage);
+
             /*Restriction on the cusomer's product classification rights*/
             SQLGenerator.GetInClauseMagicMethod("id_" + classificationLevelLabel, _session.CustomerLogin[customerRightType], true);
 
             /* Activation code to obtain only actives data */
-			sql.AppendFormat(" and wp.activation < {0} ", TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.AppendFormat(" and wp.activation < {0} ", TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
             /*Query orders fields by items' labels */
             sql.AppendFormat(" order by {0} ", classificationLevelLabel);
-			#endregion
+            #endregion
 
-			#region Excute sql query
-			try {
+            #region Excute sql query
+            try
+            {
                 //Excuting sql query
-				return GetSource().Fill(sql.ToString());
-			}
-			catch (System.Exception e) {
-				throw new Exceptions.ClassificationItemsDALException(e.Message, e);
-			}
-			#endregion
-		}
+                return GetSource().Fill(sql.ToString());
+            }
+            catch (System.Exception e)
+            {
+                throw new Exceptions.ClassificationItemsDALException(e.Message, e);
+            }
+            #endregion
+        }
 
-		#endregion
+        #endregion
 
-		#region GetRights
-		/// <summary>
-		/// Obtains customer rights according to brand classification.
-		/// </summary>
+        #region GetRights
+        /// <summary>
+        /// Obtains customer rights according to brand classification.
+        /// </summary>
         /// <param name="dimension">Determines the classification brand to use</param>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">
         /// Unknown classification brand</exception>
-		protected virtual string GetRights( Dimension dimension) {
-			string classificationRight = "";
-			switch (dimension) {
+        protected virtual string GetRights(Dimension dimension)
+        {
+            string classificationRight = "";
+            switch (dimension)
+            {
                 //Obtains rights of the product classification
-				case Dimension.product:
-					classificationRight = GetCustomerProductRight("wp", true);
-					break;
+                case Dimension.product:
+                    classificationRight = GetCustomerProductRight("wp", true);
+                    break;
                 //Obtains rights of the vehicle classification
-				case Dimension.media:
-					classificationRight = GetMediaRights( "wp", true);
-					break;
+                case Dimension.media:
+                    classificationRight = GetMediaRights("wp", true);
+                    break;
                 case Dimension.advertisingAgency:
                     return string.Empty;
-				default:
-					throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
-			}
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
 
-			return classificationRight;
-		}
+            return classificationRight;
+        }
 
-		
 
-		#endregion
 
-		#region User Rights
+        #endregion
+
+        #region User Rights
 
         #region Product Rights
         /// <summary>
         //Obtains user rights of the product classification.
-		/// </summary>
-		/// <param name="tablePrefixe">table prefix</param>
-		/// <param name="beginByAnd">True if the sql clause start with "AND"</param>
+        /// </summary>
+        /// <param name="tablePrefixe">table prefix</param>
+        /// <param name="beginByAnd">True if the sql clause start with "AND"</param>
         /// <returns>SQL code string</returns>
-		public virtual string GetCustomerProductRight( string tablePrefix, bool beginByAnd) {
-          
+        public virtual string GetCustomerProductRight(string tablePrefix, bool beginByAnd)
+        {
+
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
             string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
             return (SQLGenerator.GetClassificationCustomerProductRight(_session, tablePrefix, beginByAnd, productRightsBranches));
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#endregion
+        #endregion
 
-		#region Protected Methods
+        #region Protected Methods
 
-		#region GetView
-		/// <summary>
+        #region GetView
+        /// <summary>
         /// Search of classification items is done on a View of product or vehicle classification.
         ///  In fact, if the dimension (classification brand) is product, the search will be done on a view called "ADEXPR03.ALL_PRODUCT_33".
         ///  ADEXPR03 corresponds to the scheme of the view and ALL_PRODUCT_33 the label of the view. 
@@ -635,7 +671,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         ///  ALL_MEDIA_33 corresponds to the label of the view.
         ///  
         /// The View used for the queries depends also on type of module. 
-		/// </summary>
+        /// </summary>
         /// <param name="dimension">classification brand</param>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">
         /// Unknown classification brand</exception>
@@ -652,7 +688,7 @@ namespace TNS.AdExpressI.Classification.DAL {
                     {   //View for product classification brand
                         case Dimension.product:
                             return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapProduct);
-                        
+
                         //View for vehicle classification brand
                         case Dimension.media:
                             return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapMedia);
@@ -677,113 +713,143 @@ namespace TNS.AdExpressI.Classification.DAL {
             }
 
         }
-		#endregion
+        #endregion
 
-		
-		#region GetSource
-		/// <summary>
+
+        #region GetSource
+        /// <summary>
         /// obtains the data source according to the module. Data source allows us 
         /// to execute the various SQL queries according to the database, module, site language.
-		/// </summary>
-		protected virtual IDataSource GetSource() {
-			switch (_session.CurrentModule) {
-                  /*obtains the data source for the modules  
-                 * " Product class analysis: Graphic key reports " and "Product class analysis: Detailed reports".*/
-				case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
-				case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
-					return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
-				default:
-                     /*obtains the data source for the others modules*/
+        /// </summary>
+        protected virtual IDataSource GetSource()
+        {
+            switch (_session.CurrentModule)
+            {
+                /*obtains the data source for the modules  
+               * " Product class analysis: Graphic key reports " and "Product class analysis: Detailed reports".*/
+                case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
+                case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
+                    return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
+                default:
+                    /*obtains the data source for the others modules*/
                     return _dataSource;
-			}
-		}
-		#endregion
+            }
+        }
+        #endregion
 
-		#region Get From Clause
-		/// <summary>
+        #region Get From Clause
+        /// <summary>
         /// Get sql FROM clause
-		/// </summary>
-		/// <param name="oView">View</param>
-		/// <param name="table">Table label</param>
-		/// <param name="useView">True if must use tables' View</param>
+        /// </summary>
+        /// <param name="oView">View</param>
+        /// <param name="table">Table label</param>
+        /// <param name="useView">True if must use tables' View</param>
         /// <param name="dBSchema">Database scheme</param>
         /// <param name="sql">Sql string builder</param>
         /// <returns>sql FROM clause string</returns>
-		protected virtual void GetFromClause(StringBuilder sql,  View oView, string table,  bool useView) {
-			if (useView)
-				sql.AppendFormat(" from {0}{1} wp ", oView.Sql,_session.DataLanguage.ToString());
-			else sql.AppendFormat(" from {0}.{1} wp ",_dBSchema,table);
-		}
-		#endregion
+        protected virtual void GetFromClause(StringBuilder sql, View oView, string table, bool useView)
+        {
+            if (useView)
+                sql.AppendFormat(" from {0}{1} wp ", oView.Sql, _session.DataLanguage.ToString());
+            else sql.AppendFormat(" from {0}.{1} wp ", _dBSchema, table);
+        }
+        #endregion
 
-		#region Get Joint Clause
-		/// <summary>
-		/// Obtains sql Joins clause
-		/// </summary>
-		/// <param name="oView">View</param>
-		/// <param name="table">Table label</param>
-		/// <param name="classificationRight">Classification rights</param>
-		/// <param name="dimension">media or product classification brand</param>
-		/// <param name="useView">True if must use tables' View</param>
+        #region Get Joint Clause
+        /// <summary>
+        /// Obtains sql Joins clause
+        /// </summary>
+        /// <param name="oView">View</param>
+        /// <param name="table">Table label</param>
+        /// <param name="classificationRight">Classification rights</param>
+        /// <param name="dimension">media or product classification brand</param>
+        /// <param name="useView">True if must use tables' View</param>
         /// <param name="sql">Sql string builder</param>
-		/// <returns>sql FROM clause string</returns>
-		protected virtual void GetJointClause(StringBuilder sql, View oView, string table, Dimension dimension, string classificationRight, bool useView) {
-		
+        /// <returns>sql FROM clause string</returns>
+        protected virtual void GetJointClause(StringBuilder sql, View oView, string table, Dimension dimension, string classificationRight, bool useView)
+        {
+
             //If the queries will be done on classification brand view
-			if (useView) {
+            if (useView)
+            {
 
-				// Adding user classication rights
-				if (classificationRight != null && classificationRight.Length > 0) {
-					sql.Append(classificationRight);
-				}				
+                // Adding user classication rights
+                if (classificationRight != null && classificationRight.Length > 0)
+                {
+                    sql.Append(classificationRight);
+                }
 
-				switch (_session.CurrentModule) {
+                switch (_session.CurrentModule)
+                {
                     //For module Media Schedule the data will be filter on selected media (ex. Identifer of media TELEVISION)
-					case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
                     case TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES:
-						if (dimension == Dimension.media)
-							sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
-						break;
+                        if (dimension == Dimension.media)
+                        {
+                            string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
+                            if (!string.IsNullOrEmpty(vehicles))
+                            {
+                                sql.AppendFormat(" and wp.id_vehicle in ({0}) ", vehicles);
+                            }
+                            else if (!string.IsNullOrEmpty(VehiclesId))
+                            {
+                                sql.AppendFormat(" and wp.id_vehicle in ({0}) ", VehiclesId);
+                            }
+
+
+                        }
+                        break;
                     //For module Advertising Agency the data will be filter on selected media (ex. Identifer of media TELEVISION)
                     case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
                         if (dimension == Dimension.media)
-                            sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
+                        {
+                            string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
+                            if (!string.IsNullOrEmpty(vehicles))
+                            {
+                                sql.AppendFormat(" and wp.id_vehicle in ({0}) ", vehicles);
+                            }
+                            else if (!string.IsNullOrEmpty(VehiclesId))
+                            {
+                                sql.AppendFormat(" and wp.id_vehicle in ({0}) ", VehiclesId);
+                            }
+                        }
                         break;
                     case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
                     case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
-                        if(_filterWithProductSelection) sql.Append(GetProductSelection("wp",true));
+                        if (_filterWithProductSelection) sql.Append(GetProductSelection("wp", true));
                         break;
-				}
-			}
-			else {
+                }
+            }
+            else {
                 /*If the query is executed only on a classification table (ex. table adexpr03.Sector), only valid data (activation code equal to zero)
                  * must returned and for a specific language (ex. id_language 33 for French) */
-				sql.AppendFormat( " and wp.activation<{0}", TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-				sql.AppendFormat(" and wp.id_language = {0}", _session.DataLanguage);
-			}			
-		}
-		#endregion
+                sql.AppendFormat(" and wp.activation<{0}", TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and wp.id_language = {0}", _session.DataLanguage);
+            }
+        }
+        #endregion
 
-		#region CanUseView
-		/// <summary>
-		/// Determine if tables' View must be used in SQL query.
-		/// </summary>
-		/// <param name="dimension">media or product classification brand</param>
-		/// <param name="classificationRight">classification rights string</param>
+        #region CanUseView
+        /// <summary>
+        /// Determine if tables' View must be used in SQL query.
+        /// </summary>
+        /// <param name="dimension">media or product classification brand</param>
+        /// <param name="classificationRight">classification rights string</param>
         /// <returns>Ture if tables' View must be used in SQL query.</returns>
-		protected virtual bool CanUseView(Dimension dimension, string classificationRight) {
+        protected virtual bool CanUseView(Dimension dimension, string classificationRight)
+        {
             /*If rights are applied, the query will be executed on classification (produtc or  vehicle) view.
              * The view corresponding to a classification brand contains all fields (identifier and label) of brand.
              * For example for the product classification the View will be like this : id_produt,product, id_sector,sector, di_group_,
-             * group_ etc */            
-			if ((classificationRight != null && classificationRight.Length > 0)
-			|| (dimension == Dimension.media && _module.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+             * group_ etc */
+            if ((classificationRight != null && classificationRight.Length > 0)
+            || (dimension == Dimension.media && _module.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
              || _filterWithProductSelection)
-				return true;
-			return false;
-		}
-		#endregion
+                return true;
+            return false;
+        }
+        #endregion
 
-		#endregion
-	}
+        #endregion
+    }
 }

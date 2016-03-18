@@ -6,19 +6,22 @@
     var _controller = Model.NavigationBar.First().Controller;
 }
 <div class="row">
+    @Html.HiddenFor(e => e.Dimension)
+    @Html.HiddenFor(e => e.Multiple)
     @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("UserUniversGroups", Model.UniversGroups)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
-        @Html.HiddenFor(e => e.Multiple)
+        
         @foreach (int i in Model.IdMediasCommon)
         {
             <input type="hidden" name="HiddenIntList" value="@i" />
         }
-        <div class="panel-group" id="media-accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
+        <div class="panel-group panel-group-results" id="media-accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-primary panel-results">
+                <div class="panel-heading head-results" role="tab" id="headingOne">
                     <h3 class="panel-title pull-left">
                         <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             <i class="fa fa-eye"></i> Sélection des médias
@@ -66,8 +69,8 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
+            <div class="panel panel-primary panel-results" >
+                <div class="panel-heading head-results" role="tab" id="headingTwo">
                     <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             <i class="fa fa-search"></i> @Model.Labels.Refine
@@ -136,10 +139,6 @@
                                             <a class="btn btn-green2 btn-circle btn-xl">
                                                 <i class="fa fa-arrow-right"></i>
                                             </a>
-                                            <p class="lead">
-                                                @*@Model.Labels.Include*@
-                                                (D&eacute;placer)
-                                            </p>
                                         </div>
                                     </div>
 
@@ -218,8 +217,7 @@
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
                                 <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <a data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">Enregistrer l'univers <i class="fa fa-bookmark-o"></i></a>
-                                    @Html.ActionLink("Valider", "MediaSelection", null, new { id = "btnSubmitMarketSelection", @class = "btn btn-default btn-valider pull-right" })
+                                    <a data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">Enregistrer l'univers <i class="fa fa-bookmark-o"></i></a>                                   
 
                                 </div>
                             </div>
@@ -228,57 +226,16 @@
                 </div>
             </div>
         </div>
-        @*<div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
-                <h4 class=""><i class="fa fa-eye"></i> Sélection des médias</h4>
-            </div>
-            @Html.HiddenFor(e => e.Multiple)
-            @foreach (int i in Model.IdMediasCommon)
-                {
-                <input type="hidden" name="HiddenIntList" value="@i" />
-            }
-            @if (Model.Multiple)
-                {
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                    <div class="pull-right">
-                        <small class="v-super">Pré-sélection &nbsp; </small>
-                        <label class="i-switch" id="switch">
-                            <input type="checkbox" for="switch" id="preselection">
-                            <i></i>
-                        </label>
-                    </div>
-                </div>
-            }
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                @foreach (var item in Model.Medias)
-                {
-
-                    if (!item.Disabled)
-                    {
-                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                            <div class="block panel padder-v bg-black-only tuile-medias text-center" data-attr-id="@item.Id">
-                                <div class="top text-center w-full">
-                                    <i class="fa @item.icon m-r-sm"></i>
-                                </div>
-                                <div class="h5 font-normal h5">@item.Label</div>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                            <div class="block panel padder-v bg-black-only tuile-medias text-center disabled-effect">
-                                <div class="top text-center w-full">
-                                    <i class="fa @item.icon m-r-sm"></i>
-                                </div>
-                                <div class="h5 font-normal h5">@item.Label</div>
-                            </div>
-                        </div>
-                    }
-                }
-            </div>*@
+        
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
             <input id="btnSubmitMediaSelection" type="submit" value="Valider" class="btn btn-default btn-valider pull-right" />
         </div>
+
+    </div>
+</div>
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+
+    <div id="saveunivers" class="modal fade">
 
     </div>
 </div>
@@ -391,6 +348,39 @@
                 return message;
             }
 
+            function getSelectedMediaSupport() {
+                var trees = [];
+                $.each($('.nav.nav-tabs > li a'), function (index, elem) {
+                    var itemContainer = $(elem).attr('data-target');
+                    var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
+                    var UniversLvl = [];
+                    $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
+                        var idLevel = $(elem).attr('data-level');
+                        console.log(this);
+                        var UniLvl = [];
+                        $.each($(this).find('ul > li'), function (index, elem) {
+                            var itemUniver = $(elem).attr('data-id');
+                            var universItems = {
+                                Id: itemUniver
+                            }
+                            UniLvl.push(universItems);
+                        });
+                        var UnisLvl = {
+                            Id: idLevel,
+                            UniversItems: UniLvl
+                        };
+                        UniversLvl.push(UnisLvl);
+                    });
+                    var stuff = {
+                        Id: itemContainer,
+                        AccessType: accessType,
+                        UniversLevels: UniversLvl
+                    };
+                    trees.push(stuff);
+                });
+                return trees;
+            }
+
             $('#btnSubmitMediaSelection').on('click', function (e) {
                 e.preventDefault();
                 var msg = validate();
@@ -399,8 +389,10 @@
                     bootbox.alert(msg);
                 }
                 else {
+                    var selectedMediaSupportTrees = getSelectedMediaSupport();
                     var params = {
                         selectedMedia: idList,
+                        mediaSupport: selectedMediaSupportTrees,
                         nextStep: "PeriodSelection"
                     };
                     $.ajax({
@@ -412,8 +404,12 @@
                         error: function (xmlHttpRequest, errorText, thrownError) {
                         },
                         success: function (data) {
-                            if (data != null) {
+                            if (data.RedirectUrl != null) {
                                 document.location = data.RedirectUrl;
+                            }
+                            if (data.ErrorMessage!=null)
+                            {
+                                bootbox.alert(data.ErrorMessage);
                             }
                         }
                     });
@@ -428,9 +424,11 @@
                     bootbox.alert(msg);
                 }
                 else {
+                    var selectedMediaSupportTrees = getSelectedMediaSupport();
                     var action = "SaveMediaSelection";
                     var params = {
                         selectedMedia: idList,
+                        mediaSupport: selectedMediaSupportTrees,
                         nextStep: "Index"
                     };
 
@@ -459,9 +457,11 @@
                     bootbox.alert(msg);
                 }
                 else {
+                    var selectedMediaSupportTrees = getSelectedMediaSupport();
                     var action = "SaveMediaSelection";
                     var params = {
                         selectedMedia: idList,
+                        mediaSupport: selectedMediaSupportTrees,
                         nextStep: "PeriodSelection"
                     };
 
@@ -490,9 +490,11 @@
                     bootbox.alert(msg);
                 }
                 else {
+                    var selectedMediaSupportTrees = getSelectedMediaSupport();
                     action = "SaveMediaSelection";
                     params = {
                         selectedMedia: idList,
+                        mediaSupport: selectedMediaSupportTrees,
                         nextStep: "Results"
                     };
                     $.ajax({
@@ -512,65 +514,7 @@
                     });
                 }
             });
-
-            //PART TWO
-            $(".dropdown-menu.bg-blue.pull-right li > a").on('click', function (e) {
-                e.preventDefault();
-                var selText = $(this).text();
-                var selValue = $(this).attr("data-id");
-                $("#default").show();
-                $("#default").removeAttr("id");
-                $(this).attr("id", "default");
-                $("#default").hide();
-                $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').html(selText + '<span class="caret"></span>');
-                $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').attr("data-branch", selValue);
-                //CLEAN PANEL ON CHANGE BRANCH
-                $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
-            });
-
-            $(".btn-recherche").on('click', function (event) {
-                var keyword = $('#keyword').val();
-                var branchId = $('#branch').attr("data-branch");
-                $(".universes").hide();
-                $("#branch" + branchId).show();
-                var branchUpdate = $("[id^='groupSelectable'] [id^='selectable']").length;
-
-                $("#branch" + branchId + "> div").each(function () {
-                    var DIS = $(this);
-                    var universe = parseFloat($(this).attr('data-universe'))
-                    var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
-                    var params = {
-                        keyWord: keyword,
-                        universeId: universe
-                    };
-                    //$.ajax({
-                    //    url: '/Universe/GetUniverses',
-                    //    contentType: 'application/json',
-                    //    type: 'POST',
-                    //    datatype: 'JSON',
-                    //    data: JSON.stringify(params),
-                    //    error: function (xmlHttpRequest, errorText, thrownError) {
-                    //        alert("error");
-                    //    },
-                    //    success: function (response) {
-                    //        if (branchUpdate > 0) {
-                    //            console.log(DIS);
-                    //            DIS.updateGroup(univerLabel, response.data, response.total, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
-                    //        }
-                    //        else {
-
-                    //            DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
-                    //        }
-                    //        $('#selectable' + universe).selectable(
-                    //            {
-                    //                stop: SelectedItems
-                    //            });
-
-                    //    }
-                    //});
-
-                });
-            });
         });
     </script>
+    @Scripts.Render("~/bundles/media-selection")
 }

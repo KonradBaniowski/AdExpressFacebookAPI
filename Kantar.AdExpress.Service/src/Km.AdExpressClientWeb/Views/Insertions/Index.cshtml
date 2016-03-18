@@ -13,16 +13,10 @@
         <div class="panel-heading">
             <h3><i class="fa fa-search-plus blue"></i>&nbsp;Insertions</h3>
             <span class="pull-right">
-                <ul class="nav panel-tabs" role="tablist">
-                    @{
-                        var multi = "active";
-                    }
-                    @foreach (var item in Model.Medias)
-                    {
-                    <li role="presentation" class="@(item == Model.Medias.First() ? multi : "")">
-                        <a href="#@(item.Label)" aria-controls="@item.Label" role="tab" data-toggle="tab">@item.Label</a>
-                    </li>
-                    }
+                <div id="PresentVehiclesLoader">
+                    <img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" />
+                </div>
+                <ul id="PresentVehicles" class="nav panel-tabs" role="tablist">
                 </ul>
             </span>
         </div>
@@ -33,19 +27,15 @@
                 au
                 <strong>@Model.DateEnd.ToString("dd/MM/yyy")</strong>
             </h5>
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default">1</button>
-                <button type="button" class="btn btn-default">2</button>
-                <button type="button" class="btn btn-default">3</button>
-                <button type="button" class="btn btn-default">1</button>
-                <button type="button" class="btn btn-default">2</button>
-                <button type="button" class="btn btn-default">3</button>
-                <button type="button" class="btn btn-default">1</button>
-                <button type="button" class="btn btn-default">2</button>
-                <button type="button" class="btn btn-default">3</button>
-                <button type="button" class="btn btn-default">1</button>
-                <button type="button" class="btn btn-default">2</button>
-                <button type="button" class="btn btn-default">3</button>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default">J</button>
+                <button type="button" class="btn btn-default">F</button>
+                <button type="button" class="btn btn-default">M</button>
+                <button type="button" class="btn btn-default">A</button>
+                <button type="button" class="btn btn-default">M</button>
+                <button type="button" class="btn btn-default">J</button>
+                <button type="button" class="btn btn-default">J</button>
+                <button type="button" class="btn btn-default">A</button>
                 <button type="button" class="btn btn-default">TOUS</button>
             </div>
         </div>
@@ -87,47 +77,25 @@
                 </div>
             </div>
         </div>
-        <div class="panel-body">
-            <div class="tab-content">
-                @foreach (var item in Model.Medias)
-                {
-                    <div role="tabpanel" class="tab-pane @(item == Model.Medias.First() ? multi : "")"
-                         id="@(item.Label)">
-                        HERE I AM@(item.Label)
-                    </div>
-                }
-            </div>
+    </div>
+
+    <form>
+        <input name="ids" id="ids" type="hidden" value="@Model.datas[0]" />
+        <input name="zoomDate" id="zoomDate" type="hidden" value="@Model.datas[1]" />
+        <input name="idUnivers" id="idUnivers" type="hidden" value="@Model.datas[2]" />
+        <input name="moduleId" id="moduleId" type="hidden" value="@Model.datas[3]" />
+        <input name="idVehicle" id="idVehicle" type="hidden" value="@Model.datas[4]" />
+    </form>
+
+    <center>
+        <div id="grid" style="font-size:12px !important;" class="hide">
         </div>
-    </div>
-</div>
-<div class="row">
-
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
-        <form>
-            <input name="ids" id="ids" type="hidden" value="@Model.datas[0]" />
-            <input name="zoomDate" id="zoomDate" type="hidden" value="@Model.datas[1]" />
-            <input name="idUnivers" id="idUnivers" type="hidden" value="@Model.datas[2]" />
-            <input name="moduleId" id="moduleId" type="hidden" value="@Model.datas[3]" />
-            <input name="idVehicle" id="idVehicle" type="hidden" value="@Model.datas[4]" />
-        </form>
+        <div id="gridLoader" class="hide">
+            <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+        </div>
+    </center>
 
 
-        <center>
-            <div class="panel-heading nav-tabs-alt">
-                <ul id="PresentVehicles" class="nav nav-tabs" role="tablist"></ul>
-            </div>
-            <div id="PresentVehiclesLoader">
-                <img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" />
-            </div>
-
-            <div id="grid" class="hide">
-            </div>
-            <div id="gridLoader" class="hide">
-                <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
-            </div>
-        </center>
-
-    </div>
 </div>
 
 @section Scripts {
