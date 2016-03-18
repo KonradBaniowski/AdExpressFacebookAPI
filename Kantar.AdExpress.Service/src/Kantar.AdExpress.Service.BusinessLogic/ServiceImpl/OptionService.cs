@@ -40,15 +40,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public Options GetOptions(string idWebSession, WebConstantes.GenericDetailLevel.ComponentProfile componentProfile)
         {
             _componentProfile = componentProfile;
-            CustomerSession = (WebSession)WebSession.Load(idWebSession);
-
-            TNS.AdExpress.Classification.AdExpressUniverse universe = new TNS.AdExpress.Classification.AdExpressUniverse("test", TNS.Classification.Universe.Dimension.product);
-            var group = new TNS.Classification.Universe.NomenclatureElementsGroup("Annonceur", 0, TNS.Classification.Universe.AccessType.includes);
-            group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, "54410,34466,7798,50270,71030");
-            universe.AddGroup(universe.Count(), group);
-            var universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            universeDictionary.Add(universeDictionary.Count, universe);
-            CustomerSession.PrincipalProductUniverses = universeDictionary;
+            CustomerSession = (WebSession)WebSession.Load(idWebSession); 
+                      
             CurrentModule = WebNavigation.ModulesList.GetModule(CustomerSession.CurrentModule);
 
             Options options = new Options();
