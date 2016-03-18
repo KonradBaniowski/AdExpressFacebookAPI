@@ -2,6 +2,7 @@
 $(function () {
     
     var dimension = $('#Dimension').val();
+
     var params = {
         dimension: dimension
     };
@@ -37,8 +38,10 @@ $(function () {
 
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
-        if (keyword.length < 2)
+        if (keyword.length < 2) {
+            bootbox.alert($('#Labels_ErrorMessageLimitKeyword').val());
             return;
+        }
         var branchId = $('#branch').attr("data-branch");
         $(".universes").hide();
         $("#branch" + branchId).show();
@@ -85,7 +88,7 @@ $(function () {
     });
 
     //Déplacer un élement marché
-    $('.btn-green2.btn-circle').on('click', function () {
+    $('#move-item').on('click', function () {
         var levelSrc = $('.panel-marche .ui-selectee.ui-selected');
         console.log(levelSrc);
         if (levelSrc.length >= 1) {
@@ -93,24 +96,27 @@ $(function () {
             var tabSelected = $('ul > li[class="active"] > a').attr('data-tab');
             var universDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul');
             var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li')
+            var nbItemSrc = levelSrc.length;
+            var nbItemDst = levelDst.length;
+            if (nbItemDst + nbItemSrc > 1000)
+            {
+                bootbox.alert($('#Labels_ErrorMessageLimitUniverses').val());
+                return
+            }
             $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
             $.each(levelSrc, function (index, value) {
                 var item = $(value).clone();
                 var find = false;
                 $.each(levelDst, function (index, value) {
-
                     if (item.val() == $(value).val())
                         find = true;
                 });
                 if (!find) {
                     var buttonSupp = $('<button/>');
                     buttonSupp.addClass('pull-right');
-
                     var icon = $('<i/>');
                     icon.addClass('fa fa-times-circle black text-base');
-
                     buttonSupp.append(icon);
-
                     item.append(buttonSupp);
                     universDst.append(item);
                 }
@@ -118,11 +124,9 @@ $(function () {
         }
     });
 
-
     //VALIDER 
     $('#btnSubmitMarketSelection').on('click', function (e) {
         e.preventDefault();
-
         var things = [];
         var spinner = new Spinner().spin(this);
         $('#btnSubmitMarketSelection').off('click');
@@ -181,12 +185,12 @@ $(function () {
         });
     });
 
-    $('#Market').on('click', function (e) {
+    $('#Media').on('click', function (e) {
         e.preventDefault();
         var msg = validate();
         var isValide = !msg || msg.lentgh === 0;
         if (!isValide) {//mycondition
-            alert(msg);
+            bootbox.alert(msg);
         }
         else {
             var action = "SaveMediaSelection";
@@ -212,6 +216,9 @@ $(function () {
             });
         }
     });
+
+
+
     $('#Dates').on('click', function (e) {
         e.preventDefault();
         var msg = validate();
@@ -281,6 +288,7 @@ $(function () {
         $.ajax({
             url: '/MediaSchedule/SaveUserUnivers',
             type: 'GET',
+            data: params,
             success: function (response) {
                 spinner.stop();
                 $('#saveunivers').append(response);
@@ -377,6 +385,7 @@ $(document).on('click', '.tab-content li', function () {
 
 $(document).on('click', '#btnSaveUnivers', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var groupId = $('#ddlGroup').val();
     var universId = $('#ddlUnivers').val();
     var name = $('#universName').val();
@@ -415,7 +424,8 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         trees: trees,
         groupId: groupId,
         universId: universId,
-        name: name
+        name: name,
+        dimension:dimension
     };
     $.ajax({
         url: '/MediaSchedule/SaveUserUnivers',
@@ -443,13 +453,18 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
 
 $(document).on('change', '#ddlGroup', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var idGroup = $("#ddlGroup").val();
+    var params = {
+        id: idGroup,
+        dimension: dimension
+    };
     var local = $(this);
     var spinner = new Spinner().spin(this);
     $.ajax({
         url: '/MediaSchedule/GetUniversByGroup',
         type: 'GET',
-        data: { id: idGroup },
+        data: params,
         success: function (response) {
             $('#ddlUnivers').empty();
             $.each(response, function (i, item) {
@@ -457,7 +472,6 @@ $(document).on('change', '#ddlGroup', function (event) {
                 $("#ddlUnivers").append('<option value="' + item.Value + '">' +
                      item.Text + '</option>');
             });
-            //$('#ddlUnivers').html(response);
         }
     });
 });
@@ -473,11 +487,13 @@ $(document).on('click', 'button.tout-suppr', function () {
 
 $(document).on('click', '#LoadUnivers', function (event) {
     event.preventDefault();
+    var dimension = $('#Dimension').val();
     var spinner = new Spinner().spin(this);
     $('.btn.btn-valider').off('click');
     var universId = $('input[name="universOpt"]:checked').val();
     var params = {
-        id: universId
+        id: universId,
+        dimension:dimension
     };
     $.ajax({
         url: '/MediaSchedule/GetUserUnivers',
@@ -527,3 +543,15 @@ function ShowSelection(elem) {
     });
     alert('Selection : \n' + result);
 };
+
+
+function validate() {
+    var message = "";
+    //nbr éléments déplacer dans les univers inclus
+    var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
+    if (nbElemInclus > 1)
+    {
+        message = $('#Labels_ErrorMessageLimitUniverses').val();
+    }
+    return message;
+}

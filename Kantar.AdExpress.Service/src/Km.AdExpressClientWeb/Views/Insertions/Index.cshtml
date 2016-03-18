@@ -5,7 +5,7 @@
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
-<link href="~/IgniteUI/css/themes/flatly/infragistics.theme.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 
 <div class="row">
@@ -91,7 +91,7 @@
         <div id="grid" style="font-size:12px !important;" class="hide">
         </div>
         <div id="gridLoader" class="hide">
-            <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+            <center><img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" /></center>
         </div>
     </center>
 
@@ -102,8 +102,14 @@
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
-    <script>
 
+
+    @*<script id="colSpotTmpl" type="text/template">
+        <i class="glyphicon glyphicon-music text-5x"></i>
+    </script>*@
+
+
+    <script>
         if (typeof jQuery === "undefined") { throw new Error("jQuery") }
         $(function () {
 
@@ -210,13 +216,19 @@
                     success: function (data) {
                         if (data != null) {
                             dataTreeGrid = data.datagrid;
-                            cols = data.columns;
                             colsFixed = data.columnsfixed;
                             needFixedColumns = data.needfixedcolumns;
 
                             var schema = new $.ig.DataSchema("array", {
                                 fields: data.schema
                             });
+
+                            for (var i = 0; i < data.columns.length; i++) {
+                                if (data.columns[i].headerText == "Spot")
+                                    data.columns[i].template = "{{if ${Spot} != '' }} ${Spot} {{else}} <i class=\"glyphicon glyphicon-music text-5x\"></i> {{/if}}"
+                            }
+
+                            cols = data.columns
 
                             ds = new $.ig.DataSource({
                                 type: "json",
@@ -256,21 +268,6 @@
                             var data = JSON.parse(response);
                             var strHTML = "";
                             $.each(data, function (i, item) {
-
-                                //if ((!idVehicle || 0 === idVehicle.length) && !active) {
-                                //    active = true;
-                                //    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>';
-                                //}
-                                //else {
-                                //    if (idVehicle == item[0]) {
-                                //        strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>';
-                                //    }
-                                //    else {
-                                //        strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                                //    }
-                                //}
-
-
                                 if (!active && (!$('#idVehicle').val() || 0 === $('#idVehicle').val())) {
                                     active = item[0];
                                 }

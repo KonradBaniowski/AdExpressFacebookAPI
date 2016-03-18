@@ -1928,14 +1928,15 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 #endregion
 
                                 string weekLabel = data[0, j].ToString().Substring(4, 2);
+                                string weekLabelHtml = "<span class=\"open-media-schedule\" date=\"" + data[0, j].ToString() + "\" style=\"cursor:pointer;\">" + weekLabel + "</span>";
                                 if (!IsCreativeDivisionMS)
                                 {
-                                    periodColumnsL1.Add(new { headerText = weekLabel, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
+                                    periodColumnsL1.Add(new { headerText = weekLabelHtml, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
                                     schemaFields.Add(new { name = weekLabel });
                                 }
                                 else
                                 {
-                                    periodColumnsL1.Add(new { headerText = weekLabel, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
+                                    periodColumnsL1.Add(new { headerText = weekLabelHtml, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
                                     schemaFields.Add(new { name = weekLabel });
                                 }
                                 tableWidth += 30;

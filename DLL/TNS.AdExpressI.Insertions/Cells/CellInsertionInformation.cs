@@ -390,6 +390,13 @@ namespace TNS.AdExpressI.Insertions.Cells
             s = stringValue;
             return s;
         }
+
+
+        //TODO
+        public override string RenderString()
+        {
+            return "";
+        }
         #endregion
 
     }

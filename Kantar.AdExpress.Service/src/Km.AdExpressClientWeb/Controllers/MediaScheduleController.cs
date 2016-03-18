@@ -45,12 +45,13 @@ namespace Km.AdExpressClientWeb.Controllers
         private IUniverseService _universService;
         private IPeriodService _periodService;
         private IOptionService _optionService;
+        private ISubPeriodService _subPeriodService;
         private const string _controller = "MediaSchedule";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
 
         private string icon;
-        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
+        public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionService optionService, ISubPeriodService subPeriodService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
@@ -58,6 +59,7 @@ namespace Km.AdExpressClientWeb.Controllers
             _universService = universService;
             _periodService = periodService;
             _optionService = optionService;
+            _subPeriodService = subPeriodService;
         }
         public ActionResult Index()
         {
@@ -262,6 +264,16 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
+        public ActionResult SubPeriodSelection(string zoomDate)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var subPeriod = _subPeriodService.GetSubPeriod(idWebSession, zoomDate);
+
+            return PartialView("_SubPeriodSelection", subPeriod);
+        }
+
         public ActionResult ResultOptions()
         {
             var claim = new ClaimsPrincipal(User.Identity);
@@ -336,20 +348,20 @@ namespace Km.AdExpressClientWeb.Controllers
             return PartialView("UserUniversGroupsContent", result);
         }
 
-        public JsonResult GetUserUnivers(int id)
+        public JsonResult GetUserUnivers(int id, Dimension dimension)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _universService.GetTreesByUserUnivers(id, idWebSession, Dimension.product);
+            var result = _universService.GetTreesByUserUnivers(id, idWebSession, dimension);
             return Json(result);
         }
 
         [HttpGet]
-        public PartialViewResult SaveUserUnivers()
+        public PartialViewResult SaveUserUnivers(Dimension dimension)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product,MarketPageId);
+            var data = _universService.GetUserUniversGroups(webSessionId, dimension);
             SaveUserUniversViewModel model = new SaveUserUniversViewModel
             {
                 Title = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, data.SiteLanguage),
@@ -381,15 +393,15 @@ namespace Km.AdExpressClientWeb.Controllers
             return PartialView(model);
         }
         [HttpGet]
-        public JsonResult GetUniversByGroup(string id)
+        public JsonResult GetUniversByGroup(int id, Dimension dimension)
         {
             List<SelectListItem> univers = new List<SelectListItem>();
-            if (!string.IsNullOrEmpty(id))
+            if (id > 0)
             {
-                long groupId = long.Parse(id);
+                //long groupId = long.Parse(id);
                 var claim = new ClaimsPrincipal(User.Identity);
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product,MarketPageId, groupId);
+                var data = _universService.GetUserUniversGroups(webSessionId, dimension, id);
                 univers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
                 {
                     Value = m.Id.ToString(),
@@ -400,7 +412,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         [HttpPost]
-        public string SaveUserUnivers(List<Tree> trees, string groupId, string universId, string name)
+        public string SaveUserUnivers(List<Tree> trees, string groupId, string universId, string name,Dimension dimension)
         {
             string error = "";
             if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && !String.IsNullOrEmpty(groupId) && (!String.IsNullOrEmpty(universId) || !String.IsNullOrEmpty(name)))
@@ -411,7 +423,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 var data = Mapper.Map<List<Domain.Tree>>(validTrees);
                 Domain.UniversGroupSaveRequest request = new Domain.UniversGroupSaveRequest
                 {
-                    Dimension = Dimension.product,
+                    Dimension = dimension,
                     Name = name,
                     UniversGroupId = long.Parse(groupId),
                     UserUniversId = long.Parse(universId),
@@ -538,7 +550,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
                 ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
                 Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
-                Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage)
+                Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
+                ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
+                ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
             };
             return result;
         }

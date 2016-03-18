@@ -373,7 +373,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
        
         [HttpGet]
-        public JsonResult GetUniversByGroup(string id)
+        public JsonResult GetUniversByGroup(string id, Dimension dimension)
         {
             List<SelectListItem> univers = new List<SelectListItem>();
             if (!string.IsNullOrEmpty(id))
@@ -381,7 +381,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 long groupId = long.Parse(id);
                 var claim = new ClaimsPrincipal(User.Identity);
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var data = _universService.GetUserUniversGroups(webSessionId, TNS.Classification.Universe.Dimension.product, MarketPageId, groupId);
+                var data = _universService.GetUserUniversGroups(webSessionId, dimension, groupId);
                 univers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
                 {
                     Value = m.Id.ToString(),
