@@ -14,5 +14,7 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public string SocialErrorMessage { get; set; }
 
         public string UnitErrorMessage { get; set; }
+
+        public string PeriodErrorMessage { get; set; }
     }
 }

@@ -144,22 +144,32 @@
             locale: 'fr',
             format: 'DD/MM/YYYY',
             useCurrent: false,
-            minDate: new Date('@Model.PeriodViewModel.StartYear'),
+            minDate: new Date('@Model.PeriodViewModel.StartYear 0:0:0:0'),
             maxDate: new Date('@Model.PeriodViewModel.EndYear')
         }).on('dp.change', function (e) {
             $('#begin-date-value').val($('#datetimepicker-begin').data('date'));
         });
+
+        $(".datepicker-years .picker-switch").removeAttr('title')
+            .on('click', function (e) {
+                e.stopPropagation();
+            });
 
         $('#datetimepicker-end').datetimepicker({
             inline: true,
             locale: 'fr',
             format: 'DD/MM/YYYY',
             useCurrent: false,
-            minDate: new Date('@Model.PeriodViewModel.StartYear'),
+            minDate: new Date('@Model.PeriodViewModel.StartYear 0:0:0:0'),
             maxDate: new Date('@Model.PeriodViewModel.EndYear')
         }).on('dp.change', function (e) {
             $('#end-date-value').val($('#datetimepicker-end').data('date'));
         });
+
+        $(".datepicker-years .picker-switch").removeAttr('title')
+            .on('click', function (e) {
+                e.stopPropagation();
+            });
 
         $('#year-sliding').selectpicker();
         $('#month-sliding').selectpicker();
@@ -243,27 +253,59 @@
             $('#previous-day').prop('checked', false);
         }
 
+        $('#Market').on('click', function (e) {
+            e.preventDefault();
+            
+            var verif = SlidingDateValidation("Index", true);
+
+            if(!verif)
+                CalendarValidation("Index");
+        });
+
+        $('#Media').on('click', function (e) {
+            e.preventDefault();
+
+            var verif = SlidingDateValidation("MediaSelection", true);
+
+            if (!verif)
+                CalendarValidation("MediaSelection");
+        });
+
+        $('#Results').on('click', function (e) {
+            e.preventDefault();
+            
+            var verif = SlidingDateValidation("Results", true);
+
+            if (!verif)
+                CalendarValidation("Results");
+        });
+
         $('#calendarSubmit').off("click");
         $('#calendarSubmit').on("click", function (event) {
             PreventDefault(event);
+            
+            CalendarValidation("Results");
+        });
+
+        function CalendarValidation(nextStepParam) {
+
             var startDate = $('#begin-date-value').val();
             var endDate = $('#end-date-value').val();
 
-            @*if (startDate == '' || endDate == '') {
-                BootstrapDialog.show({
-                    type: BootstrapDialog.TYPE_WARNING,
-                    title: 'Alerte',
-                    message: '@GestionWeb.GetWebWord(1119, Model.SiteLanguage)',
-                    buttons: [{
-                        label: 'OK'
-                    }]
-                });
-                return;
-            }*@
+            if (startDate == '' || endDate == '') {
+                    bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
+                return false;
+            }
+
+            if (startDate > endDate) {
+                    bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.PeriodErrorMessage)));
+                return false;
+            }
 
             var params = {
                 selectedStartDate: startDate,
-                selectedEndDate: endDate
+                selectedEndDate: endDate,
+                nextStep: nextStepParam
             };
 
             $.ajax({
@@ -281,15 +323,28 @@
                 }
             });
 
-        });
+            return true;
+        }
 
         $('#slidingDateSubmit').off("click");
         $('#slidingDateSubmit').on("click", function (event) {
             PreventDefault(event);
 
+            SlidingDateValidation("Results", false);
+        });
+
+        function SlidingDateValidation(nextStepParam, isBreadcrumb) {
+
+            if (selectedPeriod == -1 || selectedValue == -1) {
+                if (!isBreadcrumb)
+                    bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
+                return false;
+            }
+
             var params = {
                 selectedPeriod: selectedPeriod,
-                selectedValue: selectedValue
+                selectedValue: selectedValue,
+                nextStep: nextStepParam
             };
 
             $.ajax({
@@ -307,7 +362,8 @@
                 }
             });
 
-        });
+            return true;
+        }
 
         function PreventDefault(event) {
             if (event.preventDefault) {
@@ -318,5 +374,5 @@
             }
         }
     });
-                </script>
+</script>
             }

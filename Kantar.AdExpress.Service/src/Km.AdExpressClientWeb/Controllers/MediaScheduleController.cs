@@ -193,10 +193,16 @@ namespace Km.AdExpressClientWeb.Controllers
             model.NavigationBar = navBarModel;
             model.Presentation = LoadPresentationBar(result.SiteLanguage);
 
+            model.ErrorMessage = new Models.Shared.ErrorMessage
+            {
+                EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
+                PeriodErrorMessage = GestionWeb.GetWebWord(1855, result.SiteLanguage)
+            };
+
             return View(model);
         }
 
-        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate)
+        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -206,14 +212,14 @@ namespace Km.AdExpressClientWeb.Controllers
 
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
-                url = context.Action("Results", _controller);
+                url = context.Action(nextStep, _controller);
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 
             return jsonModel;
         }
 
-        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue)
+        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -222,7 +228,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue);
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
-                url = context.Action("Results", _controller);
+                url = context.Action(nextStep, _controller);
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 
