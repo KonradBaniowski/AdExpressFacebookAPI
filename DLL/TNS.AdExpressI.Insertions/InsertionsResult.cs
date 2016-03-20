@@ -1857,50 +1857,46 @@ namespace TNS.AdExpressI.Insertions
 
         public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
+            GridResult gridResult = new GridResult();
 
             ResultTable _data = GetInsertions(vehicle,fromDate,toDate,filters,universId,zoomDate);
 
-            int k;
-            GridResult gridResult = new GridResult();
-            object[,] gridData = new object[_data.LinesNumber, _data.ColumnsNumber];
-
             if (_data != null)
             {
+                _data.Sort(ResultTable.SortOrder.NONE,1);
+
+                int k;
+                object[,] gridData = new object[100, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
 
+                _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
                 if (_data.NewHeaders != null)
                 {
+                    columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+                    schemaFields.Add(new { name = "ID" });
+                    columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+                    schemaFields.Add(new { name = "PID" });
+
                     for (int j = 0; j < _data.NewHeaders.Root.Count ; j++)
                     {
-                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "100px" });
+                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
                         schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
                     }
                 }
 
                 try
                 {
-                    for (int i = 0; i < 200; i++)  //_data.LinesNumber
+                    for (int i = 0; i < 100; i++) //_data.LinesNumber
                     {
-                        for (k = 1; k < _data.ColumnsNumber - 1; k++)//_data.ColumnsNumber
+                        gridData[i, 0] = i; // Pour column ID
+                        gridData[i, 1] = _data.GetSortedParentIndex(i); // Pour column PID
+                        
+                        for (k = 1; k < _data.ColumnsNumber -1 ; k++)
                         {
-                            try {
-                                gridData[i, k - 1] = _data[i, k].ToString();
-                            }
-                            catch
-                            {
-                                gridData[i, k - 1] = string.Empty;
-                            }
-                            //if (k == _data.LevelColumn)
-                            //{
-                            //    gridData[i, k] += _data[i, k].ToString();
-                            //}
-                            //else
-                            //{
-                            //    gridData[i, k] += _data[i, k].ToString();
-                            //}
+                            gridData[i, k + 1] = _data[i, k].RenderString();
                         }
                     }
 
@@ -1922,49 +1918,6 @@ namespace TNS.AdExpressI.Insertions
                 gridResult.HasData = false;
                 return (gridResult);
             }
-
-
-            ////TODO : A Retirer (Pour Test) **********************************************
-            //object[,] gridDataTest = new object[30, 5];
-            ////object[,] gridDataTest = new object[30, 7];
-            //List<object> columnsTest = new List<object>();
-            //List<object> schemaFieldsTest = new List<object>();
-            //Random rnd = new Random();
-            ////columnsTest.Add(new { headerText = "PID", key = "PID", dataType = "string" });
-            ////schemaFieldsTest.Add(new { name = "PID" });
-            ////columnsTest.Add(new { headerText = "ID", key = "ID", dataType = "string" });
-            ////schemaFieldsTest.Add(new { name = "ID" });
-            //columnsTest.Add(new { headerText = "Spot", key = "Spot", dataType = "string" });
-            //schemaFieldsTest.Add(new { name = "Spot" });
-            //columnsTest.Add(new { headerText = "Annonceur", key = "Annonceur", dataType = "string" });
-            //schemaFieldsTest.Add(new { name = "Annonceur" });
-            //columnsTest.Add(new { headerText = "Produit", key = "Produit", dataType = "string" });
-            //schemaFieldsTest.Add(new { name = "Produit" });
-            //columnsTest.Add(new { headerText = "Version", key = "Version", dataType = "string" });
-            //schemaFieldsTest.Add(new { name = "Version" });
-            //columnsTest.Add(new { headerText = "Regie", key = "Regie", dataType = "string" });
-            //schemaFieldsTest.Add(new { name = "Régie" });
-            //for (int l = 0; l < 30; l++) {
-            //    for (int m = 0; m < 5; m++)
-            //    {
-            //        if (m < 2)
-            //            gridDataTest[l, m] = rnd.Next(1, 4).ToString();
-            //        else
-            //            gridDataTest[l, m] = "Test";
-            //    }
-            //    //for (int m = 0; m < 7; m++){
-            //    //    if (m < 2)
-            //    //        gridDataTest[l, m] = rnd.Next(1, 4).ToString();
-            //    //    else
-            //    //        gridDataTest[l, m] = "Test";
-            //    //}
-            //}
-            //gridResult.HasData = true;
-            //gridResult.Columns = columnsTest;
-            //gridResult.Schema = schemaFieldsTest;
-            //gridResult.ColumnsFixed = null;
-            //gridResult.Data = gridDataTest;
-            ///***************************************************************************/
 
 
 

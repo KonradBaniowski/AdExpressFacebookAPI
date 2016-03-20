@@ -2,6 +2,7 @@
 $(function () {
     
     var dimension = $('#Dimension').val();
+
     var params = {
         dimension: dimension
     };
@@ -37,8 +38,10 @@ $(function () {
 
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
-        if (keyword.length < 2)
+        if (keyword.length < 2) {
+            bootbox.alert($('#Labels_ErrorMessageLimitKeyword').val());
             return;
+        }
         var branchId = $('#branch').attr("data-branch");
         $(".universes").hide();
         $("#branch" + branchId).show();
@@ -85,7 +88,7 @@ $(function () {
     });
 
     //Déplacer un élement marché
-    $('.btn-green2.btn-circle').on('click', function () {
+    $('#move-item').on('click', function () {
         var levelSrc = $('.panel-marche .ui-selectee.ui-selected');
         console.log(levelSrc);
         if (levelSrc.length >= 1) {
@@ -93,24 +96,27 @@ $(function () {
             var tabSelected = $('ul > li[class="active"] > a').attr('data-tab');
             var universDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul');
             var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li')
+            var nbItemSrc = levelSrc.length;
+            var nbItemDst = levelDst.length;
+            if (nbItemDst + nbItemSrc > 1000)
+            {
+                bootbox.alert($('#Labels_ErrorMessageLimitUniverses').val());
+                return
+            }
             $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
             $.each(levelSrc, function (index, value) {
                 var item = $(value).clone();
                 var find = false;
                 $.each(levelDst, function (index, value) {
-
                     if (item.val() == $(value).val())
                         find = true;
                 });
                 if (!find) {
                     var buttonSupp = $('<button/>');
                     buttonSupp.addClass('pull-right');
-
                     var icon = $('<i/>');
                     icon.addClass('fa fa-times-circle black text-base');
-
                     buttonSupp.append(icon);
-
                     item.append(buttonSupp);
                     universDst.append(item);
                 }
@@ -118,13 +124,46 @@ $(function () {
         }
     });
 
-
     //VALIDER 
     $('#btnSubmitMarketSelection').on('click', function (e) {
         e.preventDefault();
+        var dis = this;
+        var nextUrl = $(this).attr('href').split('/').pop();
+        NextStep(nextUrl, dis)
+    });
 
+    //FIL D ARRIANE
+    $('#Media').on('click', function (e) {
+        e.preventDefault();
+        var dis = this;
+        var nextUrl = $(this).attr('href').split('/').pop();
+        NextStep(nextUrl, dis)
+    });
+
+    $('#Dates').on('click', function (e) {
+        e.preventDefault();
+        var dis = this;
+        var nextUrl = $(this).attr('href').split('/').pop();
+        NextStep(nextUrl, dis)
+    });
+
+    $('#Results').on('click', function (e) {
+        e.preventDefault();
+        var dis = this;
+        var nextUrl = $(this).attr('href').split('/').pop();
+        NextStep(nextUrl, dis)
+    });
+
+
+    function NextStep(nextUrl, dis)
+    {
+        var msg = validate();
+        if (msg) {
+            bootbox.alert(msg);
+            return;
+        }
         var things = [];
-        var spinner = new Spinner().spin(this);
+        var spinner = new Spinner().spin(dis);
         $('#btnSubmitMarketSelection').off('click');
         var trees = [];
         $.each($('.nav.nav-tabs > li a'), function (index, elem) {
@@ -157,7 +196,7 @@ $(function () {
         });
         var params = {
             trees: trees,
-            nextStep: "MediaSelection"
+            nextStep: nextUrl
         };
 
         $.ajax({
@@ -171,108 +210,16 @@ $(function () {
             },
             success: function (data) {
                 spinner.stop();
-                if (data.ErrorMessage != null && data.ErrorMessage !="") {
+                if (data.ErrorMessage != null && data.ErrorMessage != "") {
                     bootbox.alert(data.ErrorMessage);
                 }
-                if (data.RedirectUrl!=null && data.RedirectUrl !="") {
+                if (data.RedirectUrl != null && data.RedirectUrl != "") {
                     document.location = data.RedirectUrl;
                 }
             }
         });
-    });
+    }
 
-    $('#Market').on('click', function (e) {
-        e.preventDefault();
-        var msg = validate();
-        var isValide = !msg || msg.lentgh === 0;
-        if (!isValide) {//mycondition
-            alert(msg);
-        }
-        else {
-            var action = "SaveMediaSelection";
-            var params = {
-                selectedMedia: idList,
-                nextStep: "Index"
-            };
-
-            $.ajax({
-                url: '/MediaSchedule/' + action,
-                contentType: 'application/json',
-                type: 'POST',
-                datatype: 'JSON',
-                data: JSON.stringify(params),
-                error: function (xmlHttpRequest, errorText, thrownError) {
-
-                },
-                success: function (data) {
-                    if (data != null) {
-                        document.location = data.RedirectUrl;
-                    }
-                }
-            });
-        }
-    });
-    $('#Dates').on('click', function (e) {
-        e.preventDefault();
-        var msg = validate();
-        var isValide = !msg || msg.lentgh === 0;
-        if (!isValide) {//mycondition
-            alert(msg);
-        }
-        else {
-            var action = "SaveMediaSelection";
-            var params = {
-                selectedMedia: idList,
-                nextStep: "PeriodSelection"
-            };
-
-            $.ajax({
-                url: '/MediaSchedule/' + action,
-                contentType: 'application/json',
-                type: 'POST',
-                datatype: 'JSON',
-                data: JSON.stringify(params),
-                error: function (xmlHttpRequest, errorText, thrownError) {
-
-                },
-                success: function (data) {
-                    if (data != null) {
-                        document.location = data.RedirectUrl;
-                    }
-                }
-            });
-        }
-    });
-    $('#Results').on('click', function (e) {
-        e.preventDefault();
-        var msg = validate();
-        var isValide = !msg || msg.lentgh === 0;
-        if (!isValide) {//mycondition
-            alert(msg);
-        }
-        else {
-            action = "SaveMediaSelection";
-            params = {
-                selectedMedia: idList,
-                nextStep: "Results"
-            };
-            $.ajax({
-                url: '/MediaSchedule/' + action,
-                contentType: 'application/json',
-                type: 'POST',
-                datatype: 'JSON',
-
-                data: JSON.stringify(params),
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                },
-                success: function (data) {
-                    if (data != null) {
-                        document.location = data.RedirectUrl;
-                    }
-                }
-            });
-        }
-    });
 
     $('.btn.btn-save-univers').on('click', function (event) {
         event.preventDefault();
@@ -465,7 +412,6 @@ $(document).on('change', '#ddlGroup', function (event) {
                 $("#ddlUnivers").append('<option value="' + item.Value + '">' +
                      item.Text + '</option>');
             });
-            //$('#ddlUnivers').html(response);
         }
     });
 });
@@ -537,3 +483,15 @@ function ShowSelection(elem) {
     });
     alert('Selection : \n' + result);
 };
+
+
+function validate() {
+    var message = "";
+    //nbr éléments déplacer dans les univers inclus
+    var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
+    if (nbElemInclus < 1)
+    {
+        message = $('#Labels_ErrorMininumInclude').val();
+    }
+    return message;
+}

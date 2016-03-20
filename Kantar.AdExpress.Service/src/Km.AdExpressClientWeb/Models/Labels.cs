@@ -25,6 +25,8 @@ namespace Km.AdExpressClientWeb.Models
         public string ExcludedElements { get; set; }
         public string Results { get; set; }
         public string Refine { get; set; }
-
+        public string ErrorMessageLimitKeyword { get; set; }
+        public string ErrorMessageLimitUniverses { get; set; }
+        public string ErrorMininumInclude { get; set; }
     }
 }

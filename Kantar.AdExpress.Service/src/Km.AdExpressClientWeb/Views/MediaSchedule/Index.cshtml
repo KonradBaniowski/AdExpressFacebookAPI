@@ -20,6 +20,9 @@
     @*SEARCH*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10 ">
         @Html.HiddenFor(e => e.Dimension)
+        @Html.HiddenFor(e => e.Labels.ErrorMessageLimitKeyword)
+        @Html.HiddenFor(e => e.Labels.ErrorMessageLimitUniverses)
+        @Html.HiddenFor(e => e.Labels.ErrorMininumInclude)
         <div class="row bg-black-only">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading">
                 <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp; @Model.Labels.KeyWordLabel </h4>
@@ -70,7 +73,7 @@
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                 <div class="btn-marche text-center">
-                    <a class="btn btn-green2 btn-circle btn-xl">
+                    <a id="move-item" class="btn btn-green2 btn-circle btn-xl">
                         <i class="fa fa-arrow-right"></i>
                     </a>
                 </div>

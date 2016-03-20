@@ -284,7 +284,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            Options options = _optionService.GetOptions(idWebSession, GenericDetailLevel.ComponentProfile.media);
+            Options options = _optionService.GetOptions(idWebSession);
             return PartialView("_ResultOptions", options);
         }
 
@@ -556,7 +556,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
                 ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
                 Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
-                Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage)
+                Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
+                ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
+                ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
             };
             return result;
         }

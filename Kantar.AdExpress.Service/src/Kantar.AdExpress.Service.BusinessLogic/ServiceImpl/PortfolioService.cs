@@ -60,11 +60,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             universes.Add(universes.Count, adExpressUniverse);
             _customerSession.PrincipalMediaUniverses = universes;
 
-            ArrayList levelIds = new ArrayList();
-            levelIds.Add(11);
-            levelIds.Add(12);
-            levelIds.Add(10);            
-            _customerSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+            //ArrayList levelIds = new ArrayList();
+            //levelIds.Add(11);
+            //levelIds.Add(12);
+            //levelIds.Add(10);            
+            //_customerSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 
             _customerSession.Save();
 #endif

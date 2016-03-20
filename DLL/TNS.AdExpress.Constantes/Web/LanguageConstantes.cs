@@ -7,7 +7,6 @@ namespace TNS.AdExpress.Constantes.Web
 {
   public  class LanguageConstantes
     {
-
         #region CODES OF MARKET'S LABELS
         public const long MediaScheduleCode = 150;
         public const long MediaScheduleDescriptionCode = 2200;
@@ -39,6 +38,9 @@ namespace TNS.AdExpress.Constantes.Web
         public const long TreeLabelcode = 2278;
         public const long Cancel = 000;
         public const long Submit = 000;
+        public const long LimitKeyword = 3033;
+        public const long LimitUniverses = 2265;
+        public const long MininumInclude = 2299;
         #endregion
     }
 }
