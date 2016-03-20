@@ -1,4 +1,6 @@
 ﻿@model Km.AdExpressClientWeb.Models.MediaSchedule.ResultsViewModel
+@using TNS.AdExpress.Domain.Translation;
+
 @{
     ViewBag.Title = "Results";
 }
@@ -202,7 +204,7 @@
                 error: function (xmlHttpRequest, errorText, thrownError) {
                 },
                 success: function (data) {
-                    if (data != null) {
+                    if (data != null && data != "") {
                         dataTreeGrid = data.datagrid;
                         cols = data.columns;
                         colsFixed = data.columnsfixed;
@@ -220,6 +222,11 @@
                         });
 
                         ds.dataBind();
+                    }
+                    else {
+                        $("#gridLoader").addClass("hide");
+                        $("#grid").removeClass("hide");
+                        $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
                     }
                 }
             });

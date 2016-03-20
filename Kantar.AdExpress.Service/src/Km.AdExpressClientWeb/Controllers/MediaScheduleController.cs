@@ -261,6 +261,9 @@ namespace Km.AdExpressClientWeb.Controllers
             else
                 gridResult = _mediaSchedule.GetGridResult(idWebSession, zoomDate);
 
+            if (!gridResult.HasData)
+                return null;
+
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
             var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
