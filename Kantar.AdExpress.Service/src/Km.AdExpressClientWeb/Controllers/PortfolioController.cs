@@ -108,7 +108,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region model data
             var model = new MediaSelectionViewModel()
             {
-                Multiple = true,
+                Multiple = false,
                 Medias = result.Media,
                 IdMediasCommon = result.MediaCommon,
                 Branches = new List<Models.Shared.UniversBranch>(),
@@ -139,7 +139,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
+            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true, 1, 0);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {
