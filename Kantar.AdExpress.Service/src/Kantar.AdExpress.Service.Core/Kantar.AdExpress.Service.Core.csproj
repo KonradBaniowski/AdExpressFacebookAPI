@@ -97,11 +97,14 @@
     <Compile Include="Domain\ResultOptions\PeriodDetailOption.cs" />
     <Compile Include="Domain\ResultOptions\PurchaseModeFilter.cs" />
     <Compile Include="Domain\ResultOptions\PurchaseModeOption.cs" />
+    <Compile Include="Domain\ResultOptions\ResultTypeFilter.cs" />
+    <Compile Include="Domain\ResultOptions\ResultTypeOption.cs" />
     <Compile Include="Domain\ResultOptions\SelectControl.cs" />
     <Compile Include="Domain\ResultOptions\SelectItem.cs" />
     <Compile Include="Domain\ResultOptions\UnitFilter.cs" />
     <Compile Include="Domain\ResultOptions\UnitOption.cs" />
     <Compile Include="Domain\ResultOptions\UserFilter.cs" />
+    <Compile Include="Domain\SpotResponse.cs" />
     <Compile Include="Domain\SubPeriod.cs" />
     <Compile Include="Domain\SubPeriodItem.cs" />
     <Compile Include="Domain\UserUniversGroup.cs" />

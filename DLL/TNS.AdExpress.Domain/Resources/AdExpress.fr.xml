@@ -2287,8 +2287,7 @@
     <item mnemonic="w3030" type="System.String">il n'est pas possible de faire une étude plurimédia si vous sélectionnez le média Social, veuillez changer votre sélection</item>
     <!--export powerpoint-->
     <item mnemonic="w3031" type="System.String">Résultat PowerPoint</item>
-    <item mnemonic="w3032" type="System.String">PowerPoint Alerte Plan Média</item>
-    <item mnemonic="w3033" type="System.String">PowerPoint Alerte Plan Média</item>
+    <item mnemonic="w3032" type="System.String">PowerPoint Alerte Plan Média</item>   
     <item mnemonic="w3033" type="System.String">Veuillez saisir au moins 2 caractères pour effectuer votre recherche.</item>
   </items>
 </localization>

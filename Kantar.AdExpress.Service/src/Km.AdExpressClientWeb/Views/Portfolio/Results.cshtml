@@ -82,6 +82,10 @@
                 this.Unit = $('#unit').val();
             }
 
+            function ResultTypeFilter() {
+                this.ResultType = $('#resultType').val();
+            }
+
             function InsertionFilter() {
                 this.Insertion = $('#insertion').val();
             }
@@ -91,6 +95,7 @@
                 this.PeriodDetailFilter = new PeriodDetailFilter();
                 this.UnitFilter = new UnitFilter();
                 this.InsertionFilter = new InsertionFilter();
+                this.ResultTypeFilter = new ResultTypeFilter();
             }
 
             var userFilter = new UserFilter();
@@ -227,6 +232,13 @@
             $('#unit').on('change', function (e) {
                 userFilter.UnitFilter.Unit = $('#unit').val();
             });
+
+            $('#resultType').selectpicker();
+
+            $('#resultType').on('change', function (e) {
+                userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
+            });
+
 
             $('#insertion').selectpicker();
 

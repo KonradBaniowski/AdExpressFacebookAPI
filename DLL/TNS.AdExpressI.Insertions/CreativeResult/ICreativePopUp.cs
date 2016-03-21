@@ -12,6 +12,16 @@
         /// </summary>
         bool IsAudioFileFound { get; set; }
 
+        string PathDownloadingFile
+        {
+            get; set;
+        }
+
+        string PathReadingFile
+        {
+            get; set;
+        }   
+
         /// <summary>
         /// Identifiant Produit
         /// </summary>
@@ -38,5 +48,7 @@
         /// </summary>
         /// <returns>Html code</returns>
         string CreativePopUpRenderWithoutOptions(int width, int height);
+
+        void SetCreativePaths();
     }
 }

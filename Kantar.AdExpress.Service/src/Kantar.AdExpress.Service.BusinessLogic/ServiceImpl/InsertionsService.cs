@@ -51,7 +51,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 		/// </summary>
 		private List<GenericColumnItemInformation> _columnItemList = null;
         GenericColumnItemInformation _genericColumnItemInformation = null;
-       
+        /// <summary>
+        /// Indique si l'utilisateur à le droit de lire les créations
+        /// </summary>
+        private bool _hasCreationReadRights = false;
+
+        /// <summary>
+        /// Indique si l'utilisateur à le droit de télécharger les créations
+        /// </summary>
+        private bool _hasCreationDownloadRights = false;
+
 
         public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
         {
@@ -198,6 +207,48 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         }
 
+        public SpotResponse GetSpotPath(string idWebSession,string idVersion,long idVehicle)
+        {
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+
+            SpotResponse spotResponse = new SpotResponse
+            {
+                SiteLanguage = _customerWebSession.SiteLanguage
+            };
+
+            //L'utilisateur a accès au créations en lecture ?
+            var vehicleName =  VehiclesInformation.Get(idVehicle).Id;   
+            _hasCreationReadRights = _customerWebSession.CustomerLogin.ShowCreatives(vehicleName);
+
+            if (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DOWNLOAD_ACCESS_FLAG))
+            {
+                //L'utilisateur a accès aux créations en téléchargement
+                _hasCreationDownloadRights = true;
+            }
+
+
+            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativePopUp];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the creative pop up"));
+            var param = new object[8];
+           
+            param[0] = vehicleName;
+            param[1] = idVersion;
+            param[2] = string.Empty;
+            param[3] = _customerWebSession;          
+            param[4] = _hasCreationReadRights;
+            param[5] = _hasCreationDownloadRights;
+            var result = (TNS.AdExpressI.Insertions.CreativeResult.ICreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
+
+             result.SetCreativePaths();
+
+            spotResponse.PathDownloadingFile = result.PathDownloadingFile;
+            spotResponse.PathReadingFile = result.PathReadingFile;
+            return spotResponse;
+
+
+        }
 
         public List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId)
         {
