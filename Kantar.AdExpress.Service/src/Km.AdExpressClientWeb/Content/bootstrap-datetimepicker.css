@@ -381,3 +381,7 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+.datepicker-years .picker-switch {
+    cursor: default !important;
+    background: inherit !important;
+}
