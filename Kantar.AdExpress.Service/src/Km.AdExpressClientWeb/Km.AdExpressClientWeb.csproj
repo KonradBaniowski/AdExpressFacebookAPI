@@ -179,6 +179,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
     <Compile Include="Controllers\PortfolioExportController.cs" />
+    <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Models\Insertions\InsertionViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
@@ -1492,6 +1493,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\PresentAbsent\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
