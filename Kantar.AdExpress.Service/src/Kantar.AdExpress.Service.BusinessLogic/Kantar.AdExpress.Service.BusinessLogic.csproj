@@ -110,6 +110,10 @@
       <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
       <Name>TNS.AdExpressI.Insertions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.LostWon\TNS.AdExpressI.LostWon.csproj">
+      <Project>{ead29f53-3152-4356-b965-f34299402360}</Project>
+      <Name>TNS.AdExpressI.LostWon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23e7e071-0fb0-43d4-b19d-b964ec3082f6}</Project>
       <Name>TNS.AdExpressI.MediaSchedule</Name>
