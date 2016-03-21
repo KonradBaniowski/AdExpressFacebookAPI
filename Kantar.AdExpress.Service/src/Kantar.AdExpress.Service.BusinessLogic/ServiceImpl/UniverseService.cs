@@ -90,7 +90,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             nbItems = result.Count;
             return result.Take(1000).ToList();
         }
-        public UniversBranchResult GetBranches(string webSessionId, Dimension dimension,  bool selectionPage = true)
+        public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage = true, int MaxIncludeNbr = 2, int MaxExcludeNbr = 1)
         {
             var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
 
