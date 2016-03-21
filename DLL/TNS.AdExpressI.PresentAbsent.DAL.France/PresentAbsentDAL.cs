@@ -7,7 +7,7 @@ using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.PresentAbsentDAL.Exceptions;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
-using FctWeb = TNS.AdExpress.Web.Functions;
+using FctWeb = TNS.AdExpress.Web.Core.Utilities;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 
