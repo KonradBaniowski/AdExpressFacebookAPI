@@ -71,8 +71,7 @@
                 this.CustomDetailValue = -1;
                 this.L1DetailValue = -1;
                 this.L2DetailValue = -1;
-                this.L3DetailValue = -1;
-                this.L4DetailValue = -1;
+                this.L3DetailValue = -1;             
             }
 
             function PeriodDetailFilter() {
@@ -81,6 +80,10 @@
 
             function UnitFilter() {
                 this.Unit = $('#unit').val();
+            }
+
+            function ResultTypeFilter() {
+                this.ResultType = $('#resultType').val();
             }
 
             function InsertionFilter() {
@@ -92,6 +95,7 @@
                 this.PeriodDetailFilter = new PeriodDetailFilter();
                 this.UnitFilter = new UnitFilter();
                 this.InsertionFilter = new InsertionFilter();
+                this.ResultTypeFilter = new ResultTypeFilter();
             }
 
             var userFilter = new UserFilter();
@@ -229,6 +233,13 @@
                 userFilter.UnitFilter.Unit = $('#unit').val();
             });
 
+            $('#resultType').selectpicker();
+
+            $('#resultType').on('change', function (e) {
+                userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
+            });
+
+
             $('#insertion').selectpicker();
 
             $('#insertion').on('change', function (e) {
@@ -239,15 +250,13 @@
             $('#customDetail').selectpicker();
             $('#l1Detail').selectpicker();
             $('#l2Detail').selectpicker();
-            $('#l3Detail').selectpicker();
-            $('#l4Detail').selectpicker();
+            $('#l3Detail').selectpicker();         
 
             $('#defaultDetail').on('change', function (e) {
                 $('#customDetail').selectpicker('val', '-1');
                 $('#l1Detail').selectpicker('val', '-1');
                 $('#l2Detail').selectpicker('val', '-1');
-                $('#l3Detail').selectpicker('val', '-1');
-                $('#l4Detail').selectpicker('val', '-1');
+                $('#l3Detail').selectpicker('val', '-1');            
                 InitGenericDetailLevelFilter();
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
             });
@@ -256,8 +265,7 @@
                 $('#defaultDetail').selectpicker('val', '-1');
                 $('#l1Detail').selectpicker('val', '-1');
                 $('#l2Detail').selectpicker('val', '-1');
-                $('#l3Detail').selectpicker('val', '-1');
-                $('#l4Detail').selectpicker('val', '-1');
+                $('#l3Detail').selectpicker('val', '-1');              
                 InitGenericDetailLevelFilter();
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
             });
@@ -286,21 +294,13 @@
                 userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
             });
 
-            $('#l4Detail').on('change', function (e) {
-                $('#customDetail').selectpicker('val', '-1');
-                $('#defaultDetail').selectpicker('val', '-1');
-                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L4DetailValue = $('#l4Detail').val();
-            });
 
             function InitGenericDetailLevelFilter() {
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L3DetailValue = -1;               
             }
 
         });

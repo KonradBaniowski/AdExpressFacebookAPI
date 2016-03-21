@@ -21,5 +21,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public FormatFilter FormatFilter { get; set; }
 
         public PurchaseModeFilter PurchaseModeFilter { get; set; }
+
+        public ResultTypeFilter ResultTypeFilter { get; set; }
     }
 }

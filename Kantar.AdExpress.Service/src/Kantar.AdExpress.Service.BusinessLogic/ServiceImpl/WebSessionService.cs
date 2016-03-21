@@ -173,7 +173,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 MediaScheduleStep = MediaScheduleStep.Market
             };
             var _webSession = (WebSession)WebSession.Load(webSessionId);
-            if (trees.Any())
+           
+            if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any())
             {
                 AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
                 try
@@ -227,6 +228,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
                 }
+            }
+            else
+            {
+                response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
             }
             return response;
         }

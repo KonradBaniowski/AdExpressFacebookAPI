@@ -2212,7 +2212,7 @@
     <item mnemonic="w2971" type="System.String">Désolé mais votre navigateur ne supporte pas les iframes.</item>
     <item mnemonic="w2972" type="System.String">!</item>
     <item mnemonic="w2973" type="System.String">!</item>
-    <item mnemonic="w2974" type="System.String">!</item>    
+    <item mnemonic="w2974" type="System.String">!</item>
     <!--Add text for module Rolex-->
     <item mnemonic="w2975" type="System.String">Visibilité Rolex</item>
     <item mnemonic="w2976" type="System.String"></item>
@@ -2227,7 +2227,7 @@
     <item mnemonic="w2985" type="System.String">AdExpress - Fichier PDF Fiches Visibilité Rolex généré</item>
     <item mnemonic="w2986" type="System.String">AdExpress - Fichier PDF Visibilité Rolex généré</item>
     <item mnemonic="w2987" type="System.String">Sites sans visibilité</item>
-    <item mnemonic="w2988" type="System.String">!</item>    
+    <item mnemonic="w2988" type="System.String">!</item>
     <!--Ajout nouveau media Courrier -->
     <item mnemonic="w2989" type="System.String">Courrier créations</item>
     <item mnemonic="w2990" type="System.String">Veuillez changer votre sélection. Votre univers produit n'est pas disponible sur votre sélection de médias.</item>
@@ -2268,7 +2268,7 @@
     <item mnemonic="w3016" type="System.String">Mode de vente</item>
     <item mnemonic="w3017" type="System.String">Modes de vente</item>
     <item mnemonic="w3018" type="System.String">L&amp;rsquo;offre Nationale &amp;laquo; Les Ind&amp;eacute;s Radios &amp;raquo; recouvre plus de 120 radios locales et r&amp;eacute;gionales. L&amp;rsquo;horaire de diffusion d&amp;rsquo;un spot est communiqu&amp;eacute;  &amp;agrave; titre indicatif sur la base de l&amp;rsquo;horaire de diffusion constat&amp;eacute; sur l&amp;rsquo;une des radios pig&amp;eacute;es et ne refl&amp;egrave;te donc pas l&amp;rsquo;horaire de diffusion r&amp;eacute;el sur l&amp;rsquo;ensemble des stations composant l&amp;rsquo;offre.</item>
-  <!--PLURI MEDIA HORS mmS -->  
+    <!--PLURI MEDIA HORS mmS -->
     <item mnemonic="w3019" type="System.String">Plurimédia hors Internet Display</item>
     <item mnemonic="w3020" type="System.String">PLURIMEDIA HORS INTERNET DISPLAY</item>
     <!--Ajout élément video-->
@@ -2278,12 +2278,16 @@
     <item mnemonic="w3024" type="System.String">Format MP3</item>
     <!--dates mis à jour-->
     <item mnemonic="w3025" type="System.String">5 à 6&lt;br&gt;semaines&lt;br&gt;après&lt;br&gt;la fin&lt;br&gt;du mois&lt;br&gt;précédent</item>
-<!--Filtre Format-->
+    <!--Filtre Format-->
     <item mnemonic="w3026" type="System.String">Format Internet Display</item>
     <item mnemonic="w3027" type="System.String">Format Internet Evaliant</item>
     <item mnemonic="w3028" type="System.String">INTERNET DISPLAY</item>
     <!--Media Social-->
     <item mnemonic="w3029" type="System.String">Nombre de posts</item>
     <item mnemonic="w3030" type="System.String">il n'est pas possible de faire une étude plurimédia si vous sélectionnez le média Social, veuillez changer votre sélection</item>
+    <!--export powerpoint-->
+    <item mnemonic="w3031" type="System.String">Résultat PowerPoint</item>
+    <item mnemonic="w3032" type="System.String">PowerPoint Alerte Plan Média</item>   
+    <item mnemonic="w3033" type="System.String">Veuillez saisir au moins 2 caractères pour effectuer votre recherche.</item>
   </items>
 </localization>

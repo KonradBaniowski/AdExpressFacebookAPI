@@ -1859,19 +1859,20 @@ namespace TNS.AdExpressI.Insertions
         {
             GridResult gridResult = new GridResult();
 
-            ResultTable _data = GetInsertions(vehicle,fromDate,toDate,filters,universId,zoomDate);
+            ResultTable _data = GetInsertions(vehicle, fromDate, toDate, filters, universId, zoomDate);
 
             if (_data != null)
             {
-                _data.Sort(ResultTable.SortOrder.NONE,1);
+                _data.Sort(ResultTable.SortOrder.NONE, 1);
 
                 int k;
-                object[,] gridData = new object[100, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+                object[,] gridData = new object[_data.LinesNumber, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
 
                 _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+                int creativeIndexInResultTable = -1;
 
                 if (_data.NewHeaders != null)
                 {
@@ -1880,23 +1881,38 @@ namespace TNS.AdExpressI.Insertions
                     columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
                     schemaFields.Add(new { name = "PID" });
 
-                    for (int j = 0; j < _data.NewHeaders.Root.Count ; j++)
+                    for (int j = 0; j < _data.NewHeaders.Root.Count; j++)
                     {
-                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
-                        schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
+
+                        //if (_data[j, 1] is CellImageLink)
+                        //{
+                        //    creativeIndexInResultTable = _data.NewHeaders.Root[j].IndexInResultTable;
+
+                        //    columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
+                        //    schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
+                        //}
+                        //else {
+                            columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
+                            schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
+                        //}
                     }
                 }
 
                 try
                 {
-                    for (int i = 0; i < 100; i++) //_data.LinesNumber
+                    for (int i = 0; i < _data.LinesNumber; i++) //_data.LinesNumber
                     {
                         gridData[i, 0] = i; // Pour column ID
                         gridData[i, 1] = _data.GetSortedParentIndex(i); // Pour column PID
-                        
-                        for (k = 1; k < _data.ColumnsNumber -1 ; k++)
+
+                        for (k = 1; k < _data.ColumnsNumber - 1; k++)
                         {
-                            gridData[i, k + 1] = _data[i, k].RenderString();
+                            if (_data[i, k] !=null && _data[i, k] is CellImageLink)
+                            {
+                                gridData[i, k + 1] = "C_L";
+                            }
+                            else
+                                gridData[i, k + 1] = _data[i, k].RenderString();
                         }
                     }
 

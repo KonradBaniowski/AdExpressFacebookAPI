@@ -11,7 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IOptionService
     {
-        Options GetOptions(string idWebSession, WebConstantes.GenericDetailLevel.ComponentProfile componentProfile);
+        Options GetOptions(string idWebSession);
         void SetOptions(string idWebSession, UserFilter userFilter);
     }
 }

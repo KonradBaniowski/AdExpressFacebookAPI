@@ -38,7 +38,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long TreeLabelcode = 2278;
         public const long Cancel = 000;
         public const long Submit = 000;
-        public const long LimitKeyword = 1370;
+        public const long LimitKeyword = 3033;
         public const long LimitUniverses = 2265;
         public const long MininumInclude = 2299;
         #endregion
