@@ -95,6 +95,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.PresentAbsen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.PresentAbsent.Default", "..\DLL\TNS.AdExpressI.PresentAbsent.Default\TNS.AdExpressI.PresentAbsent.Default.csproj", "{F19E8179-65DB-436B-A8BE-5F176DA73745}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.LostWon.DAL", "..\DLL\TNS.AdExpressI.LostWon.DAL\TNS.AdExpressI.LostWon.DAL.csproj", "{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.LostWon.DAL.Default", "..\DLL\TNS.AdExpressI.LostWon.DAL.Default\TNS.AdExpressI.LostWon.DAL.Default.csproj", "{C4CFB08F-FD66-4F12-8552-806651AD9A18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -330,6 +334,18 @@ Global
 		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4CFB08F-FD66-4F12-8552-806651AD9A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4CFB08F-FD66-4F12-8552-806651AD9A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4CFB08F-FD66-4F12-8552-806651AD9A18}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{C4CFB08F-FD66-4F12-8552-806651AD9A18}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{C4CFB08F-FD66-4F12-8552-806651AD9A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4CFB08F-FD66-4F12-8552-806651AD9A18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -380,5 +396,7 @@ Global
 		{F7B30ACB-D572-4EBE-B191-1B76D553B008} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{459F24EC-384D-404F-A6D2-F3B76C288A57} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 		{F19E8179-65DB-436B-A8BE-5F176DA73745} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
+		{1A942442-9ACD-4B02-8B2B-D0B85E3554C0} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
+		{C4CFB08F-FD66-4F12-8552-806651AD9A18} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 	EndGlobalSection
 EndGlobal
