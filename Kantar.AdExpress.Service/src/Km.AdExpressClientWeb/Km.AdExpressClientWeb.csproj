@@ -179,6 +179,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
     <Compile Include="Controllers\LostWonController.cs" />
+    <Compile Include="Controllers\LostWonExportController.cs" />
     <Compile Include="Controllers\PortfolioExportController.cs" />
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Models\Insertions\InsertionViewModel.cs" />
@@ -1494,6 +1495,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\LostWonExport\" />
     <Folder Include="Views\LostWon\" />
     <Folder Include="Views\PresentAbsent\" />
     <Folder Include="Views\Universe\" />
