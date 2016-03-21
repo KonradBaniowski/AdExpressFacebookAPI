@@ -1493,13 +1493,16 @@
     <Content Include="Views\PortfolioExport\Index.cshtml" />
     <Content Include="Views\PortfolioExport\ResultBrut.cshtml" />
     <Content Include="Views\MediaSchedule\_SubPeriodSelection.cshtml" />
+    <Content Include="Views\PresentAbsent\Index.cshtml" />
+    <Content Include="Views\PresentAbsent\Results.cshtml" />
+    <Content Include="Views\PresentAbsent\MediaSelection.cshtml" />
+    <Content Include="Views\PresentAbsent\_ResultOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\LostWonExport\" />
     <Folder Include="Views\LostWon\" />
     <Folder Include="Views\PresentAbsentExport\" />
-    <Folder Include="Views\PresentAbsent\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
