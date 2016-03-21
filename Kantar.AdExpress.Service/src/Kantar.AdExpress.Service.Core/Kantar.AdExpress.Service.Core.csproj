@@ -54,9 +54,11 @@
     <Compile Include="BusinessService\IApplicationUserManager.cs" />
     <Compile Include="BusinessService\IInsertionsService.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
+    <Compile Include="BusinessService\ILostWonService.cs" />
     <Compile Include="BusinessService\IMediaScheduleService.cs" />
     <Compile Include="BusinessService\IOptionService.cs" />
     <Compile Include="BusinessService\IPortfolioService.cs" />
+    <Compile Include="BusinessService\IPresentAbsentService.cs" />
     <Compile Include="BusinessService\ISubPeriodService.cs" />
     <Compile Include="BusinessService\IUniverseService.cs" />
     <Compile Include="BusinessService\IMediaService.cs" />
