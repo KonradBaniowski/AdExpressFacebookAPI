@@ -91,6 +91,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.PresentAbsen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.PresentAbsent.DAL.France", "..\DLL\TNS.AdExpressI.PresentAbsent.DAL.France\TNS.AdExpressI.PresentAbsent.DAL.France.csproj", "{F7B30ACB-D572-4EBE-B191-1B76D553B008}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.PresentAbsent", "..\DLL\TNS.AdExpressI.PresentAbsent\TNS.AdExpressI.PresentAbsent.csproj", "{459F24EC-384D-404F-A6D2-F3B76C288A57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.PresentAbsent.Default", "..\DLL\TNS.AdExpressI.PresentAbsent.Default\TNS.AdExpressI.PresentAbsent.Default.csproj", "{F19E8179-65DB-436B-A8BE-5F176DA73745}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -314,6 +318,18 @@ Global
 		{F7B30ACB-D572-4EBE-B191-1B76D553B008}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{F7B30ACB-D572-4EBE-B191-1B76D553B008}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7B30ACB-D572-4EBE-B191-1B76D553B008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{459F24EC-384D-404F-A6D2-F3B76C288A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{459F24EC-384D-404F-A6D2-F3B76C288A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{459F24EC-384D-404F-A6D2-F3B76C288A57}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{459F24EC-384D-404F-A6D2-F3B76C288A57}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{459F24EC-384D-404F-A6D2-F3B76C288A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{459F24EC-384D-404F-A6D2-F3B76C288A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F19E8179-65DB-436B-A8BE-5F176DA73745}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -362,5 +378,7 @@ Global
 		{638BEFDD-6370-4AEA-8943-DD6961FE3FDE} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 		{234DC672-6124-4101-A1BC-2F8C9D75B50F} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{F7B30ACB-D572-4EBE-B191-1B76D553B008} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
+		{459F24EC-384D-404F-A6D2-F3B76C288A57} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
+		{F19E8179-65DB-436B-A8BE-5F176DA73745} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 	EndGlobalSection
 EndGlobal
