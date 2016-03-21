@@ -95,6 +95,20 @@
         </div>
     </center>
 
+    <!-- Modal HTML -->
+    <div id="creativeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Spot Vidéo</h4>
+                </div>
+                <div class="modal-body">
+                    <iframe id="creativeStream" width="100%" height="100%" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -104,9 +118,11 @@
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 
 
-    @*<script id="colSpotTmpl" type="text/template">
-        <i class="glyphicon glyphicon-music text-5x"></i>
-    </script>*@
+    <script id="colSpotTmpl" type="text/template">
+       @* <i class="glyphicon glyphicon-music text-5x"></i>*@
+       {{if ${Spot} != 'C_L' }} ${Spot} {{else}}
+<a href='#creativeModal' data-toggle='modal' data-creative='http://adexpress.kantarmedia.fr/SpotsRadio/2016/MP3/2${Version}.MP3?autoplay=1'><i class='glyphicon glyphicon-music text-5x'></i></a> {{/if}}
+    </script>
 
 
     <script>
@@ -225,7 +241,10 @@
 
                             for (var i = 0; i < data.columns.length; i++) {
                                 if (data.columns[i].headerText == "Spot")
-                                    data.columns[i].template = "{{if ${Spot} != '' }} ${Spot} {{else}} <i class=\"glyphicon glyphicon-music text-5x\"></i> {{/if}}"
+                                {
+                                    data.columns[i].template = "{{if ${Spot} != 'C_L' }} ${Spot} {{else}} <a href='#creativeModal' data-toggle='modal' data-creative='http://adexpress.kantarmedia.fr/SpotsRadio/2016/MP3/2${Version}.MP3?autoplay=1'><i class='glyphicon glyphicon-music text-5x'  ></i></a> {{/if}}"
+
+                                }
                             }
 
                             cols = data.columns
@@ -293,7 +312,55 @@
 
 
             CallGetPresentVehicles();
+
+            AutoPlayCreativeModal();
         });
 
+        function AutoPlayCreativeModal() {
+
+
+            /* Remove iframe src attribute on page load to
+            prevent autoplay in background */
+            $("#creativeStream").attr('src', '');
+
+            /* Assign the initially stored url back to the iframe src
+            attribute when modal is displayed */
+            $("#creativeModal").on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var idCreative = button.data('creative'); // Extract info from data-* attributes
+                //alert(url);
+                var parameters = {                   
+                    idVersion: idCreative,
+                    idVehicle: $('#idVehicle').val()
+                };
+                $.ajax({
+                      url: '@Url.Action("GetCreativePaths", "Insertions")',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    datatype: 'JSON',
+                    data: parameters,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                        alert("Erreur lors de la recuperation de url de la version");
+                    },
+                    success: function (response) {
+                        if (response != null) {
+
+                            var url = response.PathReadingFile;
+                            var urlDowload = response.PathReadingFile;
+                            if (url)
+                            $("#creativeStream").attr('src', url);
+                        }
+                    }
+
+                });
+              
+            });
+
+            /* Assign empty url value to the iframe src attribute when
+            modal hide, which stop the video playing */
+            $("#creativeModal").on('hide.bs.modal', function () {
+                $("#creativeStream").attr('src', '');
+            });
+        }
     </script>
 }

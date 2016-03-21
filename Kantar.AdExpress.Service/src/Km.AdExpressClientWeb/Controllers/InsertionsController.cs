@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class InsertionsController : Controller
     {
         private IInsertionsService _insertionsService;
@@ -84,6 +85,20 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel = Json(jsonData, JsonRequestBehavior.AllowGet);
 
             return jsonModel;
+        }
+
+        public JsonResult GetCreativePaths(string idVersion, long idVehicle )
+        {
+          
+
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var reponse = _insertionsService.GetSpotPath(idWebSession, idVersion, idVehicle);
+          
+            return Json(new { PathReadingFile = reponse.PathReadingFile, PathDownloadingFile = reponse.PathDownloadingFile });
+
+           
         }
 
 

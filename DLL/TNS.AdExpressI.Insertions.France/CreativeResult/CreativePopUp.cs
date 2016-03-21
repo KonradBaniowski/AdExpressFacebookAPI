@@ -26,6 +26,22 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
         {
         }
 
+        public CreativePopUp(Vehicles.names vehicle, string idSlogan, string file,
+          WebSession webSession, bool hasCreationReadRights, bool hasCreationDownloadRights) : base(vehicle, idSlogan, file,
+           webSession, hasCreationReadRights, hasCreationDownloadRights)
+        {
+
+        }
+
+        /// <summary>
+        /// Set creative paths
+        /// </summary>
+        public override void SetCreativePaths()
+        {
+            bool flag = false;
+            GetCreativePathes(ref flag, ref flag);
+        }
+
         public override string CreativePopUpRender()
         {
             bool flag = false;

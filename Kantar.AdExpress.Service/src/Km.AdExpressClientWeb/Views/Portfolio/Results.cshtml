@@ -1,4 +1,5 @@
 ﻿@model Km.AdExpressClientWeb.Models.Portfolio.ResultsViewModel
+@using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "Results";
     var _controller = Model.NavigationBar.First().Controller;
@@ -44,7 +45,9 @@
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+
     <script>
+        //{columnKey: 'Address', allowHiding: false, hidden: true}
         $(document).ready(function () {
 
             if (typeof jQuery === "undefined") { throw new Error("jQuery") }
@@ -65,13 +68,23 @@
             var cols;
             var colsFixed;
             var needFixedColumns = false;
+            var zoomDate = '';
+            var previousSubPeriodLabel;
+
+            function GetItems(idItems) {
+                var items = '';
+                for (var i in idItems) {
+                    items += idItems[i] + ",";
+                }
+                return items.substring(0, items.length - 1);
+            }
 
             function GenericDetailLevelFilter() {
                 this.DefaultDetailValue = $('#defaultDetail').val();
                 this.CustomDetailValue = -1;
                 this.L1DetailValue = -1;
                 this.L2DetailValue = -1;
-                this.L3DetailValue = -1;             
+                this.L3DetailValue = -1;
             }
 
             function PeriodDetailFilter() {
@@ -82,8 +95,24 @@
                 this.Unit = $('#unit').val();
             }
 
+            function ResultTypeFilter() {
+                this.ResultType = $('#resultType').val();
+            }
+
             function InsertionFilter() {
                 this.Insertion = $('#insertion').val();
+            }
+
+            function AutoPromoFilter() {
+                this.AutoPromo = $('#autoPromo').val();
+            }
+
+            function FormatFilter() {
+                this.Formats = GetItems($('#format').val());
+            }
+
+            function PurchaseModeFilter() {
+                this.PurchaseModes = GetItems($('#purchaseMode').val());
             }
 
             function UserFilter() {
@@ -91,6 +120,10 @@
                 this.PeriodDetailFilter = new PeriodDetailFilter();
                 this.UnitFilter = new UnitFilter();
                 this.InsertionFilter = new InsertionFilter();
+                this.AutoPromoFilter = new AutoPromoFilter();
+                this.FormatFilter = new FormatFilter();
+                this.PurchaseModeFilter = new PurchaseModeFilter();
+                this.ResultTypeFilter = new ResultTypeFilter();
             }
 
             var userFilter = new UserFilter();
@@ -147,6 +180,7 @@
                             ]
                         })
                     }
+
                 } else {
                     alert(error);
                 }
@@ -162,7 +196,7 @@
                     error: function (xmlHttpRequest, errorText, thrownError) {
                     },
                     success: function (data) {
-                        if (data != null) {
+                        if (data != null && data != "") {
                             dataTreeGrid = data.datagrid;
                             cols = data.columns;
                             colsFixed = data.columnsfixed;
@@ -181,9 +215,15 @@
 
                             ds.dataBind();
                         }
+                        else {
+                            $("#gridLoader").addClass("hide");
+                            $("#grid").removeClass("hide");
+                            $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
+                        }
                     }
                 });
             }
+
 
             function CallSetOptions() {
                 $.ajax({
@@ -211,7 +251,7 @@
             $('#btn-export').on('click', function (e) {
                 window.open('@Url.Action("Index", _exportController)', "_blank");
             });
-
+        
             $('#btn-brut').on('click', function (e) {
                 window.open('@Url.Action("ResultBrut", _exportController)', "_blank");
             });
@@ -228,23 +268,49 @@
                 userFilter.UnitFilter.Unit = $('#unit').val();
             });
 
+            $('#resultType').selectpicker();
+
+            $('#resultType').on('change', function (e) {
+                userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
+            });
+
             $('#insertion').selectpicker();
 
             $('#insertion').on('change', function (e) {
                 userFilter.InsertionFilter.Insertion = $('#insertion').val();
             });
 
+            $('#autoPromo').selectpicker();
+
+            $('#autoPromo').on('change', function (e) {
+                userFilter.AutoPromoFilter.AutoPromo = $('#autoPromo').val();
+            });
+
+            $('#format').selectpicker();
+
+            $('#format').on('change', function (e) {
+                userFilter.FormatFilter.Formats = GetItems($('#format').val());
+            });
+
+            $('#purchaseMode').selectpicker();
+
+            $('#purchaseMode').on('change', function (e) {
+                userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
+            });
+
             $('#defaultDetail').selectpicker();
             $('#customDetail').selectpicker();
             $('#l1Detail').selectpicker();
             $('#l2Detail').selectpicker();
-            $('#l3Detail').selectpicker();         
+            $('#l3Detail').selectpicker();
+         
 
             $('#defaultDetail').on('change', function (e) {
                 $('#customDetail').selectpicker('val', '-1');
                 $('#l1Detail').selectpicker('val', '-1');
                 $('#l2Detail').selectpicker('val', '-1');
-                $('#l3Detail').selectpicker('val', '-1');            
+                $('#l3Detail').selectpicker('val', '-1');
+              
                 InitGenericDetailLevelFilter();
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
             });
@@ -253,10 +319,15 @@
                 $('#defaultDetail').selectpicker('val', '-1');
                 $('#l1Detail').selectpicker('val', '-1');
                 $('#l2Detail').selectpicker('val', '-1');
-                $('#l3Detail').selectpicker('val', '-1');              
+                $('#l3Detail').selectpicker('val', '-1');             
                 InitGenericDetailLevelFilter();
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
             });
+
+            function ResetLnLevel(lx, ly) {
+                if ($(lx).val() == $(ly).val())
+                    $(ly).selectpicker('val', '-1');
+            }
 
             $('#l1Detail').on('change', function (e) {
                 $('#customDetail').selectpicker('val', '-1');
@@ -264,6 +335,8 @@
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+                ResetLnLevel("#l1Detail", "#l2Detail");
+                ResetLnLevel("#l1Detail", "#l3Detail");              
             });
 
             $('#l2Detail').on('change', function (e) {
@@ -272,6 +345,8 @@
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+                ResetLnLevel("#l2Detail", "#l1Detail");
+                ResetLnLevel("#l2Detail", "#l3Detail");               
             });
 
             $('#l3Detail').on('change', function (e) {
@@ -280,9 +355,11 @@
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
+                ResetLnLevel("#l3Detail", "#l1Detail");
+                ResetLnLevel("#l3Detail", "#l2Detail");               
             });
 
-
+           
             function InitGenericDetailLevelFilter() {
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
@@ -292,5 +369,7 @@
             }
 
         });
+
+
     </script>
 }
