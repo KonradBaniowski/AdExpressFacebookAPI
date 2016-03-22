@@ -18,7 +18,7 @@ using CstCustom = TNS.AdExpress.Constantes.Customer;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
-using FctWeb = TNS.AdExpress.Web.Functions;
+using FctWeb = TNS.AdExpress.Web.Core.Utilities;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using System.Collections.Generic;
 using TNS.AdExpress.Classification;
@@ -28,7 +28,7 @@ using TNS.AdExpressI.DynamicReport.DAL.Exceptions;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Web.Exceptions;
+
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;

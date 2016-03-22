@@ -28,5 +28,8 @@ namespace Km.AdExpressClientWeb.Models
         public string ErrorMessageLimitKeyword { get; set; }
         public string ErrorMessageLimitUniverses { get; set; }
         public string ErrorMininumInclude { get; set; }
+        public string ErrorMediaSelected { get; set; }
+        public string ErrorNoSupport { get; set; }
+        public string ErrorItemExceeded { get; set; }
     }
 }

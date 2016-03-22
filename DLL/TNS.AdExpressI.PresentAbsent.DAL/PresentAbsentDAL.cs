@@ -20,7 +20,6 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Exceptions;
 
 using TNS.AdExpressI.PresentAbsentDAL.Exceptions;
 
@@ -31,7 +30,7 @@ using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstWeb = TNS.AdExpress.Constantes.Web;
-using FctWeb = TNS.AdExpress.Web.Functions;
+using FctWeb = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;

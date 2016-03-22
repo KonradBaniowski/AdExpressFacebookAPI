@@ -13,5 +13,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         
         InsertionResponse GetInsertionsGridResult(string idWebSession,string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle);
         List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId);
+
+        SpotResponse GetSpotPath(string idWebSession, string idVersion, long idVehicle);
     }
 }

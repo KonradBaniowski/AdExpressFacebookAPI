@@ -21,7 +21,7 @@ using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
-using FctWeb = TNS.AdExpress.Web.Functions;
+using FctWeb = TNS.AdExpress.Web.Core.Utilities;
 using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 
 using TNS.AdExpress;

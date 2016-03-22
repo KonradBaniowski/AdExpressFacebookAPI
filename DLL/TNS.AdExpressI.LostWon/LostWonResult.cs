@@ -30,7 +30,7 @@ using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
-using FctWeb = TNS.AdExpress.Web.Functions;
+using FctWeb = TNS.AdExpress.Web.Core.Utilities;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.AdExpressI.LostWon.Exceptions;

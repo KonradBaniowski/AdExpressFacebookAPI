@@ -30,6 +30,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
+    <div class="col-lg-3 col-md-3 col-sm-3">
         @Html.Action("ResultOptions", "MediaSchedule")
     </div>
 </div>
@@ -101,6 +102,7 @@
                 this.Unit = $('#unit').val();
             }
 
+       
             function InsertionFilter() {
                 this.Insertion = $('#insertion').val();
             }
@@ -158,6 +160,46 @@
                                     fixingDirection: "left",
                                     columnSettings: colsFixed
                                 }
+                            //,{
+                            //    name: "Responsive",
+                            //    enableVerticalRendering: true,
+                            //    columnSettings: [
+                            //        {
+                            //            columnKey: "VERSION",
+                            //            configuration: {
+                            //                customPhone: {
+                            //                    hidden: true
+                            //                },
+                            //                customAlt: {
+                            //                    hidden: false
+                            //                }
+                            //            }
+                            //        },
+                            //        {
+                            //            columnKey: "INSERTION",
+                            //            configuration: {
+                            //                customPhone: {
+                            //                    hidden: false
+                            //                },
+                            //                customAlt: {
+                            //                    hidden: true
+                            //                }
+                            //            }
+                            //        }
+                            //    ],
+                            //    responsiveModes: {
+                            //        customPhone: {
+                            //            minWidth: 0,
+                            //            maxWidth: 600
+                            //        },
+                            //        // alternative mode
+                            //        customAlt: {
+                            //            minWidth: 601,
+                            //            maxWidth: 1200
+                            //        }
+                            //    }
+                            //}
+
                             ]
                         })
                     }
@@ -328,6 +370,7 @@
                 userFilter.UnitFilter.Unit = $('#unit').val();
             });
 
+       
             $('#insertion').selectpicker();
 
             $('#insertion').on('change', function (e) {

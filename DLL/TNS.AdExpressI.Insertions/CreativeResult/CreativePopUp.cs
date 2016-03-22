@@ -160,6 +160,26 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="vehicle">Vehicle</param>
+        /// <param name="idSlogan">Slogan identifier</param>
+        /// <param name="file">File</param>
+        /// <param name="webSession">WebSession</param>      
+        public CreativePopUp(CstClassificationVehicle.names vehicle, string idSlogan, string file,
+            WebSession webSession, bool hasCreationReadRights, bool hasCreationDownloadRights)
+        {
+            IdProduct = null;
+            _vehicle = vehicle;
+            _idSlogan = idSlogan;
+            _file = file;
+            _webSession = webSession;
+            _hasCreationDownloadRights = hasCreationDownloadRights;
+            _hasCreationReadRights = hasCreationReadRights;
+
+        }
+
+        /// <summary>
         /// Identifiant Produit
         /// </summary>
         public string IdProduct { get; set; }
@@ -183,6 +203,18 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         }
 
         #endregion
+
+        public string PathDownloadingFile
+        {
+            get { return _pathDownloadingFile; }
+            set { _pathDownloadingFile = value; }
+        }
+
+        public string PathReadingFile
+        {
+            get { return _pathReadingFile; }
+            set { _pathReadingFile = value; }
+        }
 
         #region Get Creative PopUp
         /// <summary>
@@ -226,6 +258,22 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
         }
 
         #endregion
+
+        /// <summary>
+        /// Set creative paths
+        /// </summary>
+        public virtual void SetCreativePaths()
+        {
+            //Vérification de l'existence des fichiers et construction des chemins d'accès suivant la volonté de 
+            //lire ou de télécharger le fichier
+            bool realFormatFound = false;
+            bool windowsFormatFound = false;
+
+            GetCreativePathes(ref realFormatFound, ref windowsFormatFound);
+
+
+        }
+
 
         #region RenderCreative
 

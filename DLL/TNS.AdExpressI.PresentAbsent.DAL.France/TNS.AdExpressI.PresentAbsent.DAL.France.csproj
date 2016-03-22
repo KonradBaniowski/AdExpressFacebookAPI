@@ -20,10 +20,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\AdExpress\Bin\</OutputPath>
+    <OutputPath>..\..\Kantar.AdExpress.Service\src\Km.AdExpressClientWeb\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,10 +62,6 @@
     <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
-      <Project>{2370d3fd-15e0-4fa6-8535-2f16eb42fe93}</Project>
-      <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.PresentAbsent.DAL\TNS.AdExpressI.PresentAbsent.DAL.csproj">
       <Project>{234dc672-6124-4101-a1bc-2f8c9d75b50f}</Project>

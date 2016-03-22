@@ -71,11 +71,13 @@
     <Compile Include="Identity\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl\InsertionsService.cs" />
+    <Compile Include="ServiceImpl\LostWonService.cs" />
     <Compile Include="ServiceImpl\MediaScheduleService.cs" />
     <Compile Include="ServiceImpl\MediaService.cs" />
     <Compile Include="ServiceImpl\OptionService.cs" />
     <Compile Include="ServiceImpl\PeriodService.cs" />
     <Compile Include="ServiceImpl\PortfolioService.cs" />
+    <Compile Include="ServiceImpl\PresentAbsentService.cs" />
     <Compile Include="ServiceImpl\RightService.cs" />
     <Compile Include="ServiceImpl\SubPeriodService.cs" />
     <Compile Include="ServiceImpl\UniverseService.cs" />
@@ -110,6 +112,10 @@
       <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
       <Name>TNS.AdExpressI.Insertions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.LostWon\TNS.AdExpressI.LostWon.csproj">
+      <Project>{ead29f53-3152-4356-b965-f34299402360}</Project>
+      <Name>TNS.AdExpressI.LostWon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23e7e071-0fb0-43d4-b19d-b964ec3082f6}</Project>
       <Name>TNS.AdExpressI.MediaSchedule</Name>
@@ -117,6 +123,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Portofolio\TNS.AdExpressI.Portofolio.csproj">
       <Project>{7e85c26d-a9c8-40cd-b98d-ad04e96d340b}</Project>
       <Name>TNS.AdExpressI.Portofolio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.PresentAbsent\TNS.AdExpressI.PresentAbsent.csproj">
+      <Project>{459f24ec-384d-404f-a6d2-f3b76c288a57}</Project>
+      <Name>TNS.AdExpressI.PresentAbsent</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>

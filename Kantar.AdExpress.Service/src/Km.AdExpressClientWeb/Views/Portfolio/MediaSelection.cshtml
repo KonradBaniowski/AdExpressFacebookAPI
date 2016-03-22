@@ -14,7 +14,9 @@
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
-
+        @Html.HiddenFor(e => e.Labels.ErrorNoSupport)
+        @Html.HiddenFor(e => e.Labels.ErrorItemExceeded)
+        @Html.HiddenFor(e => e.Labels.ErrorMediaSelected)
         @foreach (int i in Model.IdMediasCommon)
         {
             <input type="hidden" name="HiddenIntList" value="@i" />
@@ -204,9 +206,6 @@
                                                             </div>
                                                         }
                                                     </div>
-                                                    <div class="pull-right">
-                                                        <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
-                                                    </div>
                                                 </div>
                                             }
                                         </div>
@@ -335,10 +334,6 @@
                     message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SearchErrorMessage))';//search
 
                 }
-                @*else if (idList.length>1 && $.inArray(socialId,idList))   //TBD
-                {
-                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SocialErrorMessage))';//search
-                }*@
                 return message;
             }
 
@@ -510,5 +505,5 @@
             });
         });
     </script>
-    @Scripts.Render("~/bundles/media-selection")
+    @Scripts.Render("~/bundles/media-selection-single")
 }
