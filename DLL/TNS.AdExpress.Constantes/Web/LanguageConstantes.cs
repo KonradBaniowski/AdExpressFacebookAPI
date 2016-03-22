@@ -41,6 +41,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LimitKeyword = 3033;
         public const long LimitUniverses = 2265;
         public const long MininumInclude = 2299;
+        public const long LostWonCode = 2169;
+        public const long LostWonDescriptionCode = 2198;
+        public const long PresentAbsentCode = 2167;
+        public const long PresentAbsentDescriptionCode = 2196;
         #endregion
     }
 }
