@@ -2262,7 +2262,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             //            gridData[ii, jj] = gridData[nbLineGrid-1, jj];
             //    }
 
-            if (tableWidth > 846)
+            if (tableWidth > 920)
                 gridResult.NeedFixedColumns = true;
 
             gridResult.HasData = true;

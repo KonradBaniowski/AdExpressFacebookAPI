@@ -131,6 +131,8 @@
 .open .dropdown-menu {
     background-color: black;
     min-width: 60px;
+    max-height: 200px!important;
+    z-index: 2000!important;
 }
 
 
@@ -930,6 +932,15 @@ input {
     box-shadow: none;
     border: 0;
     background-color: rgba(255,255,255,0.2);
+}
+
+.panel.panel-options {
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    border: 0;
+    background-color: rgba(0,0,0,0.7);
 }
 
 .panel-group .panel.panel-results + .panel.panel-results {

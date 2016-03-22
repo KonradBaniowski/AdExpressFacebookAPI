@@ -9,12 +9,12 @@
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
-    @Html.Partial("Presentation",Model.Presentation)
+    @Html.Partial("Presentation", Model.Presentation)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
         </div>
-     </div>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -23,16 +23,20 @@
             <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-valider">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
-        </div> 
+        </div>
+    </div>
+</div>
+<div class="h20">
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Action("ResultOptions", "MediaSchedule")
     </div>
 </div>
 <div id="subPeriodSelection" class="h20">
 </div>
 <div class="row">
-    <div class="col-md-3">
-        @Html.Action("ResultOptions", "MediaSchedule")
-    </div>
-    <div class="col-md-9">
+    <div class="col-md-12">
         <center>
             <div id="grid" class="hide">
             </div>
@@ -43,517 +47,518 @@
     </div>
 </div>
 @section Scripts {
-<script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
-<script src="~/IgniteUI/js/infragistics.core.js"></script>
-<script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 
-<script>
-    //{columnKey: 'Address', allowHiding: false, hidden: true}
-    $(document).ready(function () {
+    <script>
+        //{columnKey: 'Address', allowHiding: false, hidden: true}
+        $(document).ready(function () {
 
-        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+            if (typeof jQuery === "undefined") { throw new Error("jQuery") }
 
-        $("#grid").igTreeGrid({
-            //dataSource: data,
-            primaryKey: "ClassifId",
-            width: "100%",
-            defaultColumnWidth: 200,
-            avgRowHeight: 60,
-            autoGenerateColumns: true
-        });
+            $("#grid").igTreeGrid({
+                //dataSource: data,
+                primaryKey: "ClassifId",
+                width: "100%",
+                defaultColumnWidth: 200,
+                avgRowHeight: 60,
+                autoGenerateColumns: true
+            });
 
-        //$("#changeColSett").click(function () {
+            //$("#changeColSett").click(function () {
 
 
-        var ds;
-        var cols;
-        var colsFixed;
-        var needFixedColumns = false;
-        var zoomDate = '';
-        var previousSubPeriodLabel;
+            var ds;
+            var cols;
+            var colsFixed;
+            var needFixedColumns = false;
+            var zoomDate = '';
+            var previousSubPeriodLabel;
 
-        function GetItems(idItems) {
-            var items = '';
-            for (var i in idItems) {
-                items += idItems[i] + ",";
-            }
-            return items.substring(0, items.length - 1);
-        }
-
-        function GenericDetailLevelFilter() {
-            this.DefaultDetailValue = $('#defaultDetail').val();
-            this.CustomDetailValue = -1;
-            this.L1DetailValue = -1;
-            this.L2DetailValue = -1;
-            this.L3DetailValue = -1;
-            this.L4DetailValue = -1;
-        }
-
-        function PeriodDetailFilter() {
-            this.PeriodDetailType = $('#periodDetailType').val();
-        }
-
-        function UnitFilter() {
-            this.Unit = $('#unit').val();
-        }
-
-        function InsertionFilter() {
-            this.Insertion = $('#insertion').val();
-        }
-
-        function AutoPromoFilter() {
-            this.AutoPromo = $('#autoPromo').val();
-        }
-
-        function FormatFilter() {
-            this.Formats = GetItems($('#format').val());
-        }
-
-        function PurchaseModeFilter() {
-            this.PurchaseModes = GetItems($('#purchaseMode').val());
-        }
-
-        function UserFilter() {
-            this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
-            this.PeriodDetailFilter = new PeriodDetailFilter();
-            this.UnitFilter = new UnitFilter();
-            this.InsertionFilter = new InsertionFilter();
-            this.AutoPromoFilter = new AutoPromoFilter();
-            this.FormatFilter = new FormatFilter();
-            this.PurchaseModeFilter = new PurchaseModeFilter();
-        }
-
-        var userFilter = new UserFilter();
-
-        var renderGrid = function (success, error) {
-            if (success) {
-
-                $("#grid").igTreeGrid("destroy");
-                $("#gridLoader").addClass("hide");
-                $("#grid").removeClass("hide");
-                if (needFixedColumns) {
-                    $("#grid").igTreeGrid({
-                        dataSource: ds.dataView(),
-                        columns: cols,
-                        height: "530px",
-                        autoGenerateColumns: false,
-                        primaryKey: "ID_PRODUCT",
-                        foreignKey: "PID",
-                        width: "846px",
-                        features: [
-                            {
-                                name: "MultiColumnHeaders"
-                            },
-                            {
-                                name: "Paging",
-                                mode: "allLevels",
-                                pageSize: 25
-                            },
-                            {
-                                name: "ColumnFixing",
-                                fixingDirection: "left",
-                                columnSettings: colsFixed
-                            }
-                        ]
-                    })
+            function GetItems(idItems) {
+                var items = '';
+                for (var i in idItems) {
+                    items += idItems[i] + ",";
                 }
-                else {
-                    $("#grid").igTreeGrid({
-                        dataSource: ds.dataView(),
-                        columns: cols,
-                        height: "530px",
-                        autoGenerateColumns: false,
-                        primaryKey: "ID_PRODUCT",
-                        foreignKey: "PID",
-                        features: [
-                            {
-                                name: "MultiColumnHeaders"
-                            },
-                            {
-                                name: "Paging",
-                                mode: "allLevels",
-                                pageSize: 25
-                            }
-                        ]
-                    })
-                }
-                $(".open-media-schedule").on('click', function (e) {
-                    $("#perioddetailTypeContainer").removeClass("show").addClass("hide");
-                    GetSubPeriodSelection('' + $(this).attr("date"));
-                    $("#grid").addClass("hide");
-                    $("#gridLoader").removeClass("hide");
-                    CallMediaScheduleResult('' + $(this).attr("date"));
-                });
-            } else {
-                alert(error);
+                return items.substring(0, items.length - 1);
             }
 
-        }
+            function GenericDetailLevelFilter() {
+                this.DefaultDetailValue = $('#defaultDetail').val();
+                this.CustomDetailValue = -1;
+                this.L1DetailValue = -1;
+                this.L2DetailValue = -1;
+                this.L3DetailValue = -1;
+                this.L4DetailValue = -1;
+            }
 
-        function CallMediaScheduleResult(zoomDateParam) {
-            zoomDate = zoomDateParam;
-            var params = {
-                zoomDate: zoomDateParam
-            };
-            $.ajax({
-                url: '@Url.Action("MediaScheduleResult", "MediaSchedule")',
-                contentType: "application/x-www-form-urlencoded",
-                type: "POST",
-                datatype: "json",
-                data: params,
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                },
-                success: function (data) {
-                    if (data != null && data != "") {
-                        dataTreeGrid = data.datagrid;
-                        cols = data.columns;
-                        colsFixed = data.columnsfixed;
-                        needFixedColumns = data.needfixedcolumns;
+            function PeriodDetailFilter() {
+                this.PeriodDetailType = $('#periodDetailType').val();
+            }
 
-                        var schema = new $.ig.DataSchema("array", {
-                            fields: data.schema
-                        });
+            function UnitFilter() {
+                this.Unit = $('#unit').val();
+            }
 
-                        ds = new $.ig.DataSource({
-                            type: "json",
-                            schema: schema,
-                            dataSource: dataTreeGrid,
-                            callback: renderGrid
-                        });
+            function InsertionFilter() {
+                this.Insertion = $('#insertion').val();
+            }
 
-                        ds.dataBind();
+            function AutoPromoFilter() {
+                this.AutoPromo = $('#autoPromo').val();
+            }
+
+            function FormatFilter() {
+                this.Formats = GetItems($('#format').val());
+            }
+
+            function PurchaseModeFilter() {
+                this.PurchaseModes = GetItems($('#purchaseMode').val());
+            }
+
+            function UserFilter() {
+                this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
+                this.PeriodDetailFilter = new PeriodDetailFilter();
+                this.UnitFilter = new UnitFilter();
+                this.InsertionFilter = new InsertionFilter();
+                this.AutoPromoFilter = new AutoPromoFilter();
+                this.FormatFilter = new FormatFilter();
+                this.PurchaseModeFilter = new PurchaseModeFilter();
+            }
+
+            var userFilter = new UserFilter();
+
+            var renderGrid = function (success, error) {
+                if (success) {
+
+                    $("#grid").igTreeGrid("destroy");
+                    $("#gridLoader").addClass("hide");
+                    $("#grid").removeClass("hide");
+                    if (needFixedColumns) {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID_PRODUCT",
+                            foreignKey: "PID",
+                            width: "1100px",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 25
+                                },
+                                {
+                                    name: "ColumnFixing",
+                                    fixingDirection: "left",
+                                    columnSettings: colsFixed
+                                }
+                            ]
+                        })
                     }
                     else {
-                        $("#gridLoader").addClass("hide");
-                        $("#grid").removeClass("hide");
-                        $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID_PRODUCT",
+                            foreignKey: "PID",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 25
+                                }
+                            ]
+                        })
                     }
+                    $(".open-media-schedule").on('click', function (e) {
+                        $("#perioddetailTypeContainer").removeClass("show").addClass("hide");
+                        GetSubPeriodSelection('' + $(this).attr("date"));
+                        $("#grid").addClass("hide");
+                        $("#gridLoader").removeClass("hide");
+                        CallMediaScheduleResult('' + $(this).attr("date"));
+                    });
+                } else {
+                    alert(error);
                 }
-            });
-        }
 
-        function CallSetOptions() {
-            $.ajax({
-                url: '@Url.Action("SetResultOptions", "MediaSchedule")',
-                contentType: "application/x-www-form-urlencoded",
-                type: "POST",
-                datatype: "json",
-                data: userFilter,
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                },
-                success: function (data) {
-                    CallMediaScheduleResult(zoomDate);
-                }
-            });
-        }
+            }
 
-        CallMediaScheduleResult(zoomDate);
+            function CallMediaScheduleResult(zoomDateParam) {
+                zoomDate = zoomDateParam;
+                var params = {
+                    zoomDate: zoomDateParam
+                };
+                $.ajax({
+                    url: '@Url.Action("MediaScheduleResult", "MediaSchedule")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null && data != "") {
+                            dataTreeGrid = data.datagrid;
+                            cols = data.columns;
+                            colsFixed = data.columnsfixed;
+                            needFixedColumns = data.needfixedcolumns;
 
-        function GetSubPeriodSelection(zoomDateParam) {
-            var params = {
-                zoomDate: zoomDateParam
-            };
-            $.ajax({
-                url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
-                contentType: "application/x-www-form-urlencoded",
-                type: "POST",
-                data: params,
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                },
-                success: function (data) {
-                    if (data != null) {
-                        $('#subPeriodSelection').html(data);
-                        $('#leave-zoom').on('click', function (e) {
-                            $("#perioddetailTypeContainer").removeClass("hide").addClass("show");
-                            $("#leave-zoom").addClass("hide");
-                            $("#sub-period-container").addClass("hide");
-                            $("#grid").addClass("hide");
-                            $("#gridLoader").removeClass("hide");
-                            zoomDate = '';
-                            CallMediaScheduleResult(zoomDate);
-                        });
-                        $(".sub-period-btn").on('click', function (e) {
-                            $(".btn-default-sub-period").prop('disabled', false);
-                            $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
-                            $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
-                            $(this).prop('disabled', true);
-                            $("#grid").addClass("hide");
-                            $("#gridLoader").removeClass("hide");
-                            CallMediaScheduleResult($(this).attr("period"));
-                        });
-                        $(".sub-period-btn").on('mouseenter', function (e) {
-                            previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
-                            $("#subPeriodLabel").text($(this).attr("periodlabel"));
-                        });
-                        $(".sub-period-btn").on('mouseleave', function (e) {
-                            $("#subPeriodLabel").text(previousSubPeriodLabel);
-                        });
+                            var schema = new $.ig.DataSchema("array", {
+                                fields: data.schema
+                            });
+
+                            ds = new $.ig.DataSource({
+                                type: "json",
+                                schema: schema,
+                                dataSource: dataTreeGrid,
+                                callback: renderGrid
+                            });
+
+                            ds.dataBind();
+                        }
+                        else {
+                            $("#gridLoader").addClass("hide");
+                            $("#grid").removeClass("hide");
+                            $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
+                        }
                     }
-                }
+                });
+            }
+
+            function CallSetOptions() {
+                $.ajax({
+                    url: '@Url.Action("SetResultOptions", "MediaSchedule")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: userFilter,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        CallMediaScheduleResult(zoomDate);
+                    }
+                });
+            }
+
+            CallMediaScheduleResult(zoomDate);
+
+            function GetSubPeriodSelection(zoomDateParam) {
+                var params = {
+                    zoomDate: zoomDateParam
+                };
+                $.ajax({
+                    url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null) {
+                            $('#subPeriodSelection').html(data);
+                            $('#leave-zoom').on('click', function (e) {
+                                $("#perioddetailTypeContainer").removeClass("hide").addClass("show");
+                                $("#leave-zoom").addClass("hide");
+                                $("#sub-period-container").addClass("hide");
+                                $("#grid").addClass("hide");
+                                $("#gridLoader").removeClass("hide");
+                                zoomDate = '';
+                                CallMediaScheduleResult(zoomDate);
+                            });
+                            $(".sub-period-btn").on('click', function (e) {
+                                $(".btn-default-sub-period").prop('disabled', false);
+                                $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+                                $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+                                $(this).prop('disabled', true);
+                                $("#grid").addClass("hide");
+                                $("#gridLoader").removeClass("hide");
+                                CallMediaScheduleResult($(this).attr("period"));
+                            });
+                            $(".sub-period-btn").on('mouseenter', function (e) {
+                                previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+                                $("#subPeriodLabel").text($(this).attr("periodlabel"));
+                            });
+                            $(".sub-period-btn").on('mouseleave', function (e) {
+                                $("#subPeriodLabel").text(previousSubPeriodLabel);
+                            });
+                        }
+                    }
+                });
+            }
+
+            $('#periodDetailType').selectpicker();
+
+            $('#periodDetailType').on('change', function (e) {
+                userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
             });
-        }
 
-        $('#periodDetailType').selectpicker();
+            $('#btn-export').on('click', function (e) {
+                window.open('@Url.Action("Index", "TestExport")', "_blank");
+            });
 
-        $('#periodDetailType').on('change', function (e) {
-            userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
+            $('#btn-value').on('click', function (e) {
+                window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
+            });
+
+            $('#btn-brut').on('click', function (e) {
+                window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
+            });
+
+            $('#validate-options').on('click', function (e) {
+                $("#grid").addClass("hide");
+                $("#gridLoader").removeClass("hide");
+                $("#collapseContainerOne").collapse('hide');;
+                CallSetOptions();
+            });
+
+            $('#unit').selectpicker();
+
+            $('#unit').on('change', function (e) {
+                userFilter.UnitFilter.Unit = $('#unit').val();
+            });
+
+            $('#insertion').selectpicker();
+
+            $('#insertion').on('change', function (e) {
+                userFilter.InsertionFilter.Insertion = $('#insertion').val();
+            });
+
+            $('#autoPromo').selectpicker();
+
+            $('#autoPromo').on('change', function (e) {
+                userFilter.AutoPromoFilter.AutoPromo = $('#autoPromo').val();
+            });
+
+            $('#format').selectpicker();
+
+            $('#format').on('change', function (e) {
+                userFilter.FormatFilter.Formats = GetItems($('#format').val());
+            });
+
+            $('#purchaseMode').selectpicker();
+
+            $('#purchaseMode').on('change', function (e) {
+                userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
+            });
+
+            $('#defaultDetail').selectpicker();
+            $('#customDetail').selectpicker();
+            $('#l1Detail').selectpicker();
+            $('#l2Detail').selectpicker();
+            $('#l3Detail').selectpicker();
+            $('#l4Detail').selectpicker();
+
+            $('#defaultDetail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#l1Detail').selectpicker('val', '-1');
+                $('#l2Detail').selectpicker('val', '-1');
+                $('#l3Detail').selectpicker('val', '-1');
+                $('#l4Detail').selectpicker('val', '-1');
+                InitGenericDetailLevelFilter();
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
+            });
+
+            $('#customDetail').on('change', function (e) {
+                $('#defaultDetail').selectpicker('val', '-1');
+                $('#l1Detail').selectpicker('val', '-1');
+                $('#l2Detail').selectpicker('val', '-1');
+                $('#l3Detail').selectpicker('val', '-1');
+                $('#l4Detail').selectpicker('val', '-1');
+                InitGenericDetailLevelFilter();
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
+            });
+
+            function ResetLnLevel(lx, ly) {
+                if ($(lx).val() == $(ly).val())
+                    $(ly).selectpicker('val', '-1');
+            }
+
+            $('#l1Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+                ResetLnLevel("#l1Detail", "#l2Detail");
+                ResetLnLevel("#l1Detail", "#l3Detail");
+                ResetLnLevel("#l1Detail", "#l4Detail");
+            });
+
+            $('#l2Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+                ResetLnLevel("#l2Detail", "#l1Detail");
+                ResetLnLevel("#l2Detail", "#l3Detail");
+                ResetLnLevel("#l2Detail", "#l4Detail");
+            });
+
+            $('#l3Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
+                ResetLnLevel("#l3Detail", "#l1Detail");
+                ResetLnLevel("#l3Detail", "#l2Detail");
+                ResetLnLevel("#l3Detail", "#l4Detail");
+            });
+
+            $('#l4Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L4DetailValue = $('#l4Detail').val();
+                ResetLnLevel("#l4Detail", "#l1Detail");
+                ResetLnLevel("#l4Detail", "#l2Detail");
+                ResetLnLevel("#l4Detail", "#l3Detail");
+            });
+
+            function InitGenericDetailLevelFilter() {
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
+            }
+
         });
 
-        $('#btn-export').on('click', function (e) {
-            window.open('@Url.Action("Index", "TestExport")', "_blank");
-        });
+        //});
 
-        $('#btn-value').on('click', function (e) {
-            window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
-        });
+        /***************************************** Old script ********************************************/
 
-        $('#btn-brut').on('click', function (e) {
-            window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
-        });
+        //var cols = [];
+        //var data = [];
+        ////Mock Data
+        //data[1] = [
+        //    //Level 1
+        //    { "ClassifId": 0, "PID": -1, "Level": "PRESSE", "Period": "2653400", "Pdm": "-", "j": "1", "F": "2", "M": "0" },
+        //    { "ClassifId": 1, "PID": -1, "Level": "TELEVISION", "Period": "455", "Pdm": "-", "j": "1", "F": "1", "M": "1" },
 
-        $('#validate-options').on('click', function (e) {
-            $("#grid").addClass("hide");
-            $("#gridLoader").removeClass("hide");
-            CallSetOptions();
-        });
+        //    //Level 2
+        //    { "ClassifId": 4, "PID": 0, "Level": "MAGAZINES", "Period": "4444", "Pdm": "0", "j": "0", "F": "1", "M": "0" },
+        //    { "ClassifId": 5, "PID": 1, "Level": "TV NATIONALE", "Period": "524545", "Pdm": "0", "j": "1", "F": "1", "M": "1" },
 
-        $('#unit').selectpicker();
+        //    //Level 3
+        //    { "ClassifId": 8, "PID": 4, "Level": " AUTO JOURNAL", "Period": "45442", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
+        //    { "ClassifId": 9, "PID": 4, "Level": "EXPRESS", "Period": "455765", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
 
-        $('#unit').on('change', function (e) {
-            userFilter.UnitFilter.Unit = $('#unit').val();
-        });
+        //   { "ClassifId": 10, "PID": 5, "Level": "TF1", "Period": "585454", "Pdm": "4", "j": "1", "F": "2", "M": "1" },
+        //   { "ClassifId": 11, "PID": 5, "Level": "FRANCE 2", "Period": "4572", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
 
-        $('#insertion').selectpicker();
+        //    //Level 4
+        //    { "ClassifId": 12, "PID": 8, "Level": "444444", "Period": "43434", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
+        //    { "ClassifId": 13, "PID": 8, "Level": "555555", "Period": "424", "Pdm": "2", "j": "1", "F": "1", "M": "0" },
+        //    { "ClassifId": 14, "PID": 9, "Level": "666666", "Period": "45454", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
 
-        $('#insertion').on('change', function (e) {
-            userFilter.InsertionFilter.Insertion = $('#insertion').val();
-        });
+        //    { "ClassifId": 15, "PID": 10, "Level": "777777", "Period": "4554", "Pdm": "3", "j": "1", "F": "2", "M": "0" },
+        //    { "ClassifId": 16, "PID": 11, "Level": "888888", "Period": "5454", "Pdm": "3", "j": "1", "F": "2", "M": "0" }
 
-        $('#autoPromo').selectpicker();
-
-        $('#autoPromo').on('change', function (e) {
-            userFilter.AutoPromoFilter.AutoPromo = $('#autoPromo').val();
-        });
-
-        $('#format').selectpicker();
-
-        $('#format').on('change', function (e) {
-            userFilter.FormatFilter.Formats = GetItems($('#format').val());
-        });
-
-        $('#purchaseMode').selectpicker();
-
-        $('#purchaseMode').on('change', function (e) {
-            userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
-        });
-
-        $('#defaultDetail').selectpicker();
-        $('#customDetail').selectpicker();
-        $('#l1Detail').selectpicker();
-        $('#l2Detail').selectpicker();
-        $('#l3Detail').selectpicker();
-        $('#l4Detail').selectpicker();
-
-        $('#defaultDetail').on('change', function (e) {
-            $('#customDetail').selectpicker('val', '-1');
-            $('#l1Detail').selectpicker('val', '-1');
-            $('#l2Detail').selectpicker('val', '-1');
-            $('#l3Detail').selectpicker('val', '-1');
-            $('#l4Detail').selectpicker('val', '-1');
-            InitGenericDetailLevelFilter();
-            userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
-        });
-
-        $('#customDetail').on('change', function (e) {
-            $('#defaultDetail').selectpicker('val', '-1');
-            $('#l1Detail').selectpicker('val', '-1');
-            $('#l2Detail').selectpicker('val', '-1');
-            $('#l3Detail').selectpicker('val', '-1');
-            $('#l4Detail').selectpicker('val', '-1');
-            InitGenericDetailLevelFilter();
-            userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
-        });
-
-        function ResetLnLevel(lx, ly) {
-            if ($(lx).val() == $(ly).val())
-                $(ly).selectpicker('val', '-1');
-        }
-
-        $('#l1Detail').on('change', function (e) {
-            $('#customDetail').selectpicker('val', '-1');
-            $('#defaultDetail').selectpicker('val', '-1');
-            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
-            ResetLnLevel("#l1Detail", "#l2Detail");
-            ResetLnLevel("#l1Detail", "#l3Detail");
-            ResetLnLevel("#l1Detail", "#l4Detail");
-        });
-
-        $('#l2Detail').on('change', function (e) {
-            $('#customDetail').selectpicker('val', '-1');
-            $('#defaultDetail').selectpicker('val', '-1');
-            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
-            ResetLnLevel("#l2Detail", "#l1Detail");
-            ResetLnLevel("#l2Detail", "#l3Detail");
-            ResetLnLevel("#l2Detail", "#l4Detail");
-        });
-
-        $('#l3Detail').on('change', function (e) {
-            $('#customDetail').selectpicker('val', '-1');
-            $('#defaultDetail').selectpicker('val', '-1');
-            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
-            ResetLnLevel("#l3Detail", "#l1Detail");
-            ResetLnLevel("#l3Detail", "#l2Detail");
-            ResetLnLevel("#l3Detail", "#l4Detail");
-        });
-
-        $('#l4Detail').on('change', function (e) {
-            $('#customDetail').selectpicker('val', '-1');
-            $('#defaultDetail').selectpicker('val', '-1');
-            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.L4DetailValue = $('#l4Detail').val();
-            ResetLnLevel("#l4Detail", "#l1Detail");
-            ResetLnLevel("#l4Detail", "#l2Detail");
-            ResetLnLevel("#l4Detail", "#l3Detail");
-        });
-
-        function InitGenericDetailLevelFilter() {
-            userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
-            userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
-            userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
-            userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
-            userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
-        }
-
-    });
-
-    //});
-
-    /***************************************** Old script ********************************************/
-
-    //var cols = [];
-    //var data = [];
-    ////Mock Data
-    //data[1] = [
-    //    //Level 1
-    //    { "ClassifId": 0, "PID": -1, "Level": "PRESSE", "Period": "2653400", "Pdm": "-", "j": "1", "F": "2", "M": "0" },
-    //    { "ClassifId": 1, "PID": -1, "Level": "TELEVISION", "Period": "455", "Pdm": "-", "j": "1", "F": "1", "M": "1" },
-
-    //    //Level 2
-    //    { "ClassifId": 4, "PID": 0, "Level": "MAGAZINES", "Period": "4444", "Pdm": "0", "j": "0", "F": "1", "M": "0" },
-    //    { "ClassifId": 5, "PID": 1, "Level": "TV NATIONALE", "Period": "524545", "Pdm": "0", "j": "1", "F": "1", "M": "1" },
-
-    //    //Level 3
-    //    { "ClassifId": 8, "PID": 4, "Level": " AUTO JOURNAL", "Period": "45442", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-    //    { "ClassifId": 9, "PID": 4, "Level": "EXPRESS", "Period": "455765", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-
-    //   { "ClassifId": 10, "PID": 5, "Level": "TF1", "Period": "585454", "Pdm": "4", "j": "1", "F": "2", "M": "1" },
-    //   { "ClassifId": 11, "PID": 5, "Level": "FRANCE 2", "Period": "4572", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-
-    //    //Level 4
-    //    { "ClassifId": 12, "PID": 8, "Level": "444444", "Period": "43434", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
-    //    { "ClassifId": 13, "PID": 8, "Level": "555555", "Period": "424", "Pdm": "2", "j": "1", "F": "1", "M": "0" },
-    //    { "ClassifId": 14, "PID": 9, "Level": "666666", "Period": "45454", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
-
-    //    { "ClassifId": 15, "PID": 10, "Level": "777777", "Period": "4554", "Pdm": "3", "j": "1", "F": "2", "M": "0" },
-    //    { "ClassifId": 16, "PID": 11, "Level": "888888", "Period": "5454", "Pdm": "3", "j": "1", "F": "2", "M": "0" }
-
-    //];
+        //];
 
 
-    //data[0] =
-    //[
-    //        { headerText: "Id", key: "ClassifId", width: "200px", dataType: "number", allowHiding: false, hidden: true, template: "" },
-    //        { headerText: "SUPPORTS", key: "Level", width: "220px", dataType: "string", template: "" },
-    //        { headerText: "01/01/2016 - 31/01/2016", key: "Period", width: "220px", dataType: "number", template: "" },
-    //        { headerText: "PDM", key: "Pdm", width: "130px", dataType: "number", template: "" },
-    //        { headerText: "Version", key: "Version", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
-    //        { headerText: "Insertion", key: "Insertion", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
+        //data[0] =
+        //[
+        //        { headerText: "Id", key: "ClassifId", width: "200px", dataType: "number", allowHiding: false, hidden: true, template: "" },
+        //        { headerText: "SUPPORTS", key: "Level", width: "220px", dataType: "string", template: "" },
+        //        { headerText: "01/01/2016 - 31/01/2016", key: "Period", width: "220px", dataType: "number", template: "" },
+        //        { headerText: "PDM", key: "Pdm", width: "130px", dataType: "number", template: "" },
+        //        { headerText: "Version", key: "Version", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
+        //        { headerText: "Insertion", key: "Insertion", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
 
-    //        {
-    //            headerText: "Janvier 2016",
-    //            group: [
-    //                 {
-    //                     headerText: "01",
-    //                     group: [
-    //                         { headerText: "L", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "J", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "V", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "S", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "D", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" }
-    //                     ]
-    //                 }
-    //                 //,
-    //                 // {
-    //                 //     headerText: "02",
-    //                 //     group: [
-    //                 //         { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
-    //                 //     ]
-    //                 // },
-    //                 //  {
-    //                 //      headerText: "03",
-    //                 //      group: [
-    //                 //          { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
-    //                 //      ]
-    //                 //  }
-    //            ],
-    //            dataRendered: function (evt, ui) {
-    //                ui.owner.element.find("tr td:nth-child(4)").css("text-align", "center");
-    //                ui.owner.element.find("tr td:nth-child(5)").css("text-align", "center");
-    //            }
-    //        }
+        //        {
+        //            headerText: "Janvier 2016",
+        //            group: [
+        //                 {
+        //                     headerText: "01",
+        //                     group: [
+        //                         { headerText: "L", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+        //                        { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+        //                        { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+        //                        { headerText: "J", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+        //                        { headerText: "V", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+        //                        { headerText: "S", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
+        //                        { headerText: "D", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" }
+        //                     ]
+        //                 }
+        //                 //,
+        //                 // {
+        //                 //     headerText: "02",
+        //                 //     group: [
+        //                 //         { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
+        //                 //     ]
+        //                 // },
+        //                 //  {
+        //                 //      headerText: "03",
+        //                 //      group: [
+        //                 //          { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
+        //                 //      ]
+        //                 //  }
+        //            ],
+        //            dataRendered: function (evt, ui) {
+        //                ui.owner.element.find("tr td:nth-child(4)").css("text-align", "center");
+        //                ui.owner.element.find("tr td:nth-child(5)").css("text-align", "center");
+        //            }
+        //        }
 
-    //];
+        //];
 
-    //for (var key1 in data[0]) {
+        //for (var key1 in data[0]) {
 
-    //    if (data[0][key1].group != null) {
-    //        cols.push({
-    //            headerText: data[0][key1].headerText,
-    //            group: data[0][key1].group
+        //    if (data[0][key1].group != null) {
+        //        cols.push({
+        //            headerText: data[0][key1].headerText,
+        //            group: data[0][key1].group
 
-    //        })
-    //    } else {
-    //        cols.push({
-    //            headerText: data[0][key1].headerText,
-    //            key: data[0][key1].key,
-    //            width: data[0][key1].width,
-    //            dataType: data[0][key1].dataType,
-    //            allowHiding: data[0][key1].allowHiding,
-    //            hidden: data[0][key1].hidden,
-    //            template: data[0][key1].template,
+        //        })
+        //    } else {
+        //        cols.push({
+        //            headerText: data[0][key1].headerText,
+        //            key: data[0][key1].key,
+        //            width: data[0][key1].width,
+        //            dataType: data[0][key1].dataType,
+        //            allowHiding: data[0][key1].allowHiding,
+        //            hidden: data[0][key1].hidden,
+        //            template: data[0][key1].template,
 
-    //        })
-    //    }
+        //        })
+        //    }
 
-    //}
+        //}
 
-    //$("#grid").igTreeGrid("destroy");
-    //$("#grid").igTreeGrid({
-    //    dataSource: data[1],
-    //    primaryKey: "ClassifId",
-    //    foreignKey: "PID",
-    //    autoGenerateColumns: false,
-    //    columns: cols,
-    //    features: [
-    //       {
-    //           name: "MultiColumnHeaders"
-    //       },
-    //       {
-    //           name: "Paging",
-    //           mode: "allLevels",
-    //           pageSize: 10
-    //       }
-    //    ]
-    //})
-</script>
+        //$("#grid").igTreeGrid("destroy");
+        //$("#grid").igTreeGrid({
+        //    dataSource: data[1],
+        //    primaryKey: "ClassifId",
+        //    foreignKey: "PID",
+        //    autoGenerateColumns: false,
+        //    columns: cols,
+        //    features: [
+        //       {
+        //           name: "MultiColumnHeaders"
+        //       },
+        //       {
+        //           name: "Paging",
+        //           mode: "allLevels",
+        //           pageSize: 10
+        //       }
+        //    ]
+        //})
+    </script>
 }
