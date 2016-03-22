@@ -44,6 +44,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MediaSelected = 1487;
         public const long NoSupport = 3035;
         public const long ItemExceeded = 3034;
+        public const long LostWonCode = 2169;
+        public const long LostWonDescriptionCode = 2198;
+        public const long PresentAbsentCode = 2167;
+        public const long PresentAbsentDescriptionCode = 2196;
         #endregion
     }
 }
