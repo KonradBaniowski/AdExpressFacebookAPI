@@ -178,7 +178,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
+    <Compile Include="Controllers\LostWonController.cs" />
+    <Compile Include="Controllers\LostWonExportController.cs" />
     <Compile Include="Controllers\PortfolioExportController.cs" />
+    <Compile Include="Controllers\PresentAbsentController.cs" />
+    <Compile Include="Controllers\PresentAbsentExportController.cs" />
     <Compile Include="Models\Insertions\InsertionViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
@@ -1429,6 +1433,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\media-selection\media-single.js" />
     <Content Include="Scripts\media-selection\media.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\module-selection\module-selection.js" />
@@ -1489,9 +1494,16 @@
     <Content Include="Views\PortfolioExport\Index.cshtml" />
     <Content Include="Views\PortfolioExport\ResultBrut.cshtml" />
     <Content Include="Views\MediaSchedule\_SubPeriodSelection.cshtml" />
+    <Content Include="Views\PresentAbsent\Index.cshtml" />
+    <Content Include="Views\PresentAbsent\Results.cshtml" />
+    <Content Include="Views\PresentAbsent\MediaSelection.cshtml" />
+    <Content Include="Views\PresentAbsent\_ResultOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\LostWonExport\" />
+    <Folder Include="Views\LostWon\" />
+    <Folder Include="Views\PresentAbsentExport\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
@@ -1562,7 +1574,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55658</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

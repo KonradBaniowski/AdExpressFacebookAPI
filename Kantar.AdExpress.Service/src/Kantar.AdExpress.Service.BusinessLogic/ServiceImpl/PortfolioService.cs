@@ -32,7 +32,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
                 | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
 
-            throw new NotImplementedException();
+            return null;
         }
 
 
@@ -43,7 +43,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerSession = (WebSession)WebSession.Load(idWebSession);
 #if Debug
             //TODO : Resultat pour calendrier d'actiion : a enlever apres tests
-            _customerSession.CurrentTab = 6;
+            //_customerSession.CurrentTab = 6;
 
             //TODO :  selection support :  : a enlever apres tests
             TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);

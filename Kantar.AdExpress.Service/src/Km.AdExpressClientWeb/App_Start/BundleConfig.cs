@@ -19,6 +19,9 @@ namespace Km.AdExpressClientWeb
             bundles.Add(new ScriptBundle("~/bundles/media-selection").Include(
                         "~/Scripts/universe/listbox.js",
                         "~/Scripts/media-selection/media.js"));
+            bundles.Add(new ScriptBundle("~/bundles/media-selection-single").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/media-selection/media-single.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
                         "~/Scripts/module-selection/module-selection.js"));

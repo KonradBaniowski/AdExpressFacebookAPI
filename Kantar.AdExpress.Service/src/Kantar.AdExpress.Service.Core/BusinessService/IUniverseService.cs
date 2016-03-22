@@ -11,7 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 
         List<UniversItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession, Dimension dimension, List<int> idMedias, out int nbItems);
 
-        UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage);
+        UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage = true, int MaxIncludeNbr = 2, int MaxExcludeNbr = 1);
 
         UniversGroupsResponse GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage=true);
 
