@@ -29,10 +29,11 @@
 <div id="subPeriodSelection" class="h20">
 </div>
 <div class="row">
-    <div class="col-md-3">
+
+    <div class="col-lg-3 col-md-3 col-sm-3">
         @Html.Action("ResultOptions", "MediaSchedule")
     </div>
-    <div class="col-md-9">
+    <div class="col-lg-9 col-md-9 col-sm-9">
         <center>
             <div id="grid" class="hide">
             </div>
@@ -155,6 +156,46 @@
                                 fixingDirection: "left",
                                 columnSettings: colsFixed
                             }
+                            //,{
+                            //    name: "Responsive",
+                            //    enableVerticalRendering: true,
+                            //    columnSettings: [
+                            //        {
+                            //            columnKey: "VERSION",
+                            //            configuration: {
+                            //                customPhone: {
+                            //                    hidden: true
+                            //                },
+                            //                customAlt: {
+                            //                    hidden: false
+                            //                }
+                            //            }
+                            //        },
+                            //        {
+                            //            columnKey: "INSERTION",
+                            //            configuration: {
+                            //                customPhone: {
+                            //                    hidden: false
+                            //                },
+                            //                customAlt: {
+                            //                    hidden: true
+                            //                }
+                            //            }
+                            //        }
+                            //    ],
+                            //    responsiveModes: {
+                            //        customPhone: {
+                            //            minWidth: 0,
+                            //            maxWidth: 600
+                            //        },
+                            //        // alternative mode
+                            //        customAlt: {
+                            //            minWidth: 601,
+                            //            maxWidth: 1200
+                            //        }
+                            //    }
+                            //}
+
                         ]
                     })
                 }

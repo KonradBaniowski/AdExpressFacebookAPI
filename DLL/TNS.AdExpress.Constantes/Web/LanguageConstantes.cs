@@ -41,6 +41,9 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LimitKeyword = 3033;
         public const long LimitUniverses = 2265;
         public const long MininumInclude = 2299;
+        public const long MediaSelected = 1487;
+        public const long NoSupport = 3035;
+        public const long ItemExceeded = 3034;
         #endregion
     }
 }

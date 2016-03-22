@@ -94,7 +94,9 @@
             });
         }
         else {
-            bootbox.alert('message aucun medias selectionne');
+            bootbox.alert($('#Labels_ErrorMediaSelected').val());
+            $('#collapseTwo').collapse('hide');
+            $('#collapseOne').collapse('show');
         }
     });
 
@@ -128,11 +130,11 @@
                 });
             }
             else {
-                bootbox.alert("message c est pas un support");
+                bootbox.alert($('#Labels_ErrorNoSupport').val());
             }
         }
         else {
-            bootbox.alert("message can pick only one");
+            bootbox.alert($('#Labels_ErrorItemExceeded').val());
         }
     });
 
