@@ -312,6 +312,14 @@ box-shadow:none  !important;
   color:#ffffff !important;
 }
 
+.panel-group-options .panel {
+    overflow: initial!important;
+}
+
+.panel-options .panel-title{
+    width: 100%;
+}
+
 .custom-button .btn-save {
   color: #ff8c00;
   background-color: rgba(0,0,0,0.4);
@@ -443,4 +451,8 @@ box-shadow:none  !important;
     outline: 0 !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
+}
+
+.padder-btn {
+    padding: 10px 25px;
 }
