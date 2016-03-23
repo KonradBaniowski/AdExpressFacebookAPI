@@ -160,7 +160,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     TextStyle(sheet.Cells[rowStart, coltmp], HeaderTabText, HeaderTabBackground);
                     //BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
                     
-                    BorderStyle(sheet,, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet,range, CellBorderType.Thin, HeaderBorderTab);
                 }
                 else
                 {
