@@ -100,8 +100,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult MediaSelection()
         {
-            //var model = new MediaSelectionViewModel();
-
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var result = _mediaService.GetMedia(webSessionId);
