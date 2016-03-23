@@ -36,15 +36,27 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <summary>
         /// Constructor
         /// </summary>
+        //public CellRadioCreativeLink(string creative, WebSession webSession, long vehicleId)
+        //{
+        //    if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
+        //    _link = "javascript:openDownload('{0}','{1}','{2}');";
+        //    _creative = creative;
+        //    _webSession = webSession;
+        //    _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[webSession.SiteLanguage].Name+"/Images/Common/Picto_Radio.gif";
+        //    _vehicleId = vehicleId;
+        //}
+
+
         public CellRadioCreativeLink(string creative, WebSession webSession, long vehicleId)
         {
             if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
-            _link = "javascript:openDownload('{0}','{1}','{2}');";
+            _link = "{0},{1},{2}";
             _creative = creative;
             _webSession = webSession;
-            _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[webSession.SiteLanguage].Name+"/Images/Common/Picto_Radio.gif";
+            _imagePath = "/App_Themes/" + WebApplicationParameters.Themes[webSession.SiteLanguage].Name + "/Images/Common/Picto_Radio.gif";
             _vehicleId = vehicleId;
         }
+
         #endregion
 
         #region Implémentation de GetLink
