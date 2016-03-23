@@ -19,19 +19,24 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="pull-right custom-button">
+        <div class="pull-right custom-button">          
             <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-valider">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
         </div>
     </div>
 </div>
-<div class="row h20"></div>
+<div class="h20">
+</div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-12">
         @Html.Action("ResultOptions", _controller)
     </div>
-    <div class="col-md-9">
+</div>
+<div class="h20">
+</div>
+<div class="row">
+    <div class="col-md-12">
         <center>
             <div id="grid" class="hide">
             </div>
@@ -259,6 +264,7 @@
             $('#validate-options').on('click', function (e) {
                 $("#grid").addClass("hide");
                 $("#gridLoader").removeClass("hide");
+                $("#collapseContainerOne").collapse('hide');
                 CallSetOptions();
             });
 
