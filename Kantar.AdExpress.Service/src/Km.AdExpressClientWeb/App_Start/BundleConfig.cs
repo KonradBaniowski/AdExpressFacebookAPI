@@ -48,6 +48,10 @@ namespace Km.AdExpressClientWeb
                        "~/Scripts/universe/listbox.js",
                        "~/Scripts/universe/universe.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/universe-open").Include(
+                       "~/Scripts/universe/listbox.js",
+                       "~/Scripts/universe/universe-open.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.css",

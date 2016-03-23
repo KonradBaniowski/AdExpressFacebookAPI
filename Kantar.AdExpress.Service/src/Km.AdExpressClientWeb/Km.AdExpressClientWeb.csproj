@@ -1447,6 +1447,7 @@
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
     <Content Include="Scripts\universe\listbox.js" />
+    <Content Include="Scripts\universe\universe-open.js" />
     <Content Include="Scripts\universe\universe.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />

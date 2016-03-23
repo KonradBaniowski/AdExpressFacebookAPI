@@ -100,8 +100,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult MediaSelection()
         {
-            //var model = new MediaSelectionViewModel();
-
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var result = _mediaService.GetMedia(webSessionId);
@@ -240,11 +238,16 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var gridResult = _portofolioService.GetGridResult(idWebSession);
 
-            string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+            JsonResult jsonModel = new JsonResult();
+            if (gridResult !=null)
+            {
+                string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
-            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
-            jsonModel.MaxJsonLength = Int32.MaxValue;
+                var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+                 jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+            }
 
             return jsonModel;
         }

@@ -43,22 +43,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerSession = (WebSession)WebSession.Load(idWebSession);
 #if Debug
             //TODO : Resultat pour calendrier d'actiion : a enlever apres tests
-            //_customerSession.CurrentTab = 6;
+           // _customerSession.CurrentTab = 6;
 
             //TODO :  selection support :  : a enlever apres tests
-            TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
-            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            //TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
+            //Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 
-            int groupIndex = 0;
-            Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
-            NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
-            Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
-            List<long> idUniversItems = new List<long>();
-            idUniversItems.Add(2003);//EUROPE 1
-            treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
-            adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
-            universes.Add(universes.Count, adExpressUniverse);
-            _customerSession.PrincipalMediaUniverses = universes;
+            //int groupIndex = 0;
+            //Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
+            //NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
+            //Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
+            //List<long> idUniversItems = new List<long>();
+            //idUniversItems.Add(2003);//EUROPE 1
+            //treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
+            //adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
+            //universes.Add(universes.Count, adExpressUniverse);
+            //_customerSession.PrincipalMediaUniverses = universes;
 
             //ArrayList levelIds = new ArrayList();
             //levelIds.Add(11);

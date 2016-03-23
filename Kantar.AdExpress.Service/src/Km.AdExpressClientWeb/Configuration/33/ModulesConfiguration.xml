@@ -112,7 +112,7 @@
         </results>
       </module>
       <!-- *****************************************      Present / Absent                    *****************************************-->
-      <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
+      <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/PresentAbsent/MediaSelection" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.France.dll" class="TNS.AdExpressI.PresentAbsent.DAL.France.PresentAbsentDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
@@ -153,6 +153,17 @@
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected">-->
           <selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/MediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected">
@@ -419,7 +430,7 @@
         </results>
       </module>
       <!-- *****************************************      Lost / Won                          *****************************************-->
-      <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
+      <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/LostWon/MediaSelection" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
@@ -463,6 +474,17 @@
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">-->
           <selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/MediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">          
@@ -767,7 +789,7 @@
         </results>
       </module>
       <!-- *****************************************      Portefeuille d'un support           *****************************************-->
-      <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Portfolio/PeriodSelection" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
+      <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Portfolio/MediaSelection" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.France.dll" class="TNS.AdExpressI.Portofolio.DAL.France.PortofolioDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
@@ -802,6 +824,17 @@
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>           
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/PortofolioDetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>-->
           <!--<selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/PortofolioMediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>-->
