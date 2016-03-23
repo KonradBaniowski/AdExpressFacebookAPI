@@ -148,11 +148,27 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (header is HeaderMediaSchedule)
                     continue;
 
-                sheet.Cells[rowStart, coltmp].Value = header.Label;
+                if (header.ColSpan > 1)
+                {
+                    Range range = sheet.Cells.CreateRange(rowStart, coltmp, 1, header.ColSpan);
+                    range.Merge();
 
-                TextStyle(sheet.Cells[rowStart, coltmp], HeaderTabText, HeaderTabBackground);
-                BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
+                    //sheet.Cells.Merge(rowStart, coltmp, 1, header.ColSpan);
 
+                    sheet.Cells[rowStart, coltmp].Value = header.Label;
+                    
+                    TextStyle(sheet.Cells[rowStart, coltmp], HeaderTabText, HeaderTabBackground);
+                    //BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
+                    
+                    BorderStyle(sheet,, CellBorderType.Thin, HeaderBorderTab);
+                }
+                else
+                {
+                    sheet.Cells[rowStart, coltmp].Value = header.Label;
+
+                    TextStyle(sheet.Cells[rowStart, coltmp], HeaderTabText, HeaderTabBackground);
+                    BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
+                }
                 coltmp++;
             }
 
