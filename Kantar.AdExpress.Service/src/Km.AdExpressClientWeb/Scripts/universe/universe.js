@@ -319,8 +319,15 @@ $(function () {
 });
 
 //clean l element selectionnée
-$(document).on('click', '.tab-content li', function () {
-    this.remove();
+$(document).on('click', '.tab-content li > .pull-right', function () {
+    var DIS = this;
+    var parent = $(this).parents('.items-famille');
+    var header = $(this).parents('.panel.panel-results');
+    $(DIS).parents('li').remove()
+
+    if (parent.find('li').length == 0) {
+        header.find('a').collapse('hide');
+    }
 });
 
 $(document).on('click', '#btnSaveUnivers', function (event) {
