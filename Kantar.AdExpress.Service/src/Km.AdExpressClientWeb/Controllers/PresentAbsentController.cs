@@ -235,7 +235,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult PortfolioResult()
+        public JsonResult PresentAbsentResult()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();

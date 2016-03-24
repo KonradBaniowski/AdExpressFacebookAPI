@@ -53,6 +53,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
             adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
             universes.Add(universes.Count, adExpressUniverse);
+
+            groupIndex++;
+            elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
+            treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
+            elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
+            idUniversItems = new List<long>();
+            idUniversItems.Add(2001);//RMC INFO
+            treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
+            adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
+            universes.Add(universes.Count, adExpressUniverse);
+
             _customerSession.PrincipalMediaUniverses = universes;
 
             //ArrayList levelIds = new ArrayList();
