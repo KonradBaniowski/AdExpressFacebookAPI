@@ -1719,6 +1719,7 @@ ul.ui-selectable {
         opacity: 0.3;
         text-decoration: none;
     }*/
+
 .items-famille{
  list-style-type: none;
  margin: 0;
@@ -1785,3 +1786,24 @@ ul.ui-selectable {
  background:rgba(0,0,0,0.2);
  padding: 10px 15px;
 }
+
+
+
+
+/***Insertion***/
+.media.video-audio-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+
+.media.video-audio-container iframe,  .video-audio-container object,  .video-audio-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+

@@ -102,13 +102,16 @@
 
                 <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="font-normal"></h4>
+                    <h4 class="font-normal">Spot</h4>
                 </div>
 
                 <div class="modal-body">
-                    <center>
-                        <iframe id="creativeStream" src="" frameborder="0" height="300" width="450" allowfullscreen></iframe>
-                    </center>
+                    <div class="media video-audio-container">
+                        <iframe id="creativeStream" src="" frameborder="0" allowfullscreen></iframe>
+                        <div id="mediaLoader">
+                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -123,14 +126,24 @@
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 
 
-    @*<script id="colSpotTmpl" type="text/template">
-       {{if ${Spot} != 'C_L' }} ${Spot} {{else}}
-        <a href='#creativeModal' data-toggle='modal' data-creative='http://adexpress.kantarmedia.fr/SpotsRadio/2016/MP3/2${Version}.MP3?autoplay=1'><i class='glyphicon glyphicon-music text-5x'></i></a> {{/if}}
-    </script>*@
+    <script id="colSpotTmpl" type="text/template">
+        {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }} 
+            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='glyphicon glyphicon-play-round text-5x'></i></a>
+        {{else}}
+            ${Spot}
+        {{/if}}
+    </script>
 
+    <script id="colVisuTmpl" type="text/template">
+        {{if ${Visu}.startsWith('[') && ${Visu}.endsWith(']') }}
+            <div class="visuCarou" data-visu="${Visu}"></div>
+        {{else}}
+            ${Visu}
+        {{/if}}
+    </script>
 
     <script>
-        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+        if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
         $(function () {
 
             //GESTION DES ACTIVES CSS
@@ -211,6 +224,7 @@
                     alert(error);
                 }
 
+                AutoPlayVisu();
             }
 
             function CallInsertionsResult(idVehicle) {
@@ -244,6 +258,12 @@
                             });
 
                             cols = data.columns
+                            for (i = 0; i < cols.length; i++) {
+                                if (cols[i].key == "Spot")
+                                    cols[i].template = $("#colSpotTmpl").html();
+                                else if(cols[i].key == "Visu")
+                                    cols[i].template = $("#colVisuTmpl").html();
+                            }
 
                             ds = new $.ig.DataSource({
                                 type: "json",
@@ -310,49 +330,71 @@
             CallGetPresentVehicles();
 
             AutoPlayCreativeModal();
+
         });
 
         function AutoPlayCreativeModal() {
 
             $("#creativeStream").attr('src', '');
 
-            /* Assign the initially stored url back to the iframe src
-            attribute when modal is displayed */
             $("#creativeModal").on('shown.bs.modal', function (event) {
                 var button = $(event.relatedTarget);// Button that triggered the modal
-                var datas = button.data('creative'); // Extract info from data-* attributes
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace("/\[|\]/g", '');
                 datas = datas.split(",");
-                var parameters = {                   
-                    idVersion: datas[0],
-                    idVehicle: datas[2]
-                };
-                $.ajax({
-                    url: '@Url.Action("GetCreativePath", "Insertions")',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: 'POST',
-                    datatype: 'JSON',
-                    data: parameters,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                        alert("Erreur lors de la recuperation de url de la version");
-                    },
-                    success: function (response) {
-                        if (response != null) {
-                            var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
-                            var urlDowload = response.PathDownloadingFile;
-                            if (url) {
-                                $("#creativeStream").attr('src', url);
-                                $('#creativeModal h4').text("Spot");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var parameters = {
+                        idVersion: datas[0],
+                        idVehicle: datas[2]
+                    };
+                    $.ajax({
+                        url: '@Url.Action("GetCreativePath", "Insertions")',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: parameters,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                            alert("Erreur lors de la recuperation de url de la version");
+                        },
+                        success: function (response) {
+                            if (response != null) {
+                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
+                                var urlDowload = response.PathDownloadingFile;
+                                if (url) {
+                                    $("#creativeStream").attr('src', url);
+                                    $('#creativeModal h4').text("Spot");
+                                    $("#mediaLoader").addClass("hide");
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             });
 
-            /* Assign empty url value to the iframe src attribute when
-            modal hide, which stop the video playing */
             $("#creativeModal").on('hide.bs.modal', function () {
                 $("#creativeStream").attr('src', '');
+                $("#mediaLoader").removeClass("hide");
             });
         }
+
+        function AutoPlayVisu() {
+
+            var divs = $(".visuCarou");
+            for (var i = 0; i < divs.length; i++) {
+                var datas = divs[i].data('visu').toString(); // Extract info from data-* attributes
+                datas = datas.replace("/\[|\]/g", '');
+                datas = datas.split(",");
+                for (i = 0; i < datas.length; i++) {
+                    divs[i].innerHTML = "<img src='http://www.visitdenmark.fr/sites/all/themes/visit/images/loading.png' />";
+                }
+            }
+
+        }
+
+
     </script>
 }
