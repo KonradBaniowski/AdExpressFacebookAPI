@@ -1696,6 +1696,7 @@ ul.ui-selectable {
     width: 100%;
 }
 
+
 /*.fig {
     color: #ffffff;
     font-weight: 200;
@@ -1718,3 +1719,69 @@ ul.ui-selectable {
         opacity: 0.3;
         text-decoration: none;
     }*/
+.items-famille{
+ list-style-type: none;
+ margin: 0;
+ padding: 0;
+ line-height:21px;
+}
+.items-famille li{
+ color:#fff;
+ cursor:pointer !important;
+ 
+}
+.items-famille li.select{
+ color:#ff8c00;
+ font-weight: bolder;
+ 
+}
+.items-famille button{
+ background:none;
+ border:0;
+ padding: 0;
+ 
+}
+.items-famille-ma{
+ list-style-type: none;
+ margin: 0;
+ padding: 0;
+ line-height:21px;
+ background:rgb(165, 165, 165);
+}
+.items-famille-ma li{
+ color:#fff;
+ cursor:pointer !important;
+ 
+}
+.items-famille-ma li a{
+ 
+ 
+}
+.items-famille-ma li.select{
+ color:#ff8c00;
+ font-weight: bolder;
+ 
+}
+.items-famille-ma button{
+ background:none;
+ border:0;
+ padding: 0;
+ 
+}
+.items-famille-ma > li > div.checkbox{
+    width: 90%;
+}
+.items-famille-ma-alertes{
+ list-style-type: none;
+ margin: 0;
+ padding: 0;
+ line-height:21px;
+}
+.items-famille-ma-alertes li{
+ color:#fff;
+ cursor:pointer !important; 
+}
+.head-famille{
+ background:rgba(0,0,0,0.2);
+ padding: 10px 15px;
+}
