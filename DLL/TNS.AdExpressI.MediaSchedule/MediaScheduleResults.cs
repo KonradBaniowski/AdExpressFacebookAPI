@@ -1912,7 +1912,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 string monthLabel = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
                                 string monthKey = "m" + data[0, j].ToString();
                                 string monthLabelHtml = "<span class=\"open-media-schedule\" date=\"" + data[0, j].ToString() + "\" style=\"cursor:pointer;\">" + monthLabel + "</span>";
-                                periodColumnsL1.Add(new { headerText = monthLabelHtml, key = monthKey, dataType = "string", width = "20", template = "<span {{if ${" + monthKey + "} == 1 }} class='orangeTg' {{elseif ${" + monthKey + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
+                                periodColumnsL1.Add(new { headerText = monthLabelHtml, key = monthKey, dataType = "string", width = "20", template = "<span {{if ${" + monthKey + "} == 1 }} class='orangeTg' {{elseif ${" + monthKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + monthKey + "} == 3 }} class='blackTg' {{else}} class='${" + monthKey + "}' {{/if}} ></span>" });
                                 schemaFields.Add(new { name = monthKey });
                                 tableWidth += 30;
                                 break;
@@ -1931,12 +1931,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 string weekLabelHtml = "<span class=\"open-media-schedule\" date=\"" + data[0, j].ToString() + "\" style=\"cursor:pointer;\">" + weekLabel + "</span>";
                                 if (!IsCreativeDivisionMS)
                                 {
-                                    periodColumnsL1.Add(new { headerText = weekLabelHtml, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
+                                    periodColumnsL1.Add(new { headerText = weekLabelHtml, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + weekLabel + "} == 3 }} class='blackTg' {{else}} class='${" + weekLabel + "}' {{/if}} ></span>" });
                                     schemaFields.Add(new { name = weekLabel });
                                 }
                                 else
                                 {
-                                    periodColumnsL1.Add(new { headerText = weekLabelHtml, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
+                                    periodColumnsL1.Add(new { headerText = weekLabelHtml, key = weekLabel, dataType = "string", width = "*", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + weekLabel + "} == 3 }} class='blackTg' {{else}} class='${" + weekLabel + "}' {{/if}} ></span>" });
                                     schemaFields.Add(new { name = weekLabel });
                                 }
                                 tableWidth += 30;
@@ -1982,15 +1982,15 @@ namespace TNS.AdExpressI.MediaSchedule {
                         periodColumnsL1.Add(new { headerText = currentDay.ToString("dd"), group = periodColumnsL2 });
                         //Period day
                         string dayLabel = DayString.GetCharacters(currentDay, cultureInfo, 1);
-                        string dayKey = dayLabel + currentDay.ToString("dd");
+                        string dayKey = currentDay.ToString("yyyyMMdd") + currentDay.ToString("dd");
                         if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
                         {
-                            periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "*", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
+                            periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "*", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + dayKey + "} == 3 }} class='blackTg' {{else}} class='${" + dayKey + "}' {{/if}} ></span>" });
                             schemaFields.Add(new { name = dayKey });
                         }
                         else
                         {
-                            periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "*", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{else}} class='blackTg' {{/if}} ></span>" });
+                            periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "*", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + dayKey + "} == 3 }} class='blackTg' {{else}} class='${" + dayKey + "}' {{/if}} ></span>" });
                             schemaFields.Add(new { name = dayKey });
                         }
                         tableWidth += 30;
@@ -2038,10 +2038,35 @@ namespace TNS.AdExpressI.MediaSchedule {
                 {
                     gridColumnId = 0;
 
+                    #region Color Management
+                    if (sloganIndex != -1 && data[i, sloganIndex] != null &&
+                        ((detailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == detailLevel.GetNbLevels) ||
+                        (detailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < detailLevel.GetNbLevels && data[i, sloganIndex + 1] == null)))
+                    {
+                        sloganId = Convert.ToInt64(data[i, sloganIndex]);
+                        if (!_session.SloganColors.ContainsKey(sloganId))
+                        {
+                            colorNumberToUse = (colorItemIndex % _style.CellVersions.Count) + 1;
+                            cssClasse = _style.CellVersions[colorNumberToUse];
+                            cssClasseNb = _style.CellVersions[colorNumberToUse];
+                            _session.SloganColors.Add(sloganId, _style.CellVersions[colorNumberToUse]);
+                            colorItemIndex++;
+                        }
+                        cssPresentClass = _session.SloganColors[sloganId].ToString();
+                        cssExtendedClass = _session.SloganColors[sloganId].ToString();
+                        stringItem = "x";
+                    }
+                    else
+                    {
+                        cssPresentClass = _style.CellPresent;
+                        cssExtendedClass = _style.CellExtended;
+                        stringItem = "&nbsp;";
+                    }
+                    #endregion
+
                     #region Line Treatement
                     for (int j = 0; j < nbColTab; j++)
                     {
-                        
                         switch (j)
                         {
 
@@ -2212,15 +2237,18 @@ namespace TNS.AdExpressI.MediaSchedule {
                                             if (_showValues)
                                             {
                                                 if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                                                    gridData[i - 1, gridColumnId++] = string.Format("<td class=\"{0}\">{1}</td>", cssPresentClass, Units.ConvertUnitValueToString(((MediaPlanItemIds)data[i, j]).IdsNumber.Value, _session.Unit, fp));
+                                                    gridData[i - 1, gridColumnId++] = string.Format("<span class=\"{0}\">{1}</span>", cssPresentClass, Units.ConvertUnitValueToString(((MediaPlanItemIds)data[i, j]).IdsNumber.Value, _session.Unit, fp));
                                                 else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
-                                                    gridData[i - 1, gridColumnId++] = string.Format("<td class=\"{0}\">{1}</td>", cssPresentClass, Units.ConvertUnitValueToString(((MediaPlanItem)data[i, j]).Unit, _session.Unit, fp));
+                                                    gridData[i - 1, gridColumnId++] = string.Format("<span class=\"{0}\">{1}</span>", cssPresentClass, Units.ConvertUnitValueToString(((MediaPlanItem)data[i, j]).Unit, _session.Unit, fp));
                                                 else
-                                                    gridData[i - 1, gridColumnId++] = string.Format("<td class=\"{0}\">{1}</td>", cssPresentClass, string.Format(fp, unit.StringFormat, ((MediaPlanItem)data[i, j]).Unit));
+                                                    gridData[i - 1, gridColumnId++] = string.Format("<span class=\"{0}\">{1}</span>", cssPresentClass, string.Format(fp, unit.StringFormat, ((MediaPlanItem)data[i, j]).Unit));
                                             }
                                             else
                                             {
-                                                gridData[i - 1, gridColumnId++] = 1; // string.Format("<span class=\"orangeTg\">{0}</span>", stringItem);
+                                                if (stringItem == "x")
+                                                    gridData[i - 1, gridColumnId++] = "version " + cssPresentClass;
+                                                else
+                                                    gridData[i - 1, gridColumnId++] = 1; // string.Format("<span class=\"orangeTg\">{0}</span>", stringItem);
                                             }
                                             //if (string.IsNullOrEmpty(_zoom) && data[0, j] != null && !_activePeriods.Contains(Convert.ToString(data[0, j]).Trim()))
                                             //{
@@ -2228,7 +2256,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                                             //}
                                             break;
                                         case DetailledMediaPlan.graphicItemType.extended:
-                                            gridData[i - 1, gridColumnId++] = 2; //string.Format("<span class=\"orangeExtendedTg\">&nbsp;</span>", cssExtendedClass);
+                                            if (stringItem == "x")
+                                                gridData[i - 1, gridColumnId++] = cssExtendedClass;
+                                            else
+                                                gridData[i - 1, gridColumnId++] = 2; //string.Format("<span class=\"orangeExtendedTg\">&nbsp;</span>", cssExtendedClass);
                                             break;
                                         default:
                                             gridData[i - 1, gridColumnId++] = 3; //string.Format("<span class=\"blackTg\">&nbsp;</span>");

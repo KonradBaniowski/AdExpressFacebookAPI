@@ -144,7 +144,7 @@
                             autoGenerateColumns: false,
                             primaryKey: "ID_PRODUCT",
                             foreignKey: "PID",
-                            width: "1100px",
+                            width: "1140px",
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -222,6 +222,13 @@
                             ]
                         })
                     }
+
+                    $("#grid").igTreeGrid({
+                        rowCollapsed: function (evt, ui) {
+                            $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                        }
+                    });
+
                     $(".open-media-schedule").on('click', function (e) {
                         $("#perioddetailTypeContainer").removeClass("show").addClass("hide");
                         GetSubPeriodSelection('' + $(this).attr("date"));
