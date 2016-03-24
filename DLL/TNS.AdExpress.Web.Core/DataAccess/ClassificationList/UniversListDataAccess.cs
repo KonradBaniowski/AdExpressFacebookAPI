@@ -16,14 +16,16 @@ using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 using TNS.AdExpress.Web.Core.Exceptions;
-using DBConstantes=TNS.AdExpress.Constantes.DB;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
-using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
-using webConstantes=TNS.AdExpress.Constantes.Web;
+using ClassificationConstantes = TNS.AdExpress.Constantes.Classification;
+using webConstantes = TNS.AdExpress.Constantes.Web;
 
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
+using System.Linq;
+
 namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 	/// <summary>
 	/// Class used for connections with the datebase in management of the universes
@@ -529,21 +531,132 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			//retourne l'objet deserialized ou null si il y a eu un probleme
 			return(o);
 		}
-		#endregion
 
-		#region SaveUniverse
-		/// <summary>
-		/// Sauvegarde d'un nouvel univers
+        /// <summary>
+		/// Méthode pour la récupération et la "deserialization" d'un objet WebSession à partir de la table Universe Client
 		/// </summary>
-		/// <remarks>A Tester</remarks>
-		/// <param name="idGroupUniverse">Identifiant du groupe d'univers</param>
-		/// <param name="universe">Non de l'univers</param>
-		/// <param name="alUniverseTreeNode"> Liste contenant les 2 arbres utilisés pour la sauvegarde des univers</param>
-		/// <param name="type">Branche de l'univers</param>
-		/// <param name="webSession">Session utilisateur</param>
-		/// <param name="idUniverseClientDescription">idUniverseClientDescription</param>
-		/// <returns>Retourne true si l'univers a été crée</returns>
-		public static bool SaveUniverse(Int64 idGroupUniverse,string universe,ArrayList alUniverseTreeNode,TNS.AdExpress.Constantes.Classification.Branch.type type,Int64 idUniverseClientDescription,WebSession webSession){
+		/// <param name="idUniverse">Identifiant de l'univers</param>
+		/// <param name="webSession">Session du client</param>
+		/// <returns>Retourne l'objet récupéré ou null si il y a eu un problème non géré</returns>
+		public static Object GetTreeNodeUniverseWithMedia(Int64 idUniverse, WebSession webSession,List<long> medias)
+        {
+
+            #region Ouverture de la base de données
+            bool DBToClosed = false;
+            OracleConnection cnx = (OracleConnection)webSession.Source.GetSource();
+
+            if (cnx.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new UniversListException("Impossible d'ouvrir la base de données", e));
+                }
+            }
+            #endregion
+
+            #region Chargement et deserialization de l'objet
+            OracleCommand sqlCommand = null;
+            MemoryStream ms = null;
+            BinaryFormatter bf = null;
+            byte[] binaryData = null;
+            Object o = null;
+            try
+            {
+                Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
+                binaryData = new byte[0];
+                //create anonymous PL/SQL command
+                string block = " BEGIN " +
+                    " SELECT blob_universe_client INTO :1, FILTER FROM " + universeTable.Sql
+                    + " WHERE id_universe_client = " + idUniverse + "; " +
+                    " END; ";
+                sqlCommand = new OracleCommand(block);
+                sqlCommand.Connection = cnx;
+                sqlCommand.CommandType = CommandType.Text;
+                //Initialize parametres
+                OracleParameter param = sqlCommand.Parameters.Add("blobfromdb1", OracleDbType.Blob);               
+                param.Direction = ParameterDirection.Output;
+
+                OracleParameter filtersList = sqlCommand.Parameters.Add("FILTER", OracleDbType.Varchar2);
+                param.Direction = ParameterDirection.Output;
+
+                //Execute PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+                //Récupération des octets du blob
+                binaryData = (byte[])((OracleBlob)(sqlCommand.Parameters[0].Value)).Value;
+
+                //Récupérations des médias
+                var filters = Convert.ToString((sqlCommand.Parameters[1].Value));
+                if (!string.IsNullOrEmpty(filters))
+                {
+                    medias = filters.Select(s => Convert.ToInt64(s)).ToList();
+                }
+
+                //Deserialization oft the object
+                ms = new MemoryStream();
+                ms.Write(binaryData, 0, binaryData.Length);
+                bf = new BinaryFormatter();
+                ms.Position = 0;
+                o = bf.Deserialize(ms);
+            }
+            #endregion
+
+            #region Gestion des erreurs de chargement et de deserialization de l'objet
+            catch (System.Exception e)
+            {
+                try
+                {
+                    // Fermeture des structures
+                    if (ms != null) ms.Close();
+                    if (bf != null) bf = null;
+                    if (binaryData != null) binaryData = null;
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (System.Exception et)
+                {
+                    throw (new UniversListException("Impossible de libérer les ressources après échec de la méthode", et));
+                }
+                throw (new UniversListException("Problème au chargement de la session à partir de la base de données", e));
+            }
+            try
+            {
+                // Fermeture des structures
+                if (ms != null) ms.Close();
+                if (bf != null) bf = null;
+                if (binaryData != null) binaryData = null;
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+            }
+            catch (System.Exception et)
+            {
+                throw (new UniversListException("Impossible de fermer la base de données : ", et));
+            }
+            #endregion
+
+            //retourne l'objet deserialized ou null si il y a eu un probleme
+            return (o);
+        }
+        #endregion
+
+        #region SaveUniverse
+        /// <summary>
+        /// Sauvegarde d'un nouvel univers
+        /// </summary>
+        /// <remarks>A Tester</remarks>
+        /// <param name="idGroupUniverse">Identifiant du groupe d'univers</param>
+        /// <param name="universe">Non de l'univers</param>
+        /// <param name="alUniverseTreeNode"> Liste contenant les 2 arbres utilisés pour la sauvegarde des univers</param>
+        /// <param name="type">Branche de l'univers</param>
+        /// <param name="webSession">Session utilisateur</param>
+        /// <param name="idUniverseClientDescription">idUniverseClientDescription</param>
+        /// <returns>Retourne true si l'univers a été crée</returns>
+        public static bool SaveUniverse(Int64 idGroupUniverse,string universe,ArrayList alUniverseTreeNode,TNS.AdExpress.Constantes.Classification.Branch.type type,Int64 idUniverseClientDescription,WebSession webSession){
 
 			#region Ouverture de la base de données
 			OracleConnection connection=(OracleConnection) webSession.Source.GetSource();

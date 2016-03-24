@@ -211,9 +211,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region try block
                 #region Get AdExpressUniverse
                 int index = 0;
+                List<long> medias = new List<long>();
                 webSession = (WebSession)WebSession.Load(webSessionId);
                 Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)
-                TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(userUniversId, webSession);
+                TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetTreeNodeUniverseWithMedia(userUniversId, webSession, medias);
                 var adExpressUniverse = Universes[index];
                 #endregion
                 #region Iterate by Access Type
