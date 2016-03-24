@@ -1889,7 +1889,7 @@ namespace TNS.AdExpressI.Insertions
                 }
                 else
                 {
-                    columns.Add(new { headerText = "Visu", key = "Visu", dataType = "string" });
+                    columns.Add(new { headerText = "", key = "Visu", dataType = "string" });
                     schemaFields.Add(new { name = "Visu" });
                 }
 
