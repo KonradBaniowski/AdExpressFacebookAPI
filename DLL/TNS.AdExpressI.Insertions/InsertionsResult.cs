@@ -1872,7 +1872,7 @@ namespace TNS.AdExpressI.Insertions
                 List<object> columnsFixed = new List<object>();
 
                 _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-                int creativeIndexInResultTable = -1;
+                //int creativeIndexInResultTable = -1;
 
                 if (_data.NewHeaders != null)
                 {
@@ -1907,15 +1907,9 @@ namespace TNS.AdExpressI.Insertions
 
                         for (k = 1; k < _data.ColumnsNumber - 1; k++)
                         {
-                            if (_data[i, k] !=null && _data[i, k] is CellImageLink)
-                            {
-                                gridData[i, k + 1] = "C_L";
-                            }
-                            else
-                                gridData[i, k + 1] = _data[i, k].RenderString();
+                            gridData[i, k + 1] = _data[i, k].RenderString();
                         }
                     }
-
                 }
                 catch (Exception err)
                 {
