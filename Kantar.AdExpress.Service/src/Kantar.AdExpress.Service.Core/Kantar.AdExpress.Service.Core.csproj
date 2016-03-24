@@ -90,6 +90,7 @@
     <Compile Include="Domain\ResultOptions\AutoPromoOption.cs" />
     <Compile Include="Domain\ResultOptions\FormatFilter.cs" />
     <Compile Include="Domain\ResultOptions\FormatOption.cs" />
+    <Compile Include="Domain\ResultOptions\GenericColumnDetailLevelFilter.cs" />
     <Compile Include="Domain\ResultOptions\GenericColumnDetailLevelOption.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelFilter.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelOption.cs" />

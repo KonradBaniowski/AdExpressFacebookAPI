@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 {
-    public class GenericColumnDetailLevelOption
+   public class GenericColumnDetailLevelFilter
     {
-        public SelectControl L1Detail { get; set; }
+        public int L1DetailValue { get; set; }
 
-   
     }
 }

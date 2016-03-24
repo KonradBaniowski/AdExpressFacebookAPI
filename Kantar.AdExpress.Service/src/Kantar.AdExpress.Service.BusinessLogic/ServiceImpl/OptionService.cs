@@ -47,6 +47,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             Options options = new Options();
 
+            options.SiteLanguage = _customerWebSession.SiteLanguage;
 
             switch (_customerWebSession.CurrentModule)
             {
@@ -56,7 +57,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                     _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
                     _nbDetailLevelItemList = 3;
                     break;
@@ -179,6 +180,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             options.GenericDetailLevel = genericDetailLevelOption;
+
+            options.GenericColumnDetailLevelOption = GetGenericColumnLevelDetailOptions();
             #endregion
 
             #region PeriodDetailOption
@@ -410,11 +413,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                     _nbDetailLevelItemList = 3;
-                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
+                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;                  
                     break;
             }
+
+            if(_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
+            SetGenericColumnLevelDetailOptions(userFilter);
+
             #region GenericDetailLevelFilter
             ArrayList levels = new ArrayList();
 
@@ -466,7 +473,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                     _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
                     #region  resultTypeFilter
                     _customerWebSession.CurrentTab = userFilter.ResultTypeFilter.ResultType;

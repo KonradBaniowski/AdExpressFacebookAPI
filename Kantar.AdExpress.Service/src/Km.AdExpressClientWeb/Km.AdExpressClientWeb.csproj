@@ -196,6 +196,7 @@
     <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
     <Compile Include="Models\Shared\PresentationModel.cs" />
