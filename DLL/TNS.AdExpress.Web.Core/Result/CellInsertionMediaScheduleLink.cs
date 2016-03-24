@@ -29,13 +29,22 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <param name="webSession">Identifiant du produit</param>
         /// <param name="productId">Identifiant du produit</param>
         /// <param name="vehicleId">Identifiant du media</param>
-        public CellInsertionMediaScheduleLink(WebSession webSession,Int64 productId,long vehicleId) {
-            if(webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
-            _webSession=webSession;
-            _productId=productId;
-            _vehicleId=vehicleId;
-            _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[_webSession.SiteLanguage].Name+"/Images/Common/picto_plus.gif";
-            _link="javascript:OpenMediaPlanAlert('{0}','{1}','{2}');";
+        //public CellInsertionMediaScheduleLink(WebSession webSession,Int64 productId,long vehicleId) {
+        //    if(webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
+        //    _webSession=webSession;
+        //    _productId=productId;
+        //    _vehicleId=vehicleId;
+        //    _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[_webSession.SiteLanguage].Name+"/Images/Common/picto_plus.gif";
+        //    _link="javascript:OpenMediaPlanAlert('{0}','{1}','{2}');";
+        //}
+        public CellInsertionMediaScheduleLink(WebSession webSession, Int64 productId, long vehicleId)
+        {
+            if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
+            _webSession = webSession;
+            _productId = productId;
+            _vehicleId = vehicleId;
+            _imagePath = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Images/Common/picto_plus.gif";
+            _link = "{0},{1},{2}";
         }
         #endregion
 
