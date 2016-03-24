@@ -21,7 +21,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public GridResult GetGridResult(string idWebSession)
         {
-            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE);
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the present/absent result"));
             var parameters = new object[1];
@@ -34,7 +34,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public ResultTable GetResultTable(string idWebSession)
         {
             ResultTable data = null;
-            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE);
             _customerSession = (WebSession)WebSession.Load(idWebSession);
 #if Debug
             //TODO : Resultat pour calendrier d'actiion : a enlever apres tests
@@ -53,6 +53,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
             adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
             universes.Add(universes.Count, adExpressUniverse);
+
+
+            adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
+            elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
+            treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
+            elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
+            idUniversItems = new List<long>();
+            idUniversItems.Add(2001);//RMC INFO
+            treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
+            adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
+            universes.Add(universes.Count, adExpressUniverse);
+
             _customerSession.PrincipalMediaUniverses = universes;
 
             //ArrayList levelIds = new ArrayList();

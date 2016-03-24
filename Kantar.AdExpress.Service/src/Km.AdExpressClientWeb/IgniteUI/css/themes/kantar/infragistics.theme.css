@@ -851,7 +851,7 @@ tr[aria-level="3"] td .orange {
     border-top:none;
     text-align:center;
     font-weight:normal ;
-    font-size:12px;
+    font-size:11px;
 }
 
 tr[aria-level] td {
@@ -861,14 +861,14 @@ tr[aria-level] td {
     border-top: 0;
     padding: 1px 10px;
     font-weight: bolder;
-    font-size:12px;
+    font-size:11px;
     height:20px;
     white-space: nowrap;
 }
 
 tr[aria-level="0"] td{
     background-color: rgba(0,0,0,0.65);
-    font-size:13px;
+    font-size:11px;
     height:22px;
     color:#26caff;
 }
@@ -977,3 +977,361 @@ tr[aria-level="3"] td{
     border:none;
 }
 
+/*************************** Slogans cells ********************************/
+/* Present */
+span.pc0
+{
+    background-color:#646262;
+    color: #FFFFFF;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc1
+{
+    background-color:#CC99FF;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc2
+{
+    background-color:#993300;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc3
+{
+    background-color:#99CCFF;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc4
+{
+    background-color: #003300;
+    color: #FFFFFF;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc5
+{
+    background-color: #003366;
+    color: #FFFFFF;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc6
+{
+    background-color: #000080;
+    color: #FFFFFF;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc7
+{
+    background-color: #333399;
+    color: #FFFFFF;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc8
+{
+    background-color: #800000;
+    color: #FFFFFF;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc9
+{
+    background-color: #FF6600;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc10
+{
+    background-color: #808000;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc11
+{
+    background-color: #008000;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc12
+{
+    background-color: #008080;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc13
+{
+    background-color: #0000FF;
+    color: #FFFFFF;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc14
+{
+    background-color: #FF0000;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc15
+{
+    background-color: #FF9900;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc16
+{
+    background-color: #99CC00;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc17
+{
+    background-color: #339966;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc18
+{
+    background-color: #33CCCC;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc19
+{
+    background-color: #3366FF;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc20
+{
+    background-color: #800080;
+    color: #FFFFFF;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc21
+{
+    background-color: #FF00FF;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc22
+{
+    background-color: #FFCC00;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc23
+{
+    background-color: #FFFF00;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc24
+{
+    background-color: #00FF00;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc25
+{
+    background-color: #00FFFF;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc26
+{
+    background-color: #00CCFF;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc27
+{
+    background-color: #993366;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc28
+{
+    background-color: #FF99CC;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc29
+{
+    background-color: #FFCC99;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc30
+{
+    background-color: #FFFF99;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+span.pc31
+{
+    background-color: #CCFFCC;
+    color: #000000;
+    opacity: 1;
+    margin:-4px;
+    height:100%;
+    width:auto;
+    display:block;
+    text-align: center;
+}
+
+.version:before {
+   content: "X";
+}

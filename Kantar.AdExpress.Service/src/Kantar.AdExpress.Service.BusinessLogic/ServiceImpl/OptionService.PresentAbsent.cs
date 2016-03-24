@@ -6,21 +6,25 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public partial class OptionService
     {
+        protected GenericDetailLevel _genericColumnDetailLevel = null;
 
-        public GenericColumnDetailLevelOption GetGenericColumnLevelDetailOptions( )
+        private GenericColumnDetailLevelOption GetGenericColumnLevelDetailOptions()
         {
             GenericColumnDetailLevelOption genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
+            _genericColumnDetailLevel = _customerWebSession.GenericColumnDetailLevel;
 
             #region on vérifie que le niveau sélectionné à le droit d'être utilisé
             bool canAddDetail = false;
             try
             {
-                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericColumnDetailLevel, _customerWebSession.CurrentModule);
+                canAddDetail = CanAddColumnDetailLevel(_customerWebSession.GenericColumnDetailLevel, _customerWebSession.CurrentModule);
             }
             catch { }
             if (!canAddDetail)
@@ -35,41 +39,70 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Initialisation Niveau de détaille colonne
             if (_nbColumnDetailLevelItemList == 1)
             {
-                ColumnDetailLevelItemInit(genericColumnDetailLevelOption);
+                genericColumnDetailLevelOption = ColumnDetailLevelItemInit();
+                genericColumnDetailLevelOption.L1Detail.Visible = true;
             }
             #endregion
+
+            if (_nbColumnDetailLevelItemList == 1 && _genericColumnDetailLevel.GetNbLevels == 1 && _genericColumnDetailLevel.LevelIds[0] != null)
+            {
+                genericColumnDetailLevelOption.L1Detail.SelectedId = ((DetailLevelItemInformation.Levels)_genericColumnDetailLevel.LevelIds[0]).GetHashCode().ToString();
+            }
 
             return genericColumnDetailLevelOption;
         }
 
-        protected void ColumnDetailLevelItemInit(GenericColumnDetailLevelOption genericColumnDetailLevelOption)
+        private void SetGenericColumnLevelDetailOptions( UserFilter userFilter)
         {
-            genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
-            genericColumnDetailLevelOption.DefaultDetail.Id = "columnDetail_";
-            genericColumnDetailLevelOption.DefaultDetail.Items = new List<SelectItem>();
-            genericColumnDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
-            ArrayList AllowedColumnDetailLevelItems = GetAllowedColumnDetailLevelItems();
+            ArrayList levels = new ArrayList();
+
+            if (_nbColumnDetailLevelItemList == 1  )
+            {
+                levels.Add(userFilter.GenericColumnDetailLevelFilter.L1DetailValue);
+            }
+            if (levels.Count > 0)
+            {
+                _genericColumnDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
+            }
+
+            _customerWebSession.GenericColumnDetailLevel = _genericColumnDetailLevel;
+        }
+
+        protected GenericColumnDetailLevelOption ColumnDetailLevelItemInit()
+        {
+            var genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
+            genericColumnDetailLevelOption.L1Detail = new SelectControl();
+            genericColumnDetailLevelOption.L1Detail.Id = "columnDetail";
+           
+            var selectItems = new List<SelectItem>();
+            List<DetailLevelItemInformation> allowedColumnDetailLevelItems = GetAllowedColumnDetailLevelItems();
+            allowedColumnDetailLevelItems.ForEach(p => {
+                selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(p.WebTextId, _customerWebSession.SiteLanguage), Value = p.Id.GetHashCode().ToString() });
+            });
+            genericColumnDetailLevelOption.L1Detail.Items = selectItems;
+
+            return genericColumnDetailLevelOption;
+
         }
 
         /// <summary>
         /// Retourne les éléments des niveaux de détail colonne autorisés
         /// </summary>
         /// <returns>Niveaux de détail colonne</returns>
-        private ArrayList GetAllowedColumnDetailLevelItems()
+        private List<DetailLevelItemInformation> GetAllowedColumnDetailLevelItems()
         {
-
+            var levels = new List<DetailLevelItemInformation>();
             List<DetailLevelItemInformation.Levels> vehicleAllowedDetailLevelList = GetVehicleAllowedDetailLevelItems();
-            ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;
-            ArrayList list = new ArrayList();
+            ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;           
 
             List<DetailLevelItemInformation.Levels> vehicleAllowedColumnLevelList = GetVehicleAllowedColumnsLevelItems();
 
             foreach (DetailLevelItemInformation currentLevel in allowedColumnDetailLevelList)
                 if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id)
                     && vehicleAllowedColumnLevelList.Contains(currentLevel.Id))
-                    list.Add(currentLevel);
+                    levels.Add(currentLevel);
 
-            return list;
+            return levels;
 
         }
 
@@ -95,6 +128,53 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 vehicleList.Add(Convert.ToInt64(Vehicle));
             }
             return VehiclesInformation.GetColumnsDetailLevelList(vehicleList);
+        }
+
+        /// <summary>
+        /// Test si l'élément de niveau de détail peut être montré
+        /// </summary>
+        /// <param name="currentColumnDetailLevelItem">Elément de niveau de détail</param>
+        /// <param name="module">Module</param>
+        /// <returns>True si oui false sinon</returns>
+        private bool CanAddDetailLevelItem(DetailLevelItemInformation currentColumnDetailLevelItem, Int64 module)
+        {
+
+            switch (currentColumnDetailLevelItem.Id)
+            {
+                case DetailLevelItemInformation.Levels.mediaSeller:
+                    return (!_customerWebSession.isCompetitorAdvertiserSelected());
+                default:
+                    return (true);
+            }
+
+        }
+
+
+        /// <summary>
+        /// Test si un niveau de détail peut être montré
+        /// </summary>
+        /// <param name="currentColumnDetailLevel">Niveau de détail</param>
+        /// <param name="module">Module courrant</param>
+        /// <returns>True s'il peut être ajouté</returns>
+        protected virtual bool CanAddColumnDetailLevel(GenericDetailLevel currentColumnDetailLevel, Int64 module)
+        {
+            List<DetailLevelItemInformation> AllowedDetailLevelItems = GetAllowedColumnDetailLevelItems();
+            foreach (DetailLevelItemInformation currentColumnDetailLevelItem in currentColumnDetailLevel.Levels)
+            {
+                if (!AllowedDetailLevelItems.Contains(currentColumnDetailLevelItem)) return (false);
+                if (!CanAddDetailLevelItem(currentColumnDetailLevelItem, module)) return (false);
+            }
+            return (true);
+        }
+
+        /// <summary>
+        /// Vérifie si le client à le droit de voir un détail produit dans les plan media
+        /// </summary>
+        /// <returns>True si oui false sinon</returns>
+        private bool CheckProductDetailLevelAccess()
+        {
+            return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG));
+
         }
     }
 }

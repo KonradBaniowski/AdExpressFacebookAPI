@@ -10,6 +10,8 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
     {
         public GenericDetailLevelFilter GenericDetailLevelFilter { get; set; }
 
+        public GenericColumnDetailLevelFilter GenericColumnDetailLevelFilter { get; set; }
+
         public PeriodDetailFilter PeriodDetailFilter { get; set; }
 
         public UnitFilter UnitFilter { get; set; }

@@ -349,19 +349,11 @@ namespace TNS.AdExpressI.Classification.DAL
              * on the medias selected by the customer*/
             switch (_module.Id)
             {
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                 case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                    if (_dimension == Dimension.media)
-                    {
-                        string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
-                        if (!string.IsNullOrEmpty(vehicles))
-                        {
-                            sql.AppendFormat(" and wp.id_vehicle in ({0}) ", vehicles);
-                        }
-                        else if (!string.IsNullOrEmpty(VehiclesId))
-                        {
-                            sql.AppendFormat(" and wp.id_vehicle in ({0}) ", VehiclesId);
-                        }
-                    }
+                    VehicleFilter(sql, _dimension);
                     break;
                 case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
                 case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
@@ -783,36 +775,12 @@ namespace TNS.AdExpressI.Classification.DAL
                 {
                     //For module Media Schedule the data will be filter on selected media (ex. Identifer of media TELEVISION)
                     case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE:
+                    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE:
+                    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE:
                     case TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES:
-                        if (dimension == Dimension.media)
-                        {
-                            string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
-                            if (!string.IsNullOrEmpty(vehicles))
-                            {
-                                sql.AppendFormat(" and wp.id_vehicle in ({0}) ", vehicles);
-                            }
-                            else if (!string.IsNullOrEmpty(VehiclesId))
-                            {
-                                sql.AppendFormat(" and wp.id_vehicle in ({0}) ", VehiclesId);
-                            }
-
-
-                        }
-                        break;
-                    //For module Advertising Agency the data will be filter on selected media (ex. Identifer of media TELEVISION)
                     case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
-                        if (dimension == Dimension.media)
-                        {
-                            string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
-                            if (!string.IsNullOrEmpty(vehicles))
-                            {
-                                sql.AppendFormat(" and wp.id_vehicle in ({0}) ", vehicles);
-                            }
-                            else if (!string.IsNullOrEmpty(VehiclesId))
-                            {
-                                sql.AppendFormat(" and wp.id_vehicle in ({0}) ", VehiclesId);
-                            }
-                        }
+                        VehicleFilter(sql, dimension);
                         break;
                     case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
                     case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
@@ -825,6 +793,22 @@ namespace TNS.AdExpressI.Classification.DAL
                  * must returned and for a specific language (ex. id_language 33 for French) */
                 sql.AppendFormat(" and wp.activation<{0}", TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
                 sql.AppendFormat(" and wp.id_language = {0}", _session.DataLanguage);
+            }
+        }
+
+        private void VehicleFilter(StringBuilder sql, Dimension dimension)
+        {
+            if (dimension == Dimension.media)
+            {
+                string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
+                if (!string.IsNullOrEmpty(vehicles))
+                {
+                    sql.AppendFormat(" and wp.id_vehicle in ({0}) ", vehicles);
+                }
+                else if (!string.IsNullOrEmpty(VehiclesId))
+                {
+                    sql.AppendFormat(" and wp.id_vehicle in ({0}) ", VehiclesId);
+                }
             }
         }
         #endregion
