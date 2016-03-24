@@ -252,7 +252,7 @@ $(document).on('click', '.tab-content li > .pull-right', function () {
     $(DIS).parents('li').remove()
 
     if (parent.find('li').length == 0) {
-        header.find('a').collapse('hide');
+        header.find('[id^=collapse]').collapse('hide');
     }
 });
 
