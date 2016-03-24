@@ -188,7 +188,7 @@
         });
     };
 
-    $('.btn.btn-save-univers').on('click', function (event) {
+    $('#save-universe').on('click', function (event) {
         event.preventDefault();
         var spinner = new Spinner().spin(this);
         $('.btn.btn-save-univers').off("click");
@@ -206,8 +206,15 @@
 });
 
 //clean element
-$(document).on('click', '.tab-content li', function () {
-    this.remove();
+$(document).on('click', '.tab-content li > .pull-right', function () {
+    var DIS = this;
+    var parent = $(this).parents('.items-famille');
+    var header = $(this).closest('.panel.panel-results');
+    $(DIS).parents('li').remove()
+
+    if (parent.find('li').length == 0) {
+        header.find('[id^=collapse]').collapse('hide');
+    }
 });
 
 $(document).on('click', '#btnSaveUnivers', function (event) {
