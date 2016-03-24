@@ -37,6 +37,7 @@ using TNS.AdExpress.Domain.Units;
 using System.Reflection;
 using System.Collections;
 using TNS.AdExpress.Web.Core.Utilities;
+using TNS.Classification.Universe;
 
 #endregion
 
@@ -941,15 +942,20 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				sql.Append(" select id_media, count(distinct " + dateField + ") as NbParution");
 				sql.Append(" from  " + dataTableName);
 				sql.Append(" where " + dateField + " >= " + customerPeriod.StartDate + " and " + dateField + " <= " + customerPeriod.EndDate);
-                
-              
-				#region Get vehicles selected
-				//Get all vehicles selected
-				while (_session.CompetitorUniversMedia[positionUnivers] != null) {
-					mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess) + ",";
-					positionUnivers++;
-				}
-				if (mediaList.Length > 0) sql.Append(" and id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")");
+
+
+                #region Get vehicles selected
+                //Get all vehicles selected
+                // Principal media Selection
+                if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
+                {
+                    mediaList = GetCompetitormedias();
+                    if (!string.IsNullOrEmpty(mediaList))
+                    {
+                        sql.Append(" and id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")");
+                    }
+
+                }
 				#endregion
 
                 /*Filter data with the identifier of the sub media selected.
@@ -1043,10 +1049,21 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				positionUnivers++;
 			}
 
-			/*WHERE  clause */
+            // Principal media Selection
+            if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
+            {
+                mediaList = GetCompetitormedias();
+                if (!string.IsNullOrEmpty(mediaList))
+                {
+                    sql.Append(" and id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")");
+                }
 
-			//Filter data with all vehicles selected
-			sql.AppendFormat(" where {1} in ({0})", mediaList.Substring(0, mediaList.Length - 1), mediaDetailLevelItemInformation.DataBaseIdField);
+            }
+
+            /*WHERE  clause */
+
+            //Filter data with all vehicles selected
+            sql.AppendFormat(" where {1} in ({0})", mediaList.Substring(0, mediaList.Length - 1), mediaDetailLevelItemInformation.DataBaseIdField);
 
 			//Filter data language
 			sql.AppendFormat(" and {0}.id_language={1}", tblMedia.Prefix, _session.DataLanguage);
@@ -1164,9 +1181,21 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 					WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
 					mediaList.Substring(0, mediaList.Length - 1)
 				);
+            // Principal media Selection
+            if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
+            {
+                mediaList = GetCompetitormedias();
+                if (!string.IsNullOrEmpty(mediaList))
+                {
+                    sql.AppendFormat(" and {0}.id_media in ({1})",
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                     mediaList);
+                }
 
-			// Product Selection
-			if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+            }
+
+            // Product Selection
+            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
 				sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
 
 			// Excluded Products
@@ -1208,6 +1237,18 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
 			return sql.ToString();
 		}
+
+        private string GetCompetitormedias()
+        {
+            string mediaList = string.Empty;
+            for (int p = 0; p < _session.PrincipalMediaUniverses.Count; p++)
+            {
+                mediaList += _session.PrincipalMediaUniverses[p].GetLevel(TNSClassificationLevels.MEDIA, AccessType.includes);
+
+            }
+            if (!string.IsNullOrEmpty(mediaList)) mediaList = mediaList.Substring(0, mediaList.Length - 1);
+           return mediaList;
+        }
 
         /// <summary>
         /// Get Format Clause
