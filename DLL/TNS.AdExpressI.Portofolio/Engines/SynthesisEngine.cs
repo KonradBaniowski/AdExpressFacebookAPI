@@ -1504,7 +1504,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 // Nombre moyen de spots par écran
                 data = new List<ICell>(2);
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1415, _webSession.SiteLanguage)));
-                data.Add(new CellLabel(nbrSpotByEcran.ToString("0.00")));
+
+                //data.Add(new CellLabel(nbrSpotByEcran.ToString("0.00")));
+                CellNumber cell = new CellNumber((double)nbrSpotByEcran);                
+                data.Add(cell);
             }
             #endregion
 
