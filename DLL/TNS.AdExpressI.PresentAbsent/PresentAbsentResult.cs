@@ -37,6 +37,7 @@ using TNS.AdExpressI.PresentAbsent.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.Collections;
 using TNS.AdExpress.Domain.Web;
+using TNS.Classification.Universe;
 
 #endregion
 
@@ -1140,22 +1141,28 @@ namespace TNS.AdExpressI.PresentAbsent{
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
             //Init media univers mapping
+
+            #region Old
             while (_session.CompetitorUniversMedia[iUnivers] != null)
             {
                 idsByUnivers.Add(iUnivers, new List<Int64>());
                 // Load media ids
                 tmp = _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[iUnivers], CstCustomer.Right.type.mediaAccess);
-                tIds = Array.ConvertAll<string, Int64>(tmp.Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); });
+                tIds = Array.ConvertAll<string, Int64>(tmp.Split(','), (Converter<string, long>)delegate (string s) { return Convert.ToInt64(s); });
                 //Init Media ids X univers
                 foreach (Int64 l in tIds)
                 {
-                    if (!idMediaToIdUnivers.ContainsKey(l)){
+                    if (!idMediaToIdUnivers.ContainsKey(l))
+                    {
                         idMediaToIdUnivers.Add(l, iUnivers);
                     }
                 }
                 iUnivers++;
             }
             iUnivers--;
+            #endregion
+
+
 
             //Dispatch elements in current univers
             List<Int64> idElements = new List<Int64>();
@@ -1258,7 +1265,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             Header headerTmp = null;
             Header headerTotal = null;
             elementsHeader = new Dictionary<string, HeaderBase>();
-            if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1)
+            if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1 || (_session.PrincipalMediaUniverses !=null &&_session.PrincipalMediaUniverses.Count>1 ))
             {
                 headerTotal = new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage), TOTAL_HEADER_ID);
                 elementsHeader.Add(TOTAL_HEADER_ID.ToString(), headerTotal);
