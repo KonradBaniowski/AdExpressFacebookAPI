@@ -401,19 +401,22 @@ namespace TNS.AdExpressI.Insertions.Cells
             string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
             foreach (string s in _visuals)
             {
+
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp)
                 {
-                    str.AppendFormat("{0}", st);
+                    str.AppendFormat("{0},", st);
                     hasVisual = true;
                 }
             }
+            str.Append("]");
+
             if (!hasVisual)
             {
-                str.AppendFormat("{0}", GestionWeb.GetWebWord(843, _session.SiteLanguage));
+                str.Clear();
+                str.Append(GestionWeb.GetWebWord(843, _session.SiteLanguage));
             }
 
-            str.Append("]");
             return str.ToString();
         }
         #endregion
