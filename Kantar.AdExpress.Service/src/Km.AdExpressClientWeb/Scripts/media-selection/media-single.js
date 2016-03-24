@@ -43,7 +43,7 @@
         $("#" + idTree + " [id^='collapse'].in").collapse('hide');
     });
 
-    //rechercher un élement
+    //rechercher un élement 
     $(".btn-recherche").on('click', function (event) {
         var keyword = $('#keyword').val();
         if (keyword.length < 2)
