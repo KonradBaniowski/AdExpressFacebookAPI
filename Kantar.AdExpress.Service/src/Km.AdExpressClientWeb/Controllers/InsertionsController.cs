@@ -87,14 +87,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public JsonResult GetCreativePaths(string idVersion, long idVehicle )
+        public JsonResult GetCreativePath(string idVersion, long idVehicle )
         {
-          
-
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _insertionsService.GetSpotPath(idWebSession, idVersion, idVehicle);
+            var reponse = _insertionsService.GetCreativePath(idWebSession, idVersion, idVehicle);
           
             return Json(new { PathReadingFile = reponse.PathReadingFile, PathDownloadingFile = reponse.PathDownloadingFile });
 

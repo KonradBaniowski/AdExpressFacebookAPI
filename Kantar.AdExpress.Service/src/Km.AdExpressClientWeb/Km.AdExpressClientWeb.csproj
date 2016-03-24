@@ -176,6 +176,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
     <Compile Include="Controllers\LostWonController.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
     <Compile Include="Models\Shared\PresentationModel.cs" />
@@ -1507,6 +1509,7 @@
     <Content Include="Views\LostWonExport\ResultBrut.cshtml" />
     <Content Include="Views\PresentAbsentExport\ResultBrut.cshtml" />
     <Content Include="Views\PresentAbsentExport\Index.cshtml" />
+    <Content Include="Views\CustomerArea\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

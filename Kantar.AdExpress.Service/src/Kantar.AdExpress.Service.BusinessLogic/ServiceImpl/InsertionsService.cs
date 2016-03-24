@@ -207,7 +207,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         }
 
-        public SpotResponse GetSpotPath(string idWebSession,string idVersion,long idVehicle)
+        public SpotResponse GetCreativePath(string idWebSession,string idVersion,long idVehicle)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
 
@@ -229,7 +229,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativePopUp];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the creative pop up"));
-            var param = new object[8];
+            var param = new object[6];
            
             param[0] = vehicleName;
             param[1] = idVersion;
@@ -241,12 +241,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, System.Reflection.BindingFlags.CreateInstance
                 | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
 
-             result.SetCreativePaths();
+            result.SetCreativePaths();
 
             spotResponse.PathDownloadingFile = result.PathDownloadingFile;
             spotResponse.PathReadingFile = result.PathReadingFile;
             return spotResponse;
-
 
         }
 

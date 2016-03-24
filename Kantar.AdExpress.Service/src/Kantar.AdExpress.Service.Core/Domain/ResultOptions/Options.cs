@@ -10,6 +10,8 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
     {
         public GenericDetailLevelOption GenericDetailLevel { get; set; }
 
+        public GenericColumnDetailLevelOption GenericColumnDetailLevelOption { get; set; }
+
         public PeriodDetailOption PeriodDetail { get; set; }
 
         public UnitOption UnitOption { get; set; }
@@ -23,5 +25,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public PurchaseModeOption PurchaseModeOption { get; set; }
 
         public ResultTypeOption ResultTypeOption { get; set; }
+
+        public int SiteLanguage { get; set; }
     }
 }

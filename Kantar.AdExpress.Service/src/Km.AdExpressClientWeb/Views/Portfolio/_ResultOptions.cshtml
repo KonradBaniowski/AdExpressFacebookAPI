@@ -1,5 +1,5 @@
 ﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.Options
-
+@using TNS.AdExpress.Domain.Translation;
 @{
     var optionsNb = 1;
 }
@@ -22,7 +22,7 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Résultat
+                                    @GestionWeb.GetWebWord(793, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse in">
@@ -53,7 +53,7 @@
                             <div class="panel-primary panel-options-results">
                                 <div class="panel-heading head-options-results">
                                     <p class="panel-title options ">
-                                        Unité
+                                        @GestionWeb.GetWebWord(304, Model.SiteLanguage)
                                     </p>
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in">
