@@ -37,6 +37,7 @@ using TNS.AdExpressI.PresentAbsent.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.Collections;
 using TNS.AdExpress.Domain.Web;
+using TNS.Classification.Universe;
 
 #endregion
 
@@ -497,7 +498,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         {
 
             #region Variables
-            int positionUnivers = 1;
+            int positionUnivers = 0; //1 oLD
             Int32 nbLine = 8;
             Int32 advertiserLineIndex = 0;
             Int32 brandLineIndex = 0;
@@ -1140,22 +1141,40 @@ namespace TNS.AdExpressI.PresentAbsent{
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
             //Init media univers mapping
-            while (_session.CompetitorUniversMedia[iUnivers] != null)
+
+            #region Old
+            //while (_session.CompetitorUniversMedia[iUnivers] != null)
+            //{
+            //    idsByUnivers.Add(iUnivers, new List<Int64>());
+            //    // Load media ids
+            //    tmp = _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[iUnivers], CstCustomer.Right.type.mediaAccess);
+            //    tIds = Array.ConvertAll<string, Int64>(tmp.Split(','), (Converter<string, long>)delegate (string s) { return Convert.ToInt64(s); });
+            //    //Init Media ids X univers
+            //    foreach (Int64 l in tIds)
+            //    {
+            //        if (!idMediaToIdUnivers.ContainsKey(l))
+            //        {
+            //            idMediaToIdUnivers.Add(l, iUnivers);
+            //        }
+            //    }
+            //    iUnivers++;
+            //}
+            //iUnivers--;
+            #endregion
+
+            for(int p=0; p<_session.PrincipalMediaUniverses.Count;p++)
             {
-                idsByUnivers.Add(iUnivers, new List<Int64>());
-                // Load media ids
-                tmp = _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[iUnivers], CstCustomer.Right.type.mediaAccess);
-                tIds = Array.ConvertAll<string, Int64>(tmp.Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); });
+                var includedItems = _session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
+                idsByUnivers.Add(p, includedItems);
                 //Init Media ids X univers
-                foreach (Int64 l in tIds)
+                foreach (Int64 l in includedItems)
                 {
-                    if (!idMediaToIdUnivers.ContainsKey(l)){
-                        idMediaToIdUnivers.Add(l, iUnivers);
+                    if (!idMediaToIdUnivers.ContainsKey(l))
+                    {
+                        idMediaToIdUnivers.Add(l, p);
                     }
                 }
-                iUnivers++;
             }
-            iUnivers--;
 
             //Dispatch elements in current univers
             List<Int64> idElements = new List<Int64>();
@@ -1258,7 +1277,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             Header headerTmp = null;
             Header headerTotal = null;
             elementsHeader = new Dictionary<string, HeaderBase>();
-            if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1)
+            if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1 || (_session.PrincipalMediaUniverses !=null &&_session.PrincipalMediaUniverses.Count>1 ))
             {
                 headerTotal = new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage), TOTAL_HEADER_ID);
                 elementsHeader.Add(TOTAL_HEADER_ID.ToString(), headerTotal);
@@ -1273,56 +1292,113 @@ namespace TNS.AdExpressI.PresentAbsent{
             iUnivers = 1;
             elementsSubTotal = new Dictionary<string, HeaderBase>();
             universesSubTotal = new Dictionary<Int64, HeaderBase>();
-            while (_session.CompetitorUniversMedia[iUnivers] != null)
+
+            #region Old
+            //while (_session.CompetitorUniversMedia[iUnivers] != null)
+            //{
+            //    //Group init
+            //    if (iUnivers != 1)
+            //    {
+            //        headerGroupTmp = new HeaderGroup(string.Format("{0} {1}", GestionWeb.GetWebWord(1366, _session.SiteLanguage), iUnivers - 1), true, START_ID_GROUP + iUnivers);
+            //    }
+            //    else
+            //    {
+            //        headerGroupTmp = new HeaderGroup(GestionWeb.GetWebWord(1365, _session.SiteLanguage), true, START_ID_GROUP + iUnivers);
+            //    }
+            //    if (idsByUnivers[iUnivers].Count > 1 && _session.CompetitorUniversMedia.Count > 1)
+            //    {
+            //        headerGroupSubTotal = headerGroupTmp.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUB_TOTAL_HEADER_ID);
+            //        universesSubTotal.Add(iUnivers, headerGroupSubTotal);
+            //    }
+            //    List<Header> heads = new List<Header>();
+            //    foreach (Int64 id in idsByUnivers[iUnivers])
+            //    {
+            //        headerTmp = new Header(true, levels[id], id);
+            //        heads.Add(headerTmp);
+            //        elementsHeader.Add(string.Format("{0}-{1}", iUnivers, id), headerTmp);
+            //        if (!headerGroupTmp.ContainSubTotal)
+            //        {
+            //            if (!universesSubTotal.ContainsKey(iUnivers))
+            //            {
+            //                if (iUnivers == 1 && idsByUnivers.Count < 2 && idsByUnivers[1].Count > 1)
+            //                {
+            //                    universesSubTotal.Add(iUnivers, headerTotal);
+            //                }
+            //                else
+            //                {
+            //                    universesSubTotal.Add(iUnivers, headerTmp);
+            //                }
+            //            }
+            //            elementsSubTotal.Add(string.Format("{0}-{1}", iUnivers, id), headerTmp);
+            //        }
+            //        else
+            //        {
+            //            elementsSubTotal.Add(string.Format("{0}-{1}", iUnivers, id), headerGroupSubTotal);
+            //        }
+            //    }
+            //    heads.Sort(delegate (Header h1, Header h2) { return h1.Label.CompareTo(h2.Label); });
+            //    foreach (Header h in heads)
+            //    {
+            //        headerGroupTmp.Add(h);
+            //    }
+            //    headers.Root.Add(headerGroupTmp);
+            //    iUnivers++;
+            //}
+
+            #endregion
+
+            for (int p = 0; p < _session.PrincipalMediaUniverses.Count; p++)
             {
+                var includedItems = _session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
+              
                 //Group init
-                if (iUnivers != 1)
+                if (p > 0)
                 {
-                    headerGroupTmp = new HeaderGroup(string.Format("{0} {1}", GestionWeb.GetWebWord(1366, _session.SiteLanguage), iUnivers-1), true, START_ID_GROUP + iUnivers);
+                    headerGroupTmp = new HeaderGroup(string.Format("{0} {1}", GestionWeb.GetWebWord(1366, _session.SiteLanguage), p), true, START_ID_GROUP + p);
                 }
                 else
                 {
-                    headerGroupTmp = new HeaderGroup(GestionWeb.GetWebWord(1365, _session.SiteLanguage), true, START_ID_GROUP + iUnivers);
+                    headerGroupTmp = new HeaderGroup(GestionWeb.GetWebWord(1365, _session.SiteLanguage), true, START_ID_GROUP + p);
                 }
-                if (idsByUnivers[iUnivers].Count > 1 && _session.CompetitorUniversMedia.Count > 1)
+                if (idsByUnivers[p].Count > 1 && _session.PrincipalMediaUniverses.Count > 1)
                 {
                     headerGroupSubTotal = headerGroupTmp.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUB_TOTAL_HEADER_ID);
-                    universesSubTotal.Add(iUnivers, headerGroupSubTotal);
+                    universesSubTotal.Add(p, headerGroupSubTotal);
                 }
-                List<Header> heads = new List<Header>(); 
-                foreach (Int64 id in idsByUnivers[iUnivers])
-                {                    
+                List<Header> heads = new List<Header>();
+                foreach (Int64 id in idsByUnivers[p])
+                {
                     headerTmp = new Header(true, levels[id], id);
                     heads.Add(headerTmp);
-                    elementsHeader.Add(string.Format("{0}-{1}",iUnivers, id), headerTmp);
+                    elementsHeader.Add(string.Format("{0}-{1}", p, id), headerTmp);
                     if (!headerGroupTmp.ContainSubTotal)
                     {
-                        if (!universesSubTotal.ContainsKey(iUnivers))
+                        if (!universesSubTotal.ContainsKey(p))
                         {
-                            if (iUnivers == 1 && idsByUnivers.Count < 2 && idsByUnivers[1].Count > 1)
+                            if (p == 0 && idsByUnivers.Count < 2 && idsByUnivers[p].Count > 1)
                             {
-                                universesSubTotal.Add(iUnivers, headerTotal);
+                                universesSubTotal.Add(p, headerTotal);
                             }
                             else
                             {
-                                universesSubTotal.Add(iUnivers, headerTmp);
+                                universesSubTotal.Add(p, headerTmp);
                             }
                         }
-                        elementsSubTotal.Add(string.Format("{0}-{1}", iUnivers, id), headerTmp);
+                        elementsSubTotal.Add(string.Format("{0}-{1}", p, id), headerTmp);
                     }
                     else
                     {
-                        elementsSubTotal.Add(string.Format("{0}-{1}", iUnivers, id), headerGroupSubTotal);
+                        elementsSubTotal.Add(string.Format("{0}-{1}", p, id), headerGroupSubTotal);
                     }
                 }
-                heads.Sort(delegate(Header h1, Header h2) { return h1.Label.CompareTo(h2.Label); });
+                heads.Sort(delegate (Header h1, Header h2) { return h1.Label.CompareTo(h2.Label); });
                 foreach (Header h in heads)
                 {
                     headerGroupTmp.Add(h);
                 }
                 headers.Root.Add(headerGroupTmp);
-                iUnivers++;
             }
+
             #endregion
 
             #endregion

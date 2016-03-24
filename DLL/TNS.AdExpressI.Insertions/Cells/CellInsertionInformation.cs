@@ -392,10 +392,32 @@ namespace TNS.AdExpressI.Insertions.Cells
         }
 
 
-        //TODO
         public override string RenderString()
         {
-            return "";
+            StringBuilder str = new StringBuilder();
+            str.Append("[");
+            bool hasVisual = false;
+
+            string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
+            foreach (string s in _visuals)
+            {
+
+                string[] tmp = s.Split(',');
+                foreach (string st in tmp)
+                {
+                    str.AppendFormat("{0},", st);
+                    hasVisual = true;
+                }
+            }
+            str.Append("]");
+
+            if (!hasVisual)
+            {
+                str.Clear();
+                str.Append(GestionWeb.GetWebWord(843, _session.SiteLanguage));
+            }
+
+            return str.ToString();
         }
         #endregion
 

@@ -1,5 +1,5 @@
 ﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.Options
-
+@using TNS.AdExpress.Domain.Translation;
 @{
     var optionsNb = 1;
 }
@@ -22,7 +22,7 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Résultat
+                                    @GestionWeb.GetWebWord(793, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse in">
@@ -53,7 +53,7 @@
                             <div class="panel-primary panel-options-results">
                                 <div class="panel-heading head-options-results">
                                     <p class="panel-title options ">
-                                        Unité
+                                        @GestionWeb.GetWebWord(304, Model.SiteLanguage)
                                     </p>
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in">
@@ -77,7 +77,44 @@
                                 </div>
                             </div>
                         </div>
+                        optionsNb++;                      
+                    }
+                    @if (@Model.GenericColumnDetailLevelOption.L1Detail.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(2300, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.GenericColumnDetailLevelOption.L1Detail.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.GenericColumnDetailLevelOption.L1Detail.Items)
+                                                {
+                                                    if (item.Value == Model.GenericColumnDetailLevelOption.L1Detail.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         optionsNb++;
+                        if (optionsNb == 3)
+                        {
+                            optionsNb = 0;
+                            @Html.Raw("</div><div class='row'>");
+                        }
                     }
                     @if (@Model.InsertionOption.Insertion.Visible)
                     {

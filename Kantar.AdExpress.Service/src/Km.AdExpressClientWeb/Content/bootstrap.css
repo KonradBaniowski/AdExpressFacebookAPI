@@ -5645,6 +5645,11 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-heading + .list-group .list-group-item:first-child {
   border-top-width: 0;
 }
+.panel-heading > .head-famille-results{
+    padding: 10px 15px !important;
+    border-bottom: 1px solid rgba(0,0,0,0.2) !important;
+    border-radius: 0 !important;
+}
 
 .panel > .table,
 .panel > .table-responsive > .table {
@@ -7122,3 +7127,11 @@ td.visible-print {
     display: none !important;
   }
 }
+
+.text-info-customer-area {
+  color: #ffffff;
+}
+.panel-heading-light {
+    background-color: rgba(0,0,0,0.6)
+}
+

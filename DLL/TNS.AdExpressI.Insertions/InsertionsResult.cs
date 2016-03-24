@@ -1863,44 +1863,39 @@ namespace TNS.AdExpressI.Insertions
 
             if (_data != null)
             {
-                _data.Sort(ResultTable.SortOrder.NONE, 1);
+                _data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
-                int k;
+                int i, j, k;
+                //int creativeIndexInResultTable = -1;
                 object[,] gridData = new object[_data.LinesNumber, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
 
-                _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-                //int creativeIndexInResultTable = -1;
+
+                columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+                schemaFields.Add(new { name = "ID" });
+                columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+                schemaFields.Add(new { name = "PID" });
 
                 if (_data.NewHeaders != null)
                 {
-                    columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
-                    schemaFields.Add(new { name = "ID" });
-                    columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
-                    schemaFields.Add(new { name = "PID" });
-
-                    for (int j = 0; j < _data.NewHeaders.Root.Count; j++)
+                    for (j = 0; j < _data.NewHeaders.Root.Count; j++)
                     {
-
-                        //if (_data[j, 1] is CellImageLink)
-                        //{
-                        //    creativeIndexInResultTable = _data.NewHeaders.Root[j].IndexInResultTable;
-
-                        //    columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
-                        //    schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
-                        //}
-                        //else {
-                            columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
-                            schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
-                        //}
+                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
+                        schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
                     }
+                }
+                else
+                {
+                    columns.Add(new { headerText = "", key = "Visu", dataType = "string" });
+                    schemaFields.Add(new { name = "Visu" });
                 }
 
                 try
                 {
-                    for (int i = 0; i < _data.LinesNumber; i++) //_data.LinesNumber
+                    for (i = 0; i < _data.LinesNumber; i++) //_data.LinesNumber
                     {
                         gridData[i, 0] = i; // Pour column ID
                         gridData[i, 1] = _data.GetSortedParentIndex(i); // Pour column PID
@@ -1929,10 +1924,7 @@ namespace TNS.AdExpressI.Insertions
                 return (gridResult);
             }
 
-
-
             return gridResult;
-
         }
         #endregion
 
