@@ -61,6 +61,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle);
 
+            if (!reponse.GridResult.HasData)
+                return null;
+
             if (reponse.Message == null)
             {
                 jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);

@@ -115,7 +115,6 @@
     var universeIdCalling = $(this).closest('.panel').attr('data-universe');
     var branchId = $(this).closest('.panel').attr('data-branch');
     var universesToUpdate = $("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
-    var spinner = new Spinner().spin(DIS);
     var idMedias = [];
     $.each($('.tuile-medias-active'), function (index, value) {
         idMedias.push($(value).attr('data-attr-id'));
@@ -143,7 +142,6 @@
                 alert("error");
             },
             success: function (response) {
-                spinner.stop();
                 $("#containerSelectable" + universe).html('');
                 $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                 $('#selectable' + univerIndex).selectable(
@@ -157,14 +155,12 @@
 
     $('.btn.btn-save-univers').on('click', function (event) {
         event.preventDefault();
-        var spinner = new Spinner().spin(this);
         $('.btn.btn-save-univers').off("click");
         $.ajax({
             url: '/MediaSchedule/SaveUserUnivers',
             type: 'GET',
             data: params,
             success: function (response) {
-                spinner.stop();
                 $('#saveunivers').append(response);
                 $('#saveunivers').modal('show');
             }
@@ -198,6 +194,7 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
     $.each($('.tuile-medias-active'), function (index, value) {
         idMedias.push($(value).attr('data-attr-id'));
     });    
+
     $('#btnSaveUnivers').off('click');
     var trees = [];
     $.each($('.nav.nav-tabs > li a'), function (index, elem) {
@@ -241,7 +238,6 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         type: 'POST',
         data: params,
         success: function (response) {
-            spinner.stop();
             $('#saveunivers').modal('hide');
             $.ajax({
                 url: '/MediaSchedule/LoadUserUniversGroups',
@@ -268,7 +264,6 @@ $(document).on('change', '#ddlGroup', function (event) {
         dimension: dimension
     };
     var local = $(this);
-    var spinner = new Spinner().spin(this);
     $.ajax({
         url: '/MediaSchedule/GetUniversByGroup',
         type: 'GET',
@@ -276,11 +271,9 @@ $(document).on('change', '#ddlGroup', function (event) {
         success: function (response) {
             $('#ddlUnivers').empty();
             $.each(response, function (i, item) {
-                spinner.stop();
                 $("#ddlUnivers").append('<option value="' + item.Value + '">' +
                      item.Text + '</option>');
             });
-            //$('#ddlUnivers').html(response);
         }
     });
 });
@@ -288,7 +281,6 @@ $(document).on('change', '#ddlGroup', function (event) {
 $(document).on('click', '#LoadUnivers', function (event) {
     event.preventDefault();
     var dimension = $('#Dimension').val();
-    var spinner = new Spinner().spin(this);
     $('.btn.btn-valider').off('click');
     var universId = $('input[name="universOpt"]:checked').val();
     var params = {
@@ -300,7 +292,6 @@ $(document).on('click', '#LoadUnivers', function (event) {
         type: 'POST',
         data: params,
         success: function (response) {
-            spinner.stop();
             $('#monunivers').modal('hide');
             var trees = response.Trees;
             var medias = response.UniversMediaIds;
@@ -321,7 +312,6 @@ $(document).on('click', '#LoadUnivers', function (event) {
             });
         },
         error: function (response) {
-            spinner.stop();
             bootbox.alert("Error has been occured!");
         }
     });

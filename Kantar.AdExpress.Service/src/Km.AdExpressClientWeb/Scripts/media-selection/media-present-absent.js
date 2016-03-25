@@ -55,7 +55,7 @@
 
         var branchUpdate = $("[id^='groupSelectable'] [id^='selectable']").length;
         var idMedias = [];
-        if ($('.tuile-medias-active').length > 0 ) {
+        if ($('.tuile-medias-active').length > 0) {
             $.each($('.tuile-medias-active'), function (index, value) {
                 idMedias.push($(value).attr('data-attr-id'));
             });
@@ -104,31 +104,42 @@
     //Déplacer un élement marché
     $('.btn-green2.btn-circle').on('click', function () {
         var levelSrc = $('.panel-marche .ui-selectee.ui-selected');
-        var tabSelected = $('ul > li[class="active"] > a').attr('data-tab');
+        var tabSelected = $('ul > li[class="active"] > a');
+        var indexTab = tabSelected.attr('data-tab');
+        var idTab = "tab-" + indexTab;
         if (levelSrc.length == 1) {
             var universSrc = $('.ui-selectee.ui-selected').closest('.panel-default').attr('data-universe');
             if (universSrc == 14) {
-                var universDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul');
-                var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li')
-                $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
-                $.each(levelSrc, function (index, value) {
-                    var item = $(value).clone();
-                    var find = false;
-                    $.each(levelDst, function (index, value) {
+                var isLock = $('#'+ idTab).attr('lock');
+                if (isLock == undefined || isLock == false) {
 
-                        if (item.val() == $(value).val())
-                            find = true;
+                    var universDst = $('.panel-body[data-tree=' + indexTab + '][data-level=' + universSrc + '] > ul');
+                    var levelAllDst = $('.tab-content li');
+                    $('#collapse-' + universSrc + '-' + indexTab).collapse('show');
+                    $.each(levelSrc, function (index, value) {
+                        var item = $(value).clone();
+                        var find = false;
+                        $.each(levelAllDst, function (index, value) {
+
+                            if (item.val() == $(value).val()) {
+                                find = true;
+                                bootbox.alert('deja mis qq part');
+                            }
+                        });
+                        if (!find) {
+                            var buttonSupp = $('<button/>');
+                            buttonSupp.addClass('pull-right');
+                            var icon = $('<i/>');
+                            icon.addClass('fa fa-times-circle black text-base');
+                            buttonSupp.append(icon);
+                            item.append(buttonSupp);
+                            universDst.append(item);
+                        }
                     });
-                    if (!find) {
-                        var buttonSupp = $('<button/>');
-                        buttonSupp.addClass('pull-right');
-                        var icon = $('<i/>');
-                        icon.addClass('fa fa-times-circle black text-base');
-                        buttonSupp.append(icon);
-                        item.append(buttonSupp);
-                        universDst.append(item);
-                    }
-                });
+                }
+                else {
+                    bootbox.alert('lock');
+                }
             }
             else {
                 bootbox.alert($('#Labels_ErrorNoSupport').val());
@@ -176,7 +187,7 @@
                     alert("error");
                 },
                 success: function (response) {
-                   
+
                     $("#containerSelectable" + universe).html('');
                     $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                     $('#selectable' + univerIndex).selectable(
