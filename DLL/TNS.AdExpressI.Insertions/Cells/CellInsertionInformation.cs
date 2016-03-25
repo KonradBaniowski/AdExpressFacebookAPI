@@ -397,6 +397,11 @@ namespace TNS.AdExpressI.Insertions.Cells
             StringBuilder str = new StringBuilder();
             str.Append("[");
             bool hasVisual = false;
+            bool first = true;
+            string value;
+            string[] values;
+            int i = -1;
+            bool hasData = false;
 
             string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
             foreach (string s in _visuals)
@@ -405,17 +410,62 @@ namespace TNS.AdExpressI.Insertions.Cells
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp)
                 {
-                    str.AppendFormat("{0},", st);
+                    if (!first)
+                        str.AppendFormat(",{0}", st);
+                    else {
+                        str.AppendFormat("{0}", st);
+                        first = false;
+                    }
+
                     hasVisual = true;
                 }
             }
-            str.Append("]");
+            str.Append("],");
+
+
 
             if (!hasVisual)
             {
                 str.Clear();
                 str.Append(GestionWeb.GetWebWord(843, _session.SiteLanguage));
             }
+
+
+            str.Append("[");
+            foreach (GenericColumnItemInformation g in _columns)
+            {
+                i++;
+                if (canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster)
+                {
+                    str.AppendFormat("{0}", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
+                    str.Append(":");
+                    _values[i].Parent = this.Parent;
+                    value = _values[i].ToString();
+                    hasData = false;
+                    if (_values[i] != null)
+                    {
+                        if (!(_values[i] is CellUnit))
+                        {
+                            values = value.Split(',');
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
+                                    str.Append(",");
+                                }
+                                hasData = true;
+                                str.AppendFormat("{0},", s);
+                            }
+                        }
+                        else
+                        {
+                            str.AppendFormat("{0},", value);
+                        }
+                    }
+                }
+            }
+            str.Append("]");
+
 
             return str.ToString();
         }
