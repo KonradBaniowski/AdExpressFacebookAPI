@@ -332,6 +332,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     webSession = (WebSession)WebSession.Load(request.WebSessionId);
                     long idSelectedUniverse = request.UserUniversId ?? 0;
                     long idSelectedDirectory = request.UniversGroupId;
+                    string mediaIds = null;
+                    if(request.MediaIds.Any())
+                        mediaIds = string.Join(", ", request.MediaIds);
+                    string levels = null;
+                    foreach (var item in request.Trees)
+                    {
+                        levels = string.Join(", ", item.UniversLevels.Where(d=>d.UniversItems.Any()).Select(x => x.Id));
+                    }
+
 
                     //Identification de la branche de l'univers					
                     TNS.AdExpress.Constantes.Classification.Branch.type branchType = GetBrancheType(request.Dimension);
@@ -376,8 +385,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             {
 
                                 //Add AdExpress universe to collection
-                                universes.Add(universes.Count, adExpressUniverse);
-                                if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession))
+                                universes.Add(universes.Count, adExpressUniverse);                                
+                                if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, levels, mediaIds))
                                 //if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession))
                                 {
                                     // Validation : confirmation d'enregistrement de l'univers

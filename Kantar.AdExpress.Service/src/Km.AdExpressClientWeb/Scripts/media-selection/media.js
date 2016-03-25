@@ -189,11 +189,15 @@ $(document).on('click', 'button.tout-suppr', function () {
 
 $(document).on('click', '#btnSaveUnivers', function (event) {
     event.preventDefault();
+    var spinner = new Spinner().spin(this);
     var dimension = $('#Dimension').val();
     var groupId = $('#ddlGroup').val();
     var universId = $('#ddlUnivers').val();
     var name = $('#universName').val();
-    var spinner = new Spinner().spin(this);
+    var idMedias = [];
+    $.each($('.tuile-medias-active'), function (index, value) {
+        idMedias.push($(value).attr('data-attr-id'));
+    });    
     $('#btnSaveUnivers').off('click');
     var trees = [];
     $.each($('.nav.nav-tabs > li a'), function (index, elem) {
@@ -229,7 +233,8 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         groupId: groupId,
         universId: universId,
         name: name,
-        dimension: dimension
+        dimension: dimension,
+        media:idMedias
     };
     $.ajax({
         url: '/MediaSchedule/SaveUserUnivers',
