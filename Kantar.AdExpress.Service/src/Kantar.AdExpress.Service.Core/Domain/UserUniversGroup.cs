@@ -50,6 +50,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
     public class UniversResponse
     {
         public List<Tree> Trees { get; set; }
+
+        public List<long> UniversMediaIds { get; set; }
         public string Message { get; set; }
     }
 

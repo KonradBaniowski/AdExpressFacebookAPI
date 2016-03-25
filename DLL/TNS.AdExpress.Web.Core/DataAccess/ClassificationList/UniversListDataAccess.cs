@@ -649,10 +649,14 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                 binaryData = (byte[])((OracleBlob)(sqlCommand.Parameters[0].Value)).Value;
 
                 //Récupérations des médias
-                var filters = Convert.ToString((sqlCommand.Parameters[1].Value)).Split(',');
-                if (filters !=null && filters.Any())
+                if (sqlCommand.Parameters[1].Value.ToString() != "null")
                 {
-                    medias = filters.Select(s => Convert.ToInt64(s)).ToList();
+                    var list = Convert.ToString(sqlCommand.Parameters[1].Value);
+                    var filters = list.Split(',');
+                    if (filters != null && filters.Any())
+                    {
+                        medias = filters.Select(s => Convert.ToInt64(s)).ToList();
+                    }
                 }
 
                 //Deserialization oft the object
