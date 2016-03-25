@@ -1696,9 +1696,121 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
             return (success);
 
         }
+
+        /// <summary>
+        ///  Renommer un univers
+        /// </summary>
+        /// <remarks>Testée</remarks>
+        /// <param name="idUniverse">idUniverse</param>
+        /// <param name="filters">filters</param>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="levels">levels</param>
+        public static bool UpdateUniverse(Int64 idUniverse, WebSession webSession, string filters , string  levels)
+        {
+
+            #region Ouverture de la base de données
+            OracleConnection connection = (OracleConnection)webSession.Source.GetSource();
+            bool DBToClosed = false;
+            bool success = false;
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new UniversListException("Impossible d'ouvrir la base de données :" + e.Message));
+                }
+            }
+            #endregion
+
+            #region Sérialisation et Mise à jour de la session
+            OracleCommand sqlCommand = null;
+          
+
+            try
+            {
+                Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
+              
+                //mise à jour de la session
+                string sql = " UPDATE  " + universeTable.Sql + " ";
+                sql += " SET  DATE_MODIFICATION=SYSDATE, FILTER ='" + filters + "',\"LEVEL\" ='" + levels+"'";
+                sql += " WHERE  ID_UNIVERSE_CLIENT=" + idUniverse + " ";
+
+                //Exécution de la requête
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = connection;
+                sqlCommand.CommandType = CommandType.Text;
+                
+                //Execution PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+
+            }
+            #endregion
+
+            #region Gestion des erreurs dues à la sérialisation et à la sauvegarde de l'objet
+            catch (System.Exception e)
+            {
+                // Fermeture des structures
+                try
+                {
+                   
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) connection.Close();
+                }
+                catch (System.Exception et)
+                {
+                    throw (new UniversListException(" Impossible de libérer les ressources après échec de la méthode : " + et.Message));
+                }
+                throw (new UniversListException(" Echec de la sauvegarde de l'objet dans la base de donnée : " + e.Message));
+            }
+            //pas d'erreur
+            try
+            {
+                // Fermeture des structures               
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) connection.Close();
+                success = true;
+            }
+            catch (System.Exception et)
+            {
+                throw (new UniversListException(" Impossible de fermer la base de données : " + et.Message));
+            }
+            #endregion
+
+            return (success);
+
+        }
         #endregion
 
         #endregion
+
+        public static DataSet GetMediaRelated(WebSession webSession, string querystring)
+        {
+
+
+            /* TODO MODIFICATION
+             * Code add to improve the performance of the universe loading process
+            * 
+            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".COLUMN_NAME ";*/
+            string sql = querystring;
+
+          
+            try
+            {
+                return (webSession.Source.Fill(sql));
+            }
+            catch (System.Exception err)
+            {
+                throw (new UniversListException("Impossible to retreive the mediad", err));
+            }
+          
+
+        }
+
 
     }
 }
