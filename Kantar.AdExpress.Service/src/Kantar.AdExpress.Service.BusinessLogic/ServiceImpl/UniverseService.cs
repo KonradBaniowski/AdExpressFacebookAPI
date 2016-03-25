@@ -204,17 +204,21 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             UniversResponse result = new UniversResponse
             {
-                Trees = new List<Tree>()
+                Trees = new List<Tree>(),
+                UniversMediaIds = new List<long>()
             };
             try
             {
                 #region try block
                 #region Get AdExpressUniverse
                 int index = 0;
+                List<long> medias = new List<long>();
                 webSession = (WebSession)WebSession.Load(webSessionId);
                 Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)
-                TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(userUniversId, webSession);
+                TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetTreeNodeUniverseWithMedia(userUniversId, webSession,out medias);
                 var adExpressUniverse = Universes[index];
+                if (medias != null && medias.Any())
+                    result.UniversMediaIds = medias;
                 #endregion
                 #region Iterate by Access Type
                 int id = 0;

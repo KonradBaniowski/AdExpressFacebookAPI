@@ -287,6 +287,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
         success: function (response) {
             $('#monunivers').modal('hide');
             var trees = response.Trees;
+            var medias = response.UniversMediaIds;
             $.each(trees, function (index, tree) {
                 var id = tree.Id + 1;
                 var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
@@ -298,6 +299,9 @@ $(document).on('click', '#LoadUnivers', function (event) {
                     SetUniversItems(uniLvl, panel);
                 });
 
+            });
+            $.each(medias, function (index, item) {                
+                $('.tuile-medias[data-attr-id="' + item + '"]').toggleClass("tuile-medias tuile-medias-active");
             });
         },
         error: function (response) {
