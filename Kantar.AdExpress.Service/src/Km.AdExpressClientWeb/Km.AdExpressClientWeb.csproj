@@ -530,6 +530,7 @@
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
     <Content Include="Content\options-control.css" />
+    <Content Include="Content\spinner.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -1394,7 +1395,7 @@
     <Content Include="IgniteUI\mobile\js\modules\infragistics.util.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
-    <Content Include="Scripts\app\Layout\Layout.js" />
+    <Content Include="Scripts\app\layout.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -1436,6 +1437,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\media-selection\add-tree.js" />
+    <Content Include="Scripts\media-selection\media-present-absent.js" />
     <Content Include="Scripts\media-selection\media-single.js" />
     <Content Include="Scripts\media-selection\media.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />

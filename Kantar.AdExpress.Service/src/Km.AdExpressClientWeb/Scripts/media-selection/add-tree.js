@@ -18,19 +18,32 @@
                 var aHtml = $('<a/>');
                 //SET LABEL 
                 aHtml.text('Concurrent');
-                aHtml.attr('data-target', '#tab' + idNext);
+                aHtml.attr('data-target', '#tab-' + idNext);
                 aHtml.attr('data-tab', idNext);
                 aHtml.attr('data-toggle', 'tab');
                 aHtml.appendTo(liHtml);
                 liHtml.appendTo(ulSource);
 
-                var panelHtml = $('.panel-group.panel-group-results [id="tree-' + nbIncludes + '"]').clone();
+                var ref = $('#tab-' + nbIncludes + '');
+                var tabHtml = ref.clone();
+
+                //LOCK OLD ONE
+                ref.attr('lock', 'true');
+                ref.attr('class', 'tab-pane');
+                tabHtml.attr('id', 'tab-' + idNext);
+                var panelHtml = tabHtml.find('.panel-group.panel-group-results[id="tree-' + nbIncludes + '"]');
                 panelHtml.attr('id', 'tree-' + idNext);
+               
+                panelHtml.find('.items-famille').empty();
                 $.each(panelHtml.find('a[data-parent]'), function (index, value) {
                     var href = $(value).attr('href');
                     href = href.slice(0, -1);
                     href += idNext;
                     $(value).attr('href', href);
+                    var data = $(value).attr('data-parent');
+                    data = data.slice(0, -1);
+                    data += idNext;
+                    $(value).attr('data-parent', '#tree-'+ idNext);
                 });
                 $.each(panelHtml.find('.panel-collapse'), function (index, value) {
                     var id = $(value).attr('id');
@@ -38,12 +51,12 @@
                     id += idNext;
                     $(value).attr('id', id);
                 });
-                $.each(panelHtml.find('.panel-collapse'), function (index, value) {
+                $.each(panelHtml.find('.panel-body'), function (index, value) {
                     var dataTree = $(value).attr('data-tree');
                     $(value).attr('data-tree', idNext);
                 });
-                $('.tabpanel').append(panelHtml);
-
+                panelHtml.find('[id^=collapse-14]').collapse('hide');
+                $('.tab-content').append(tabHtml);
             }
             else {
                 bootbox.alert('too much');

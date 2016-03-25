@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <a class="navbar-brand"  style="font-weight:bold;" href="/">AdExpress</a>
+            <a class="navbar-brand" style="font-weight:bold;" href="/">AdExpress</a>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/"><i class="glyphicon glyphicon-th"></i></a></li>
@@ -51,7 +51,7 @@
                     <li>
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
-                            @Html.AntiForgeryToken()
+                        @Html.AntiForgeryToken()
                         }
                         <a href="javascript:document.getElementById('logoutForm').submit()"><i class="glyphicon glyphicon-off"></i></a>
                     </li>
@@ -62,11 +62,19 @@
     <div class="container">
         @RenderBody()
     </div>
+    <div class="modal fade" id="loader" tabindex="-1">
+        <div class="modal-dialog">
+            <div id="spinner-loader">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </div>
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ajax")
 
 
     @RenderSection("scripts", required: false)
-   
+
 </body>
 </html>
