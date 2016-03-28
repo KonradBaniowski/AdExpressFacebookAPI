@@ -10,6 +10,7 @@ namespace Km.AdExpressClientWeb.Models.Insertions
         public DateTime DateEnd { get; set; }
         public List<Month> Months { get; set; }
         public List<string> datas { get; set; }
+        public int SiteLanguage { get; set; }
     }
 
     public class Month

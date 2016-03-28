@@ -32,7 +32,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
                 | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
 
-            return null;
+            return portofolioResult.GetGridResult();
         }
 
 

@@ -40,6 +40,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.Medias = mediasTabs;
             model.DateBegin = past;
             model.DateEnd = today;
+            model.SiteLanguage = 33;
 
             List<string> datas = new List<string>();
             datas.Add(ids);

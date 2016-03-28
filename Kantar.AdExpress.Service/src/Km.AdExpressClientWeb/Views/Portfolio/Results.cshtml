@@ -19,7 +19,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="pull-right custom-button">          
+        <div class="pull-right custom-button">
             <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-valider">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
@@ -60,7 +60,7 @@
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "ClassifId",
-                width: "100%",
+                width: "1140px",
                 defaultColumnWidth: 200,
                 avgRowHeight: 60,
                 autoGenerateColumns: true
@@ -145,9 +145,9 @@
                             columns: cols,
                             height: "530px",
                             autoGenerateColumns: false,
-                            primaryKey: "ID_PRODUCT",
+                            primaryKey: "ID",
                             foreignKey: "PID",
-                            width: "846px",
+                            width: "1140px",
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -162,6 +162,12 @@
                                     fixingDirection: "left",
                                     columnSettings: colsFixed
                                 }
+                                ,
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false
+                                }
                             ]
                         })
                     }
@@ -171,8 +177,9 @@
                             columns: cols,
                             height: "530px",
                             autoGenerateColumns: false,
-                            primaryKey: "ID_PRODUCT",
+                            primaryKey: "ID",
                             foreignKey: "PID",
+                            width: "1140px",
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -181,10 +188,21 @@
                                     name: "Paging",
                                     mode: "allLevels",
                                     pageSize: 25
+                                },
+                                 {
+                                    name: "Sorting",
+                                    type: "local" ,
+                                    applySortedColumnCss : false
                                 }
                             ]
                         })
                     }
+
+                    $("#grid").igTreeGrid({
+                        rowCollapsed: function (evt, ui) {
+                            $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                        }
+                    });
 
                 } else {
                     alert(error);
@@ -256,7 +274,7 @@
             $('#btn-export').on('click', function (e) {
                 window.open('@Url.Action("Index", _exportController)', "_blank");
             });
-        
+
             $('#btn-brut').on('click', function (e) {
                 window.open('@Url.Action("ResultBrut", _exportController)', "_blank");
             });
@@ -309,14 +327,14 @@
             $('#l1Detail').selectpicker();
             $('#l2Detail').selectpicker();
             $('#l3Detail').selectpicker();
-         
+
 
             $('#defaultDetail').on('change', function (e) {
                 $('#customDetail').selectpicker('val', '-1');
                 $('#l1Detail').selectpicker('val', '-1');
                 $('#l2Detail').selectpicker('val', '-1');
                 $('#l3Detail').selectpicker('val', '-1');
-              
+
                 InitGenericDetailLevelFilter();
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
             });
@@ -325,7 +343,7 @@
                 $('#defaultDetail').selectpicker('val', '-1');
                 $('#l1Detail').selectpicker('val', '-1');
                 $('#l2Detail').selectpicker('val', '-1');
-                $('#l3Detail').selectpicker('val', '-1');             
+                $('#l3Detail').selectpicker('val', '-1');
                 InitGenericDetailLevelFilter();
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
             });
@@ -342,7 +360,7 @@
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
                 ResetLnLevel("#l1Detail", "#l2Detail");
-                ResetLnLevel("#l1Detail", "#l3Detail");              
+                ResetLnLevel("#l1Detail", "#l3Detail");
             });
 
             $('#l2Detail').on('change', function (e) {
@@ -352,7 +370,7 @@
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
                 ResetLnLevel("#l2Detail", "#l1Detail");
-                ResetLnLevel("#l2Detail", "#l3Detail");               
+                ResetLnLevel("#l2Detail", "#l3Detail");
             });
 
             $('#l3Detail').on('change', function (e) {
@@ -362,16 +380,16 @@
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
                 ResetLnLevel("#l3Detail", "#l1Detail");
-                ResetLnLevel("#l3Detail", "#l2Detail");               
+                ResetLnLevel("#l3Detail", "#l2Detail");
             });
 
-           
+
             function InitGenericDetailLevelFilter() {
                 userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
-                userFilter.GenericDetailLevelFilter.L3DetailValue = -1;               
+                userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
             }
 
         });

@@ -241,7 +241,9 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var gridResult = _presentAbsentService.GetGridResult(idWebSession);
 
-            string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+            if (!gridResult.HasData) return null;            
+
+             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
             var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
             JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);

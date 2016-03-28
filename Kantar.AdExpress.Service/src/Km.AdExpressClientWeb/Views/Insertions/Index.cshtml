@@ -1,4 +1,5 @@
 ﻿@model Km.AdExpressClientWeb.Models.Insertions.InsertionViewModel
+@using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "Insertions";
     Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
@@ -267,7 +268,7 @@
                         else {
                             $("#gridLoader").addClass("hide");
                             $("#grid").removeClass("hide");
-                            $("#grid").html("Pas de donnees");
+                            $("#grid").html("@GestionWeb.GetWebWord(2106, Model.SiteLanguage)");
                         }
                     }
                 });
