@@ -41,11 +41,13 @@ using TNS.Classification.Universe;
 
 #endregion
 
-namespace TNS.AdExpressI.PresentAbsent{
+namespace TNS.AdExpressI.PresentAbsent
+{
     /// <summary>
     /// Default Present/Absent reports
     /// </summary>
-    public abstract class PresentAbsentResult : IPresentAbsentResult{
+    public abstract class PresentAbsentResult : IPresentAbsentResult
+    {
 
         #region Constantes
         /// <summary>
@@ -64,7 +66,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// Index of level N-1 Id
         /// </summary>
         protected const int IDL2_INDEX = 2;
-		/// <summary>
+        /// <summary>
         /// Index of level N-1 Label
         /// </summary>
         protected const int LABELL2_INDEX = 3;
@@ -72,7 +74,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// Index of level N-2 Id
         /// </summary>
         protected const int IDL3_INDEX = 4;
-		/// <summary>
+        /// <summary>
         /// Index of level N-3 Label
         /// </summary>
         protected const int LABELL3_INDEX = 5;
@@ -84,14 +86,14 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// Index of total
         /// </summary>
         protected const int TOTAL_INDEX = 7;
-		/// <summary>
-		/// Level Column Id (product)
-		/// </summary>
-        protected const int LEVEL_HEADER_ID = 0;        
-		/// <summary>
-		/// Creatives Column ID
-		/// </summary>
-        protected const int CREATIVE_HEADER_ID = 1;        
+        /// <summary>
+        /// Level Column Id (product)
+        /// </summary>
+        protected const int LEVEL_HEADER_ID = 0;
+        /// <summary>
+        /// Creatives Column ID
+        /// </summary>
+        protected const int CREATIVE_HEADER_ID = 1;
         /// <summary>
         /// Inserts Column ID
         /// </summary>
@@ -220,9 +222,9 @@ namespace TNS.AdExpressI.PresentAbsent{
 
             #region Sélection du vehicle
             string vehicleSelection = session.GetSelection(session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
-            if(vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new PresentAbsentException("Uncorrect Media Selection"));
+            if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new PresentAbsentException("Uncorrect Media Selection"));
             _vehicleInformation = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
-            
+
             #endregion
 
         }
@@ -302,10 +304,10 @@ namespace TNS.AdExpressI.PresentAbsent{
         {
             switch (result)
             {
-                case CompetitorMarketShare.ABSENT: 
-                case CompetitorMarketShare.COMMON: 
-                case CompetitorMarketShare.EXCLUSIF: 
-                case CompetitorMarketShare.FORCES: 
+                case CompetitorMarketShare.ABSENT:
+                case CompetitorMarketShare.COMMON:
+                case CompetitorMarketShare.EXCLUSIF:
+                case CompetitorMarketShare.FORCES:
                 case CompetitorMarketShare.PORTEFEUILLE:
                 case CompetitorMarketShare.POTENTIELS:
                     this._result = result;
@@ -314,7 +316,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                     this._result = CompetitorMarketShare.SYNTHESIS;
                     return GetSynthesisData();
                 default: return null;
-            }            
+            }
         }
 
         /// <summary>
@@ -363,13 +365,13 @@ namespace TNS.AdExpressI.PresentAbsent{
                     bool competitor = false;
 
                     CellLevel[] levels = new CellLevel[nbLevel];
-                    bool[] display = new bool[nbLevel+1];
+                    bool[] display = new bool[nbLevel + 1];
                     for (int i = 0; i <= nbLevel; i++) { display[i] = false; }
                     CellLevel cLevel = null;
                     for (int i = 0; i < tabData.LinesNumber; i++)
                     {
                         cLevel = (CellLevel)tabData[i, 1];
-                        
+
                         if (cLevel.Level < nbLevel)
                         {
                             if (levels[cLevel.Level] != null)
@@ -391,9 +393,10 @@ namespace TNS.AdExpressI.PresentAbsent{
 
                         #region Result specific treatment
                         display[cLevel.Level] = false;
-                        switch(_session.CurrentTab){
+                        switch (_session.CurrentTab)
+                        {
                             case CompetitorMarketShare.ABSENT:
-                                 // We look for lines with first subTotal
+                                // We look for lines with first subTotal
                                 if (((ICell)tabData[i, universesSubTotal[iUnivers].IndexInResultTable]).CompareTo(0.0) == 0)
                                 {
                                     iUnivers++;
@@ -436,7 +439,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                                 break;
                         }
                         #endregion
-                        
+
                         if (!display[cLevel.Level])
                         {
                             tabData.SetLineStart(new LineHide(tabData.GetLineStart(i).LineType), i);
@@ -462,7 +465,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                         }
                     }
                     break;
-                #endregion
+                    #endregion
 
             }
             #endregion
@@ -522,8 +525,8 @@ namespace TNS.AdExpressI.PresentAbsent{
             string mediaList = "";
             string expression = "";
             string sort = "id_media asc";
-			string unitFormat = "{0:max0}";
-			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+            string unitFormat = "{0:max0}";
+            bool showProduct = _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             #endregion
 
             #region Init delegates
@@ -562,13 +565,14 @@ namespace TNS.AdExpressI.PresentAbsent{
 
             #region Création des headers
             nbLine = 4;
-			if (showProduct) nbLine++;
+            if (showProduct) nbLine++;
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
             //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
-             if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId)){
-				if(_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))nbLine++;
-				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) nbLine++;
-			}
+            if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
+            {
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) nbLine++;
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) nbLine++;
+            }
 
             // Ajout de la colonne Produit
             Headers headers = new Headers();
@@ -620,10 +624,11 @@ namespace TNS.AdExpressI.PresentAbsent{
                 brandLineIndex = resultTable.AddNewLine(LineType.level1);
                 resultTable[brandLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1149, _session.SiteLanguage));
             }
-			if (showProduct) {
-				productLineIndex = resultTable.AddNewLine(LineType.level1);
-				resultTable[productLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1164, _session.SiteLanguage));
-			}
+            if (showProduct)
+            {
+                productLineIndex = resultTable.AddNewLine(LineType.level1);
+                resultTable[productLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1164, _session.SiteLanguage));
+            }
             sectorLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[sectorLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1847, _session.SiteLanguage));
             subsectorLineIndex = resultTable.AddNewLine(LineType.level1);
@@ -634,14 +639,16 @@ namespace TNS.AdExpressI.PresentAbsent{
             //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
             if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
             {
-				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
-					agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
-					resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
-				}
-				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
-					agencyLineIndex = resultTable.AddNewLine(LineType.level1);
-					resultTable[agencyLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1851, _session.SiteLanguage));
-				}
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                {
+                    agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
+                    resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
+                }
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                {
+                    agencyLineIndex = resultTable.AddNewLine(LineType.level1);
+                    resultTable[agencyLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1851, _session.SiteLanguage));
+                }
             }
 
             Int32 presentNumberColumnIndex = resultTable.GetHeadersIndexInResultTable(PRESENT_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
@@ -649,15 +656,16 @@ namespace TNS.AdExpressI.PresentAbsent{
             Int32 exclusiveNumberColumnIndex = resultTable.GetHeadersIndexInResultTable(EXCLUSIVE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
 
             #region Initialisation des Nombres
-            for (int i = 0; i < nbLine; i++) {
-				CellNumber cN = new CellNumber();
-				cN.StringFormat = unitFormat;
-				resultTable[i, presentNumberColumnIndex] = cN;
-				CellNumber cN1 = new CellNumber();
-				cN1.StringFormat = unitFormat;
+            for (int i = 0; i < nbLine; i++)
+            {
+                CellNumber cN = new CellNumber();
+                cN.StringFormat = unitFormat;
+                resultTable[i, presentNumberColumnIndex] = cN;
+                CellNumber cN1 = new CellNumber();
+                cN1.StringFormat = unitFormat;
                 resultTable[i, absentNumberColumnIndex] = cN1;
-				CellNumber cN2 = new CellNumber();
-				cN2.StringFormat = unitFormat;
+                CellNumber cN2 = new CellNumber();
+                cN2.StringFormat = unitFormat;
                 resultTable[i, exclusiveNumberColumnIndex] = cN2;
             }
             for (Int32 i = 0; i < nbLine; i++)
@@ -746,7 +754,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                         }
 
                         //Activité publicitaire produits
-                        if (showProduct &&  currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString()))
+                        if (showProduct && currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString()))
                         {
                             expression = string.Format("id_product={0}", currentRow["id_product"]);
                             GetProductActivity(resultTable, dt, productLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
@@ -777,7 +785,8 @@ namespace TNS.AdExpressI.PresentAbsent{
 
 
                         //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)){
-                          if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId)){
+                        if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
+                        {
                             //activité publicitaire Groupes d'agences
                             if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency) && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
                             {
@@ -837,7 +846,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             {
                 // Supprime les lignes qui ont un total support de références média inférieur
                 // au total univers des supports de référence.
-                long[] nbLevelToShow ={ 0, 0, 0, 0 };
+                long[] nbLevelToShow = { 0, 0, 0, 0 };
                 CellLevel curLevel = null;
                 for (i = data.LinesNumber - 1; i >= 0; i--)
                 {
@@ -865,11 +874,13 @@ namespace TNS.AdExpressI.PresentAbsent{
                         {
                             data.SetLineStart(new LineHide(data.GetLineStart(i).LineType), i);
                         }
-						if (!(data[i, 0] is LineStart && ((LineStart)data[i, 0]).LineType == LineType.nbParution)) {
-							for (int j = curLevel.Level + 1; j < nbLevelToShow.Length; j++) {
-								nbLevelToShow[j] = 0;
-							}
-						}
+                        if (!(data[i, 0] is LineStart && ((LineStart)data[i, 0]).LineType == LineType.nbParution))
+                        {
+                            for (int j = curLevel.Level + 1; j < nbLevelToShow.Length; j++)
+                            {
+                                nbLevelToShow[j] = 0;
+                            }
+                        }
                     }
                 }
             }
@@ -908,7 +919,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             object[] parameters = new object[1];
             parameters[0] = _session;
             IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-			dt = presentAbsentDAL.GetData().Tables[0];
+            dt = presentAbsentDAL.GetData().Tables[0];
             dsMedia = presentAbsentDAL.GetColumnDetails();
 
             DataTable dtMedia = dsMedia.Tables[0];
@@ -924,7 +935,7 @@ namespace TNS.AdExpressI.PresentAbsent{
 
             #region Get Headers
             Dictionary<Int64, Int64> mediaToUnivers = null;
-            Headers headers = GetHeaders(dtMedia,out elementsHeader, out elementsSubTotal, out universesSubTotal, out mediaToUnivers);
+            Headers headers = GetHeaders(dtMedia, out elementsHeader, out elementsSubTotal, out universesSubTotal, out mediaToUnivers);
             #endregion
 
             #region Init ResultTable
@@ -941,7 +952,8 @@ namespace TNS.AdExpressI.PresentAbsent{
             for (int i = 0; i < levelNb; i++) { oldIds[i] = cIds[i] = long.MinValue; }
             CellUnitFactory cellFactory = _session.GetCellUnitFactory();
             SetLineDelegate setLine;
-            switch(_session.Unit){
+            switch (_session.Unit)
+            {
                 case CstWeb.CustomerSessions.Unit.versionNb:
                     setLine = new SetLineDelegate(SetListLine);
                     break;
@@ -951,7 +963,8 @@ namespace TNS.AdExpressI.PresentAbsent{
             }
             foreach (DataRow row in dt.Rows)
             {
-                for (int i = 0; i < levelNb; i++) {
+                for (int i = 0; i < levelNb; i++)
+                {
                     cIds[i] = _session.GenericProductDetailLevel.GetIdValue(row, i + 1);
                     if (cIds[i] >= 0 && cIds[i] != oldIds[i])
                     {
@@ -1003,7 +1016,8 @@ namespace TNS.AdExpressI.PresentAbsent{
 
             Int32 cLine = -1;
             CellLevel cell;
-            switch(level){
+            switch (level)
+            {
                 case 1:
                     cLine = tab.AddNewLine(LineType.level1);
                     break;
@@ -1057,7 +1071,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <returns>Current line</returns>
         protected virtual Int32 SetDoubleLine(ResultTable tab, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Dictionary<Int64, Int64> mediaToUnivers)
         {
-			DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
             Int64 idElement = Convert.ToInt64(row[columnDetailLevel.DataBaseIdField]);
             Int64 idMedia = Convert.ToInt64(row["id_media"]);
@@ -1136,7 +1150,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             //Elements by univers
             Dictionary<Int64, List<Int64>> idsByUnivers = new Dictionary<Int64, List<Int64>>();
             //Media ids ==> id univers mapping
-            idMediaToIdUnivers = new Dictionary<Int64,Int64>();
+            idMediaToIdUnivers = new Dictionary<Int64, Int64>();
             //vehicle-level detail in column
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
@@ -1162,7 +1176,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             //iUnivers--;
             #endregion
 
-            for(int p=0; p<_session.PrincipalMediaUniverses.Count;p++)
+            for (int p = 0; p < _session.PrincipalMediaUniverses.Count; p++)
             {
                 var includedItems = _session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
                 idsByUnivers.Add(p, includedItems);
@@ -1183,7 +1197,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             Int64 idMedia = long.MinValue;
             foreach (DataRow row in dtMedia.Rows)
             {
-                idElement = Convert.ToInt64(row[columnDetailLevel.DataBaseIdField]); 
+                idElement = Convert.ToInt64(row[columnDetailLevel.DataBaseIdField]);
                 idMedia = Convert.ToInt64(row["id_media"]);
                 if (!idElements.Contains(idElement))
                 {
@@ -1196,7 +1210,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                 }
 
             }
-            if (sIdElments.Length > 0) sIdElments.Length -= 1; 
+            if (sIdElments.Length > 0) sIdElments.Length -= 1;
             #endregion
 
             #region Load elements labels
@@ -1265,19 +1279,19 @@ namespace TNS.AdExpressI.PresentAbsent{
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subBrand)
                 )
-                && _session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)!=null
+                && _session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null
                 )
             {
                 headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(150, _session.SiteLanguage), MEDIA_SCHEDULE_HEADER_ID));
                 _showMediaSchedule = true;
             }
             #endregion
-            
+
             #region Total column
             Header headerTmp = null;
             Header headerTotal = null;
             elementsHeader = new Dictionary<string, HeaderBase>();
-            if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1 || (_session.PrincipalMediaUniverses !=null &&_session.PrincipalMediaUniverses.Count>1 ))
+            if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1 || (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 1))
             {
                 headerTotal = new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage), TOTAL_HEADER_ID);
                 elementsHeader.Add(TOTAL_HEADER_ID.ToString(), headerTotal);
@@ -1350,7 +1364,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             for (int p = 0; p < _session.PrincipalMediaUniverses.Count; p++)
             {
                 var includedItems = _session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
-              
+
                 //Group init
                 if (p > 0)
                 {
@@ -1416,16 +1430,16 @@ namespace TNS.AdExpressI.PresentAbsent{
             //Total Line
             nbLine++;
             //Parution Number
-			Dictionary<Int64, double> resNbParution = null;
+            Dictionary<Int64, double> resNbParution = null;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
-			if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (_vehicleInformation.Id == CstDBClassif.Vehicles.names.press || _vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress
+            if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (_vehicleInformation.Id == CstDBClassif.Vehicles.names.press || _vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress
                 || _vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
                 || _vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine))
             {
-				resNbParution = GetNbParutionsByMedia();
-				if (resNbParution != null && resNbParution.Count>0)
-					nbLine++;
-			}
+                resNbParution = GetNbParutionsByMedia();
+                if (resNbParution != null && resNbParution.Count > 0)
+                    nbLine++;
+            }
             #endregion
 
             #region Init indexes and tables
@@ -1441,7 +1455,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             if (_showInsertions) iFirstDataIndex++;
             if (_showMediaSchedule) iFirstDataIndex++;
             Int64 nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
-            CellLevel[] parents = new CellLevel[nbLevel+1];
+            CellLevel[] parents = new CellLevel[nbLevel + 1];
             #endregion
 
             #region Init Units dimensions
@@ -1467,7 +1481,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             parents[1] = cLevelTotal;
             cLine = tab.AddNewLine(LineType.total);
             //Total label
-            tab[cLine, 1] = cLevelTotal;          
+            tab[cLine, 1] = cLevelTotal;
             if (_showCreative) tab[cLine, creaIndex] = new CellOneLevelCreativesLink(cLevelTotal, _session, _session.GenericProductDetailLevel);
             if (_showInsertions) tab[cLine, insertIndex] = new CellOneLevelInsertionsLink(cLevelTotal, _session, _session.GenericProductDetailLevel);
             if (_showMediaSchedule) tab[cLine, msIndex] = new CellMediaScheduleLink(cLevelTotal, _session);
@@ -1493,8 +1507,10 @@ namespace TNS.AdExpressI.PresentAbsent{
                 }
 
                 //Insert numbers of parutions
-                foreach(HeaderBase h in elementsHeader.Values){
-                    if (resNbParution.ContainsKey(h.Id)){
+                foreach (HeaderBase h in elementsHeader.Values)
+                {
+                    if (resNbParution.ContainsKey(h.Id))
+                    {
                         tab[cLine, h.IndexInResultTable] = nbFactory.Get(resNbParution[h.Id]);
                     }
                 }
@@ -1520,7 +1536,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                 {
                     parents[cLevel.Level + 1] = cLevel;
                 }
-                else{
+                else {
                     setLine(grossTable, tab, i, cLine, elementsHeader, elementsSubTotal);
                 }
 
@@ -1575,8 +1591,9 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// </summary>
         /// <param name="cell">Reference Cell</param>
         /// <returns>CellPDM</returns>
-        protected virtual CellUnit GetCellPDM(CellUnit cell) {
-            
+        protected virtual CellUnit GetCellPDM(CellUnit cell)
+        {
+
             CellPDM cellPDM = new CellPDM(null, cell);
             return cellPDM;
 
@@ -1656,7 +1673,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             foreach (string s in elementsHeader.Keys)
             {
                 cHeader = elementsHeader[s];
-                if (cHeader !=hTotal)
+                if (cHeader != hTotal)
                 {
                     value = ((CellUnit)fromTab[fromLine, cHeader.IndexInResultTable]).GetNullableValue();
                     if (value.HasValue)
@@ -1679,7 +1696,7 @@ namespace TNS.AdExpressI.PresentAbsent{
 
             }
 
-            return toLine ;
+            return toLine;
 
         }
         protected virtual Int64 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
@@ -1691,7 +1708,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             //elements
             HeaderBase cHeader = null;
             HeaderBase subTotalHeader = null;
-            HybridList value = null ;
+            HybridList value = null;
             Int64 l = long.MinValue;
             Int64 len = 0;
             bool affectTotal = hTotal != null;
@@ -1901,7 +1918,8 @@ namespace TNS.AdExpressI.PresentAbsent{
         {
 
             string[] ids = value.ToString().Split(',');
-            for(int i = 0; i < ids.Length; i++){
+            for (int i = 0; i < ids.Length; i++)
+            {
                 cell.Add(Convert.ToDouble(ids[i]));
             }
 
@@ -1941,52 +1959,192 @@ namespace TNS.AdExpressI.PresentAbsent{
         protected virtual Dictionary<Int64, double> GetNbParutionsByMedia()
         {
 
-			#region Variables
+            #region Variables
             Dictionary<Int64, double> res = new Dictionary<Int64, double>();
-			double nbParutionsCounter = 0;
-			bool start = true;
+            double nbParutionsCounter = 0;
+            bool start = true;
             Int64 oldKey = long.MinValue;
             Int64 cKey = long.MinValue;
-			#endregion		
+            #endregion
 
-			#region Chargement des données à partir de la base
-			DataSet ds;
-			try {
-				if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the present absent result"));
-				object[] parameters = new object[1];
-				parameters[0] = _session;
-				IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-				ds = presentAbsentDAL.GetNbParutionData();
-				
-			}
-			catch (System.Exception err) {
-				throw (new PresentAbsentException("Impossible de charger les données pour le nombre de parution", err));
-			}
-			DataTable dt = ds.Tables[0];
-			#endregion
+            #region Chargement des données à partir de la base
+            DataSet ds;
+            try
+            {
+                if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the present absent result"));
+                object[] parameters = new object[1];
+                parameters[0] = _session;
+                IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+                ds = presentAbsentDAL.GetNbParutionData();
 
-			if (dt != null && dt.Rows.Count > 0) {
+            }
+            catch (System.Exception err)
+            {
+                throw (new PresentAbsentException("Impossible de charger les données pour le nombre de parution", err));
+            }
+            DataTable dt = ds.Tables[0];
+            #endregion
 
-				foreach (DataRow dr in dt.Rows) {
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                foreach (DataRow dr in dt.Rows)
+                {
 
                     cKey = Convert.ToInt64(dr["id_media"]);
-					if (oldKey != cKey && !start) {
-						res.Add(oldKey, nbParutionsCounter);
-						nbParutionsCounter = 0;
-					}
-					nbParutionsCounter += Convert.ToDouble(dr["NbParution"]);
-					start = false;
+                    if (oldKey != cKey && !start)
+                    {
+                        res.Add(oldKey, nbParutionsCounter);
+                        nbParutionsCounter = 0;
+                    }
+                    nbParutionsCounter += Convert.ToDouble(dr["NbParution"]);
+                    start = false;
                     oldKey = cKey;
 
-				}
-				res.Add(oldKey, nbParutionsCounter);
+                }
+                res.Add(oldKey, nbParutionsCounter);
 
-			}
+            }
 
-			return res;
+            return res;
 
-		}
-		#endregion
+        }
+
+        public GridResult GetGridResult()
+        {
+            GridResult gridResult = new GridResult();
+            ResultTable resultTable = GetResult();
+            string mediaSchedulePath = "/MediaSchedule";
+            string insertionPath = "/Insertions";
+            string versionPath = "/Insertions";
+           
+            if (resultTable == null || resultTable.DataColumnsNumber == 0)
+            {
+                gridResult.HasData = false;
+                return gridResult;
+            }
+
+            resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+            List<object> columns = new List<object>();
+            List<object> schemaFields = new List<object>();
+            List<object> columnsFixed = new List<object>();
+
+            //Hierachical ids for Treegrid
+            columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "ID" });
+            columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "PID" });
+            List<object> groups = null;
+
+            //Headers
+            if (resultTable.NewHeaders != null)
+            {
+                for (int j = 0; j < resultTable.NewHeaders.Root.Count; j++)
+                {
+                    groups = null;
+                    string colKey = string.Empty;
+                    if (resultTable.NewHeaders.Root[j].Count > 0)
+                    {
+                        groups = new List<object>();
+
+                        int nbGroupItems = resultTable.NewHeaders.Root[j].Count;
+                        for (int g = 0; g < nbGroupItems; g++)
+                        {
+                            colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
+                            schemaFields.Add(new { name = colKey });
+                        }
+                        colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", group = groups });
+                        schemaFields.Add(new { name = colKey });
+                    }
+                    else
+                    {
+                        colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                        schemaFields.Add(new { name = colKey });
+                        if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                    }
+
+                }
+            }
+
+            //table body rows
+            for (int i = 0; i < resultTable.LinesNumber; i++) //_data.LinesNumber
+            {
+                gridData[i, 0] = i; // Pour column ID
+                gridData[i, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
+
+                for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
+                {
+                    var cell = resultTable[i, k];
+                    var link = string.Empty;
+                    if (cell is CellMediaScheduleLink)
+                    {
+
+                        var c = cell as CellMediaScheduleLink;
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                           , mediaSchedulePath
+                           , link);
+                            }
+                        }                       
+                         gridData[i, k + 1] = link;
+                       
+                    }
+                    else if (cell is CellOneLevelInsertionsLink)
+                    {
+                        var c = cell as CellOneLevelInsertionsLink;
+
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                         , insertionPath
+                         , link);
+                            }
+
+                        }                       
+                        gridData[i, k + 1] = link;
+                    }
+                    else if (cell is CellOneLevelCreativesLink)
+                    {
+                        var c = cell as CellOneLevelCreativesLink;
+
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                         , versionPath
+                         , link);
+                            }
+
+                        }
+                        gridData[i, k + 1] = link;
+                    }
+                    else gridData[i, k + 1] = cell.RenderString();
+                }
+            }
+            gridResult.NeedFixedColumns = true;
+            gridResult.HasData = true;
+            gridResult.Columns = columns;
+            gridResult.Schema = schemaFields;
+            gridResult.ColumnsFixed = columnsFixed;
+            gridResult.Data = gridData;
+
+            return gridResult;
+        }
+        #endregion
 
         #endregion
     }

@@ -28,8 +28,7 @@ using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using FrameWorkResultsConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
-
-
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -115,6 +114,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			return BuildHtmlResult();
         }
 
+        public virtual GridResult GetGridResult()
+        {
+            return BuildGridResult();
+        }
+
         #region Data for vehicle view
         /// <summary>
         /// Get data for vehicle view
@@ -184,14 +188,22 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// </summary>
 		/// <returns></returns>
 		protected abstract string BuildHtmlResult();
-		#endregion
 
-		#region Protected methods
-		/// <summary>
-		/// No data message
+        /// <summary>
+		/// Build grid result
 		/// </summary>
 		/// <returns></returns>
-		protected virtual string GetNoDataMessageHtml() {
+		protected abstract GridResult BuildGridResult();
+
+
+        #endregion
+
+        #region Protected methods
+        /// <summary>
+        /// No data message
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetNoDataMessageHtml() {
 			#region No data
 			return ("<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, _webSession.SiteLanguage)
 				+ "</div>");

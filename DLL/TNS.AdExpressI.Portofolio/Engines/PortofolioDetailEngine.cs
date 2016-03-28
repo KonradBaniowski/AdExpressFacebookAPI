@@ -16,6 +16,7 @@ using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -384,8 +385,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			}
 			return (int)nbLine;
 		}
-		#endregion
 
-		#endregion
-	}
+        protected override GridResult BuildGridResult()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #endregion
+    }
 }

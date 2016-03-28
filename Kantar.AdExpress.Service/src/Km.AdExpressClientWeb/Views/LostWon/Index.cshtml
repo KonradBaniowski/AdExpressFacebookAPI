@@ -1,17 +1,175 @@
-﻿
+﻿@model  Km.AdExpressClientWeb.Models.Shared.MarketViewModel
+
+@using TNS.AdExpress.Domain.Translation;
 @{
-    Layout = null;
+    ViewBag.Title = "MarketSelection";
 }
 
-<!DOCTYPE html>
+<div class="row">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
+    <input type="hidden" id="siteLanguage" value="@Model.Presentation.SiteLanguage" />
+    @*PRESENTATION*@
+    <div>
+        @Html.Partial("Presentation", Model.Presentation)
+        @Html.Partial("UserUniversGroups", Model.UniversGroups)
     </div>
-</body>
-</html>
+    @*BREADCRUM*@
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
+        @Html.Partial("NavigationBar", @Model.NavigationBar)
+    </div>
+    @*SEARCH*@
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10 ">
+        @Html.HiddenFor(e => e.Dimension)
+        @Html.HiddenFor(e => e.Labels.ErrorMessageLimitKeyword)
+        @Html.HiddenFor(e => e.Labels.ErrorMessageLimitUniverses)
+        @Html.HiddenFor(e => e.Labels.ErrorMininumInclude)
+        <div class="row bg-black-only">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading">
+                <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp; @Model.Labels.KeyWordLabel </h4>
+                <h5 class="pull-right"> @Model.Labels.KeyWordDescription</h5>
+                <div class="clearfix"></div>
+                <div class="input-group">
+                    <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
+                    <div class="input-group-btn dropdown" dropdown="">
+                        <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
+                        <ul class="dropdown-menu bg-blue pull-right">
+                            @foreach (var item in Model.Branches)
+                            {
+                                if (item.IsSelected)
+                                {
+                                    <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
+                                }
+                                else
+                                {
+                                    <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                                }
+                            }
+                        </ul>
+                        <button type="submit" class="btn btn-default btn-recherche"><i class="fa fa-search blue "></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <div class="panel  panel-marche">
+                    <div class="panel-heading-choix">
+                        <h4 class="panel-title"><i class="fa fa-list-ul"></i>&nbsp; Résultats</h4>
+                    </div>
+                    @foreach (var item in Model.Branches)
+                    {
+                        <div id="branch@(item.Id)" class="universes" style="display:none">
+                            @foreach (var level in item.UniversLevels)
+                            {
+                                <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"
+                                     data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default">
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="btn-marche text-center">
+                    <a id="move-item" class="btn btn-green2 btn-circle btn-xl">
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+
+
+                <div class="panel-heading-choix nav-tabs-alt">
+                    <ul class="nav nav-tabs" role="tablist">
+                        @foreach (var tree in Model.Trees)
+                        {
+                            <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
+                                <a data-target="#tab-@(tree.Id)"
+                                   data-tab="@(tree.Id)"
+                                   role="tab"
+                                   data-toggle="tab"
+                                   aria-expanded="true">
+                                    @tree.Label
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    @{
+                        var multi = "active in";
+                    }
+                    @foreach (var tree in Model.Trees)
+                    {
+                        <div role="tabpanel"
+                             class="tab-pane @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? multi : "")"
+                             id="tab-@(tree.Id)">
+                            <div class="panel-group panel-group-results"
+                                 id="tree-@(tree.Id)"
+                                 data-access-type="@((int)tree.AccessType)"
+                                 role="tablist"
+                                 aria-multiselectable="true">
+                                @foreach (var level in tree.UniversLevels)
+                                {
+                                    <div class="panel panel-primary panel-results">
+                                        <div class="panel-heading head-results"
+                                             role="tab"
+                                             id="heading-@(level.Id)"
+                                             data-id="@level.Id">
+                                            <h6 class="panel-title famille ">
+                                                <a role="button"
+                                                   data-toggle="collapse"
+                                                   data-parent="#tree-@(tree.Id)"
+                                                   href="#collapse-@(level.Id)-@(tree.Id)"
+                                                   aria-expanded="true"
+                                                   aria-controls="collapse-@(level.Id)">
+                                                    @level.Label
+                                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div id="collapse-@(level.Id)-@(tree.Id)"
+                                             class="panel-collapse collapse"
+                                             role="tabpanel"
+                                             aria-labelledby="heading-@(level.Id)">
+                                            <div class="panel-body" data-tree="@(tree.Id)" data-level="@(level.Id)">
+                                                <ul class="items-famille"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" class="tout-suppr"><span>Tout supprimer</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
+        <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <a data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">Enregistrer l'univers <i class="fa fa-bookmark-o"></i></a>
+            @Html.ActionLink("Valider", "MediaSelection", null, new { id = "btnSubmitMarketSelection", @class = "btn btn-default btn-valider pull-right" })
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+
+    <div id="saveunivers" class="modal fade">
+
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/universe")
+}

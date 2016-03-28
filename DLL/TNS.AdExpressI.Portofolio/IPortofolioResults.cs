@@ -28,11 +28,17 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <param name="excel">True if export excel</param>
 		/// <returns>html code</returns>
 		string GetStructureHtml(bool excel);
-		/// <summary>
-		/// Get structure chart data
+        /// <summary>
+		/// Get Structure grid result
 		/// </summary>
-		/// <returns></returns>
-		DataTable GetStructureChartData();		
+		/// <param name="excel">True if export excel</param>
+		/// <returns>html code</returns>
+		GridResult GetStructureGridResult(bool excel);
+        /// <summary>
+        /// Get structure chart data
+        /// </summary>
+        /// <returns></returns>
+        DataTable GetStructureChartData();		
         /// <summary>
         /// Get ResultTable for some portofolio result
         ///  - DETAIL_PORTOFOLIO
@@ -66,13 +72,19 @@ namespace TNS.AdExpressI.Portofolio {
         /// <param name="excel">True for excel result</param>
         /// <returns>HTML Code</returns>
         string GetDetailMediaHtml(bool excel);
-		/// <summary>
-		/// Get visual list
-		/// </summary>
-		/// <param name="beginnDate">beginning Date</param>
-		/// <param name="endDate">end Date</param>
-		/// <returns></returns>
-		Dictionary<string, string> GetVisualList(string beginnDate, string endDate);
+        /// <summary>
+        /// Get detail media grid result
+        /// </summary>
+        /// <param name="excel">True for excel result</param>
+        /// <returns>HTML Code</returns>
+        GridResult GetDetailMediaGridResult(bool excel);
+        /// <summary>
+        /// Get visual list
+        /// </summary>
+        /// <param name="beginnDate">beginning Date</param>
+        /// <param name="endDate">end Date</param>
+        /// <returns></returns>
+        Dictionary<string, string> GetVisualList(string beginnDate, string endDate);
         /// <summary>
         /// Get vehicle cover items
         /// </summary>

@@ -295,7 +295,7 @@ namespace TNS.AdExpressI.Portofolio
                     }
                 }
 
-               
+
                 //table body rows
                 for (int i = 0; i < resultTable.LinesNumber; i++) //_data.LinesNumber
                 {
@@ -305,20 +305,22 @@ namespace TNS.AdExpressI.Portofolio
                     for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
                     {
                         var cell = resultTable[i, k];
+                        var link = string.Empty;
                         if (cell is CellMediaScheduleLink)
                         {
 
                             var c = cell as CellMediaScheduleLink;
-                            var link = string.Empty;
                             if (c != null)
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
-                               , mediaSchedulePath
-                               , c.GetLink());
+                                link = c.GetLink();
+                                if (!string.IsNullOrEmpty(link))
+                                {
+                                    link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                     , mediaSchedulePath
+                                     , link);
+                                }
                             }
-                            if (!string.IsNullOrEmpty(link))
-                                gridData[i, k + 1] =  link;
-                            else gridData[i, k + 1] = string.Empty;
+                            gridData[i, k + 1] = link;
                         }
                         else gridData[i, k + 1] = cell.RenderString();
                     }
@@ -885,6 +887,73 @@ namespace TNS.AdExpressI.Portofolio
                     break;
                 default:
                     throw new PortofolioException("GetHourIntevalList(): Vehicle unknown.");
+            }
+        }
+
+        public GridResult GetStructureGridResult(bool excel)
+        {
+            Engines.StructureEngine result = null;
+            switch (_vehicleInformation.Id)
+            {
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    List<FrameWorkResultConstantes.PortofolioStructure.Ventilation> ventilationTypeList = GetVentilationTypeList();
+                    result = new Engines.StructureEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, ventilationTypeList, excel);
+                    break;
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                    Dictionary<string, double> hourBeginningList = new Dictionary<string, double>();
+                    Dictionary<string, double> hourEndList = new Dictionary<string, double>();
+                    GetHourIntevalList(hourBeginningList, hourEndList);
+                    result = new Engines.StructureEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, hourBeginningList, hourEndList, excel);
+                    break;
+                default:
+                    throw new PortofolioException("Vehicle unknown.");
+            }
+            return result.GetGridResult();
+        }
+
+        public GridResult GetDetailMediaGridResult(bool excel)
+        {
+            Engines.MediaDetailEngine result = null;
+            StringBuilder t = new StringBuilder(5000);
+
+            switch (_vehicleInformation.Id)
+            {
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
+                    //TODO : Gérer le lien vars de détails insertion
+                    //result.GetAllPeriodInsertions(t, GestionWeb.GetWebWord(1837, _webSession.SiteLanguage));
+                    //return t.ToString();
+                    return null;
+
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                    result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, excel);
+                    return result.GetGridResult();
+                default:
+                    throw new PortofolioException("Vehicle unknown.");
             }
         }
 

@@ -2020,6 +2020,107 @@ namespace TNS.AdExpressI.LostWon
 
         }
 
+        public GridResult GetGridResult()
+        {
+            GridResult gridResult = new GridResult();
+            ResultTable resultTable = GetResult();
+            string mediaSchedulePath = "/MediaSchedule";
+          
+
+            if (resultTable == null || resultTable.DataColumnsNumber == 0)
+            {
+                gridResult.HasData = false;
+                return gridResult;
+            }
+
+            resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+            List<object> columns = new List<object>();
+            List<object> schemaFields = new List<object>();
+            List<object> columnsFixed = new List<object>();
+
+            //Hierachical ids for Treegrid
+            columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "ID" });
+            columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "PID" });
+            List<object> groups = null;
+
+            //Headers
+            if (resultTable.NewHeaders != null)
+            {
+                for (int j = 0; j < resultTable.NewHeaders.Root.Count; j++)
+                {
+                    groups = null;
+                    string colKey = string.Empty;
+                    if (resultTable.NewHeaders.Root[j].Count > 0)
+                    {
+                        groups = new List<object>();
+
+                        int nbGroupItems = resultTable.NewHeaders.Root[j].Count;
+                        for (int g = 0; g < nbGroupItems; g++)
+                        {
+                            colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
+                            schemaFields.Add(new { name = colKey });
+                        }
+                        colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", group = groups });
+                        schemaFields.Add(new { name = colKey });
+                    }
+                    else
+                    {
+                        colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                        schemaFields.Add(new { name = colKey });
+                        if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                    }
+
+                }
+            }
+
+            //table body rows
+            for (int i = 0; i < resultTable.LinesNumber; i++) //_data.LinesNumber
+            {
+                gridData[i, 0] = i; // Pour column ID
+                gridData[i, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
+
+                for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
+                {
+                    var cell = resultTable[i, k];
+                    var link = string.Empty;
+                    if (cell is CellMediaScheduleLink)
+                    {
+
+                        var c = cell as CellMediaScheduleLink;
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                           , mediaSchedulePath
+                           , link);
+                            }
+                        }
+                        gridData[i, k + 1] = link;
+
+                    }
+                   
+                    else gridData[i, k + 1] = cell.RenderString();
+                }
+            }
+            gridResult.NeedFixedColumns = true;
+            gridResult.HasData = true;
+            gridResult.Columns = columns;
+            gridResult.Schema = schemaFields;
+            gridResult.ColumnsFixed = columnsFixed;
+            gridResult.Data = gridData;
+
+            return gridResult;
+        }
+
         #endregion
 
         #endregion
