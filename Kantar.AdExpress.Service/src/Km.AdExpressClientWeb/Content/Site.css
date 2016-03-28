@@ -288,6 +288,10 @@ input {
     background-color: #00c1ff;
 }
 
+.bg-orange {
+    background: #ff8c00 !important;
+}
+
 .green {
     color: #afd702;
 }
@@ -1805,5 +1809,12 @@ ul.ui-selectable {
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+
+/****Carousel****/
+.carousel-control.right,
+.carousel-control.left {
+	background-image: none;
 }
 
