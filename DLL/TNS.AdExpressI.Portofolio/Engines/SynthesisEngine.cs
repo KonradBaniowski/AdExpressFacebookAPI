@@ -114,8 +114,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region headers
             Headers headers = new Headers();
             TNS.FrameWork.WebResultUI.Header header = new TNS.FrameWork.WebResultUI.Header(GetDataMedia().ToString(), HEADER_COLUMN_INDEX, "SynthesisH1");
-            header.Add(new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2"));
-            header.Add(new TNS.FrameWork.WebResultUI.Header("", SECOND_COLUMN_INDEX, "SynthesisH2"));
+            //header.Add(new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2"));
+            //header.Add(new TNS.FrameWork.WebResultUI.Header("", SECOND_COLUMN_INDEX, "SynthesisH2"));
+            headers.Root.Add(header);
+            header =  new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2");
             headers.Root.Add(header);
             resultTable = new ResultTable(data.Count / 2, headers);
             #endregion
@@ -126,7 +128,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = data[i];
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = data[i+1];
-                ChangeLineType(ref lineType);
+              //  ChangeLineType(ref lineType);
             }
             #endregion
 
@@ -156,9 +158,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// <returns>Line type</returns>
 		protected virtual void ChangeLineType(ref LineType lineType) {
 
-			if (lineType == LineType.level1)
-				lineType = LineType.level2;
-			else
+			//if (lineType == LineType.level1)
+			//	lineType = LineType.level2;
+			//else
 				lineType = LineType.level1;
 
 		}

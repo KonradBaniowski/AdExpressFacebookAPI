@@ -421,7 +421,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         [HttpPost]
-        public string SaveUserUnivers(List<Tree> trees, string groupId, string universId, string name,Dimension dimension)
+        public string SaveUserUnivers(List<Tree> trees, string groupId, string universId, string name,Dimension dimension, List<long> media=null)
         {
             string error = "";
             if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && !String.IsNullOrEmpty(groupId) && (!String.IsNullOrEmpty(universId) || !String.IsNullOrEmpty(name)))
@@ -438,7 +438,8 @@ namespace Km.AdExpressClientWeb.Controllers
                     UserUniversId = long.Parse(universId),
                     WebSessionId = webSessionId,
                     Trees = Mapper.Map<List<Domain.Tree>>(validTrees),
-                    IdUniverseClientDescription = 16
+                    IdUniverseClientDescription = 16,
+                    MediaIds = media
                 };
                 var result = _universService.SaveUserUnivers(request);
                 error = result.ErrorMessage;

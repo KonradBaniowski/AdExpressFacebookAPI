@@ -23,6 +23,7 @@ namespace Km.AdExpressClientWeb.Controllers
         // GET: Insertions
         public ActionResult Index(string ids, string zoomDate, string idUnivers, string moduleId, string idVehicle)
         {
+<<<<<<< HEAD
             List<string> paramsUrl = new List<string>();
             paramsUrl.Add(ids);
             paramsUrl.Add(zoomDate);
@@ -30,6 +31,35 @@ namespace Km.AdExpressClientWeb.Controllers
             paramsUrl.Add(moduleId);
             paramsUrl.Add(idVehicle);
             return View(paramsUrl);
+=======
+            DateTime today = DateTime.Today;
+            DateTime past = DateTime.Today.AddDays(-30).Date;
+
+            InsertionViewModel model = new InsertionViewModel();
+            var mediasTabs = new List<Medias> {
+                new Medias {
+                    Label = "Press",
+                    LabelID = 989
+                },
+                new Medias  {
+                    Label = "Television",
+                    LabelID = 999
+                }
+            };
+            model.Medias = mediasTabs;
+            model.DateBegin = past;
+            model.DateEnd = today;
+            model.SiteLanguage = 33;
+
+            List<string> datas = new List<string>();
+            datas.Add(ids);
+            datas.Add(zoomDate);
+            datas.Add(idUnivers);
+            datas.Add(moduleId);
+            datas.Add(idVehicle);
+            model.datas = datas;
+            return View(model);
+>>>>>>> 427ccbc49b3169e994b204c821b0c1524d6b2491
         }
 
         [HttpPost]

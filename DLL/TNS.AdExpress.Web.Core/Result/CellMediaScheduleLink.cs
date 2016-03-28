@@ -81,12 +81,14 @@ namespace TNS.AdExpress.Web.Core.Result{
                     detailLevelItemInformation == DetailLevelItemInformation.Levels.subBrand 
                     )
                 {
-					
-					return(_link.Replace("{0}",_webSession.IdSession).Replace("{1}",_classificationId.ToString()).Replace("{2}",_level.ToString()));
-				}
+
+                    //return(_link.Replace("{0}",_webSession.IdSession).Replace("{1}",_classificationId.ToString()).Replace("{2}",_level.ToString()));
+                    return string.Format("id={0}&level={1}",  _classificationId, _level.ToString());
+                }
 			}
 			return("");
 		}
+
 
 		/// <summary>
 		/// Retourne une représentation string de l'objet
