@@ -23,6 +23,17 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/universe/listbox.js",
                         "~/Scripts/media-selection/media-single.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/media-present-absent").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/media-selection/media-present-absent.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/ajax").Include(
+                        "~/Scripts/app/layout.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/media-compare-group").Include(
+                        "~/Scripts/media-selection/add-tree.js"));
+
+
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
                         "~/Scripts/module-selection/module-selection.js"));
 
@@ -62,7 +73,9 @@ namespace Km.AdExpressClientWeb
                       "~/Content/themes/base/theme.css",
                       "~/Content/bootstrap-select.css",
                       "~/Content/treegrid.css",
-                      "~/Content/options-control.css"));
+                      "~/Content/options-control.css",
+                      "~/Content/spinner.css"));
+
         }
     }
 }

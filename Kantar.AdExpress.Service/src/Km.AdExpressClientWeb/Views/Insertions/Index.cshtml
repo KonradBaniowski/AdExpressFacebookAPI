@@ -1,110 +1,92 @@
-﻿@model Km.AdExpressClientWeb.Models.Insertions.InsertionViewModel
+﻿@model List<string>
+@using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "Insertions";
     Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
 }
-
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
-
 <div class="row">
-    <div class="panel panel-default panel-cotes">
-        <div class="panel-heading">
-            <h3><i class="fa fa-search-plus blue"></i>&nbsp;Insertions</h3>
-            <span class="pull-right">
-                <div id="PresentVehiclesLoader">
-                    <img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" />
+    <div class="container-full">
+        <div class="col-md-12 panel-heading" style="background-color:black; color:white;">
+            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; Insertions</span></h5>
+            <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
+        </div>
+        <div id="HeaderLoader">
+            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+        </div>
+
+        <div id="HeaderElmt" class="hide">
+            <div id="subPeriodSelection" style="background-color:grey"></div>
+            <div class="col-md-12 bg-orange" style="background-color:black; color:white;">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <a data-toggle="collapse" data-target="#lvlperso" class="collapsed">
+                        <h5 class="panel-title">
+                            Niveaux personnalisés
+                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                        </h5>
+                    </a>
                 </div>
-                <ul id="PresentVehicles" class="nav panel-tabs" role="tablist">
-                </ul>
-            </span>
-        </div>
-        <div class="panel-heading second">
-            <h5>
-                Navigation par mois: Du
-                <strong>@Model.DateBegin.ToString("dd/MM/yyy")</strong>
-                au
-                <strong>@Model.DateEnd.ToString("dd/MM/yyy")</strong>
-            </h5>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default">J</button>
-                <button type="button" class="btn btn-default">F</button>
-                <button type="button" class="btn btn-default">M</button>
-                <button type="button" class="btn btn-default">A</button>
-                <button type="button" class="btn btn-default">M</button>
-                <button type="button" class="btn btn-default">J</button>
-                <button type="button" class="btn btn-default">J</button>
-                <button type="button" class="btn btn-default">A</button>
-                <button type="button" class="btn btn-default">TOUS</button>
-            </div>
-        </div>
-
-        <div class="panel panel-default third">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h5 class="panel-title"  data-toggle="collapse" data-target="#lvlperso">
-                    Niveaux personnalisés
-                </h5>
-            </div>
-            <div id="lvlperso" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label>Construction</label>
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                            <br>
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                            <br />
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-
-                        </div>
-                    </form>
+                <div id="lvlperso" data-toggle="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>Construction</label>
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                                <br>
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                                <br />
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <form>
-        <input name="ids" id="ids" type="hidden" value="@Model.datas[0]" />
-        <input name="zoomDate" id="zoomDate" type="hidden" value="@Model.datas[1]" />
-        <input name="idUnivers" id="idUnivers" type="hidden" value="@Model.datas[2]" />
-        <input name="moduleId" id="moduleId" type="hidden" value="@Model.datas[3]" />
-        <input name="idVehicle" id="idVehicle" type="hidden" value="@Model.datas[4]" />
-    </form>
+        <form>
+            <input name="ids" id="ids" type="hidden" value="@Model[0]" />
+            <input name="zoomDate" id="zoomDate" type="hidden" value="@Model[1]" />
+            <input name="idUnivers" id="idUnivers" type="hidden" value="@Model[2]" />
+            <input name="moduleId" id="moduleId" type="hidden" value="@Model[3]" />
+            <input name="idVehicle" id="idVehicle" type="hidden" value="@Model[4]" />
+        </form>
+        <div class="col-md-12" style="margin-top:10px;">
+            <center>
+                <p id="gridEmpty" class="hide">Pas de donnees</p>
+                <div id="grid" class="hide"></div>
+                <div id="gridLoader" class="hide">
+                    <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+                </div>
+            </center>
+        </div>
 
-    <center>
-        <div id="grid" style="font-size:12px !important;" class="hide">
-        </div>
-        <div id="gridLoader" class="hide">
-            <center><img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" /></center>
-        </div>
-    </center>
+    </div> <!-- /container full -->
 
     <!-- Modal HTML -->
     <div id="creativeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-
                 <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="font-normal">Spot</h4>
+                    <h4 class="font-normal" style="color:white;">Spot</h4>
                 </div>
-
                 <div class="modal-body">
                     <div class="media video-audio-container">
                         <iframe id="creativeStream" src="" frameborder="0" allowfullscreen></iframe>
@@ -113,55 +95,68 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    </div>
+</div>
+
 
 @section Scripts {
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 
-
     <script id="colSpotTmpl" type="text/template">
-        {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }} 
-            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='glyphicon glyphicon-play-round text-5x'></i></a>
+        {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
+            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}">Play<i class='glyphicons glyphicons-playlist text-5x'></i></a>
         {{else}}
             ${Spot}
         {{/if}}
     </script>
-
     <script id="colVisuTmpl" type="text/template">
         {{if ${Visu}.startsWith('[') && ${Visu}.endsWith(']') }}
-            <div class="visuCarou" data-visu="${Visu}"></div>
+            <!-- Slider -->
+            <div class="row">
+                <div id="visuCarou" datavisu="${Visu}" class="carousel slide col-md-4" style="margin-bottom:10px;" >
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox"></div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Precedent</span>
+                    </a>
+                    <a class="right carousel-control">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Suivant</span>
+                    </a>
+                </div>
+                <div class="infos col-md-5"></div>
+            </div>
         {{else}}
             ${Visu}
         {{/if}}
     </script>
-
     <script>
         if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
         $(function () {
 
             //GESTION DES ACTIVES CSS
-            $(".btn-group > .btn").click(function () {
-                $(this).addClass("active").siblings().removeClass("active");
-            });
+            //$(".btn-group > .btn").click(function () {
+            //    $(this).addClass("active").siblings().removeClass("active");
+            //});
 
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "Id",
-                width: "100%",
+                width: "95%",
                 defaultColumnWidth: 200,
                 avgRowHeight: 60,
                 autoGenerateColumns: true
             });
 
 
-            $('#period-display-type').selectpicker();
             var ds;
             var cols;
             var colsFixed;
@@ -182,7 +177,7 @@
                             autoGenerateColumns: false,
                             primaryKey: "ID",
                             foreignKey: "PID",
-                            width: "1000px",
+                            width: "95%",
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -208,6 +203,7 @@
                             autoGenerateColumns: true,
                             primaryKey: "ID",
                             foreignKey: "PID",
+                            width: "95%",
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -221,20 +217,18 @@
                         })
                     }
                 } else {
-                    alert(error);
+                    alert("Error");
                 }
-
-                AutoPlayVisu();
             }
 
-            function CallInsertionsResult(idVehicle) {
-
+            function CallInsertionsResult(idV,zoomdt) {
+                $("#gridEmpty").addClass("hide");
                 var parameters = {
                     ids: $('#ids').val(),
-                    zoomDate: $('#zoomDate').val(),
+                    zoomDate: zoomdt,
                     idUnivers: $('#idUnivers').val(),
                     moduleId: $('#moduleId').val(),
-                    idVehicle: idVehicle
+                    idVehicle: idV
                 };
 
 
@@ -248,7 +242,7 @@
                         alert("Erreur");
                     },
                     success: function (data) {
-                        if (data != null) {
+                        if (data != null && data != "") {
                             dataTreeGrid = data.datagrid;
                             colsFixed = data.columnsfixed;
                             needFixedColumns = data.needfixedcolumns;
@@ -274,6 +268,11 @@
 
                             ds.dataBind();
                         }
+                        else {
+                            $("#gridLoader").addClass("hide");
+                            $("#gridEmpty").removeClass("hide");
+                            $("#grid").addClass("hide");
+                        }
                     }
                 });
             }
@@ -297,104 +296,170 @@
                         alert("Erreur");
                     },
                     success: function (response) {
-                        var active = false;
-
                         if (response != null) {
                             var data = JSON.parse(response);
                             var strHTML = "";
+                            var idV;
                             $.each(data, function (i, item) {
-                                if (!active && (!$('#idVehicle').val() || 0 === $('#idVehicle').val())) {
-                                    active = item[0];
-                                }
+                                if (!$('#idVehicle').val() || 0 === $('#idVehicle').val())
+                                    idV = item[0];
+                                else
+                                    idV = $('#idVehicle').val();
 
-                                if (active == item[i]) {
+                                if (idV == item[i]) {
                                     strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
                                 } else {
                                     strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
                                 }
-
                                 $('#PresentVehicles').append(strHTML);
                             });
 
-                            $("#PresentVehiclesLoader").addClass("hide");
-                            $("#PresentVehicles").removeClass("hide");
 
+                            $("#HeaderLoader").addClass("hide");
+                            $("#HeaderElmt").removeClass("hide");
+                            
+                            $('#idVehicle').val(idV.toString());
                             $("#gridLoader").removeClass("hide");
-                            CallInsertionsResult(active);
+                            CallInsertionsResult(idV, '');
                         }
                     }
                 });
             }
 
 
-            CallGetPresentVehicles();
+            function GetSubPeriodSelection(zoomDateParam) {
+                var params = {
+                    zoomDate: zoomDateParam
+                };
+                $.ajax({
+                    url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null) {
+                            $('#subPeriodSelection').html(data);
+                            $("#leave-zoom").addClass("hide");
+                            $(".sub-period-btn").on('click', function (e) {
+                                $(".btn-default-sub-period").prop('disabled', false);
+                                $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+                                $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+                                $(this).prop('disabled', true);
+                                $("#grid").addClass("hide");
+                                $("#gridLoader").removeClass("hide");
+                                CallInsertionsResult($('#idVehicle').val(),$(this).attr("period"));
+                            });
+                            $(".sub-period-btn").on('mouseenter', function (e) {
+                                previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+                                $("#subPeriodLabel").text($(this).attr("periodlabel"));
+                            });
+                            $(".sub-period-btn").on('mouseleave', function (e) {
+                                $("#subPeriodLabel").text(previousSubPeriodLabel);
+                            });
+                        }
+                    }
+                });
+            }
 
+
+            function AutoPlayCreativeModal() {
+
+                $("#creativeStream").attr('src', '');
+
+                $("#creativeModal").on('shown.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);// Button that triggered the modal
+                    var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                    datas = datas.replace(/\[|\]/g, '');
+                    datas = datas.split(",");
+
+                    if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                        alert("Les fichiers média ne sont pas disponibles.");
+                    }
+                    else {
+                        var parameters = {
+                            idVersion: datas[0],
+                            idVehicle: datas[2]
+                        };
+                        $.ajax({
+                            url: '@Url.Action("GetCreativePath", "Insertions")',
+                            contentType: "application/x-www-form-urlencoded",
+                            type: 'POST',
+                            datatype: 'JSON',
+                            data: parameters,
+                            error: function (xmlHttpRequest, errorText, thrownError) {
+                                alert("Erreur lors de la recuperation de url de la version");
+                            },
+                            success: function (response) {
+                                if (response != null) {
+                                    var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
+                                    var urlDowload = response.PathDownloadingFile;
+                                    if (url) {
+                                        $("#creativeStream").attr('src', url);
+                                        $('#creativeModal h4').text("Spot");
+                                        $("#mediaLoader").addClass("hide");
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+
+                $("#creativeModal").on('hide.bs.modal', function () {
+                    $("#creativeStream").attr('src', '');
+                    $("#mediaLoader").removeClass("hide");
+                });
+            }
+
+
+            function AutoPlayVisu() {
+                $("div[datavisu]").each(function (index) {
+                    var datas = $(this).attr('datavisu').toString();
+                    $(this).attr("id", "visuCarou" + index);
+                    var active = "active";
+                    datas = datas.split('],[');
+                    visus = datas[0].replace(/\[|\]/g, '').split(",");
+                    infos = datas[1].replace(/\[|\]/g, '').split(";");
+                    if (visus.length > 1) {
+                        for (i = 0; i < visus.length; i++) {
+                            if (i != 0) active = "";
+                            $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img style="max-height:200px;" onclick="alert();" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                        }
+                    } else {
+                        $(this).attr("id", "visu");
+                        $(this).html('<center><img style="max-height:200px;" onclick="alert();" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" /></center>')
+                    }
+                    for (j = infos.length - 1; j >= 0; j--) {
+                        if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
+                            tmp = infos[j].split(":");
+                            $(this).next().prepend('<div style="width:100%"><span style="display:inline-block;min-width:100px;">' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                        }
+                    }
+                });
+            }
+
+            //** Important charge les images au fur et a mesure que le teableau s'affiche
+            $("#grid").on("igtreegridrowsrendered", function (evt, ui) {
+                AutoPlayVisu();
+
+                $(".carousel").each(function (index) {
+                    $("#visuCarou" + index.toString()).carousel("pause");
+                    $("#visuCarou" + index.toString()).find('.left').click(function () {
+                        $("#visuCarou" + index.toString()).carousel("prev");
+                    });
+                    $("#visuCarou" + index.toString()).find('.right').click(function () {
+                        $("#visuCarou" + index.toString()).carousel("next");
+                    });
+                });
+
+            });
+
+            CallGetPresentVehicles();
+            GetSubPeriodSelection('');
             AutoPlayCreativeModal();
 
         });
-
-        function AutoPlayCreativeModal() {
-
-            $("#creativeStream").attr('src', '');
-
-            $("#creativeModal").on('shown.bs.modal', function (event) {
-                var button = $(event.relatedTarget);// Button that triggered the modal
-                var datas = button.data('creative').toString(); // Extract info from data-* attributes
-                datas = datas.replace("/\[|\]/g", '');
-                datas = datas.split(",");
-
-                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
-                    alert("Les fichiers média ne sont pas disponibles.");
-                }
-                else {
-                    var parameters = {
-                        idVersion: datas[0],
-                        idVehicle: datas[2]
-                    };
-                    $.ajax({
-                        url: '@Url.Action("GetCreativePath", "Insertions")',
-                        contentType: "application/x-www-form-urlencoded",
-                        type: 'POST',
-                        datatype: 'JSON',
-                        data: parameters,
-                        error: function (xmlHttpRequest, errorText, thrownError) {
-                            alert("Erreur lors de la recuperation de url de la version");
-                        },
-                        success: function (response) {
-                            if (response != null) {
-                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
-                                var urlDowload = response.PathDownloadingFile;
-                                if (url) {
-                                    $("#creativeStream").attr('src', url);
-                                    $('#creativeModal h4').text("Spot");
-                                    $("#mediaLoader").addClass("hide");
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-
-            $("#creativeModal").on('hide.bs.modal', function () {
-                $("#creativeStream").attr('src', '');
-                $("#mediaLoader").removeClass("hide");
-            });
-        }
-
-        function AutoPlayVisu() {
-
-            var divs = $(".visuCarou");
-            for (var i = 0; i < divs.length; i++) {
-                var datas = divs[i].data('visu').toString(); // Extract info from data-* attributes
-                datas = datas.replace("/\[|\]/g", '');
-                datas = datas.split(",");
-                for (i = 0; i < datas.length; i++) {
-                    divs[i].innerHTML = "<img src='http://www.visitdenmark.fr/sites/all/themes/visit/images/loading.png' />";
-                }
-            }
-
-        }
-
 
     </script>
 }

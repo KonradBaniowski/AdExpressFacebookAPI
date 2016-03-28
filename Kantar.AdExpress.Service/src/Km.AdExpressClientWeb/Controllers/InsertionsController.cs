@@ -23,32 +23,13 @@ namespace Km.AdExpressClientWeb.Controllers
         // GET: Insertions
         public ActionResult Index(string ids, string zoomDate, string idUnivers, string moduleId, string idVehicle)
         {
-            DateTime today = DateTime.Today;
-            DateTime past = DateTime.Today.AddDays(-30).Date;
-
-            InsertionViewModel model = new InsertionViewModel();
-            var mediasTabs = new List<Medias> {
-                new Medias {
-                    Label = "Press",
-                    LabelID = 989
-                },
-                new Medias  {
-                    Label = "Television",
-                    LabelID = 999
-                }
-            };
-            model.Medias = mediasTabs;
-            model.DateBegin = past;
-            model.DateEnd = today;
-
-            List<string> datas = new List<string>();
-            datas.Add(ids);
-            datas.Add(zoomDate);
-            datas.Add(idUnivers);
-            datas.Add(moduleId);
-            datas.Add(idVehicle);
-            model.datas = datas;
-            return View(model);
+            List<string> paramsUrl = new List<string>();
+            paramsUrl.Add(ids);
+            paramsUrl.Add(zoomDate);
+            paramsUrl.Add(idUnivers);
+            paramsUrl.Add(moduleId);
+            paramsUrl.Add(idVehicle);
+            return View(paramsUrl);
         }
 
         [HttpPost]
@@ -60,6 +41,9 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle);
+
+            if (!reponse.GridResult.HasData)
+                return null;
 
             if (reponse.Message == null)
             {
