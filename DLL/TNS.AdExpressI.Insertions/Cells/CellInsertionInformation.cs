@@ -446,20 +446,20 @@ namespace TNS.AdExpressI.Insertions.Cells
                     {
                         if (!(_values[i] is CellUnit))
                         {
-                            values = value.Split(',');
+                            values = value.Split(';');
                             foreach (string s in values)
                             {
                                 if (hasData)
                                 {
-                                    str.Append(",");
+                                    str.Append(";");
                                 }
                                 hasData = true;
-                                str.AppendFormat("{0},", s);
+                                str.AppendFormat("{0};", s);
                             }
                         }
                         else
                         {
-                            str.AppendFormat("{0},", value);
+                            str.AppendFormat("{0};", value);
                         }
                     }
                 }

@@ -1,4 +1,5 @@
-﻿@model Km.AdExpressClientWeb.Models.Insertions.InsertionViewModel
+﻿@model List<string>
+@using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "Insertions";
     Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
@@ -7,25 +8,27 @@
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
-    <div class="panel panel-default panel-cotes">
-        <div class="panel-heading">
-            <h3><i class="fa fa-search-plus blue"></i>&nbsp;Insertions</h3>
+    <div class="container-full">
+        <div class="col-md-12 panel-heading" style="background-color:black; color:white;">
+            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; Insertions</span></h5>
+            <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
         <div id="HeaderLoader">
             <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
         </div>
+
         <div id="HeaderElmt" class="hide">
-            <div class="panel-heading row" >
-                <ul id="PresentVehicles" class="nav panel-tabs" role="tablist"></ul>
-            </div>
-            <div id="subPeriodSelection" class="row h20"></div>
-            <div class="panel panel-default">
+            <div id="subPeriodSelection" style="background-color:grey"></div>
+            <div class="col-md-12 bg-orange" style="background-color:black; color:white;">
                 <div class="panel-heading" role="tab" id="headingOne">
-                    <h5 class="panel-title" data-toggle="collapse" data-target="#lvlperso">
-                        Niveaux personnalisés
-                    </h5>
+                    <a data-toggle="collapse" data-target="#lvlperso" class="collapsed">
+                        <h5 class="panel-title">
+                            Niveaux personnalisés
+                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                        </h5>
+                    </a>
                 </div>
-                <div id="lvlperso" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div id="lvlperso" data-toggle="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
                         <form role="form">
                             <div class="form-group">
@@ -56,24 +59,26 @@
                 </div>
             </div>
         </div>
-    </div>
-    <form>
-        <input name="ids" id="ids" type="hidden" value="@Model.datas[0]" />
-        <input name="zoomDate" id="zoomDate" type="hidden" value="@Model.datas[1]" />
-        <input name="idUnivers" id="idUnivers" type="hidden" value="@Model.datas[2]" />
-        <input name="moduleId" id="moduleId" type="hidden" value="@Model.datas[3]" />
-        <input name="idVehicle" id="idVehicle" type="hidden" value="@Model.datas[4]" />
-    </form>
-    <div class="row">
-        <div class="col-md-12">
+
+        <form>
+            <input name="ids" id="ids" type="hidden" value="@Model[0]" />
+            <input name="zoomDate" id="zoomDate" type="hidden" value="@Model[1]" />
+            <input name="idUnivers" id="idUnivers" type="hidden" value="@Model[2]" />
+            <input name="moduleId" id="moduleId" type="hidden" value="@Model[3]" />
+            <input name="idVehicle" id="idVehicle" type="hidden" value="@Model[4]" />
+        </form>
+        <div class="col-md-12" style="margin-top:10px;">
             <center>
+                <p id="gridEmpty" class="hide">Pas de donnees</p>
                 <div id="grid" class="hide"></div>
                 <div id="gridLoader" class="hide">
                     <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
                 </div>
             </center>
         </div>
-    </div>
+
+    </div> <!-- /container full -->
+
     <!-- Modal HTML -->
     <div id="creativeModal" class="modal fade">
         <div class="modal-dialog">
@@ -113,7 +118,7 @@
         {{if ${Visu}.startsWith('[') && ${Visu}.endsWith(']') }}
             <!-- Slider -->
             <div class="row">
-                <div id="visuCarou" datavisu="${Visu}" class="carousel slide col-md-5" >
+                <div id="visuCarou" datavisu="${Visu}" class="carousel slide col-md-4" style="margin-bottom:10px;" >
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox"></div>
 
@@ -152,7 +157,6 @@
             });
 
 
-            $('#period-display-type').selectpicker();
             var ds;
             var cols;
             var colsFixed;
@@ -218,7 +222,7 @@
             }
 
             function CallInsertionsResult(idV,zoomdt) {
-
+                $("#gridEmpty").addClass("hide");
                 var parameters = {
                     ids: $('#ids').val(),
                     zoomDate: zoomdt,
@@ -266,8 +270,8 @@
                         }
                         else {
                             $("#gridLoader").addClass("hide");
-                            $("#grid").removeClass("hide");
-                            $("#grid").html("Pas de donnees");
+                            $("#gridEmpty").removeClass("hide");
+                            $("#grid").addClass("hide");
                         }
                     }
                 });
@@ -295,6 +299,7 @@
                         if (response != null) {
                             var data = JSON.parse(response);
                             var strHTML = "";
+                            var idV;
                             $.each(data, function (i, item) {
                                 if (!$('#idVehicle').val() || 0 === $('#idVehicle').val())
                                     idV = item[0];
@@ -306,13 +311,14 @@
                                 } else {
                                     strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
                                 }
-
                                 $('#PresentVehicles').append(strHTML);
                             });
 
+
                             $("#HeaderLoader").addClass("hide");
                             $("#HeaderElmt").removeClass("hide");
-
+                            
+                            $('#idVehicle').val(idV.toString());
                             $("#gridLoader").removeClass("hide");
                             CallInsertionsResult(idV, '');
                         }
@@ -335,6 +341,7 @@
                     success: function (data) {
                         if (data != null) {
                             $('#subPeriodSelection').html(data);
+                            $("#leave-zoom").addClass("hide");
                             $(".sub-period-btn").on('click', function (e) {
                                 $(".btn-default-sub-period").prop('disabled', false);
                                 $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
@@ -413,19 +420,21 @@
                     var active = "active";
                     datas = datas.split('],[');
                     visus = datas[0].replace(/\[|\]/g, '').split(",");
-                    infos = datas[1].replace(/\[|\]/g, '').split(",");
+                    infos = datas[1].replace(/\[|\]/g, '').split(";");
                     if (visus.length > 1) {
                         for (i = 0; i < visus.length; i++) {
                             if (i != 0) active = "";
-                            $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img onclick="alert();" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                            $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img style="max-height:200px;" onclick="alert();" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
                         }
                     } else {
                         $(this).attr("id", "visu");
-                        $(this).html('<center><img onclick="alert();" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" /></center>')
+                        $(this).html('<center><img style="max-height:200px;" onclick="alert();" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" /></center>')
                     }
-                    for (j = 0; j < infos.length; j++) {
-                        tmp = infos[j].split(":");
-                        $(this).next().prepend('<div class="col-md-6">' + tmp[0] + '</div><div class="col-md-6"><span class="pull-right">' + tmp[1] + '</span></div>')
+                    for (j = infos.length - 1; j >= 0; j--) {
+                        if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
+                            tmp = infos[j].split(":");
+                            $(this).next().prepend('<div style="width:100%"><span style="display:inline-block;min-width:100px;">' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                        }
                     }
                 });
             }
@@ -434,7 +443,7 @@
             $("#grid").on("igtreegridrowsrendered", function (evt, ui) {
                 AutoPlayVisu();
 
-                $("div[datavisu]").each(function (index) {
+                $(".carousel").each(function (index) {
                     $("#visuCarou" + index.toString()).carousel("pause");
                     $("#visuCarou" + index.toString()).find('.left').click(function () {
                         $("#visuCarou" + index.toString()).carousel("prev");
@@ -447,7 +456,7 @@
             });
 
             CallGetPresentVehicles();
-            GetSubPeriodSelection();
+            GetSubPeriodSelection('');
             AutoPlayCreativeModal();
 
         });
