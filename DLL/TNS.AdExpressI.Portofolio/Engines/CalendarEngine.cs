@@ -32,6 +32,8 @@ using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Result;
+using TNS.AdExpress.Domain.Results;
+
 namespace TNS.AdExpressI.Portofolio.Engines {
 
 	/// <summary>
@@ -435,6 +437,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     throw new PortofolioException("The column name does not exist.");
             }
 
+        }
+
+        protected override GridResult BuildGridResult()
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

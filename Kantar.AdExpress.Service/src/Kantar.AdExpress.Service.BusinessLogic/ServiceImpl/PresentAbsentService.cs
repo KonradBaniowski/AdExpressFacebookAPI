@@ -27,8 +27,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var parameters = new object[1];
             parameters[0] = _customerSession;
             var presentAbsentResult = (IPresentAbsentResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-            return null;
-
+            var gridResult = presentAbsentResult.GetGridResult();
+            return gridResult;
         }
 
         public ResultTable GetResultTable(string idWebSession)

@@ -60,7 +60,7 @@
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "ClassifId",
-                width: "100%",
+                width: "1140px",
                 defaultColumnWidth: 200,
                 avgRowHeight: 60,
                 autoGenerateColumns: true
@@ -150,9 +150,9 @@
                             columns: cols,
                             height: "530px",
                             autoGenerateColumns: false,
-                            primaryKey: "ID_PRODUCT",
+                            primaryKey: "ID",
                             foreignKey: "PID",
-                            width: "846px",
+                            width: "1140px",
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -167,6 +167,12 @@
                                     fixingDirection: "left",
                                     columnSettings: colsFixed
                                 }
+                                 ,
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false
+                                }
                             ]
                         })
                     }
@@ -176,7 +182,7 @@
                             columns: cols,
                             height: "530px",
                             autoGenerateColumns: false,
-                            primaryKey: "ID_PRODUCT",
+                            primaryKey: "ID",
                             foreignKey: "PID",
                             features: [
                                 {
@@ -190,6 +196,12 @@
                             ]
                         })
                     }
+
+                    $("#grid").igTreeGrid({
+                        rowCollapsed: function (evt, ui) {
+                            $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                        }
+                    });
 
                 } else {
                     alert(error);

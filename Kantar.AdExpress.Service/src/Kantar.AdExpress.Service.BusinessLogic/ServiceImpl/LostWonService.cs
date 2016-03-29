@@ -20,7 +20,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public GridResult GetGridResult(string idWebSession)
         {
-            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_DYNAMIQUE);
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Lost/Won result"));
             var parameters = new object[1];
@@ -29,14 +29,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null,
             parameters, null, null);
 
-            return null;
+            return lostWonResult.GetGridResult();
 
         }
 
         public ResultTable GetResultTable(string idWebSession)
         {
             ResultTable data = null;
-            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_DYNAMIQUE);
             _customerSession = (WebSession)WebSession.Load(idWebSession);
 #if Debug
             //TODO : Resultat pour calendrier d'actiion : a enlever apres tests

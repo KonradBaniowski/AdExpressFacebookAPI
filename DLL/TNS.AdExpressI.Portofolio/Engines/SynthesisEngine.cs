@@ -25,6 +25,7 @@ using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -1506,7 +1507,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 // Nombre moyen de spots par écran
                 data = new List<ICell>(2);
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1415, _webSession.SiteLanguage)));
-                data.Add(new CellLabel(nbrSpotByEcran.ToString("0.00")));
+
+                //data.Add(new CellLabel(nbrSpotByEcran.ToString("0.00")));
+                CellNumber cell = new CellNumber((double)nbrSpotByEcran);                
+                data.Add(cell);
             }
             #endregion
 
@@ -1691,6 +1695,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             return data;
 
+        }
+
+        protected override GridResult BuildGridResult()
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

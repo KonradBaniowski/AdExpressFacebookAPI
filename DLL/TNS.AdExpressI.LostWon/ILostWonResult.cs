@@ -9,6 +9,7 @@
 #endregion
 
 #region Using
+using TNS.AdExpress.Domain.Results;
 using TNS.FrameWork.WebResultUI;
 #endregion
 
@@ -67,6 +68,12 @@ namespace TNS.AdExpressI.LostWon
         /// </summary>
         /// <returns>Computed data</returns>
         ResultTable GetResult();
+
+        /// <summary>
+        /// Compute result grid specified in user session
+        /// </summary>
+        /// <returns>Computed data</returns>
+        GridResult GetGridResult();
 
     }
 

@@ -10,7 +10,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using VM = Km.AdExpressClientWeb.Models.MediaSchedule;
+using VM = Km.AdExpressClientWeb.Models.PresentAbsent;
 using KM.AdExpress.Framework.MediaSelection;
 using Domain = Kantar.AdExpress.Service.Core.Domain;
 using Kantar.AdExpress.Service.Core;
