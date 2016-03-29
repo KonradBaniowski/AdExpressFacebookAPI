@@ -131,8 +131,8 @@
 .open .dropdown-menu {
     background-color: black;
     min-width: 60px;
-    max-height: 200px!important;
-    z-index: 2000!important;
+    max-height: 200px !important;
+    z-index: 2000 !important;
 }
 
 
@@ -1625,75 +1625,75 @@ ul.ui-selectable {
 /*PANEL SUB PERIOD MEDIA SCHEDULE*/
 
 .panel-sub-period .panel {
-    background-color: transparent!important;
-    border: none!important;
+    background-color: transparent !important;
+    border: none !important;
 }
 
-.panel-sub-period .panel.panel-default.panel-cotes > .panel-heading {
-    background-color: transparent!important;
-    border: none;
-    border-radius: unset;
-    padding: 2px 15px;
-}
+    .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading {
+        background-color: transparent !important;
+        border: none;
+        border-radius: unset;
+        padding: 2px 15px;
+    }
 
-.panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group {
-    display: inline-flex;
-    overflow-x: auto;
-    max-width: 464px!important;
-    width: 100%;
-}
+        .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group {
+            display: inline-flex;
+            overflow-x: auto;
+            max-width: 464px !important;
+            width: 100%;
+        }
 
-.panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn {
-    background-color: rgba(0,0,0,0.4);
-    color: white;
-    border: 1px solid transparent;
-}
+            .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn {
+                background-color: rgba(0,0,0,0.4);
+                color: white;
+                border: 1px solid transparent;
+            }
 
-.panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:active,
-.panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:hover,
-.panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn.active {
-    background-color: #00c1ff;
-}
+                .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:active,
+                .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:hover,
+                .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn.active {
+                    background-color: #00c1ff;
+                }
 
-.panel-sub-period .panel.panel-default.panel-cotes > .panel-heading > h5 {
-    display: inline-block;
-}
+        .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading > h5 {
+            display: inline-block;
+        }
 
 .panel-sub-period .btn {
-    padding: 1px 8px!important;
+    padding: 1px 8px !important;
     font-size: 12px;
 }
 
 .btn-default-sub-period {
-    background: #00C1FF!important;
-    border: none!important;
+    background: #00C1FF !important;
+    border: none !important;
 }
 
-.btn-default-sub-period:focus {
-    outline: none;
-}
+    .btn-default-sub-period:focus {
+        outline: none;
+    }
 
 .btn-group-margin {
     margin-left: 20px;
 }
 
 .sub-period-btn {
-    width: 30px!important;
-    height: 30px!important;
+    width: 30px !important;
+    height: 30px !important;
 }
 
 .sub-period-label {
     margin-left: 4px;
 }
 
-.sub-period-info{
-    float:left;
+.sub-period-info {
+    float: left;
     width: 330px;
 }
 
-.sub-period-info > h5 {
-    font-size: 13px;
-}
+    .sub-period-info > h5 {
+        font-size: 13px;
+    }
 
 .open-media-schedule {
     display: inline-block;
@@ -1724,71 +1724,75 @@ ul.ui-selectable {
         text-decoration: none;
     }*/
 
-.items-famille{
- list-style-type: none;
- margin: 0;
- padding: 0;
- line-height:21px;
+.items-famille {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    line-height: 21px;
 }
-.items-famille li{
- color:#fff;
- cursor:pointer !important;
- 
+
+    .items-famille li {
+        color: #fff;
+        cursor: pointer !important;
+    }
+
+        .items-famille li.select {
+            color: #ff8c00;
+            font-weight: bolder;
+        }
+
+    .items-famille button {
+        background: none;
+        border: 0;
+        padding: 0;
+    }
+
+.items-famille-ma {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    line-height: 21px;
+    background: rgb(165, 165, 165);
 }
-.items-famille li.select{
- color:#ff8c00;
- font-weight: bolder;
- 
+
+    .items-famille-ma li {
+        color: #fff;
+        cursor: pointer !important;
+    }
+
+        .items-famille-ma li a {
+        }
+
+        .items-famille-ma li.select {
+            color: #ff8c00;
+            font-weight: bolder;
+        }
+
+    .items-famille-ma button {
+        background: none;
+        border: 0;
+        padding: 0;
+    }
+
+    .items-famille-ma > li > div.checkbox {
+        width: 90%;
+    }
+
+.items-famille-ma-alertes {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    line-height: 21px;
 }
-.items-famille button{
- background:none;
- border:0;
- padding: 0;
- 
-}
-.items-famille-ma{
- list-style-type: none;
- margin: 0;
- padding: 0;
- line-height:21px;
- background:rgb(165, 165, 165);
-}
-.items-famille-ma li{
- color:#fff;
- cursor:pointer !important;
- 
-}
-.items-famille-ma li a{
- 
- 
-}
-.items-famille-ma li.select{
- color:#ff8c00;
- font-weight: bolder;
- 
-}
-.items-famille-ma button{
- background:none;
- border:0;
- padding: 0;
- 
-}
-.items-famille-ma > li > div.checkbox{
-    width: 90%;
-}
-.items-famille-ma-alertes{
- list-style-type: none;
- margin: 0;
- padding: 0;
- line-height:21px;
-}
-.items-famille-ma-alertes li{
- color:#fff;
- cursor:pointer !important; 
-}
-.head-famille{
- background:rgba(0,0,0,0.2);
- padding: 10px 15px;
+
+    .items-famille-ma-alertes li {
+        color: #fff;
+        cursor: pointer !important;
+    }
+
+.head-famille {
+    background: rgba(0,0,0,0.2);
+    padding: 10px 15px;
 }
 
 
@@ -1803,18 +1807,26 @@ ul.ui-selectable {
     overflow: hidden;
 }
 
-.media.video-audio-container iframe,  .video-audio-container object,  .video-audio-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
+    .media.video-audio-container iframe, .video-audio-container object, .video-audio-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 
 
 /****Carousel****/
 .carousel-control.right,
 .carousel-control.left {
-	background-image: none;
+    background-image: none;
 }
 
+#loader .modal-footer {
+    position: relative;
+    width: 100px;
+    top: 50%;
+    margin: -19px -100px;
+    left: 50%;
+    border-top: none;
+}
