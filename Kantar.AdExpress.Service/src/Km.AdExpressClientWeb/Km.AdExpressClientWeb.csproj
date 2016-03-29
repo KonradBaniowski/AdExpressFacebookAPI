@@ -1439,7 +1439,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\media-selection\add-tree.js" />
     <Content Include="Scripts\media-selection\media-present-absent.js" />
+    <Content Include="Scripts\media-selection\media-support-multiple.js" />
     <Content Include="Scripts\media-selection\media-single.js" />
+    <Content Include="Scripts\media-selection\media-support-single.js" />
     <Content Include="Scripts\media-selection\media.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\module-selection\module-selection.js" />
