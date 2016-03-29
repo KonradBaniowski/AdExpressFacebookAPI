@@ -1016,7 +1016,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                 StringBuilder query = new StringBuilder();
                 //blob_universe_client, 
                 query.Append(" BEGIN  ");
-                query.AppendFormat("INSERT INTO ", universeTable.Sql);
+                query.AppendFormat("INSERT INTO {0} ", universeTable.Sql);
                 query.AppendFormat("(ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT, ID_TYPE_UNIVERSE_CLIENT, ID_UNIVERSE_CLIENT_DESCRIPTION, DATE_CREATION, DATE_MODIFICATION, ACTIVATION");
                 if (!String.IsNullOrEmpty(level))
                     query.AppendFormat(", \"LEVEL\" ");
@@ -1025,26 +1025,12 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                 query.AppendFormat(") Values ");
                 query.AppendFormat(" ( {0}.seq_universe_client.nextval, {1}, '{2}', :1, {3},{4},sysdate, sysdate, {5}", schema.Label, idGroupUniverse, universe, idTypeUniverseClient, idUniverseClientDescription, DBConstantes.ActivationValues.ACTIVATED);
                 if (!String.IsNullOrEmpty(level))
-                    query.AppendFormat(", \"{0}\"",level);
+                    query.AppendFormat(", '{0}'",level);
                 if (!String.IsNullOrEmpty(filter))
-                    query.AppendFormat(", \"{0}\"", filter);
+                    query.AppendFormat(", '{0}'", filter);
                 query.AppendFormat(" );");
                 query.AppendFormat(" END; ");
 
-                //string block = " BEGIN " +
-                //    " INSERT INTO " + universeTable.Sql +
-                //    " (ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT,ID_TYPE_UNIVERSE_CLIENT ,ID_UNIVERSE_CLIENT_DESCRIPTION ,DATE_CREATION, DATE_MODIFICATION, ACTIVATION) " +
-                //    " VALUES " +
-                //    " (" + schema.Label + ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate, " + DBConstantes.ActivationValues.ACTIVATED + "); " +
-
-                    /* TODO MODIFICATION
-                     * Code add to improve the performance of the universe loading process
-                    * 
-                    " (ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT,ID_TYPE_UNIVERSE_CLIENT ,ID_UNIVERSE_CLIENT_DESCRIPTION ,DATE_CREATION, DATE_MODIFICATION, COMMENTARY, ACTIVATION) " +
-                    " VALUES " +
-                    " (" + schema.Label + ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate," + levelsIdsField + ", " + DBConstantes.ActivationValues.ACTIVATED + "); " +*/
-
-                   // " END; ";
                 sqlCommand = new OracleCommand(query.ToString());
                 sqlCommand.Connection = connection;
                 sqlCommand.CommandType = CommandType.Text;
