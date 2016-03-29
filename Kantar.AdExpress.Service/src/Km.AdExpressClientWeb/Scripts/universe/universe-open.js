@@ -132,7 +132,6 @@ $(function () {
         //    return;
         //}
         var things = [];
-        var spinner = new Spinner().spin(dis);
         $('#btnSubmitMarketSelection').off('click');
         var trees = [];
         $.each($('.nav.nav-tabs > li a'), function (index, elem) {
@@ -174,11 +173,9 @@ $(function () {
             //datatype: 'JSON',
             data: params,
             error: function (data) {
-                spinner.stop();
                 bootbox.alert(data.ErrorMessage);
             },
             success: function (data) {
-                spinner.stop();
                 if (data.ErrorMessage != null && data.ErrorMessage != "") {
                     bootbox.alert(data.ErrorMessage);
                 }
@@ -199,7 +196,6 @@ $(function () {
         var universeIdCalling = $(this).closest('.panel').attr('data-universe');
         var branchId = $(this).closest('.panel').attr('data-branch');
         var universesToUpdate = $("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
-        var spinner = new Spinner().spin(DIS);
         $.each(universesToUpdate, function (index, elem) {
 
             var universe = $(elem).attr('data-universe');
@@ -222,7 +218,6 @@ $(function () {
                     alert("error");
                 },
                 success: function (response) {
-                    spinner.stop();
                     $("#containerSelectable" + universe).html('');
                     $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                     $('#selectable' + univerIndex).selectable(
@@ -252,7 +247,7 @@ $(document).on('click', '.tab-content li > .pull-right', function () {
     $(DIS).parents('li').remove()
 
     if (parent.find('li').length == 0) {
-        header.find('a').collapse('hide');
+        header.find('[id^=collapse]').collapse('hide');
     }
 });
 

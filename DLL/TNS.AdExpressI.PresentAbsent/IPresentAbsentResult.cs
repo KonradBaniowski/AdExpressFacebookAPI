@@ -10,6 +10,7 @@
 
 #region Using
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 #endregion
@@ -69,6 +70,12 @@ namespace TNS.AdExpressI.PresentAbsent
         /// </summary>
         /// <returns>Computed data</returns>
         ResultTable GetResult();
+
+        /// <summary>
+        /// Compute result grid specified in user session
+        /// </summary>
+        /// <returns>Computed data</returns>
+        GridResult GetGridResult();
 
     }
 

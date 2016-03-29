@@ -7,6 +7,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -38,7 +39,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Initialisation Niveau de détaille colonne
             if (_nbColumnDetailLevelItemList == 1)
             {
-                ColumnDetailLevelItemInit(genericColumnDetailLevelOption);
+                genericColumnDetailLevelOption = ColumnDetailLevelItemInit();
+                genericColumnDetailLevelOption.L1Detail.Visible = true;
             }
             #endregion
 
@@ -66,33 +68,41 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerWebSession.GenericColumnDetailLevel = _genericColumnDetailLevel;
         }
 
-        protected void ColumnDetailLevelItemInit(GenericColumnDetailLevelOption genericColumnDetailLevelOption)
+        protected GenericColumnDetailLevelOption ColumnDetailLevelItemInit()
         {
-            genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
+            var genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
+            genericColumnDetailLevelOption.L1Detail = new SelectControl();
             genericColumnDetailLevelOption.L1Detail.Id = "columnDetail";
-            genericColumnDetailLevelOption.L1Detail.Items = new List<SelectItem>();          
-            ArrayList AllowedColumnDetailLevelItems = GetAllowedColumnDetailLevelItems();
+           
+            var selectItems = new List<SelectItem>();
+            List<DetailLevelItemInformation> allowedColumnDetailLevelItems = GetAllowedColumnDetailLevelItems();
+            allowedColumnDetailLevelItems.ForEach(p => {
+                selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(p.WebTextId, _customerWebSession.SiteLanguage), Value = p.Id.GetHashCode().ToString() });
+            });
+            genericColumnDetailLevelOption.L1Detail.Items = selectItems;
+
+            return genericColumnDetailLevelOption;
+
         }
 
         /// <summary>
         /// Retourne les éléments des niveaux de détail colonne autorisés
         /// </summary>
         /// <returns>Niveaux de détail colonne</returns>
-        private ArrayList GetAllowedColumnDetailLevelItems()
+        private List<DetailLevelItemInformation> GetAllowedColumnDetailLevelItems()
         {
-
+            var levels = new List<DetailLevelItemInformation>();
             List<DetailLevelItemInformation.Levels> vehicleAllowedDetailLevelList = GetVehicleAllowedDetailLevelItems();
-            ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;
-            ArrayList list = new ArrayList();
+            ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;           
 
             List<DetailLevelItemInformation.Levels> vehicleAllowedColumnLevelList = GetVehicleAllowedColumnsLevelItems();
 
             foreach (DetailLevelItemInformation currentLevel in allowedColumnDetailLevelList)
                 if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id)
                     && vehicleAllowedColumnLevelList.Contains(currentLevel.Id))
-                    list.Add(currentLevel);
+                    levels.Add(currentLevel);
 
-            return list;
+            return levels;
 
         }
 
@@ -148,7 +158,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// <returns>True s'il peut être ajouté</returns>
         protected virtual bool CanAddColumnDetailLevel(GenericDetailLevel currentColumnDetailLevel, Int64 module)
         {
-            ArrayList AllowedDetailLevelItems = GetAllowedColumnDetailLevelItems();
+            List<DetailLevelItemInformation> AllowedDetailLevelItems = GetAllowedColumnDetailLevelItems();
             foreach (DetailLevelItemInformation currentColumnDetailLevelItem in currentColumnDetailLevel.Levels)
             {
                 if (!AllowedDetailLevelItems.Contains(currentColumnDetailLevelItem)) return (false);

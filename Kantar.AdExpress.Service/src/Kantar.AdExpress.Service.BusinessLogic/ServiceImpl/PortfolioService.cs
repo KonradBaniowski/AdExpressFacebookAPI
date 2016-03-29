@@ -31,8 +31,21 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
                 + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
                 | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            switch (_customerSession.CurrentTab)
+            {
 
-            return null;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                    return portofolioResult.GetDetailMediaGridResult(false);
+                    
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                    return portofolioResult.GetStructureGridResult(false);
+                    
+                default:
+                   return  portofolioResult.GetGridResult();
+                    
+
+            }
+            return portofolioResult.GetGridResult();
         }
 
 

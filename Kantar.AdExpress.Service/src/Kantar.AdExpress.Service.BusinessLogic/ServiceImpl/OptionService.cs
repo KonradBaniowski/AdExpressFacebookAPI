@@ -181,7 +181,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             options.GenericDetailLevel = genericDetailLevelOption;
 
-            options.GenericColumnDetailLevelOption = GetGenericColumnLevelDetailOptions();
+          
             #endregion
 
             #region PeriodDetailOption
@@ -396,6 +396,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             options.PurchaseModeOption = purchaseModeOption;
             #endregion
+
+            switch (_customerWebSession.CurrentModule)
+            {              
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    options.GenericColumnDetailLevelOption = GetGenericColumnLevelDetailOptions();
+                    break;
+            }
 
             return options;
         }

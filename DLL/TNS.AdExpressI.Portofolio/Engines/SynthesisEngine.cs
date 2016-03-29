@@ -25,6 +25,7 @@ using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -114,8 +115,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region headers
             Headers headers = new Headers();
             TNS.FrameWork.WebResultUI.Header header = new TNS.FrameWork.WebResultUI.Header(GetDataMedia().ToString(), HEADER_COLUMN_INDEX, "SynthesisH1");
-            header.Add(new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2"));
-            header.Add(new TNS.FrameWork.WebResultUI.Header("", SECOND_COLUMN_INDEX, "SynthesisH2"));
+            //header.Add(new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2"));
+            //header.Add(new TNS.FrameWork.WebResultUI.Header("", SECOND_COLUMN_INDEX, "SynthesisH2"));
+            headers.Root.Add(header);
+            header =  new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2");
             headers.Root.Add(header);
             resultTable = new ResultTable(data.Count / 2, headers);
             #endregion
@@ -126,7 +129,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = data[i];
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = data[i+1];
-                ChangeLineType(ref lineType);
+              //  ChangeLineType(ref lineType);
             }
             #endregion
 
@@ -156,9 +159,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// <returns>Line type</returns>
 		protected virtual void ChangeLineType(ref LineType lineType) {
 
-			if (lineType == LineType.level1)
-				lineType = LineType.level2;
-			else
+			//if (lineType == LineType.level1)
+			//	lineType = LineType.level2;
+			//else
 				lineType = LineType.level1;
 
 		}
@@ -1504,7 +1507,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 // Nombre moyen de spots par écran
                 data = new List<ICell>(2);
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1415, _webSession.SiteLanguage)));
-                data.Add(new CellLabel(nbrSpotByEcran.ToString("0.00")));
+
+                //data.Add(new CellLabel(nbrSpotByEcran.ToString("0.00")));
+                CellNumber cell = new CellNumber((double)nbrSpotByEcran);                
+                data.Add(cell);
             }
             #endregion
 
@@ -1689,6 +1695,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             return data;
 
+        }
+
+        protected override GridResult BuildGridResult()
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

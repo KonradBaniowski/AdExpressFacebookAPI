@@ -70,7 +70,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
 
                 _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-
+              
                 IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
 
                 insertionResponse.Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, false);

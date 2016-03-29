@@ -26,6 +26,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.Portofolio.Engines
 {
@@ -665,8 +666,13 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 return value;
 
         }
+
+        protected override GridResult BuildGridResult()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
-       
+
     }
 }
