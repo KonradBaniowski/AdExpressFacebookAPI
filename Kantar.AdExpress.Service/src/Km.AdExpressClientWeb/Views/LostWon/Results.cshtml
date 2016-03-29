@@ -1,17 +1,409 @@
-﻿
+﻿@model Km.AdExpressClientWeb.Models.LostWon.ResultsViewModel
+@using TNS.AdExpress.Domain.Translation;
 @{
-    Layout = null;
+    ViewBag.Title = "Results";
+    var _controller = Model.NavigationBar.First().Controller;
+    var _exportController = "LostWonExport";
 }
 
-<!DOCTYPE html>
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Results</title>
-</head>
-<body>
-    <div> 
+<div class="row">
+    @Html.Partial("Presentation", Model.Presentation)
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+        <div class="row row-sm">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
+        </div>
     </div>
-</body>
-</html>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right custom-button">
+            <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            <button class="btn btn-valider">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
+        </div>
+    </div>
+</div>
+<div class="h20">
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Action("ResultOptions", _controller)
+    </div>
+</div>
+<div class="h20">
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <center>
+            <div id="grid" class="hide">
+            </div>
+            <div id="gridLoader">
+                <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+            </div>
+        </center>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+
+    <script>
+        //{columnKey: 'Address', allowHiding: false, hidden: true}
+        $(document).ready(function () {
+
+            if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+
+            $("#grid").igTreeGrid({
+                //dataSource: data,
+                primaryKey: "ClassifId",
+                width: "1140px",
+                defaultColumnWidth: 200,
+                avgRowHeight: 60,
+                autoGenerateColumns: true
+            });
+
+            //$("#changeColSett").click(function () {
+
+
+            var ds;
+            var cols;
+            var colsFixed;
+            var needFixedColumns = false;
+            var zoomDate = '';
+            var previousSubPeriodLabel;
+
+            function GetItems(idItems) {
+                var items = '';
+                for (var i in idItems) {
+                    items += idItems[i] + ",";
+                }
+                return items.substring(0, items.length - 1);
+            }
+
+            function GenericDetailLevelFilter() {
+                this.DefaultDetailValue = $('#defaultDetail').val();
+                this.CustomDetailValue = -1;
+                this.L1DetailValue = -1;
+                this.L2DetailValue = -1;
+                this.L3DetailValue = -1;
+            }
+
+            function GenericColumnDetailLevelFilter() {
+                this.L1DetailValue = $('#columnDetail').val();
+            }
+
+            function PeriodDetailFilter() {
+                this.PeriodDetailType = $('#periodDetailType').val();
+            }
+
+            function UnitFilter() {
+                this.Unit = $('#unit').val();
+            }
+
+            function ResultTypeFilter() {
+                this.ResultType = $('#resultType').val();
+            }
+
+            function InsertionFilter() {
+                this.Insertion = $('#insertion').val();
+            }
+
+            function AutoPromoFilter() {
+                this.AutoPromo = $('#autoPromo').val();
+            }
+
+            function FormatFilter() {
+                this.Formats = GetItems($('#format').val());
+            }
+
+            function PurchaseModeFilter() {
+                this.PurchaseModes = GetItems($('#purchaseMode').val());
+            }
+
+            function UserFilter() {
+                this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
+                this.GenericColumnDetailLevelFilter = new GenericColumnDetailLevelFilter();
+                this.PeriodDetailFilter = new PeriodDetailFilter();
+                this.UnitFilter = new UnitFilter();
+                this.InsertionFilter = new InsertionFilter();
+                this.AutoPromoFilter = new AutoPromoFilter();
+                this.FormatFilter = new FormatFilter();
+                this.PurchaseModeFilter = new PurchaseModeFilter();
+                this.ResultTypeFilter = new ResultTypeFilter();
+            }
+
+            var userFilter = new UserFilter();
+
+            var renderGrid = function (success, error) {
+                if (success) {
+
+                    $("#grid").igTreeGrid("destroy");
+                    $("#gridLoader").addClass("hide");
+                    $("#grid").removeClass("hide");
+                    if (needFixedColumns) {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID",
+                            foreignKey: "PID",
+                            width: "1140px",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 25
+                                },
+                                {
+                                    name: "ColumnFixing",
+                                    fixingDirection: "left",
+                                    columnSettings: colsFixed
+                                },
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false
+                                }
+                            ]
+                        })
+                    }
+                    else {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID",
+                            foreignKey: "PID",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 25
+                                }
+                                   ,
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false
+                                }
+                            ]
+                        })
+                    }
+
+                    $("#grid").igTreeGrid({
+                        rowCollapsed: function (evt, ui) {
+                            $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                        }
+                    });
+
+                } else {
+                    alert(error);
+                }
+
+            }
+
+            function CallLostWonResult() {
+                $.ajax({
+                    url: '@Url.Action("LostWonResult", _controller)',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null && data != "") {
+                            dataTreeGrid = data.datagrid;
+                            cols = data.columns;
+                            colsFixed = data.columnsfixed;
+                            needFixedColumns = data.needfixedcolumns;
+
+                            var schema = new $.ig.DataSchema("array", {
+                                fields: data.schema
+                            });
+
+                            ds = new $.ig.DataSource({
+                                type: "json",
+                                schema: schema,
+                                dataSource: dataTreeGrid,
+                                callback: renderGrid
+                            });
+
+                            ds.dataBind();
+                        }
+                        else {
+                            $("#gridLoader").addClass("hide");
+                            $("#grid").removeClass("hide");
+                            $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
+                        }
+                    }
+                });
+            }
+
+
+            function CallSetOptions() {
+                $.ajax({
+                    url: '@Url.Action("SetResultOptions", _controller)',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: userFilter,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        CallLostWonResult();
+                    }
+                });
+            }
+
+            CallLostWonResult();
+
+            $('#periodDetailType').selectpicker();
+
+            $('#periodDetailType').on('change', function (e) {
+                userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                window.open('@Url.Action("Index", _exportController)', "_blank");
+            });
+
+            $('#btn-brut').on('click', function (e) {
+                window.open('@Url.Action("ResultBrut", _exportController)', "_blank");
+            });
+
+            $('#validate-options').on('click', function (e) {
+                $("#grid").addClass("hide");
+                $("#gridLoader").removeClass("hide");
+                $("#collapseContainerOne").collapse('hide');
+                CallSetOptions();
+            });
+
+            $('#unit').selectpicker();
+
+            $('#unit').on('change', function (e) {
+                userFilter.UnitFilter.Unit = $('#unit').val();
+            });
+
+            $('#resultType').selectpicker();
+
+            $('#resultType').on('change', function (e) {
+                userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
+            });
+
+            $('#insertion').selectpicker();
+
+            $('#insertion').on('change', function (e) {
+                userFilter.InsertionFilter.Insertion = $('#insertion').val();
+            });
+
+            $('#autoPromo').selectpicker();
+
+            $('#autoPromo').on('change', function (e) {
+                userFilter.AutoPromoFilter.AutoPromo = $('#autoPromo').val();
+            });
+
+            $('#format').selectpicker();
+
+            $('#format').on('change', function (e) {
+                userFilter.FormatFilter.Formats = GetItems($('#format').val());
+            });
+
+            $('#purchaseMode').selectpicker();
+
+            $('#purchaseMode').on('change', function (e) {
+                userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
+            });
+
+            $('#columnDetail').selectpicker();
+
+            $('#columnDetail').on('change', function (e) {
+                userFilter.GenericColumnDetailLevelFilter.L1DetailValue = $('#columnDetail').val();
+            });
+
+            $('#defaultDetail').selectpicker();
+            $('#customDetail').selectpicker();
+            $('#l1Detail').selectpicker();
+            $('#l2Detail').selectpicker();
+            $('#l3Detail').selectpicker();
+
+
+            $('#defaultDetail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#l1Detail').selectpicker('val', '-1');
+                $('#l2Detail').selectpicker('val', '-1');
+                $('#l3Detail').selectpicker('val', '-1');
+
+                InitGenericDetailLevelFilter();
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = $('#defaultDetail').val();
+            });
+
+            $('#customDetail').on('change', function (e) {
+                $('#defaultDetail').selectpicker('val', '-1');
+                $('#l1Detail').selectpicker('val', '-1');
+                $('#l2Detail').selectpicker('val', '-1');
+                $('#l3Detail').selectpicker('val', '-1');
+                InitGenericDetailLevelFilter();
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = $('#customDetail').val();
+            });
+
+            function ResetLnLevel(lx, ly) {
+                if ($(lx).val() == $(ly).val())
+                    $(ly).selectpicker('val', '-1');
+            }
+
+            $('#l1Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+                ResetLnLevel("#l1Detail", "#l2Detail");
+                ResetLnLevel("#l1Detail", "#l3Detail");
+            });
+
+            $('#l2Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+                ResetLnLevel("#l2Detail", "#l1Detail");
+                ResetLnLevel("#l2Detail", "#l3Detail");
+            });
+
+            $('#l3Detail').on('change', function (e) {
+                $('#customDetail').selectpicker('val', '-1');
+                $('#defaultDetail').selectpicker('val', '-1');
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
+                ResetLnLevel("#l3Detail", "#l1Detail");
+                ResetLnLevel("#l3Detail", "#l2Detail");
+            });
+
+
+            function InitGenericDetailLevelFilter() {
+                userFilter.GenericDetailLevelFilter.DefaultDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.CustomDetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
+                userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
+            }
+
+        });
+
+
+    </script>
+}

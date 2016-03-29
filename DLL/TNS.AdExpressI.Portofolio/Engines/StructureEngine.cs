@@ -34,6 +34,7 @@ using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -123,11 +124,39 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			}
 		}
 
-		/// <summary>
+        /// <summary>
 		/// Build Html result
 		/// </summary>
 		/// <returns></returns>
-		protected override ResultTable ComputeResultTable() {
+		protected override GridResult BuildGridResult()
+        {
+            switch (_vehicleInformation.Id)
+            {
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                    return GetStructureGrid();
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    return GetPressStructureGrid();
+                default: throw new PortofolioException("The method to get data is not defined for this vehicle.");
+            }
+        }
+
+        /// <summary>
+        /// Build Html result
+        /// </summary>
+        /// <returns></returns>
+        protected override ResultTable ComputeResultTable() {
 			throw new PortofolioException("The method or operation is not implemented.");
 		}
 		#endregion
@@ -246,15 +275,142 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			}
 			return t.ToString();
 		}
-		#endregion
+        #endregion
 
-		#region GetStructureHtml
-		/// <summary>
-		/// Get structure html
-		/// <remarks>Used currently for vehicle , tv,others an radio</remarks>
-		/// </summary>
-		/// <returns></returns>
-		protected virtual string GetStructureHtml() {
+        protected virtual GridResult GetPressStructureGrid()
+        {
+           
+            DataSet ds = null;
+            DataTable dt = null;
+            int oldIdVentilationType = -1;
+            int labelCode;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+            int currentLineIndex = -1;
+            int parentColumnIndex = -1;
+            int k = 0;
+
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            object[] parameters = new object[6];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicleInformation;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            parameters[5] = _ventilationTypeList;
+
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            ds = portofolioDAL.GetData();
+            GridResult gridResult = new GridResult();
+
+            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+            {
+                dt = ds.Tables[0];
+                object[,] gridData = new object[dt.Rows.Count, dt.Columns.Count + 2]; //+2 car ID et PID en plus
+                List<object> columns = new List<object>();
+                List<object> schemaFields = new List<object>();
+                List<object> columnsFixed = new List<object>();
+
+                columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+                schemaFields.Add(new { name = "ID" });
+                columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+                schemaFields.Add(new { name = "PID" });
+
+               string colKey = "LabelKey";
+                columns.Add(new { headerText = string.Empty, key = colKey, dataType = "string", width = "*" });
+                schemaFields.Add(new { name = colKey });
+
+                string valColKey = "ValKey";
+                columns.Add(new { headerText = string.Empty, key = valColKey, dataType = "string", width = "*" });
+                schemaFields.Add(new { name = valColKey });
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (oldIdVentilationType != int.Parse(dr["ventilationType"].ToString()))
+                    {
+                        currentLineIndex++;
+                        switch ((FrameWorkResultConstantes.PortofolioStructure.Ventilation)long.Parse(dr["ventilationType"].ToString()))
+                        {
+                            case FrameWorkResultConstantes.PortofolioStructure.Ventilation.color:
+                                labelCode = 1438;
+                                break;
+                            case FrameWorkResultConstantes.PortofolioStructure.Ventilation.format:
+                                labelCode = 1420;
+                                break;
+                            case FrameWorkResultConstantes.PortofolioStructure.Ventilation.insert:
+                                labelCode = 1440;
+                                break;
+                            case FrameWorkResultConstantes.PortofolioStructure.Ventilation.location:
+                                labelCode = 1439;
+                                break;
+                            default:
+                                throw new PortofolioException("GetVentilationLines: Ventilation type unknown.");
+                        }
+                     
+
+                        //Total line
+                         k = 0;
+                        parentColumnIndex = currentLineIndex;
+                        gridData[currentLineIndex, k] = currentLineIndex; // Pour column ID
+
+                        k++;
+                        gridData[currentLineIndex, k] = -1; // Pour column PID
+
+                        //labels
+                        k++;
+                        gridData[currentLineIndex, k] = GestionWeb.GetWebWord(labelCode, _webSession.SiteLanguage);
+
+                        k++;
+                        gridData[currentLineIndex, k] = GestionWeb.GetWebWord(1398, _webSession.SiteLanguage);
+                    }
+                    //Nb insertion
+                    currentLineIndex++;
+                    k = 0;
+                    gridData[currentLineIndex, k] = currentLineIndex; // Pour column ID
+
+                    k++;
+                    gridData[currentLineIndex, k] = parentColumnIndex; // Pour column PID
+                    if (dr["ventilation"] != null)
+                    {
+                        gridData[currentLineIndex, k] = dr["ventilation"].ToString();
+                    }
+                    else
+                    {
+                        gridData[currentLineIndex, k] = string.Empty;
+                    }
+                      
+                    UnitInformation unitInformation = UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion);
+                    if (dr[unitInformation.Id.ToString()] != null)
+                    {
+                        gridData[currentLineIndex, k] = Units.ConvertUnitValueAndPdmToString(dr[unitInformation.Id.ToString()], unitInformation.Id, false, fp);
+                    }
+                    else gridData[currentLineIndex, k]  = string.Empty;
+                
+
+                    oldIdVentilationType = int.Parse(dr["ventilationType"].ToString());
+                }
+
+                // gridResult.NeedFixedColumns = true;
+                gridResult.HasData = true;
+                gridResult.Columns = columns;
+                gridResult.Schema = schemaFields;
+                //gridResult.ColumnsFixed = columnsFixed;
+                gridResult.Data = gridData;
+            }
+            else
+            {
+                gridResult.HasData = false;
+            }
+
+                return gridResult;
+        }
+
+        #region GetStructureHtml
+            /// <summary>
+            /// Get structure html
+            /// <remarks>Used currently for vehicle , tv,others an radio</remarks>
+            /// </summary>
+            /// <returns></returns>
+        protected virtual string GetStructureHtml() {
 			StringBuilder t = new StringBuilder(5000);
 			DataSet ds = null;
 			DataTable dt = null;
@@ -387,11 +543,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			return t.ToString();
 		}
 
-		/// <summary>
-		///Get hour interval web word code 
-		/// </summary>
-		/// <returns></returns>
-		protected virtual Dictionary<string, int> GetHourIntervalWebWordCode() {
+      
+
+        /// <summary>
+        ///Get hour interval web word code 
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Dictionary<string, int> GetHourIntervalWebWordCode() {
 			Dictionary<string, int> dic = new Dictionary<string, int>();
 			dic.Add("0007",2462);
 			dic.Add("0712", 2463);
@@ -408,14 +566,181 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			return dic;
 
 		}
-		#endregion
+        #endregion
 
-		#region Compute data for chart for press
-		/// <summary>
-		/// Compute data for preess chart results 
-		/// </summary>
-		/// <returns>Data set for preess chart</returns>
-		protected virtual DataTable ComputePressChartData() {
+
+        #region GetStructureGrid
+        /// <summary>
+        /// Get structure grid
+        /// <remarks>Used currently for vehicle , tv,others an radio</remarks>
+        /// </summary>
+        /// <returns></returns>
+        protected virtual GridResult GetStructureGrid()
+        {
+            StringBuilder t = new StringBuilder(5000);
+            DataSet ds = null;
+            DataTable dt = null;
+            List<UnitInformation> unitInformationList = new List<UnitInformation>();
+            string P2 = "p2";
+            string backGround = "backGroundWhite";
+            string classCss = "acl1";
+            string hourIntervallLabel = "";
+            double totalUnit = 0;
+            IFormatProvider fp = (_excel) ?
+                WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfoExcel
+                : WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            object[] parameters = new object[7];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicleInformation;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            parameters[5] = _hourBeginningList;
+            parameters[6] = _hourEndList;
+
+            GridResult gridResult = new GridResult();
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            ds = portofolioDAL.GetData();
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+            {
+                dt = ds.Tables[0];
+                unitInformationList = _webSession.GetValidUnitForResult();
+
+                object[,] gridData = new object[dt.Rows.Count, dt.Columns.Count + 2]; //+2 car ID et PID en plus
+                List<object> columns = new List<object>();
+                List<object> schemaFields = new List<object>();
+                List<object> columnsFixed = new List<object>();
+
+                columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+                schemaFields.Add(new { name = "ID" });
+                columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+                schemaFields.Add(new { name = "PID" });
+
+                //Heades
+                string colKey = string.Empty;
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic)
+                {
+                    colKey = "LabelKey";
+                    columns.Add(new { headerText = GestionWeb.GetWebWord(1299, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
+                    schemaFields.Add(new { name = colKey });
+                    // if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                }
+                else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
+                {
+                    colKey = "LabelKey";
+                    columns.Add(new { headerText = GestionWeb.GetWebWord(1451, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
+                    schemaFields.Add(new { name = colKey });
+                    // if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                }
+
+
+                for (int i = 0; i < unitInformationList.Count; i++)
+                {
+                    colKey = string.Format("Key_{0}", i);
+                    string typeOfData = "number";
+                    if (unitInformationList[i].Id == WebCst.CustomerSessions.Unit.duration) typeOfData = "string";
+                    columns.Add(new { headerText = GestionWeb.GetWebWord(unitInformationList[i].WebTextId, _webSession.SiteLanguage), key = colKey, dataType = typeOfData, width = "*" });
+                    schemaFields.Add(new { name = colKey });
+                    // if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });                  
+                }
+
+                //Total line
+                int k = 0;
+                gridData[0, k] = 0; // Pour column ID
+
+                k++;
+                gridData[0, k] = -1; // Pour column PID
+
+                k++;
+                gridData[0, k] = GestionWeb.GetWebWord(1401, _webSession.SiteLanguage);
+                ////line total units
+                for (int i = 0; i < unitInformationList.Count; i++)
+                {
+                    totalUnit = 0;
+                    k++;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        totalUnit += (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value) ? double.Parse(dr[unitInformationList[i].Id.ToString()].ToString()) : 0;
+                    }
+                    if (unitInformationList[i].Id != WebCst.CustomerSessions.Unit.duration)
+                    {
+                        gridData[0, k] = Units.ConvertUnitValueAndPdmToString(totalUnit, unitInformationList[i].Id, false, fp);
+                    }
+                    else
+                    {
+                        gridData[0, k] = string.Format(fp, unitInformationList[i].StringFormat, totalUnit);
+                    }
+                }
+
+
+                //One line by time interval
+                int currentLineIndex = 1;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    k = 0;
+                    gridData[currentLineIndex, k] = currentLineIndex; // Pour column ID
+
+                    k++;
+                    gridData[currentLineIndex, k] = 0; // Pour column PID
+
+                    k++;
+                    hourIntervallLabel = GestionWeb.GetWebWord(GetHourIntervalWebWordCode()[dr["HourInterval"].ToString()], _webSession.SiteLanguage);
+                    gridData[currentLineIndex, k] = hourIntervallLabel;
+
+                    //Unit Value
+                    for (int i = 0; i < unitInformationList.Count; i++)
+                    {
+                        k++;
+                        if (unitInformationList[i].Id != WebCst.CustomerSessions.Unit.duration)
+                        {
+                            gridData[currentLineIndex, k] = Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()], unitInformationList[i].Id, false, fp);
+                        }
+                        else
+                        {
+                            if (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value)
+                                gridData[currentLineIndex, k] = string.Format(fp, unitInformationList[i].StringFormat, Convert.ToDouble(dr[unitInformationList[i].Id.ToString()]));
+                            else gridData[currentLineIndex, k] = string.Empty;
+                        }
+                    }
+
+                    currentLineIndex++;
+                }
+
+                // gridResult.NeedFixedColumns = true;
+                gridResult.HasData = true;
+                gridResult.Columns = columns;
+                gridResult.Schema = schemaFields;
+                //gridResult.ColumnsFixed = columnsFixed;
+                gridResult.Data = gridData;
+
+            }
+            else
+            {
+                gridResult.HasData = false;
+            }
+
+
+
+            return gridResult;
+        }
+
+        #endregion
+        #region Compute data for chart for press
+        /// <summary>
+        /// Compute data for preess chart results 
+        /// </summary>
+        /// <returns>Data set for preess chart</returns>
+        protected virtual DataTable ComputePressChartData() {
 			DataSet ds = null;
 			DataTable dt = null, dtResult = null;
 			DataRow newRow = null;

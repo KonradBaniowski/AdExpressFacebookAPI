@@ -1,1 +1,380 @@
-﻿
+﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.Options
+@using TNS.AdExpress.Domain.Translation;
+@{
+    var optionsNb = 1;
+}
+
+<div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-primary panel-options">
+        <div class="panel-heading head-results" role="tab" id="headingOne">
+            <h3 class="panel-title pull-left orange">
+                <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
+                    <i class="fa fa-cog text-lg orange"></i> Options d'analyse
+                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                </a>
+            </h3>
+            <div class="clearfix"></div>
+        </div>
+        <div id="collapseContainerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-sans text-left options-control">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    @GestionWeb.GetWebWord(793, Model.SiteLanguage)
+                                </p>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.ResultTypeOption.ResultType.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.ResultTypeOption.ResultType.Items)
+                                            {
+                                                if (item.Value == Model.ResultTypeOption.ResultType.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (@Model.UnitOption.Unit.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(304, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.UnitOption.Unit.Items)
+                                                {
+                                                    if (item.Value == Model.UnitOption.Unit.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        optionsNb++;
+                    }
+                    @if (@Model.GenericColumnDetailLevelOption.L1Detail.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(2300, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.GenericColumnDetailLevelOption.L1Detail.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.GenericColumnDetailLevelOption.L1Detail.Items)
+                                                {
+                                                    if (item.Value == Model.GenericColumnDetailLevelOption.L1Detail.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        optionsNb++;
+                        if (optionsNb == 3)
+                        {
+                            optionsNb = 0;
+                            @Html.Raw("</div><div class='row'>");
+                        }
+                    }
+                    @if (@Model.InsertionOption.Insertion.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        Insertion
+                                    </p>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.InsertionOption.Insertion.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.InsertionOption.Insertion.Items)
+                                                {
+                                                    if (item.Value == Model.InsertionOption.Insertion.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        optionsNb++;
+                        if (optionsNb == 3)
+                        {
+                            optionsNb = 0;
+                            @Html.Raw("</div><div class='row'>");
+                        }
+                    }
+                    @if (@Model.AutoPromoOption.AutoPromo.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        Auto promo
+                                    </p>
+                                </div>
+                                <div id="collapseTree" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.AutoPromoOption.AutoPromo.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.AutoPromoOption.AutoPromo.Items)
+                                                {
+                                                    if (item.Value == Model.AutoPromoOption.AutoPromo.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        optionsNb++;
+                        if (optionsNb == 3)
+                        {
+                            optionsNb = 0;
+                            @Html.Raw("</div><div class='row'>");
+                        }
+                    }
+
+                    @if (@Model.FormatOption.Format.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        Format
+                                    </p>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.FormatOption.Format.Id" class="selectdatepicker" multiple>
+                                                @foreach (var item in Model.FormatOption.Format.Items)
+                                                {
+                                                    if (Model.FormatOption.Format.SelectedId.Contains(item.Value))
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        optionsNb++;
+                        if (optionsNb == 3)
+                        {
+                            optionsNb = 0;
+                            @Html.Raw("</div><div class='row'>");
+                        }
+                    }
+                    @if (@Model.PurchaseModeOption.PurchaseMode.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        Mode de vente
+                                    </p>
+                                </div>
+                                <div id="collapseSix" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.PurchaseModeOption.PurchaseMode.Id" class="selectdatepicker" multiple>
+                                                @foreach (var item in Model.PurchaseModeOption.PurchaseMode.Items)
+                                                {
+                                                    if (Model.PurchaseModeOption.PurchaseMode.SelectedId.Contains(item.Value))
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        optionsNb++;
+                        if (optionsNb == 3)
+                        {
+                            optionsNb = 0;
+                            @Html.Raw("</div><div class='row'>");
+                        }
+                    }
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    Niveaux détaillées par
+                                </p>
+                            </div>
+                            <div id="collapseHeight" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.DefaultDetail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.DefaultDetail.Items)
+                                            {
+                                                if (item.Value == Model.GenericDetailLevel.DefaultDetail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        optionsNb++;
+                        if (optionsNb == 3)
+                        {
+                            optionsNb = 0;
+                            @Html.Raw("</div><div class='row'>");
+                        }
+                    }
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    Niveaux personnalisés
+                                </p>
+                            </div>
+                            <div id="collapseNine" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <small class="pader-v-mi orange">Niveaux enregistrés</small><button class="btn btn-sans pull-right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></button>
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.CustomDetail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.CustomDetail.Items)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <small class="pader-v-mi orange">Construction</small><button class="btn btn-sans pull-right" title="Sauvegarder"><i class="glyphicon glyphicon-floppy-save"></i></button>
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.L1Detail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.L1Detail.Items)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.L2Detail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.L2Detail.Items)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.L3Detail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.L3Detail.Items)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        optionsNb++;
+                        if (optionsNb == 3)
+                        {
+                            optionsNb = 0;
+                            @Html.Raw("</div><div class='row'>");
+                        }
+                    }
+                    <div class="col-md-4">
+                        <div class="checkbox padder orange">
+                            <label class="i-checks i-checks-sm">
+                                <input type="checkbox" name="a">
+                                <i></i>
+                                Annuler la séléction produits
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="padder-btn btn-options pull-right">
+                        <button id="validate-options" class="btn btn-valider">Appliquer&nbsp;<i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
