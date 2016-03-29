@@ -224,12 +224,42 @@ $(document).on('click', '.tab-content li > .pull-right', function () {
     }
 });
 
+$(document).on('change', '#ddlGroup', function (event) {
+    event.preventDefault();
+    var idGroup = $("#ddlGroup").val();
+    var dimension = $('#Dimension').val();
+    var params = {
+        id: idGroup,
+        dimension: dimension
+    };
+    var local = $(this);
+    $.ajax({
+        url: '/MediaSchedule/GetUniversByGroup',
+        type: 'GET',
+        data: params,
+        success: function (response) {
+            $('#ddlUnivers').empty();
+            $.each(response, function (i, item) {
+                $("#ddlUnivers").append('<option value="' + item.Value + '">' +
+                     item.Text + '</option>');
+            });
+            //$('#ddlUnivers').html(response);
+        }
+    });
+});
+
 $(document).on('click', '#btnSaveUnivers', function (event) {
     event.preventDefault();
+    var spinner = new Spinner().spin(this);
     var dimension = $('#Dimension').val();
     var groupId = $('#ddlGroup').val();
     var universId = $('#ddlUnivers').val();
     var name = $('#universName').val();
+    var idMedias = [];
+    $.each($('.tuile-medias-active'), function (index, value) {
+        idMedias.push($(value).attr('data-attr-id'));
+    });
+
     $('#btnSaveUnivers').off('click');
     var trees = [];
     $.each($('.nav.nav-tabs > li a'), function (index, elem) {
@@ -265,7 +295,8 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         groupId: groupId,
         universId: universId,
         name: name,
-        dimension: dimension
+        dimension: dimension,
+        media: idMedias
     };
     $.ajax({
         url: '/MediaSchedule/SaveUserUnivers',
@@ -289,30 +320,6 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
     });
 });
 
-$(document).on('change', '#ddlGroup', function (event) {
-    event.preventDefault();
-    var idGroup = $("#ddlGroup").val();
-    var dimension = $('#Dimension').val();
-    var params = {
-        id: idGroup,
-        dimension: dimension
-    };
-    var local = $(this);
-    $.ajax({
-        url: '/MediaSchedule/GetUniversByGroup',
-        type: 'GET',
-        data: params,
-        success: function (response) {
-            $('#ddlUnivers').empty();
-            $.each(response, function (i, item) {
-                $("#ddlUnivers").append('<option value="' + item.Value + '">' +
-                     item.Text + '</option>');
-            });
-            //$('#ddlUnivers').html(response);
-        }
-    });
-});
-
 $(document).on('click', '#LoadUnivers', function (event) {
     event.preventDefault();
     var dimension = $('#Dimension').val();
@@ -329,8 +336,9 @@ $(document).on('click', '#LoadUnivers', function (event) {
         success: function (response) {
             $('#monunivers').modal('hide');
             var trees = response.Trees;
+            var medias = response.UniversMediaIds;
             $.each(trees, function (index, tree) {
-                var id = tree.Id + 1;
+                var id = tree.Id ;
                 var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
                 $.each($(tree.UniversLevels), function (index, uniLvl) {
                     console.log(uniLvl);
@@ -340,6 +348,9 @@ $(document).on('click', '#LoadUnivers', function (event) {
                     SetUniversItems(uniLvl, panel);
                 });
 
+            });
+            $.each(medias, function (index, item) {
+                $('.tuile-medias[data-attr-id="' + item + '"]').toggleClass("tuile-medias tuile-medias-active");
             });
         },
         error: function (response) {

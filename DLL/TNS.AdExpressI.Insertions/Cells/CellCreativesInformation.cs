@@ -106,6 +106,14 @@ namespace TNS.AdExpressI.Insertions.Cells
         {
             return _values[_columnIndex[c.Id]].ToString();
         }
+
+        /// <summary>
+        /// Get Vehicle
+        /// </summary>
+        public Int64 IdVersion
+        {
+            get { return _idVersion; }
+        }
         #endregion
 
         #region Constructeur

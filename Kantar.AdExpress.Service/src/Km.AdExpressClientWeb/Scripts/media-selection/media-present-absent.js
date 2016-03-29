@@ -341,7 +341,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
             $('#monunivers').modal('hide');
             var trees = response.Trees;
             $.each(trees, function (index, tree) {
-                var id = tree.Id + 1;
+                var id = tree.Id ;
                 var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
                 $.each($(tree.UniversLevels), function (index, uniLvl) {
                     console.log(uniLvl);
@@ -350,7 +350,10 @@ $(document).on('click', '#LoadUnivers', function (event) {
                     $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
                     SetUniversItems(uniLvl, panel);
                 });
-
+            });
+            var medias = response.UniversMediaIds;
+            $.each(medias, function (index, item) {
+                $('.tuile-medias[data-attr-id="' + item + '"]').toggleClass("tuile-medias tuile-medias-active");
             });
         },
         error: function (response) {

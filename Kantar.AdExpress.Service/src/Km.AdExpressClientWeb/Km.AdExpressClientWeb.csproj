@@ -1515,6 +1515,7 @@
     <Content Include="Views\PresentAbsentExport\Index.cshtml" />
     <Content Include="Views\CustomerArea\Home.cshtml" />
     <Content Include="Views\Insertions\_DetailLevel.cshtml" />
+    <Content Include="Views\MediaSchedule\_MSCreativesResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1556,6 +1557,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date\TNS.AdExpressI.Date.csproj">
       <Project>{d24531cc-e000-4aef-8218-56885d87dfcb}</Project>
       <Name>TNS.AdExpressI.Date</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
+      <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
+      <Name>TNS.AdExpressI.Insertions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23e7e071-0fb0-43d4-b19d-b964ec3082f6}</Project>
