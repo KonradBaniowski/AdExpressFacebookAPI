@@ -112,11 +112,6 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public ActionResult Presentation()
-        {
-            return View();
-        }
-
         public ActionResult MediaSelection()
         {
             //var model = new MediaSelectionViewModel();
@@ -336,24 +331,25 @@ namespace Km.AdExpressClientWeb.Controllers
             string url = string.Empty;
             var response = new Domain.WebSessionResponse();
             var errorMsg = String.Empty;
+            JsonResult jsonModel = new JsonResult();
             if (selectedMedia != null)
             {
                 List<Domain.Tree> trees = (mediaSupport !=null)? mediaSupport: new List<Domain.Tree>();
                 trees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees,Dimension.media,Security.full);
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees,Dimension.media,Security.full,false);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                 if (response.Success)
+                {
                     url = context.Action(nextStep, _controller);
+                    jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
+                }
                 else
                 {
-                    errorMsg = response.ErrorMessage;
+                    jsonModel = Json(new { response.ErrorMessage });
                 }
             }
-           
-            
-            JsonResult jsonModel = Json(new { RedirectUrl = url, ErrorMessage= errorMsg });
             return jsonModel;
         }
         
