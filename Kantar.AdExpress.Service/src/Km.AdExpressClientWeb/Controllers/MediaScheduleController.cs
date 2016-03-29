@@ -33,6 +33,10 @@ using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using TNS.AdExpress.Domain.Results;
+using TNS.FrameWork.WebResultUI;
+using TNS.AdExpressI.Insertions.Cells;
+using CoreDomain = Kantar.AdExpress.Service.Core.Domain;
+using System.Collections;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -266,11 +270,39 @@ namespace Km.AdExpressClientWeb.Controllers
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, hasMSCreatives = gridResult.HasMSCreatives };
             JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
             return jsonModel;
+        }
+
+        public ActionResult MSCreativesResult(string zoomDate)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            CoreDomain.MSCreatives creatives = _mediaSchedule.GetMSCreatives(idWebSession, zoomDate);
+
+            return PartialView("_MSCreativesResult", creatives);
+        }
+
+        public void SetMSCreatives(Int64[] slogans)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            ArrayList sloganList = new ArrayList();
+
+            if (slogans != null)
+            {
+                foreach (var slogan in slogans)
+                    sloganList.Add(slogan);
+            }
+            else
+                sloganList = null;
+
+            _mediaSchedule.SetMSCreatives(idWebSession, sloganList);
         }
 
         public ActionResult SubPeriodSelection(string zoomDate)

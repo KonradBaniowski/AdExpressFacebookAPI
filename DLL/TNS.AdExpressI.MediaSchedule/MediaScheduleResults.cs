@@ -486,9 +486,6 @@ namespace TNS.AdExpressI.MediaSchedule {
             _style = new PDFMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
-
-        
-      
         #endregion
 
         #region Protected Methods
@@ -1691,6 +1688,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         protected virtual GridResult ComputeGridResult(object[,] data)
         {
             GridResult gridResult = new GridResult();
+            MediaScheduleData oMediaScheduleData = new MediaScheduleData();
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
             IFormatProvider fp =
                 (!_isExcelReport || _isCreativeDivisionMS) ? WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo
@@ -2050,7 +2048,18 @@ namespace TNS.AdExpressI.MediaSchedule {
                             cssClasse = _style.CellVersions[colorNumberToUse];
                             cssClasseNb = _style.CellVersions[colorNumberToUse];
                             _session.SloganColors.Add(sloganId, _style.CellVersions[colorNumberToUse]);
+                            if (_allowVersion)
+                            {
+                                oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, cssClasse));
+                            }
                             colorItemIndex++;
+                        }
+                        if (sloganId != 0 && !oMediaScheduleData.VersionsDetail.ContainsKey(sloganId))
+                        {
+                            if (_allowVersion)
+                            {
+                                oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                            }
                         }
                         cssPresentClass = _session.SloganColors[sloganId].ToString();
                         cssExtendedClass = _session.SloganColors[sloganId].ToString();
@@ -2296,11 +2305,14 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (tableWidth > 920)
                 gridResult.NeedFixedColumns = true;
 
+            gridResult.HasMSCreatives = oMediaScheduleData.VersionsDetail.Count > 0 ? true : false;
             gridResult.HasData = true;
             gridResult.Columns = columns;
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
             gridResult.Data = gridData;
+
+            _session.Save();
 
             return gridResult;
         }
