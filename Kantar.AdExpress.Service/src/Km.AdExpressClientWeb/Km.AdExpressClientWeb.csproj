@@ -1514,6 +1514,7 @@
     <Content Include="Views\PresentAbsentExport\ResultBrut.cshtml" />
     <Content Include="Views\PresentAbsentExport\Index.cshtml" />
     <Content Include="Views\CustomerArea\Home.cshtml" />
+    <Content Include="Views\Insertions\_DetailLevel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

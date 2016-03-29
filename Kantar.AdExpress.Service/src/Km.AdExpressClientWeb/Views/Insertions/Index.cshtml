@@ -19,45 +19,7 @@
 
         <div id="HeaderElmt" class="hide">
             <div id="subPeriodSelection" style="background-color:grey"></div>
-            <div class="col-md-12 bg-orange" style="background-color:black; color:white;">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <a data-toggle="collapse" data-target="#lvlperso" class="collapsed">
-                        <h5 class="panel-title">
-                            Niveaux personnalisés
-                            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                        </h5>
-                    </a>
-                </div>
-                <div id="lvlperso" data-toggle="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        <form role="form">
-                            <div class="form-group">
-                                <label>Construction</label>
-                                <select class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                                <br>
-                                <select class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                                <br />
-                                <select class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <div id="detailLevelItem" class="col-md-12 bg-orange" style="background-color:black; color:white;"></div>
         </div>
 
         <form>
@@ -99,6 +61,21 @@
         </div>
     </div>
 
+    <!-- Modal zoom visuel -->
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="Visuel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Visuel</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="" id="imagepreview" style="width: 400px; height: 264px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -109,7 +86,7 @@
 
     <script id="colSpotTmpl" type="text/template">
         {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
-            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}">Play<i class='glyphicons glyphicons-playlist text-5x'></i></a>
+            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}">Lire<i class='glyphicons glyphicons-play'></i></a>
         {{else}}
             ${Spot}
         {{/if}}
@@ -314,7 +291,6 @@
                                 $('#PresentVehicles').append(strHTML);
                             });
 
-
                             $("#HeaderLoader").addClass("hide");
                             $("#HeaderElmt").removeClass("hide");
                             
@@ -359,6 +335,28 @@
                                 $("#subPeriodLabel").text(previousSubPeriodLabel);
                             });
                         }
+                    }
+                });
+            }
+
+            function GetDetailLevelItem(idV) {
+                var params = {
+                    idVehicle: idV
+                };
+                $.ajax({
+                    url: '@Url.Action("GetDetailLevel", "Insertions")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null) {
+                            $('#detailLevelItem').html(data);
+                        }
+                    },
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                        alert("detailLevel error")
                     }
                 });
             }
@@ -424,11 +422,11 @@
                     if (visus.length > 1) {
                         for (i = 0; i < visus.length; i++) {
                             if (i != 0) active = "";
-                            $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img style="max-height:200px;" onclick="alert();" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                            $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
                         }
                     } else {
                         $(this).attr("id", "visu");
-                        $(this).html('<center><img style="max-height:200px;" onclick="alert();" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" /></center>')
+                        $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" /></center>')
                     }
                     for (j = infos.length - 1; j >= 0; j--) {
                         if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
@@ -457,7 +455,15 @@
 
             CallGetPresentVehicles();
             GetSubPeriodSelection('');
+            //TODO Modifier le parametre IdVehicle (ici 2) passe en dure
+            GetDetailLevelItem(2);
             AutoPlayCreativeModal();
+
+
+            $("#pop").on("click", function () {
+                $('#imagepreview').attr('src', $(this).attr('src'));
+                $('#imagemodal').modal('show');
+            });
 
         });
 

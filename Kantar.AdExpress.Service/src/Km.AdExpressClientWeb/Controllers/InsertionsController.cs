@@ -14,10 +14,12 @@ namespace Km.AdExpressClientWeb.Controllers
     public class InsertionsController : Controller
     {
         private IInsertionsService _insertionsService;
+        private IDetailLevelService _detailLevelService;
 
-        public InsertionsController(IInsertionsService insertionsService)
+        public InsertionsController(IInsertionsService insertionsService, IDetailLevelService detailLevelservice)
         {
             _insertionsService = insertionsService;
+            _detailLevelService = detailLevelservice;
         }
 
         // GET: Insertions
@@ -77,12 +79,20 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             var reponse = _insertionsService.GetCreativePath(idWebSession, idVersion, idVehicle);
-          
-            return Json(new { PathReadingFile = reponse.PathReadingFile, PathDownloadingFile = reponse.PathDownloadingFile });
 
-           
+            return Json(new { PathReadingFile = reponse.PathReadingFile, PathDownloadingFile = reponse.PathDownloadingFile });
         }
 
+        
+        public ActionResult GetDetailLevel(int idVehicle)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle);
+
+            return PartialView("_DetailLevel", detailLevel);
+        }
 
     }
 }

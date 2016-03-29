@@ -1,0 +1,35 @@
+﻿@model List<Kantar.AdExpress.Service.Core.Domain.DetailLevel>
+
+<div class="panel-heading" role="tab" id="headingOne">
+    @*<a data-toggle="collapse"  class="collapsed">*@
+        <h5 class="panel-title">
+            Niveaux personnalisés
+            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+        </h5>
+    @*</a>*@
+</div>
+<div id="lvlperso" @*data-toggle="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"*@>
+    <div class="panel-body">
+        <form role="form">
+            <div class="form-group">
+                <label>Construction</label>
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        <select class="form-control">
+                            @foreach (var item in Model[i].Items)
+                            {
+                                if (item.IsSelected)
+                                {
+                                    <option value="@item.DetailLevel">@item.Label</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.DetailLevel">@item.Label</option>
+                                }
+                            }
+                        </select>
+                    }
+            </div>
+        </form>
+    </div>
+</div>
