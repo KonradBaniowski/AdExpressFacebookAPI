@@ -428,7 +428,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
             }
 
-            if(_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
+            if(_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
+                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
             SetGenericColumnLevelDetailOptions(userFilter);
 
             #region GenericDetailLevelFilter
