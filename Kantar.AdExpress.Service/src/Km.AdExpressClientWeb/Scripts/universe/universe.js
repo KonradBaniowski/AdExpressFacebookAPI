@@ -7,7 +7,7 @@ $(function () {
         dimension: dimension
     };
     $.ajax({
-        url: '/MediaSchedule/LoadUserUniversGroups',
+        url: '/Universe/LoadUserUniversGroups',
         type: 'GET',
         data: params,
         error: function (xmlHttpRequest, errorText, thrownError) {
@@ -226,7 +226,7 @@ $(function () {
         var spinner = new Spinner().spin(this);
         $('.btn.btn-save-univers').off("click");
         $.ajax({
-            url: '/MediaSchedule/SaveUserUnivers',
+            url: '/Universe/SaveUserUnivers',
             type: 'GET',
             data: params,
             success: function (response) {
@@ -375,14 +375,14 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         dimension:dimension
     };
     $.ajax({
-        url: '/MediaSchedule/SaveUserUnivers',
+        url: '/Universe/SaveUserUnivers',
         type: 'POST',
         data: params,
         success: function (response) {
             spinner.stop();
             $('#saveunivers').modal('hide');
             $.ajax({
-                url: '/MediaSchedule/LoadUserUniversGroups',
+                url: '/Universe/LoadUserUniversGroups',
                 type: 'GET',
                 error: function (data) {
                     bootbox.alert(data);
@@ -409,7 +409,7 @@ $(document).on('change', '#ddlGroup', function (event) {
     var local = $(this);
     var spinner = new Spinner().spin(this);
     $.ajax({
-        url: '/MediaSchedule/GetUniversByGroup',
+        url: '/Universe/GetUniversByGroup',
         type: 'GET',
         data: params,
         success: function (response) {
@@ -443,7 +443,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
         dimension:dimension
     };
     $.ajax({
-        url: '/MediaSchedule/GetUserUnivers',
+        url: '/Universe/GetUserUnivers',
         type: 'POST',
         data: params,
         success: function (response) {

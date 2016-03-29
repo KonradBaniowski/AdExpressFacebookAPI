@@ -7,7 +7,7 @@ $(function () {
         dimension: dimension
     };
     $.ajax({
-        url: '/MediaSchedule/LoadUserUniversGroups',
+        url: '/Universe/LoadUserUniversGroups',
         type: 'GET',
         data: params,
         error: function (xmlHttpRequest, errorText, thrownError) {
@@ -246,7 +246,7 @@ $(function () {
         event.preventDefault();
         $('.btn.btn-save-univers').off('click');
         $.ajax({
-            url: '/MediaSchedule/SaveUserUnivers',
+            url: '/Universe/SaveUserUnivers',
             type: 'GET',
             data: params,
             success: function (response) {
@@ -297,7 +297,7 @@ $(document).on('change', '#ddlGroup', function (event) {
     };
     var local = $(this);
     $.ajax({
-        url: '/MediaSchedule/GetUniversByGroup',
+        url: '/Universe/GetUniversByGroup',
         type: 'GET',
         data: params,
         success: function (response) {
@@ -362,13 +362,13 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         media: idMedias
     };
     $.ajax({
-        url: '/MediaSchedule/SaveUserUnivers',
+        url: '/Universe/SaveUserUnivers',
         type: 'POST',
         data: params,
         success: function (response) {
             $('#saveunivers').modal('hide');
             $.ajax({
-                url: '/MediaSchedule/LoadUserUniversGroups',
+                url: '/Universe/LoadUserUniversGroups',
                 type: 'GET',
                 error: function (data) {
                     bootbox.alert(data);
@@ -393,7 +393,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
         dimension: dimension
     };
     $.ajax({
-        url: '/MediaSchedule/GetUserUnivers',
+        url: '/Universe/GetUserUnivers',
         type: 'POST',
         data: params,
         success: function (response) {

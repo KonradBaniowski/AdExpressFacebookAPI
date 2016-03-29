@@ -4,7 +4,7 @@
         dimension: dimension
     };
     $.ajax({
-        url: '/MediaSchedule/LoadUserUniversGroups',
+        url: '/Universe/LoadUserUniversGroups',
         type: 'GET',
         data: params,
         error: function (xmlHttpRequest, errorText, thrownError) {
@@ -33,12 +33,9 @@
 
     //clean la selection en cas de changement de médias
     $('.tuile-medias').on('click', function (event) {
-        //$('.tuile-medias-active')
-        console.log('Media has changed');
         var panel = $('.panel-group.panel-group-results[data-access-type]');
         var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
         var idTree = $('.panel-group.panel-group-results[data-access-type]').attr('id');
-        console.log(idTree);
         panel.find('li').remove();
         $("#" + idTree + " [id^='collapse'].in").collapse('hide');
     });
@@ -192,7 +189,7 @@
         event.preventDefault();
         $('.btn.btn-save-univers').off("click");
         $.ajax({
-            url: '/MediaSchedule/SaveUserUnivers',
+            url: '/Universe/SaveUserUnivers',
             type: 'GET',
             data: params,
             success: function (response) {
@@ -208,7 +205,6 @@ $('#keyword').off('keyup');
 $('#keyword').on('keyup', function () {
     if (event.keyCode == 13) {
         $(".btn-recherche").click();
-        console.log('Enter was pressed');
     }
 });
 
@@ -234,7 +230,7 @@ $(document).on('change', '#ddlGroup', function (event) {
     };
     var local = $(this);
     $.ajax({
-        url: '/MediaSchedule/GetUniversByGroup',
+        url: '/Universe/GetUniversByGroup',
         type: 'GET',
         data: params,
         success: function (response) {
@@ -268,7 +264,6 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         var UniversLvl = [];
         $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
             var idLevel = $(elem).attr('data-level');
-            console.log(this);
             var UniLvl = [];
             $.each($(this).find('ul > li'), function (index, elem) {
                 var itemUniver = $(elem).attr('data-id');
@@ -299,13 +294,13 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         media: idMedias
     };
     $.ajax({
-        url: '/MediaSchedule/SaveUserUnivers',
+        url: '/Universe/SaveUserUnivers',
         type: 'POST',
         data: params,
         success: function (response) {
             $('#saveunivers').modal('hide');
             $.ajax({
-                url: '/MediaSchedule/LoadUserUniversGroups',
+                url: '/Universe/LoadUserUniversGroups',
                 type: 'GET',
                 error: function (data) {
                     bootbox.alert(data);
@@ -330,7 +325,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
         dimension: dimension
     };
     $.ajax({
-        url: '/MediaSchedule/GetUserUnivers',
+        url: '/Universe/GetUserUnivers',
         type: 'POST',
         data: params,
         success: function (response) {
@@ -341,7 +336,6 @@ $(document).on('click', '#LoadUnivers', function (event) {
                 var id = tree.Id ;
                 var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
                 $.each($(tree.UniversLevels), function (index, uniLvl) {
-                    console.log(uniLvl);
                     var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
                     panel.html('');
                     $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
