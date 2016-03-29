@@ -471,7 +471,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     WebSessionId = webSessionId,
                     Trees = Mapper.Map<List<Domain.Tree>>(validTrees),
                     IdUniverseClientDescription = 16,
-                    MediaIds = media
+                    MediaIds = (media!= null)?media: new List<long>()
                 };
                 var result = _universService.SaveUserUnivers(request);
                 error = result.ErrorMessage;
