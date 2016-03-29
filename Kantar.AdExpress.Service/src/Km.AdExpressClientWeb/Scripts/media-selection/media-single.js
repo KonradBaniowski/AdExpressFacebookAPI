@@ -203,6 +203,15 @@
     });
 });
 
+$('#keyword').off('keyup');
+
+$('#keyword').on('keyup', function () {
+    if (event.keyCode == 13) {
+        $(".btn-recherche").click();
+        console.log('Enter was pressed');
+    }
+});
+
 //clean element
 $(document).on('click', '.tab-content li > .pull-right', function () {
     var DIS = this;
