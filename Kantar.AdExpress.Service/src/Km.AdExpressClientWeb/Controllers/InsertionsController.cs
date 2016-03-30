@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Models.Insertions;
 using Newtonsoft.Json;
 using System;
@@ -42,7 +43,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle);
+            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, false);
 
             if (!reponse.GridResult.HasData)
                 return null;
@@ -92,6 +93,14 @@ namespace Km.AdExpressClientWeb.Controllers
             var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle);
 
             return PartialView("_DetailLevel", detailLevel);
+        }
+
+        public void SetDetailLevel(UserFilter userFilter)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            _detailLevelService.SetDetailLevelItem(idWebSession, userFilter);
         }
 
     }
