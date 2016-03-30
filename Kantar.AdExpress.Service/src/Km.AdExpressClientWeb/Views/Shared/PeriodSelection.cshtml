@@ -144,7 +144,7 @@
                         locale: 'fr',
                         format: 'DD/MM/YYYY',
                         useCurrent: false,
-                        minDate: new Date('@Model.PeriodViewModel.StartYear 0:0:0:0'),
+                        minDate: new Date('@Model.PeriodViewModel.StartYear'),
                         maxDate: new Date('@Model.PeriodViewModel.EndYear')
                     }).on('dp.change', function (e) {
                         $('#begin-date-value').val($('#datetimepicker-begin').data('date'));
@@ -160,7 +160,7 @@
                         locale: 'fr',
                         format: 'DD/MM/YYYY',
                         useCurrent: false,
-                        minDate: new Date('@Model.PeriodViewModel.StartYear 0:0:0:0'),
+                        minDate: new Date('@Model.PeriodViewModel.StartYear'),
                         maxDate: new Date('@Model.PeriodViewModel.EndYear')
                     }).on('dp.change', function (e) {
                         $('#end-date-value').val($('#datetimepicker-end').data('date'));
@@ -297,7 +297,10 @@
                             return false;
                         }
 
-                        if (startDate > endDate) {
+                        var startD = new Date(parseInt(startDate.substr(6, 4)), parseInt(startDate.substr(3, 2)) - 1, parseInt(startDate.substr(0, 2)));
+                        var endD = new Date(parseInt(endDate.substr(6, 4)), parseInt(endDate.substr(3, 2)) - 1, parseInt(endDate.substr(0, 2)));
+
+                        if (startD > endD) {
                             bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.PeriodErrorMessage)));
                             return false;
                         }
