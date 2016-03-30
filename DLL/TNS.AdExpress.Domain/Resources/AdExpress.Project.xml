@@ -1,20 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly>
   <name>AdExpress.Localization</name>
-  <!--<compiler>C:\Windows\Microsoft.NET\Framework\v4.0.30319</compiler>-->
-  <compiler>C:\Windows\Microsoft.NET\Framework64\v4.0.30319</compiler>
+  <compiler>C:\Windows\Microsoft.NET\Framework\v4.0.30319</compiler>
   <alinker>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin</alinker>
   <projects>
     <project id="Global">
       <files>
         <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.ru.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
         <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
         <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ru.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
+        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
         <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.sk.xml</file>
         <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ie.xml</file>
+        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
+        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
       </files>
     </project>
     <project id="Poland">
@@ -25,7 +24,6 @@
     </project>
   </projects>
   <outputs>
-    <!--<dir>\\172.17.236.86\Programme\Projets\France\AdExpress Olympe 2009\Bin</dir>-->
     <dir>\\172.17.236.86\Programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\x64</dir>
   </outputs>
 </assembly>

@@ -1926,6 +1926,21 @@ namespace TNS.AdExpressI.Insertions
 
             return gridResult;
         }
+
+        public GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        {
+            GridResult gridResult = new GridResult();
+
+            return gridResult;
+         
+        }
+
+        public GridResult GetMSCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        {
+          
+
+            throw new NotImplementedException();
+        }
         #endregion
 
         #endregion

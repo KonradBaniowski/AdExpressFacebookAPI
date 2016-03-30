@@ -290,7 +290,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 }
                 else
                 {
-                    jsonModel = Json(new { response.ErrorMessage });
+                    jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
                 }
             }
             return jsonModel;

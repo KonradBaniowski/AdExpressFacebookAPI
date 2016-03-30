@@ -9,7 +9,6 @@
     @Html.HiddenFor(e => e.Dimension)
     @Html.HiddenFor(e => e.Multiple)
     @Html.Partial("Presentation", Model.Presentation)
-    @Html.Partial("UserUniversGroups", Model.UniversGroups)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
@@ -17,6 +16,8 @@
         @Html.HiddenFor(e => e.Labels.ErrorNoSupport)
         @Html.HiddenFor(e => e.Labels.ErrorItemExceeded)
         @Html.HiddenFor(e => e.Labels.ErrorMediaSelected)
+        @Html.HiddenFor(e => e.Labels.ErrorMessageLimitUniverses)
+        @Html.HiddenFor(e => e.Labels.ErrorMininumInclude)
         @foreach (int i in Model.IdMediasCommon)
         {
             <input type="hidden" name="HiddenIntList" value="@i" />
@@ -138,7 +139,7 @@
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                         <div class="btn-marche text-center">
-                                            <a class="btn btn-green2 btn-circle btn-xl">
+                                            <a id="move-item" class="btn btn-green2 btn-circle btn-xl">
                                                 <i class="fa fa-arrow-right"></i>
                                             </a>
                                         </div>
@@ -209,15 +210,7 @@
                                                 </div>
                                             }
                                         </div>
-
-
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
-                                <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <a data-toggle="modal" href="#saveMediaSupportUnivers" class="btn btn-save-univers">Enregistrer l'univers <i class="fa fa-bookmark-o"></i></a>
-
                                 </div>
                             </div>
                         </div>
@@ -234,7 +227,7 @@
 </div>
 
 @section scripts {
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(document).ready(function () {
             if (typeof jQuery === "undefined") { throw new Error("Media Client selector requires jQuery") }
             var idList = [];
@@ -315,195 +308,7 @@
                     $(this).attr("checked", "");
                 }
             }
-
-            function validate() {
-                var message = "";
-                $('.tuile-medias-active').each(function (index) {
-                    var data = $(this).attr('data-attr-id');
-                    var dataIndex = $.inArray(data, idList);
-                    if (dataIndex == -1) {
-                        idList.push(data);
-                    }
-                });
-
-                var index = $.inArray(searchId, idList);
-                if (idList == null || idList.length == 0) {
-                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection))';
-                }
-                else if (idList.length > 1 && index > -1) {
-                    message = '@Html.Raw(Json.Encode(Model.ErrorMessage.SearchErrorMessage))';//search
-
-                }
-                return message;
-            }
-
-            function getSelectedMediaSupport() {
-                var trees = [];
-                $.each($('.nav.nav-tabs > li a'), function (index, elem) {
-                    var itemContainer = $(elem).attr('data-target');
-                    var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
-                    var UniversLvl = [];
-                    $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
-                        var idLevel = $(elem).attr('data-level');
-                        console.log(this);
-                        var UniLvl = [];
-                        $.each($(this).find('ul > li'), function (index, elem) {
-                            var itemUniver = $(elem).attr('data-id');
-                            var universItems = {
-                                Id: itemUniver
-                            }
-                            UniLvl.push(universItems);
-                        });
-                        var UnisLvl = {
-                            Id: idLevel,
-                            UniversItems: UniLvl
-                        };
-                        UniversLvl.push(UnisLvl);
-                    });
-                    var stuff = {
-                        Id: itemContainer,
-                        AccessType: accessType,
-                        UniversLevels: UniversLvl
-                    };
-                    trees.push(stuff);
-                });
-                return trees;
-            }
-
-            $('#btnSubmitMediaSelection').on('click', function (e) {
-                e.preventDefault();
-                var msg = validate();
-                var isValide = !msg || msg.lentgh === 0;
-                if (!isValide) {//mycondition
-                    bootbox.alert(msg);
-                }
-                else {
-                    var selectedMediaSupportTrees = getSelectedMediaSupport();
-                    var params = {
-                        selectedMedia: idList,
-                        mediaSupport: selectedMediaSupportTrees,
-                        nextStep: "PeriodSelection"
-                    };
-                    $.ajax({
-                        url: '/@_controller/SaveMediaSelection',
-                        contentType: 'application/json',
-                        type: 'POST',
-                        datatype: 'JSON',
-                        data: JSON.stringify(params),
-                        error: function (xmlHttpRequest, errorText, thrownError) {
-                        },
-                        success: function (data) {
-                            if (data.RedirectUrl != null) {
-                                document.location = data.RedirectUrl;
-                            }
-                            if (data.ErrorMessage!=null)
-                            {
-                                bootbox.alert(data.ErrorMessage);
-                            }
-                        }
-                    });
-                }
-            });
-
-            $('#Market').on('click', function (e) {
-                e.preventDefault();
-                var msg = validate();
-                var isValide = !msg || msg.lentgh === 0;
-                if (!isValide) {//mycondition
-                    bootbox.alert(msg);
-                }
-                else {
-                    var selectedMediaSupportTrees = getSelectedMediaSupport();
-                    var action = "SaveMediaSelection";
-                    var params = {
-                        selectedMedia: idList,
-                        mediaSupport: selectedMediaSupportTrees,
-                        nextStep: "Index"
-                    };
-
-                    $.ajax({
-                        url: '/@_controller/' + action,
-                        contentType: 'application/json',
-                        type: 'POST',
-                        datatype: 'JSON',
-                        data: JSON.stringify(params),
-                        error: function (xmlHttpRequest, errorText, thrownError) {
-
-                        },
-                        success: function (data) {
-                            if (data != null) {
-                                document.location = data.RedirectUrl;
-                            }
-                        }
-                    });
-                }
-            });
-            $('#Dates').on('click', function (e) {
-                e.preventDefault();
-                var msg = validate();
-                var isValide = !msg || msg.lentgh === 0;
-                if (!isValide) {//mycondition
-                    bootbox.alert(msg);
-                }
-                else {
-                    var selectedMediaSupportTrees = getSelectedMediaSupport();
-                    var action = "SaveMediaSelection";
-                    var params = {
-                        selectedMedia: idList,
-                        mediaSupport: selectedMediaSupportTrees,
-                        nextStep: "PeriodSelection"
-                    };
-
-                    $.ajax({
-                        url: '/@_controller/' + action,
-                        contentType: 'application/json',
-                        type: 'POST',
-                        datatype: 'JSON',
-                        data: JSON.stringify(params),
-                        error: function (xmlHttpRequest, errorText, thrownError) {
-
-                        },
-                        success: function (data) {
-                            if (data != null) {
-                                document.location = data.RedirectUrl;
-                            }
-                        }
-                    });
-                }
-            });
-            $('#Results').on('click', function (e) {
-                e.preventDefault();
-                var msg = validate();
-                var isValide = !msg || msg.lentgh === 0;
-                if (!isValide) {//mycondition
-                    bootbox.alert(msg);
-                }
-                else {
-                    var selectedMediaSupportTrees = getSelectedMediaSupport();
-                    action = "SaveMediaSelection";
-                    params = {
-                        selectedMedia: idList,
-                        mediaSupport: selectedMediaSupportTrees,
-                        nextStep: "Results"
-                    };
-                    $.ajax({
-                        url: '/@_controller/' + action,
-                        contentType: 'application/json',
-                        type: 'POST',
-                        datatype: 'JSON',
-
-                        data: JSON.stringify(params),
-                        error: function (xmlHttpRequest, errorText, thrownError) {
-                        },
-                        success: function (data) {
-                            if (data != null) {
-                                document.location = data.RedirectUrl;
-                            }
-                        }
-                    });
-                }
-            });
         });
-    </script>
-    @Scripts.Render("~/bundles/media-selection-single")
+    </script>*@
+    @Scripts.Render("~/bundles/portfolio-media")
 }
