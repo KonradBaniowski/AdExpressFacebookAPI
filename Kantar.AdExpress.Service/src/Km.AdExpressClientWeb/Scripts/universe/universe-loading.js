@@ -18,9 +18,9 @@ $(function () {
     });
 });
 
-$('.btn.btn-save-univers').on('click', function (event) {
+$('#save-universe').on('click', function (event) {
     event.preventDefault();
-    $('.btn.btn-save-univers').off('click');
+    //$('#save-universe').off('click');
     $.ajax({
         url: '/Universe/SaveUserUnivers',
         type: 'GET',
