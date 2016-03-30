@@ -176,6 +176,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CreativeController.cs" />
     <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
@@ -527,6 +528,7 @@
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\OLD_kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
@@ -1518,6 +1520,7 @@
     <Content Include="Views\CustomerArea\Home.cshtml" />
     <Content Include="Views\Insertions\_DetailLevel.cshtml" />
     <Content Include="Views\MediaSchedule\_MSCreativesResult.cshtml" />
+    <Content Include="Views\Creative\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
