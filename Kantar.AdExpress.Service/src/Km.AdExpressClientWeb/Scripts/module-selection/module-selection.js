@@ -2,7 +2,6 @@
 
 $(function () {
 
-
     $('a.tile-body.text-center').on('click', currentModule);
 
     function currentModule(event) {
@@ -27,4 +26,14 @@ $(function () {
             }
         });
     }
+  
 });
+$('#keyword').off('keyup');
+
+$('#keyword').on('keyup', function () {
+    if (event.keyCode == 13) {
+        $(".btn-recherche").click();
+        console.log('Enter was pressed');
+    }
+});
+

@@ -13,11 +13,18 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.MediaSchedule;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using CustomCst = TNS.AdExpress.Constantes.Customer;
 using System.Reflection;
 using Kantar.AdExpress.Service.Core.Domain;
 using System.Collections;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Insertions;
+using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpressI.Insertions.Cells;
+using TNS.AdExpressI.MediaSchedule.Style;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -37,6 +44,57 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate);
 
             return mediaScheduleResult.GetGridResult();
+        }
+
+        public MSCreatives GetMSCreatives(string idWebSession, string zoomDate)
+        {
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            #region MSCreatives
+            object[] paramMSCraetives = new object[2];
+            paramMSCraetives[0] = CustomerSession;
+            paramMSCraetives[1] = CustomerSession.CurrentModule;
+
+            MediaSchedulePeriod period = new MediaSchedulePeriod(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodEndDate, CustomerSession.DetailPeriod);
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
+            var resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null);
+
+            ResultTable data = null;
+            string[] vehicles = CustomerSession.GetSelection(CustomerSession.SelectionUniversMedia, CustomCst.Right.type.vehicleAccess).Split(',');
+            string filters = string.Empty;
+            int fromDate = Convert.ToInt32(period.Begin.ToString("yyyyMMdd"));
+            int toDate = Convert.ToInt32(period.End.ToString("yyyyMMdd"));
+            #endregion
+
+            data = resultMSCreatives.GetMSCreatives(VehiclesInformation.Get(Int64.Parse(vehicles[0])), fromDate, toDate, filters, -1, zoomDate);
+
+            MSCreatives creatives = new MSCreatives();
+            creatives.Items = new List<MSCreative>();
+            DefaultMediaScheduleStyle style = new DefaultMediaScheduleStyle();
+
+            for (int i = 0; i < data.LinesNumber; i++)
+            {
+                CellCreativesInformation cell = (CellCreativesInformation)data[i, 1];
+                MSCreative creative = new MSCreative { Id = cell.IdVersion, Vehicle = cell.Vehicle, NbVisuals = cell.NbVisuals, Visuals = cell.Visuals };
+                creative.Class = CustomerSession.SloganColors[cell.IdVersion].ToString();
+                creatives.Items.Add(creative);
+            }
+
+            return creatives;
+        }
+
+        public void SetMSCreatives(string idWebSession, ArrayList slogans) {
+
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            CustomerSession.IdSlogans = slogans;
+            CustomerSession.Save();
+            CustomerSession.Source.Close();
+
         }
 
         private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate)

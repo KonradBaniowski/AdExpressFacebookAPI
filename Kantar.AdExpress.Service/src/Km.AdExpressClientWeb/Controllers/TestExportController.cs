@@ -15,13 +15,14 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpressI.MediaSchedule.Functions;
 using TNS.FrameWork.Date;
-
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
@@ -745,7 +746,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             }
 
                                             TextStyle(sheet.Cells[cellRow, colLevel], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);                                            
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -812,7 +813,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             }
 
                                             TextStyle(sheet.Cells[cellRow, colLevel], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);                                            
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
                                         }
 
                                         #region Total
@@ -885,7 +886,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         }
 
                                         TextStyle(sheet.Cells[cellRow, colLevel], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);                                        
+                                        BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
                                     }
 
                                     #region Total
@@ -4370,6 +4371,139 @@ namespace Km.AdExpressClientWeb.Controllers
         //            || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet)
         //        );
         //}
+
+        private void SetSelectionCallback()
+        {
+            //Choix de l'étude           
+            var studychoice = GestionWeb.GetWebWord(842, _session.SiteLanguage);
+
+            //Période sélectionée
+            var startDate = _session.PeriodBeginningDate;
+            var endDate = _session.PeriodEndDate;
+
+            //période comparative
+            var comparativePeriodLabel = GestionWeb.GetWebWord(2292, _session.SiteLanguage);
+           
+           if (_session.ComparativeStudy)
+            {
+
+                var comparativePeriod = GestionWeb.GetWebWord(1118, _session.SiteLanguage);
+            }
+
+            
+            //Module
+            var moduleLabel = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_session.CurrentModule), _session.SiteLanguage);
+
+            // Détail Média
+            if (_session.SelectionUniversMedia.FirstNode != null && _session.SelectionUniversMedia.FirstNode.Nodes.Count > 0)
+            {
+               
+                System.Text.StringBuilder detailMedia = new System.Text.StringBuilder(1000);
+
+             
+               var detailmediaLabel = GestionWeb.GetWebWord(1194, _session.SiteLanguage);
+
+                //Voir function =>
+                // var mediaDetailText =
+                //TNS.AdExpress.Web.Core.Utilities.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_session.SelectionUniversMedia.FirstNode, false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true, _webSession.DataLanguage, dataSource) + "</TD>");
+
+
+                #region Univers produit principal sélectionné
+                if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+                {
+                    System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+                    int code = 0;
+                    string nameProduct = "";
+                    string productText = "";
+
+                    if (_session.PrincipalProductUniverses.Count > 1)
+                    {                       
+                        code = 2302;
+                    }
+                    else {
+                       
+                        code = 1759;
+                    }
+
+                   
+                    for (int k = 0; k < _session.PrincipalProductUniverses.Count; k++)
+                    {
+                        if (_session.PrincipalProductUniverses.Count > 1)
+                        {
+                            if (_session.PrincipalProductUniverses.ContainsKey(k))
+                            {
+                                if (k > 0)
+                                {
+                                    nameProduct = GestionWeb.GetWebWord(2301, _session.SiteLanguage);
+                                }
+                                else {
+                                    nameProduct = GestionWeb.GetWebWord(2302, _session.SiteLanguage);
+                                }
+
+                                t.Append("<TR>");
+                                t.Append("<TD class=\"txtViolet11Bold\" >&nbsp;");
+                                t.Append("<label>" + nameProduct + "</label></TD>");
+                                t.Append("</TR>");
+
+                                // Universe Label
+                                if (_session.PrincipalProductUniverses[k].Label != null && _session.PrincipalProductUniverses[k].Label.Length > 0)
+                                {
+                                    t.Append("<TR>");
+                                    t.Append("<TD class=\"txtViolet11Bold\" >&nbsp;");
+                                    t.Append("<Label>" + _session.PrincipalProductUniverses[k].Label + "</Label>");
+                                    t.Append("</TD></TR>");
+                                }
+
+                                //Voir Function : ShowUniverse ===>
+                                // Render universe html code
+                                //t.Append("<TR height=\"20\">");
+                                //t.Append("<TD vAlign=\"top\">" + selectItemsInClassificationWebControl.ShowUniverse(_session.PrincipalProductUniverses[k], _session.DataLanguage, DBFunctions.GetDataSource(_session)) + "</TD>");
+                                //t.Append("</TR>");
+                                //t.Append("<TR height=\"10\"><TD></TD></TR>");
+                            }
+                        }
+                        else {
+                            if (_session.PrincipalProductUniverses.ContainsKey(k))
+                            {
+                                //Voir Function : ShowUniverse ===>
+                               // productText += selectItemsInClassificationWebControl.ShowUniverse(_session.PrincipalProductUniverses[k], _session.DataLanguage, DBFunctions.GetDataSource(_session));
+                            }
+                        }
+                    }
+                  
+                }
+                #endregion
+
+                #region Univers support principal sélectionné
+                if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
+                {
+                  
+                    
+                    var mediaSelectiondWebText = GestionWeb.GetWebWord(2540, _session.SiteLanguage);
+
+
+                    //Voir fonction ==>
+                    // string  mediaSelectiondText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalMediaUniverses[0], _webSession.DataLanguage, dataSource);
+                }
+                #endregion
+
+                #region Type de pourcentage
+                string percentageAlignmentLabel = string.Empty;
+                switch (_session.PercentageAlignment)
+                {
+                    case CstWeb.Percentage.Alignment.vertical:
+                        percentageAlignmentLabel = GestionWeb.GetWebWord(2065, _session.SiteLanguage);
+                        break;
+                    case CstWeb.Percentage.Alignment.horizontal:
+                        percentageAlignmentLabel = GestionWeb.GetWebWord(2064, _session.SiteLanguage);
+                        break;
+                    default: break;
+                }
+                #endregion
+
+            }
+
+        }
 
     }
 }

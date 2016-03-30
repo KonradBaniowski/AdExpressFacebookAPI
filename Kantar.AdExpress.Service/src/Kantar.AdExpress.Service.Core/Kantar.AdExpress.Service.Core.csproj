@@ -88,6 +88,8 @@
     <Compile Include="Domain\Mau\ModuleAssignment.cs" />
     <Compile Include="Domain\Mau\RightAssignment.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
+    <Compile Include="Domain\MSCreative.cs" />
+    <Compile Include="Domain\MSCreatives.cs" />
     <Compile Include="Domain\Period.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoOption.cs" />

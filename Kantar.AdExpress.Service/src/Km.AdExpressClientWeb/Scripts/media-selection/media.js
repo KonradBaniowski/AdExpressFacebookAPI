@@ -4,7 +4,7 @@
         dimension: dimension
     };
     $.ajax({
-        url: '/MediaSchedule/LoadUserUniversGroups',
+        url: '/Universe/LoadUserUniversGroups',
         type: 'GET',
         data: params,
         error: function (xmlHttpRequest, errorText, thrownError) {
@@ -53,7 +53,6 @@
                 },
                 success: function (response) {
                     if (branchUpdate > 0) {
-                        console.log(DIS);
                         DIS.updateGroup(univerLabel, response.data, response.total, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
                     }
                     else {
@@ -74,7 +73,6 @@
     //Déplacer un élement marché
     $('.btn-green2.btn-circle').on('click', function () {
         var levelSrc = $('.panel-marche .ui-selectee.ui-selected');
-        console.log(levelSrc);
         if (levelSrc.length >= 1) {
             var universSrc = $('.ui-selectee.ui-selected').closest('.panel-default').attr('data-universe');
             var tabSelected = $('ul > li[class="active"] > a').attr('data-tab');
@@ -157,7 +155,7 @@
         event.preventDefault();
         $('.btn.btn-save-univers').off("click");
         $.ajax({
-            url: '/MediaSchedule/SaveUserUnivers',
+            url: '/Universe/SaveUserUnivers',
             type: 'GET',
             data: params,
             success: function (response) {
@@ -166,6 +164,14 @@
             }
         });
     });
+});
+
+$('#keyword').off('keyup');
+
+$('#keyword').on('keyup', function () {
+    if (event.keyCode == 13) {
+        $(".btn-recherche").click();
+    }
 });
 
 //clean element
@@ -177,7 +183,6 @@ $(document).on('click', '.tab-content li', function () {
 $(document).on('click', 'button.tout-suppr', function () {
     var test = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results');
     var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
-    console.log(idTree);
     test.find('li').remove();
     $("#" + idTree + " [id^='collapse'].in").collapse('hide');
 });
@@ -234,13 +239,13 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         media:idMedias
     };
     $.ajax({
-        url: '/MediaSchedule/SaveUserUnivers',
+        url: '/Universe/SaveUserUnivers',
         type: 'POST',
         data: params,
         success: function (response) {
             $('#saveunivers').modal('hide');
             $.ajax({
-                url: '/MediaSchedule/LoadUserUniversGroups',
+                url: '/Universe/LoadUserUniversGroups',
                 type: 'GET',
                 error: function (data) {
                     bootbox.alert(data);
@@ -265,7 +270,7 @@ $(document).on('change', '#ddlGroup', function (event) {
     };
     var local = $(this);
     $.ajax({
-        url: '/MediaSchedule/GetUniversByGroup',
+        url: '/Universe/GetUniversByGroup',
         type: 'GET',
         data: params,
         success: function (response) {
@@ -288,7 +293,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
         dimension: dimension
     };
     $.ajax({
-        url: '/MediaSchedule/GetUserUnivers',
+        url: '/Universe/GetUserUnivers',
         type: 'POST',
         data: params,
         success: function (response) {
