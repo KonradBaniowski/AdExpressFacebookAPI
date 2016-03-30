@@ -2291,5 +2291,7 @@
     <item mnemonic="w3033" type="System.String">Veuillez saisir au moins 2 caractères pour effectuer votre recherche.</item>
     <item mnemonic="w3034" type="System.String">Vous ne pouvez déplacer qu'un seul support.</item>
     <item mnemonic="w3035" type="System.String">L'élement que vous déplacez n'est pas un support.</item>
+    <item mnemonic="w3036" type="System.String">Vous ne pouvez sélectionner qu'un élément.</item>
+    
   </items>
 </localization>
