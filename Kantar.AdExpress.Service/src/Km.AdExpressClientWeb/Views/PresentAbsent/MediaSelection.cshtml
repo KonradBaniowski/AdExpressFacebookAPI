@@ -138,7 +138,7 @@
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                         <div class="btn-marche text-center">
-                                            <a class="btn btn-green2 btn-circle btn-xl">
+                                            <a id="move-item" class="btn btn-green2 btn-circle btn-xl">
                                                 <i class="fa fa-arrow-right"></i>
                                             </a>
                                         </div>
@@ -504,6 +504,5 @@
             });
         });
     </script>
-    @Scripts.Render("~/bundles/media-present-absent")
-    @Scripts.Render("~/bundles/media-compare-group")
+    @Scripts.Render("~/bundles/presentabsent-media")
 }

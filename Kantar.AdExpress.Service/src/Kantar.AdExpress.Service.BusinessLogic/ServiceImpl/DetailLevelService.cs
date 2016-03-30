@@ -5,14 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Web.Core.Sessions;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain;
-using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
+using System.Collections;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -25,7 +28,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
             List<DetailLevel> detailLevelList = new List<DetailLevel>();
-            bool selected;
 
             allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(vehicleId);
             defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(vehicleId);
@@ -61,14 +63,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             });
                         }
                     }
-
-                    //TODO : Items.isselected
-                    //if (i == 1)
-                    //    dropDownList.SelectedValue = ((DetailLevelItemInformation.Levels)CustomerSession.DetailLevel.LevelIds[0]).GetHashCode().ToString();
-                    //if ((i == 2) && (CustomerSession.DetailLevel.LevelIds.Count > 1))
-                    //    dropDownList.SelectedValue = ((DetailLevelItemInformation.Levels)CustomerSession.DetailLevel.LevelIds[1]).GetHashCode().ToString();
-                    //if ((i == 3) && (CustomerSession.DetailLevel.LevelIds.Count > 2))
-                    //    dropDownList.SelectedValue = ((DetailLevelItemInformation.Levels)CustomerSession.DetailLevel.LevelIds[2]).GetHashCode().ToString();
                 }
 
                 detailLevelList.Add(detaiLevelltmp);
@@ -77,6 +71,35 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             return detailLevelList;
         }
+
+
+        public void SetDetailLevelItem(string idWebSession, UserFilter userFilter)
+        {
+            WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            ArrayList levels = new ArrayList();
+
+            if (userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
+            {
+                levels.Add(userFilter.GenericDetailLevelFilter.L1DetailValue);
+            }
+            if (userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
+            {
+                levels.Add(userFilter.GenericDetailLevelFilter.L2DetailValue);
+            }
+            if (userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
+            {
+                levels.Add(userFilter.GenericDetailLevelFilter.L3DetailValue);
+            }
+            if (levels.Count > 0)
+            {
+                CustomerSession.DetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
+            }
+
+            CustomerSession.Save();
+
+        }
+
 
         private bool CanAddDetailLevelItem(WebSession CustomerSession, DetailLevelItemInformation currentDetailLevel)
         {

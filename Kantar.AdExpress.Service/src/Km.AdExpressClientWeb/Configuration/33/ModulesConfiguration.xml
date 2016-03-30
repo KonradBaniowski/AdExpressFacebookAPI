@@ -170,8 +170,8 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="26" name="title"/>
-              <allowedUniverseLevel id="27" name="media_Seller"/>
+              <allowedUniverseLevel id="27" name="title"/>
+              <allowedUniverseLevel id="28" name="media_Seller"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="12">
               <allowedUniverseBranch id="12" name="interest_center\media"/>
@@ -493,8 +493,8 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="26" name="title"/>
-              <allowedUniverseLevel id="27" name="media_Seller"/>
+              <allowedUniverseLevel id="27" name="title"/>
+              <allowedUniverseLevel id="28" name="media_Seller"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="12">
               <allowedUniverseBranch id="12" name="interest_center\media"/>
@@ -845,8 +845,8 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="26" name="title"/>
-              <allowedUniverseLevel id="27" name="media_Seller"/>
+              <allowedUniverseLevel id="27" name="title"/>
+              <allowedUniverseLevel id="28" name="media_Seller"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="12">
               <allowedUniverseBranch id="12" name="interest_center\media"/>

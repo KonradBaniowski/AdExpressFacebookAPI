@@ -62,7 +62,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private bool _hasCreationDownloadRights = false;
 
 
-        public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
+        public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged = false)
         {
             InsertionResponse insertionResponse = new InsertionResponse();
             ArrayList levels = new ArrayList();
@@ -79,7 +79,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return insertionResponse;
                 }
 
-                //TODO : TROUVER OU IL EST CHARGE
                 if (idVehicle.HasValue)
                 {
                     insertionResponse.IdVehicle = idVehicle.Value;
@@ -155,13 +154,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 _columnItemList = ColumnRight(_columnItemList);
 
-                #region Initialisation de la liste des niveaux de détail
-                _allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(insertionResponse.IdVehicle);
-                _defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(insertionResponse.IdVehicle);
-                #endregion
+                if (isVehicleChanged)
+                {
+                    foreach (GenericDetailLevel detailItem in _defaultDetailItemList)
+                        levels = detailItem.LevelIds;
 
-                foreach (GenericDetailLevel detailItem in _defaultDetailItemList)
-                    levels = detailItem.LevelIds;
+                    _customerWebSession.DetailLevel = new GenericDetailLevel(levels, WebCst.GenericDetailLevel.SelectedFrom.defaultLevels);
+                }
                 List<Int64> genericColumnList = new List<Int64>();
                 foreach (GenericColumnItemInformation Column in _columnItemList)
                 {                   
@@ -169,7 +168,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                        // _columnItemSelectedList.Add(Column);//TODO: A checker                   
                 }
                 _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
-                _customerWebSession.DetailLevel = new GenericDetailLevel(levels, WebCst.GenericDetailLevel.SelectedFrom.defaultLevels);
 
                 // _customerWebSession.Save();
 

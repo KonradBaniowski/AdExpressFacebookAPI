@@ -1883,13 +1883,13 @@ namespace TNS.AdExpressI.Insertions
                 {
                     for (j = 0; j < _data.NewHeaders.Root.Count; j++)
                     {
-                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
+                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "*" });
                         schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
                     }
                 }
                 else
                 {
-                    columns.Add(new { headerText = "", key = "Visu", dataType = "string" });
+                    columns.Add(new { headerText = "", key = "Visu", dataType = "string", width = "*" });
                     schemaFields.Add(new { name = "Visu" });
                 }
 
