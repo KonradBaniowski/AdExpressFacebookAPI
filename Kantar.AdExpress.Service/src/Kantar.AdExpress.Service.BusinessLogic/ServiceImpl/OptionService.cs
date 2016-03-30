@@ -1,4 +1,5 @@
-﻿using Kantar.AdExpress.Service.Core.BusinessService;
+﻿#define Debug
+using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using System;
 using System.Collections;
@@ -24,6 +25,7 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Constantes.Classification.DB;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 using FrameWorkResults = TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.Classification.Universe;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -428,7 +430,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
             }
 
-            if(_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
+            if(_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
+                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
             SetGenericColumnLevelDetailOptions(userFilter);
 
             #region GenericDetailLevelFilter
@@ -618,6 +621,39 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private List<Int64> GetVehicles()
         {
+#if Debug
+            //TODO : Resultat pour calendrier d'actiion : a enlever apres tests
+            // _customerSession.CurrentTab = 6;
+
+            _customerWebSession.SelectionUniversMedia.Nodes.Clear();
+            System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("RADIO");
+            tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, 2, "RADIO");
+            _customerWebSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+            _customerWebSession.CurrentUniversMedia = _customerWebSession.SelectionUniversMedia;
+
+            //TODO :  selection support :  : a enlever apres tests
+            TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
+            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+
+            int groupIndex = 0;
+            Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
+            NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
+            Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
+            List<long> idUniversItems = new List<long>();
+            idUniversItems.Add(2003);//EUROPE 1
+            treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
+            adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
+            universes.Add(universes.Count, adExpressUniverse);
+            _customerWebSession.PrincipalMediaUniverses = universes;
+
+            //ArrayList levelIds = new ArrayList();
+            //levelIds.Add(11);
+            //levelIds.Add(12);
+            //levelIds.Add(10);            
+            //_customerSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+
+            _customerWebSession.Save();
+#endif
             List<Int64> vehicleList = new List<Int64>();
             string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
             if (!string.IsNullOrEmpty(listStr))

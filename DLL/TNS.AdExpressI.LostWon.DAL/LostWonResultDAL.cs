@@ -21,7 +21,6 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctWeb = TNS.AdExpress.Web.Core.Utilities;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using System.Collections.Generic;
-using TNS.AdExpress.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpressI.DynamicReport.DAL.Exceptions;
@@ -32,8 +31,8 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
-using System.Text.RegularExpressions;
 using TNS.AdExpress.Web.Core.Utilities;
+using TNS.Classification.Universe;
 #endregion
 
 namespace TNS.AdExpressI.LostWon.DAL
@@ -483,13 +482,18 @@ namespace TNS.AdExpressI.LostWon.DAL
             }
 
             #region Sélection de Médias
-            while (_session.CompetitorUniversMedia[positionUnivers] != null)
-            {
-                mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
-                positionUnivers++;
-            }
 
-            sql.AppendFormat(" where id_media in ({0})", mediaList.Substring(0, mediaList.Length - 1));
+            #region Old
+            //while (_session.CompetitorUniversMedia[positionUnivers] != null)
+            //{
+            //    mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
+            //    positionUnivers++;
+            //}
+            #endregion
+
+            mediaList = GetCompetitormedias();
+
+            sql.AppendFormat(" where id_media in ({0})", mediaList);
             sql.AppendFormat(" and {0}.id_language = {1}", tblMedia.Prefix, _session.DataLanguage);
             #endregion
 
@@ -794,16 +798,19 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             //Medias selection
             int positionUnivers = 1;
-            string mediaList = "";
-            while (_session.CompetitorUniversMedia[positionUnivers] != null)
-            {
-                mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
-                positionUnivers++;
-            }
-            if (mediaList.Length > 0)
+            string mediaList = GetCompetitormedias();
+            #region Old
+            //while (_session.CompetitorUniversMedia[positionUnivers] != null)
+            //{
+            //    mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
+            //    positionUnivers++;
+            //}
+            #endregion
+
+            if (!string.IsNullOrEmpty(mediaList))
                 sql.AppendFormat(" and {0}.id_media in ({1})",
                     WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
-                    mediaList.Substring(0, mediaList.Length - 1)
+                    mediaList
                 );
             //Media Universe
             sql.Append(FctWeb.SQLGenerator.GetResultMediaUniverse(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
@@ -1134,21 +1141,25 @@ namespace TNS.AdExpressI.LostWon.DAL
                     dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
                 dateField = DATA_TABLE_PREFIXE + "." + CstDB.Fields.DATE_MEDIA_NUM;
 
-                sql.Append(" select " + DATA_TABLE_PREFIXE + ".id_media, date_media_num as date_num, " + yearParutionIndex + " as yearParution");
-                sql.Append(" from  " + dataTableName);
-                sql.Append(" where " + dateField + ">=" + startDate + " and " + dateField + " <= " + endDate);
+                sql.AppendFormat(" select {0}.id_media, date_media_num as date_num, {1} as yearParution"
+                    , DATA_TABLE_PREFIXE, yearParutionIndex);
+                sql.AppendFormat(" from {0} ", dataTableName);
+                sql.AppendFormat(" where {0}>={1} and {2} <={3} ", dateField, startDate, dateField, endDate);
 
                 #region Sélection de Médias
-                while (_session.CompetitorUniversMedia[positionUnivers] != null)
-                {
-                    mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
-                    positionUnivers++;
-                }
-                if (mediaList.Length > 0) sql.Append(" and id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")");
+                mediaList = GetCompetitormedias();
+                #region Old
+                //while (_session.CompetitorUniversMedia[positionUnivers] != null)
+                //{
+                //    mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
+                //    positionUnivers++;
+                //}
+                #endregion
+                if (! string.IsNullOrEmpty(mediaList)) sql.AppendFormat(" and id_media in ({0})",mediaList);
                 #endregion
 
                 // Group by
-                sql.Append(" group by id_media, " + dateField);
+                sql.AppendFormat(" group by id_media, {0} " , dateField);
 
             }
             catch (Exception e)
@@ -1211,6 +1222,18 @@ namespace TNS.AdExpressI.LostWon.DAL
             return sql.ToString();
         }
         #endregion
+
+        private string GetCompetitormedias()
+        {
+            string mediaList = string.Empty;
+            List<long> ids = new List<long>();
+            for (int p = 0; p < _session.PrincipalMediaUniverses.Count; p++)
+            {
+                ids.AddRange(_session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes));
+            }
+            if (ids.Count > 0) return String.Join(",", ids);
+            return mediaList;
+        }
 
     }
 

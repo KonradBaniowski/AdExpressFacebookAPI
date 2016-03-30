@@ -55,8 +55,14 @@ namespace TNS.AdExpressI.Insertions
         ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, 
             int toDate, string filters, int universId, string zoomDate);
 
+        GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate,
+          int toDate, string filters, int universId, string zoomDate);
+
         ResultTable GetMSCreatives(VehicleInformation vehicle, int fromDate,
             int toDate, string filters, int universId, string zoomDate);
+
+        GridResult GetMSCreativesGridResult(VehicleInformation vehicle, int fromDate,
+         int toDate, string filters, int universId, string zoomDate);
 
         List<VehicleInformation> GetPresentVehicles(string filters, int universId, bool sloaganNotNull);
           /// <summary>
