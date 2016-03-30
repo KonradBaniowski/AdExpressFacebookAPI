@@ -11,7 +11,7 @@ $(document).ajaxStart(function () {
 });
 
 $(document).ajaxStop(function () {
-    $('#loader .modal-footer').dequeue();
+    //$('#loader .modal-footer').dequeue();
     $('#loader .modal-footer').hide();
     $('#loader').modal('hide');
 });

@@ -219,9 +219,9 @@ function NextStep(nextUrl, dis) {
         trees: trees,
         nextStep: nextUrl
     };
-
+    var ctrl = $('#Labels_CurrentController').val();
     $.ajax({
-        url: '/Portfolio/SaveMarketSelection',
+        url: '/' + ctrl + '/SaveMarketSelection',
         type: 'POST',
         data: params,
         error: function (data) {
