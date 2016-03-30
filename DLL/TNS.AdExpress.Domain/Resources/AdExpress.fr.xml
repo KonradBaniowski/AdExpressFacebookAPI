@@ -1482,7 +1482,7 @@
     <item mnemonic="w2283" type="System.String">{0} éléments sur {1} .&lt;br&gt;Affiner votre recherche.</item>
     <item mnemonic="w2284" type="System.String">Les périodes &lt;font color=#787878&gt;« en gris foncé »&lt;/font&gt; ne sont pas, à ce jour, complètement chargées.</item>
     <item mnemonic="w2285" type="System.String">Impossible d'avoir des elements de même niveaux dans des groupes en inclusion.</item>
-    <item mnemonic="w2286" type="System.String">Vous ne pouvez sélectionner au maximum que 1000 éléments par niveau.</item>
+    <item mnemonic="w2286" type="System.String">Vous ne pouvez sélectionner au maximum que 100 éléments par niveau.</item>
     <item mnemonic="w2287" type="System.String">Mot-clé seul = Recherche « commençant par ». Mot-clé précédé d'une * = Recherche « par contenant ».</item>
     <item mnemonic="w2288" type="System.String">Période détaillée par :</item>
     <item mnemonic="w2289" type="System.String">Jour</item>

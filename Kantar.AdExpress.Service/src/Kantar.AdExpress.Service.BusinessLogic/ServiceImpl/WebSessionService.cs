@@ -31,6 +31,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private WebSession _webSession = null;
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
+        private const int MaxItemsPerLevel = 100;
         public WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool mediaSupportRequired)
         {
             WebSessionResponse response = new WebSessionResponse
@@ -187,58 +188,69 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
            
             if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any())
             {
-                AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
-                try
+                #region Fix max items per level
+                if (trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
                 {
-                    if (univers != null && univers.Count() > 0)
+                    response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
+                }
+                #endregion
+                #region try catch block
+                else
+                {
+                    AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
+                    try
                     {
-                        bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
-                        List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
-                        if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
+                        if (univers != null && univers.Count() > 0)
                         {
-                            Dictionary<int, AdExpressUniverse>
-                                    universDictionary = new Dictionary<int, AdExpressUniverse>();
-                            universDictionary.Add(universDictionary.Count, univers);
-                            
-                            if (!IsValidUniverseLevels(univers, _webSession))
+                            bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
+                            List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
+                            if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
                             {
-                                response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
+                                Dictionary<int, AdExpressUniverse>
+                                        universDictionary = new Dictionary<int, AdExpressUniverse>();
+                                universDictionary.Add(universDictionary.Count, univers);
+
+                                if (!IsValidUniverseLevels(univers, _webSession))
+                                {
+                                    response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
+                                }
+                                else
+                                {
+                                    _webSession.PrincipalProductUniverses = universDictionary;
+                                    response.Success = true;
+                                    _webSession.Save();
+                                    _webSession.Source.Close();
+                                }
                             }
                             else
                             {
-                                _webSession.PrincipalProductUniverses = universDictionary;
-                                response.Success = true;
-                                _webSession.Save();
-                                _webSession.Source.Close();
+                                response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
                             }
                         }
                         else
                         {
-                            response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                            response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
                         }
                     }
-                    else
+
+                    catch (SecurityException)
                     {
-                        response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
+                        _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
+                        _webSession.Save();
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
+                    }
+                    catch (CapacityException)
+                    {
+                        _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                        _webSession.Save();
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
+                    }
+                    catch (Exception)
+                    {
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
                     }
                 }
-
-                catch (SecurityException)
-                {
-                    _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
-                    _webSession.Save();
-                    response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
-                }
-                catch (CapacityException)
-                {
-                    _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-                    _webSession.Save();
-                    response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
-                }
-                catch (Exception)
-                {
-                    response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
-                }
+                #endregion
             }
             else
             {

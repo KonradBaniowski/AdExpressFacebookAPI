@@ -33,6 +33,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string _controller = "LostWon";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
+        private const int MaxIncludeNbr = 1;
+        private const int MaxExcludeNbr = 0;
 
         public LostWonController(ILostWonService lostWonService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {
@@ -59,7 +61,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true, MaxIncludeNbr,MaxExcludeNbr);
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
@@ -282,7 +284,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 }
                 else
                 {
-                    jsonModel = Json(new { response.ErrorMessage });
+                    jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
                 }
             }
             return jsonModel;
