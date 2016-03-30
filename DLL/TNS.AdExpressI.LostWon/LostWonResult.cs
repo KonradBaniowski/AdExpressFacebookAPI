@@ -355,6 +355,7 @@ namespace TNS.AdExpressI.LostWon
             string endPeriodDA = _session.PeriodEndDate;
             CellNumber c = new CellNumber(0.0);
             c.StringFormat = "{0:max0}";
+            c.AsposeFormat = 3;
             CellUnitFactory numberFactory = new CellUnitFactory(c); ;
             #endregion
 
@@ -1223,6 +1224,7 @@ namespace TNS.AdExpressI.LostWon
             #region Nombre parutions by media
             CellNumber cNb = new CellNumber(0.0);
             cNb.StringFormat = "{0:max0}";
+            cNb.AsposeFormat = 3;
             CellUnitFactory nbFactory = new CellUnitFactory(cNb);
             CellEvol cEvol;
             if (resNbParution != null && resNbParution.Count > 0)

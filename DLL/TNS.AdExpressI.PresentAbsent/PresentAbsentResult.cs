@@ -526,6 +526,7 @@ namespace TNS.AdExpressI.PresentAbsent
             string expression = "";
             string sort = "id_media asc";
             string unitFormat = "{0:max0}";
+            int asposeFormat = 37;
             bool showProduct = _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             #endregion
 
@@ -660,12 +661,15 @@ namespace TNS.AdExpressI.PresentAbsent
             {
                 CellNumber cN = new CellNumber();
                 cN.StringFormat = unitFormat;
+                cN.AsposeFormat = asposeFormat;
                 resultTable[i, presentNumberColumnIndex] = cN;
                 CellNumber cN1 = new CellNumber();
                 cN1.StringFormat = unitFormat;
+                cN1.AsposeFormat = asposeFormat;
                 resultTable[i, absentNumberColumnIndex] = cN1;
                 CellNumber cN2 = new CellNumber();
                 cN2.StringFormat = unitFormat;
+                cN2.AsposeFormat = asposeFormat;
                 resultTable[i, exclusiveNumberColumnIndex] = cN2;
             }
             for (Int32 i = 0; i < nbLine; i++)
@@ -1500,7 +1504,7 @@ namespace TNS.AdExpressI.PresentAbsent
                 if (_showCreative) tab[cLine, creaIndex] = new CellOneLevelCreativesLink(cLevelParution, _session, _session.GenericProductDetailLevel);
                 if (_showInsertions) tab[cLine, insertIndex] = new CellOneLevelInsertionsLink(cLevelParution, _session, _session.GenericProductDetailLevel);
                 if (_showMediaSchedule) tab[cLine, msIndex] = new CellMediaScheduleLink(cLevelParution, _session);
-                if (_showTotal) { tab[cLine, totalIndex] = new CellNumber(); ((CellNumber)tab[cLine, totalIndex]).StringFormat = "{0:max0}"; }
+                if (_showTotal) { tab[cLine, totalIndex] = new CellNumber(); ((CellNumber)tab[cLine, totalIndex]).StringFormat = "{0:max0}"; ((CellNumber)tab[cLine, totalIndex]).AsposeFormat = 3; }
                 for (Int32 i = iFirstDataIndex; i <= tab.DataColumnsNumber; i++)
                 {
                     tab[cLine, i] = nbFactory.Get(null);

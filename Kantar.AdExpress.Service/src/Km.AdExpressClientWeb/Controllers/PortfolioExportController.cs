@@ -199,14 +199,42 @@ namespace Km.AdExpressClientWeb.Controllers
                         SetPercentFormat(sheet.Cells[cellRow, cellCol]);
                         SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
                     }
+                    else if (cell is CellDuration)
+                    {
+                        DateTime dt = new DateTime();
+
+                        double value = ((CellUnit)cell).GetValue();
+
+                        dt = dt.AddSeconds(value);
+
+                        sheet.Cells[cellRow, cellCol].Value = dt.ToShortTimeString();
+                        
+                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                    }
+                    else if (cell is CellDate)
+                    {
+                        //DateTime dt = new DateTime();
+
+                        //double value = ((CellUnit)cell).GetValue();
+
+                        //dt = dt.AddSeconds(value);
+
+                        //sheet.Cells[cellRow, cellCol].Value = dt.ToShortTimeString();
+
+                        //SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                    }
                     else if (cell is CellUnit)
                     {
                         double value = ((CellUnit)cell).GetValue();
                         if (value != 0.0)
                         {
-                            sheet.Cells[cellRow, cellCol].Value = ((CellUnit)cell).GetValue();
+                            sheet.Cells[cellRow, cellCol].Value = value;
 
-                            SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                            if (((CellUnit)cell).AsposeFormat == -1)
+                                SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                            else
+                                SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
+
                             SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
                         }
                     }
@@ -405,6 +433,15 @@ namespace Km.AdExpressClientWeb.Controllers
         //48	Scientific	##0.0E+00
         //49	Text	@
         #endregion
+
+        private void SetAsposeFormat(Aspose.Cells.Cell cell, int asposeFormat)
+        {
+            Style style = cell.GetStyle();
+
+            style.Number = asposeFormat;
+
+            cell.SetStyle(style);
+        }
 
         private void SetDecimalFormat(Aspose.Cells.Cell cell)
         {
