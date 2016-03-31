@@ -219,7 +219,6 @@
                     isVehicleChanged: vehicleChanged
                 };
 
-
                 $.ajax({
                     url: '@Url.Action("InsertionsResult", "Insertions")',
                     contentType: "application/x-www-form-urlencoded",
@@ -487,8 +486,6 @@
         });
 
 
-
-
         //OnChange Vehicle
         function getEventTarget(e) {
             e = e || window.event;
@@ -497,6 +494,7 @@
         $(document).on("click", "#PresentVehicles li a", function () {
             $("#grid").addClass("hide");
             $("#gridLoader").removeClass("hide");
+            $('#idVehicle').val($(this).attr('id'));
             CallInsertionsResult($(this).attr('id'), '', true);
             GetDetailLevelItem($(this).attr('id'));
         });
