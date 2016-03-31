@@ -20,7 +20,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private IWebSessionService _webSessionService;
 
         #region Couleurs
-        
+
         Color HeaderTabBackground = Color.FromArgb(105, 112, 129);
         Color HeaderTabText = Color.White;
         Color HeaderBorderTab = Color.White;
@@ -140,12 +140,12 @@ namespace Km.AdExpressClientWeb.Controllers
             Color borderColor;
 
 
-    int coltmp = columnStart;
+            int coltmp = columnStart;
             foreach (var item in data.HeadersIndexInResultTable)
             {
                 HeaderBase header = item.Value;
 
-                if (header is HeaderMediaSchedule)
+                if (header is HeaderMediaSchedule || header is HeaderCreative)
                     continue;
 
                 if (header.ColSpan > 1)
@@ -156,11 +156,11 @@ namespace Km.AdExpressClientWeb.Controllers
                     //sheet.Cells.Merge(rowStart, coltmp, 1, header.ColSpan);
 
                     sheet.Cells[rowStart, coltmp].Value = header.Label;
-                    
+
                     TextStyle(sheet.Cells[rowStart, coltmp], HeaderTabText, HeaderTabBackground);
                     //BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
-                    
-                    BorderStyle(sheet,range, CellBorderType.Thin, HeaderBorderTab);
+
+                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
                 }
                 else
                 {
@@ -183,11 +183,11 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     var cell = data[idxRow, idxCol];
 
-                    
+
 
                     if (cell is LineStart || cell is LineStop || cell is CellImageLink)
                     {
-                       // if (((LineStart)cell).LineType == LineType.)
+                        // if (((LineStart)cell).LineType == LineType.)
 
                         columnHide = true;
                         break;
@@ -201,27 +201,32 @@ namespace Km.AdExpressClientWeb.Controllers
                     }
                     else if (cell is CellDuration)
                     {
-                        DateTime dt = new DateTime();
-
-                        double value = ((CellUnit)cell).GetValue();
-
-                        dt = dt.AddSeconds(value);
-
-                        sheet.Cells[cellRow, cellCol].Value = dt.ToShortTimeString();
-                        
-                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-                    }
-                    else if (cell is CellDate)
-                    {
                         //DateTime dt = new DateTime();
 
                         //double value = ((CellUnit)cell).GetValue();
 
                         //dt = dt.AddSeconds(value);
 
-                        //sheet.Cells[cellRow, cellCol].Value = dt.ToShortTimeString();
+                        //sheet.Cells[cellRow, cellCol].Value = dt.ToLongTimeString();
 
                         //SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+
+                        double value = ((CellUnit)cell).GetValue();
+
+                        double hours = Math.Floor(value / 3600);
+                        double minutes = Math.Floor((value - (hours * 3600)) / 60);
+                        double secondes = value - hours * 3600 - minutes * 60;
+
+                        sheet.Cells[cellRow, cellCol].Value = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + secondes.ToString("00");
+
+                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                    }
+                    else if (cell is CellDate)
+                    {
+
+                        sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
+                                                
+                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
                     }
                     else if (cell is CellUnit)
                     {
@@ -287,7 +292,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             break;
                     }
 
-                    
+
 
                     TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
                     BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
@@ -332,7 +337,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             sheet.Cells[idxRow, idxCol].SetStyle(style);
         }
-        
+
         private void BorderStyle(Worksheet sheet, Range range, CellBorderType borderLineStyle, Color color)
         {
             //Range range = worksheet.getCells().createRange("A1:F10");
