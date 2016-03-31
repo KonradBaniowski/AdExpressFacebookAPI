@@ -148,7 +148,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 Models.Shared.Tree tree = new Models.Shared.Tree
                 {
-                    Id = item.Id,
+                    Id = 1,
                     LabelId = item.LabelId,
                     AccessType = item.AccessType,
                     UniversLevels = Mapper.Map<List<Models.Shared.UniversLevel>>(item.UniversLevels)
@@ -414,7 +414,12 @@ namespace Km.AdExpressClientWeb.Controllers
                 ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
                 ErrorItemExceeded = GestionWeb.GetWebWord(LanguageConstantes.ItemExceeded, siteLanguage),
                 ErrorMediaSelected = GestionWeb.GetWebWord(LanguageConstantes.MediaSelected, siteLanguage),
-                ErrorNoSupport = GestionWeb.GetWebWord(LanguageConstantes.NoSupport, siteLanguage)
+                ErrorNoSupport = GestionWeb.GetWebWord(LanguageConstantes.NoSupport, siteLanguage),
+                DeleteAll = GestionWeb.GetWebWord(LanguageConstantes.DeleteAllcode, siteLanguage),
+                ErrorOnlyOneItemAllowed = GestionWeb.GetWebWord(LanguageConstantes.ErrorOnlyOneItemAllowed, siteLanguage),
+                ErrorOverLimit = GestionWeb.GetWebWord(LanguageConstantes.ErrorOverLimit, siteLanguage),
+                SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
+                AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage)
             };
             return result;
         }

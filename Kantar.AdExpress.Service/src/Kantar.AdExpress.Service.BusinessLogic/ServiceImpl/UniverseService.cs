@@ -137,7 +137,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     result.Branches.Add(branch);
                 }
                 // Create trees according to the dimension
-                int idTree = 1;
+                int idTree = 0;
                 foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
                 {
                     var maxTreesNbr = (type == AccessType.includes) ? MaxIncludeNbr : MaxExcludeNbr;//(Enum.GetValues(typeof(AccessType)))

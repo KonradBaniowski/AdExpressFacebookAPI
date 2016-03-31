@@ -48,6 +48,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LostWonDescriptionCode = 2198;
         public const long PresentAbsentCode = 2167;
         public const long PresentAbsentDescriptionCode = 2196;
+        public const long DeleteAllcode = 2279;
+        public const long ErrorOnlyOneItemAllowed = 3036;
+        public const long ErrorOverLimit = 2264;//==> only 200items
+        public const long AddConcurrentCode = 3037;
         #endregion
     }
 }

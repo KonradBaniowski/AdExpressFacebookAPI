@@ -185,43 +185,17 @@ function NextStep(nextUrl, dis) {
         bootbox.alert(msg);
         return;
     }
-    var things = [];
-    $('#btnSubmitMarketSelection').off('click');
-    var trees = [];
-    $.each($('.nav.nav-tabs > li a'), function (index, elem) {
-        var itemContainer = $(elem).attr('data-target');
-        var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
-        var UniversLvl = [];
-        $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
-            var idLevel = $(elem).attr('data-level');
-            var UniLvl = [];
-            $.each($(this).find('ul > li'), function (index, elem) {
-                var itemUniver = $(elem).attr('data-id');
-                var universItems = {
-                    Id: itemUniver
-                }
-                UniLvl.push(universItems);
-            });
-            var UnisLvl = {
-                Id: idLevel,
-                UniversItems: UniLvl
-            };
-            UniversLvl.push(UnisLvl);
-        });
-        var stuff = {
-            Id: itemContainer,
-            AccessType: accessType,
-            UniversLevels: UniversLvl
-        };
-        trees.push(stuff);
-    });
+    //var things = [];
+    $('#btnSubmitMarketSelection').off('click');  
+    var selectedMediaSupportTrees = getSelectedMediaSupport();
     var params = {
-        trees: trees,
+        selectedMedia: idList,
+        mediaSupport: selectedMediaSupportTrees,
         nextStep: nextUrl
     };
     var ctrl = $('#Labels_CurrentController').val();
     $.ajax({
-        url: '/' + ctrl + '/SaveMarketSelection',
+        url: '/' + ctrl + '/SaveMediaSelection',
         type: 'POST',
         data: params,
         error: function (data) {
