@@ -23,13 +23,6 @@
             <div id="detailLevelItem" class="col-md-12 bg-orange" style="background-color:black; color:white;"></div>
         </div>
 
-        <form>
-            <input name="ids" id="ids" type="hidden" value="@(Model.paramsUrl[0])" />
-            <input name="zoomDate" id="zoomDate" type="hidden" value="@(Model.paramsUrl[1])" />
-            <input name="idUnivers" id="idUnivers" type="hidden" value="@(Model.paramsUrl[2])" />
-            <input name="moduleId" id="moduleId" type="hidden" value="@(Model.paramsUrl[3])" />
-            <input name="idVehicle" id="idVehicle" type="hidden" value="@(Model.paramsUrl[4])" />
-        </form>
         <div class="col-md-12" style="margin-top:10px;">
             <center>
                 <p id="gridEmpty" class="hide">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
@@ -130,7 +123,7 @@
             avgRowHeight: 60,
             autoGenerateColumns: true
         });
-            
+
 
         var ds;
         var cols;
@@ -143,13 +136,21 @@
             this.L2DetailValue = -1;
             this.L3DetailValue = -1;
         }
+        function paramsUrl() {
+            this.ids = "@(Model.paramsUrl[0])";
+            this.zoomDate = "@(Model.paramsUrl[1])";
+            this.idUnivers = "@(Model.paramsUrl[2])";
+            this.moduleId = "@(Model.paramsUrl[3])";
+            this.idVehicle = "@(Model.paramsUrl[4])";
+        }
 
         function UserFilter() {
             this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
+            this.paramsUrl = new paramsUrl();
+            this.isVehicleChanged = true;
         }
 
         var userFilter = new UserFilter();
-
 
         var renderGrid = function (success, error) {
             if (success) {
@@ -209,15 +210,15 @@
             }
         }
 
-        function CallInsertionsResult(idV, zoomdt, vehicleChanged) {
+        function CallInsertionsResult() {
             $("#gridEmpty").addClass("hide");
             var parameters = {
-                ids: $('#ids').val(),
-                zoomDate: zoomdt,
-                idUnivers: $('#idUnivers').val(),
-                moduleId: $('#moduleId').val(),
-                idVehicle: idV,
-                isVehicleChanged: vehicleChanged
+                ids: userFilter.paramsUrl.ids,
+                zoomDate: userFilter.paramsUrl.zoomDate,
+                idUnivers: userFilter.paramsUrl.idUnivers,
+                moduleId: userFilter.paramsUrl.moduleId,
+                idVehicle: userFilter.paramsUrl.idVehicle,
+                isVehicleChanged: userFilter.isVehicleChanged
             };
 
             $.ajax({
@@ -269,9 +270,9 @@
         function CallGetPresentVehicles() {
 
             var parameters = {
-                ids: $('#ids').val(),
-                idUnivers: $('#idUnivers').val(),
-                moduleId: $('#moduleId').val(),
+                ids: userFilter.paramsUrl.ids,
+                moduleId: userFilter.paramsUrl.moduleId,
+                idUnivers: userFilter.paramsUrl.idUnivers,
             };
 
             $.ajax({
@@ -288,8 +289,8 @@
                         var data = JSON.parse(response);
                         var strHTML = "";
                         var idV = data[0][0];
-                        if (!(0 === $('#idVehicle').val()) && $('#idVehicle').val())
-                            idV = $('#idVehicle').val();
+                        if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
+                            idV = userFilter.paramsUrl.idVehicle;
 
                         $.each(data, function (i, item) {
                             if (idV == item[i]) {
@@ -299,10 +300,12 @@
                             }
                         });
                         $('#PresentVehicles').html(strHTML);
-                        $('#idVehicle').val(idV.toString());
+                        userFilter.paramsUrl.idVehicle = idV.toString();
+                        userFilter.isVehicleChanged = true;
+                        userFilter.paramsUrl.zoomDate = "";
 
-                        GetDetailLevelItem(idV);
-                        CallInsertionsResult(idV, '', true);
+                        GetDetailLevelItem();
+                        CallInsertionsResult();
 
                         $("#HeaderLoader").addClass("hide");
                         $("#HeaderElmt").removeClass("hide");
@@ -313,9 +316,9 @@
         }
 
 
-        function GetSubPeriodSelection(zoomDateParam) {
+        function GetSubPeriodSelection() {
             var params = {
-                zoomDate: zoomDateParam
+                zoomDate: userFilter.paramsUrl.zoomDate
             };
             $.ajax({
                 url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
@@ -336,8 +339,9 @@
                             $(this).prop('disabled', true);
                             $("#grid").addClass("hide");
                             $("#gridLoader").removeClass("hide");
-                            $("#zoomDate").val($(this).attr("period"));
-                            CallInsertionsResult($('#idVehicle').val(), $(this).attr("period"), false);
+                            userFilter.paramsUrl.zoomDate = $(this).attr("period");
+                            userFilter.isVehicleChange = false;
+                            CallInsertionsResult();
                         });
                         $(".sub-period-btn").on('mouseenter', function (e) {
                             previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
@@ -351,9 +355,9 @@
             });
         }
 
-        function GetDetailLevelItem(idV) {
+        function GetDetailLevelItem() {
             var params = {
-                idVehicle: idV
+                idVehicle: userFilter.paramsUrl.idVehicle
             };
             $.ajax({
                 url: '@Url.Action("GetDetailLevel", "Insertions")',
@@ -373,8 +377,23 @@
             });
         }
 
-        function AutoPlayCreativeModal() {
+        function CallSetDetailLvl() {
+            $.ajax({
+                url: '@Url.Action("SetDetailLevel", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: userFilter,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    userFilter.isVehicleChanged = false;
+                    CallInsertionsResult();
+                }
+            });
+        }
 
+        function AutoPlayCreativeModal() {
             $("#creativeStream").attr('src', '');
 
             $("#creativeModal").on('shown.bs.modal', function (event) {
@@ -436,7 +455,7 @@
                     }
                 } else {
                     $(this).attr("id", "visu");
-                    $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" /></center>')
+                    $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
                 }
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
@@ -447,25 +466,8 @@
             });
         }
 
-        function CallSetDetailLvl(zoomDate) {
-            $.ajax({
-                url: '@Url.Action("SetDetailLevel", "Insertions")',
-                contentType: "application/x-www-form-urlencoded",
-                type: "POST",
-                datatype: "json",
-                data: userFilter,
-                error: function (xmlHttpRequest, errorText, thrownError) {
-                },
-                success: function (data) {
-                    CallInsertionsResult($('#idVehicle').val(), zoomDate,false);
-                }
-            });
-        }
-
-
-
         CallGetPresentVehicles();
-        GetSubPeriodSelection('');
+        GetSubPeriodSelection();
         AutoPlayCreativeModal();
 
 
@@ -494,11 +496,12 @@
         $(document).on("click", "#PresentVehicles li a", function () {
             $("#grid").addClass("hide");
             $("#gridLoader").removeClass("hide");
-            $('#idVehicle').val($(this).attr('id'));
-            CallInsertionsResult($(this).attr('id'), '', true);
-            GetDetailLevelItem($(this).attr('id'));
-        });
+            userFilter.isVehicleChanged = true;
+            userFilter.paramsUrl.idVehicle = $(this).attr('id');
+            GetDetailLevelItem();
+            CallInsertionsResult();
 
+        });
 
         function ResetLnLevel(lx, ly) {
             if ($(lx).val() == $(ly).val())
@@ -531,7 +534,7 @@
         $(document).on("click", "#submitLvl", function (e) {
             $("#grid").addClass("hide");
             $("#gridLoader").removeClass("hide");
-            CallSetDetailLvl($("#zoomDate").val());
+            CallSetDetailLvl();
         });
 
     </script>
