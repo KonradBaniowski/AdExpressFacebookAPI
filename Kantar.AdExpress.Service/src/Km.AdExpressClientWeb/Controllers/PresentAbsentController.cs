@@ -290,7 +290,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 }
                 else
                 {
-                    jsonModel = Json(new { response.ErrorMessage });
+                    jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
                 }
             }
             return jsonModel;
@@ -394,7 +394,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var result = new Labels
             {
-               
+                CurrentController = _controller,
                 KeyWordLabel = GestionWeb.GetWebWord(LanguageConstantes.KeyWordLabelCode, siteLanguage),
                 KeyWordDescription = GestionWeb.GetWebWord(LanguageConstantes.KeyWordDescriptionCode, siteLanguage),
                 ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgCode, siteLanguage),

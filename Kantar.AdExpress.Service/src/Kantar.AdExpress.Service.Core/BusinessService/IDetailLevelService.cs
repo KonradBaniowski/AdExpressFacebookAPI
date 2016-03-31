@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.Domain;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     public interface IDetailLevelService
     {
         List<DetailLevel> GetDetailLevelItem(string idWebSession, int vehicleId);
+
+        void SetDetailLevelItem(string idWebSession, UserFilter userFilter);
     }
 }

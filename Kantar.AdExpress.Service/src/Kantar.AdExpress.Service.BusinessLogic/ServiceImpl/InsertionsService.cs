@@ -50,7 +50,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 		/// Liste des colonnes personnalisées
 		/// </summary>
 		private List<GenericColumnItemInformation> _columnItemList = null;
-        GenericColumnItemInformation _genericColumnItemInformation = null;
+
         /// <summary>
         /// Indique si l'utilisateur à le droit de lire les créations
         /// </summary>
@@ -62,13 +62,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private bool _hasCreationDownloadRights = false;
 
 
-        public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
+        public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged = false)
         {
             InsertionResponse insertionResponse = new InsertionResponse();
             ArrayList levels = new ArrayList();
             try
             {
-
                 _customerWebSession = (WebSession)WebSession.Load(idWebSession);
               
                 IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
@@ -79,7 +78,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return insertionResponse;
                 }
 
-                //TODO : TROUVER OU IL EST CHARGE
                 if (idVehicle.HasValue)
                 {
                     insertionResponse.IdVehicle = idVehicle.Value;
@@ -155,13 +153,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 _columnItemList = ColumnRight(_columnItemList);
 
-                #region Initialisation de la liste des niveaux de détail
-                _allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(insertionResponse.IdVehicle);
-                _defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(insertionResponse.IdVehicle);
-                #endregion
+                if (isVehicleChanged)
+                {
+                    foreach (GenericDetailLevel detailItem in _defaultDetailItemList)
+                        levels = detailItem.LevelIds;
 
-                foreach (GenericDetailLevel detailItem in _defaultDetailItemList)
-                    levels = detailItem.LevelIds;
+                    _customerWebSession.DetailLevel = new GenericDetailLevel(levels, WebCst.GenericDetailLevel.SelectedFrom.defaultLevels);
+                }
                 List<Int64> genericColumnList = new List<Int64>();
                 foreach (GenericColumnItemInformation Column in _columnItemList)
                 {                   
@@ -169,7 +167,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                        // _columnItemSelectedList.Add(Column);//TODO: A checker                   
                 }
                 _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
-                _customerWebSession.DetailLevel = new GenericDetailLevel(levels, WebCst.GenericDetailLevel.SelectedFrom.defaultLevels);
 
                 // _customerWebSession.Save();
 

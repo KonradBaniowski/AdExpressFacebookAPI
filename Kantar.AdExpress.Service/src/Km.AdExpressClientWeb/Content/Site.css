@@ -1,23 +1,4 @@
-﻿/*#media-accordion.panel-group > .panel {
-    background-color: transparent;
-    border-color: rgba(0,0,0,0.4);
-}
-
-#media-accordion.panel-group .panel > .panel-heading {
-    background-color: rgba(0,0,0,0.4);
-    color: white;
-}*/
-
-.container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-
-
-
+﻿
 .bb-alert {
     position: fixed;
     bottom: 25%;

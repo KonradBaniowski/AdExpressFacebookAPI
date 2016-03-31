@@ -387,6 +387,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var result = new Labels
             {
+                CurrentController = "Portfolio",
                 KeyWordLabel = GestionWeb.GetWebWord(LanguageConstantes.KeyWordLabelCode, siteLanguage),
                 KeyWordDescription = GestionWeb.GetWebWord(LanguageConstantes.KeyWordDescriptionCode, siteLanguage),
                 ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgCode, siteLanguage),

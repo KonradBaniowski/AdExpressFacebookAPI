@@ -1,7 +1,4 @@
-﻿$(function () {
-    console.log('load add-tree presents-absents');
-
-    $('#add-tree').on('click', function () {
+﻿ $('#add-tree').on('click', function () {
         //Check si ya des elem a lock
         var nbElemToLock = $('.tab-content .items-famille > li').length;
         if (nbElemToLock >= 1) {
@@ -67,4 +64,3 @@
             bootbox.alert('rien a locker');
         }
     })
-});

@@ -15,7 +15,7 @@
                 <div class="btn-group btn-group-margin" role="group" aria-label="...">
                     @foreach (var item in Model.Items)
                     {
-                        if (item.IsSelected)
+                        if (@item.IsSelected)
                         {
                             <button type="button" disabled class="btn btn-default-sub-period sub-period-btn" period="@item.Period" periodlabel="@item.PeriodLabel">@item.Label</button>
                         }
@@ -24,6 +24,7 @@
                             <button type="button" class="btn btn-default sub-period-btn" period="@item.Period" periodlabel="@item.PeriodLabel">@item.Label</button>
                         }
                     }
+                    <button id="allSubPeriod" style="width:auto !important;" type="button" class="btn btn-default sub-period-btn hidden" period="" periodlabel="@(Model.Items.First().PeriodLabel) - @(Model.Items.Last().PeriodLabel)">Tous</button>
                 </div>
             </div>
         </div>

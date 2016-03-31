@@ -8,7 +8,7 @@ namespace Km.AdExpressClientWeb
         public static void RegisterBundles(BundleCollection bundles)
         {
             //BundleTable.EnableOptimizations = true;
-
+            #region jQuery & Bootstrap bundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js"));
@@ -16,32 +16,19 @@ namespace Km.AdExpressClientWeb
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/media-selection").Include(
-                        "~/Scripts/universe/listbox.js",
-                        "~/Scripts/media-selection/media.js"));
-            bundles.Add(new ScriptBundle("~/bundles/media-selection-single").Include(
-                        "~/Scripts/universe/listbox.js",
-                        "~/Scripts/media-selection/media-single.js",
-                        "~/Scripts/media-selection/media-support-single"));
-
-            bundles.Add(new ScriptBundle("~/bundles/media-present-absent").Include(
-                        "~/Scripts/universe/listbox.js",
-                        "~/Scripts/media-selection/media-present-absent.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/ajax").Include(
-                        "~/Scripts/app/layout.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/media-compare-group").Include(
-                        "~/Scripts/media-selection/add-tree.js"));
-
-
-            bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
-                        "~/Scripts/module-selection/module-selection.js"));
+                        "~/Scripts/app/layout.js"));                    
+            
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
+
+            #endregion
+
+            bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
+                  "~/Scripts/module-selection/module-selection.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/bootstrap.js",
@@ -54,15 +41,7 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/bootbox.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/period-selector").Include(
-                      "~/Scripts/period-selector.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/universe").Include(
-                       "~/Scripts/universe/listbox.js",
-                       "~/Scripts/universe/universe.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/universe-open").Include(
-                       "~/Scripts/universe/listbox.js",
-                       "~/Scripts/universe/universe-open.js"));
+                      "~/Scripts/period-selector.js"));            
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -77,6 +56,69 @@ namespace Km.AdExpressClientWeb
                       "~/Content/options-control.css",
                       "~/Content/spinner.css"));
 
+            #region Javascript for Market & Media
+            #region Plan Media
+            bundles.Add(new ScriptBundle("~/bundles/planmedia-market").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/market/market-required.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/universe/universe-market.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/planmedia-media").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/market/market-optional.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/universe/universe-media.js",
+                        "~/Scripts/media/media-media.js"));
+            #endregion
+            #region Portfolio
+            bundles.Add(new ScriptBundle("~/bundles/portfolio-market").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/market/market-unrequired.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/universe/universe-market.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/portfolio-media").Include(
+                        "~/Scripts/universe/listbox.js",                        
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/media/media-portfolio.js",
+                        "~/Scripts/universe/universe-media.js"));
+            #endregion
+            #region LostWon
+            bundles.Add(new ScriptBundle("~/bundles/lostWon-market").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/market/market-unrequired.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/universe/universe-market.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/lostwon-media").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/media/media-lost-won.js",
+                        "~/Scripts/universe/universe-media.js"));
+            #endregion
+            #region PresentAbsent
+            bundles.Add(new ScriptBundle("~/bundles/presentabsent-market").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/market/market-unrequired.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/universe/universe-market.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/presentabsent-media").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/media/media-present-absent.js",
+                        "~/Scripts/media/add-tree.js",
+                        "~/Scripts/universe/universe-media.js"));
+            #endregion
+            #endregion
         }
     }
 }

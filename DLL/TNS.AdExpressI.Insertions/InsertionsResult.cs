@@ -1858,7 +1858,7 @@ namespace TNS.AdExpressI.Insertions
         public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
             GridResult gridResult = new GridResult();
-
+            gridResult.HasData = false;
             ResultTable _data = GetInsertions(vehicle, fromDate, toDate, filters, universId, zoomDate);
 
             if (_data != null)
@@ -1883,13 +1883,13 @@ namespace TNS.AdExpressI.Insertions
                 {
                     for (j = 0; j < _data.NewHeaders.Root.Count; j++)
                     {
-                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "200px" });
+                        columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "*" });
                         schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
                     }
                 }
                 else
                 {
-                    columns.Add(new { headerText = "", key = "Visu", dataType = "string" });
+                    columns.Add(new { headerText = "", key = "Visu", dataType = "string", width = "*" });
                     schemaFields.Add(new { name = "Visu" });
                 }
 
@@ -1925,6 +1925,21 @@ namespace TNS.AdExpressI.Insertions
             }
 
             return gridResult;
+        }
+
+        public GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        {
+            GridResult gridResult = new GridResult();
+
+            return gridResult;
+         
+        }
+
+        public GridResult GetMSCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        {
+          
+
+            throw new NotImplementedException();
         }
         #endregion
 

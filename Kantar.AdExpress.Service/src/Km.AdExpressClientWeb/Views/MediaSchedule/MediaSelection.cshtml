@@ -10,6 +10,8 @@
     @Html.HiddenFor(e => e.Multiple)
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("UserUniversGroups", Model.UniversGroups)
+    @Html.HiddenFor(e => e.Labels.ErrorMessageLimitKeyword)
+    @Html.HiddenFor(e => e.Labels.ErrorMediaSelected)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
@@ -136,7 +138,7 @@
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                         <div class="btn-marche text-center">
-                                            <a class="btn btn-green2 btn-circle btn-xl">
+                                            <a id="move-item" class="btn btn-green2 btn-circle btn-xl">
                                                 <i class="fa fa-arrow-right"></i>
                                             </a>
                                         </div>
@@ -217,7 +219,7 @@
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
                                 <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <a data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">Enregistrer l'univers <i class="fa fa-bookmark-o"></i></a>                                   
+                                    <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">Enregistrer l'univers <i class="fa fa-bookmark-o"></i></a>                                   
 
                                 </div>
                             </div>
@@ -516,5 +518,5 @@
             });
         });
     </script>
-    @Scripts.Render("~/bundles/media-selection")
+    @Scripts.Render("~/bundles/planmedia-media")
 }

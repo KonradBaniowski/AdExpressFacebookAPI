@@ -1,5 +1,5 @@
 ﻿@model List<string>
-@using TNS.AdExpress.Domain.Translation;
+
 @{
     ViewBag.Title = "Insertions";
     Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="container-full">
-        <div class="col-md-12 panel-heading" style="background-color:black; color:white;">
+        <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
             <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; Insertions</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
@@ -65,12 +65,12 @@
     <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="Visuel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
                     <h4 class="modal-title" id="myModalLabel">Visuel</h4>
                 </div>
                 <div class="modal-body">
-                    <img src="" id="imagepreview" style="width: 400px; height: 264px;">
+                    <center><img src="" id="imagepreview"></center>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
 
     <script id="colSpotTmpl" type="text/template">
         {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
-            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}">Lire<i class='glyphicons glyphicons-play'></i></a>
+            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa fa-play'></i></a>
         {{else}}
             ${Spot}
         {{/if}}
@@ -95,11 +95,9 @@
         {{if ${Visu}.startsWith('[') && ${Visu}.endsWith(']') }}
             <!-- Slider -->
             <div class="row">
-                <div id="visuCarou" datavisu="${Visu}" class="carousel slide col-md-4" style="margin-bottom:10px;" >
-                    <!-- Wrapper for slides -->
+                <div id="visuCarou" datavisu="${Visu}" class="carousel slide col-md-3" style="margin-bottom:10px;" >
                     <div class="carousel-inner" role="listbox"></div>
 
-                    <!-- Left and right controls -->
                     <a class="left carousel-control">
                         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                         <span class="sr-only">Precedent</span>
@@ -117,7 +115,6 @@
     </script>
     <script>
         if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
-        $(function () {
 
             //GESTION DES ACTIVES CSS
             //$(".btn-group > .btn").click(function () {
@@ -132,13 +129,26 @@
                 avgRowHeight: 60,
                 autoGenerateColumns: true
             });
-
+            
 
             var ds;
             var cols;
             var colsFixed;
             var needFixedColumns = false;
             var periodType = "Mois";
+
+            function GenericDetailLevelFilter() {
+                this.L1DetailValue = -1;
+                this.L2DetailValue = -1;
+                this.L3DetailValue = -1;
+            }
+
+            function UserFilter() {
+                this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
+            }
+
+            var userFilter = new UserFilter();
+
 
             var renderGrid = function (success, error) {
                 if (success) {
@@ -198,16 +208,16 @@
                 }
             }
 
-            function CallInsertionsResult(idV,zoomdt) {
+            function CallInsertionsResult(idV, zoomdt, vehicleChanged) {
                 $("#gridEmpty").addClass("hide");
                 var parameters = {
                     ids: $('#ids').val(),
                     zoomDate: zoomdt,
                     idUnivers: $('#idUnivers').val(),
                     moduleId: $('#moduleId').val(),
-                    idVehicle: idV
+                    idVehicle: idV,
+                    isVehicleChanged: vehicleChanged
                 };
-
 
                 $.ajax({
                     url: '@Url.Action("InsertionsResult", "Insertions")',
@@ -276,27 +286,26 @@
                         if (response != null) {
                             var data = JSON.parse(response);
                             var strHTML = "";
-                            var idV;
-                            $.each(data, function (i, item) {
-                                if (!$('#idVehicle').val() || 0 === $('#idVehicle').val())
-                                    idV = item[0];
-                                else
-                                    idV = $('#idVehicle').val();
+                            var idV = data[0][0];
+                            if (!(0 === $('#idVehicle').val()) && $('#idVehicle').val())
+                                idV = $('#idVehicle').val();
 
+                            $.each(data, function (i, item) {
                                 if (idV == item[i]) {
                                     strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
                                 } else {
                                     strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
                                 }
-                                $('#PresentVehicles').append(strHTML);
                             });
+                            $('#PresentVehicles').html(strHTML);
+                            $('#idVehicle').val(idV.toString());
 
                             $("#HeaderLoader").addClass("hide");
                             $("#HeaderElmt").removeClass("hide");
-                            
-                            $('#idVehicle').val(idV.toString());
                             $("#gridLoader").removeClass("hide");
-                            CallInsertionsResult(idV, '');
+
+                            CallInsertionsResult(idV, '', true);
+                            GetDetailLevelItem(idV);
                         }
                     }
                 });
@@ -317,6 +326,7 @@
                     success: function (data) {
                         if (data != null) {
                             $('#subPeriodSelection').html(data);
+                            $('#allSubPeriod').removeClass("hidden");
                             $("#leave-zoom").addClass("hide");
                             $(".sub-period-btn").on('click', function (e) {
                                 $(".btn-default-sub-period").prop('disabled', false);
@@ -325,7 +335,7 @@
                                 $(this).prop('disabled', true);
                                 $("#grid").addClass("hide");
                                 $("#gridLoader").removeClass("hide");
-                                CallInsertionsResult($('#idVehicle').val(),$(this).attr("period"));
+                                CallInsertionsResult($('#idVehicle').val(),$(this).attr("period"),false);
                             });
                             $(".sub-period-btn").on('mouseenter', function (e) {
                                 previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
@@ -437,34 +447,91 @@
                 });
             }
 
-            //** Important charge les images au fur et a mesure que le teableau s'affiche
-            $("#grid").on("igtreegridrowsrendered", function (evt, ui) {
-                AutoPlayVisu();
-
-                $(".carousel").each(function (index) {
-                    $("#visuCarou" + index.toString()).carousel("pause");
-                    $("#visuCarou" + index.toString()).find('.left').click(function () {
-                        $("#visuCarou" + index.toString()).carousel("prev");
-                    });
-                    $("#visuCarou" + index.toString()).find('.right').click(function () {
-                        $("#visuCarou" + index.toString()).carousel("next");
-                    });
+            function CallSetDetailLvl() {
+                $.ajax({
+                    url: '@Url.Action("SetDetailLevel", "Insertions")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: userFilter,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        CallInsertionsResult($('#idVehicle').val(), '',false);
+                    }
                 });
+            }
 
+
+
+        CallGetPresentVehicles();
+        GetSubPeriodSelection('');
+        AutoPlayCreativeModal();
+
+
+        //** Important charge les images au fur et a mesure que le teableau s'affiche
+        $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
+            AutoPlayVisu();
+
+            $(".carousel").each(function (index) {
+                $("#visuCarou" + index.toString()).carousel("pause");
+                $("#visuCarou" + index.toString()).find('.left').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("prev");
+                });
+                $("#visuCarou" + index.toString()).find('.right').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("next");
+                });
             });
 
-            CallGetPresentVehicles();
-            GetSubPeriodSelection('');
-            //TODO Modifier le parametre IdVehicle (ici 2) passe en dure
-            GetDetailLevelItem(2);
-            AutoPlayCreativeModal();
+        });
 
 
-            $("#pop").on("click", function () {
-                $('#imagepreview').attr('src', $(this).attr('src'));
-                $('#imagemodal').modal('show');
-            });
+        //OnChange Vehicle
+        function getEventTarget(e) {
+            e = e || window.event;
+            return e.target || e.srcElement;
+        }
+        $(document).on("click", "#PresentVehicles li a", function () {
+            $("#grid").addClass("hide");
+            $("#gridLoader").removeClass("hide");
+            $('#idVehicle').val($(this).attr('id'));
+            CallInsertionsResult($(this).attr('id'), '', true);
+            GetDetailLevelItem($(this).attr('id'));
+        });
 
+
+        function ResetLnLevel(lx, ly) {
+            if ($(lx).val() == $(ly).val())
+                $(ly).val('-1');
+        }
+
+        //Zoom visuel
+        $(document).on("click", "#pop", function () {
+            $('#imagepreview').attr('src', $(this).attr('src'));
+            $('#imagemodal').modal('show');
+        });
+
+        $(document).on("change", "#l1Detail", function (e) {
+            userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+            ResetLnLevel("#l1Detail", "#l2Detail");
+            ResetLnLevel("#l1Detail", "#l3Detail");
+        });
+        $(document).on("change", "#l2Detail", function (e) {
+            userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+            ResetLnLevel("#l2Detail", "#l1Detail");
+            ResetLnLevel("#l2Detail", "#l3Detail");
+        });
+        $(document).on("change", "#l3Detail", function (e) {
+            userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
+            ResetLnLevel("#l3Detail", "#l1Detail");
+            ResetLnLevel("#l3Detail", "#l2Detail");
+        });
+
+        //Changement de Level
+        $(document).on("click", "#submitLvl", function (e) {
+            $("#grid").addClass("hide");
+            $("#gridLoader").removeClass("hide");
+            CallSetDetailLvl();
         });
 
     </script>

@@ -176,6 +176,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CreativeController.cs" />
     <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
@@ -527,6 +528,7 @@
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\OLD_kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
@@ -1427,6 +1429,7 @@
     <EmbeddedResource Include="Aspose.Cells.lic" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\component-selectable\common-actions.js" />
     <Content Include="Scripts\datepicker-fr.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1437,12 +1440,12 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\media-selection\add-tree.js" />
-    <Content Include="Scripts\media-selection\media-present-absent.js" />
-    <Content Include="Scripts\media-selection\media-support-multiple.js" />
-    <Content Include="Scripts\media-selection\media-single.js" />
-    <Content Include="Scripts\media-selection\media-support-single.js" />
-    <Content Include="Scripts\media-selection\media.js" />
+    <Content Include="Scripts\market\market-unrequired.js" />
+    <Content Include="Scripts\media\add-tree.js" />
+    <Content Include="Scripts\media\media-lost-won.js" />
+    <Content Include="Scripts\media\media-media.js" />
+    <Content Include="Scripts\media\media-portfolio.js" />
+    <Content Include="Scripts\media\media-present-absent.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\module-selection\module-selection.js" />
     <Content Include="Scripts\moment-with-locales.js" />
@@ -1455,8 +1458,11 @@
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
     <Content Include="Scripts\universe\listbox.js" />
-    <Content Include="Scripts\universe\universe-open.js" />
-    <Content Include="Scripts\universe\universe.js" />
+    <Content Include="Scripts\universe\universe-loading.js" />
+    <Content Include="Scripts\universe\universe-market.js" />
+    <Content Include="Scripts\universe\universe-media.js" />
+    <Content Include="Scripts\market\market-optional.js" />
+    <Content Include="Scripts\market\market-required.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1518,6 +1524,7 @@
     <Content Include="Views\CustomerArea\Home.cshtml" />
     <Content Include="Views\Insertions\_DetailLevel.cshtml" />
     <Content Include="Views\MediaSchedule\_MSCreativesResult.cshtml" />
+    <Content Include="Views\Creative\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,6 +7,7 @@ namespace Km.AdExpressClientWeb.Models
 {
     public class Labels
     {
+        public string CurrentController { get; set; }
         public string KeyWordLabel { get; set; }// 972
         public string KeyWordDescription { get; set; }//phrase under search input 2287
         public string ErrorMessage { get; set; }//930

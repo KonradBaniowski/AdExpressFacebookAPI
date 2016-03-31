@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Models.Insertions;
 using Newtonsoft.Json;
 using System;
@@ -35,26 +36,36 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         [HttpPost]
-        public JsonResult InsertionsResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
+        public JsonResult InsertionsResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged)
         {
             string jsonData = "";
 
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle);
+            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged);
 
-            if (!reponse.GridResult.HasData)
-                return null;
-
-            if (reponse.Message == null)
+            try
             {
-                jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
-                JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
-                return jsonModel;
-            }
-            return null;
+                if (!reponse.GridResult.HasData)
+                    return null;
 
+                if (reponse.Message == null)
+                {
+                    jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
+                    JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+                    jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                    return jsonModel;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+            return null;
         }
 
 
@@ -92,6 +103,14 @@ namespace Km.AdExpressClientWeb.Controllers
             var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle);
 
             return PartialView("_DetailLevel", detailLevel);
+        }
+
+        public void SetDetailLevel(UserFilter userFilter)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            _detailLevelService.SetDetailLevelItem(idWebSession, userFilter);
         }
 
     }
