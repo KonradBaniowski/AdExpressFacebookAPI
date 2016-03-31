@@ -11,6 +11,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public Int64 Id { get; set; }
 
+        public string SessionId { get; set; }
+
         public VehicleInformation Vehicle { get; set; }
 
         public Int64 NbVisuals { get; set; }
