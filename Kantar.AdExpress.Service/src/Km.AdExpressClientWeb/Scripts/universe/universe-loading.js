@@ -57,7 +57,7 @@ $(document).on('change', '#ddlGroup', function (event) {
 
 $(document).on('click', '#btnSaveUnivers', function (event) {
     event.preventDefault();
-       var dimension = $('#Dimension').val();
+    var dimension = $('#Dimension').val();
     var groupId = $('#ddlGroup').val();
     var universId = $('#ddlUnivers').val();
     var name = $('#universName').val();
@@ -112,7 +112,7 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
             $('#saveunivers').modal('hide');
             $.ajax({
                 url: '/Universe/LoadUserUniversGroups',
-                type: 'GET',
+                type: 'POST',
                 data: params,
                 error: function (data) {
                     bootbox.alert(data);
@@ -145,7 +145,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
             var trees = response.Trees;
             var medias = response.UniversMediaIds;
             $.each(trees, function (index, tree) {
-                var id = tree.Id + 1;
+                var id = tree.Id;
                 var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
                 $.each($(tree.UniversLevels), function (index, uniLvl) {
                     console.log(uniLvl);
@@ -173,6 +173,12 @@ function SetUniversItems(data, panel) {
             item.val(data.UniversItems[i].Id);
             item.attr('data-id', data.UniversItems[i].Id)
             item.text(data.UniversItems[i].Label);
+            var buttonSupp = $('<button/>');
+            buttonSupp.addClass('pull-right');
+            var icon = $('<i/>');
+            icon.addClass('fa fa-times-circle black text-base');
+            buttonSupp.append(icon);
+            item.append(buttonSupp);
             item.appendTo(panel);
         }
     }

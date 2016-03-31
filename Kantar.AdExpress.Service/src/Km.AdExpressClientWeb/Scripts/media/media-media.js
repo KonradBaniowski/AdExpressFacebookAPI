@@ -1,5 +1,5 @@
 ﻿//VALIDER TODO
-
+var idMedias = [];
 //FIL D ARRIANE
 $('#Market').on('click', function (e) {
     e.preventDefault();
@@ -22,28 +22,7 @@ $('#Results').on('click', function (e) {
     NextStep(nextUrl, dis)
 });
 
-
-function validate() {
-    var message = "";
-    var idMedias = [];
-    if ($('.tuile-medias-active').length > 0) {
-        $.each($('.tuile-medias-active'), function (index, value) {
-            idMedias.push($(value).attr('data-attr-id'));
-        });
-    }
-    if (idMedia.length == 0)
-        message = "empty selection";
-    return message;
-}
-
-function NextStep(nextUrl, dis) {
-    var msg = validate();
-    if (msg) {
-        bootbox.alert(msg);
-        return;
-    }
-    var things = [];
-    $('#btnSubmitMarketSelection').off('click');
+function getSelectedMediaSupport() {
     var trees = [];
     $.each($('.nav.nav-tabs > li a'), function (index, elem) {
         var itemContainer = $(elem).attr('data-target');
@@ -73,17 +52,40 @@ function NextStep(nextUrl, dis) {
         };
         trees.push(stuff);
     });
+    return trees;
+}
+function validate() {
+    var message = "";
+    idMedias = [];
+    if ($('.tuile-medias-active').length > 0) {
+        $.each($('.tuile-medias-active'), function (index, value) {
+            idMedias.push($(value).attr('data-attr-id'));
+        });
+    }
+    if (idMedias.length == 0)
+        message = $('#Labels_ErrorMediaSelected');
+    return message;
+}
+
+function NextStep(nextUrl, dis) {
+    var msg = validate();
+    if (msg) {
+        bootbox.alert(msg);
+        return;
+    }
+    $('#btnSubmitMarketSelection').off('click');
+   
+    var selectedMediaSupportTrees = getSelectedMediaSupport();
     var params = {
-        trees: trees,
+        selectedMedia: idMedias,
+        mediaSupport: selectedMediaSupportTrees,
         nextStep: nextUrl
     };
-
     $.ajax({
-        url: '/MediaSchedule/SaveMarketSelection',
+        url: '/MediaSchedule/SaveMediaSelection',
         type: 'POST',
         data: params,
         error: function (data) {
-            spinner.stop();
             bootbox.alert(data.ErrorMessage);
         },
         success: function (data) {

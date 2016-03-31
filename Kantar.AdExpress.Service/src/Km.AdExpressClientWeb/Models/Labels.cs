@@ -26,11 +26,16 @@ namespace Km.AdExpressClientWeb.Models
         public string ExcludedElements { get; set; }
         public string Results { get; set; }
         public string Refine { get; set; }
-        public string ErrorMessageLimitKeyword { get; set; }
+        public string ErrorMessageLimitKeyword { get; set; }//1370
         public string ErrorMessageLimitUniverses { get; set; }
         public string ErrorMininumInclude { get; set; }
         public string ErrorMediaSelected { get; set; }
         public string ErrorNoSupport { get; set; }
         public string ErrorItemExceeded { get; set; }
+        public string DeleteAll { get; set; }// 2279
+        public string ErrorOnlyOneItemAllowed { get; set; }//3036
+        public string ErrorOverLimit { get; set; }//w2264==> only 200items
+        public string SaveUnivers { get; set; }//769
+        public string AddConcurrent { get; set;}//3037
     }
 }

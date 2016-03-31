@@ -243,7 +243,7 @@ namespace TNS.AdExpressI.Portofolio
             ResultTable resultTable = GetResultTable();
             GridResult gridResult = new GridResult();
             string mediaSchedulePath = "/MediaSchedule/Index";
-            int tableWidth = 250;
+            int tableWidth = 0;
            
             if (resultTable != null)
             {
@@ -281,7 +281,7 @@ namespace TNS.AdExpressI.Portofolio
                                 colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
                                 groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
                                 schemaFields.Add(new { name = colKey });
-                                tableWidth = +250;
+                                tableWidth = tableWidth + 150;
                             }
                             colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", group = groups });
@@ -293,7 +293,7 @@ namespace TNS.AdExpressI.Portofolio
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
                             schemaFields.Add(new { name = colKey });
                             if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
-                            tableWidth =+ 250;
+                            tableWidth = tableWidth + 150;
                         }
 
                     }

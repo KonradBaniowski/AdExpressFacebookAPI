@@ -1858,7 +1858,7 @@ namespace TNS.AdExpressI.Insertions
         public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
             GridResult gridResult = new GridResult();
-
+            gridResult.HasData = false;
             ResultTable _data = GetInsertions(vehicle, fromDate, toDate, filters, universId, zoomDate);
 
             if (_data != null)

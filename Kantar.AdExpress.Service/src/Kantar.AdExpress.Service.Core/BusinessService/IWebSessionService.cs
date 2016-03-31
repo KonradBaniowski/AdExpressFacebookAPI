@@ -8,7 +8,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     {
         WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool mediaSupportRequired);
 
-        WebSessionResponse SaveMarketSelection(string webSessionId, List<Tree> trees, Dimension dimension, Security security);
+        WebSessionResponse SaveMarketSelection(string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool required=false);
 
         void SaveCurrentModule(string webSessionId, int moduleId);
     }

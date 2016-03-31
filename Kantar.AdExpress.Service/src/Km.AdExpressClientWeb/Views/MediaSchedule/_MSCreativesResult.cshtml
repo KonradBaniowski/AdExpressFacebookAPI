@@ -4,6 +4,8 @@
     var columnWidth = 0;
     Int64 nbVisuals = 1;
     string modalHref = "";
+    string creativeIcon = "";
+    string modalCreative = "";
 }
 
 <div class="row">
@@ -14,6 +16,11 @@
                 <div class="font-normal text-primary-lt">Détails des versions de la presse</div>
             </div>
             <div class="panel-body" style="height:250px;overflow-y:scroll;width:100%;">
+                @if(Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo) {
                 <div class="row no-gutter">
                     @foreach (var creative in Model.Items)
                     {
@@ -39,7 +46,7 @@
                                         @for (int i = 0; i < creative.Visuals.Count; i++ )
                                         {
                                             columnWidth = 12 / creative.Visuals.Count;
-                                            modalHref = "#myModalIMG" + i;
+                                            modalHref = "#myModalIMG" + @creative.Id + i;
                                             <div class="col-xs-@columnWidth" href="@modalHref" data-toggle="modal"><img src="@creative.Visuals[i]" class="img-full"></div>
                                         }
                                         @if (creative.NbVisuals == 0)
@@ -49,14 +56,19 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor)
+                            {
+                                modalCreative = "modal-creative";
+                            }
                             @for (int i = 0; i < creative.Visuals.Count; i++)
                             {
-                                modalHref = "myModalIMG" + i;
+                                modalHref = "myModalIMG" + @creative.Id + i;
+                                
                                 <div id="@modalHref" class="modal fade">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog @modalCreative">
                                         <div class="modal-content">
-                                            <div class="modal-body">
-                                                <img src="@creative.Visuals[i]" class="img-full">
+                                            <div class="modal-body modal-body-align">
+                                                <img src="@creative.Visuals[i].Replace("Imagette/", "")" class="img-full">
                                             </div>
                                         </div>
                                     </div>
@@ -65,6 +77,82 @@
                         </div>
                     }
                 </div>
+                }
+                else if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile)
+                {
+                    <div class="row no-gutter">
+                        @foreach (var creative in Model.Items)
+                        {
+                            <div class="col-xs-1">
+                                <div class="panel press">
+                                    <div class="item">
+                                        <div class="select-affiner">
+                                            <input id="@creative.Id" name="creative" type="checkbox" class="with-font" value="@creative.Id" />
+                                            <label for="@creative.Id"></label>
+                                        </div>
+                                        <div class="bottom text-white">
+                                            <div class="@creative.Class">@creative.Id</div>
+                                        </div>
+                                        <div class="row no-gutter">
+                                            @switch (Model.VehicleId)
+                                            {
+                                                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                                                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
+                                                    creativeIcon = "iconkantar-television20"; 
+                                                    break;
+                                                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                                                    creativeIcon = "iconkantar-radio46";
+                                                    break;
+                                                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                                                    creativeIcon = "iconkantar-monitor74";
+                                                    break;
+                                                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                                                    creativeIcon = "iconkantar-cellphone55";
+                                                    break;
+                                                        
+                                            }
+                                            @if (creative.NbVisuals == 0)
+                                            {
+                                                <div class="col-xs-1 creative-background"><i class="fa @creativeIcon creative-icon creative-unavailable-icon"></i></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-xs-1 creative-background" href="#creativeModal" data-toggle="modal" data-creative="[@creative.Id,@creative.SessionId,@creative.Vehicle.DatabaseId]"><i class="fa @creativeIcon creative-icon"></i></div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv
+                                || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others
+                                || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio)
+                                {
+                                    <div id="creativeModal" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header header-kantar-popup">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="font-normal" style="color:white;">Spot</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="media video-audio-container">
+                                                        <iframe id="creativeStream" src="" frameborder="0" allowfullscreen></iframe>
+                                                        <div id="mediaLoader">
+                                                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>

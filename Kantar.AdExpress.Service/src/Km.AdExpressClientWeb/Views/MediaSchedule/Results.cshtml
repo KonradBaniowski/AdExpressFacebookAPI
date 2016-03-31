@@ -314,6 +314,8 @@
                     creatives = [];
                     $("#creative-btn").prop('disabled', true);
 
+                    AutoPlayCreativeModal();
+
                     $("#creative-btn").on('click', function (e) {
                         $('#msCreativesResult').addClass("hide");
                         var params = {
@@ -445,6 +447,56 @@
                 }
             });
         }
+
+        function AutoPlayCreativeModal() {
+
+            $("#creativeStream").attr('src', '');
+
+            $("#creativeModal").on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var parameters = {
+                        idVersion: datas[0],
+                        idVehicle: datas[2]
+                    };
+                    $.ajax({
+                        url: '@Url.Action("GetCreativePath", "Insertions")',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: parameters,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                            alert("Erreur lors de la recuperation de url de la version");
+                        },
+                        success: function (response) {
+                            if (response != null) {
+                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
+                                var urlDowload = response.PathDownloadingFile;
+                                if (url) {
+                                    $("#creativeStream").attr('src', url);
+                                    $('#creativeModal h4').text("Spot");
+                                    $("#mediaLoader").addClass("hide");
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            $("#creativeModal").on('hide.bs.modal', function () {
+                $("#creativeStream").attr('src', '');
+                $("#mediaLoader").removeClass("hide");
+            });
+        }
+
+        
 
         $('#periodDetailType').selectpicker();
 

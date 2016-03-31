@@ -3,10 +3,9 @@
         var nbElemToLock = $('.tab-content .items-famille > li').length;
         if (nbElemToLock >= 1) {
             var nbIncludes = $('.panel-heading-choix.nav-tabs-alt').find('li').length;
-            $('[data-tab=' + nbIncludes + ']').append('<i class="fa fa-lock"></i>');
             //limit concurrent a 5 
             if (nbIncludes < 5) {
-
+                $('[data-tab=' + nbIncludes + ']').append('<i class="fa fa-lock"></i>');
                 $('.panel-heading-choix.nav-tabs-alt').find('li[class="active"]').attr('class', '');
                 var idNext = nbIncludes + 1
                 var ulSource = $('.nav.nav-tabs');

@@ -70,19 +70,48 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             int toDate = Convert.ToInt32(period.End.ToString("yyyyMMdd"));
             #endregion
 
-            data = resultMSCreatives.GetMSCreatives(VehiclesInformation.Get(Int64.Parse(vehicles[0])), fromDate, toDate, filters, -1, zoomDate);
+            VehicleInformation vehicle = VehiclesInformation.Get(Int64.Parse(vehicles[0]));
+            data = resultMSCreatives.GetMSCreatives(vehicle, fromDate, toDate, filters, -1, zoomDate);
 
             MSCreatives creatives = new MSCreatives();
             creatives.Items = new List<MSCreative>();
             DefaultMediaScheduleStyle style = new DefaultMediaScheduleStyle();
+            Int64 nbVisuals = 0;
+            List<string> visuals;
+
+            creatives.VehicleId = vehicle.Id;
 
             for (int i = 0; i < data.LinesNumber; i++)
             {
                 CellCreativesInformation cell = (CellCreativesInformation)data[i, 1];
-                MSCreative creative = new MSCreative { Id = cell.IdVersion, Vehicle = cell.Vehicle, NbVisuals = cell.NbVisuals, Visuals = cell.Visuals };
+                nbVisuals = 0;
+                visuals = new List<string>();
+
+                // Limit to 12 visuals
+                if (cell.NbVisuals <= 12)
+                {
+                    nbVisuals = cell.NbVisuals;
+                    visuals = cell.Visuals;
+                }
+                else
+                {
+                    nbVisuals = 12;
+                    visuals = cell.Visuals.Take(12).ToList();
+                }
+
+                MSCreative creative = new MSCreative { Id = cell.IdVersion, SessionId = CustomerSession.IdSession, Vehicle = cell.Vehicle, NbVisuals = nbVisuals, Visuals = visuals };
                 creative.Class = CustomerSession.SloganColors[cell.IdVersion].ToString();
                 creatives.Items.Add(creative);
             }
+
+            if (vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
+                    || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress
+                    || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor
+                    || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing
+                    || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo)
+                creatives.Items = creatives.Items.OrderBy(i => i.NbVisuals).ToList();
+            else
+                creatives.Items = creatives.Items.OrderByDescending(i => i.NbVisuals).ToList();
 
             return creatives;
         }
