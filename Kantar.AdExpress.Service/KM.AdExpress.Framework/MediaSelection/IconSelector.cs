@@ -36,9 +36,9 @@ namespace KM.AdExpress.Framework.MediaSelection
                 case Vehicles.names.directMarketing:
                     icon = "iconkantar-mail114";
                     break;
-                case Vehicles.names.emailing:
-                    icon = "iconkantar-envelope82";
-                    break;
+                //case Vehicles.names.emailing:
+                //    icon = "iconkantar-envelope82";
+                //    break;
                 case Vehicles.names.adnettrack:
                     icon = "iconkantar-monitor74";
                     break;
@@ -53,6 +53,9 @@ namespace KM.AdExpress.Framework.MediaSelection
                     break;
                 case Vehicles.names.tvSponsorship:
                     icon = "iconkantar-wireless-connectivity79";
+                    break;
+                case Vehicles.names.mailValo:
+                    icon = "iconkantar-envelope82";
                     break;
                 default:
                     icon = "iconkantar-window50";
