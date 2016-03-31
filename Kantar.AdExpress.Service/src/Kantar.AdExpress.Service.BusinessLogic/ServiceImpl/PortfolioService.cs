@@ -79,7 +79,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     
 
             }
-            return portofolioResult.GetGridResult();
+           
         }
 
 

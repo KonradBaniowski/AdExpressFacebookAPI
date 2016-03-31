@@ -575,6 +575,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
                         else
                             unitWebText = GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage);
 
+                        k++;
+                        gridData[currentLineIndex, k] = unitWebText;
+
                         #endregion
 
                         #region Column day of week
@@ -584,8 +587,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
                             {
                              
                                 k++;
-                                gridData[currentLineIndex, k] = string.Format("<a href='javascript:window.open(\"/{0}?{1}&{2}&{3}&{4}\", \"\", \"width=auto, height=auto\");'>{5}</a>",
-                                    insertionDetailPath, _webSession.IdSession, _idMedia, dayName[i], dr["screenCode"].ToString(), Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));
+                                gridData[currentLineIndex, k] = Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp);
+                                    /*string.Format("<a href='javascript:window.open(\"{0}?{1}&{2}&{3}&{4}\", \"\", \"width=auto, height=auto\");'>{5}</a>",
+                                    insertionDetailPath, _webSession.IdSession, _idMedia, dayName[i], dr["screenCode"].ToString(), Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));*/
 
                             }
                             else
@@ -607,7 +611,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
             gridResult.HasData = true;
             gridResult.Columns = columns;
             gridResult.Schema = schemaFields;
-            //gridResult.ColumnsFixed = columnsFixed;
+            gridResult.ColumnsFixed = columnsFixed;
             gridResult.Data = gridData;
 
             return gridResult;

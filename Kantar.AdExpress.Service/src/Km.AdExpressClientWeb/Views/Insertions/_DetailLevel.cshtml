@@ -19,7 +19,7 @@
                             <option value="-1" selected>--------</option>
                             @foreach (var item in Model[i].Items)
                             {
-                                if (item.IsSelected)
+                                if (@item.IsSelected)
                                 {
                                     <option value="@item.DetailLevel" selected>@item.Label</option>
                                 }

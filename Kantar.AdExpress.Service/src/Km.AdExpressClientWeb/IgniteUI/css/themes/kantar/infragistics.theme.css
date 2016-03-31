@@ -851,7 +851,7 @@ tr[aria-level="3"] td .orange {
     border-top:none;
     text-align:center;
     font-weight:normal ;
-    font-size:11px;
+    font-size:12px;/*dede*/
 }
 
 tr[aria-level] td {
@@ -861,14 +861,14 @@ tr[aria-level] td {
     border-top: 0;
     padding: 1px 10px;
     font-weight: bolder;
-    font-size:11px;
+    font-size:12px;/*dede*/
     height:20px;
     white-space: nowrap;
 }
 
 tr[aria-level="0"] td{
     background-color: rgba(0,0,0,0.65);
-    font-size:11px;
+    font-size:12px;/*dede*/
     height:22px;
     color:#26caff;
 }
@@ -959,7 +959,7 @@ tr[aria-level="3"] td{
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-   /* color: black;black;*/ /*dede*/
+   /*color: black;*/ /*dede*/
     border: none;
 }
 
