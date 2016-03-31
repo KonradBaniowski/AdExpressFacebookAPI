@@ -1,6 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Models.Insertions;
+using Km.AdExpressClientWeb.Models.Shared;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -16,23 +19,37 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IInsertionsService _insertionsService;
         private IDetailLevelService _detailLevelService;
+        private IUniverseService _universService;
 
-        public InsertionsController(IInsertionsService insertionsService, IDetailLevelService detailLevelservice)
+        public InsertionsController(IInsertionsService insertionsService, IDetailLevelService detailLevelservice, IUniverseService universService)
         {
             _insertionsService = insertionsService;
-            _detailLevelService = detailLevelservice;
+            _detailLevelService = detailLevelservice; ;
+            _universService = universService;
         }
 
         // GET: Insertions
         public ActionResult Index(string ids, string zoomDate, string idUnivers, string moduleId, string idVehicle)
         {
-            List<string> paramsUrl = new List<string>();
-            paramsUrl.Add(ids);
-            paramsUrl.Add(zoomDate);
-            paramsUrl.Add(idUnivers);
-            paramsUrl.Add(moduleId);
-            paramsUrl.Add(idVehicle);
-            return View(paramsUrl);
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var model = new InsertionViewModel()
+            {
+                paramsUrl = new List<string>(),
+                SiteLanguage = 33, // Default
+            };
+
+            model.paramsUrl.Add(ids);
+            model.paramsUrl.Add(zoomDate);
+            model.paramsUrl.Add(idUnivers);
+            model.paramsUrl.Add(moduleId);
+            model.paramsUrl.Add(idVehicle);
+
+            var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
+            model.SiteLanguage = result.SiteLanguage;
+
+            return View(model);
         }
 
         [HttpPost]

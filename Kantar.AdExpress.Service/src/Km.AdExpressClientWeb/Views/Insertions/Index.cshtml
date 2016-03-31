@@ -1,4 +1,5 @@
-﻿@model List<string>
+﻿@model Km.AdExpressClientWeb.Models.Insertions.InsertionViewModel
+@using TNS.AdExpress.Domain.Translation;
 
 @{
     ViewBag.Title = "Insertions";
@@ -10,7 +11,7 @@
 <div class="row">
     <div class="container-full">
         <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
-            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; Insertions</span></h5>
+            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @(@GestionWeb.GetWebWord(2245, Model.SiteLanguage))</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
         <div id="HeaderLoader">
@@ -23,15 +24,15 @@
         </div>
 
         <form>
-            <input name="ids" id="ids" type="hidden" value="@Model[0]" />
-            <input name="zoomDate" id="zoomDate" type="hidden" value="@Model[1]" />
-            <input name="idUnivers" id="idUnivers" type="hidden" value="@Model[2]" />
-            <input name="moduleId" id="moduleId" type="hidden" value="@Model[3]" />
-            <input name="idVehicle" id="idVehicle" type="hidden" value="@Model[4]" />
+            <input name="ids" id="ids" type="hidden" value="@(Model.paramsUrl[0])" />
+            <input name="zoomDate" id="zoomDate" type="hidden" value="@(Model.paramsUrl[1])" />
+            <input name="idUnivers" id="idUnivers" type="hidden" value="@(Model.paramsUrl[2])" />
+            <input name="moduleId" id="moduleId" type="hidden" value="@(Model.paramsUrl[3])" />
+            <input name="idVehicle" id="idVehicle" type="hidden" value="@(Model.paramsUrl[4])" />
         </form>
         <div class="col-md-12" style="margin-top:10px;">
             <center>
-                <p id="gridEmpty" class="hide">Pas de donnees</p>
+                <p id="gridEmpty" class="hide">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
                 <div id="grid" class="hide"></div>
                 <div id="gridLoader" class="hide">
                     <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
@@ -47,7 +48,7 @@
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="font-normal" style="color:white;">Spot</h4>
+                    <h4 class="font-normal" style="color:white;">@(@GestionWeb.GetWebWord(869, Model.SiteLanguage))</h4>
                 </div>
                 <div class="modal-body">
                     <div class="media video-audio-container">
@@ -67,7 +68,7 @@
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Visuel</h4>
+                    <h4 class="modal-title" id="myModalLabel">@(@GestionWeb.GetWebWord(1909, Model.SiteLanguage))</h4>
                 </div>
                 <div class="modal-body">
                     <center><img src="" id="imagepreview"></center>
@@ -300,12 +301,12 @@
                             $('#PresentVehicles').html(strHTML);
                             $('#idVehicle').val(idV.toString());
 
+                            CallInsertionsResult(idV, '', true);
+                            GetDetailLevelItem(idV);
+
                             $("#HeaderLoader").addClass("hide");
                             $("#HeaderElmt").removeClass("hide");
                             $("#gridLoader").removeClass("hide");
-
-                            CallInsertionsResult(idV, '', true);
-                            GetDetailLevelItem(idV);
                         }
                     }
                 });
@@ -370,7 +371,6 @@
                     }
                 });
             }
-
 
             function AutoPlayCreativeModal() {
 
