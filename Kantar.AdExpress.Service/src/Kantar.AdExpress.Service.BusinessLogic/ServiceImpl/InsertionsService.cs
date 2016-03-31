@@ -50,7 +50,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 		/// Liste des colonnes personnalisées
 		/// </summary>
 		private List<GenericColumnItemInformation> _columnItemList = null;
-        GenericColumnItemInformation _genericColumnItemInformation = null;
+
         /// <summary>
         /// Indique si l'utilisateur à le droit de lire les créations
         /// </summary>
@@ -68,7 +68,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             ArrayList levels = new ArrayList();
             try
             {
-
                 _customerWebSession = (WebSession)WebSession.Load(idWebSession);
               
                 IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);

@@ -1461,21 +1461,24 @@ namespace TNS.AdExpressI.Insertions.DAL
             /* Get the list of medias selected
              * There are several treenodes to save the univers media, so according to the module we can get the media list
              * */
+            #region Old
             //Medias selection
-            int positionUnivers = 1;
-            string mediaList = string.Empty;
-            while (_session.CompetitorUniversMedia[positionUnivers] != null)
-            {
-                mediaList += _session.GetSelection((TreeNode)
-                    _session.CompetitorUniversMedia[positionUnivers],
-                    CstCustomer.Right.type.mediaAccess) + ",";
-                positionUnivers++;
-            }
-            if (mediaList.Length > 0)
+            //int positionUnivers = 1;
+            //string mediaList = string.Empty;
+            //while (_session.CompetitorUniversMedia[positionUnivers] != null)
+            //{
+            //    mediaList += _session.GetSelection((TreeNode)
+            //        _session.CompetitorUniversMedia[positionUnivers],
+            //        CstCustomer.Right.type.mediaAccess) + ",";
+            //    positionUnivers++;
+            //}
+            #endregion
+            string mediaList = GetCompetitormedias();
+            if (!string.IsNullOrEmpty(mediaList)) {
                 sql.AppendFormat(" and {0}.id_media in ({1})",
                    tData.Prefix,
-                    mediaList.Substring(0, mediaList.Length - 1)
-                );
+                    mediaList);
+            }
 
             #endregion
 
@@ -2606,6 +2609,16 @@ namespace TNS.AdExpressI.Insertions.DAL
         #endregion
 
         #endregion
-
+        private string GetCompetitormedias()
+        {
+            string mediaList = string.Empty;
+            List<long> ids = new List<long>();
+            for (int p = 0; p < _session.PrincipalMediaUniverses.Count; p++)
+            {
+                ids.AddRange(_session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes));
+            }
+            if (ids.Count > 0) return String.Join(",", ids);
+            return mediaList;
+        }
     }
 }

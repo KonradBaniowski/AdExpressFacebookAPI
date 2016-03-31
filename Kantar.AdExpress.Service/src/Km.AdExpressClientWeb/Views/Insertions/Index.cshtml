@@ -1,5 +1,5 @@
 ﻿@model List<string>
-@using TNS.AdExpress.Domain.Translation;
+
 @{
     ViewBag.Title = "Insertions";
     Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
@@ -65,12 +65,12 @@
     <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="Visuel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
                     <h4 class="modal-title" id="myModalLabel">Visuel</h4>
                 </div>
                 <div class="modal-body">
-                    <img src="" id="imagepreview">
+                    <center><img src="" id="imagepreview"></center>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
 
     <script id="colSpotTmpl" type="text/template">
         {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
-            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}">Lire<i class='glyphicons glyphicons-play'></i></a>
+            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa fa-play'></i></a>
         {{else}}
             ${Spot}
         {{/if}}
@@ -129,7 +129,7 @@
                 avgRowHeight: 60,
                 autoGenerateColumns: true
             });
-
+            
 
             var ds;
             var cols;
@@ -208,14 +208,15 @@
                 }
             }
 
-            function CallInsertionsResult(idV,zoomdt) {
+            function CallInsertionsResult(idV, zoomdt, vehicleChanged) {
                 $("#gridEmpty").addClass("hide");
                 var parameters = {
                     ids: $('#ids').val(),
                     zoomDate: zoomdt,
                     idUnivers: $('#idUnivers').val(),
                     moduleId: $('#moduleId').val(),
-                    idVehicle: idV
+                    idVehicle: idV,
+                    isVehicleChanged: vehicleChanged
                 };
 
 
@@ -286,27 +287,25 @@
                         if (response != null) {
                             var data = JSON.parse(response);
                             var strHTML = "";
-                            var idV;
-                            $.each(data, function (i, item) {
-                                if (!$('#idVehicle').val() || 0 === $('#idVehicle').val())
-                                    idV = item[0];
-                                else
-                                    idV = $('#idVehicle').val();
+                            var idV = data[0][0];
+                            if (!(0 === $('#idVehicle').val()) && $('#idVehicle').val())
+                                idV = $('#idVehicle').val();
 
+                            $.each(data, function (i, item) {
                                 if (idV == item[i]) {
                                     strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
                                 } else {
                                     strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
                                 }
-                                $('#PresentVehicles').append(strHTML);
                             });
+                            $('#PresentVehicles').html(strHTML);
                             $('#idVehicle').val(idV.toString());
 
                             $("#HeaderLoader").addClass("hide");
                             $("#HeaderElmt").removeClass("hide");
                             $("#gridLoader").removeClass("hide");
 
-                            CallInsertionsResult(idV, '');
+                            CallInsertionsResult(idV, '', true);
                             GetDetailLevelItem(idV);
                         }
                     }
@@ -328,6 +327,7 @@
                     success: function (data) {
                         if (data != null) {
                             $('#subPeriodSelection').html(data);
+                            $('#allSubPeriod').removeClass("hidden");
                             $("#leave-zoom").addClass("hide");
                             $(".sub-period-btn").on('click', function (e) {
                                 $(".btn-default-sub-period").prop('disabled', false);
@@ -336,7 +336,7 @@
                                 $(this).prop('disabled', true);
                                 $("#grid").addClass("hide");
                                 $("#gridLoader").removeClass("hide");
-                                CallInsertionsResult($('#idVehicle').val(),$(this).attr("period"));
+                                CallInsertionsResult($('#idVehicle').val(),$(this).attr("period"),false);
                             });
                             $(".sub-period-btn").on('mouseenter', function (e) {
                                 previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
@@ -458,33 +458,48 @@
                     error: function (xmlHttpRequest, errorText, thrownError) {
                     },
                     success: function (data) {
-                        CallInsertionsResult($('#idVehicle').val(), '');
+                        CallInsertionsResult($('#idVehicle').val(), '',false);
                     }
                 });
             }
 
 
 
-            CallGetPresentVehicles();
-            GetSubPeriodSelection('');
-            AutoPlayCreativeModal();
+        CallGetPresentVehicles();
+        GetSubPeriodSelection('');
+        AutoPlayCreativeModal();
 
 
-            //** Important charge les images au fur et a mesure que le teableau s'affiche
-            $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
-                AutoPlayVisu();
+        //** Important charge les images au fur et a mesure que le teableau s'affiche
+        $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
+            AutoPlayVisu();
 
-                $(".carousel").each(function (index) {
-                    $("#visuCarou" + index.toString()).carousel("pause");
-                    $("#visuCarou" + index.toString()).find('.left').click(function () {
-                        $("#visuCarou" + index.toString()).carousel("prev");
-                    });
-                    $("#visuCarou" + index.toString()).find('.right').click(function () {
-                        $("#visuCarou" + index.toString()).carousel("next");
-                    });
+            $(".carousel").each(function (index) {
+                $("#visuCarou" + index.toString()).carousel("pause");
+                $("#visuCarou" + index.toString()).find('.left').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("prev");
                 });
-
+                $("#visuCarou" + index.toString()).find('.right').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("next");
+                });
             });
+
+        });
+
+
+
+
+        //OnChange Vehicle
+        function getEventTarget(e) {
+            e = e || window.event;
+            return e.target || e.srcElement;
+        }
+        $(document).on("click", "#PresentVehicles li a", function () {
+            $("#grid").addClass("hide");
+            $("#gridLoader").removeClass("hide");
+            CallInsertionsResult($(this).attr('id'), '', true);
+            GetDetailLevelItem($(this).attr('id'));
+        });
 
 
         function ResetLnLevel(lx, ly) {
