@@ -181,7 +181,7 @@ function getSelectedMediaSupport() {
 function NextStep(nextUrl, dis) {
     var msg = validate();
     if (msg) {
-        bootbox.alert(msg);
+        bootbox.alert(msg.replace(/\n/g, "<br />"));
         return;
     }
     $('#btnSubmitMarketSelection').off('click');
@@ -212,11 +212,19 @@ function NextStep(nextUrl, dis) {
 }
 
 function validate() {
+    //var message = "";
+    //var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
+    //if (nbElemInclus < 1) {
+    //    message = $('#Labels_ErrorMininumInclude').val();
+    //}
+    //return message;
     var message = "";
     var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
     if (nbElemInclus < 1) {
         message = $('#Labels_ErrorMininumInclude').val();
     }
+    if (idList.length == 0)
+        message += "\n" + $('#Labels_ErrorMediaSelected').val();
     return message;
 }
 

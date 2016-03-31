@@ -33,8 +33,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string _controller = "LostWon";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
-        private const int MaxIncludeNbr = 1;
-        private const int MaxExcludeNbr = 0;
+        private const int MaxIncludeNbr = 2;
+        private const int MaxExcludeNbr = 1;
 
         public LostWonController(ILostWonService lostWonService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {

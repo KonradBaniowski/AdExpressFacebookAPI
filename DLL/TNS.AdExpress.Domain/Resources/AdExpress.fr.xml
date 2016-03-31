@@ -757,7 +757,7 @@
     <item mnemonic="w1484" type="System.String">Lors de la redéfinition d'un univers, les éléments préalablement sélectionnés ont été effacés.&lt;br&gt;Si vous utilisez les boutons « précédent » ou « suivant », vous ne pourrez pas réafficher votre résultat car les éléments nécessaires au calcul du tableau ne seront pas définis.</item>
     <item mnemonic="w1485" type="System.String">La demande d'information n'a pas pu être envoyée.</item>
     <item mnemonic="w1486" type="System.String">Le mail a bien été envoyé.</item>
-    <item mnemonic="w1487" type="System.String">Vous devez sélectionnez au moins un Média.</item>
+    <item mnemonic="w1487" type="System.String">Vous devez sélectionner au moins un Média.</item>
     <item mnemonic="w1488" type="System.String">Le module demandé n'est pas accessible.</item>
     <item mnemonic="w1489" type="System.String">Une erreur est survenue.&lt;br&gt;Nous ne pouvons pas afficher la page demand&amp;eacute;e.</item>
     <item mnemonic="w1490" type="System.String">Erreur non répertoriée.</item>
