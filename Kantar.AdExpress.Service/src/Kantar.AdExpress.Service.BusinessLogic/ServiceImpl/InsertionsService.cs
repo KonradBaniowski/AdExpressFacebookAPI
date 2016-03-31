@@ -168,7 +168,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
 
-                // _customerWebSession.Save();
+                _customerWebSession.Save();
 
                 if (_customerWebSession.GenericInsertionColumns.Columns.Count < 1)
                 {
