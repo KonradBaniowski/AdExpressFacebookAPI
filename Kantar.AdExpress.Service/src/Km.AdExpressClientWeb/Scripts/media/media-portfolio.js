@@ -235,7 +235,7 @@ $('#move-item').on('click', function () {
             var nbItemSrc = levelSrc.length;
             var nbItemDst = levelDst.length;
             if (nbItemDst + nbItemSrc > 1) {
-                bootbox.alert($('#Labels_ErrorMessageLimitUniverses').val());
+                bootbox.alert($('#Labels_ErrorOnlyOneItemAllowed').val());
                 return
             }
             $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
@@ -259,7 +259,7 @@ $('#move-item').on('click', function () {
         }
     }
     else {
-        bootbox.alert($('#Labels_ErrorItemExceeded').val());
+        bootbox.alert($('#Labels_ErrorOnlyOneItemAllowed').val());
     }
 });
 
