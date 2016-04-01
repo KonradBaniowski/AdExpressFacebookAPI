@@ -215,98 +215,107 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 int index = 0;
                 List<long> medias = new List<long>();
                 webSession = (WebSession)WebSession.Load(webSessionId);
+                long idModule = webSession.CurrentModule;
                 Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)
-                TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetTreeNodeUniverseWithMedia(userUniversId, webSession,out medias);
-                var adExpressUniverse = Universes[index];
+                UniversListDataAccess.GetTreeNodeUniverseWithMedia(userUniversId, webSession,out medias);
+                if (idModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || idModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE || idModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+                { }
+                
                 if (medias != null && medias.Any())
                     result.UniversMediaIds = medias;
                 #endregion
-                #region Iterate by Access Type
-                int id = 0;
-                if (adExpressUniverse != null && adExpressUniverse.Count() > 0)
+                foreach (var univers in Universes)
                 {
-                    foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
+                    var adExpressUniverse = Universes[index];
+                    #region Iterate by Access Type
+                    int id = 0;
+                    if (adExpressUniverse != null && adExpressUniverse.Count() > 0)
                     {
-                        List<NomenclatureElementsGroup> elementsGroups = new List<NomenclatureElementsGroup>();
-                        Tree tree = new Tree
+                        foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
                         {
-                            AccessType = type,
-                            UniversLevels = new List<UniversLevel>(),
-                            Id = id
-                        };
-                        elementsGroups = (type == AccessType.excludes) ? adExpressUniverse.GetExludes() : adExpressUniverse.GetIncludes();
-                        if (elementsGroups != null && elementsGroups.Count > 0)
-                        {
-                            #region Repository 
-                            
-                            foreach (NomenclatureElementsGroup elementGroup in elementsGroups)
+                            List<NomenclatureElementsGroup> elementsGroups = new List<NomenclatureElementsGroup>();
+                            Tree tree = new Tree
                             {
-                                #region looping inside elementsgroups                         
-                                DataSet ds = null;
-                                List<long> oldLevelsId = new List<long>();
-                                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
-                                if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
-                                object[] param = new object[2];
-                                param[0] = webSession;
-                                param[1] = dimension;
-                                ClassificationDAL classficationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-                                classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
-                                var tuple = GetAllowedIds(webSessionId, dimension,  true);
-                                
-                                foreach (var currentLevel in tuple.Item1)
+                                AccessType = type,
+                                UniversLevels = new List<UniversLevel>(),
+                                Id = id
+                            };
+                            elementsGroups = (type == AccessType.excludes) ? adExpressUniverse.GetExludes() : adExpressUniverse.GetIncludes();
+                            if (elementsGroups != null && elementsGroups.Count > 0)
+                            {
+                                #region Repository 
+
+                                foreach (NomenclatureElementsGroup elementGroup in elementsGroups)
                                 {
-                                    if (!oldLevelsId.Contains(currentLevel))
+                                    #region looping inside elementsgroups                         
+                                    DataSet ds = null;
+                                    List<long> oldLevelsId = new List<long>();
+                                    CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+                                    if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                                    object[] param = new object[2];
+                                    param[0] = webSession;
+                                    param[1] = dimension;
+                                    ClassificationDAL classficationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                                    classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+                                    var tuple = GetAllowedIds(webSessionId, dimension, true);
+
+                                    foreach (var currentLevel in tuple.Item1)
                                     {
-                                        if (elementGroup != null && elementGroup.Contains(currentLevel))
+                                        if (!oldLevelsId.Contains(currentLevel))
                                         {
-                                            var table = UniverseLevels.Get(currentLevel).TableName;
-                                            ds = classficationDAL.GetSelectedItems(table, elementGroup.GetAsString(currentLevel));
-                                            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                            if (elementGroup != null && elementGroup.Contains(currentLevel))
                                             {
-                                                UniversLevel level = new UniversLevel
+                                                var table = UniverseLevels.Get(currentLevel).TableName;
+                                                ds = classficationDAL.GetSelectedItems(table, elementGroup.GetAsString(currentLevel));
+                                                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                                                 {
-                                                    Id = currentLevel,
-                                                    UniversItems = new List<UniversItem>()
-                                                };
-                                                foreach (DataRow dr in ds.Tables[0].Rows)
-                                                {
-                                                    UniversItem item = new UniversItem();
-                                                    item.Id = (Int64)dr[0];
-                                                    item.Label = dr[1].ToString();
-                                                    item.IdLevelUniverse = currentLevel;
-                                                    level.UniversItems.Add(item);
-                                                    
+                                                    UniversLevel level = new UniversLevel
+                                                    {
+                                                        Id = currentLevel,
+                                                        UniversItems = new List<UniversItem>()
+                                                    };
+                                                    foreach (DataRow dr in ds.Tables[0].Rows)
+                                                    {
+                                                        UniversItem item = new UniversItem();
+                                                        item.Id = (Int64)dr[0];
+                                                        item.Label = dr[1].ToString();
+                                                        item.IdLevelUniverse = currentLevel;
+                                                        level.UniversItems.Add(item);
+
+                                                    }
+                                                    tree.UniversLevels.Add(level);
                                                 }
-                                                tree.UniversLevels.Add(level);
                                             }
                                         }
                                     }
+                                    #endregion
+                                    cl = null;
+                                    classficationDAL = null;
+                                    result.Trees.Add(tree);
+                                    id++;
+                                    if (elementsGroups.Count > 1 && elementsGroups.Count + 1 > id)
+                                    {
+                                        tree = new Tree
+                                        {
+                                            AccessType = type,
+                                            UniversLevels = new List<UniversLevel>(),
+                                            Id = id
+                                        };
+                                    }
                                 }
                                 #endregion
-                                cl = null;
-                                classficationDAL = null;
-                                result.Trees.Add(tree);
-                                id++;
-                                if (elementsGroups.Count>1 && elementsGroups.Count+1>id)
-                                {                                    
-                                    tree = new Tree
-                                    {
-                                        AccessType = type,
-                                        UniversLevels = new List<UniversLevel>(),
-                                        Id = id
-                                    };
-                                }
                             }
-                            #endregion
-                        }
-                        if (elementsGroups.Count==0)
-                        {
-                            result.Trees.Add(tree);
+                            if (elementsGroups.Count == 0 && (idModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || idModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE || idModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE))
+                            {
+                                result.Trees.Add(tree);                                
+                            }
                             id++;
                         }
                     }
+                    #endregion
+                    index++;
                 }
-                #endregion
+
                 #endregion
             }
 
