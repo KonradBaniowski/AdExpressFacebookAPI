@@ -59,6 +59,9 @@ $(document).ready(function () {
         if (index > -1) {
             idList.splice(index, 1);
         }
+        else {
+            idList.push(id);
+        }
     }
 
     function preselection() {
@@ -79,7 +82,39 @@ $(document).ready(function () {
     }
 });
 
-
+$('#btnSubmitMediaSelection').on('click', function (e) {
+    e.preventDefault();
+    var msg = validate();
+    var isValide = !msg || msg.lentgh === 0;
+    if (!isValide) {//mycondition
+        bootbox.alert(msg);
+    }
+    else {
+        var selectedMediaSupportTrees = getSelectedMediaSupport();
+        var params = {
+            selectedMedia: idList,
+            mediaSupport: selectedMediaSupportTrees,
+            nextStep: "PeriodSelection"
+        };
+        $.ajax({
+            url: '/MediaSchedule/SaveMediaSelection',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                if (data.RedirectUrl != null) {
+                    document.location = data.RedirectUrl;
+                }
+                if (data.ErrorMessage != null) {
+                    bootbox.alert(data.ErrorMessage);
+                }
+            }
+        });
+    }
+});
 //VALIDER TODO
 
 var idMedias = [];
