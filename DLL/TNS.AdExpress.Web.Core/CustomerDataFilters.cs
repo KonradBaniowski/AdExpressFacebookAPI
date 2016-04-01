@@ -735,9 +735,9 @@ namespace TNS.AdExpress.Web.Core
         protected Dictionary<int, string> GetCompetingMediaUniverses()
         {
             Dictionary<int, string> selection = new Dictionary<int, string>();
-            int positionUnivers = 1;
+            int positionUnivers = 0;
             string mediaList = "";
-
+            int i = 0;
             switch (_currentModule.Id)
             {
 
@@ -747,26 +747,35 @@ namespace TNS.AdExpress.Web.Core
                 case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
 
                     //Get competing vehicles selection					
-                    while (_customerSession.CompetitorUniversMedia[positionUnivers] != null)
+                    for( i =0; i< _customerSession.PrincipalMediaUniverses.Count;i++)
                     {
-                        mediaList = _customerSession.GetSelection((TreeNode)_customerSession.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess);
-                        if (mediaList != null && mediaList.Length > 0)
+                        mediaList = GetCompetitormedias( i);
+                        if (!string.IsNullOrWhiteSpace(mediaList))
                         {
                             selection.Add(positionUnivers, mediaList);
                         }
-                        positionUnivers++;
+                      
                     }
                     break;
                 //Get selected vehicles from the module "Vehicle Portofolio"
                 case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
-                    mediaList = _customerSession.GetSelection((TreeNode)_customerSession.ReferenceUniversMedia, CstCustomer.Right.type.mediaAccess);
-                    if (mediaList != null && mediaList.Length > 0)
+
+                    mediaList = GetCompetitormedias(i);
+                    if (!string.IsNullOrWhiteSpace(mediaList))
                         selection.Add(positionUnivers, mediaList);
                     break;
                 default:
                     throw (new CustomerDataFiltersException("Impossible to identify the current module "));
             }
             return selection;
+        }
+
+        private string GetCompetitormedias(int positionUnivers)
+        {
+            string mediaList = string.Empty;                 
+            List<long> ids = _customerSession.PrincipalMediaUniverses[positionUnivers].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
+            if (ids.Count > 0) return String.Join(",", ids);
+            return mediaList;
         }
         #endregion
 

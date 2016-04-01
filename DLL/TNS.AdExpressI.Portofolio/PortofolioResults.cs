@@ -775,21 +775,12 @@ namespace TNS.AdExpressI.Portofolio
         {
             try
             {
-                //TODO: A tester partout car le support es tmaintenant mis dans _webSession.PrincipalMediaUniverses.
-                if (_webSession.ReferenceUniversMedia != null && _webSession.ReferenceUniversMedia.Nodes.Count > 0)
-                    return (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);
-                else
-                {
-                    if (_webSession.PrincipalMediaUniverses != null && _webSession.PrincipalMediaUniverses.Count > 0)
-                    {
+                //OLD: A tester partout car le support es tmaintenant mis dans _webSession.PrincipalMediaUniverses.
+                //if (_webSession.ReferenceUniversMedia != null && _webSession.ReferenceUniversMedia.Nodes.Count > 0)
+                //    return (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);
+                                 
                         var items = _webSession.PrincipalMediaUniverses[0].GetIncludes();
                         return items.First().Get(TNSClassificationLevels.MEDIA).First();
-
-                    }
-
-
-                    return (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                }
 
             }
             catch (System.Exception err)
