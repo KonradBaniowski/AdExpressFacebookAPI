@@ -20,7 +20,7 @@ $(function () {
 
 $('#save-universe').on('click', function (event) {
     event.preventDefault();
-    //$('#save-universe').off('click');
+    $('#save-universe').off('click');
     $.ajax({
         url: '/Universe/SaveUserUnivers',
         type: 'GET',

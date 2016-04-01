@@ -132,28 +132,57 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     #region Save Media support if any
                     if (trees.Any())
                     {
-                        AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
-                        if (univers != null && univers.Count() > 0)
+                        Dictionary<int, AdExpressUniverse> universDictionary = new Dictionary<int, AdExpressUniverse>();
+                        long idModule = _webSession.CurrentModule;
+                        if (idModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA || idModule == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE || idModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE)
                         {
-                            bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
-                            List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
-                            if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
+                            AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
+                            if (univers != null && univers.Count() > 0)
                             {
-                                Dictionary<int, AdExpressUniverse>
-                                        universDictionary = new Dictionary<int, AdExpressUniverse>();
-                                universDictionary.Add(universDictionary.Count, univers);
-                                _webSession.PrincipalMediaUniverses = universDictionary;
-                                success = true;
+                                bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
+                                List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
+                                if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
+                                {
+                                    universDictionary.Add(universDictionary.Count, univers);
+                                    _webSession.PrincipalMediaUniverses = universDictionary;
+                                    success = true;
+                                }
+                                else
+                                {
+                                    response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                                }
                             }
                             else
                             {
-                                response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                                response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
                             }
                         }
-                        else
+                        else if (idModule == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE)
                         {
-                            response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
+                            Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(trees, _webSession, dimension, security);
+                            _webSession.PrincipalMediaUniverses = universes;
+                            success = true;
                         }
+                            //AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
+                        //if (univers != null && univers.Count() > 0)
+                        //{
+                        //    bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
+                        //    List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
+                        //    if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
+                        //    {                                
+                        //        universDictionary.Add(universDictionary.Count, univers);
+                        //        _webSession.PrincipalMediaUniverses = universDictionary;
+                        //        success = true;
+                        //    }
+                        //    else
+                        //    {
+                        //        response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
+                        //}
                     }
                     #endregion
 
@@ -752,6 +781,49 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
             }
             return true;
+        }
+        private Dictionary<int, AdExpressUniverse> GetConcurrentUniverses(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
+        {
+            Dictionary<int, AdExpressUniverse> adExpressUniverses = new Dictionary<int, AdExpressUniverse>(trees.Count);
+            try
+            {
+                int index = 0;
+                foreach (Tree tree in trees)
+                {
+                    AdExpressUniverse adExpressUniverse = new AdExpressUniverse(dimension)
+                    {
+                        Security=security                        
+                    };
+                    Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
+                    NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(index, tree.AccessType);
+                    if (tree.UniversLevels.Any())
+                    {
+                        foreach (var level in tree.UniversLevels.Where(x => x.UniversItems != null))
+                        {
+                            if (level.UniversItems != null && level.UniversItems.Count > _nbMaxItemByLevel)
+                                throw new CapacityException("Dépassement du nombre d'éléments autorisés pour un niveau");
+                            List<long> levelItems = new List<long>();
+                            foreach (var item in level.UniversItems)
+                            {
+                                levelItems.Add(item.Id);
+                            }
+                            if (levelItems.Any())
+                                treeNomenclatureEG.AddItems(level.Id, levelItems);
+                        }
+                    }
+                    if (treeNomenclatureEG != null && treeNomenclatureEG.Count() > 0)
+                    {
+                        adExpressUniverse.AddGroup(index, treeNomenclatureEG);
+                        adExpressUniverses.Add(index,adExpressUniverse);
+                        index++;
+                    }
+                    }
+            }
+            catch
+            {
+
+            }
+            return adExpressUniverses;
         }
         #endregion
     }
