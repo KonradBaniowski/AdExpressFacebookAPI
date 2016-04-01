@@ -81,7 +81,6 @@ namespace TNS.AdExpressI.Insertions.Cells
         #region Properties
         Int64 _idAdvertiser = -1;
         Int64 _idProduct = -1;
-        Int64 _idVersion = -1;
         string _dimension = string.Empty;
         string _format = string.Empty;
         string _url = string.Empty;
