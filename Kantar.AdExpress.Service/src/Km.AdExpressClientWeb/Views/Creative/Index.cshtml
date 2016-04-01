@@ -1,11 +1,463 @@
-﻿
+﻿@model Km.AdExpressClientWeb.Models.Shared.InsertionCreativeViewModel
 @using TNS.AdExpress.Domain.Translation;
 
 @{
-    ViewBag.Title = "Insertions";
+    ViewBag.Title = "Creative";
     Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
 }
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
-    Version
+    <div class="container-full">
+        <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
+            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @(@GestionWeb.GetWebWord(1888, Model.SiteLanguage))</span></h5>
+            <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
+        </div>
+        <div id="HeaderLoader">
+            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+        </div>
+
+        <div id="HeaderElmt" class="hide">
+            <div id="subPeriodSelection" style="background-color:grey"></div>
+        </div>
+
+        <div class="col-md-12" style="margin-top:10px;">
+            <center>
+                <p id="gridEmpty" class="hide">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
+                <div id="grid" class="hide"></div>
+                <div id="gridLoader" class="hide">
+                    <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+                </div>
+            </center>
+        </div>
+
+    </div> <!-- /container full -->
+    <!-- Modal HTML -->
+    <div id="creativeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header header-kantar-popup">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white !important;">&times;</button>
+                    <h4 class="font-normal" style="color:white;">@(@GestionWeb.GetWebWord(869, Model.SiteLanguage))</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="media video-audio-container">
+                        <iframe id="creativeStream" src="" frameborder="0" allowfullscreen></iframe>
+                        <div id="mediaLoader">
+                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Modal zoom visuel -->
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="Visuel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header header-kantar-popup">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                    <h4 class="modal-title" id="myModalLabel">@(@GestionWeb.GetWebWord(1909, Model.SiteLanguage))</h4>
+                </div>
+                <div class="modal-body">
+                    <center><img src="" id="imagepreview"></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+
+    <script id="colVisuTmpl" type="text/template">
+        {{if ${Visu}.startsWith('[') && ${Visu}.endsWith(']') }}
+        <!-- Slider -->
+        <div class="row" style="margin-bottom:15px;">
+            <div style="width:350px; float:left" id="visuCarou" datavisu="${Visu}" class="carousel slide" style="margin-bottom:10px;">
+                <div class="carousel-inner" role="listbox"></div>
+
+                <a class="left carousel-control">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Precedent</span>
+                </a>
+                <a class="right carousel-control">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Suivant</span>
+                </a>
+            </div>
+            <div style="margin-left:350px;" class="infos"></div>
+        </div>
+        {{else}}
+        ${Visu}
+        {{/if}}
+    </script>
+    <script>
+    if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
+
+        //GESTION DES ACTIVES CSS
+        //$(".btn-group > .btn").click(function () {
+        //    $(this).addClass("active").siblings().removeClass("active");
+        //});
+
+        $("#grid").igTreeGrid({
+            //dataSource: data,
+            primaryKey: "Id",
+            width: "95%",
+            defaultColumnWidth: 200,
+            avgRowHeight: 60,
+            autoGenerateColumns: true
+        });
+
+
+        var ds;
+        var cols;
+        var colsFixed;
+        var needFixedColumns = false;
+        var periodType = "Mois";
+
+        function paramsUrl() {
+            this.ids = "@(Model.paramsUrl[0])";
+            this.zoomDate = "@(Model.paramsUrl[1])";
+            this.idUnivers = "@(Model.paramsUrl[2])";
+            this.moduleId = "@(Model.paramsUrl[3])";
+            this.idVehicle = "@(Model.paramsUrl[4])";
+        }
+
+        function UserFilter() {
+            this.paramsUrl = new paramsUrl();
+            this.isVehicleChanged = true;
+        }
+
+        var userFilter = new UserFilter();
+
+        var renderGrid = function (success, error) {
+            if (success) {
+
+                $("#grid").igTreeGrid("destroy");
+                $("#gridLoader").addClass("hide");
+                $("#grid").removeClass("hide");
+                if (needFixedColumns) {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: "650px",
+                        autoGenerateColumns: false,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        width: "1140px",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 25
+                            },
+                            {
+                                name: "ColumnFixing",
+                                fixingDirection: "left",
+                                columnSettings: colsFixed
+                            }
+                        ]
+                    })
+                }
+                else {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: "650px",
+                        autoGenerateColumns: true,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        width: "95%",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 25
+                            }
+                        ]
+                    })
+                }
+            } else {
+                alert("Error");
+            }
+        }
+
+        function CallCreativeResult() {
+            $("#gridEmpty").addClass("hide");
+            var parameters = {
+                ids: userFilter.paramsUrl.ids,
+                zoomDate: userFilter.paramsUrl.zoomDate,
+                idUnivers: userFilter.paramsUrl.idUnivers,
+                moduleId: userFilter.paramsUrl.moduleId,
+                idVehicle: userFilter.paramsUrl.idVehicle,
+                isVehicleChanged: userFilter.isVehicleChanged
+            };
+
+            $.ajax({
+                url: '@Url.Action("CreativeResult", "Creative")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("Erreur");
+                },
+                success: function (data) {
+                    if (data != null && data != "") {
+                        dataTreeGrid = data.datagrid;
+                        colsFixed = data.columnsfixed;
+                        needFixedColumns = data.needfixedcolumns;
+
+                        var schema = new $.ig.DataSchema("array", {
+                            fields: data.schema
+                        });
+
+                        cols = data.columns
+                        for (i = 0; i < cols.length; i++) {
+                            if(cols[i].key == "Visu")
+                                cols[i].template = $("#colVisuTmpl").html();
+                        }
+
+                        ds = new $.ig.DataSource({
+                            type: "json",
+                            schema: schema,
+                            dataSource: dataTreeGrid,
+                            callback: renderGrid
+                        });
+
+                        ds.dataBind();
+                    }
+                    else {
+                        $("#gridLoader").addClass("hide");
+                        $("#gridEmpty").removeClass("hide");
+                        $("#grid").addClass("hide");
+                    }
+                }
+            });
+        }
+
+
+        function CallGetPresentVehicles() {
+
+            var parameters = {
+                ids: userFilter.paramsUrl.ids,
+                moduleId: userFilter.paramsUrl.moduleId,
+                idUnivers: userFilter.paramsUrl.idUnivers,
+            };
+
+            $.ajax({
+                url: '@Url.Action("GetPresentVehicles", "Creative")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("Erreur");
+                },
+                success: function (response) {
+                    if (response != null) {
+                        var data = JSON.parse(response);
+                        var strHTML = "";
+                        var idV = data[0][0];
+                        if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
+                            idV = userFilter.paramsUrl.idVehicle;
+
+                        $.each(data, function (i, item) {
+                            if (idV == item[i]) {
+                                strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                            } else {
+                                strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                            }
+                        });
+                        $('#PresentVehicles').html(strHTML);
+                        userFilter.paramsUrl.idVehicle = idV.toString();
+                        userFilter.isVehicleChanged = true;
+                        userFilter.paramsUrl.zoomDate = "";
+
+                        CallCreativeResult();
+                        $("#HeaderLoader").addClass("hide");
+                        $("#HeaderElmt").removeClass("hide");
+                        $("#gridLoader").removeClass("hide");
+                    }
+                }
+            });
+        }
+
+
+        function GetSubPeriodSelection() {
+            var params = {
+                zoomDate: userFilter.paramsUrl.zoomDate
+            };
+            $.ajax({
+                url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                        $('#subPeriodSelection').html(data);
+                        $('#allSubPeriod').removeClass("hidden");
+                        $("#leave-zoom").addClass("hide");
+                        $(".sub-period-btn").on('click', function (e) {
+                            $(".btn-default-sub-period").prop('disabled', false);
+                            $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+                            $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+                            $(this).prop('disabled', true);
+                            $("#grid").addClass("hide");
+                            $("#gridLoader").removeClass("hide");
+                            userFilter.paramsUrl.zoomDate = $(this).attr("period");
+                            userFilter.isVehicleChange = false;
+                            CallCreativeResult();
+                        });
+                        $(".sub-period-btn").on('mouseenter', function (e) {
+                            previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+                            $("#subPeriodLabel").text($(this).attr("periodlabel"));
+                        });
+                        $(".sub-period-btn").on('mouseleave', function (e) {
+                            $("#subPeriodLabel").text(previousSubPeriodLabel);
+                        });
+                    }
+                }
+            });
+        }
+
+        function AutoPlayCreativeModal() {
+            $("#creativeStream").attr('src', '');
+
+            $("#creativeModal").on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var parameters = {
+                        idVersion: datas[0],
+                        idVehicle: datas[2]
+                    };
+                    $.ajax({
+                        url: '@Url.Action("GetCreativePath", "Creative")',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: parameters,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                            alert("Erreur lors de la recuperation de url de la version");
+                        },
+                        success: function (response) {
+                            if (response != null) {
+                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
+                                var urlDowload = response.PathDownloadingFile;
+                                if (url) {
+                                    $("#creativeStream").attr('src', url);
+                                    $('#creativeModal h4').text("@(@GestionWeb.GetWebWord(1909, Model.SiteLanguage))");
+                                    $("#mediaLoader").addClass("hide");
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            $("#creativeModal").on('hide.bs.modal', function () {
+                $("#creativeStream").attr('src', '');
+                $("#mediaLoader").removeClass("hide");
+            });
+        }
+
+        function AutoPlayVisu() {
+            $("div[datavisu]").each(function (index) {
+                var datas = $(this).attr('datavisu').toString();
+                $(this).attr("id", "visuCarou" + index);
+                var active = "active";
+                datas = datas.split('],[');
+                visus = datas[0].replace(/\[|\]/g, '').split(",");
+                infos = datas[2].replace(/\[|\]/g, '').split(";");
+                paramsLink = datas[1].replace(/\[|\]/g, '').split(";");
+                if (visus.length > 1) {
+                    for (i = 0; i < visus.length; i++) {
+                        if (i != 0) active = "";
+                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                    }
+                } else {
+                    $(this).attr("id", "visu");
+
+                    if (paramsLink.length > 0) {
+                        $(this).html('<center><a href="#creativeModal" data-toggle="modal" data-creative="'+paramsLink+'"><img style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></a></center>');
+                    }
+                    else {
+                        $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
+                    }
+                    
+                }
+                for (j = infos.length - 1; j >= 0; j--) {
+                    if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
+                        tmp = infos[j].split(":");
+                        $(this).next().prepend('<div><span style="display:inline-block;min-width:150px;">' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                    }
+                }
+            });
+        }
+
+        CallGetPresentVehicles();
+        GetSubPeriodSelection();
+        AutoPlayCreativeModal();
+
+
+        //** Important charge les images au fur et a mesure que le teableau s'affiche
+        $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
+            AutoPlayVisu();
+
+            $(".carousel").each(function (index) {
+                $("#visuCarou" + index.toString()).carousel("pause");
+                $("#visuCarou" + index.toString()).find('.left').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("prev");
+                });
+                $("#visuCarou" + index.toString()).find('.right').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("next");
+                });
+            });
+
+        });
+
+
+        //OnChange Vehicle
+        function getEventTarget(e) {
+            e = e || window.event;
+            return e.target || e.srcElement;
+        }
+        $(document).on("click", "#PresentVehicles li a", function () {
+            $("#grid").addClass("hide");
+            $("#gridLoader").removeClass("hide");
+            userFilter.isVehicleChanged = true;
+            userFilter.paramsUrl.idVehicle = $(this).attr('id');
+            CallCreativeResult();
+
+        });
+
+        //Zoom visuel
+        $(document).on("click", "#pop", function () {
+            $('#imagepreview').attr('src', $(this).attr('src'));
+            $('#imagemodal').modal('show');
+        });
+
+    </script>
+}

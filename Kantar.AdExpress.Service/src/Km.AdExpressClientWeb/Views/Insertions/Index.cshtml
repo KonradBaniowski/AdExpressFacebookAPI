@@ -1,4 +1,4 @@
-﻿@model Km.AdExpressClientWeb.Models.Insertions.InsertionViewModel
+﻿@model Km.AdExpressClientWeb.Models.Shared.InsertionCreativeViewModel
 @using TNS.AdExpress.Domain.Translation;
 
 @{
@@ -162,7 +162,7 @@
                     $("#grid").igTreeGrid({
                         dataSource: ds.dataView(),
                         columns: cols,
-                        height: "600px",
+                        height: "650px",
                         autoGenerateColumns: false,
                         primaryKey: "ID",
                         foreignKey: "PID",
@@ -188,7 +188,7 @@
                     $("#grid").igTreeGrid({
                         dataSource: ds.dataView(),
                         columns: cols,
-                        height: "530px",
+                        height: "650px",
                         autoGenerateColumns: true,
                         primaryKey: "ID",
                         foreignKey: "PID",
@@ -425,7 +425,7 @@
                                 var urlDowload = response.PathDownloadingFile;
                                 if (url) {
                                     $("#creativeStream").attr('src', url);
-                                    $('#creativeModal h4').text("Spot");
+                                    $('#creativeModal h4').text("@(@GestionWeb.GetWebWord(1909, Model.SiteLanguage))");
                                     $("#mediaLoader").addClass("hide");
                                 }
                             }

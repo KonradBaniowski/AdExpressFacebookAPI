@@ -430,7 +430,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 str.Append("[" + GestionWeb.GetWebWord(843, _session.SiteLanguage) + "],");
 
                 //TODO a utiliser lorsque lorsque le chemin ne sera plus en dure depuis l'ancien site (dans index de insertions)
-                //str.Append("[~/Content/img/no_visu.jpg],"); 
+                //str.Append("[/Content/img/no_visu.jpg],"); 
             }
 
 
