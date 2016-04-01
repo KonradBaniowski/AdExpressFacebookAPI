@@ -408,6 +408,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
             }
 
+            _customerWebSession.Save();
+
             return options;
         }
 
@@ -503,6 +505,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region Options by Vehicle
+            Dictionary<Int64, VehicleInformation> VehicleInformationList = _customerWebSession.GetVehiclesSelected();
             string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
             string[] vehicles = vehicleListId.Split(',');
             bool autopromoEvaliantOption = false;
@@ -542,7 +545,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region PurchaseModeFilter
-            if (autopromoEvaliantOption)
+            if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId) && string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes))
                 _customerWebSession.SelectedPurchaseModeList = userFilter.PurchaseModeFilter.PurchaseModes;
             #endregion
 
