@@ -674,9 +674,9 @@ namespace TNS.AdExpress.Web.Core
         protected Dictionary<CstCustomer.Right.type, string> GetSelectedVehicles()
         {
 
-            int positionUnivers = 1;
+            int positionUnivers = 0;
             Dictionary<CstCustomer.Right.type, string> selection = new Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>();
-            string mediaList = "";
+            string mediaList = string.Empty;
 
             switch (_currentModule.Id)
             {
@@ -686,18 +686,16 @@ namespace TNS.AdExpress.Web.Core
                 //Get selected vehicles from the module " Lost /Won report "
                 case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
 
+                    //Get competing vehicles selection					                  
+                     mediaList = GetCompetitormedias();
+
                     //Get competing vehicles selection					
-                    while (_customerSession.CompetitorUniversMedia[positionUnivers] != null)
-                    {
-                        mediaList += _customerSession.GetSelection((TreeNode)_customerSession.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess) + ",";
-                        positionUnivers++;
-                    }
-                    if (mediaList.Length > 0) selection.Add(CstCustomer.Right.type.mediaAccess, mediaList.Substring(0, mediaList.Length - 1));
+                    if (!string.IsNullOrWhiteSpace(mediaList)) selection.Add(CstCustomer.Right.type.mediaAccess, mediaList);
                     break;
                 //Get selected vehicles from the module "Vehicle Portofolio"
                 case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
-                    mediaList = _customerSession.GetSelection((TreeNode)_customerSession.ReferenceUniversMedia, CstCustomer.Right.type.mediaAccess);
-                    if (mediaList.Length > 0) selection.Add(CstCustomer.Right.type.mediaAccess, mediaList);
+                    mediaList = GetCompetitormedias(positionUnivers);
+                    if (!string.IsNullOrWhiteSpace(mediaList)) selection.Add(CstCustomer.Right.type.mediaAccess, mediaList);
                     break;
                 //Get selected media classification from the module "Media schedule"
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
@@ -722,6 +720,18 @@ namespace TNS.AdExpress.Web.Core
                     throw (new CustomerDataFiltersException("Impossible to identify the current module "));
             }
             return selection;
+        }
+
+        private string GetCompetitormedias()
+        {
+            string mediaList = string.Empty;
+            List<long> ids = new List<long>();
+            for (int p = 0; p < _customerSession.PrincipalMediaUniverses.Count; p++)
+            {
+                ids.AddRange(_customerSession.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes));
+            }
+            if (ids.Count > 0) return String.Join(",", ids);
+            return mediaList;
         }
 
 
@@ -948,9 +958,9 @@ namespace TNS.AdExpress.Web.Core
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                 case CstWeb.Module.Name.CELEBRITIES:
-                    if (_customerSession.SecondaryMediaUniverses != null && _customerSession.SecondaryMediaUniverses.Count > 0)
+                    if (_customerSession.PrincipalMediaUniverses != null && _customerSession.PrincipalMediaUniverses.Count > 0)
                     {
-                        return _customerSession.SecondaryMediaUniverses[0];
+                        return _customerSession.PrincipalMediaUniverses[0];
                     }
                     break;
                 //Get selected products the module " Present /Absent report"
