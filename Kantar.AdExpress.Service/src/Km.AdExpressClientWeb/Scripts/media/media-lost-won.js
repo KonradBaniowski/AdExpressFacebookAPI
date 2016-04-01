@@ -79,6 +79,40 @@ $(document).ready(function () {
     }
 });
 
+$('#btnSubmitMediaSelection').on('click', function (e) {
+    e.preventDefault();
+    var msg = validate();
+    var isValide = !msg || msg.lentgh === 0;
+    if (!isValide) {//mycondition
+        bootbox.alert(msg);
+    }
+    else {
+        var selectedMediaSupportTrees = getSelectedMediaSupport();
+        var params = {
+            selectedMedia: idList,
+            mediaSupport: selectedMediaSupportTrees,
+            nextStep: "PeriodSelection"
+        };
+        $.ajax({
+            url: '/LostWon/SaveMediaSelection',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                if (data.RedirectUrl != null) {
+                    document.location = data.RedirectUrl;
+                }
+                if (data.ErrorMessage != null) {
+                    bootbox.alert(data.ErrorMessage);
+                }
+            }
+        });
+    }
+});
+
 //VALIDER TODO
 
 //FIL D ARRIANE
@@ -147,7 +181,7 @@ function getSelectedMediaSupport() {
 function NextStep(nextUrl, dis) {
     var msg = validate();
     if (msg) {
-        bootbox.alert(msg);
+        bootbox.alert(msg.replace(/\n/g, "<br />"));
         return;
     }
     $('#btnSubmitMarketSelection').off('click');
@@ -178,11 +212,19 @@ function NextStep(nextUrl, dis) {
 }
 
 function validate() {
+    //var message = "";
+    //var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
+    //if (nbElemInclus < 1) {
+    //    message = $('#Labels_ErrorMininumInclude').val();
+    //}
+    //return message;
     var message = "";
     var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
     if (nbElemInclus < 1) {
         message = $('#Labels_ErrorMininumInclude').val();
     }
+    if (idList.length == 0)
+        message += "\n" + $('#Labels_ErrorMediaSelected').val();
     return message;
 }
 

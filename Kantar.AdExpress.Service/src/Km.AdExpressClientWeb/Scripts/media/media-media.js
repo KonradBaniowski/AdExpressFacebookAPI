@@ -1,10 +1,131 @@
-﻿//VALIDER TODO
+﻿var idList = null;
+$(document).ready(function () {
+    var searchId = '18';
+    //var socialId=TBD
+    if ($('#Multiple').val() == "True") {
+
+        $('.tuile-medias[data-attr-id]').on('click', selectMultiple)
+        idList = [];
+        //CHECKBOX
+        var idCommon = [];
+        $('[name="HiddenIntList"]').each(function (index) {
+            idCommon.push($(this).attr("value"));
+        });
+        $('.tuile-medias[data-attr-id]').each(function (i, e) {
+            var elem = $(e);
+            var indexElem = elem.attr('data-attr-id');
+            var index = $.inArray(indexElem, idCommon);
+            if (index == -1)
+                elem.attr("data-grp", "A");
+            else
+                elem.attr("data-grp", "B");
+        });
+
+        $(':checkbox').on('change', preselection);
+
+        //FOCUS
+        $('[data-grp]').on('mouseenter', highlight);
+        $('[data-grp]').on('mouseleave', unhighlight);
+    }
+    else {
+        idList = "";
+        $('.tuile-medias[data-attr-id]').on('click', selectUnique)
+    }
+
+    function highlight() {
+        var grp = $(this).attr('data-grp');
+        $('[data-grp="' + grp + '"]').addClass('highlight');
+    }
+
+    function unhighlight() {
+        var grp = $(this).attr('data-grp');
+        $('[data-grp="' + grp + '"]').removeClass('highlight');
+    }
+
+    function selectUnique() {
+        $(this).toggleClass("tuile-medias tuile-medias-active")
+        var id = $(this).attr("data-attr-id");
+        if (idList !== null && idList !== undefined) {
+            $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
+        }
+        idList = id;
+    }
+
+    function selectMultiple(e) {
+        $(this).toggleClass("tuile-medias tuile-medias-active")
+        var id = $(this).attr("data-attr-id");
+
+        var index = $.inArray(id, idList);
+        if (index > -1) {
+            idList.splice(index, 1);
+        }
+        else {
+            idList.push(id);
+        }
+    }
+
+    function preselection() {
+        $('.tuile-medias-active').toggleClass("tuile-medias tuile-medias-active")
+        var attr = $(this).attr('checked');
+        if (typeof attr !== typeof undefined && attr !== false) {
+            $.each(idCommon, function (index, value) {
+                $('.tuile-medias-active[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
+            });
+            $(this).removeAttr("checked");
+        }
+        else {
+            $.each(idCommon, function (index, value) {
+                $('.tuile-medias[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
+            });
+            $(this).attr("checked", "");
+        }
+    }
+});
+
+$('#btnSubmitMediaSelection').on('click', function (e) {
+    e.preventDefault();
+    var msg = validate();
+    var isValide = !msg || msg.lentgh === 0;
+    if (!isValide) {//mycondition
+        bootbox.alert(msg);
+    }
+    else {
+        var selectedMediaSupportTrees = getSelectedMediaSupport();
+        var params = {
+            selectedMedia: idList,
+            mediaSupport: selectedMediaSupportTrees,
+            nextStep: "PeriodSelection"
+        };
+        $.ajax({
+            url: '/MediaSchedule/SaveMediaSelection',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                if (data.RedirectUrl != null) {
+                    document.location = data.RedirectUrl;
+                }
+                if (data.ErrorMessage != null) {
+                    bootbox.alert(data.ErrorMessage);
+                }
+            }
+        });
+    }
+});
+//VALIDER TODO
+
 var idMedias = [];
 //FIL D ARRIANE
 $('#Market').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
+    if (nextUrl === "MediaSchedule") {
+        nextUrl = "Index";
+    }
     NextStep(nextUrl, dis)
 });
 
@@ -12,6 +133,9 @@ $('#Dates').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
+    if (nextUrl === "MediaSchedule") {
+        nextUrl = "Index";
+    }
     NextStep(nextUrl, dis)
 });
 
@@ -19,6 +143,9 @@ $('#Results').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
+    if (nextUrl === "MediaSchedule") {
+        nextUrl = "Index";
+    }
     NextStep(nextUrl, dis)
 });
 
@@ -63,7 +190,7 @@ function validate() {
         });
     }
     if (idMedias.length == 0)
-        message = $('#Labels_ErrorMediaSelected');
+        message = $('#Labels_ErrorMediaSelected').val();
     return message;
 }
 

@@ -182,7 +182,7 @@ $('#Results').on('click', function (e) {
 function NextStep(nextUrl, dis) {
     var msg = validate();
     if (msg) {
-        bootbox.alert(msg);
+        bootbox.alert(msg.replace(/\n/g, "<br />"));
         return;
     }
     //var things = [];
@@ -218,6 +218,8 @@ function validate() {
     if (nbElemInclus < 1) {
         message = $('#Labels_ErrorMininumInclude').val();
     }
+    if (idList.length == 0)
+        message += "\n" + $('#Labels_ErrorMediaSelected').val();
     return message;
 }
 
@@ -235,7 +237,7 @@ $('#move-item').on('click', function () {
             var nbItemSrc = levelSrc.length;
             var nbItemDst = levelDst.length;
             if (nbItemDst + nbItemSrc > 1) {
-                bootbox.alert($('#Labels_ErrorMessageLimitUniverses').val());
+                bootbox.alert($('#Labels_ErrorOnlyOneItemAllowed').val());
                 return
             }
             $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
@@ -259,7 +261,7 @@ $('#move-item').on('click', function () {
         }
     }
     else {
-        bootbox.alert($('#Labels_ErrorItemExceeded').val());
+        bootbox.alert($('#Labels_ErrorOnlyOneItemAllowed').val());
     }
 });
 

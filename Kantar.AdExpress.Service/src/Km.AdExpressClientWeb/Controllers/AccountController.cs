@@ -10,6 +10,7 @@ using TNS.AdExpressI.Date.DAL;
 using System;
 using System.Reflection;
 using System.Security.Claims;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -29,7 +30,11 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            LoginViewModel model = new LoginViewModel
+            {
+                ErrorMessage = GestionWeb.GetWebWord(880, 33)
+            };
+            return View(model);
         }
 
         //
@@ -40,9 +45,9 @@ namespace Km.AdExpressClientWeb.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             //TO DO
-            ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
+           ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             //model.ReturnUrl = returnUrl;
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || String.IsNullOrEmpty(model.Email) || String.IsNullOrEmpty(model.Password))
             {
                 return View(model);
             }

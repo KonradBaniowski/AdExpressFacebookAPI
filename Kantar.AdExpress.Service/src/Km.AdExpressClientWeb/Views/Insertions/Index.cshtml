@@ -23,13 +23,6 @@
             <div id="detailLevelItem" class="col-md-12 bg-orange" style="background-color:black; color:white;"></div>
         </div>
 
-        <form>
-            <input name="ids" id="ids" type="hidden" value="@(Model.paramsUrl[0])" />
-            <input name="zoomDate" id="zoomDate" type="hidden" value="@(Model.paramsUrl[1])" />
-            <input name="idUnivers" id="idUnivers" type="hidden" value="@(Model.paramsUrl[2])" />
-            <input name="moduleId" id="moduleId" type="hidden" value="@(Model.paramsUrl[3])" />
-            <input name="idVehicle" id="idVehicle" type="hidden" value="@(Model.paramsUrl[4])" />
-        </form>
         <div class="col-md-12" style="margin-top:10px;">
             <center>
                 <p id="gridEmpty" class="hide">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
@@ -47,7 +40,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white !important;">&times;</button>
                     <h4 class="font-normal" style="color:white;">@(@GestionWeb.GetWebWord(869, Model.SiteLanguage))</h4>
                 </div>
                 <div class="modal-body">
@@ -96,376 +89,385 @@
         {{if ${Visu}.startsWith('[') && ${Visu}.endsWith(']') }}
             <!-- Slider -->
             <div class="row">
-                <div id="visuCarou" datavisu="${Visu}" class="carousel slide col-md-3" style="margin-bottom:10px;" >
+                <div style="width:350px; float:left" id="visuCarou" datavisu="${Visu}" class="carousel slide" style="margin-bottom:10px;" >
                     <div class="carousel-inner" role="listbox"></div>
 
                     <a class="left carousel-control">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span style="color:black;" class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                         <span class="sr-only">Precedent</span>
                     </a>
                     <a class="right carousel-control">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span  style="color:black;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                         <span class="sr-only">Suivant</span>
                     </a>
                 </div>
-                <div class="infos col-md-5"></div>
+                <div style="margin-left:350px;" class="infos"></div>
             </div>
         {{else}}
             ${Visu}
         {{/if}}
     </script>
     <script>
-        if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
+    if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
 
-            //GESTION DES ACTIVES CSS
-            //$(".btn-group > .btn").click(function () {
-            //    $(this).addClass("active").siblings().removeClass("active");
-            //});
+        //GESTION DES ACTIVES CSS
+        //$(".btn-group > .btn").click(function () {
+        //    $(this).addClass("active").siblings().removeClass("active");
+        //});
 
-            $("#grid").igTreeGrid({
-                //dataSource: data,
-                primaryKey: "Id",
-                width: "95%",
-                defaultColumnWidth: 200,
-                avgRowHeight: 60,
-                autoGenerateColumns: true
-            });
-            
-
-            var ds;
-            var cols;
-            var colsFixed;
-            var needFixedColumns = false;
-            var periodType = "Mois";
-
-            function GenericDetailLevelFilter() {
-                this.L1DetailValue = -1;
-                this.L2DetailValue = -1;
-                this.L3DetailValue = -1;
-            }
-
-            function UserFilter() {
-                this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
-            }
-
-            var userFilter = new UserFilter();
+        $("#grid").igTreeGrid({
+            //dataSource: data,
+            primaryKey: "Id",
+            width: "95%",
+            defaultColumnWidth: 200,
+            avgRowHeight: 60,
+            autoGenerateColumns: true
+        });
 
 
-            var renderGrid = function (success, error) {
-                if (success) {
+        var ds;
+        var cols;
+        var colsFixed;
+        var needFixedColumns = false;
+        var periodType = "Mois";
 
-                    $("#grid").igTreeGrid("destroy");
-                    $("#gridLoader").addClass("hide");
-                    $("#grid").removeClass("hide");
-                    if (needFixedColumns) {
-                        $("#grid").igTreeGrid({
-                            dataSource: ds.dataView(),
-                            columns: cols,
-                            height: "530px",
-                            autoGenerateColumns: false,
-                            primaryKey: "ID",
-                            foreignKey: "PID",
-                            width: "95%",
-                            features: [
-                                {
-                                    name: "MultiColumnHeaders"
-                                },
-                                {
-                                    name: "Paging",
-                                    mode: "allLevels",
-                                    pageSize: 25
-                                },
-                                {
-                                    name: "ColumnFixing",
-                                    fixingDirection: "left",
-                                    columnSettings: colsFixed
-                                }
-                            ]
-                        })
-                    }
-                    else {
-                        $("#grid").igTreeGrid({
-                            dataSource: ds.dataView(),
-                            columns: cols,
-                            height: "530px",
-                            autoGenerateColumns: true,
-                            primaryKey: "ID",
-                            foreignKey: "PID",
-                            width: "95%",
-                            features: [
-                                {
-                                    name: "MultiColumnHeaders"
-                                },
-                                {
-                                    name: "Paging",
-                                    mode: "allLevels",
-                                    pageSize: 25
-                                }
-                            ]
-                        })
-                    }
-                } else {
-                    alert("Error");
-                }
-            }
+        function GenericDetailLevelFilter() {
+            this.L1DetailValue = -1;
+            this.L2DetailValue = -1;
+            this.L3DetailValue = -1;
+        }
+        function paramsUrl() {
+            this.ids = "@(Model.paramsUrl[0])";
+            this.zoomDate = "@(Model.paramsUrl[1])";
+            this.idUnivers = "@(Model.paramsUrl[2])";
+            this.moduleId = "@(Model.paramsUrl[3])";
+            this.idVehicle = "@(Model.paramsUrl[4])";
+        }
 
-            function CallInsertionsResult(idV, zoomdt, vehicleChanged) {
-                $("#gridEmpty").addClass("hide");
-                var parameters = {
-                    ids: $('#ids').val(),
-                    zoomDate: zoomdt,
-                    idUnivers: $('#idUnivers').val(),
-                    moduleId: $('#moduleId').val(),
-                    idVehicle: idV,
-                    isVehicleChanged: vehicleChanged
-                };
+        function UserFilter() {
+            this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
+            this.paramsUrl = new paramsUrl();
+            this.isVehicleChanged = true;
+        }
 
-                $.ajax({
-                    url: '@Url.Action("InsertionsResult", "Insertions")',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "POST",
-                    datatype: "json",
-                    data: parameters,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                        alert("Erreur");
-                    },
-                    success: function (data) {
-                        if (data != null && data != "") {
-                            dataTreeGrid = data.datagrid;
-                            colsFixed = data.columnsfixed;
-                            needFixedColumns = data.needfixedcolumns;
+        var userFilter = new UserFilter();
 
-                            var schema = new $.ig.DataSchema("array", {
-                                fields: data.schema
-                            });
+        var renderGrid = function (success, error) {
+            if (success) {
 
-                            cols = data.columns
-                            for (i = 0; i < cols.length; i++) {
-                                if (cols[i].key == "Spot")
-                                    cols[i].template = $("#colSpotTmpl").html();
-                                else if(cols[i].key == "Visu")
-                                    cols[i].template = $("#colVisuTmpl").html();
-                            }
-
-                            ds = new $.ig.DataSource({
-                                type: "json",
-                                schema: schema,
-                                dataSource: dataTreeGrid,
-                                callback: renderGrid
-                            });
-
-                            ds.dataBind();
-                        }
-                        else {
-                            $("#gridLoader").addClass("hide");
-                            $("#gridEmpty").removeClass("hide");
-                            $("#grid").addClass("hide");
-                        }
-                    }
-                });
-            }
-
-
-            function CallGetPresentVehicles() {
-
-                var parameters = {
-                    ids: $('#ids').val(),
-                    idUnivers: $('#idUnivers').val(),
-                    moduleId: $('#moduleId').val(),
-                };
-
-                $.ajax({
-                    url: '@Url.Action("GetPresentVehicles", "Insertions")',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "POST",
-                    datatype: "json",
-                    data: parameters,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                        alert("Erreur");
-                    },
-                    success: function (response) {
-                        if (response != null) {
-                            var data = JSON.parse(response);
-                            var strHTML = "";
-                            var idV = data[0][0];
-                            if (!(0 === $('#idVehicle').val()) && $('#idVehicle').val())
-                                idV = $('#idVehicle').val();
-
-                            $.each(data, function (i, item) {
-                                if (idV == item[i]) {
-                                    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                                } else {
-                                    strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                                }
-                            });
-                            $('#PresentVehicles').html(strHTML);
-                            $('#idVehicle').val(idV.toString());
-
-                            CallInsertionsResult(idV, '', true);
-                            GetDetailLevelItem(idV);
-
-                            $("#HeaderLoader").addClass("hide");
-                            $("#HeaderElmt").removeClass("hide");
-                            $("#gridLoader").removeClass("hide");
-                        }
-                    }
-                });
-            }
-
-
-            function GetSubPeriodSelection(zoomDateParam) {
-                var params = {
-                    zoomDate: zoomDateParam
-                };
-                $.ajax({
-                    url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "POST",
-                    data: params,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        if (data != null) {
-                            $('#subPeriodSelection').html(data);
-                            $('#allSubPeriod').removeClass("hidden");
-                            $("#leave-zoom").addClass("hide");
-                            $(".sub-period-btn").on('click', function (e) {
-                                $(".btn-default-sub-period").prop('disabled', false);
-                                $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
-                                $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
-                                $(this).prop('disabled', true);
-                                $("#grid").addClass("hide");
-                                $("#gridLoader").removeClass("hide");
-                                CallInsertionsResult($('#idVehicle').val(),$(this).attr("period"),false);
-                            });
-                            $(".sub-period-btn").on('mouseenter', function (e) {
-                                previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
-                                $("#subPeriodLabel").text($(this).attr("periodlabel"));
-                            });
-                            $(".sub-period-btn").on('mouseleave', function (e) {
-                                $("#subPeriodLabel").text(previousSubPeriodLabel);
-                            });
-                        }
-                    }
-                });
-            }
-
-            function GetDetailLevelItem(idV) {
-                var params = {
-                    idVehicle: idV
-                };
-                $.ajax({
-                    url: '@Url.Action("GetDetailLevel", "Insertions")',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "POST",
-                    data: params,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        if (data != null) {
-                            $('#detailLevelItem').html(data);
-                        }
-                    },
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                        alert("detailLevel error")
-                    }
-                });
-            }
-
-            function AutoPlayCreativeModal() {
-
-                $("#creativeStream").attr('src', '');
-
-                $("#creativeModal").on('shown.bs.modal', function (event) {
-                    var button = $(event.relatedTarget);// Button that triggered the modal
-                    var datas = button.data('creative').toString(); // Extract info from data-* attributes
-                    datas = datas.replace(/\[|\]/g, '');
-                    datas = datas.split(",");
-
-                    if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
-                        alert("Les fichiers média ne sont pas disponibles.");
-                    }
-                    else {
-                        var parameters = {
-                            idVersion: datas[0],
-                            idVehicle: datas[2]
-                        };
-                        $.ajax({
-                            url: '@Url.Action("GetCreativePath", "Insertions")',
-                            contentType: "application/x-www-form-urlencoded",
-                            type: 'POST',
-                            datatype: 'JSON',
-                            data: parameters,
-                            error: function (xmlHttpRequest, errorText, thrownError) {
-                                alert("Erreur lors de la recuperation de url de la version");
+                $("#grid").igTreeGrid("destroy");
+                $("#gridLoader").addClass("hide");
+                $("#grid").removeClass("hide");
+                if (needFixedColumns) {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: "600px",
+                        autoGenerateColumns: false,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        width: "1140px",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
                             },
-                            success: function (response) {
-                                if (response != null) {
-                                    var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
-                                    var urlDowload = response.PathDownloadingFile;
-                                    if (url) {
-                                        $("#creativeStream").attr('src', url);
-                                        $('#creativeModal h4').text("Spot");
-                                        $("#mediaLoader").addClass("hide");
-                                    }
-                                }
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 25
+                            },
+                            {
+                                name: "ColumnFixing",
+                                fixingDirection: "left",
+                                columnSettings: colsFixed
+                            }
+                        ]
+                    })
+                }
+                else {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: "530px",
+                        autoGenerateColumns: true,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        width: "95%",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 25
+                            }
+                        ]
+                    })
+                }
+            } else {
+                alert("Error");
+            }
+        }
+
+        function CallInsertionsResult() {
+            $("#gridEmpty").addClass("hide");
+            var parameters = {
+                ids: userFilter.paramsUrl.ids,
+                zoomDate: userFilter.paramsUrl.zoomDate,
+                idUnivers: userFilter.paramsUrl.idUnivers,
+                moduleId: userFilter.paramsUrl.moduleId,
+                idVehicle: userFilter.paramsUrl.idVehicle,
+                isVehicleChanged: userFilter.isVehicleChanged
+            };
+
+            $.ajax({
+                url: '@Url.Action("InsertionsResult", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("Erreur");
+                },
+                success: function (data) {
+                    if (data != null && data != "") {
+                        dataTreeGrid = data.datagrid;
+                        colsFixed = data.columnsfixed;
+                        needFixedColumns = data.needfixedcolumns;
+
+                        var schema = new $.ig.DataSchema("array", {
+                            fields: data.schema
+                        });
+
+                        cols = data.columns
+                        for (i = 0; i < cols.length; i++) {
+                            if (cols[i].key == "Spot")
+                                cols[i].template = $("#colSpotTmpl").html();
+                            else if(cols[i].key == "Visu")
+                                cols[i].template = $("#colVisuTmpl").html();
+                        }
+
+                        ds = new $.ig.DataSource({
+                            type: "json",
+                            schema: schema,
+                            dataSource: dataTreeGrid,
+                            callback: renderGrid
+                        });
+
+                        ds.dataBind();
+                    }
+                    else {
+                        $("#gridLoader").addClass("hide");
+                        $("#gridEmpty").removeClass("hide");
+                        $("#grid").addClass("hide");
+                    }
+                }
+            });
+        }
+
+
+        function CallGetPresentVehicles() {
+
+            var parameters = {
+                ids: userFilter.paramsUrl.ids,
+                moduleId: userFilter.paramsUrl.moduleId,
+                idUnivers: userFilter.paramsUrl.idUnivers,
+            };
+
+            $.ajax({
+                url: '@Url.Action("GetPresentVehicles", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("Erreur");
+                },
+                success: function (response) {
+                    if (response != null) {
+                        var data = JSON.parse(response);
+                        var strHTML = "";
+                        var idV = data[0][0];
+                        if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
+                            idV = userFilter.paramsUrl.idVehicle;
+
+                        $.each(data, function (i, item) {
+                            if (idV == item[i]) {
+                                strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                            } else {
+                                strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
                             }
                         });
+                        $('#PresentVehicles').html(strHTML);
+                        userFilter.paramsUrl.idVehicle = idV.toString();
+                        userFilter.isVehicleChanged = true;
+                        userFilter.paramsUrl.zoomDate = "";
+
+                        GetDetailLevelItem();
+                        CallInsertionsResult();
+
+                        $("#HeaderLoader").addClass("hide");
+                        $("#HeaderElmt").removeClass("hide");
+                        $("#gridLoader").removeClass("hide");
                     }
-                });
-
-                $("#creativeModal").on('hide.bs.modal', function () {
-                    $("#creativeStream").attr('src', '');
-                    $("#mediaLoader").removeClass("hide");
-                });
-            }
+                }
+            });
+        }
 
 
-            function AutoPlayVisu() {
-                $("div[datavisu]").each(function (index) {
-                    var datas = $(this).attr('datavisu').toString();
-                    $(this).attr("id", "visuCarou" + index);
-                    var active = "active";
-                    datas = datas.split('],[');
-                    visus = datas[0].replace(/\[|\]/g, '').split(",");
-                    infos = datas[1].replace(/\[|\]/g, '').split(";");
-                    if (visus.length > 1) {
-                        for (i = 0; i < visus.length; i++) {
-                            if (i != 0) active = "";
-                            $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+        function GetSubPeriodSelection() {
+            var params = {
+                zoomDate: userFilter.paramsUrl.zoomDate
+            };
+            $.ajax({
+                url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                        $('#subPeriodSelection').html(data);
+                        $('#allSubPeriod').removeClass("hidden");
+                        $("#leave-zoom").addClass("hide");
+                        $(".sub-period-btn").on('click', function (e) {
+                            $(".btn-default-sub-period").prop('disabled', false);
+                            $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+                            $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+                            $(this).prop('disabled', true);
+                            $("#grid").addClass("hide");
+                            $("#gridLoader").removeClass("hide");
+                            userFilter.paramsUrl.zoomDate = $(this).attr("period");
+                            userFilter.isVehicleChange = false;
+                            CallInsertionsResult();
+                        });
+                        $(".sub-period-btn").on('mouseenter', function (e) {
+                            previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+                            $("#subPeriodLabel").text($(this).attr("periodlabel"));
+                        });
+                        $(".sub-period-btn").on('mouseleave', function (e) {
+                            $("#subPeriodLabel").text(previousSubPeriodLabel);
+                        });
+                    }
+                }
+            });
+        }
+
+        function GetDetailLevelItem() {
+            var params = {
+                idVehicle: userFilter.paramsUrl.idVehicle
+            };
+            $.ajax({
+                url: '@Url.Action("GetDetailLevel", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                        $('#detailLevelItem').html(data);
+                    }
+                },
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("detailLevel error")
+                }
+            });
+        }
+
+        function CallSetDetailLvl() {
+            $.ajax({
+                url: '@Url.Action("SetDetailLevel", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: userFilter,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    userFilter.isVehicleChanged = false;
+                    CallInsertionsResult();
+                }
+            });
+        }
+
+        function AutoPlayCreativeModal() {
+            $("#creativeStream").attr('src', '');
+
+            $("#creativeModal").on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var parameters = {
+                        idVersion: datas[0],
+                        idVehicle: datas[2]
+                    };
+                    $.ajax({
+                        url: '@Url.Action("GetCreativePath", "Insertions")',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: parameters,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                            alert("Erreur lors de la recuperation de url de la version");
+                        },
+                        success: function (response) {
+                            if (response != null) {
+                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
+                                var urlDowload = response.PathDownloadingFile;
+                                if (url) {
+                                    $("#creativeStream").attr('src', url);
+                                    $('#creativeModal h4').text("Spot");
+                                    $("#mediaLoader").addClass("hide");
+                                }
+                            }
                         }
-                    } else {
-                        $(this).attr("id", "visu");
-                        $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" /></center>')
-                    }
-                    for (j = infos.length - 1; j >= 0; j--) {
-                        if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
-                            tmp = infos[j].split(":");
-                            $(this).next().prepend('<div style="width:100%"><span style="display:inline-block;min-width:100px;">' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
-                        }
-                    }
-                });
-            }
+                    });
+                }
+            });
 
-            function CallSetDetailLvl() {
-                $.ajax({
-                    url: '@Url.Action("SetDetailLevel", "Insertions")',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "POST",
-                    datatype: "json",
-                    data: userFilter,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        CallInsertionsResult($('#idVehicle').val(), '',false);
+            $("#creativeModal").on('hide.bs.modal', function () {
+                $("#creativeStream").attr('src', '');
+                $("#mediaLoader").removeClass("hide");
+            });
+        }
+
+        function AutoPlayVisu() {
+            $("div[datavisu]").each(function (index) {
+                var datas = $(this).attr('datavisu').toString();
+                $(this).attr("id", "visuCarou" + index);
+                var active = "active";
+                datas = datas.split('],[');
+                visus = datas[0].replace(/\[|\]/g, '').split(",");
+                infos = datas[1].replace(/\[|\]/g, '').split(";");
+                if (visus.length > 1) {
+                    for (i = 0; i < visus.length; i++) {
+                        if (i != 0) active = "";
+                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
                     }
-                });
-            }
-
-
+                } else {
+                    $(this).attr("id", "visu");
+                    $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
+                }
+                for (j = infos.length - 1; j >= 0; j--) {
+                    if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
+                        tmp = infos[j].split(":");
+                        $(this).next().prepend('<div><span style="display:inline-block;min-width:100px;">' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                    }
+                }
+            });
+        }
 
         CallGetPresentVehicles();
-        GetSubPeriodSelection('');
+        GetSubPeriodSelection();
         AutoPlayCreativeModal();
 
 
@@ -494,11 +496,12 @@
         $(document).on("click", "#PresentVehicles li a", function () {
             $("#grid").addClass("hide");
             $("#gridLoader").removeClass("hide");
-            $('#idVehicle').val($(this).attr('id'));
-            CallInsertionsResult($(this).attr('id'), '', true);
-            GetDetailLevelItem($(this).attr('id'));
-        });
+            userFilter.isVehicleChanged = true;
+            userFilter.paramsUrl.idVehicle = $(this).attr('id');
+            GetDetailLevelItem();
+            CallInsertionsResult();
 
+        });
 
         function ResetLnLevel(lx, ly) {
             if ($(lx).val() == $(ly).val())

@@ -27,9 +27,6 @@ namespace Km.AdExpressClientWeb
 
             #endregion
 
-            bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
-                  "~/Scripts/module-selection/module-selection.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/respond.js",
@@ -55,6 +52,12 @@ namespace Km.AdExpressClientWeb
                       "~/Content/treegrid.css",
                       "~/Content/options-control.css",
                       "~/Content/spinner.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
+                  "~/Scripts/module-selection/module-selection.js"));
+            bundles.Add(new ScriptBundle("~/bundles/account").Include(
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/Account/account.js"));
 
             #region Javascript for Market & Media
             #region Plan Media

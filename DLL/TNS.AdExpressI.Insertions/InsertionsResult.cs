@@ -1854,6 +1854,7 @@ namespace TNS.AdExpressI.Insertions
         {
             return file;
         }
+        #endregion
 
         public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
@@ -1885,6 +1886,7 @@ namespace TNS.AdExpressI.Insertions
                     {
                         columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "*" });
                         schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
+                        columnsFixed.Add(new { columnKey = _data.NewHeaders.Root[j].Label , isFixed = true, allowFixing = true });
                     }
                 }
                 else
@@ -1911,6 +1913,8 @@ namespace TNS.AdExpressI.Insertions
                     throw (new Exception(err.Message));
                 }
 
+                if (columns.Count > 920)
+                    gridResult.NeedFixedColumns = true;
                 gridResult.HasData = true;
                 gridResult.Columns = columns;
                 gridResult.Schema = schemaFields;
@@ -1943,7 +1947,6 @@ namespace TNS.AdExpressI.Insertions
         }
         #endregion
 
-        #endregion
 
     }
 }
