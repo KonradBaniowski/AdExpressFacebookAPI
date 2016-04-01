@@ -37,5 +37,6 @@ namespace Km.AdExpressClientWeb.Models
         public string ErrorOverLimit { get; set; }//w2264==> only 200items
         public string SaveUnivers { get; set; }//769
         public string AddConcurrent { get; set;}//3037
+        public string ErrorSupportAlreadyDefine { get; set; } // 3038
     }
 }

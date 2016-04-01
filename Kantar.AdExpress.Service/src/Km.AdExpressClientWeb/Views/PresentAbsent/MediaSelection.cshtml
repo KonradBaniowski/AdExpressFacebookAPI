@@ -18,6 +18,7 @@
         @Html.HiddenFor(e => e.Labels.ErrorItemExceeded)
         @Html.HiddenFor(e => e.Labels.ErrorMediaSelected)
         @Html.HiddenFor(e => e.Labels.CurrentController)
+        @Html.HiddenFor(e => e.Labels.ErrorSupportAlreadyDefine)
         @foreach (int i in Model.IdMediasCommon)
         {
             <input type="hidden" name="HiddenIntList" value="@i" />

@@ -52,6 +52,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ErrorOnlyOneItemAllowed = 3036;
         public const long ErrorOverLimit = 2264;//==> only 200items
         public const long AddConcurrentCode = 3037;
+        /// <summary>
+        /// Support is defined in another tree
+        /// </summary>
+        public const long SupportAlreadyDefine = 3038;
         #endregion
     }
 }

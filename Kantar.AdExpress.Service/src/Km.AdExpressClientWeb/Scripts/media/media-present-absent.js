@@ -262,12 +262,12 @@ $('#move-item').on('click', function () {
     if (levelSrc.length >= 1) {
         var universSrc = $('.ui-selectee.ui-selected').closest('.panel-default').attr('data-universe');
         if (universSrc == 14) {
-            var isLock = $('#' + idTab).attr('lock');
-            if (isLock == undefined || isLock == false) {
+            //var isLock = $('#' + idTab).attr('lock');
+            //if (isLock == undefined || isLock == false) {
                 var universDst = $('.panel-body[data-tree=' + indexTab + '][data-level=' + universSrc + '] > ul');
                 var levelAllDst = $('.tab-content li');
                 if (levelAllDst.length < 200) {
-                    $('#collapse-' + universSrc + '-' + indexTab).collapse('show');
+                    
                     $.each(levelSrc, function (index, value) {
                         var item = $(value).clone();
                         var find = false;
@@ -275,10 +275,11 @@ $('#move-item').on('click', function () {
 
                             if (item.val() == $(value).val()) {
                                 find = true;
-                                //bootbox.alert('deja mis qq part');
+                                bootbox.alert($('#Labels_ErrorSupportAlreadyDefine').val());
                             }
                         });
                         if (!find) {
+                            $('#collapse-' + universSrc + '-' + indexTab).collapse('show');
                             var buttonSupp = $('<button/>');
                             buttonSupp.addClass('pull-right');
                             var icon = $('<i/>');
@@ -292,10 +293,10 @@ $('#move-item').on('click', function () {
                 else {
                     console.log('DEPASEE LA LIMIT');
                 }
-            }
-            else {
-                bootbox.alert('lock');
-            }
+            //}
+            //else {
+            //    bootbox.alert('lock');
+            //}
         }
         else {
             bootbox.alert($('#Labels_ErrorNoSupport').val());
