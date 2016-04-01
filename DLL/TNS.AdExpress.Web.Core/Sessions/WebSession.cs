@@ -4013,8 +4013,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns></returns>	
         public bool isCompetitorMediaSelected()
         {
-            if (this.CompetitorUniversMedia.Count > 0) return (true);
-            else return (false);
+            return (_principalMediaUniverses != null && _principalMediaUniverses.Count > 1);
         }
 
         /// <summary>
@@ -4023,8 +4022,8 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>True si des médias ont été enregistrées, false sinon</returns>
         public bool isReferenceMediaSelected()
         {
-            if (this.referenceUniversMedia.Nodes.Count > 0) return (true);
-            else return (false);
+            //if (this.referenceUniversMedia.Nodes.Count > 0) return (true);
+            return (_principalMediaUniverses !=null &&  _principalMediaUniverses.Count>0);         
         }
 
 
@@ -4034,15 +4033,16 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns></returns>
         public int mediaUniversNumber()
         {
-            int mediaNumber = 0;
+            //OLD
+            //int mediaNumber = 0;
 
-            if (this.ReferenceUniversMedia.Nodes.Count > 0)
-            {
-                mediaNumber++;
-            }
-            mediaNumber += this.CompetitorUniversMedia.Count;
+            //if (this.ReferenceUniversMedia.Nodes.Count > 0)
+            //{
+            //    mediaNumber++;
+            //}
+            //mediaNumber += this.CompetitorUniversMedia.Count;
 
-            return (mediaNumber);
+            return _principalMediaUniverses.Count;
 
         }
 

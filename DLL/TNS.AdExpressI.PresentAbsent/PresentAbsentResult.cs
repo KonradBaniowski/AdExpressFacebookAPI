@@ -2014,10 +2014,10 @@ namespace TNS.AdExpressI.PresentAbsent
         {
             GridResult gridResult = new GridResult();
             ResultTable resultTable = GetResult();
-            string mediaSchedulePath = "/MediaSchedule";
+            string mediaSchedulePath = "/MediaSchedulePopUp";
             string insertionPath = "/Insertions";
-            string versionPath = "/Insertions";
-           
+            string versionPath = "/Creative";
+
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
             {
                 gridResult.HasData = false;

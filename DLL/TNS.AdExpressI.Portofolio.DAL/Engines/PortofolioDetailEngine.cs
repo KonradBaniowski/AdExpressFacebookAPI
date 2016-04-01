@@ -306,8 +306,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql += " " + dataJointForInsert;
 
 				#region Media selection
-				mediaList += _webSession.GetSelection((TreeNode)_webSession.ReferenceUniversMedia, CustormerConstantes.Right.type.mediaAccess);
-				if (mediaList.Length > 0) sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media in (" + mediaList + ")";
+				sql += GetMediaSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 				#endregion
 
 				#region Products Selection

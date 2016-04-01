@@ -2292,6 +2292,7 @@
     <item mnemonic="w3034" type="System.String">Vous ne pouvez déplacer qu'un seul support.</item>
     <item mnemonic="w3035" type="System.String">L'élement que vous déplacez n'est pas un support.</item>
     <item mnemonic="w3036" type="System.String">Vous ne pouvez sélectionner qu'un élément.</item>
-    <item mnemonic="w3037" type="System.String">Ajouter un concurrent</item>    
+    <item mnemonic="w3037" type="System.String">Ajouter un concurrent</item>
+    <item mnemonic="w3038" type="System.String">Ce support a déjà été ajouté dans l'arbre de référence ou dans un concurrent</item>
   </items>
 </localization>
