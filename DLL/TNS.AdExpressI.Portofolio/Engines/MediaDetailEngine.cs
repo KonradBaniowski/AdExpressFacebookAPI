@@ -585,7 +585,8 @@ namespace TNS.AdExpressI.Portofolio.Engines
                         {
                             if (dr[dayName[i]] != null && dr[dayName[i]] != System.DBNull.Value && !dr[dayName[i]].ToString().Equals("0"))
                             {
-                             
+                                                               
+
                                 k++;
                                 gridData[currentLineIndex, k] = Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp);
                                     /*string.Format("<a href='javascript:window.open(\"{0}?{1}&{2}&{3}&{4}\", \"\", \"width=auto, height=auto\");'>{5}</a>",

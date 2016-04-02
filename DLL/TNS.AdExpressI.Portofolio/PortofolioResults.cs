@@ -321,7 +321,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                                      , mediaSchedulePath
                                      , link);
                                 }
@@ -337,7 +337,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                              , insertionPath
                              , link);
                                 }
@@ -354,7 +354,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                              , versionPath
                              , link);
                                 }
