@@ -404,18 +404,19 @@ namespace TNS.AdExpressI.Insertions.Cells
             bool hasData = false;
 
             string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
+            str.AppendFormat("{0}", pathes);
             foreach (string s in _visuals)
             {
 
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp)
                 {
-                    if (!first)
-                        str.AppendFormat(",{0}", st);
-                    else {
-                        str.AppendFormat("{0}", st);
-                        first = false;
-                    }
+                    //if (!first)
+                    //    str.AppendFormat(",{0}", st);
+                    //else {
+                    //    str.AppendFormat("{0}", st);
+                    //    first = false;
+                    //}
 
                     hasVisual = true;
                 }

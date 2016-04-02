@@ -391,9 +391,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         }
         #endregion
 
-        #endregion
-
-
+        #region RenderString
         public override string RenderString()
         {
             StringBuilder str = new StringBuilder();
@@ -405,7 +403,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             string value;
             string[] values;
             int i = -1;
-            string tmpLink = "";
+            string tmpLink = "[],";
 
 
             #region visuals
@@ -416,7 +414,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 foreach (string st in tmp)
                 {
                     //SetOpenDownloadScript(str, s);
-                    str.Append("App_Themes/KMAE-Fr/Images/Common/audioFile.gif");
+                    //str.Append("App_Themes/KMAE-Fr/Images/Common/audioFile.gif");
                     tmpLink = "[" + _idVersion + "," + _session.IdSession + "," + _vehicle.DatabaseId + "],";
                     hasVisual = true;
                 }
@@ -428,7 +426,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 str.Clear();
                 str.Append("[" + GestionWeb.GetWebWord(843, _session.SiteLanguage) + "],");
 
-                //TODO a utiliser lorsque lorsque le chemin ne sera plus en dure depuis l'ancien site (dans index de insertions)
+                //TODO a utiliser lorsque lorsque le chemin ne sera plus en dure depuis l'ancien site (dans index de creative)
                 //str.Append("[/Content/img/no_visu.jpg],"); 
             }
             #endregion
@@ -480,7 +478,8 @@ namespace TNS.AdExpressI.Insertions.Cells
                                     }
                                     #endregion
 
-                                    tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
+                                    //tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
+                                    tmpStr.AppendFormat("{1};", openBaliseA, s, closeBaliseA);
                                 }
                                 else
                                 {
@@ -490,13 +489,14 @@ namespace TNS.AdExpressI.Insertions.Cells
                         }
                         else
                         {
-                            tmpStr.AppendFormat("{0}", value);
+                            tmpStr.AppendFormat("{0};", value);
                         }
                     }
                     cols.Add(tmpStr.ToString());
                 }
             }
 
+            #region Info
             int nbLine = (int)Math.Ceiling(((double)cols.Count) / 2.0);
             for (int l = 0; l < nbLine; l++)
             {
@@ -511,14 +511,20 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
                 str.Append(";");
             }
+            #endregion
 
             str.Append("]");
             #endregion
 
             return str.ToString();
 
-
         }
+        #endregion
+
+        #endregion
+
+
+
     }
 
 }

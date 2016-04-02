@@ -35,13 +35,13 @@
 
     </div> <!-- /container full -->
 
-    <!-- Modal HTML -->
+    <!-- Modal lien video radio -->
     <div id="creativeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white !important;">&times;</button>
-                    <h4 class="font-normal" style="color:white;">@(@GestionWeb.GetWebWord(869, Model.SiteLanguage))</h4>
+                    <h4 class="font-normal" style="color:white;"><i></i></h4>
                 </div>
                 <div class="modal-body">
                     <div class="media video-audio-container">
@@ -50,6 +50,9 @@
                             <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="" download="" class="btn btn-valider w-full">@(@GestionWeb.GetWebWord(874, Model.SiteLanguage))&nbsp;<i class="fa fa-arrow-down"></i></a>
                 </div>
             </div>
         </div>
@@ -80,7 +83,7 @@
 
     <script id="colSpotTmpl" type="text/template">
         {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
-            <a href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa fa-play'></i></a>
+            <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa fa-2x'></i></a>
         {{else}}
             ${Spot}
         {{/if}}
@@ -397,6 +400,7 @@
             $("#creativeStream").attr('src', '');
 
             $("#creativeModal").on('shown.bs.modal', function (event) {
+                $('#creativeModal h4 > i').attr("class", 'fa iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
                 var button = $(event.relatedTarget);// Button that triggered the modal
                 var datas = button.data('creative').toString(); // Extract info from data-* attributes
                 datas = datas.replace(/\[|\]/g, '');
@@ -422,11 +426,15 @@
                         success: function (response) {
                             if (response != null) {
                                 var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
-                                var urlDowload = response.PathDownloadingFile;
+                                var urlDownload = "http://adexpress.kantarmedia.fr/" +  response.PathDownloadingFile;
                                 if (url) {
                                     $("#creativeStream").attr('src', url);
-                                    $('#creativeModal h4').text("@(@GestionWeb.GetWebWord(1909, Model.SiteLanguage))");
                                     $("#mediaLoader").addClass("hide");
+                                }
+                                if (urlDownload) {
+                                    $("#creativeModal .modal-footer").removeClass("hide");
+                                    $("#creativeModal .modal-footer > a").attr("href", urlDownload);
+                                    //$("#creativeModal .modal-footer > a").attr("download", parameters.idVersion);
                                 }
                             }
                         }
@@ -436,6 +444,7 @@
 
             $("#creativeModal").on('hide.bs.modal', function () {
                 $("#creativeStream").attr('src', '');
+                $("#creativeModal .modal-footer").addClass("hide");
                 $("#mediaLoader").removeClass("hide");
             });
         }
@@ -483,6 +492,10 @@
                 $("#visuCarou" + index.toString()).find('.right').click(function () {
                     $("#visuCarou" + index.toString()).carousel("next");
                 });
+            });
+
+            $(".triggerModal > .fa").each(function () {
+                $(this).addClass('iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
             });
 
         });

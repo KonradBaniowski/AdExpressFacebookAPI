@@ -1950,7 +1950,7 @@ namespace TNS.AdExpressI.Insertions
             else
             {
                 gridResult.HasData = false;
-                return (gridResult);
+                return gridResult;
             }
 
             return gridResult;
