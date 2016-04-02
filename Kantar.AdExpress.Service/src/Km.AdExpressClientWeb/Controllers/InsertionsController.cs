@@ -1,6 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
-using Km.AdExpressClientWeb.Models.Insertions;
 using Km.AdExpressClientWeb.Models.Shared;
 using Newtonsoft.Json;
 using System;
@@ -34,7 +33,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var model = new InsertionViewModel()
+            var model = new InsertionCreativeViewModel()
             {
                 paramsUrl = new List<string>(),
                 SiteLanguage = 33, // Default

@@ -393,6 +393,132 @@ namespace TNS.AdExpressI.Insertions.Cells
 
         #endregion
 
+
+        public override string RenderString()
+        {
+            StringBuilder str = new StringBuilder();
+            str.Append("[");
+
+            if (_newGroup)
+                str.Append("-");
+
+            string value;
+            string[] values;
+            int i = -1;
+            string tmpLink = "";
+
+
+            #region visuals
+            bool hasVisual = false;
+            foreach (string s in _visuals)
+            {
+                string[] tmp = s.Split(',');
+                foreach (string st in tmp)
+                {
+                    //SetOpenDownloadScript(str, s);
+                    str.Append("App_Themes/KMAE-Fr/Images/Common/audioFile.gif");
+                    tmpLink = "[" + _idVersion + "," + _session.IdSession + "," + _vehicle.DatabaseId + "],";
+                    hasVisual = true;
+                }
+            }
+            str.Append("],");
+
+            if (!hasVisual)
+            {
+                str.Clear();
+                str.Append("[" + GestionWeb.GetWebWord(843, _session.SiteLanguage) + "],");
+
+                //TODO a utiliser lorsque lorsque le chemin ne sera plus en dure depuis l'ancien site (dans index de insertions)
+                //str.Append("[/Content/img/no_visu.jpg],"); 
+            }
+            #endregion
+
+            str.Append(tmpLink);
+
+            #region Init Informations
+            str.Append("[");
+            List<string> cols = new List<string>();
+            bool hasData = false;
+
+            foreach (GenericColumnItemInformation g in _columns)
+            {
+                i++;
+                _values[i].Parent = this.Parent;
+                value = _values[i].ToString();
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual &&
+                    g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster
+                    && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                {
+
+                    var tmpStr = new StringBuilder();
+                    tmpStr.AppendFormat("{0}", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
+                    tmpStr.Append(":");
+                    hasData = false;
+                    if (_values[i] != null)
+                    {
+                        if (!(_values[i] is CellUnit))
+                        {
+                            values = value.Split(';');
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
+                                    tmpStr.Append(";");
+                                }
+                                hasData = true;
+                                if (g.Id == GenericColumnItemInformation.Columns.advertiser)
+                                {
+
+                                    #region GAD
+                                    string openBaliseA = string.Empty;
+                                    string closeBaliseA = string.Empty;
+
+                                    if (_adressId != -1)
+                                    {
+                                        openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}')\">", _session.IdSession, value, _adressId);
+                                        closeBaliseA = "</a>;";
+                                    }
+                                    #endregion
+
+                                    tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
+                                }
+                                else
+                                {
+                                    tmpStr.AppendFormat("{0};", s);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            tmpStr.AppendFormat("{0}", value);
+                        }
+                    }
+                    cols.Add(tmpStr.ToString());
+                }
+            }
+
+            int nbLine = (int)Math.Ceiling(((double)cols.Count) / 2.0);
+            for (int l = 0; l < nbLine; l++)
+            {
+                str.Append(cols[l]);
+                if (l + nbLine < cols.Count)
+                {
+                    str.Append(cols[l + nbLine]);
+                }
+                else
+                {
+                    str.Append("-");
+                }
+                str.Append(";");
+            }
+
+            str.Append("]");
+            #endregion
+
+            return str.ToString();
+
+
+        }
     }
 
 }
