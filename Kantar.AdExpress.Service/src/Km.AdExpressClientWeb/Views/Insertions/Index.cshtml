@@ -113,11 +113,6 @@
     <script>
     if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
 
-        //GESTION DES ACTIVES CSS
-        //$(".btn-group > .btn").click(function () {
-        //    $(this).addClass("active").siblings().removeClass("active");
-        //});
-
         $("#grid").igTreeGrid({
             //dataSource: data,
             primaryKey: "Id",
@@ -169,7 +164,7 @@
                         autoGenerateColumns: false,
                         primaryKey: "ID",
                         foreignKey: "PID",
-                        width: "1140px",
+                        width: "95%",
                         features: [
                             {
                                 name: "MultiColumnHeaders"
