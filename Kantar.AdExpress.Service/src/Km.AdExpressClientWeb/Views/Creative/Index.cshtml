@@ -33,13 +33,14 @@
         </div>
 
     </div> <!-- /container full -->
-    <!-- Modal HTML -->
+
+    <!-- Modal lien video radio -->
     <div id="creativeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white !important;">&times;</button>
-                    <h4 class="font-normal" style="color:white;">@(@GestionWeb.GetWebWord(869, Model.SiteLanguage))</h4>
+                    <h4 class="font-normal" style="color:white;"><i class="fa fa-2x "></i></h4>
                 </div>
                 <div class="modal-body">
                     <div class="media video-audio-container">
@@ -48,6 +49,9 @@
                             <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="" download="" class="btn btn-valider w-full">@(@GestionWeb.GetWebWord(874, Model.SiteLanguage))&nbsp;<i class="fa fa-arrow-down"></i></a>
                 </div>
             </div>
         </div>
@@ -101,18 +105,12 @@
     <script>
     if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
 
-        //GESTION DES ACTIVES CSS
-        //$(".btn-group > .btn").click(function () {
-        //    $(this).addClass("active").siblings().removeClass("active");
-        //});
-
         $("#grid").igTreeGrid({
             //dataSource: data,
             primaryKey: "Id",
             width: "95%",
             defaultColumnWidth: 200,
-            avgRowHeight: 60,
-            autoGenerateColumns: true
+            autoGenerateColumns: true,
         });
 
 
@@ -147,11 +145,12 @@
                     $("#grid").igTreeGrid({
                         dataSource: ds.dataView(),
                         columns: cols,
-                        height: "650px",
+                        //height: "650px",
                         autoGenerateColumns: false,
                         primaryKey: "ID",
                         foreignKey: "PID",
-                        width: "1140px",
+                        width: "95%",
+                        fixedHeaders : false,
                         features: [
                             {
                                 name: "MultiColumnHeaders"
@@ -159,7 +158,7 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 25
+                                pageSize: 15
                             },
                             {
                                 name: "ColumnFixing",
@@ -173,11 +172,12 @@
                     $("#grid").igTreeGrid({
                         dataSource: ds.dataView(),
                         columns: cols,
-                        height: "650px",
+                        //height: "650px",
                         autoGenerateColumns: true,
                         primaryKey: "ID",
                         foreignKey: "PID",
                         width: "95%",
+                        fixedHeaders: false,
                         features: [
                             {
                                 name: "MultiColumnHeaders"
@@ -185,13 +185,13 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 25
+                                pageSize: 15
                             }
                         ]
                     })
                 }
             } else {
-                alert("Error");
+                alert("Erreur");
             }
         }
 
@@ -338,8 +338,9 @@
 
         function AutoPlayCreativeModal() {
             $("#creativeStream").attr('src', '');
-
+            
             $("#creativeModal").on('shown.bs.modal', function (event) {
+                $('#creativeModal h4 > i').attr("class", 'fa iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
                 var button = $(event.relatedTarget);// Button that triggered the modal
                 var datas = button.data('creative').toString(); // Extract info from data-* attributes
                 datas = datas.replace(/\[|\]/g, '');
@@ -365,11 +366,15 @@
                         success: function (response) {
                             if (response != null) {
                                 var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
-                                var urlDowload = response.PathDownloadingFile;
+                                var urlDownload = "http://adexpress.kantarmedia.fr/" + response.PathDownloadingFile;
                                 if (url) {
                                     $("#creativeStream").attr('src', url);
-                                    $('#creativeModal h4').text("@(@GestionWeb.GetWebWord(1909, Model.SiteLanguage))");
                                     $("#mediaLoader").addClass("hide");
+                                }
+                                if (urlDownload) {
+                                    $("#creativeModal .modal-footer").removeClass("hide");
+                                    $("#creativeModal .modal-footer > a").attr("href", urlDownload);
+                                    //$("#creativeModal .modal-footer > a").attr("download", parameters.idVersion);
                                 }
                             }
                         }
@@ -379,6 +384,7 @@
 
             $("#creativeModal").on('hide.bs.modal', function () {
                 $("#creativeStream").attr('src', '');
+                $("#creativeModal .modal-footer").addClass("hide");
                 $("#mediaLoader").removeClass("hide");
             });
         }
@@ -390,8 +396,10 @@
                 var active = "active";
                 datas = datas.split('],[');
                 visus = datas[0].replace(/\[|\]/g, '').split(",");
+                paramsLink = datas[1].replace(/\[|\]/g, '').split(",");
                 infos = datas[2].replace(/\[|\]/g, '').split(";");
-                paramsLink = datas[1].replace(/\[|\]/g, '').split(";");
+
+                //Visuels
                 if (visus.length > 1) {
                     for (i = 0; i < visus.length; i++) {
                         if (i != 0) active = "";
@@ -399,15 +407,15 @@
                     }
                 } else {
                     $(this).attr("id", "visu");
-
-                    if (paramsLink.length > 0) {
-                        $(this).html('<center><a href="#creativeModal" data-toggle="modal" data-creative="'+paramsLink+'"><img style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></a></center>');
+                    if (visus[0] == "") {
+                        $(this).html('<span class="fa big iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '"></span>');
+                        if (paramsLink.length > 1)
+                            $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '">' + $(this).html() + '</a></div>');
+                    } else {
+                        $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>');
                     }
-                    else {
-                        $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
-                    }
-                    
                 }
+                //Infos
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
                         tmp = infos[j].split(":");
@@ -444,7 +452,7 @@
             e = e || window.event;
             return e.target || e.srcElement;
         }
-        $(document).on("click", "#PresentVehicles li a", function () {
+        $(document).on("click", "#PresentVehicles > li > a", function () {
             $("#grid").addClass("hide");
             $("#gridLoader").removeClass("hide");
             userFilter.isVehicleChanged = true;

@@ -1908,8 +1908,10 @@ namespace TNS.AdExpressI.Insertions
                 throw (new Exception(err.Message));
             }
 
-            if (columns.Count > 920)
-                gridResult.NeedFixedColumns = true;
+            //if (columns.Count > 10)
+            //    gridResult.NeedFixedColumns = true;
+            gridResult.NeedFixedColumns = false;
+
             gridResult.HasData = true;
             gridResult.Columns = columns;
             gridResult.Schema = schemaFields;
@@ -1950,7 +1952,7 @@ namespace TNS.AdExpressI.Insertions
             else
             {
                 gridResult.HasData = false;
-                return (gridResult);
+                return gridResult;
             }
 
             return gridResult;
