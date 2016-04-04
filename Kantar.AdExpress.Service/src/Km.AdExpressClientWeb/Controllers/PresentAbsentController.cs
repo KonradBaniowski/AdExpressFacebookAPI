@@ -148,12 +148,13 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 Models.Shared.Tree tree = new Models.Shared.Tree
                 {
-                    Id = 1,
+                    Id = item.Id,
                     LabelId = item.LabelId,
                     AccessType = item.AccessType,
+                    Label =item.Label,
                     UniversLevels = Mapper.Map<List<Models.Shared.UniversLevel>>(item.UniversLevels)
                 };
-                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                tree.Label = (tree.Id==0) ? model.Labels.Referent : model.Labels.Concurrent;
                 model.Trees.Add(tree);
             }
             #endregion
@@ -397,7 +398,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 CurrentController = _controller,
                 KeyWordLabel = GestionWeb.GetWebWord(LanguageConstantes.KeyWordLabelCode, siteLanguage),
                 KeyWordDescription = GestionWeb.GetWebWord(LanguageConstantes.KeyWordDescriptionCode, siteLanguage),
-                ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgCode, siteLanguage),
+                ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage),
                 BranchLabel = GestionWeb.GetWebWord(LanguageConstantes.BranchLabelCode, siteLanguage),
                 NoSavedUnivers = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage),
                 UserSavedUniversLabel = GestionWeb.GetWebWord(LanguageConstantes.UserSavedUniversCode, siteLanguage),
@@ -419,7 +420,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 ErrorOnlyOneItemAllowed = GestionWeb.GetWebWord(LanguageConstantes.ErrorOnlyOneItemAllowed, siteLanguage),
                 ErrorOverLimit = GestionWeb.GetWebWord(LanguageConstantes.ErrorOverLimit, siteLanguage),
                 SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
-                AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage)
+                AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage),
+                Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
+                Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent,siteLanguage)
             };
             return result;
         }

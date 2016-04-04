@@ -321,7 +321,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                                      , mediaSchedulePath
                                      , link);
                                 }
@@ -337,7 +337,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                              , insertionPath
                              , link);
                                 }
@@ -354,7 +354,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                              , versionPath
                              , link);
                                 }
@@ -654,7 +654,8 @@ namespace TNS.AdExpressI.Portofolio
                             }
                             else
                             {
-                                pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+                                //pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+                                pathWeb = "/Content/img/no_visu.jpg";
                             }
                             DateTime dayDT =
                                 new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)),

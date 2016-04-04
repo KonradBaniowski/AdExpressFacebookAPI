@@ -144,8 +144,67 @@ $(document).on('click', '#LoadUnivers', function (event) {
             $('#monunivers').modal('hide');
             var trees = response.Trees;
             var medias = response.UniversMediaIds;
+            var nav = $('.nav.nav-tabs');
             $.each(trees, function (index, tree) {
                 var id = tree.Id;
+                if (id > 0)//Create the tab
+                {
+                    var ulSource = $('.nav.nav-tabs');
+                    var liHtml = $('<li/>');
+                    //liHtml.attr('class', 'active');
+                    var aHtml = $('<a/>');
+                    //SET LABEL 
+                    console.log(tree);
+                    aHtml.text(tree.Label);
+                    aHtml.attr('data-target', '#tab-' + id);
+                    aHtml.attr('id', 'tree-'+id);
+                    aHtml.attr('data-tab', id);
+                    aHtml.attr('data-toggle', 'tab');
+                    aHtml.appendTo(liHtml);
+                    liHtml.appendTo(ulSource);
+                    var nbIncludes = $('.panel-heading-choix.nav-tabs-alt').find('li').length;
+                    var ref = $('#tab-0');// + nbIncludes + '');
+                    var tabHtml = ref.clone();
+                    tabHtml.attr('id', 'tab-' + id);
+                    var panelHtml = tabHtml.find('.panel-group.panel-group-results[id=tree-0]');
+                    panelHtml.attr('id', 'tree-' + id);
+                    panelHtml.find('.items-famille').empty();
+                    $.each(panelHtml.find('a[data-parent]'), function (index, value) {
+                        var href = $(value).attr('href');
+                        href = href.slice(0, -1);
+                        href += id;
+                        $(value).attr('href', href);
+                        var data = $(value).attr('data-parent');
+                        data = data.slice(0, -1);
+                        data += id;
+                        $(value).attr('data-parent', '#tree-' + id);
+                    });
+                    $.each(panelHtml.find('.panel-collapse'), function (index, value) {
+                        var id = $(value).attr('id');
+                        id = id.slice(0, -1);
+                        id += id;
+                        $(value).attr('id', id);
+                    });
+                    $.each(panelHtml.find('.panel-body'), function (index, value) {
+                        var dataTree = $(value).attr('data-tree');
+                        $(value).attr('data-tree', id);
+                    });
+                    panelHtml.find('[id^=collapse-14]').collapse('hide');
+                    $('.tab-content').append(tabHtml);
+                    //var tabContent =$('.tab-content');
+                    //var tabPanel = $('<div/>');
+                    //tabPanel.attr('id', 'tab-' + id);
+                    //tabPanel.attr('role', 'tabpanel');
+                    //var content = $('<div/>');
+                    //content.attr('class', '.panel-group panel-group-results');
+                    //content.attr('data-access-type', tree.AccessType);
+                    //content.attr('id', 'tree-' + id);
+                    //content.attr('role', 'tablist');
+                    //content.attr('aria-multiselectable', true);
+                    //content.appendTo(tabPanel);
+                    //tabPanel.appendTo(tabContent);
+
+                }
                 var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
                 $.each($(tree.UniversLevels), function (index, uniLvl) {
                     console.log(uniLvl);
