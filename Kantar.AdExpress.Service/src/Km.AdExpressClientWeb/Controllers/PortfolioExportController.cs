@@ -19,6 +19,73 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
 
+        public PortfolioExportController(IPortfolioService portofolioService, IMediaService mediaService, IWebSessionService webSessionService)
+        {
+            _portofolioService = portofolioService;
+            _mediaService = mediaService;
+            _webSessionService = webSessionService;
+
+        }
+
+        // GET: PortfolioExport
+        public ActionResult Index()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _portofolioService.GetResultTable(idWebSession);
+
+            ExportAspose export = new ExportAspose();
+
+            Workbook document = new Workbook(FileFormatType.Excel2003XML);
+
+            export.export(document, data);
+
+            string documentFileNameRoot;
+            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+
+            Response.Clear();
+            Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
+            Response.ContentType = "application/octet-stream";
+
+            document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
+
+            Response.End();
+
+            return View();
+        }
+
+        public ActionResult ResultBrut()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _portofolioService.GetResultTable(idWebSession);
+
+
+
+            ExportAspose export = new ExportAspose();
+
+            Workbook document = new Workbook(FileFormatType.Excel2003XML);
+
+            export.export(document, data);
+
+            string documentFileNameRoot;
+            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+
+            Response.Clear();
+            Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
+            Response.ContentType = "application/octet-stream";
+
+            document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
+
+            Response.End();
+
+            return View();
+        }
+    }
+
+    public class ExportAspose : Controller
+    {
+
         #region Couleurs
 
         Color HeaderTabBackground = Color.FromArgb(105, 112, 129);
@@ -54,43 +121,15 @@ namespace Km.AdExpressClientWeb.Controllers
         Color ExtendedBackground = Color.FromArgb(243, 209, 97);
         #endregion
 
-        public PortfolioExportController(IPortfolioService portofolioService, IMediaService mediaService, IWebSessionService webSessionService)
-        {
-            _portofolioService = portofolioService;
-            _mediaService = mediaService;
-            _webSessionService = webSessionService;
+        public ExportAspose()
+        { }
 
-        }
-
-        // GET: PortfolioExport
-        public ActionResult Index()
-        {
-            var claim = new ClaimsPrincipal(User.Identity);
-            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _portofolioService.GetResultTable(idWebSession);
-
-            export(data);
-
-            return View();
-        }
-
-        public ActionResult ResultBrut()
-        {
-            var claim = new ClaimsPrincipal(User.Identity);
-            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _portofolioService.GetResultTable(idWebSession);
-
-            export(data);
-
-            return View();
-        }
-
-        private void export(ResultTable data)
+        public void export(Workbook document, ResultTable data)
         {
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
 
-            Workbook document = new Workbook(FileFormatType.Excel2003XML);
+            //Workbook document = new Workbook(FileFormatType.Excel2003XML);
 
             document.Worksheets.Clear();
 
@@ -141,38 +180,44 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
             int coltmp = columnStart;
-            foreach (var item in data.HeadersIndexInResultTable)
-            {
-                HeaderBase header = item.Value;
 
-                if (header is HeaderMediaSchedule || header is HeaderCreative)
-                    continue;
+            int nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
 
-                if (header.ColSpan > 1)
-                {
-                    Range range = sheet.Cells.CreateRange(rowStart, coltmp, 1, header.ColSpan);
-                    range.Merge();
+            ////foreach (var item in data.HeadersIndexInResultTable)
+            //foreach (var item in data.NewHeaders.Root)
+            //{
 
-                    //sheet.Cells.Merge(rowStart, coltmp, 1, header.ColSpan);
+            //    //HeaderBase header = item.Value;
+            //    HeaderBase header = item as HeaderBase;
 
-                    sheet.Cells[rowStart, coltmp].Value = header.Label;
+            //    if (header is HeaderMediaSchedule || header is HeaderCreative)
+            //        continue;
 
-                    TextStyle(sheet.Cells[rowStart, coltmp], HeaderTabText, HeaderTabBackground);
-                    //BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
+            //    int ronSpan = nbRowTotal - (NbRow(header) - 1);
 
-                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
-                }
-                else
-                {
-                    sheet.Cells[rowStart, coltmp].Value = header.Label;
+            //    if (header.ColSpan > 1 || ronSpan > 1)
+            //    {
+            //        Range range = sheet.Cells.CreateRange(rowStart, coltmp, ronSpan, header.ColSpan);
+            //        range.Merge();
 
-                    TextStyle(sheet.Cells[rowStart, coltmp], HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
-                }
-                coltmp++;
-            }
+            //        sheet.Cells[rowStart, coltmp].Value = header.Label;
 
-            rowStart++;
+            //        TextStyle(sheet.Cells[rowStart, coltmp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+            //        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+            //    }
+            //    else
+            //    {
+            //        sheet.Cells[rowStart, coltmp].Value = header.Label;
+
+            //        TextStyle(sheet.Cells[rowStart, coltmp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+            //        BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
+            //    }
+            //    coltmp++;
+            //}
+
+            DrawHeaders(data.NewHeaders.Root, sheet, rowStart, columnStart);
+
+            rowStart += nbRowTotal;
 
             for (int idxCol = 0, cellCol = columnStart; idxCol < data.ColumnsNumber; idxCol++)
             {
@@ -193,12 +238,24 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                     }
 
-                    if (cell is CellPercent)
+                    if (cell is CellPercent || cell is CellEvol)
                     {
-                        sheet.Cells[cellRow, cellCol].Value = ((CellPercent)cell).Value / 100;
+                        double value = ((CellUnit)cell).Value;
+
+                        if (double.IsInfinity(value) || double.IsNaN(value))
+                            sheet.Cells[cellRow, cellCol].Value = "";
+                        else
+                            sheet.Cells[cellRow, cellCol].Value = value / 100;
+
                         SetPercentFormat(sheet.Cells[cellRow, cellCol]);
                         SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
                     }
+                    //else if (cell is CellEvol)
+                    //{
+                    //    sheet.Cells[cellRow, cellCol].Value = ((CellEvol)cell).Value;
+                    //    SetPercentFormat(sheet.Cells[cellRow, cellCol]);
+                    //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                    //}
                     else if (cell is CellDuration)
                     {
                         //DateTime dt = new DateTime();
@@ -225,7 +282,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     {
 
                         sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
-                                                
+
                         SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
                     }
                     else if (cell is CellUnit)
@@ -309,16 +366,16 @@ namespace Km.AdExpressClientWeb.Controllers
 
             #endregion
 
-            string documentFileNameRoot;
-            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            //string documentFileNameRoot;
+            //documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
 
-            Response.Clear();
-            Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
-            Response.ContentType = "application/octet-stream";
+            //Response.Clear();
+            //Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
+            //Response.ContentType = "application/octet-stream";
 
-            document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
+            //document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
 
-            Response.End();
+            //Response.End();
         }
 
         private void BorderStyle(Worksheet sheet, int idxRow, int idxCol, CellBorderType borderLineStyle, Color color)
@@ -477,5 +534,106 @@ namespace Km.AdExpressClientWeb.Controllers
 
             cell.SetStyle(style);
         }
+
+        private int NbRow(HeaderBase root)
+        {
+            int nbRow = 1;
+            int maxRow = 0;
+            bool haveGroup = false;
+
+            foreach (HeaderBase item in root)
+            {
+                if (item is HeaderGroup)
+                {
+                    int tmp = NbRow(item);
+
+                    if (tmp > maxRow)
+                        maxRow = tmp;
+
+                    haveGroup = true;
+                }
+            }
+
+            if (!haveGroup && root.Count > 0)
+                nbRow++;
+
+            return nbRow + maxRow;
+        }
+
+        private int NbColumn(HeaderBase root)
+        {
+            int nbCol = 0;
+            int maxCol = 0;
+
+            if (root is HeaderGroup)
+            {
+                foreach (HeaderBase item in root)
+                {
+                    if (item is HeaderGroup)
+                    {
+                        int tmp = NbColumn(item);
+
+                        maxCol += tmp;
+                    }
+                    else
+                    {
+                        maxCol++;
+                    }
+                }
+            }
+            else
+            {
+                nbCol = 1;
+            }
+
+            return nbCol + maxCol;
+        }
+
+        private void DrawHeaders(HeaderBase head, Worksheet sheet, int rowStart, int colStart)
+        {
+            int nbRowTotal = NbRow(head);
+
+            //if (head.IndexInResultTable == -1)
+            nbRowTotal--;
+
+            //foreach (var item in data.HeadersIndexInResultTable)
+            foreach (var item in head)
+            {
+
+                //HeaderBase header = item.Value;
+                HeaderBase header = item as HeaderBase;
+
+                if (header is HeaderMediaSchedule || header is HeaderCreative)
+                    continue;
+
+                int ronSpan = nbRowTotal - (NbRow(header) - 1);
+                int colSpan = NbColumn(header);
+
+                if (colSpan > 1 || ronSpan > 1)
+                {
+                    Range range = sheet.Cells.CreateRange(rowStart, colStart, ronSpan, colSpan);
+                    range.Merge();
+
+                    sheet.Cells[rowStart, colStart].Value = header.Label;
+
+                    TextStyle(sheet.Cells[rowStart, colStart], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                }
+                else
+                {
+                    sheet.Cells[rowStart, colStart].Value = header.Label;
+
+                    TextStyle(sheet.Cells[rowStart, colStart], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                    BorderStyle(sheet, rowStart, colStart, CellBorderType.Thin, HeaderBorderTab);
+                }
+
+                if (header is HeaderGroup)
+                    DrawHeaders(header, sheet, rowStart + 1, colStart);
+
+                colStart += colSpan;
+            }
+
+        }
+
     }
 }
