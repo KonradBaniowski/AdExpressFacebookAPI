@@ -72,19 +72,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //_customerSession.CurrentTab = 6;
 
             //TODO :  selection support :  : a enlever apres tests
-            TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
-            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            //TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
+            //Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 
-            int groupIndex = 0;
-            Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
-            NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
-            Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
-            List<long> idUniversItems = new List<long>();
-            idUniversItems.Add(2003);//EUROPE 1
-            treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
-            adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
-            universes.Add(universes.Count, adExpressUniverse);
-            _customerSession.PrincipalMediaUniverses = universes;
+            //int groupIndex = 0;
+            //Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
+            //NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
+            //Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
+            //List<long> idUniversItems = new List<long>();
+            //idUniversItems.Add(2003);//EUROPE 1
+            //treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
+            //adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
+            //universes.Add(universes.Count, adExpressUniverse);
+            //_customerSession.PrincipalMediaUniverses = universes;
 
             //ArrayList levelIds = new ArrayList();
             //levelIds.Add(11);
@@ -92,7 +92,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //levelIds.Add(10);            
             //_customerSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 
-            _customerSession.Save();
+           // _customerSession.Save();
 #endif           
             
             if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Lost/Won result"));
