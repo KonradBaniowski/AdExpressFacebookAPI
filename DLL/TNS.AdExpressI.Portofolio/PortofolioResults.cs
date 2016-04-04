@@ -242,8 +242,10 @@ namespace TNS.AdExpressI.Portofolio
         {
             ResultTable resultTable = GetResultTable();
             GridResult gridResult = new GridResult();
-            string mediaSchedulePath = "/MediaSchedule/Index";
-            int tableWidth = 250;
+            string mediaSchedulePath = "/MediaSchedulePopUp";
+            string insertionPath = "/Insertions";
+            string versionPath = "/Creative";
+            int tableWidth = 0;
            
             if (resultTable != null)
             {
@@ -281,7 +283,7 @@ namespace TNS.AdExpressI.Portofolio
                                 colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
                                 groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
                                 schemaFields.Add(new { name = colKey });
-                                tableWidth = +250;
+                                tableWidth = tableWidth + 150;
                             }
                             colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", group = groups });
@@ -293,7 +295,7 @@ namespace TNS.AdExpressI.Portofolio
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
                             schemaFields.Add(new { name = colKey });
                             if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
-                            tableWidth =+ 250;
+                            tableWidth = tableWidth + 150;
                         }
 
                     }
@@ -319,10 +321,44 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                                      , mediaSchedulePath
                                      , link);
                                 }
+                            }
+                            gridData[i, k + 1] = link;
+                        }
+                        else if (cell is CellOneLevelInsertionsLink)
+                        {
+                            var c = cell as CellOneLevelInsertionsLink;
+
+                            if (c != null)
+                            {
+                                link = c.GetLink();
+                                if (!string.IsNullOrEmpty(link))
+                                {
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                             , insertionPath
+                             , link);
+                                }
+
+                            }
+                            gridData[i, k + 1] = link;
+                        }
+                        else if (cell is CellOneLevelCreativesLink)
+                        {
+                            var c = cell as CellOneLevelCreativesLink;
+
+                            if (c != null)
+                            {
+                                link = c.GetLink();
+                                if (!string.IsNullOrEmpty(link))
+                                {
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                             , versionPath
+                             , link);
+                                }
+
                             }
                             gridData[i, k + 1] = link;
                         }
@@ -618,7 +654,8 @@ namespace TNS.AdExpressI.Portofolio
                             }
                             else
                             {
-                                pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+                                //pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+                                pathWeb = "/Content/img/no_visu.jpg";
                             }
                             DateTime dayDT =
                                 new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)),
@@ -775,21 +812,12 @@ namespace TNS.AdExpressI.Portofolio
         {
             try
             {
-                //TODO: A tester partout car le support es tmaintenant mis dans _webSession.PrincipalMediaUniverses.
-                if (_webSession.ReferenceUniversMedia != null && _webSession.ReferenceUniversMedia.Nodes.Count > 0)
-                    return (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);
-                else
-                {
-                    if (_webSession.PrincipalMediaUniverses != null && _webSession.PrincipalMediaUniverses.Count > 0)
-                    {
+                //OLD: A tester partout car le support es tmaintenant mis dans _webSession.PrincipalMediaUniverses.
+                //if (_webSession.ReferenceUniversMedia != null && _webSession.ReferenceUniversMedia.Nodes.Count > 0)
+                //    return (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);
+                                 
                         var items = _webSession.PrincipalMediaUniverses[0].GetIncludes();
                         return items.First().Get(TNSClassificationLevels.MEDIA).First();
-
-                    }
-
-
-                    return (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                }
 
             }
             catch (System.Exception err)

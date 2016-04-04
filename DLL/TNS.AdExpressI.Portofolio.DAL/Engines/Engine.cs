@@ -31,7 +31,7 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Constantes.DB;
-
+using TNS.Classification.Universe;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -211,10 +211,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         protected virtual string GetMediaSelection(string dataTablePrefixe)
         {
             StringBuilder sql = new StringBuilder();
-            if (_webSession.SecondaryMediaUniverses != null && _webSession.SecondaryMediaUniverses.Count > 0)
-                sql.Append( _webSession.SecondaryMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true));
 
-            //TODO: A tester rajouté pour la nouvelle version
+            #region Old
+
+            //if (_webSession.SecondaryMediaUniverses != null && _webSession.SecondaryMediaUniverses.Count > 0)
+            //    sql.Append(_webSession.SecondaryMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true)); 
+            #endregion
+          
             if (_webSession.PrincipalMediaUniverses != null && _webSession.PrincipalMediaUniverses.Count > 0)
                 sql.Append(_webSession.PrincipalMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true));
 
@@ -227,6 +230,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             return string.Format(",{0}.id_banners", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
         }
+
+     
 
     }
 }

@@ -179,15 +179,7 @@ $('#Results').on('click', function (e) {
     }
     NextStep(nextUrl, dis)
 });
-
-function NextStep(nextUrl, dis) {
-    var msg = validate();
-    if (msg) {
-        bootbox.alert(msg);
-        return;
-    }
-    var things = [];
-    $('#btnSubmitMarketSelection').off('click');
+function getSelectedMediaSupport() {
     var trees = [];
     $.each($('.nav.nav-tabs > li a'), function (index, elem) {
         var itemContainer = $(elem).attr('data-target');
@@ -217,13 +209,25 @@ function NextStep(nextUrl, dis) {
         };
         trees.push(stuff);
     });
+    return trees;
+}
+
+function NextStep(nextUrl, dis) {
+    var msg = validate();
+    if (msg) {
+        bootbox.alert(msg);
+        return;
+    }
+    $('#btnSubmitMarketSelection').off('click');
+    var selectedMediaSupportTrees = getSelectedMediaSupport();
     var params = {
-        trees: trees,
+        selectedMedia: idList,
+        mediaSupport: selectedMediaSupportTrees,
         nextStep: nextUrl
     };
     var ctrl = $('#Labels_CurrentController').val();
     $.ajax({
-        url: '/' + ctrl + '/SaveMarketSelection',
+        url: '/' + ctrl + '/SaveMediaSelection',
         type: 'POST',
         data: params,
         error: function (data) {

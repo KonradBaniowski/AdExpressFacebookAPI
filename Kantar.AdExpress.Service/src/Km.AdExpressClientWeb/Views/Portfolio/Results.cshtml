@@ -60,7 +60,7 @@
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "ClassifId",
-                width: "1140px",
+                width: "100%",
                 defaultColumnWidth: 200,
                 avgRowHeight: 60,
                 autoGenerateColumns: true
@@ -176,10 +176,10 @@
                             dataSource: ds.dataView(),
                             columns: cols,
                             height: "530px",
+                            width: "100%",
                             autoGenerateColumns: false,
                             primaryKey: "ID",
-                            foreignKey: "PID",
-                            width: "1140px",
+                            foreignKey: "PID",                           
                             features: [
                                 {
                                     name: "MultiColumnHeaders"

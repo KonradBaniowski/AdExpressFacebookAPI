@@ -1,10 +1,128 @@
-﻿//VALIDER TODO
+﻿var idList = null;
+$(document).ready(function () {
+    var searchId = '18';
+    //var socialId=TBD
+    if ($('#Multiple').val() == "True") {
+
+        $('.tuile-medias[data-attr-id]').on('click', selectMultiple)
+        idList = [];
+        //CHECKBOX
+        var idCommon = [];
+        $('[name="HiddenIntList"]').each(function (index) {
+            idCommon.push($(this).attr("value"));
+        });
+        $('.tuile-medias[data-attr-id]').each(function (i, e) {
+            var elem = $(e);
+            var indexElem = elem.attr('data-attr-id');
+            var index = $.inArray(indexElem, idCommon);
+            if (index == -1)
+                elem.attr("data-grp", "A");
+            else
+                elem.attr("data-grp", "B");
+        });
+
+        $(':checkbox').on('change', preselection);
+
+        //FOCUS
+        $('[data-grp]').on('mouseenter', highlight);
+        $('[data-grp]').on('mouseleave', unhighlight);
+    }
+    else {
+        idList = "";
+        $('.tuile-medias[data-attr-id]').on('click', selectUnique)
+    }
+
+    function highlight() {
+        var grp = $(this).attr('data-grp');
+        $('[data-grp="' + grp + '"]').addClass('highlight');
+    }
+
+    function unhighlight() {
+        var grp = $(this).attr('data-grp');
+        $('[data-grp="' + grp + '"]').removeClass('highlight');
+    }
+
+    function selectUnique() {
+        $(this).toggleClass("tuile-medias tuile-medias-active")
+        var id = $(this).attr("data-attr-id");
+        if (idList !== null && idList !== undefined) {
+            $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
+        }
+        idList = id;
+    }
+
+    function selectMultiple(e) {
+        $(this).toggleClass("tuile-medias tuile-medias-active")
+        var id = $(this).attr("data-attr-id");
+
+        var index = $.inArray(id, idList);
+        if (index > -1) {
+            idList.splice(index, 1);
+        }
+    }
+
+    function preselection() {
+        $('.tuile-medias-active').toggleClass("tuile-medias tuile-medias-active")
+        var attr = $(this).attr('checked');
+        if (typeof attr !== typeof undefined && attr !== false) {
+            $.each(idCommon, function (index, value) {
+                $('.tuile-medias-active[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
+            });
+            $(this).removeAttr("checked");
+        }
+        else {
+            $.each(idCommon, function (index, value) {
+                $('.tuile-medias[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
+            });
+            $(this).attr("checked", "");
+        }
+    }
+});
+
+$('#btnSubmitMediaSelection').on('click', function (e) {
+    e.preventDefault();
+    var msg = validate();
+    var isValide = !msg || msg.lentgh === 0;
+    if (!isValide) {//mycondition
+        bootbox.alert(msg);
+    }
+    else {
+        var selectedMediaSupportTrees = getSelectedMediaSupport();
+        var params = {
+            selectedMedia: idList,
+            mediaSupport: selectedMediaSupportTrees,
+            nextStep: "PeriodSelection"
+        };
+        $.ajax({
+            url: '/LostWon/SaveMediaSelection',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                if (data.RedirectUrl != null) {
+                    document.location = data.RedirectUrl;
+                }
+                if (data.ErrorMessage != null) {
+                    bootbox.alert(data.ErrorMessage);
+                }
+            }
+        });
+    }
+});
+
+//VALIDER TODO
 
 //FIL D ARRIANE
 $('#Market').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
+    if (nextUrl === "LostWon") {
+        nextUrl = "Index";
+    }
     NextStep(nextUrl, dis)
 });
 
@@ -12,6 +130,9 @@ $('#Dates').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
+    if (nextUrl === "LostWon") {
+        nextUrl = "Index";
+    }
     NextStep(nextUrl, dis)
 });
 
@@ -19,18 +140,12 @@ $('#Results').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
+    if (nextUrl === "LostWon") {
+        nextUrl = "Index";
+    }
     NextStep(nextUrl, dis)
 });
-
-function NextStep(nextUrl, dis) {
-    var msg = validate();
-    if (msg) {
-        bootbox.alert(msg);
-        return;
-    }
-    var things = [];
-    var spinner = new Spinner().spin(dis);
-    $('#btnSubmitMarketSelection').off('click');
+function getSelectedMediaSupport() {
     var trees = [];
     $.each($('.nav.nav-tabs > li a'), function (index, elem) {
         var itemContainer = $(elem).attr('data-target');
@@ -60,21 +175,32 @@ function NextStep(nextUrl, dis) {
         };
         trees.push(stuff);
     });
+    return trees;
+}
+
+function NextStep(nextUrl, dis) {
+    var msg = validate();
+    if (msg) {
+        bootbox.alert(msg.replace(/\n/g, "<br />"));
+        return;
+    }
+    $('#btnSubmitMarketSelection').off('click');
+
+    var selectedMediaSupportTrees = getSelectedMediaSupport();
     var params = {
-        trees: trees,
+        selectedMedia: idList,
+        mediaSupport: selectedMediaSupportTrees,
         nextStep: nextUrl
     };
-
+    var ctrl = $('#Labels_CurrentController').val();
     $.ajax({
-        url: '/MediaSchedule/SaveMarketSelection',
+        url: '/' + ctrl + '/SaveMediaSelection',
         type: 'POST',
         data: params,
         error: function (data) {
-            spinner.stop();
             bootbox.alert(data.ErrorMessage);
         },
         success: function (data) {
-            spinner.stop();
             if (data.ErrorMessage != null && data.ErrorMessage != "") {
                 bootbox.alert(data.ErrorMessage);
             }
@@ -86,11 +212,19 @@ function NextStep(nextUrl, dis) {
 }
 
 function validate() {
+    //var message = "";
+    //var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
+    //if (nbElemInclus < 1) {
+    //    message = $('#Labels_ErrorMininumInclude').val();
+    //}
+    //return message;
     var message = "";
     var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
     if (nbElemInclus < 1) {
         message = $('#Labels_ErrorMininumInclude').val();
     }
+    if (idList.length == 0)
+        message += "\n" + $('#Labels_ErrorMediaSelected').val();
     return message;
 }
 

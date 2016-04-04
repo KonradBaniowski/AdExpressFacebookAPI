@@ -206,7 +206,7 @@
     <item mnemonic="w875" type="System.String">Mes univers</item>
     <item mnemonic="w876" type="System.String">Lire / Sauvegarder une création</item>
     <item mnemonic="w878" type="System.String">Erreur : Aucun élément n'est sélectionné</item>
-    <item mnemonic="w880" type="System.String">Vous ne pouvez pas vous connectez avec cet identifiant / mot de passe</item>
+    <item mnemonic="w880" type="System.String">Vous ne pouvez pas se connecter avec cet identifiant / mot de passe</item>
     <item mnemonic="w881" type="System.String">Sélectionner l'univers à déplacer dans la liste suivante : </item>
     <item mnemonic="w882" type="System.String">Déplacer l'univers sélectionné vers :</item>
     <item mnemonic="w883" type="System.String">Déplacer un univers :</item>
@@ -757,7 +757,7 @@
     <item mnemonic="w1484" type="System.String">Lors de la redéfinition d'un univers, les éléments préalablement sélectionnés ont été effacés.&lt;br&gt;Si vous utilisez les boutons « précédent » ou « suivant », vous ne pourrez pas réafficher votre résultat car les éléments nécessaires au calcul du tableau ne seront pas définis.</item>
     <item mnemonic="w1485" type="System.String">La demande d'information n'a pas pu être envoyée.</item>
     <item mnemonic="w1486" type="System.String">Le mail a bien été envoyé.</item>
-    <item mnemonic="w1487" type="System.String">Vous devez sélectionnez au moins un Média.</item>
+    <item mnemonic="w1487" type="System.String">Vous devez sélectionner au moins un Média.</item>
     <item mnemonic="w1488" type="System.String">Le module demandé n'est pas accessible.</item>
     <item mnemonic="w1489" type="System.String">Une erreur est survenue.&lt;br&gt;Nous ne pouvons pas afficher la page demand&amp;eacute;e.</item>
     <item mnemonic="w1490" type="System.String">Erreur non répertoriée.</item>
@@ -2292,6 +2292,8 @@
     <item mnemonic="w3034" type="System.String">Vous ne pouvez déplacer qu'un seul support.</item>
     <item mnemonic="w3035" type="System.String">L'élement que vous déplacez n'est pas un support.</item>
     <item mnemonic="w3036" type="System.String">Vous ne pouvez sélectionner qu'un élément.</item>
-    
+    <item mnemonic="w3037" type="System.String">Ajouter un concurrent</item>
+    <item mnemonic="w3038" type="System.String">Ce support a déjà été ajouté dans l'arbre de référence ou dans un concurrent</item>
+    <item mnemonic="w3039" type="System.String">Référents</item>
   </items>
 </localization>

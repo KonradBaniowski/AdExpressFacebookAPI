@@ -74,7 +74,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 SaveUniversCode = LanguageConstantes.SaveUniversCode,
                 UserUniversGroups = new List<UserUniversGroup>(),
                 UserUniversCode = LanguageConstantes.UserUniversCode,
-                ErrorMsgCode = LanguageConstantes.ErrorMsgCode,
+                ErrorMsgCode = LanguageConstantes.NoSavedUniversCode,
                 ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
                 ShowUserSavedGroups = showUserSavedGroups
             };

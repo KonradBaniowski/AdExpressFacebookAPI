@@ -2026,7 +2026,7 @@ namespace TNS.AdExpressI.LostWon
         {
             GridResult gridResult = new GridResult();
             ResultTable resultTable = GetResult();
-            string mediaSchedulePath = "/MediaSchedule";
+            string mediaSchedulePath = "/MediaSchedulePopUp";
           
 
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
@@ -2068,8 +2068,8 @@ namespace TNS.AdExpressI.LostWon
                             schemaFields.Add(new { name = colKey });
                         }
                         colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", group = groups });
-                        schemaFields.Add(new { name = colKey });
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label,  group = groups });
+                      
                     }
                     else
                     {
@@ -2101,7 +2101,7 @@ namespace TNS.AdExpressI.LostWon
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                            , mediaSchedulePath
                            , link);
                             }

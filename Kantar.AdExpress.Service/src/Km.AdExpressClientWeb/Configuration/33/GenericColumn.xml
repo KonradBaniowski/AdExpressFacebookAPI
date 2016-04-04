@@ -614,6 +614,33 @@
       <columnItem id="65" name="Contenu"/>
       <columnItem id="41" name="Visuel"/>
     </detailColumn>
+    <!--Evaliant-->
+    <detailColumn id="37" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="77" name="Produit AdNetTrack"/>
+      <columnItem id="78" name="Format banner"/>
+      <columnItem id="79" name="Dimension banner"/>
+      <columnItem id="88" name="First parution"/>
+      <columnItem id="80" name="url"/>
+      <columnItem id="87" name="Gad"/>
+      <columnItem id="81" name="hashcode" isKey="true"/>
+      <columnItem id="75" name="Banner"/>
+      <columnItem id="175" name="country"/>
+    </detailColumn>
+    <!--Evaliant Mobile-->
+    <detailColumn id="38" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="92" name="Produit evaliant mobile"/>
+      <columnItem id="78" name="Format banner"/>
+      <columnItem id="91" name="Dimension banner mobile"/>
+      <columnItem id="88" name="First parution"/>
+      <columnItem id="80" name="url"/>
+      <columnItem id="87" name="Gad"/>
+      <columnItem id="81" name="hashcode" isKey="true"/>
+      <columnItem id="75" name="Banner"/>
+    </detailColumn>
     <!--/MS Détail versions-->
 
     <!--insertions TV portefeuille-->

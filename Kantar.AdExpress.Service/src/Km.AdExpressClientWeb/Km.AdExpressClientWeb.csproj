@@ -185,7 +185,6 @@
     <Compile Include="Controllers\PortfolioExportController.cs" />
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
-    <Compile Include="Models\Insertions\InsertionViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
     <Compile Include="Controllers\TestExportController.cs" />
@@ -200,6 +199,7 @@
     <Compile Include="Models\LostWon\ResultsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
+    <Compile Include="Models\Shared\InsertionCreativeViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
     <Compile Include="Models\Shared\PresentationModel.cs" />
@@ -528,6 +528,7 @@
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\no_visu.jpg" />
     <Content Include="Content\img\OLD_kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
     <Content Include="Content\img\logo_adexpress.png" />
@@ -1396,6 +1397,7 @@
     <Content Include="IgniteUI\mobile\js\modules\infragistics.templating.js" />
     <Content Include="IgniteUI\mobile\js\modules\infragistics.ui.scroll.js" />
     <Content Include="IgniteUI\mobile\js\modules\infragistics.util.js" />
+    <Content Include="Scripts\Account\account.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\app\layout.js" />
@@ -1528,6 +1530,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Creative\" />
+    <Folder Include="Models\Insertions\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>

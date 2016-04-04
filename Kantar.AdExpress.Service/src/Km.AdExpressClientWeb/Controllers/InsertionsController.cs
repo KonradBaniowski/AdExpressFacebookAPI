@@ -1,6 +1,6 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
-using Km.AdExpressClientWeb.Models.Insertions;
+using Km.AdExpressClientWeb.Models.Shared;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -16,46 +18,70 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IInsertionsService _insertionsService;
         private IDetailLevelService _detailLevelService;
+        private IUniverseService _universService;
 
-        public InsertionsController(IInsertionsService insertionsService, IDetailLevelService detailLevelservice)
+        public InsertionsController(IInsertionsService insertionsService, IDetailLevelService detailLevelservice, IUniverseService universService)
         {
             _insertionsService = insertionsService;
-            _detailLevelService = detailLevelservice;
+            _detailLevelService = detailLevelservice; ;
+            _universService = universService;
         }
 
         // GET: Insertions
         public ActionResult Index(string ids, string zoomDate, string idUnivers, string moduleId, string idVehicle)
         {
-            List<string> paramsUrl = new List<string>();
-            paramsUrl.Add(ids);
-            paramsUrl.Add(zoomDate);
-            paramsUrl.Add(idUnivers);
-            paramsUrl.Add(moduleId);
-            paramsUrl.Add(idVehicle);
-            return View(paramsUrl);
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var model = new InsertionCreativeViewModel()
+            {
+                paramsUrl = new List<string>(),
+                SiteLanguage = 33, // Default
+            };
+
+            model.paramsUrl.Add(ids);
+            model.paramsUrl.Add(zoomDate);
+            model.paramsUrl.Add(idUnivers);
+            model.paramsUrl.Add(moduleId);
+            model.paramsUrl.Add(idVehicle);
+
+            var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
+            model.SiteLanguage = result.SiteLanguage;
+
+            return View(model);
         }
 
         [HttpPost]
-        public JsonResult InsertionsResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
+        public JsonResult InsertionsResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged)
         {
             string jsonData = "";
 
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, false);
+            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged);
 
-            if (!reponse.GridResult.HasData)
-                return null;
-
-            if (reponse.Message == null)
+            try
             {
-                jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
-                JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
-                return jsonModel;
-            }
-            return null;
+                if (!reponse.GridResult.HasData)
+                    return null;
 
+                if (reponse.Message == null)
+                {
+                    jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
+                    JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+                    jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                    return jsonModel;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+            return null;
         }
 
 

@@ -50,7 +50,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 		/// Liste des colonnes personnalisées
 		/// </summary>
 		private List<GenericColumnItemInformation> _columnItemList = null;
-        GenericColumnItemInformation _genericColumnItemInformation = null;
+
         /// <summary>
         /// Indique si l'utilisateur à le droit de lire les créations
         /// </summary>
@@ -62,13 +62,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private bool _hasCreationDownloadRights = false;
 
 
-        public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged = false)
+        public InsertionCreativeResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged = false)
         {
-            InsertionResponse insertionResponse = new InsertionResponse();
+            InsertionCreativeResponse insertionResponse = new InsertionCreativeResponse();
             ArrayList levels = new ArrayList();
             try
             {
-
                 _customerWebSession = (WebSession)WebSession.Load(idWebSession);
               
                 IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
@@ -169,7 +168,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
 
-                // _customerWebSession.Save();
+                _customerWebSession.Save();
 
                 if (_customerWebSession.GenericInsertionColumns.Columns.Count < 1)
                 {
@@ -349,7 +348,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public IInsertionsResult InitInsertionCall(WebSession custSession, long moduleId)
         {
             //**TODO : IdVehicules not null
-
 
             CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));

@@ -2018,10 +2018,10 @@ namespace TNS.AdExpressI.PresentAbsent
         {
             GridResult gridResult = new GridResult();
             ResultTable resultTable = GetResult();
-            string mediaSchedulePath = "/MediaSchedule";
+            string mediaSchedulePath = "/MediaSchedulePopUp";
             string insertionPath = "/Insertions";
-            string versionPath = "/Insertions";
-           
+            string versionPath = "/Creative";
+
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
             {
                 gridResult.HasData = false;
@@ -2060,9 +2060,9 @@ namespace TNS.AdExpressI.PresentAbsent
                             groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
                             schemaFields.Add(new { name = colKey });
                         }
-                        colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", group = groups });
-                        schemaFields.Add(new { name = colKey });
+                        //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, group = groups });
+                       // schemaFields.Add(new { name = colKey });
                     }
                     else
                     {
@@ -2094,7 +2094,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                            , mediaSchedulePath
                            , link);
                             }
@@ -2111,7 +2111,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                          , insertionPath
                          , link);
                             }
@@ -2128,7 +2128,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"/{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
                          , versionPath
                          , link);
                             }

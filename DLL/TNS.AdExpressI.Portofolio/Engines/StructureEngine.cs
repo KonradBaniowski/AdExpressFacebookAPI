@@ -608,7 +608,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 dt = ds.Tables[0];
                 unitInformationList = _webSession.GetValidUnitForResult();
 
-                object[,] gridData = new object[dt.Rows.Count, dt.Columns.Count + 2]; //+2 car ID et PID en plus
+                object[,] gridData = new object[dt.Rows.Count +1, dt.Columns.Count + 2]; //Rows : +2 car hedaer et ligne total // Columns : +2 car ID et PID en plus
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
@@ -647,7 +647,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 for (int i = 0; i < unitInformationList.Count; i++)
                 {
                     colKey = string.Format("Key_{0}", i);
-                    string typeOfData = "number";
+                    string typeOfData = "string";//number
                     if (unitInformationList[i].Id == WebCst.CustomerSessions.Unit.duration) typeOfData = "string";
                     columns.Add(new { headerText = GestionWeb.GetWebWord(unitInformationList[i].WebTextId, _webSession.SiteLanguage), key = colKey, dataType = typeOfData, width = "*" });
                     schemaFields.Add(new { name = colKey });
