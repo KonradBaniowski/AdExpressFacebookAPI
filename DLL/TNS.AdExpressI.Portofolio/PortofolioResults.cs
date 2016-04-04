@@ -654,7 +654,8 @@ namespace TNS.AdExpressI.Portofolio
                             }
                             else
                             {
-                                pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+                                //pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+                                pathWeb = "/Content/img/no_visu.jpg";
                             }
                             DateTime dayDT =
                                 new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)),

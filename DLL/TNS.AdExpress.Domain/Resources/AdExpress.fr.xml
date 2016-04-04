@@ -2294,5 +2294,6 @@
     <item mnemonic="w3036" type="System.String">Vous ne pouvez sélectionner qu'un élément.</item>
     <item mnemonic="w3037" type="System.String">Ajouter un concurrent</item>
     <item mnemonic="w3038" type="System.String">Ce support a déjà été ajouté dans l'arbre de référence ou dans un concurrent</item>
+    <item mnemonic="w3039" type="System.String">Référents</item>
   </items>
 </localization>
