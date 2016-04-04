@@ -183,6 +183,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
             int nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
 
+            //GenericDetailLevel detailLevel = _session.GenericMediaDetailLevel;
+            //detailLevel.GetNbLevels
+
             ////foreach (var item in data.HeadersIndexInResultTable)
             //foreach (var item in data.NewHeaders.Root)
             //{
