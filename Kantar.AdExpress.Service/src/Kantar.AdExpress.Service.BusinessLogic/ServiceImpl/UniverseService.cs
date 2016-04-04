@@ -326,7 +326,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     {
                                         AccessType = AccessType.includes,
                                         UniversLevels = new List<UniversLevel>(),
-                                        Id = counter
+                                        Id = counter,
+                                        Label = (counter == 0) ? "Referents" : "Concurrents"
                                     };
                                     elementsGroups = presentAbsentUnivers.GetIncludes();
                                     if (elementsGroups != null && elementsGroups.Count > 0)
@@ -383,11 +384,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                         #endregion
                                         if (elementsGroups.Count > 1)
                                             {
-                                                tree = new Tree
-                                                {
-                                                    AccessType = AccessType.includes,
-                                                    UniversLevels = new List<UniversLevel>(),
-                                                    Id = counter
+                                            tree = new Tree
+                                            {
+                                                AccessType = AccessType.includes,
+                                                UniversLevels = new List<UniversLevel>(),
+                                                Id = counter,
+                                                Label = (counter == 0) ? "Referents" : "Concurrents"
+                                                //Label = (counter == 0) ? GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Referent, webSession.SiteLanguage)
+                                                //                    : GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Referent, webSession.SiteLanguage)
                                                 };
                                             }
                                         }

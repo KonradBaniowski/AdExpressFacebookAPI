@@ -7,7 +7,7 @@ namespace TNS.AdExpress.Constantes.Web
 {
   public  class LanguageConstantes
     {
-        #region CODES OF MARKET'S LABELS
+        #region Please insert any new code in the correct order
         public const long Cancel = 000;
         public const long Submit = 000;
         public const long MediaScheduleCode = 150;
@@ -51,6 +51,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSupport = 3035;
         public const long ErrorOnlyOneItemAllowed = 3036;
         public const long AddConcurrentCode = 3037;
+        public const long Referent = 3039;
         
         #endregion
     }

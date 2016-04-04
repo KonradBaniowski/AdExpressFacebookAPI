@@ -142,7 +142,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true, 5, 0);
+            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true, 1, 0);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {
@@ -151,9 +151,10 @@ namespace Km.AdExpressClientWeb.Controllers
                     Id = item.Id,
                     LabelId = item.LabelId,
                     AccessType = item.AccessType,
+                    Label =item.Label,
                     UniversLevels = Mapper.Map<List<Models.Shared.UniversLevel>>(item.UniversLevels)
                 };
-                tree.Label = (tree.Id==0) ? model.Labels.IncludedElements : model.Labels.Concurrent;
+                tree.Label = (tree.Id==0) ? model.Labels.Referent : model.Labels.Concurrent;
                 model.Trees.Add(tree);
             }
             #endregion
@@ -420,7 +421,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 ErrorOverLimit = GestionWeb.GetWebWord(LanguageConstantes.ErrorOverLimit, siteLanguage),
                 SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage),
-                Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage)
+                Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
+                Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent,siteLanguage)
             };
             return result;
         }
