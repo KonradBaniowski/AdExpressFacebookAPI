@@ -20,6 +20,7 @@
         @Html.HiddenFor(e => e.Labels.CurrentController)
         @Html.HiddenFor(e => e.Labels.ErrorSupportAlreadyDefine)
         @Html.HiddenFor(e => e.Labels.Concurrent)
+        @Html.HiddenFor(e => e.Labels.ErrorMininumInclude) 
         @foreach (int i in Model.IdMediasCommon)
         {
             <input type="hidden" name="HiddenIntList" value="@i" />

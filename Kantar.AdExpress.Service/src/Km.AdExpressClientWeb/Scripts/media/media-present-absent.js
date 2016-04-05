@@ -250,6 +250,8 @@ function validate() {
     if (nbElemInclus < 1) {
         message = $('#Labels_ErrorMininumInclude').val();
     }
+    if (idList.length == 0)
+        message += "\n" + $('#Labels_ErrorMediaSelected').val();
     return message;
 }
 

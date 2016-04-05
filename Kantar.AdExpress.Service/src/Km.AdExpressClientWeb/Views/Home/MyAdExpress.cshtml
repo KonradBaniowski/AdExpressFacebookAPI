@@ -12,9 +12,9 @@
 </div>
 <div class="row">
     <ul id="tab-myadexpress" class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#home" data-toggle="tab">Mes résultats</a></li>
-        <li role="presentation"><a href="#profile" data-toggle="tab">Mes univers</a></li>
-        <li role="presentation"><a href="#messages" data-toggle="tab">Mes alertes</a></li>
+        <li role="presentation" class="active"><a href="#home" data-toggle="tab">@Model.Labels.Results</a></li>
+        <li role="presentation"><a href="#profile" data-toggle="tab">@Model.Labels.UserUniversCode</a></li>
+        <li role="presentation"><a href="#messages" data-toggle="tab">@Model.Labels.AlertsCode</a></li>
     </ul>
     @*TAG OBLIGATOIRE
     tab-content-myadexpress
@@ -26,18 +26,32 @@
             <div class="panel panel-default panel-tab">
                 @*REPERTOIRES RESULTATS*@
                 <div class="panel-heading resume">
-                    <h3 class="panel-title pull-left">
-                        <span class="blue">5</span> répertoires,  <span class="blue">28</span> résultats
-                    </h3>
-                    <h3 class="panel-title pull-right">
-                        <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
-                        <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
-                        <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
-                    </h3>
+                    
+                       @if (Model.SavedResults != null && Model.SavedResults.UniversGroups.Any())
+                       { 
+                            <h3 class="panel-title pull-left">
+                                <span class="blue">@Model.SavedResults.NbrFolder</span> répertoires,  <span class="blue">@Model.SavedResults.NbrUniversGroups</span> résultats
+                            </h3>
+                            <h3 class="panel-title pull-right">
+                                <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
+                                <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
+                                <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
+                            </h3>
+                       }
+                       else
+                       {
+                        <h3 class="panel-title pull-left">
+                            <span>@Model.Labels.NoSavedUnivers</span>
+                        </h3>
+                       }                    
                     <div class="clearfix"></div>
                 </div>
 
                 <div class="panel-body">
+                    @if (Model.SavedResults != null && Model.SavedResults.UniversGroups.Any())
+                    {
+                    foreach (var item in Model.SavedResults.UniversGroups)
+                    {
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-primary">
                             <div class="panel-heading" role="tab" id="headingOne">
@@ -73,7 +87,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-primary">
+                        @*<div class="panel panel-primary">
                             <div class="panel-heading" role="tab" id="headingTwo">
                                 <h4 class="panel-title">
                                     <a class="btn-block collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -88,11 +102,15 @@
                                     Anim pariatur cliche reprehenderit, 
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
+                    }
+                    }
                 </div>
+
             </div>
         </div>
+
         <div role="tabpanel" class="tab-pane" id="profile">univers</div>
         <div role="tabpanel" class="tab-pane" id="messages">alertes</div>
     </div>

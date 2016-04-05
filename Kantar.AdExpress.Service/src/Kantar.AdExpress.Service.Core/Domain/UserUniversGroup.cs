@@ -57,4 +57,44 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public long ModuleId { get; set; }
     }
 
+    public class AdExpressUniversResponse
+    {
+        public long NbrFolder { get; set; }
+        public long NbrUniversGroups { get; set; }
+        public List<UserUniversGroup> UniversGroups { get; set; }
+
+        public UniversType UniversType { get; set; }
+    }
+    public class Alert
+    {
+        public List<DateTime> Occurrences { get; set; }
+        public AlertDetails Details { get; set; }
+        public long NbrOccurrences { get; set; }
+        
+    }
+    public enum UniversType
+    {
+        Result,
+        Univers,
+        Alert
+    }
+    public enum Periodicity
+    {
+        Daily,
+        Weekly,
+        Biweekly,
+        Monthly,
+        Quartly,
+        Biannually,
+        Annually
+    }
+
+    public class AlertDetails
+    {
+        public Periodicity Periodicity { get; set; }
+        public DateTime EndDate { get; set; }
+        public string Description { get; set; }
+        public string ReceiverEmailAddress { get; set; }
+    }
+
 }

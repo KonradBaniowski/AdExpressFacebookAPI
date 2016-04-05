@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Domain=Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.Home;
 using Km.AdExpressClientWeb.Models.Shared;
@@ -129,9 +130,14 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult MyAdExpress()
         {
-            var model = new MyAdExpressViewModel();
-            PresentationModel Presentation = new PresentationModel();
-            model.PresentationModel = LoadPresentationBar(33);
+            var model = new MyAdExpressViewModel
+            {
+                SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>() },
+                SavedUnivers = new Domain.AdExpressUniversResponse { UniversType = Domain.UniversType.Univers, UniversGroups = new List<Domain.UserUniversGroup>() },
+                Alerts = new List<Domain.Alert>(),
+                PresentationModel = LoadPresentationBar(33, false),
+                Labels = LoadPageLabels(33)
+            };
             return View(model);
         }
 
@@ -147,6 +153,20 @@ namespace Km.AdExpressClientWeb.Controllers
                 //Eviter de se garder GESTION WEB WORD DANS LES VUES CSHTML, la PLS
                 ModuleDescription = GestionWeb.GetWebWord(LanguageConstantes.MonAdExpressDescription, siteLanguage),
                 ModuleTitle = GestionWeb.GetWebWord(LanguageConstantes.MonAdExpressCode, siteLanguage)
+            };
+            return result;
+        }
+        private Labels LoadPageLabels(int siteLanguage)
+        {
+            var result = new Labels
+            {
+                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),                
+                Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),               
+                SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
+                UserUniversCode = GestionWeb.GetWebWord(LanguageConstantes.UserSavedUniversCode, siteLanguage),
+                MyResultsDescription = GestionWeb.GetWebWord(LanguageConstantes.MyResultsDescription, siteLanguage),
+                AlertsCode= GestionWeb.GetWebWord(LanguageConstantes.AlertsCode, siteLanguage),
+                NoSavedUnivers = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage)
             };
             return result;
         }
