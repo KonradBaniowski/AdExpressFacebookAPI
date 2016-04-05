@@ -185,6 +185,7 @@
     <Compile Include="Controllers\PortfolioExportController.cs" />
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
+    <Compile Include="Models\Home\MyAdExpressViewModel.cs" />
     <Compile Include="Models\Insertions\InsertionViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
@@ -528,6 +529,7 @@
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\kantarmedia-bg-4.jpg" />
     <Content Include="Content\img\no_visu.jpg" />
     <Content Include="Content\img\OLD_kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
@@ -1527,6 +1529,8 @@
     <Content Include="Views\Insertions\_DetailLevel.cshtml" />
     <Content Include="Views\MediaSchedule\_MSCreativesResult.cshtml" />
     <Content Include="Views\Creative\Index.cshtml" />
+    <Content Include="Views\Home\MyAdExpress.cshtml" />
+    <Content Include="Views\Shared\_LayoutMyAdExpress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

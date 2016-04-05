@@ -1,11 +1,14 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Km.AdExpressClientWeb.Models;
+using Km.AdExpressClientWeb.Models.Home;
+using Km.AdExpressClientWeb.Models.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -60,14 +63,6 @@ namespace Km.AdExpressClientWeb.Controllers
             var Home = new HomePageViewModel()
             {
                 ModuleRight = res,
-                //new System.Collections.Generic.Dictionary<long, Models.Module>()
-                //{
-                //    { 198, new Models.Module() },
-                //    { 197, new Models.Module() },
-                //    { 7216, new Models.Module() },
-                //    { 1781, new Models.Module() },
-                //    { 4370, new Models.Module() }
-                //},
                 Modules = resList,
                 Documents = new List<Documents>() {
                     new Documents()
@@ -130,6 +125,30 @@ namespace Km.AdExpressClientWeb.Controllers
                 throw new Exception("Module pb");
             }
             //if here pb
+        }
+
+        public ActionResult MyAdExpress()
+        {
+            var model = new MyAdExpressViewModel();
+            PresentationModel Presentation = new PresentationModel();
+            model.PresentationModel = LoadPresentationBar(33);
+            return View(model);
+        }
+
+        private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
+        {
+            PresentationModel result = new PresentationModel
+            {
+                ModuleCode = LanguageConstantes.MediaScheduleCode,
+                SiteLanguage = siteLanguage,
+                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
+                ShowCurrentSelection = showCurrentSelection,
+
+                //Eviter de se garder GESTION WEB WORD DANS LES VUES CSHTML, la PLS
+                ModuleDescription = GestionWeb.GetWebWord(LanguageConstantes.MonAdExpressDescription, siteLanguage),
+                ModuleTitle = GestionWeb.GetWebWord(LanguageConstantes.MonAdExpressCode, siteLanguage)
+            };
+            return result;
         }
     }
 }

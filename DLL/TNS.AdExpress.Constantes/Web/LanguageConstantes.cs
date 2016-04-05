@@ -5,21 +5,27 @@ using System.Text;
 
 namespace TNS.AdExpress.Constantes.Web
 {
-  public  class LanguageConstantes
+    /// <summary>
+    /// Hello world, merci de trier par ordre numérique
+    /// </summary>
+    public class LanguageConstantes
     {
         #region CODES OF MARKET'S LABELS
         public const long MediaScheduleCode = 150;
         public const long MediaScheduleDescriptionCode = 2200;
+        public const long MonAdExpressCode = 761;
         public const long SaveUniversCode = 769;
         public const long LoadUniversCode = 770;
         public const long ResultsCode = 829;
         public const long UserUniversCode = 875;
         public const long UserSavedUniversCode = 893;
+        public const long MonAdExpressDescription = 904;
         public const long SelectUniversGroup = 917;
         public const long ExceptionMsg = 922;
         public const long ErrorMsgCode = 930;
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
+
         public const long Capacity = 1000;
         public const long RefineCode = 2053;
         public const long PortfolioCode = 2170;
