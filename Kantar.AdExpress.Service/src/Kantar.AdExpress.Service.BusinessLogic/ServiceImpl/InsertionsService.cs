@@ -19,7 +19,7 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Web;
 using System.Collections;
 using WebCst = TNS.AdExpress.Constantes.Web;
-
+using TNS.FrameWork.WebResultUI;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -202,6 +202,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             return insertionResponse;
 
+        }
+
+        public ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle)
+        {
+            ResultTable data = null;
+            IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
+
+            return data;
         }
 
         public SpotResponse GetCreativePath(string idWebSession,string idVersion,long idVehicle)
