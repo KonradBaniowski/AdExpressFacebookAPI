@@ -11,7 +11,10 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public int SiteLanguage { get; set; }
         public long ModuleCode { get; set; }
         public long ModuleDecriptionCode { get; set; }
-        public bool ShowCurrentSelection { get; set; }        
+        public bool ShowCurrentSelection { get; set; }
+
+        public string ModuleDescription { get; set; }
+        public string ModuleTitle { get; set; }
     }
 
 }
