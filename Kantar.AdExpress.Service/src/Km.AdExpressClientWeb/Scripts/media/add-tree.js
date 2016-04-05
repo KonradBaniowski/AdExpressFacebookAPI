@@ -7,55 +7,57 @@
             if (nbIncludes < 5) {
                 $('[data-tab=' + nbIncludes + ']').append('<i class="fa fa-lock"></i>');
                 $('.panel-heading-choix.nav-tabs-alt').find('li[class="active"]').attr('class', '');
-                var idNext = nbIncludes + 1
+                var nextId = nbIncludes;
                 var ulSource = $('.nav.nav-tabs');
                 var liHtml = $('<li/>');
                 liHtml.attr('class', 'active');
                 var aHtml = $('<a/>');
-                //SET LABEL 
-                aHtml.text('Concurrent');
-                aHtml.attr('data-target', '#tab-' + idNext);
-                aHtml.attr('data-tab', idNext);
+                //SET LABEL
+                var concurrent=$('#Labels_Concurrent').val();
+                aHtml.text(concurrent);
+                aHtml.attr('data-target', '#tab-' + nextId);
+                aHtml.attr('id', 'tree-' + nextId);
+                aHtml.attr('data-tab', nextId);
                 aHtml.attr('data-toggle', 'tab');
                 aHtml.appendTo(liHtml);
                 liHtml.appendTo(ulSource);
 
-                var ref = $('#tab-' + nbIncludes + '');
+                var ref = $('#tab-0');
                 var tabHtml = ref.clone();
 
                 //LOCK OLD ONE
                 ref.attr('lock', 'true');
                 ref.attr('class', 'tab-pane');
-                tabHtml.attr('id', 'tab-' + idNext);
-                var panelHtml = tabHtml.find('.panel-group.panel-group-results[id="tree-' + nbIncludes + '"]');
-                panelHtml.attr('id', 'tree-' + idNext);
+                tabHtml.attr('id', 'tab-' + nextId);
+                var panelHtml = tabHtml.find('.panel-group.panel-group-results[id=tree-0]');
+                panelHtml.attr('id', 'tree-' + nextId);
                
                 panelHtml.find('.items-famille').empty();
                 $.each(panelHtml.find('a[data-parent]'), function (index, value) {
                     var href = $(value).attr('href');
                     href = href.slice(0, -1);
-                    href += idNext;
+                    href += nextId;
                     $(value).attr('href', href);
                     var data = $(value).attr('data-parent');
                     data = data.slice(0, -1);
-                    data += idNext;
-                    $(value).attr('data-parent', '#tree-'+ idNext);
+                    data += nextId;
+                    $(value).attr('data-parent', '#tree-'+ nextId);
                 });
                 $.each(panelHtml.find('.panel-collapse'), function (index, value) {
                     var id = $(value).attr('id');
                     id = id.slice(0, -1);
-                    id += idNext;
+                    id += nextId;
                     $(value).attr('id', id);
                 });
                 $.each(panelHtml.find('.panel-body'), function (index, value) {
                     var dataTree = $(value).attr('data-tree');
-                    $(value).attr('data-tree', idNext);
+                    $(value).attr('data-tree', nextId);
                 });
                 panelHtml.find('[id^=collapse-14]').collapse('hide');
                 $('.tab-content').append(tabHtml);
             }
             else {
-                bootbox.alert('too much');
+                $('#add-tree').off();
             }
         }
         else

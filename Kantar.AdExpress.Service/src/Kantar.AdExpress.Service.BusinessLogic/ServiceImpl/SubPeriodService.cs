@@ -62,10 +62,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 subPeriod.PeriodLabel = "Mois";
             }
 
+
             string currentPeriod = periodBegin;
             periodIndex = -1;
             i = -1;
             List<string> activePeriods = null;
+
+
+            /****************FirstDate/Lastate*************/
+            subPeriod.BeginPeriodLabel = Dates.DateToString(Dates.getZoomBeginningDate(realPeriodBegin, periodType), CustomerSession.SiteLanguage);
+            subPeriod.EndPeriodLabel = Dates.DateToString(Dates.getZoomEndDate(realPeriodEnd, periodType), CustomerSession.SiteLanguage);
+            subPeriod.AllPeriodLabel = string.Format("{0} {1} {2} {3}",
+                GestionWeb.GetWebWord(896, CustomerSession.SiteLanguage),
+                subPeriod.BeginPeriodLabel,
+                GestionWeb.GetWebWord(897, CustomerSession.SiteLanguage),
+                subPeriod.EndPeriodLabel);
+            /************************************/
 
             subPeriod.Items = new List<SubPeriodItem>();
             SubPeriodItem item = new SubPeriodItem();
@@ -106,28 +118,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentPeriod = string.Format("{0}{1}", tmp.Year, tmp.Week.ToString("0#"));
                 }
 
-            } while (periodEnd != currentPeriod);
+            //Voir avec youssef R.
+            //} while (periodEnd != currentPeriod);
+            } while (int.Parse(periodEnd) >= int.Parse(currentPeriod));
 
-            item = new SubPeriodItem();
 
-            item.Period = currentPeriod;
+            //item = new SubPeriodItem();
 
-            if (periodDisplay == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
-                item.Label = currentPeriod.Substring(4, 2);
-            else
-                item.Label = MonthString.GetCharacters(int.Parse(currentPeriod.Substring(4, 2)), cultureInfo, 1);
+            //item.Period = currentPeriod;
 
-            AppendPeriod(CustomerSession, periodType, currentPeriod, i, ref item, ref periodIndex, realPeriodBegin, realPeriodEnd, ref labBegin, ref labEnd, activePeriods);
+            //if (periodDisplay == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
+            //    item.Label = currentPeriod.Substring(4, 2);
+            //else
+            //    item.Label = MonthString.GetCharacters(int.Parse(currentPeriod.Substring(4, 2)), cultureInfo, 1);
 
-            if (item.Period == zoomDate)
-            {
-                item.IsSelected = true;
-                subPeriod.FirstPeriodLabel = item.PeriodLabel;
-            }
-            else
-                item.IsSelected = false;
+            //AppendPeriod(CustomerSession, periodType, currentPeriod, i, ref item, ref periodIndex, realPeriodBegin, realPeriodEnd, ref labBegin, ref labEnd, activePeriods);
 
-            subPeriod.Items.Add(item);
+            //if (item.Period == zoomDate)
+            //{
+            //    item.IsSelected = true;
+            //    subPeriod.FirstPeriodLabel = item.PeriodLabel;
+            //}
+            //else
+            //    item.IsSelected = false;
+
+            //subPeriod.Items.Add(item);
 
             return subPeriod;
         }
