@@ -338,7 +338,7 @@
 
                     function SlidingDateValidation(nextStepParam, isBreadcrumb) {
 
-                        if (selectedPeriod == -1 || selectedValue == -1) {
+                        if (selectedPeriod == -1) {
                             if (!isBreadcrumb)
                                 bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
                             return false;
