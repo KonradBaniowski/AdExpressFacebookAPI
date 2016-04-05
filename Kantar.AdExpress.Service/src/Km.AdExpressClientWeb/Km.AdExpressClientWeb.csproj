@@ -182,6 +182,7 @@
     <Compile Include="Controllers\InsertionsController.cs" />
     <Compile Include="Controllers\LostWonController.cs" />
     <Compile Include="Controllers\LostWonExportController.cs" />
+    <Compile Include="Controllers\MediaSchedulePopUpController.cs" />
     <Compile Include="Controllers\PortfolioExportController.cs" />
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
@@ -1532,6 +1533,8 @@
     <Content Include="Views\Portfolio\VehicleItemsCarousel.cshtml" />
     <Content Include="Views\Home\MyAdExpress.cshtml" />
     <Content Include="Views\Shared\_LayoutMyAdExpress.cshtml" />
+    <Content Include="Views\MediaSchedulePopUp\Index.cshtml" />
+    <Content Include="Views\MediaSchedulePopUp\_ResultOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
