@@ -1,6 +1,6 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
-using Km.AdExpressClientWeb.Models.Insertions;
+using Km.AdExpressClientWeb.Models.Shared;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -36,7 +36,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             WebSession customerSession = (WebSession)WebSession.Load(idWebSession);
 
-            var model = new InsertionViewModel()
+            var model = new InsertionCreativeViewModel()
             {
                 paramsUrl = new List<string>(),
                 SiteLanguage = 33, // Default
