@@ -180,6 +180,7 @@
     <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
+    <Compile Include="Controllers\InsertionsExportController.cs" />
     <Compile Include="Controllers\LostWonController.cs" />
     <Compile Include="Controllers\LostWonExportController.cs" />
     <Compile Include="Controllers\PortfolioExportController.cs" />
@@ -1537,6 +1538,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
+    <Folder Include="Views\InsertionsExport\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
