@@ -45,7 +45,6 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public Dimension Dimension { get; set; }
         public string WebSessionId { get; set; }
         public long IdUniverseClientDescription { get; set; }
-
         public List<long> MediaIds { get; set; }
     }
 
@@ -55,6 +54,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
         public List<long> UniversMediaIds { get; set; }
         public string Message { get; set; }
+        public long ModuleId { get; set; }
     }
 
 }

@@ -186,7 +186,6 @@
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
     <Compile Include="Models\Home\MyAdExpressViewModel.cs" />
-    <Compile Include="Models\Insertions\InsertionViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
     <Compile Include="Controllers\TestExportController.cs" />
@@ -201,6 +200,7 @@
     <Compile Include="Models\LostWon\ResultsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
+    <Compile Include="Models\Shared\InsertionCreativeViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
     <Compile Include="Models\Shared\PresentationModel.cs" />
@@ -1534,6 +1534,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Creative\" />
+    <Folder Include="Models\Insertions\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>

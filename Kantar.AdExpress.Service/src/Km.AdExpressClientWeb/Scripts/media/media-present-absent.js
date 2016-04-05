@@ -95,7 +95,7 @@ $('#btnSubmitMediaSelection').on('click', function (e) {
             nextStep: "PeriodSelection"
         };
         $.ajax({
-            url: '/Portfolio/SaveMediaSelection',
+            url: '/PresentAbsent/SaveMediaSelection',
             contentType: 'application/json',
             type: 'POST',
             datatype: 'JSON',

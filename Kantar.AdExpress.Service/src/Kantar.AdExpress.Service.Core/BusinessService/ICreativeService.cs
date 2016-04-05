@@ -11,7 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     {
 
 
-        InsertionResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle);
+        InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged);
         List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId);
 
         SpotResponse GetCreativePath(string idWebSession, string idVersion, long idVehicle);

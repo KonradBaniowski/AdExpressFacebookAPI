@@ -8,7 +8,7 @@ using TNS.AdExpress.Domain.Results;
 
 namespace Kantar.AdExpress.Service.Core.Domain
 {
-  public  class InsertionResponse
+  public  class InsertionCreativeResponse
     {
 
         public GridResult GridResult { get; set; }

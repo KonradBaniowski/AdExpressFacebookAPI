@@ -41,5 +41,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public int Id { get; set; }
         public AccessType AccessType { get; set; }
         public List<UniversLevel> UniversLevels { get; set; }
+
+        public string Label { get; set; }
     }
 }

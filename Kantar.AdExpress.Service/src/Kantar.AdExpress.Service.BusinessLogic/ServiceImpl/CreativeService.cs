@@ -77,36 +77,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// </summary>
         protected string _optionHtml = string.Empty;
 
-        public InsertionResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
+        public InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged)
         {
-            InsertionResponse insertionResponse = new InsertionResponse();
+            InsertionCreativeResponse creativeResponse = new InsertionCreativeResponse();
             ArrayList levels = new ArrayList();
             try
             {
-
                 _customerWebSession = (WebSession)WebSession.Load(idWebSession);
 
-                IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
+                IInsertionsResult creativeResult = InitCreativeCall(_customerWebSession, moduleId);
 
-                insertionResponse.Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, false);
-                if (insertionResponse.Vehicles.Count <= 0)
+                creativeResponse.Vehicles = creativeResult.GetPresentVehicles(ids, idUnivers, false);
+                if (creativeResponse.Vehicles.Count <= 0)
                 {
-                    return insertionResponse;
+                    return creativeResponse;
                 }
 
-                //TODO : TROUVER OU IL EST CHARGE
                 if (idVehicle.HasValue)
                 {
-                    insertionResponse.IdVehicle = idVehicle.Value;
+                    creativeResponse.IdVehicle = idVehicle.Value;
                 }
-                _idVehicle = insertionResponse.IdVehicle;
-                VehicleInformation vehicle = VehiclesInformation.Get(insertionResponse.IdVehicle);
-
-
+                _idVehicle = creativeResponse.IdVehicle;
+                VehicleInformation vehicle = VehiclesInformation.Get(creativeResponse.IdVehicle);
 
                 string message = string.Empty;
-               
-               
                 //date
                 TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType = _customerWebSession.PeriodType;
                 string periodBegin = _customerWebSession.PeriodBeginningDate;
@@ -131,11 +125,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _toDate = Convert.ToInt32(Dates.getZoomEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
                 }
 
-                _columnSetId = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(insertionResponse.IdVehicle, _customerWebSession.CurrentModule);
-                _defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(insertionResponse.IdVehicle);
-                _allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(insertionResponse.IdVehicle);
+                _columnSetId = WebApplicationParameters.CreativesDetail.GetDetailColumnsId(creativeResponse.IdVehicle, _customerWebSession.CurrentModule);
+                _defaultDetailItemList = WebApplicationParameters.CreativesDetail.GetDefaultMediaDetailLevels(creativeResponse.IdVehicle);
+                _allowedDetailItemList = WebApplicationParameters.CreativesDetail.GetAllowedMediaDetailLevelItems(creativeResponse.IdVehicle);
 
-                List<GenericColumnItemInformation> tmp = WebApplicationParameters.InsertionsDetail.GetDetailColumns(insertionResponse.IdVehicle, _customerWebSession.CurrentModule);
+                List<GenericColumnItemInformation> tmp = WebApplicationParameters.CreativesDetail.GetDetailColumns(creativeResponse.IdVehicle, _customerWebSession.CurrentModule);
                 _columnItemList = new List<GenericColumnItemInformation>();
                 foreach (GenericColumnItemInformation column in tmp)
                 {
@@ -151,7 +145,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 Int64 idColumnsSet = WebApplicationParameters.CreativesDetail.GetDetailColumnsId(vehicle.DatabaseId, moduleId);
                 foreach (GenericColumnItemInformation g in columns)
                 {
-                    
                     columnsId.Add(g.Id.GetHashCode());
                     if (WebApplicationParameters.GenericColumnsInformation.IsFilter(idColumnsSet, g.Id))
                     {
@@ -170,15 +163,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     saveLevels = null;
                 }
                 _customerWebSession.DetailLevel = new GenericDetailLevel(new ArrayList());
-               //data = result.GetCreatives(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
-                insertionResponse.GridResult = insertionResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
+                //data = result.GetCreatives(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
+                creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
                 if (saveLevels != null)
                 {
                     _customerWebSession.DetailLevel = saveLevels;
                 }
-                if (insertionResponse.GridResult != null && insertionResponse.GridResult.HasData)
+                if (creativeResponse.GridResult != null && creativeResponse.GridResult.HasData)
                 {
-                    //VOIR YOUGIL POUR LE S FILTRES
+                    //VOIR YOUGIL POUR LES FILTRES
                    //BuildCustomFilter(ref data, columnFilters);
                 }
                                           
@@ -186,10 +179,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                insertionResponse.Message = GestionWeb.GetWebWord(959, _customerWebSession.SiteLanguage);
+                creativeResponse.Message = GestionWeb.GetWebWord(959, _customerWebSession.SiteLanguage);
             }
 
-            return insertionResponse;
+            return creativeResponse;
 
         }
 
@@ -238,9 +231,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-            IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
+            IInsertionsResult creativeResult = InitCreativeCall(_customerWebSession, moduleId);
 
-            List<VehicleInformation> Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, false);
+            List<VehicleInformation> Vehicles = creativeResult.GetPresentVehicles(ids, idUnivers, false);
 
             List<List<string>> ListRetour = new List<List<string>>();
             string vehicle = string.Empty;
@@ -334,10 +327,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public IInsertionsResult InitInsertionCall(WebSession custSession, long moduleId)
+        public IInsertionsResult InitCreativeCall(WebSession custSession, long moduleId)
         {
             //**TODO : IdVehicules not null
-
 
             CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
@@ -348,139 +340,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance
                 | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
 
-
             return result;
-
-        }
-
-        /// <summary>
-		/// Verifie les droits pour une liste de colonnes
-		/// </summary>
-		/// <param name="columnItemList">Liste des colonnes par média</param>
-		/// <returns></returns>
-        private List<GenericColumnItemInformation> ColumnRight(List<GenericColumnItemInformation> columnItemList)
-        {
-            List<GenericColumnItemInformation> columnList = new List<GenericColumnItemInformation>();
-
-            foreach (GenericColumnItemInformation column in columnItemList)
-                if (CanAddColumnItem(column))
-                    columnList.Add(column);
-
-            return (columnList);
-        }
-
-        /// <summary>
-		/// Verifie les droits pour une colonne
-		/// </summary>
-		/// <param name="currentColumn">Colonne courante</param>
-		/// <returns></returns>
-		private bool CanAddColumnItem(GenericColumnItemInformation currentColumn)
-        {
-            switch (currentColumn.Id)
-            {
-                case GenericColumnItemInformation.Columns.slogan:
-                    return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG);
-                case GenericColumnItemInformation.Columns.interestCenter:
-                case GenericColumnItemInformation.Columns.mediaSeller:
-                    return (!_customerWebSession.isCompetitorAdvertiserSelected());
-                case GenericColumnItemInformation.Columns.visual:
-                case GenericColumnItemInformation.Columns.associatedFile:
-                    return _customerWebSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(_idVehicle.Value));
-                case GenericColumnItemInformation.Columns.product:
-                    return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
-                default:
-                    return (true);
-            }
-        }
-
-        /// <summary>
-        /// Get Allowed Detail Item List
-        /// </summary>
-        /// <returns>ID of Allowed Detail Item List</returns>
-        protected List<int> GetAllowedDetailItemList()
-        {
-            List<int> list = new List<int>();
-            foreach (DetailLevelItemInformation currentDetailLevelItem in _allowedDetailItemList)
-            {
-                if (CanAddDetailLevelItem(currentDetailLevelItem))
-                {
-                    list.Add(currentDetailLevelItem.Id.GetHashCode());
-                }
-            }
-            return list;
-        }
-
-        ///<summary>
-		/// Test si un niveau de détail peut être montré
-		/// </summary>
-		///  <param name="currentDetailLevel">
-		///  </param>
-		///  <returns>
-		///  </returns>
-		///  <url>element://model:project::TNS.AdExpress.Web.Controls/design:view:::a6hx33ynklrfe4g_v</url>
-		private bool CanAddDetailLevelItem(DetailLevelItemInformation currentDetailLevel)
-        {
-
-            switch (currentDetailLevel.Id)
-            {
-                case DetailLevelItemInformation.Levels.slogan:
-                    return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG);
-                case DetailLevelItemInformation.Levels.interestCenter:
-                case DetailLevelItemInformation.Levels.mediaSeller:
-                    return (!_customerWebSession.isCompetitorAdvertiserSelected());
-                case DetailLevelItemInformation.Levels.brand:
-                    return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE));
-                case DetailLevelItemInformation.Levels.product:
-                    return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG));
-                case DetailLevelItemInformation.Levels.advertiser:
-                    return (CheckProductDetailLevelAccess());
-                case DetailLevelItemInformation.Levels.sector:
-                case DetailLevelItemInformation.Levels.subSector:
-                case DetailLevelItemInformation.Levels.group:
-                    return (CheckProductDetailLevelAccess() && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_GROUP_LEVEL_ACCESS_FLAG));
-                case DetailLevelItemInformation.Levels.segment:
-                    return (CheckProductDetailLevelAccess() && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG));
-                case DetailLevelItemInformation.Levels.holdingCompany:
-                    return (CheckProductDetailLevelAccess());
-                case DetailLevelItemInformation.Levels.groupMediaAgency:
-                case DetailLevelItemInformation.Levels.agency:
-                    List<Int64> vehicleList = GetVehicles();
-                    return (_customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList));
-                case DetailLevelItemInformation.Levels.mediaGroup:
-                    return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_GROUP);
-                default:
-                    return (true);
-            }
-        }
-
-
-        /// <summary>
-        /// Vérifie si le client à le droit de voir un détail produit dans les plan media
-        /// </summary>
-        /// <returns>True si oui false sinon</returns>
-        private bool CheckProductDetailLevelAccess()
-        {
-            return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG));
-
-        }
-
-        private List<Int64> GetVehicles()
-        {
-            List<Int64> vehicleList = new List<Int64>();
-            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-            if (listStr != null && listStr.Length > 0)
-            {
-                string[] list = listStr.Split(',');
-                for (int i = 0; i < list.Length; i++)
-                    vehicleList.Add(Convert.ToInt64(list[i]));
-            }
-            else
-            {
-                //When a vehicle is not checked but one or more category, this get the vehicle correspondly
-                string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-                vehicleList.Add(Convert.ToInt64(Vehicle));
-            }
-            return vehicleList;
         }
 
         #region Build Custom Filters

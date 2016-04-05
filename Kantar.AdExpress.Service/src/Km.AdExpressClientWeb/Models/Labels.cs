@@ -38,5 +38,7 @@ namespace Km.AdExpressClientWeb.Models
         public string SaveUnivers { get; set; }//769
         public string AddConcurrent { get; set;}//3037
         public string ErrorSupportAlreadyDefine { get; set; } // 3038
+        public string Concurrent { get; set; } //w2869
+        public string Referent { get; set; } //3039
     }
 }

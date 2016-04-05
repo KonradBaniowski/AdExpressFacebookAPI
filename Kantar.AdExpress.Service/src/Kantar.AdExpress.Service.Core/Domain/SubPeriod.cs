@@ -12,6 +12,14 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
         public string FirstPeriodLabel { get; set; }
 
+        public string LastPeriodLabel { get; set; }
+
+        public string BeginPeriodLabel { get; set; }
+
+        public string EndPeriodLabel { get; set; }
+
+        public string AllPeriodLabel { get; set; }
+
         public List<SubPeriodItem> Items { get; set; }
     }
 }

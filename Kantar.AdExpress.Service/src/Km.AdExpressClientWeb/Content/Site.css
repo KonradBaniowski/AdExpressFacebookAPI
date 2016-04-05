@@ -1964,7 +1964,7 @@ ul.ui-selectable {
 
 
 
-/***Insertion***/
+/***Insertion, Creative***/
 .media.video-audio-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -1972,7 +1972,6 @@ ul.ui-selectable {
     height: 0;
     overflow: hidden;
 }
-
     .media.video-audio-container iframe, .video-audio-container object, .video-audio-container embed {
         position: absolute;
         top: 0;
@@ -1980,7 +1979,6 @@ ul.ui-selectable {
         width: 100%;
         height: 100%;
     }
-
 
 /****Carousel****/
 .carousel-control.right,
@@ -2067,3 +2065,21 @@ ul.ui-selectable {
     #tab-content-myadexpress .panel-group .panel + .panel {
         margin-top: 0px;
     }
+/*Images Creative (class = iconCreative+[numero_du_vehicle])*/
+.iconInsertionCreativ, .big{
+    font-size: 10em;
+}
+.iconInsertionCreative:before{ 
+    content: "\f01d"; /*Defaut*/
+}
+.iconInsertionCreative0:before{
+}
+.iconInsertionCreative1:before{ 
+}
+.iconInsertionCreative2:before{ /*Radio*/
+    content: "\f001";
+}
+.iconInsertionCreative3:before{ /*TV*/
+    content: "\f008";
+}
+
