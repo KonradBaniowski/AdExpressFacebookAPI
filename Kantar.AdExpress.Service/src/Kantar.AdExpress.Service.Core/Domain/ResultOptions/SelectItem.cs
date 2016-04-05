@@ -11,5 +11,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public string Text { get; set; }
 
         public string Value { get; set; }
+
+        public bool slogan { get; set; }
     }
 }

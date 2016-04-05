@@ -42,6 +42,7 @@
         <center>
             <div id="grid" class="hide">
             </div>
+            <div id="gridMessage" class="hide"></div>
             <div id="gridLoader">
                 <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
             </div>
@@ -247,6 +248,9 @@
         }
 
         function CallMediaScheduleResult(zoomDateParam) {
+
+            $("#gridMessage").addClass("hide");
+
             zoomDate = zoomDateParam;
             var params = {
                 zoomDate: zoomDateParam
@@ -285,8 +289,8 @@
                     }
                     else {
                         $("#gridLoader").addClass("hide");
-                        $("#grid").removeClass("hide");
-                        $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
+                        $("#gridMessage").removeClass("hide");
+                        $("#gridMessage").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
                     }
                 }
             });
