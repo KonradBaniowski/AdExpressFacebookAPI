@@ -213,6 +213,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
                         oldEcranCode = ecranCode;
 
+
                         if (!start)
                         {
                             currentLine += unitsList.Count;
@@ -511,37 +512,37 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
             //Monday
             colKey = "Key654";
-            columns.Add(new { headerText = GestionWeb.GetWebWord(654, _webSession.SiteLanguage), key = colKey, dataType = "number", width = "*" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(654, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
             schemaFields.Add(new { name = colKey });
 
             // Tuesday
             colKey = "Key655";
-            columns.Add(new { headerText = GestionWeb.GetWebWord(655, _webSession.SiteLanguage), key = colKey, dataType = "number", width = "*" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(655, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
             schemaFields.Add(new { name = colKey });
 
             //Wednesday
             colKey = "Key656";
-            columns.Add(new { headerText = GestionWeb.GetWebWord(656, _webSession.SiteLanguage), key = colKey, dataType = "number", width = "*" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(656, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
             schemaFields.Add(new { name = colKey });
 
             // Thursday
             colKey = "Key657";
-            columns.Add(new { headerText = GestionWeb.GetWebWord(657, _webSession.SiteLanguage), key = colKey, dataType = "number", width = "*" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(657, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
             schemaFields.Add(new { name = colKey });
 
             // friday
             colKey = "Key658";
-            columns.Add(new { headerText = GestionWeb.GetWebWord(658, _webSession.SiteLanguage), key = colKey, dataType = "number", width = "*" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(658, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
             schemaFields.Add(new { name = colKey });
 
             // Saturday
             colKey = "Key659";
-            columns.Add(new { headerText = GestionWeb.GetWebWord(659, _webSession.SiteLanguage), key = colKey, dataType = "number", width = "*" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(659, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
             schemaFields.Add(new { name = colKey });
 
             // Sunday
             colKey = "Key660";
-            columns.Add(new { headerText = GestionWeb.GetWebWord(660, _webSession.SiteLanguage), key = colKey, dataType = "number", width = "*" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(660, _webSession.SiteLanguage), key = colKey, dataType = "string", width = "*" });
             schemaFields.Add(new { name = colKey });
 
             #endregion
@@ -553,21 +554,31 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
                 if (unitsList.Contains(unitInformation))
                 {
-                   
+
+                    int k = 0;
+                    gridData[currentLineIndex, k] = currentLineIndex; // Pour column ID
+
+                    k++;
+                    gridData[currentLineIndex, k] = -1; // Pour column PID
+
                     if (oldEcranCode != long.Parse(dr["screenCode"].ToString()))
                     {
-                        int k = 0;
-                        gridData[currentLineIndex, k] = currentLineIndex; // Pour column ID
-
-                        k++;
-                        gridData[currentLineIndex, k] = -1; // Pour column PID
+                        
 
                         // Screen code
                         k++;
                         gridData[currentLineIndex, k] = GetScreenCodeText(dr["screenCode"].ToString());
 
-                        #region Column units
-                        if (unitInformation.Id == WebCst.CustomerSessions.Unit.euro
+
+                    }
+                    else
+                    {
+                        k++;
+                        gridData[currentLineIndex, k] = string.Empty;
+                    }
+
+                    #region Column units
+                    if (unitInformation.Id == WebCst.CustomerSessions.Unit.euro
                             || unitInformation.Id == WebCst.CustomerSessions.Unit.kEuro
                             || unitInformation.Id == WebCst.CustomerSessions.Unit.rubles
                             || unitInformation.Id == WebCst.CustomerSessions.Unit.usd)
@@ -585,11 +596,12 @@ namespace TNS.AdExpressI.Portofolio.Engines
                         {
                             if (dr[dayName[i]] != null && dr[dayName[i]] != System.DBNull.Value && !dr[dayName[i]].ToString().Equals("0"))
                             {
-                             
+
+                           // idMedia = 2003 & dayOfWeek = Wednesday & ecran = 515
                                 k++;
-                                gridData[currentLineIndex, k] = Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp);
-                                    /*string.Format("<a href='javascript:window.open(\"{0}?{1}&{2}&{3}&{4}\", \"\", \"width=auto, height=auto\");'>{5}</a>",
-                                    insertionDetailPath, _webSession.IdSession, _idMedia, dayName[i], dr["screenCode"].ToString(), Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));*/
+                                gridData[currentLineIndex, k] =
+                                    string.Format("<a href='javascript:window.open(\"{0}?idMedia={1}&dayOfWeek={2}&ecran={3}\", \"\", \"width=auto, height=auto\");'>{4}</a>",
+                                    insertionDetailPath,  _idMedia, dayName[i], dr["screenCode"].ToString(), Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));
 
                             }
                             else
@@ -601,7 +613,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                         #endregion
 
                         oldEcranCode = long.Parse(dr["screenCode"].ToString());
-                    }
+                  
                     currentLineIndex++;
 
 

@@ -62,9 +62,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private bool _hasCreationDownloadRights = false;
 
 
-        public InsertionResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged = false)
+        public InsertionCreativeResponse GetInsertionsGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged = false)
         {
-            InsertionResponse insertionResponse = new InsertionResponse();
+            InsertionCreativeResponse insertionResponse = new InsertionCreativeResponse();
             ArrayList levels = new ArrayList();
             try
             {
@@ -348,7 +348,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public IInsertionsResult InitInsertionCall(WebSession custSession, long moduleId)
         {
             //**TODO : IdVehicules not null
-
 
             CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));

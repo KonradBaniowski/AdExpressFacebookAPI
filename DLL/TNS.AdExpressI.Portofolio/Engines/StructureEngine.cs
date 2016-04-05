@@ -647,7 +647,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 for (int i = 0; i < unitInformationList.Count; i++)
                 {
                     colKey = string.Format("Key_{0}", i);
-                    string typeOfData = "number";
+                    string typeOfData = "string";//number
                     if (unitInformationList[i].Id == WebCst.CustomerSessions.Unit.duration) typeOfData = "string";
                     columns.Add(new { headerText = GestionWeb.GetWebWord(unitInformationList[i].WebTextId, _webSession.SiteLanguage), key = colKey, dataType = typeOfData, width = "*" });
                     schemaFields.Add(new { name = colKey });

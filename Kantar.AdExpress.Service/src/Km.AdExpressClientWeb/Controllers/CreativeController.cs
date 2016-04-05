@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Km.AdExpressClientWeb.Models.Shared;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,44 +13,70 @@ namespace Km.AdExpressClientWeb.Controllers
     public class CreativeController : Controller
     {
         private ICreativeService _creativeService;
+        private IUniverseService _universService;
 
-        public CreativeController(ICreativeService creativeService)
+        public CreativeController(ICreativeService creativeService, IUniverseService universService)
         {
             _creativeService = creativeService;
+            _universService = universService;
         }
 
         // GET: Creative
         public ActionResult Index(string ids, string zoomDate, string idUnivers, string moduleId, string idVehicle)
         {
-            List<string> paramsUrl = new List<string>();
-            paramsUrl.Add(ids);
-            paramsUrl.Add(zoomDate);
-            paramsUrl.Add(idUnivers);
-            paramsUrl.Add(moduleId);
-            paramsUrl.Add(idVehicle);
-            return View(paramsUrl);
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var model = new InsertionCreativeViewModel()
+            {
+                paramsUrl = new List<string>(),
+                SiteLanguage = 33, // Default
+            };
+
+            model.paramsUrl.Add(ids);
+            model.paramsUrl.Add(zoomDate);
+            model.paramsUrl.Add(idUnivers);
+            model.paramsUrl.Add(moduleId);
+            model.paramsUrl.Add(idVehicle);
+
+            var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
+            model.SiteLanguage = result.SiteLanguage;
+
+            return View(model);
         }
+
+
         [HttpPost]
-        public JsonResult CreativeResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
+        public JsonResult CreativeResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged)
         {
+
             string jsonData = "";
 
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _creativeService.GetCreativeGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle);
+            var reponse = _creativeService.GetCreativeGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged);
 
-            if (!reponse.GridResult.HasData)
-                return null;
-
-            if (reponse.Message == null)
+            try
             {
-                jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
-                JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
-                return jsonModel;
-            }
-            return null;
+                if (!reponse.GridResult.HasData)
+                    return null;
 
+                if (reponse.Message == null)
+                {
+                    jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
+                    JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+                    jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                    return jsonModel;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            return null;
         }
 
 

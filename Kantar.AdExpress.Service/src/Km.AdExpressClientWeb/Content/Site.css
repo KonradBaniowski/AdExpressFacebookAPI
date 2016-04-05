@@ -148,6 +148,12 @@
     background-size: cover;
 }
 
+.container-kantar-myadexpress {
+    background: url('../Content/img/kantarmedia-bg-4.jpg') no-repeat;
+    color: #ffffff;
+    background-size: cover;
+}
+
 .header-kantar-popup {
     padding: 10px 15px;
     border-bottom: 1px solid transparent;
@@ -1248,58 +1254,58 @@ input[type=checkbox].with-font {
     width: 1px;
 }
 
-input[type=radio].with-font ~ label:before {
-    font-family: FontAwesome;
-    display: inline-block;
-    content: "\f1db";
-    letter-spacing: 10px;
-    font-size: 1.2em;
-    color: rgba(255,255,255,0.2);
-    width: 1.4em;
-}
+    input[type=radio].with-font ~ label:before {
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f1db";
+        letter-spacing: 10px;
+        font-size: 1.2em;
+        color: rgba(255,255,255,0.2);
+        width: 1.4em;
+    }
 
-input[type=checkbox].with-font ~ label:before {
-    font-family: FontAwesome;
-    display: inline-block;
-    content: "\f0c8";
-    letter-spacing: 10px;
-    font-size: 1.2em;
-    color: #FF8C1C;
-    width: 1.4em;
-}
+    input[type=checkbox].with-font ~ label:before {
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f0c8";
+        letter-spacing: 10px;
+        font-size: 1.2em;
+        color: #FF8C1C;
+        width: 1.4em;
+    }
 
-input[type=radio].with-font:checked ~ label:before {
-    content: "\f192";
-    font-size: 1.2em;
-    color: #00c1ff;
-    letter-spacing: 10px;
-}
+    input[type=radio].with-font:checked ~ label:before {
+        content: "\f192";
+        font-size: 1.2em;
+        color: #00c1ff;
+        letter-spacing: 10px;
+    }
 
-input[type=checkbox].with-font:checked ~ label:before {
-    content: "\f14a";
-    font-size: 1.2em;
-    color: #FF8C1C;
-    letter-spacing: 10px;
-}
+    input[type=checkbox].with-font:checked ~ label:before {
+        content: "\f14a";
+        font-size: 1.2em;
+        color: #FF8C1C;
+        letter-spacing: 10px;
+    }
 
-input[type=checkbox].with-font ~ label:before {
-    content: "\f0c8";
-}
+    input[type=checkbox].with-font ~ label:before {
+        content: "\f0c8";
+    }
 
-input[type=checkbox].with-font:checked ~ label:before {
-    content: "\f14a";
-    color: #FF8C1C;
-}
+    input[type=checkbox].with-font:checked ~ label:before {
+        content: "\f14a";
+        color: #FF8C1C;
+    }
 
-input[type=radio].with-font:focus ~ label:before,
-input[type=radio].with-font:focus ~ label {
-    color: #00c1ff;
-}
+    input[type=radio].with-font:focus ~ label:before,
+    input[type=radio].with-font:focus ~ label {
+        color: #00c1ff;
+    }
 
-input[type=checkbox].with-font:focus ~ label:before,
-input[type=checkbox].with-font:focus ~ label {
-    color: #FF8C1C;
-}
+    input[type=checkbox].with-font:focus ~ label:before,
+    input[type=checkbox].with-font:focus ~ label {
+        color: #FF8C1C;
+    }
 
 .selectdatecontainer {
     height: 36px !important;
@@ -1707,43 +1713,44 @@ ul.ui-selectable {
 }
 
 .msCreative .panel {
-  border-radius: 2px;
-  border:0 !important;
-  background-color:rgba(255,255,255,0.2);
-  line-height: 1.2;
+    border-radius: 2px;
+    border: 0 !important;
+    background-color: rgba(255,255,255,0.2);
+    line-height: 1.2;
 }
 
-.msCreative .btn-filtrer{
+.msCreative .btn-filtrer {
     color: #fff;
     background-color: #00c1ff;
     border: 0;
     font-weight: bolder;
     padding: 2px 10px;
     cursor: pointer;
-    font-size: 12px; 
+    font-size: 12px;
 }
 
-.msCreative .btn-filtrer:hover,
-.msCreative .btn-filtrer:focus,
-.msCreative .btn-filtrer:active,
-.msCreative .btn-filtrer.active,
-.msCreative .open .dropdown-toggle.btn-filtrer {
-  color: #fff !important;
-  background-color: #21c9ff;
+    .msCreative .btn-filtrer:hover,
+    .msCreative .btn-filtrer:focus,
+    .msCreative .btn-filtrer:active,
+    .msCreative .btn-filtrer.active,
+    .msCreative .open .dropdown-toggle.btn-filtrer {
+        color: #fff !important;
+        background-color: #21c9ff;
+    }
+
+.press img {
+    border-width: 5px;
+    border-radius: 2px;
+    max-height: 105px;
+    width: 100%;
+    height: 105px;
+    cursor: pointer;
 }
 
-.press img{
-  border-width: 5px;  
-  border-radius: 2px;
-  max-height:105px;
-  width: 100%;
-  height: 105px;
-  cursor:pointer;
-}
-.press{
-  margin-bottom: 0 !important;
-  padding: 5px;
-  background: none;
+.press {
+    margin-bottom: 0 !important;
+    padding: 5px;
+    background: none;
 }
 
 .modal-body-align {
@@ -1755,56 +1762,56 @@ ul.ui-selectable {
 }
 
 .item {
-  position: relative;
- -webkit-transition: all 0.2s ease-in-out 0s;
-          transition: all 0.2s ease-in-out 0s;
+    position: relative;
+    -webkit-transition: all 0.2s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s;
 }
 
-.item .top {
-  position: relative;
-  top: 0;
-  left: 0;
-}
+    .item .top {
+        position: relative;
+        top: 0;
+        left: 0;
+    }
 
-.item .bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    z-index: 10;
-    font-size: 12px;
-}
+    .item .bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+        font-size: 12px;
+    }
 
-.item .center {
-  position: absolute;
-  top: 50%;
-}
+    .item .center {
+        position: absolute;
+        top: 50%;
+    }
 
 .item-overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
 }
 
-.item-overlay.active,
-.item:hover .item-overlay {
-  display: block;
-}
+    .item-overlay.active,
+    .item:hover .item-overlay {
+        display: block;
+    }
 
 .row.no-gutter {
-  margin-right: 0;
-  margin-left: 0;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .no-gutter [class*="col"] {
-  padding: 0;
+    padding: 0;
 }
 
-.select-affiner{
+.select-affiner {
     position: absolute;
     left: 5px;
     width: 15px;
@@ -1812,36 +1819,40 @@ ul.ui-selectable {
     z-index: 10;
     margin-top: 5px;
 }
-.select-affiner button{
-  width:100%;
-  text-align:center;
-}
-.select-affiner button span{
-  float:right;
-  margin-top: 6px;
-}
-.select-affiner > .dropdown-menu{
-  max-width: 150px !important;
-  min-width: 150px;
-}
-.select-affiner label{
-  display:block;
-  text-align:center;
-  background-color: #ffffff;
-  line-height: 0.8em;
-  width: 14px;
-  height: 10px;
-}
+
+    .select-affiner button {
+        width: 100%;
+        text-align: center;
+    }
+
+        .select-affiner button span {
+            float: right;
+            margin-top: 6px;
+        }
+
+    .select-affiner > .dropdown-menu {
+        max-width: 150px !important;
+        min-width: 150px;
+    }
+
+    .select-affiner label {
+        display: block;
+        text-align: center;
+        background-color: #ffffff;
+        line-height: 0.8em;
+        width: 14px;
+        height: 10px;
+    }
 
 .empty-image {
     width: 100%;
-    min-height: 105px; 
+    min-height: 105px;
     background-color: #1F2025;
 }
 
 .creative-background {
     width: 100%;
-    min-height: 60px; 
+    min-height: 60px;
     background-color: #1F2025;
     text-align: center;
 }
@@ -1953,7 +1964,7 @@ ul.ui-selectable {
 
 
 
-/***Insertion***/
+/***Insertion, Creative***/
 .media.video-audio-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -1961,7 +1972,6 @@ ul.ui-selectable {
     height: 0;
     overflow: hidden;
 }
-
     .media.video-audio-container iframe, .video-audio-container object, .video-audio-container embed {
         position: absolute;
         top: 0;
@@ -1969,7 +1979,6 @@ ul.ui-selectable {
         width: 100%;
         height: 100%;
     }
-
 
 /****Carousel****/
 .carousel-control.right,
@@ -1985,3 +1994,92 @@ ul.ui-selectable {
     left: 50%;
     border-top: none;
 }
+
+#tab-myadexpress {
+    background-color: rgba(0,0,0,0.6);
+    border-bottom: 0px;
+}
+
+    #tab-myadexpress.nav-tabs > li.active > a {
+        transition: all 0.2s ease-in-out 0s;
+        color: #ff8c00;
+        background: transparent;
+        text-transform: uppercase;
+        border: none;
+    }
+
+    #tab-myadexpress.nav-tabs > li > a, #tab-myadexpress.nav-tabs > li > a:hover {
+        transition: all 0.2s ease-in-out 0s;
+        background: transparent;
+        text-transform: uppercase;
+        border: none;
+    }
+
+#tab-content-myadexpress .panel.panel-default {
+    border-radius: 0px;
+}
+
+    #tab-content-myadexpress .panel.panel-default.panel-tab {
+        background: transparent;
+        border: none;
+    }
+
+        #tab-content-myadexpress .panel.panel-default.panel-tab > .panel-body {
+            padding: 0px;
+        }
+
+#tab-content-myadexpress .panel-heading.resume {
+    background: rgba(0,0,0,0.2);
+    border-bottom: 0px;
+    color: white;
+}
+
+#tab-content-myadexpress .panel-group {
+}
+
+    #tab-content-myadexpress .panel-group .panel-primary {
+        background-color: rgba(255,255,255,0.2);
+        border: none;
+        border-radius: 0px;
+    }
+
+        #tab-content-myadexpress .panel-group .panel-primary > .panel-heading {
+            background-color: rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+        }
+
+        #tab-content-myadexpress .panel-group .panel-primary .panel-body {
+            background-color: rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+        }
+
+        #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title {
+             color: #00c1ff;
+        }
+
+        #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
+           color:white;
+        }
+
+
+    #tab-content-myadexpress .panel-group .panel + .panel {
+        margin-top: 0px;
+    }
+/*Images Creative (class = iconCreative+[numero_du_vehicle])*/
+.iconInsertionCreativ, .big{
+    font-size: 10em;
+}
+.iconInsertionCreative:before{ 
+    content: "\f01d"; /*Defaut*/
+}
+.iconInsertionCreative0:before{
+}
+.iconInsertionCreative1:before{ 
+}
+.iconInsertionCreative2:before{ /*Radio*/
+    content: "\f001";
+}
+.iconInsertionCreative3:before{ /*TV*/
+    content: "\f008";
+}
+

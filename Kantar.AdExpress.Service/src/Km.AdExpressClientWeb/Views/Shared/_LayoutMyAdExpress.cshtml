@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.2.3/css/simple-line-icons.css">
 </head>
 
-<body class="container-kantar-other">
+<body class="container-kantar-myadexpress">
     <nav class="navbar navbar-default navbar-static-top navbar-color">
         <div class="container">
             @*ROMAIN*@
@@ -51,7 +51,7 @@
                     <li>
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
-                        @Html.AntiForgeryToken()
+                            @Html.AntiForgeryToken()
                         }
                         <a href="javascript:document.getElementById('logoutForm').submit()"><i class="glyphicon glyphicon-off"></i></a>
                     </li>
@@ -71,7 +71,7 @@
         <div class="modal-footer" hidden>
             <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
         </div>
-       
+
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

@@ -84,7 +84,7 @@
     <Compile Include="Domain\Identity\ApplicationUserLoginInfo.cs" />
     <Compile Include="Domain\Identity\ApplicationUserRole.cs" />
     <Compile Include="Domain\Identity\AppUser.cs" />
-    <Compile Include="Domain\InsertionResponse.cs" />
+    <Compile Include="Domain\InsertionCreativeResponse.cs" />
     <Compile Include="Domain\Mau\Login.cs" />
     <Compile Include="Domain\Mau\Module.cs" />
     <Compile Include="Domain\Mau\ModuleAssignment.cs" />

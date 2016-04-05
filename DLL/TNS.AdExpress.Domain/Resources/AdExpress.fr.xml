@@ -228,7 +228,7 @@
     <item mnemonic="w901" type="System.String">Vous pouvez effectuer un zoom sur un ou plusieurs éléments de la nomenclature produit à l'aide du menu déroulant ci-dessous.&lt;br&gt;Vous pouvez également zoomer sur une période hebdomadaire ou mensuelle en cliquant sur son libéllé.&lt;br&gt;De plus, il est possible de deployer les média et les catégories en cliquant sur leur libellé. Un click sur le libellé du support permet de visualiser exclusivement sa ligne.</item>
     <item mnemonic="w902" type="System.String">Vous pouvez naviguer d'une période à l'autre à l'aide des flèches de déplacement qui encadre le libellé de la période. Pour visualiser les créations et le détail des insertions publicitaires, cliquez sur l'icône de la colonne "création".&lt;br&gt;Pour revenir au tableau de résultat initial, cliquez sur le bouton retour.&lt;br&gt;De plus, il est possible de déployer les média et les catégories en cliquant sur leur libellé. Un click sur le libellé du support permet de visualiser exclusivement sa ligne.</item>
     <item mnemonic="w903" type="System.String">Mes Univers liste tous les univers que vous avez préalablement enregistrés.&lt;br&gt;Vous pouvez voir leur détail, créer, modifier ou supprimer des groupes d'univers.</item>
-    <item mnemonic="w904" type="System.String">« Mon AdExpress » vous permet de sauvegarder la définition de l'ensemble des dimensions d'une requête&lt;br&gt;(dimensions produits (Secteurs ou Annonceurs), Supports et Période).&lt;br&gt;Vous pouvez ainsi recalculer rapidement un résultat.</item>
+    <item mnemonic="w904" type="System.String">« Mon AdExpress » vous permet de sauvegarder la définition de l'ensemble des dimensions d'une requête (dimensions produits (Secteurs ou Annonceurs), Supports et Période). Vous pouvez ainsi recalculer rapidement un résultat.</item>
     <item mnemonic="w905" type="System.String">« Mes Univers » vous permet de sauvegarder la définition des dimensions produits&lt;br&gt;(Secteurs ou Annonceurs) ou Supports</item>
     <item mnemonic="w906" type="System.String">Rechercher un résultat</item>
     <item mnemonic="w907" type="System.String">Sélectionnez un résultat dans la liste suivante :</item>
@@ -2292,6 +2292,8 @@
     <item mnemonic="w3034" type="System.String">Vous ne pouvez déplacer qu'un seul support.</item>
     <item mnemonic="w3035" type="System.String">L'élement que vous déplacez n'est pas un support.</item>
     <item mnemonic="w3036" type="System.String">Vous ne pouvez sélectionner qu'un élément.</item>
-    <item mnemonic="w3037" type="System.String">Ajouter un concurrent</item>    
+    <item mnemonic="w3037" type="System.String">Ajouter un concurrent</item>
+    <item mnemonic="w3038" type="System.String">Ce support a déjà été ajouté dans l'arbre de référence ou dans un concurrent</item>
+    <item mnemonic="w3039" type="System.String">Référents</item>
   </items>
 </localization>
