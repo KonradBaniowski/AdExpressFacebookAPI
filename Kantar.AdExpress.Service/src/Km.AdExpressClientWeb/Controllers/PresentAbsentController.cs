@@ -422,7 +422,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage),
                 Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
-                Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent,siteLanguage)
+                Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent,siteLanguage),
+                CantAddItemToConcurrentUnivers = GestionWeb.GetWebWord(LanguageConstantes.CantAddItemToConcurrentUnivers, siteLanguage)
             };
             return result;
         }

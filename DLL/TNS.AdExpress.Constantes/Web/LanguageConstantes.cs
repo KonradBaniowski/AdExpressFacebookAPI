@@ -51,6 +51,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSupport = 3035;
         public const long ErrorOnlyOneItemAllowed = 3036;
         public const long AddConcurrentCode = 3037;
+        public const long CantAddItemToConcurrentUnivers = 3038;
         public const long Referent = 3039;
         
         #endregion
