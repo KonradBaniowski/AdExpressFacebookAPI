@@ -606,7 +606,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 //HeaderBase header = item.Value;
                 HeaderBase header = item as HeaderBase;
 
-                if (header is HeaderMediaSchedule || header is HeaderCreative)
+                if (header is HeaderMediaSchedule || header is HeaderCreative || header is HeaderInsertions)
                     continue;
 
                 int ronSpan = nbRowTotal - (NbRow(header) - 1);
