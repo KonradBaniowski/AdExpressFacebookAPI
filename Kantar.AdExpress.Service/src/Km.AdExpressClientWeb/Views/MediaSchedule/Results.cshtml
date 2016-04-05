@@ -273,6 +273,8 @@
 
                         if (hasMSCreatives)
                             CallMSCreativesResult();
+                        else
+                            $('#msCreativesResult').addClass("hide");
 
                         var schema = new $.ig.DataSchema("array", {
                             fields: data.schema

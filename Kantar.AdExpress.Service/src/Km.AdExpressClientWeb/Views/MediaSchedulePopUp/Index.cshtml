@@ -1,4 +1,4 @@
-﻿@model Km.AdExpressClientWeb.Models.Insertions.InsertionViewModel
+﻿@model Km.AdExpressClientWeb.Models.Shared.InsertionCreativeViewModel
 @using TNS.AdExpress.Domain.Translation;
 
 @{
@@ -9,6 +9,17 @@
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
+<div class="h20">
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right custom-button">
+            <button class="btn btn-save" id="btn-value">Valeurs&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+        </div>
+    </div>
+</div>
 <div class="h20">
 </div>
 <div class="row">
@@ -192,6 +203,8 @@
 
                         if (hasMSCreatives)
                             CallMSCreativesResult();
+                        else
+                            $('#msCreativesResult').addClass("hide");
 
                         var schema = new $.ig.DataSchema("array", {
                             fields: data.schema
@@ -425,6 +438,18 @@
 
             $('#periodDetailType').on('change', function (e) {
                 userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                window.open('@Url.Action("Index", "TestExport")', "_blank");
+            });
+
+            $('#btn-value').on('click', function (e) {
+                window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
+            });
+
+            $('#btn-brut').on('click', function (e) {
+                window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
             });
 
             $('#validate-options').on('click', function (e) {
