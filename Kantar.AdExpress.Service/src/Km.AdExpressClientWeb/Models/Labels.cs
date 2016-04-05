@@ -40,5 +40,8 @@ namespace Km.AdExpressClientWeb.Models
         public string ErrorSupportAlreadyDefine { get; set; } // 3038
         public string Concurrent { get; set; } //w2869
         public string Referent { get; set; } //3039
+        public string UserUniversCode { get; set; }//875
+        public string MyResultsDescription { get; set; }//827
+        public string AlertsCode { get; set; }//2585
     }
 }
