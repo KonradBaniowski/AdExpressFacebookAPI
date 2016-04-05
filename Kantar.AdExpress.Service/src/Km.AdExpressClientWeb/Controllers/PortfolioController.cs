@@ -321,6 +321,11 @@ namespace Km.AdExpressClientWeb.Controllers
             return Json(result);
         }
 
+        public ActionResult VehicleItemsCarousel()
+        {
+            return View();
+        }
+
         #region Private methodes
         private List<NavigationNode> LoadNavBar(int currentPosition)
         {

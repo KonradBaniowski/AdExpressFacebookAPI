@@ -1527,6 +1527,7 @@
     <Content Include="Views\Insertions\_DetailLevel.cshtml" />
     <Content Include="Views\MediaSchedule\_MSCreativesResult.cshtml" />
     <Content Include="Views\Creative\Index.cshtml" />
+    <Content Include="Views\Portfolio\VehicleItemsCarousel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
