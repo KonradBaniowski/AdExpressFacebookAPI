@@ -54,6 +54,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
         public List<long> UniversMediaIds { get; set; }
         public string Message { get; set; }
+        public long ModuleId { get; set; }
     }
 
 }

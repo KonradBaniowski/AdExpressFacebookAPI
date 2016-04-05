@@ -70,11 +70,11 @@ function SelectedItems(event, ui) {
 $(document).on('click', '.tab-content li > .pull-right', function () {
     var DIS = this;
     var parent = $(this).parents('.items-famille');
-    var header = $(this).parents('.panel.panel-results');
+    var header = parent.closest('.panel.panel-results');
     $(DIS).parents('li').remove()
 
     if (parent.find('li').length == 0) {
-        header.find('[id^=collapse]').collapse('hide');
+        header.find('[id^=collapse-].in').collapse('hide');
     }
 });
 

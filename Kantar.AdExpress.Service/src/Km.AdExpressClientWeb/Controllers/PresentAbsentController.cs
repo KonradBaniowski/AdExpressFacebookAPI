@@ -421,6 +421,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 ErrorOverLimit = GestionWeb.GetWebWord(LanguageConstantes.ErrorOverLimit, siteLanguage),
                 SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage),
+                ErrorSupportAlreadyDefine = GestionWeb.GetWebWord(LanguageConstantes.SupportAlreadyDefine, siteLanguage),
                 Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
                 Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent,siteLanguage)
             };

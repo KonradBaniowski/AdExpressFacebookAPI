@@ -5,21 +5,27 @@ using System.Text;
 
 namespace TNS.AdExpress.Constantes.Web
 {
-  public  class LanguageConstantes
+    /// <summary>
+    /// Hello world, merci de trier par ordre numérique
+    /// </summary>
+    public class LanguageConstantes
     {
         #region Please insert any new code in the correct order
         public const long Cancel = 000;
         public const long Submit = 000;
         public const long MediaScheduleCode = 150;
+        public const long MonAdExpressCode = 761;
         public const long SaveUniversCode = 769;
         public const long LoadUniversCode = 770;
         public const long ResultsCode = 829;
         public const long UserUniversCode = 875;
         public const long UserSavedUniversCode = 893;
+        public const long MonAdExpressDescription = 904;
         public const long SelectUniversGroup = 917;
         public const long ExceptionMsg = 922;
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
+
         public const long Capacity = 1000;
         public const long MediaSelected = 1487;
         public const long RefineCode = 2053;
@@ -51,6 +57,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSupport = 3035;
         public const long ErrorOnlyOneItemAllowed = 3036;
         public const long AddConcurrentCode = 3037;
+        /// <summary>
+        /// Support is defined in another tree
+        /// </summary>
+        public const long SupportAlreadyDefine = 3038;
         public const long Referent = 3039;
         
         #endregion

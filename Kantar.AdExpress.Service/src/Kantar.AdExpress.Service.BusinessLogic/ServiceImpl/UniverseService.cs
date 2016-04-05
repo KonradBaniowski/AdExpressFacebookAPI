@@ -202,25 +202,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public UniversResponse GetTreesByUserUnivers(int userUniversId, string webSessionId, Dimension dimension)
         {
+            webSession = (WebSession)WebSession.Load(webSessionId);
             UniversResponse result = new UniversResponse
             {
                 Trees = new List<Tree>(),
-                UniversMediaIds = new List<long>()
+                UniversMediaIds = new List<long>(),
+                ModuleId = webSession.CurrentModule
             };
             try
             {
                 #region try block
                 
                 int index = 0;
-                List<long> medias = new List<long>();
-                webSession = (WebSession)WebSession.Load(webSessionId);
-                long idModule = webSession.CurrentModule;
+                List<long> medias = new List<long>();                
+                //long idModule = webSession.CurrentModule;
                 Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)
                 UniversListDataAccess.GetTreeNodeUniverseWithMedia(userUniversId, webSession, out medias);
                 if (medias != null && medias.Any())
                     result.UniversMediaIds = medias;
                 // MediaSchedule, Portfolio & Lost/won
-                switch (idModule)
+                switch (result.ModuleId)
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
@@ -327,7 +328,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                         AccessType = AccessType.includes,
                                         UniversLevels = new List<UniversLevel>(),
                                         Id = counter,
-                                        Label = (counter == 0) ? "Referents" : "Concurrents"
+                                        Label = (counter == 0) ? GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Referent,webSession.SiteLanguage): GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Concurrent,webSession.SiteLanguage)
                                     };
                                     elementsGroups = presentAbsentUnivers.GetIncludes();
                                     if (elementsGroups != null && elementsGroups.Count > 0)
