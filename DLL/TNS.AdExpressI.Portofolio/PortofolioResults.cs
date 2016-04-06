@@ -281,18 +281,18 @@ namespace TNS.AdExpressI.Portofolio
                             for (int g = 0; g < nbGroupItems; g++)
                             {
                                 colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
+                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "250" });
                                 schemaFields.Add(new { name = colKey });
                                 tableWidth = tableWidth + 150;
                             }
-                            colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", group = groups });
-                            schemaFields.Add(new { name = colKey });
+                           // colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label,  group = groups });
+                            //schemaFields.Add(new { name = colKey });
                         }
                         else
                         {
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "250" });
                             schemaFields.Add(new { name = colKey });
                             if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                             tableWidth = tableWidth + 150;
