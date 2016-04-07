@@ -267,6 +267,10 @@ namespace TNS.AdExpressI.Portofolio
                 List<object> groups = null;
 
                 //Headers
+                string colWidth = "200";
+                if(_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
+                    colWidth = "50%";
+
                 if (resultTable.NewHeaders != null)
                 {
                     for (int j = 0; j < resultTable.NewHeaders.Root.Count; j++)
@@ -281,18 +285,18 @@ namespace TNS.AdExpressI.Portofolio
                             for (int g = 0; g < nbGroupItems; g++)
                             {
                                 colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
+                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = colWidth });
                                 schemaFields.Add(new { name = colKey });
                                 tableWidth = tableWidth + 150;
                             }
-                            colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", group = groups });
-                            schemaFields.Add(new { name = colKey });
+                           // colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label,  group = groups });
+                            //schemaFields.Add(new { name = colKey });
                         }
                         else
                         {
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = colWidth });
                             schemaFields.Add(new { name = colKey });
                             if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                             tableWidth = tableWidth + 150;
@@ -321,7 +325,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'><span class='fa fa-search-plus'></span></a></center>"
                                      , mediaSchedulePath
                                      , link);
                                 }
@@ -337,7 +341,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'><span class='fa fa-search-plus'></span></a></center>"
                              , insertionPath
                              , link);
                                 }
@@ -354,7 +358,7 @@ namespace TNS.AdExpressI.Portofolio
                                 link = c.GetLink();
                                 if (!string.IsNullOrEmpty(link))
                                 {
-                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                    link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'><span class='fa fa-search-plus'></span></a></center>"
                              , versionPath
                              , link);
                                 }

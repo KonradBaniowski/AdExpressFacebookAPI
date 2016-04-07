@@ -2057,7 +2057,7 @@ namespace TNS.AdExpressI.PresentAbsent
                         for (int g = 0; g < nbGroupItems; g++)
                         {
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
+                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "200" });
                             schemaFields.Add(new { name = colKey });
                         }
                         //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
@@ -2067,7 +2067,7 @@ namespace TNS.AdExpressI.PresentAbsent
                     else
                     {
                         colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "200" });
                         schemaFields.Add(new { name = colKey });
                         if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                     }
@@ -2094,7 +2094,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'><span class='fa fa-search-plus'></span></a></center>"
                            , mediaSchedulePath
                            , link);
                             }
@@ -2111,7 +2111,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'><span class='fa fa-search-plus'></span></a></center>"
                          , insertionPath
                          , link);
                             }
@@ -2128,7 +2128,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'><span class='fa fa-search-plus'></span></a></center>"
                          , versionPath
                          , link);
                             }
