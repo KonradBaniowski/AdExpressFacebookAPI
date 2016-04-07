@@ -633,6 +633,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
+        public AdExpressUniversResponse GetResultUnivers(string webSessionId)
+        {
+            var result = new AdExpressUniversResponse
+            {
+                UniversType = UniversType.Result
+            };
+            webSession = (WebSession)WebSession.Load(webSessionId);
+            //var dsListRepertory = TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionsDataAccess.GetData(_webSession);
+            return result;
+        }
+
+        public AdExpressUniversResponse GetUnivers(string webSessionId)
+        {
+            var result = new AdExpressUniversResponse
+            {
+                UniversType = UniversType.Univers
+            };
+            return result;
+        }
+
+        public List<Alert> GetUserAlerts(string webSessionId)
+        {
+            List<Alert> result = new List<Alert>();
+            return result;
+        }
         #region private methods
         private Tuple<List<long>, List<int>, WebSession, int, int> GetAllowedIds(string webSessionId, Dimension dimension, bool selectionPage = true)
         {

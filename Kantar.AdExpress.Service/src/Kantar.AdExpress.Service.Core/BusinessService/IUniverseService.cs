@@ -19,5 +19,10 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 
         UniversGroupSaveResponse SaveUserUnivers(UniversGroupSaveRequest request);
         UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, long idGroup=0);
+
+        AdExpressUniversResponse GetResultUnivers(string webSessionId);
+        AdExpressUniversResponse GetUnivers(string webSessionId);
+        List<Alert> GetUserAlerts(string webSessionId);
+
     }
 }

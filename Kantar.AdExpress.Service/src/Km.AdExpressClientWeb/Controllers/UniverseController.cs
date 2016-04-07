@@ -186,5 +186,13 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             return error;
         }
+
+        public JsonResult GetResultUnivers()
+        {
+            JsonResult result = new JsonResult();
+            var claim = new ClaimsPrincipal(User.Identity);            
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            return result;
+        }
     }
 }
