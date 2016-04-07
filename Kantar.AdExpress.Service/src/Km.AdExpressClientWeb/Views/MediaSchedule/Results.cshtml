@@ -80,6 +80,7 @@
         var previousSubPeriodLabel;
         var hasMSCreatives = false;
         var creatives = [];
+        var gridWidth;
 
         function GetItems(idItems) {
             var items = '';
@@ -150,6 +151,10 @@
                         primaryKey: "ID_PRODUCT",
                         foreignKey: "PID",
                         width: "1140px",
+                        dataRendered: function (evt, ui) {
+                            ui.owner.element.find("tr td:nth-child(2)").css("text-align", "right");
+                            ui.owner.element.find("tr td:nth-child(3)").css("text-align", "right");
+                        },
                         features: [
                             {
                                 name: "MultiColumnHeaders"
@@ -164,46 +169,6 @@
                                 fixingDirection: "left",
                                 columnSettings: colsFixed
                             }
-                        //,{
-                        //    name: "Responsive",
-                        //    enableVerticalRendering: true,
-                        //    columnSettings: [
-                        //        {
-                        //            columnKey: "VERSION",
-                        //            configuration: {
-                        //                customPhone: {
-                        //                    hidden: true
-                        //                },
-                        //                customAlt: {
-                        //                    hidden: false
-                        //                }
-                        //            }
-                        //        },
-                        //        {
-                        //            columnKey: "INSERTION",
-                        //            configuration: {
-                        //                customPhone: {
-                        //                    hidden: false
-                        //                },
-                        //                customAlt: {
-                        //                    hidden: true
-                        //                }
-                        //            }
-                        //        }
-                        //    ],
-                        //    responsiveModes: {
-                        //        customPhone: {
-                        //            minWidth: 0,
-                        //            maxWidth: 600
-                        //        },
-                        //        // alternative mode
-                        //        customAlt: {
-                        //            minWidth: 601,
-                        //            maxWidth: 1200
-                        //        }
-                        //    }
-                        //}
-
                         ]
                     })
                 }
@@ -215,6 +180,10 @@
                         autoGenerateColumns: false,
                         primaryKey: "ID_PRODUCT",
                         foreignKey: "PID",
+                        dataRendered: function (evt, ui) {
+                            ui.owner.element.find("tr td:nth-child(2)").css("text-align", "right");
+                            ui.owner.element.find("tr td:nth-child(3)").css("text-align", "right");
+                        },
                         features: [
                             {
                                 name: "MultiColumnHeaders"
@@ -228,9 +197,11 @@
                     })
                 }
 
+                gridWidth = $("#grid_table_container").width();
+
                 $("#grid").igTreeGrid({
                     rowCollapsed: function (evt, ui) {
-                        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                        $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                     }
                 });
 

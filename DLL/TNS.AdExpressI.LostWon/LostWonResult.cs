@@ -2101,7 +2101,7 @@ namespace TNS.AdExpressI.LostWon
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'><span class='fa fa-search-plus'></span></a></center>"
                            , mediaSchedulePath
                            , link);
                             }
