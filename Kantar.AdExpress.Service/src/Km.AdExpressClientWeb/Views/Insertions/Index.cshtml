@@ -23,6 +23,11 @@
             <div id="detailLevelItem" class="col-md-12 bg-orange" style="background-color:black; color:white;"></div>
         </div>
 
+        <div class="col-md-12">
+            <div class="pull-right custom-button">
+                <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            </div>
+        </div>
         <div class="col-md-12" style="margin-top:10px;">
             <center>
                 <p id="gridEmpty" class="hide">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
@@ -548,6 +553,12 @@
             $("#grid").addClass("hide");
             $("#gridLoader").removeClass("hide");
             CallSetDetailLvl();
+        });
+
+
+        //Export btn
+        $('#btn-export').on('click', function (e) {
+           window.open('@Url.Action("InsertionsResult", "InsertionsExport")?ids='+userFilter.paramsUrl.ids+'&zoomDate='+userFilter.paramsUrl.zoomDate+'&idUnivers='+userFilter.paramsUrl.idUnivers+'&moduleId='+userFilter.paramsUrl.moduleId+'&idVehicle='+userFilter.paramsUrl.idVehicle, "_blank");
         });
 
     </script>
