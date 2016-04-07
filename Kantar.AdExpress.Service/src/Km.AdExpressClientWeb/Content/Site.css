@@ -1972,6 +1972,7 @@ ul.ui-selectable {
     height: 0;
     overflow: hidden;
 }
+
     .media.video-audio-container iframe, .video-audio-container object, .video-audio-container embed {
         position: absolute;
         top: 0;
@@ -2054,32 +2055,60 @@ ul.ui-selectable {
         }
 
         #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title {
-             color: #00c1ff;
+            color: #00c1ff;
         }
 
-        #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
-           color:white;
-        }
+            #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
+                color: white;
+            }
 
 
     #tab-content-myadexpress .panel-group .panel + .panel {
         margin-top: 0px;
     }
-/*Images Creative (class = iconCreative+[numero_du_vehicle])*/
-.iconInsertionCreativ, .big{
-    font-size: 10em;
-}
-.iconInsertionCreative:before{ 
-    content: "\f01d"; /*Defaut*/
-}
-.iconInsertionCreative0:before{
-}
-.iconInsertionCreative1:before{ 
-}
-.iconInsertionCreative2:before{ /*Radio*/
-    content: "\f001";
-}
-.iconInsertionCreative3:before{ /*TV*/
-    content: "\f008";
+
+#tab-content-myadexpress .list-group {
+    background-color: transparent;
+    margin-bottom: 0px;
 }
 
+    #tab-content-myadexpress .list-group.b-r {
+        border-right: 1px solid rgba(0,0,0,0.2);
+    }
+
+    #tab-content-myadexpress .list-group li.list-group-item {
+        background-color: transparent;
+        border: none;
+        padding: 5px 15px;
+    }
+
+        #tab-content-myadexpress .list-group li.list-group-item:first-child,
+        #tab-content-myadexpress .list-group li.list-group-item:last-child {
+            border-radius: 0px;
+        }
+
+
+
+
+/*Images Creative (class = iconCreative+[numero_du_vehicle])*/
+.iconInsertionCreativ, .big {
+    font-size: 10em;
+}
+
+.iconInsertionCreative:before {
+    content: "\f01d"; /*Defaut*/
+}
+
+.iconInsertionCreative0:before {
+}
+
+.iconInsertionCreative1:before {
+}
+
+.iconInsertionCreative2:before { /*Radio*/
+    content: "\f001";
+}
+
+.iconInsertionCreative3:before { /*TV*/
+    content: "\f008";
+}
