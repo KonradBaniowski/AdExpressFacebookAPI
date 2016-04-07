@@ -187,6 +187,7 @@ function validate() {
     if ($('.tuile-medias-active').length > 0) {
         $.each($('.tuile-medias-active'), function (index, value) {
             idMedias.push($(value).attr('data-attr-id'));
+            
         });
     }
     if (idMedias.length == 0)

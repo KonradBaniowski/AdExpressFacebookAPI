@@ -2079,7 +2079,7 @@ ul.ui-selectable {
     #tab-content-myadexpress .list-group li.list-group-item {
         background-color: transparent;
         border: none;
-        padding: 5px 15px;
+        padding: 1px 15px;
     }
 
         #tab-content-myadexpress .list-group li.list-group-item:first-child,
@@ -2087,7 +2087,9 @@ ul.ui-selectable {
             border-radius: 0px;
         }
 
-
+#tab-content-myadexpress h5, #tab-content-myadexpress h4 {
+    padding: 5px 15px;
+}
 
 
 /*Images Creative (class = iconCreative+[numero_du_vehicle])*/
