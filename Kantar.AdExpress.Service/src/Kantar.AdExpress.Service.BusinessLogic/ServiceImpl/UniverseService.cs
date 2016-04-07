@@ -32,7 +32,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public List<UniversItem> GetItems(int universeLevelId, string keyWord, string idSession, Dimension dimension, List<int> idMedias, out int nbItems)
         {
-            webSession = (WebSession)WebSession.Load(idSession);
+            webSession = (WebSession)WebSession.Load(idSession);            
+            webSession.SelectionUniversMedia.Nodes.Clear();
+            //webSession.SelectionUniversMedia.Nodes.Add(node);
+            // Tracking
+            //webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
             //CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
