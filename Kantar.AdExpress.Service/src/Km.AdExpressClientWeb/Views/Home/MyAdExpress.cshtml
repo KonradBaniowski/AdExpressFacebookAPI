@@ -17,41 +17,41 @@
         <li role="presentation"><a href="#messages" data-toggle="tab">@Model.Labels.AlertsCode</a></li>
     </ul>
     @*TAG OBLIGATOIRE
-    tab-content-myadexpress
-    panel panel-default panel-tab
-    panel-heading resume
+        tab-content-myadexpress
+        panel panel-default panel-tab
+        panel-heading resume
     *@
     <div id="tab-content-myadexpress" class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
             <div class="panel panel-default panel-tab">
                 @*REPERTOIRES RESULTATS*@
                 <div class="panel-heading resume">
-                    
-                       @if (Model.SavedResults != null && Model.SavedResults.UniversGroups.Any())
-                       { 
-                            <h3 class="panel-title pull-left">
-                                <span class="blue">@Model.SavedResults.NbrFolder</span> répertoires,  <span class="blue">@Model.SavedResults.NbrUniversGroups</span> résultats
-                            </h3>
-                            <h3 class="panel-title pull-right">
-                                <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
-                                <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
-                                <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
-                            </h3>
-                       }
-                       else
-                       {
+
+                    @if (Model.SavedResults != null && Model.SavedResults.UniversGroups.Any())
+                    {
+                        <h3 class="panel-title pull-left">
+                            <span class="blue">@Model.SavedResults.NbrFolder</span> répertoires,  <span class="blue">@Model.SavedResults.NbrUniversGroups</span> résultats
+                        </h3>
+                        <h3 class="panel-title pull-right">
+                            <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
+                            <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
+                            <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
+                        </h3>
+                    }
+                    else
+                    {
                         <h3 class="panel-title pull-left">
                             <span>@Model.Labels.NoSavedUnivers</span>
                         </h3>
-                       }                    
+                    }
                     <div class="clearfix"></div>
                 </div>
 
                 <div class="panel-body">
                     @*@if (Model.SavedResults != null && Model.SavedResults.UniversGroups.Any())
-                    {
-                    foreach (var item in Model.SavedResults.UniversGroups)
-                    {*@
+                        {
+                        foreach (var item in Model.SavedResults.UniversGroups)
+                        {*@
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-primary">
                             <div class="panel-heading" role="tab" id="headingOne">
@@ -64,50 +64,56 @@
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
-                                   <div class="row">
-                                       <div class="col-lg-6">
-                                           <ul class="list-group b-r">
-                                               <li class="list-group-item">Cras justo odio
-                                               epitech
-                                                   <a href="#myModal4" data-toggle="modal" title="Déplacer le résultat"><i class="fa icon-share-alt white text-base m-r-xs"></i></a></li>
-                                               <li class="list-group-item">Dapibus ac facilisis in</li>
-                                               <li class="list-group-item">Morbi leo risus</li>
-                                               <li class="list-group-item">Porta ac consectetur ac</li>
-                                               <li class="list-group-item">Vestibulum at eros</li>
-                                           </ul>
-                                       </div>
-                                       <div class="col-lg-6">
-                                           <ul class="list-group">
-                                               <li class="list-group-item">Cras justo odio</li>
-                                               <li class="list-group-item">Dapibus ac facilisis in</li>
-                                               <li class="list-group-item">Morbi leo risus</li>
-                                               <li class="list-group-item">Porta ac consectetur ac</li>
-                                               <li class="list-group-item">Vestibulum at eros</li>
-                                           </ul>
-                                       </div>
-                                   </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <ul class="list-group b-r">
+                                                <li class="list-group-item">
+                                                    <span>Cras justo odio</span>
+                                                    <div class="pull-right">
+                                                        <a>
+                                                            <i class="fa fa-search fa-lg"></i>
+                                                        </a>
+                                                        <a href="#myModal4" data-toggle="modal" title="Déplacer le résultat">
+                                                            <i class="fa icon-share-alt fa-lg"></i>
+                                                        </a>
+                                                        <a>
+                                                            <i class="fa fa-pencil fa-lg"></i>
+                                                        </a>
+                                                        <a>
+                                                            <i class="fa fa-trash-o fa-lg"></i>
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">Cras justo odio</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         @*<div class="panel panel-primary">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
-                                    <a class="btn-block collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        MON REPERTOIRE 2
-                                        <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
-                                    </a>
-                                   
-                                </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, 
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a class="btn-block collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            MON REPERTOIRE 2
+                                            <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
+                                        </a>
+
+                                    </h4>
                                 </div>
-                            </div>
-                        </div>*@
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche reprehenderit,
+                                    </div>
+                                </div>
+                            </div>*@
                     </div>
                     @*}
-                    }*@
+                        }*@
                 </div>
 
             </div>
