@@ -43,5 +43,6 @@ namespace Km.AdExpressClientWeb.Models
         public string UserUniversCode { get; set; }//875
         public string MyResultsDescription { get; set; }//827
         public string AlertsCode { get; set; }//2585
+        public string UnityError { get; set; }
     }
 }
