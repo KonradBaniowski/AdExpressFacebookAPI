@@ -148,6 +148,12 @@
     background-size: cover;
 }
 
+.container-kantar-results {
+    background: url('../Content/img/kantarmedia-bg-3.jpg') no-repeat;
+    color: #ffffff;
+    background-size: cover;
+}
+
 .container-kantar-myadexpress {
     background: url('../Content/img/kantarmedia-bg-4.jpg') no-repeat;
     color: #ffffff;
