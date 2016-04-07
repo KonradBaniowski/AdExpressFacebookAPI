@@ -530,10 +530,10 @@
     <Content Include="Content\img\bann_adexpress.jpg" />
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
-    <Content Include="Content\img\kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\kantarmedia-bg-3.jpg" />
     <Content Include="Content\img\kantarmedia-bg-4.jpg" />
     <Content Include="Content\img\no_visu.jpg" />
-    <Content Include="Content\img\OLD_kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
@@ -1536,6 +1536,7 @@
     <Content Include="Views\Shared\_LayoutMyAdExpress.cshtml" />
     <Content Include="Views\MediaSchedulePopUp\Index.cshtml" />
     <Content Include="Views\MediaSchedulePopUp\_ResultOptions.cshtml" />
+    <Content Include="Views\Shared\_LayoutResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

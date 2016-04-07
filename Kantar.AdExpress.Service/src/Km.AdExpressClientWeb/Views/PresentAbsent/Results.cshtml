@@ -4,6 +4,7 @@
     ViewBag.Title = "Results";
     var _controller = Model.NavigationBar.First().Controller;
     var _exportController = "PresentAbsentExport";
+    Layout = "~/Views/Shared/_LayoutResults.cshtml";
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -41,7 +42,7 @@
             <div id="grid" class="hide">
             </div>
             <div id="gridLoader">
-                <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
             </div>
         </center>
     </div>

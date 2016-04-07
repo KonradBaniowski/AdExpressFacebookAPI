@@ -28,7 +28,7 @@
                 <p id="gridEmpty" class="hide">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
                 <div id="grid" class="hide"></div>
                 <div id="gridLoader" class="hide">
-                    <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+                    <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
                 </div>
             </center>
         </div>
@@ -85,7 +85,7 @@
 
     <script id="colSpotTmpl" type="text/template">
         {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
-            <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa fa-2x'></i></a>
+            <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa'></i></a>
         {{else}}
             ${Spot}
         {{/if}}
