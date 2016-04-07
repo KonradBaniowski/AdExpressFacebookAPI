@@ -206,10 +206,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle)
         {
-            ResultTable data = null;
+           
             IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
-
-            return data;
+            VehicleInformation vehicle = VehiclesInformation.Get(idVehicle);
+            return insertionResult.GetInsertions(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
+           
         }
 
         public SpotResponse GetCreativePath(string idWebSession,string idVersion,long idVehicle)
