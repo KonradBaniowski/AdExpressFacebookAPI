@@ -44,9 +44,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="media video-audio-container">
-                        <iframe id="creativeStream" src="" frameborder="0" allowfullscreen></iframe>
-                        <div id="mediaLoader">
-                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                        <div class="media video-audio-container">
+                            <video id="creativeStream" class="hide" width="100%" controls="controls" preload="auto" autoplay>
+                                Votre navigateur ne gère pas l'élément
+                            </video>
+                            <div id="mediaLoader">
+                                <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -370,6 +374,8 @@
                                 if (url) {
                                     $("#creativeStream").attr('src', url);
                                     $("#mediaLoader").addClass("hide");
+                                    $("#creativeStream").removeClass("hide");
+                                    $("#creativeStream").load();
                                 }
                                 if (urlDownload) {
                                     $("#creativeModal .modal-footer").removeClass("hide");
@@ -384,8 +390,9 @@
 
             $("#creativeModal").on('hide.bs.modal', function () {
                 $("#creativeStream").attr('src', '');
-                $("#creativeModal .modal-footer").addClass("hide");
+                $("#creativeStream").addClass("hide");
                 $("#mediaLoader").removeClass("hide");
+                $("#creativeModal .modal-footer").addClass("hide");
             });
         }
 

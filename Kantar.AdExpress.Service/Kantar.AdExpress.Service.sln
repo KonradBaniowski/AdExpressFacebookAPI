@@ -320,6 +320,7 @@ Global
 		{234DC672-6124-4101-A1BC-2F8C9D75B50F}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{234DC672-6124-4101-A1BC-2F8C9D75B50F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{234DC672-6124-4101-A1BC-2F8C9D75B50F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{234DC672-6124-4101-A1BC-2F8C9D75B50F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{F7B30ACB-D572-4EBE-B191-1B76D553B008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F7B30ACB-D572-4EBE-B191-1B76D553B008}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7B30ACB-D572-4EBE-B191-1B76D553B008}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU

@@ -2479,7 +2479,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (data[line, level] != null)
             {
                 //TODO : A faire côté client
-                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:window.open(\"/Insertions?ids={0}&zoomDate={1}&idUnivers=-1&moduleId={2}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:window.open(\"/Insertions?ids={0}&zoomDate={1}&idUnivers=-1&moduleId={2}\", \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0)'><span class='fa fa-search-plus'></span></a></center>"
                     , GetLevelFilter(data, line, level)
                     , _zoom
                     , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
@@ -2511,7 +2511,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 //    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA, "");
 
                 //TODO : A faire côté client
-                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:window.open(\"/Creative?ids={0}&zoomDate={1}&idUnivers=-1&moduleId={2}\", \"\", \"width=auto, height=auto\");'><span class='fa fa-search-plus'></span></a></center>"
+                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='javascript:window.open(\"/Creative?ids={0}&zoomDate={1}&idUnivers=-1&moduleId={2}\", \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0)'><span class='fa fa-search-plus'></span></a></center>"
                     , GetLevelFilter(data, line, level)
                     , _zoom
                     , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
