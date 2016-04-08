@@ -88,6 +88,10 @@
     <Compile Include="ServiceImpl\WebSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.csproj">
+      <Project>{02b3e71a-f7e6-4de6-b42d-b421d94ed9f2}</Project>
+      <Name>KM.AdExpressI.MyAdExpress</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
@@ -135,6 +139,14 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
       <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303c6b21-ca16-4d7b-8edb-e8869b2b3ec9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
+      <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Contracts\Kantar.AdExpress.Service.Contracts.csproj">
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>

@@ -45,7 +45,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
                 bool isAllCommun = mediaIds.All(e => commun.Contains(e));
                 var _webSession = (WebSession)WebSession.Load(webSessionId);
-                if (!isAllCommun)
+                if (!isAllCommun && mediaIds.Count()>1)
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
                 }

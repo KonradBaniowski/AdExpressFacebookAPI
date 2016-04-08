@@ -14,8 +14,10 @@ using TNS.AdExpressI.Classification.DAL;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using AutoMapper;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
+using KM.AdExpressI.MyAdExpress;
+using LS = TNS.Ares.Domain.LS;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -594,7 +596,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 UniversGroups = new List<UserUniversGroup>(),
                 SiteLanguage = tuple.Item4
             };
-            List<UserUnivers> UserUniversList = new List<UserUnivers>();
+            List<UserUnivers> userUniversList = new List<UserUnivers>();
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
             var branch = (dimension == Dimension.product) ? TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString() : TNS.AdExpress.Constantes.Classification.Branch.type.media.GetHashCode().ToString();
@@ -619,9 +621,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         Id = item.UniversID ?? 0,
                         Description = item.UniversDescription
                     };
-                    UserUniversList.Add(UserUnivers);
+                    userUniversList.Add(UserUnivers);
                 }
-                var groupedUniversList = UserUniversList.GroupBy(p => p.ParentId);
+                var groupedUniversList = userUniversList.GroupBy(p => p.ParentId);
                 foreach (var item in groupedUniversList)
                 {
                     UserUniversGroup universGroup = new UserUniversGroup
@@ -641,25 +643,111 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             var result = new AdExpressUniversResponse
             {
-                UniversType = UniversType.Result
+                UniversType = UniversType.Result,
+                UniversGroups = new List<UserUniversGroup>()
             };
             webSession = (WebSession)WebSession.Load(webSessionId);
-            //var dsListRepertory = TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionsDataAccess.GetData(_webSession);
-            return result;
+            result.SiteLanguage = webSession.SiteLanguage;
+            var dsListRepertory = MyResultsDAL.GetData(webSession);
+            List<UserUnivers> userUniversList = new List<UserUnivers>();
+            if (dsListRepertory != null && dsListRepertory.Tables[0].AsEnumerable().Any())
+            {
+                var list = dsListRepertory.Tables[0].AsEnumerable().Select(p => new
+                {
+                    GroupID = p.Field<long?>("ID_DIRECTORY")??0,
+                    GroupDescription = p.Field<string>("DIRECTORY"),
+                    UniversID = p.Field<long?>("ID_MY_SESSION")??0,
+                    UniversDescription = p.Field<string>("MY_SESSION"),
+                }).ToList();
+                foreach (var item in list)
+                {
+                    UserUnivers UserUnivers = new UserUnivers
+                    {
+                        ParentId = item.GroupID,
+                        ParentDescription = item.GroupDescription,
+                        Id = item.UniversID,
+                        Description = item.UniversDescription
+                    };
+                    userUniversList.Add(UserUnivers);
+                }
+                var groupedUniversList = userUniversList.GroupBy(p => p.ParentId);
+                foreach (var item in groupedUniversList)
+                {
+                    UserUniversGroup universGroup = new UserUniversGroup
+                    {
+                        Id = item.Key,
+                        Description = item.FirstOrDefault().ParentDescription,
+                        UserUnivers = item.ToList(),
+                        Count = item.Count()
+                    };
+                    result.UniversGroups.Add(universGroup);
+                }
+                result.NbrFolder = result.UniversGroups.Count();
+                result.NbrUnivers = list.Count(p=>p.UniversID>0);
+            }
+            
+                return result;
         }
 
-        public AdExpressUniversResponse GetUnivers(string webSessionId)
+        public AdExpressUniversResponse GetUnivers(string webSessionId,string branch, string listUniverseClientDescription)
         {
+            #region Init
             var result = new AdExpressUniversResponse
             {
-                UniversType = UniversType.Univers
+                UniversType = UniversType.Univers,
+                UniversGroups = new List<UserUniversGroup>()
             };
+            List<UserUnivers> userUniversList = new List<UserUnivers>();
+            webSession = (WebSession)WebSession.Load(webSessionId);
+            result.SiteLanguage = webSession.SiteLanguage;
+            #endregion
+            #region Repository
+            var data = UniversListDataAccess.GetData(webSession, branch, listUniverseClientDescription);
+            if (data != null && data.Tables[0].AsEnumerable().Any())
+            {
+                var list = data.Tables[0].AsEnumerable().Select(p => new
+                {
+                    GroupID = p.Field<long?>("ID_GROUP_UNIVERSE_CLIENT"),
+                    GroupDescription = p.Field<string>("GROUP_UNIVERSE_CLIENT"),
+                    UniversID = p.Field<long?>("ID_UNIVERSE_CLIENT"),
+                    UniversDescription = p.Field<string>("UNIVERSE_CLIENT"),
+                }).ToList();
+                foreach (var item in list)
+                {
+                    UserUnivers UserUnivers = new UserUnivers
+                    {
+                        ParentId = item.GroupID ?? 0,
+                        ParentDescription = item.GroupDescription,
+                        Id = item.UniversID ?? 0,
+                        Description = item.UniversDescription
+                    };
+                    userUniversList.Add(UserUnivers);
+                }
+                var groupedUniversList = userUniversList.GroupBy(p => p.ParentId);
+                foreach (var item in groupedUniversList)
+                {
+                    UserUniversGroup universGroup = new UserUniversGroup
+                    {
+                        Id = item.Key,
+                        Description = item.FirstOrDefault().ParentDescription,
+                        UserUnivers = item.ToList(),
+                        Count = item.Count()
+                    };
+                    result.UniversGroups.Add(universGroup);
+                    result.NbrFolder = result.UniversGroups.Count();
+                    result.NbrUnivers = list.Count(p => p.UniversID > 0);
+                }
+            }
+            #endregion
             return result;
         }
 
         public List<Alert> GetUserAlerts(string webSessionId)
         {
             List<Alert> result = new List<Alert>();
+            var layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
+            TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+            //alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
             return result;
         }
         #region private methods

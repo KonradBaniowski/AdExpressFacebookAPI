@@ -87,7 +87,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _creativeService.GetPresentVehicles(idWebSession, ids, idUnivers, moduleId);
+            var reponse = _creativeService.GetPresentVehicles(idWebSession, ids, idUnivers, moduleId, true);
 
             jsonData = JsonConvert.SerializeObject(reponse);
             JsonResult jsonModel = Json(jsonData, JsonRequestBehavior.AllowGet);

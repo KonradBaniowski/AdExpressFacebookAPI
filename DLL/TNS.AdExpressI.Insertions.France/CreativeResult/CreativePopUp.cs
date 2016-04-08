@@ -25,14 +25,18 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
             : base(popUp, vehicle, idSlogan, file, webSession, title, hasCreationReadRights, hasCreationDownloadRights)
         {
         }
-
         public CreativePopUp(Vehicles.names vehicle, string idSlogan, string file,
-          WebSession webSession, bool hasCreationReadRights, bool hasCreationDownloadRights) : base(vehicle, idSlogan, file,
-           webSession, hasCreationReadRights, hasCreationDownloadRights)
+           WebSession webSession, bool hasCreationReadRights, bool hasCreationDownloadRights) : base(vehicle, idSlogan, file,
+            webSession, hasCreationReadRights, hasCreationDownloadRights)
         {
 
         }
-
+        public override string CreativePopUpRender()
+        {
+            bool flag = false;
+            GetCreativePathes(ref flag, ref flag);
+            return RenderCreative(flag, flag, true).ToString();
+        }
         /// <summary>
         /// Set creative paths
         /// </summary>
@@ -42,12 +46,6 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
             GetCreativePathes(ref flag, ref flag);
         }
 
-        public override string CreativePopUpRender()
-        {
-            bool flag = false;
-            GetCreativePathes(ref flag, ref flag);
-            return RenderCreative(flag, flag, true).ToString();
-        }
 
         public override string CreativePopUpRenderWithoutOptions(int width, int height)
         {
@@ -132,12 +130,12 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
         protected override void IsRadioFileExists(ref bool realFormatFound, ref bool windowsFormatFound)
         {
             SetDAL();
-            _dateMedia = _vehicleInformation == null ? _dal.GetVersionMinParutionDate(_idSlogan, 
+            _dateMedia = _vehicleInformation == null ? _dal.GetVersionMinParutionDate(_idSlogan,
                 VehiclesInformation.Get(_vehicle)) : _dal.GetVersionMinParutionDate(_idSlogan, _vehicleInformation);
 
-            IsAudioFileFound = !string.IsNullOrEmpty(_dateMedia) && File.Exists(string.Format("{0}\\{1}\\{2}\\2{3}.{2}", 
+            IsAudioFileFound = !string.IsNullOrEmpty(_dateMedia) && File.Exists(string.Format("{0}\\{1}\\{2}\\2{3}.{2}",
                 CreationServerPathes.LOCAL_PATH_CREATIVES_RADIO, _dateMedia.Substring(0, 4), "MP3", _idSlogan));
-           
+
         }
 
         protected override void IsOthersFileExists(out bool realFormatFound, out bool windowsFormatFound)
@@ -169,8 +167,8 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
             if (!HasCreationDownloadRights)
                 return;
             if (!string.IsNullOrEmpty(_dateMedia))
-            _pathDownloadingFile = string.Format("{0}/{1}/{2}/3{3}.{4}", CreationServerPathes.DOWNLOAD_TV_SERVER,
-                _dateMedia.Substring(0, 4), "240", _idSlogan, MP4_EXTENSION);
+                _pathDownloadingFile = string.Format("{0}/{1}/{2}/3{3}.{4}", CreationServerPathes.DOWNLOAD_TV_SERVER,
+                    _dateMedia.Substring(0, 4), "240", _idSlogan, MP4_EXTENSION);
         }
 
         protected override void GetRadioCreativePathes()
@@ -180,8 +178,8 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
                 _pathReadingFile = string.Format("{0}/{1}/{2}/2{3}.{2}", CreationServerPathes.DOWNLOAD_RADIO_SERVER, _dateMedia.Substring(0, 4), "MP3", _idSlogan);
             if (!HasCreationDownloadRights)
                 return;
-             if (!string.IsNullOrEmpty(_dateMedia))
-            _pathDownloadingFile = string.Format("{0}/{1}/{2}/2{3}.{2}", CreationServerPathes.DOWNLOAD_RADIO_SERVER, _dateMedia.Substring(0, 4), "MP3", _idSlogan);
+            if (!string.IsNullOrEmpty(_dateMedia))
+                _pathDownloadingFile = string.Format("{0}/{1}/{2}/2{3}.{2}", CreationServerPathes.DOWNLOAD_RADIO_SERVER, _dateMedia.Substring(0, 4), "MP3", _idSlogan);
         }
 
         protected override void GetOthersCreativePathes()
@@ -198,7 +196,7 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
         {
             var res = new StringBuilder(2000);
             if (!string.IsNullOrEmpty(_pathReadingFile)
-                && (IsVideoFileFound || IsAudioFileFound) 
+                && (IsVideoFileFound || IsAudioFileFound)
                 && (HasCreationReadRights || HasCreationDownloadRights))
             {
                 res.Append("<TABLE cellSpacing=\"0\" cellPadding=\"10\" width=\"770\" border=\"0\" align=\"center\" height=\"100%\" ><TR>");
