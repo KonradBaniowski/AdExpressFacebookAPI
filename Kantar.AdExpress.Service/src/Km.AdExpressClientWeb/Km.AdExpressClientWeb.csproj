@@ -1537,12 +1537,12 @@
     <Content Include="Views\MediaSchedulePopUp\Index.cshtml" />
     <Content Include="Views\MediaSchedulePopUp\_ResultOptions.cshtml" />
     <Content Include="Views\Shared\_LayoutResults.cshtml" />
+    <Content Include="Views\InsertionsExport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
-    <Folder Include="Views\InsertionsExport\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>

@@ -26,8 +26,8 @@ namespace Km.AdExpressClientWeb.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult InsertionsResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged)
+
+        public ActionResult InsertionsResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle)
         {
            
             var claim = new ClaimsPrincipal(User.Identity);
