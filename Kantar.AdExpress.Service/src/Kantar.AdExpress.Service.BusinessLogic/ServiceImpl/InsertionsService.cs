@@ -282,12 +282,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         }
 
-        public List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId)
+        public List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId, bool slogan = false)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
 
-            List<VehicleInformation> Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, false);
+            List<VehicleInformation> Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, slogan);
 
             List<List<string>> ListRetour = new List<List<string>>();
             string vehicle = string.Empty;
