@@ -21,7 +21,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, long idGroup=0);
 
         AdExpressUniversResponse GetResultUnivers(string webSessionId);
-        AdExpressUniversResponse GetUnivers(string webSessionId);
+        AdExpressUniversResponse GetUnivers(string webSessionId, string branch, string listUniverseClientDescription);
         List<Alert> GetUserAlerts(string webSessionId);
 
     }

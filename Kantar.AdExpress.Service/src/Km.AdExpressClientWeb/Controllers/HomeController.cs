@@ -142,6 +142,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            #region Saved Reuslt Queries
             var result = _universService.GetResultUnivers(idWebSession);
             foreach (var group in result.UniversGroups)
             {
@@ -150,6 +151,19 @@ namespace Km.AdExpressClientWeb.Controllers
                 group.SecondeColumnSize = count - group.FirstColumnSize;
             }
             model.SavedResults = result;
+            #endregion
+            #region Saved Univers (Market & Media)
+            string branch = "2";
+            string listUniversClientDescription = string.Empty;
+            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
+            foreach (var group in univers.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model.SavedUnivers = univers;
+            #endregion
             return View(model);
         }
 
