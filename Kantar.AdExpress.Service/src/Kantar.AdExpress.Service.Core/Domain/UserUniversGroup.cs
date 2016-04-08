@@ -13,6 +13,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public int Count { get; set; }
         public string Description { get; set; }
         public List<UserUnivers> UserUnivers { get; set; }
+        public int FirstColumnSize { get; set; }
+        public int SecondeColumnSize { get; set; }
     }
 
     public class UserUnivers
@@ -62,8 +64,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public long NbrFolder { get; set; }
         public long NbrUnivers { get; set; }
         public List<UserUniversGroup> UniversGroups { get; set; }
-
         public UniversType UniversType { get; set; }
+        public int SiteLanguage { get; set; }
     }
     public class Alert
     {

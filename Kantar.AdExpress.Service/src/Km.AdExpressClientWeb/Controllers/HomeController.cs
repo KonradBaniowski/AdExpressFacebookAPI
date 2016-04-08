@@ -142,7 +142,14 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            model.SavedResults = _universService.GetResultUnivers(idWebSession);
+            var result = _universService.GetResultUnivers(idWebSession);
+            foreach (var group in result.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model.SavedResults = result;
             return View(model);
         }
 

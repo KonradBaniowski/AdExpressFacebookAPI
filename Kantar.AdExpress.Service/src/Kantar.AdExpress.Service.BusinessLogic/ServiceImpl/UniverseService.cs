@@ -646,6 +646,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 UniversGroups = new List<UserUniversGroup>()
             };
             webSession = (WebSession)WebSession.Load(webSessionId);
+            result.SiteLanguage = webSession.SiteLanguage;
             var dsListRepertory = MyResultsDAL.GetData(webSession);
             List<UserUnivers> userUniversList = new List<UserUnivers>();
             if (dsListRepertory != null && dsListRepertory.Tables[0].AsEnumerable().Any())
