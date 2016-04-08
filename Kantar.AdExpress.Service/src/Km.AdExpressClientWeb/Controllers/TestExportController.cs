@@ -4351,28 +4351,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             cell.SetStyle(style);
         }
-
-        //public GenericDetailLevel GetDetailsLevelSelected()
-        //{
-        //    if (IsPlanMediaAdnettrack())
-        //    {
-        //        return (_session.GenericAdNetTrackDetailLevel);
-        //    }
-        //    else
-        //    {
-        //        return (_session.GenericMediaDetailLevel);
-        //    }
-        //}
-
-        //private bool IsPlanMediaAdnettrack()
-        //{
-        //    return (!_isPDFReport
-        //        && VehiclesInformation.Contains(_vehicleId)
-        //        && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack
-        //            || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet)
-        //        );
-        //}
-
+        
         private void SetSelectionCallback()
         {
             //Choix de l'étude           

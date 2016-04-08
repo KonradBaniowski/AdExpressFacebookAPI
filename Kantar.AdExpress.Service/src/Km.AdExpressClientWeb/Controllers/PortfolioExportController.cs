@@ -44,7 +44,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
             Workbook document = new Workbook(FileFormatType.Excel2003XML);
 
-            export.export(document, data, session);
+            document.Worksheets.Clear();
+
+            export.ExportSelection(document);
+            export.Export(document, data, session);
 
             string documentFileNameRoot;
             documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
@@ -71,7 +74,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
             Workbook document = new Workbook(FileFormatType.Excel2003XML);
 
-            export.export(document, data, session, true);
+            document.Worksheets.Clear();
+
+            export.ExportSelection(document);
+            export.Export(document, data, session, true);
 
             string documentFileNameRoot;
             documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
@@ -129,7 +135,7 @@ namespace Km.AdExpressClientWeb.Controllers
         public ExportAspose()
         { }
 
-        public void export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false)
+        public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false)
         {
             data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
@@ -138,13 +144,13 @@ namespace Km.AdExpressClientWeb.Controllers
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
 
-            document.Worksheets.Clear();
+            //document.Worksheets.Clear();
 
-            Worksheet sheet = document.Worksheets.Add("WorkSheet1");
+            Worksheet sheet = document.Worksheets.Add("Resultat");
 
-            document.ChangePalette(HeaderTabBackground, 25);
-            document.ChangePalette(HeaderTabText, 24);
-            document.ChangePalette(HeaderBorderTab, 23);
+            document.ChangePalette(HeaderTabBackground, 3);
+            document.ChangePalette(HeaderTabText, 2);
+            document.ChangePalette(HeaderBorderTab, 1);
 
             document.ChangePalette(L1Background, 22);
             document.ChangePalette(L1Text, 21);
@@ -476,6 +482,20 @@ namespace Km.AdExpressClientWeb.Controllers
             //document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
 
             //Response.End();
+        }
+
+        public void ExportSelection(Workbook document)
+        {
+            License licence = new License();
+            licence.SetLicense("Aspose.Cells.lic");
+
+            //document.Worksheets.Clear();
+
+            Worksheet sheet = document.Worksheets.Add("Selection");
+
+
+            //TODO
+
         }
 
         private void BorderStyle(Worksheet sheet, int idxRow, int idxCol, CellBorderType borderLineStyle, Color color)
