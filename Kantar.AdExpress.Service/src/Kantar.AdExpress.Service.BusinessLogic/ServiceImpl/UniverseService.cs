@@ -16,7 +16,8 @@ using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using KM.AdExpressI.MyAdExpress;
-using LS=TNS.Ares.Domain.LS;
+using LS = TNS.Ares.Domain.LS;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
