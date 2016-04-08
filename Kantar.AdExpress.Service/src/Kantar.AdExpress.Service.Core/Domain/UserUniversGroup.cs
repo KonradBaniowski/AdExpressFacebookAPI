@@ -42,7 +42,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public long UniversGroupId { get; set; }
         public long? UserUniversId { get; set; }
-        public List<Tree> Trees { get; set;}
+        public List<Tree> Trees { get; set; }
         public string Name { get; set; }
         public Dimension Dimension { get; set; }
         public string WebSessionId { get; set; }
@@ -72,7 +72,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<DateTime> Occurrences { get; set; }
         public AlertDetails Details { get; set; }
         public long NbrOccurrences { get; set; }
-        
+
     }
     public enum UniversType
     {
@@ -97,6 +97,13 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public DateTime EndDate { get; set; }
         public string Description { get; set; }
         public string ReceiverEmailAddress { get; set; }
+    }
+
+    public class AlertResponse
+    {
+        public List<Alert> Alerts { get; set; }
+        public int SiteLanguage { get; set; }
+        public string ErrorMessage { get; set; }
     }
 
 }

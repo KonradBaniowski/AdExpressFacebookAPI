@@ -136,9 +136,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>() },
                 SavedUnivers = new Domain.AdExpressUniversResponse { UniversType = Domain.UniversType.Univers, UniversGroups = new List<Domain.UserUniversGroup>() },
-                Alerts = new List<Domain.Alert>(),
-                PresentationModel = LoadPresentationBar(33, false),
-                Labels = LoadPageLabels(33)
+                Alerts = new List<Domain.Alert>()
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -164,6 +162,11 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             model.SavedUnivers = univers;
             #endregion
+            #region Alerts
+            var alerts = _universService.GetUserAlerts(idWebSession);
+            #endregion
+            model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
+            model.Labels = LoadPageLabels(result.SiteLanguage);
             return View(model);
         }
 

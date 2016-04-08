@@ -742,15 +742,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<Core.Domain.Alert> GetUserAlerts(string webSessionId)
+        public AlertResponse GetUserAlerts(string webSessionId)
         {
-            List<Core.Domain.Alert> result = new List<Core.Domain.Alert>();
-            var layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
-            TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
-            var alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
-            int idOccurrence = 0;
-            int idAlert = 0;
-            AlertOccurence occ = alertDAL.GetOccurrence(idOccurrence, idAlert);
+            webSession = (WebSession)WebSession.Load(webSessionId);
+            AlertResponse result = new AlertResponse
+            {
+             Alerts = new List<Core.Domain.Alert>(),
+             SiteLanguage = webSession.SiteLanguage 
+            };
+            
+            #region Alerts
+            if (AlertConfiguration.IsActivated)
+            { 
+                var layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
+                TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                var alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+                AlertCollection alerts = alertDAL.GetAlerts(webSession.CustomerLogin.IdLogin);
+                if (alerts.Count == 0)
+                    result.ErrorMessage = GestionWeb.GetWebWord(833, result.SiteLanguage);
+            }
+            #endregion
             return result;
         }
         #region private methods
