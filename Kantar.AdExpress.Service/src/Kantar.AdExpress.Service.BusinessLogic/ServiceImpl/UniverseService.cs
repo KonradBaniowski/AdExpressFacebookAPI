@@ -14,9 +14,9 @@ using TNS.AdExpressI.Classification.DAL;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using AutoMapper;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using KM.AdExpressI.MyAdExpress;
+using LS=TNS.Ares.Domain.LS;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -744,6 +744,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public List<Alert> GetUserAlerts(string webSessionId)
         {
             List<Alert> result = new List<Alert>();
+            var layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
+            TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+            //alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
             return result;
         }
         #region private methods
