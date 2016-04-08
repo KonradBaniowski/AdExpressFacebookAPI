@@ -21,7 +21,7 @@ $('#keyword').on('keyup', function () {
         $(".btn-recherche").click();
     }
 });
-
+var idMedias = [];
 //MAJ des boxes adjacentes
 function SelectedItems(event, ui) {
     var itemIds = [];
@@ -33,6 +33,12 @@ function SelectedItems(event, ui) {
     var universeIdCalling = $(this).closest('.panel').attr('data-universe');
     var branchId = $(this).closest('.panel').attr('data-branch');
     var universesToUpdate = $("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
+    var idMedias = [];
+    if ($('.tuile-medias-active').length > 0) {
+        $.each($('.tuile-medias-active'), function (index, value) {
+            idMedias.push($(value).attr('data-attr-id'));
+        });
+    }
     $.each(universesToUpdate, function (index, elem) {
 
         var universe = $(elem).attr('data-universe');
@@ -40,7 +46,8 @@ function SelectedItems(event, ui) {
             levelId: universe,
             selectedClassification: DIS.itemIds.join(","),
             selectedLevelId: universeIdCalling,
-            dimension: dimension
+            dimension: dimension,
+            idMedias: idMedias
         };
         var univerIndex = parseFloat($(elem).attr('data-universe'));
         var univerLabel = $(elem).attr('data-label') + "\{NB_ELEM\}";
