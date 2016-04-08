@@ -60,7 +60,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
     public class AdExpressUniversResponse
     {
         public long NbrFolder { get; set; }
-        public long NbrUniversGroups { get; set; }
+        public long NbrUnivers { get; set; }
         public List<UserUniversGroup> UniversGroups { get; set; }
 
         public UniversType UniversType { get; set; }

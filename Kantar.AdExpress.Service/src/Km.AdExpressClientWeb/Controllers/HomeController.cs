@@ -23,12 +23,14 @@ namespace Km.AdExpressClientWeb.Controllers
         private IRightService _rightService;
         private IApplicationUserManager _userManager;
         private IWebSessionService _webSessionService;
+        private IUniverseService _universService;
 
-        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService)
+        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService, IUniverseService universService)
         {
             _userManager = applicationUserManager;
             _rightService = rightService;
             _webSessionService = webSessionService;
+            _universService = universService;
         }
 
         public ActionResult Index()
@@ -138,6 +140,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 PresentationModel = LoadPresentationBar(33, false),
                 Labels = LoadPageLabels(33)
             };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            model.SavedResults = _universService.GetResultUnivers(idWebSession);
             return View(model);
         }
 
