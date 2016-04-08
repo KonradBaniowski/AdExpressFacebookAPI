@@ -18,6 +18,8 @@ using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using KM.AdExpressI.MyAdExpress;
 using LS = TNS.Ares.Domain.LS;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.Ares.Alerts.DAL;
+using TNS.Alert.Domain;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -29,8 +31,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const long SecurityMsg = 2285;
         private const long OverLimitMsgCode = 2286;
         public const long ElementLabelCode = 2278;
-        //public const int MaxIncludeNbr = 2;
-        //public const int MaxExcludeNbr = 1;
 
         public List<UniversItem> GetItems(int universeLevelId, string keyWord, string idSession, Dimension dimension, List<int> idMedias, out int nbItems)
         {
@@ -742,12 +742,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<Alert> GetUserAlerts(string webSessionId)
+        public List<Core.Domain.Alert> GetUserAlerts(string webSessionId)
         {
-            List<Alert> result = new List<Alert>();
+            List<Core.Domain.Alert> result = new List<Core.Domain.Alert>();
             var layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
             TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
-            //alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+            var alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+            int idOccurrence = 0;
+            int idAlert = 0;
+            AlertOccurence occ = alertDAL.GetOccurrence(idOccurrence, idAlert);
             return result;
         }
         #region private methods
