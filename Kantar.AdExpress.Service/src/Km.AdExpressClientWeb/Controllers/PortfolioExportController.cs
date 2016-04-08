@@ -49,6 +49,8 @@ namespace Km.AdExpressClientWeb.Controllers
             export.ExportSelection(document);
             export.Export(document, data, session);
 
+            document.Worksheets.ActiveSheetIndex = 1;
+
             string documentFileNameRoot;
             documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
 
@@ -78,6 +80,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             export.ExportSelection(document);
             export.Export(document, data, session, true);
+
+            document.Worksheets.ActiveSheetIndex = 1;
 
             string documentFileNameRoot;
             documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
