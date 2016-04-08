@@ -107,6 +107,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         #region Properties
         Int64 _idAdvertiser = -1;
         Int64 _idProduct = -1;
+        Int64 _idVersion = -1;
         string _dimension = string.Empty;
         string _format = string.Empty;
         string _url = string.Empty;
@@ -443,7 +444,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                     if (displayFlv)
                     {
                         embededType = "application/x-shockwave-flash";
-                        if (_format.ToUpper() == MP4_ID) embededType = "video/mp4";
+                        if (_format.ToUpper() == MP4_ID) embededType = string.Empty; //"video/mp4";
                         if (_format.ToUpper() == MOV_ID) embededType = "video/quicktime";
                         AppendVideo(output, embededType, _visuals[0]);
                     }
@@ -452,7 +453,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                         output.AppendFormat("<img border=0 src=\"/App_Themes/{0}/Images/Common/no_visuel_flv.jpeg\" border=\"0\">",
                             WebApplicationParameters.Themes[_session.SiteLanguage].Name);
                     }
-                }              
+                }
                 else if (_format.ToUpper() == AVI_ID)
                 {
                     output.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><div class=\"videoFileBackGround\"></div></a>"
@@ -544,7 +545,8 @@ namespace TNS.AdExpressI.Insertions.Cells
             output.Append("<param name=\"allowfullscreen\" value=\"true\" />");
             output.Append("<param name=\"allowscriptaccess\" value=\"always\" />");
             output.AppendFormat("<param name=\"flashvars\" value=\"file={0}\" />", fileName);
-            output.AppendFormat("<embed type=\"{0}\"", embededType);
+            output.AppendFormat("<embed ");
+            if (!string.IsNullOrEmpty(embededType)) output.AppendFormat("type=\"{0}\"", embededType);
             output.Append("src=\"/Player/playerflv.swf\" ");
             output.Append("width=\"400\" ");
             output.Append("height=\"315\"");
