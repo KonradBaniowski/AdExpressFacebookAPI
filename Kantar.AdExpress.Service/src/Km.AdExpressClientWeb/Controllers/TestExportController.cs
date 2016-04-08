@@ -24,6 +24,7 @@ using TNS.AdExpressI.MediaSchedule.Functions;
 using TNS.FrameWork.Date;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using System.Net;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -353,7 +354,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     sheet.Cells.Merge(cellRow - 1, colSupport + l - 1, rowSpanNb, labColSpan);
                     range = sheet.Cells.CreateRange(cellRow - 1, colSupport + l - 1, rowSpanNb, labColSpan);
-                    sheet.Cells[cellRow - 1, colSupport + l - 1].Value = GestionWeb.GetWebWord(detailLevel[l].WebTextId, _session.SiteLanguage);
+                    sheet.Cells[cellRow - 1, colSupport + l - 1].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(detailLevel[l].WebTextId, _session.SiteLanguage));
 
                     TextStyle(sheet.Cells[cellRow - 1, colSupport + l - 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
@@ -382,7 +383,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     colFirstMediaPlan = colFirstMediaPlan + nbColTabFirst;
                     sheet.Cells.Merge(cellRow - 1, colTotal, rowSpanNb, labColSpan);
                     range = sheet.Cells.CreateRange(cellRow - 1, colTotal, rowSpanNb, labColSpan);
-                    sheet.Cells[cellRow - 1, colTotal].Value = GestionWeb.GetWebWord(805, _session.SiteLanguage);
+                    sheet.Cells[cellRow - 1, colTotal].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(805, _session.SiteLanguage));
 
                     TextStyle(sheet.Cells[cellRow - 1, colTotal], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
@@ -414,7 +415,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     sheet.Cells.Merge(cellRow - 1, colPdm, rowSpanNb, labColSpan);
                     range = sheet.Cells.CreateRange(cellRow - 1, colPdm, rowSpanNb, labColSpan);
 
-                    sheet.Cells[cellRow - 1, colPdm].Value = GestionWeb.GetWebWord(806, _session.SiteLanguage);
+                    sheet.Cells[cellRow - 1, colPdm].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(806, _session.SiteLanguage));
 
                     TextStyle(sheet.Cells[cellRow - 1, colPdm], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
@@ -634,15 +635,15 @@ namespace Km.AdExpressClientWeb.Controllers
                                         }
 
                                         #region Label
-                                        sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
-                                        classifLabels[0] = data[i, j].ToString();
+                                        sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
+                                        classifLabels[0] = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                         for (int colLevel = colSupport; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++)
                                         {
 
                                             if (colLevel != colSupport)
                                             {
-                                                sheet.Cells[cellRow, colLevel].Value = GestionWeb.GetWebWord(1401, _session.SiteLanguage);
+                                                sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
                                             }
 
                                             if (i == TOTAL_LINE_INDEX)
@@ -731,7 +732,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     {
                                         #region Label
                                         //sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
-                                        classifLabels[1] = data[i, j].ToString();
+                                        classifLabels[1] = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                         for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
                                         {
@@ -742,7 +743,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             }
                                             else if (level > 1)
                                             {
-                                                sheet.Cells[cellRow, colLevel].Value = GestionWeb.GetWebWord(1401, _session.SiteLanguage);
+                                                sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
                                             }
 
                                             TextStyle(sheet.Cells[cellRow, colLevel], L2Text, L2Background);
@@ -798,7 +799,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     if (data[i, j] != null)
                                     {
                                         //sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
-                                        classifLabels[2] = data[i, j].ToString();
+                                        classifLabels[2] = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                         for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
                                         {
@@ -809,7 +810,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             }
                                             else if (level > 2)
                                             {
-                                                sheet.Cells[cellRow, colLevel].Value = GestionWeb.GetWebWord(1401, _session.SiteLanguage);
+                                                sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
                                             }
 
                                             TextStyle(sheet.Cells[cellRow, colLevel], L3Text, L3Background);
@@ -871,7 +872,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 case L4_COLUMN_INDEX:
                                     //sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
 
-                                    classifLabels[3] = data[i, j].ToString();
+                                    classifLabels[3] = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                     for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
                                     {
@@ -882,7 +883,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         }
                                         else if (level > 3)
                                         {
-                                            sheet.Cells[cellRow, colLevel].Value = GestionWeb.GetWebWord(1401, _session.SiteLanguage);
+                                            sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
                                         }
 
                                         TextStyle(sheet.Cells[cellRow, colLevel], L4Text, L4Background);
@@ -3447,7 +3448,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 #region Title first column (Product Column)
                 sheet.Cells.Merge(cellRow - 1, colSupport, rowSpanNb, labColSpan);
                 Range range = sheet.Cells.CreateRange(cellRow - 1, colSupport, rowSpanNb, labColSpan);
-                sheet.Cells[cellRow - 1, colSupport].Value = GestionWeb.GetWebWord(804, _session.SiteLanguage);
+                sheet.Cells[cellRow - 1, colSupport].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(804, _session.SiteLanguage));
                 TextStyle(sheet.Cells[cellRow - 1, colSupport], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                 BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
@@ -3465,7 +3466,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     colFirstMediaPlan++;
                     sheet.Cells.Merge(cellRow - 1, colTotal, rowSpanNb, labColSpan);
                     range = sheet.Cells.CreateRange(cellRow - 1, colTotal, rowSpanNb, labColSpan);
-                    sheet.Cells[cellRow - 1, colTotal].Value = GestionWeb.GetWebWord(805, _session.SiteLanguage);
+                    sheet.Cells[cellRow - 1, colTotal].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(805, _session.SiteLanguage));
 
                     TextStyle(sheet.Cells[cellRow - 1, colTotal], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
@@ -3497,7 +3498,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     sheet.Cells.Merge(cellRow - 1, colPdm, rowSpanNb, labColSpan);
                     range = sheet.Cells.CreateRange(cellRow - 1, colPdm, rowSpanNb, labColSpan);
 
-                    sheet.Cells[cellRow - 1, colPdm].Value = GestionWeb.GetWebWord(806, _session.SiteLanguage);
+                    sheet.Cells[cellRow - 1, colPdm].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(806, _session.SiteLanguage));
 
                     TextStyle(sheet.Cells[cellRow - 1, colPdm], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
@@ -3717,7 +3718,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         }
 
                                         #region Label
-                                        sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
+                                        sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
 
 
                                         if (i == TOTAL_LINE_INDEX)
@@ -3804,7 +3805,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     if (data[i, j] != null)
                                     {
                                         #region Label
-                                        sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
+                                        sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                         TextStyle(sheet.Cells[cellRow, colSupport], L2Text, L2Background);
                                         BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
@@ -3858,7 +3859,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 case L3_COLUMN_INDEX:
                                     if (data[i, j] != null)
                                     {
-                                        sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
+                                        sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                         TextStyle(sheet.Cells[cellRow, colSupport], L3Text, L3Background);
                                         BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
@@ -3917,7 +3918,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                 #region Level 4
                                 case L4_COLUMN_INDEX:
-                                    sheet.Cells[cellRow, colSupport].Value = data[i, j].ToString();
+                                    sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                     TextStyle(sheet.Cells[cellRow, colSupport], L4Text, L4Background);
                                     BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);

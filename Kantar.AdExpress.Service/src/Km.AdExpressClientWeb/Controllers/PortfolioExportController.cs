@@ -4,9 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
@@ -67,7 +71,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             Workbook document = new Workbook(FileFormatType.Excel2003XML);
 
-            export.export(document, data, session);
+            export.export(document, data, session, true);
 
             string documentFileNameRoot;
             documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
@@ -125,12 +129,14 @@ namespace Km.AdExpressClientWeb.Controllers
         public ExportAspose()
         { }
 
-        public void export(Workbook document, ResultTable data, WebSession session)
+        public void export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false)
         {
+            data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
+
+
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
-
-            //Workbook document = new Workbook(FileFormatType.Excel2003XML);
 
             document.Worksheets.Clear();
 
@@ -171,8 +177,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
             int rowStart = 1;
             int columnStart = 1;
-            //int cellRow = 0;
-            //int cellCol = 0;
             bool columnHide = false;
 
             Color textColor;
@@ -184,60 +188,165 @@ namespace Km.AdExpressClientWeb.Controllers
 
             int nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
 
-            //GenericDetailLevel detailLevel = _session.GenericMediaDetailLevel;
-            //detailLevel.GetNbLevels
+            GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
+            int nbLevel = detailLevel.GetNbLevels;
+            HeaderBase headerBase = data.NewHeaders.Root;
 
-            ////foreach (var item in data.HeadersIndexInResultTable)
-            //foreach (var item in data.NewHeaders.Root)
-            //{
+            if (isExportBrut)
+            {
+                if (nbLevel == 1)
+                    headerBase = data.NewHeaders.Root;
+                else
+                {
+                    headerBase = new Header();
 
-            //    //HeaderBase header = item.Value;
-            //    HeaderBase header = item as HeaderBase;
+                    for (int l = 1; l <= nbLevel; l++)
+                    {
+                        Header headerTmp = new Header(GestionWeb.GetWebWord(detailLevel[l].WebTextId, session.SiteLanguage));
 
-            //    if (header is HeaderMediaSchedule || header is HeaderCreative)
-            //        continue;
+                        headerBase.Add(headerTmp);
+                    }
 
-            //    int ronSpan = nbRowTotal - (NbRow(header) - 1);
+                    bool first = true;
+                    foreach (var item in data.NewHeaders.Root)
+                    {
+                        if (!first)
+                        {
+                            HeaderBase header = item as HeaderBase;
+                            headerBase.Add(header);
+                        }
 
-            //    if (header.ColSpan > 1 || ronSpan > 1)
-            //    {
-            //        Range range = sheet.Cells.CreateRange(rowStart, coltmp, ronSpan, header.ColSpan);
-            //        range.Merge();
+                        first = false;
+                    }
+                }
+            }
 
-            //        sheet.Cells[rowStart, coltmp].Value = header.Label;
-
-            //        TextStyle(sheet.Cells[rowStart, coltmp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-            //        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
-            //    }
-            //    else
-            //    {
-            //        sheet.Cells[rowStart, coltmp].Value = header.Label;
-
-            //        TextStyle(sheet.Cells[rowStart, coltmp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-            //        BorderStyle(sheet, rowStart, coltmp, CellBorderType.Thin, HeaderBorderTab);
-            //    }
-            //    coltmp++;
-            //}
-
-            DrawHeaders(data.NewHeaders.Root, sheet, rowStart, columnStart);
+            DrawHeaders(headerBase, sheet, rowStart, columnStart);
 
             rowStart += nbRowTotal;
 
-            for (int idxCol = 0, cellCol = columnStart; idxCol < data.ColumnsNumber; idxCol++)
+            int colLevel = 0;
+
+            #region colonne en mode brut
+            if (isExportBrut && nbLevel > 1)
+            {
+                ICell cell = new CellLabel("");
+                string[] tabLevel = new string[nbLevel];
+
+                colLevel = nbLevel;
+
+                for (int idxRow = 0, cellRow = rowStart; idxRow < data.LinesNumber; idxRow++, cellRow++)
+                {
+                    for (int idxCol = 0, cellCol = columnStart; idxCol < nbLevel; cellCol++, idxCol++)
+                    {
+                        switch (((LineStart)data[idxRow, 0]).LineType)
+                        {
+                            case LineType.total:
+
+                                if (idxCol == 0)
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                else
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, session.SiteLanguage));
+
+                                textColor = LTotalText;
+                                backColor = LTotalBackground;
+                                borderColor = BorderTab;
+                                break;
+                            case LineType.level1:
+
+                                if (idxCol == 0)
+                                { 
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                    tabLevel[0] = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                }
+                                else
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, session.SiteLanguage));
+
+                                textColor = L1Text;
+                                backColor = L1Background;
+                                borderColor = BorderTab;
+                                break;
+                            case LineType.level2:
+
+                                if (idxCol == 1)
+                                {
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                    tabLevel[1] = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                }
+                                else if (idxCol < 1)
+                                    sheet.Cells[cellRow, cellCol].Value = tabLevel[idxCol];
+                                else
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, session.SiteLanguage));
+
+                                textColor = L2Text;
+                                backColor = L2Background;
+                                borderColor = BorderTab;
+                                //if (cell is CellLabel)
+                                //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
+                                break;
+                            case LineType.level3:
+
+                                if (idxCol == 2)
+                                {
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                    tabLevel[2] = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                }
+                                else if (idxCol < 2)
+                                    sheet.Cells[cellRow, cellCol].Value = tabLevel[idxCol];
+                                else
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, session.SiteLanguage));
+
+                                textColor = L3Text;
+                                backColor = L3Background;
+                                borderColor = BorderTab;
+                                //if (cell is CellLabel)
+                                //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 2);
+                                break;
+                            case LineType.level4:
+
+                                if (idxCol == 3)
+                                {
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                    tabLevel[3] = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
+                                }
+                                else if (idxCol < 3)
+                                    sheet.Cells[cellRow, cellCol].Value = tabLevel[idxCol];
+                                else
+                                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, session.SiteLanguage));
+
+                                textColor = L4Text;
+                                backColor = L4Background;
+                                borderColor = BorderTab;
+                                //if (cell is CellLabel)
+                                //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
+                                break;
+                            default:
+                                textColor = Color.Black;
+                                backColor = Color.White;
+                                borderColor = Color.Black;
+                                break;
+                        }
+
+                        TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
+                        BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
+                    }
+                }
+
+            }
+            #endregion
+
+
+
+            for (int idxCol = colLevel, cellCol = columnStart + colLevel; idxCol < data.ColumnsNumber; idxCol++)
             {
                 columnHide = false;
 
                 for (int idxRow = 0, cellRow = rowStart; idxRow < data.LinesNumber; idxRow++, cellRow++)
                 {
-
-                    var cell = data[idxRow, idxCol];
-
-
+                    ICell cell = data[idxRow, idxCol];
 
                     if (cell is LineStart || cell is LineStop || cell is CellImageLink)
                     {
-                        // if (((LineStart)cell).LineType == LineType.)
-
                         columnHide = true;
                         break;
                     }
@@ -262,16 +371,6 @@ namespace Km.AdExpressClientWeb.Controllers
                     //}
                     else if (cell is CellDuration)
                     {
-                        //DateTime dt = new DateTime();
-
-                        //double value = ((CellUnit)cell).GetValue();
-
-                        //dt = dt.AddSeconds(value);
-
-                        //sheet.Cells[cellRow, cellCol].Value = dt.ToLongTimeString();
-
-                        //SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-
                         double value = ((CellUnit)cell).GetValue();
 
                         double hours = Math.Floor(value / 3600);
@@ -305,11 +404,10 @@ namespace Km.AdExpressClientWeb.Controllers
                         }
                     }
                     else if (cell is CellLabel)
-                        sheet.Cells[cellRow, cellCol].Value = ((CellLabel)cell).Label;
+                        sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)cell).Label);
                     else
                     {
-                        int i = 0;
-
+                        int i = 0;                        
                     }
 
 
@@ -352,8 +450,6 @@ namespace Km.AdExpressClientWeb.Controllers
                             borderColor = Color.Black;
                             break;
                     }
-
-
 
                     TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
                     BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
@@ -595,16 +691,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
         private void DrawHeaders(HeaderBase head, Worksheet sheet, int rowStart, int colStart)
         {
-            int nbRowTotal = NbRow(head);
+            int nbRowTotal = NbRow(head) - 1;
 
-            //if (head.IndexInResultTable == -1)
-            nbRowTotal--;
-
-            //foreach (var item in data.HeadersIndexInResultTable)
             foreach (var item in head)
             {
-
-                //HeaderBase header = item.Value;
                 HeaderBase header = item as HeaderBase;
 
                 if (header is HeaderMediaSchedule || header is HeaderCreative || header is HeaderInsertions)
@@ -618,14 +708,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     Range range = sheet.Cells.CreateRange(rowStart, colStart, ronSpan, colSpan);
                     range.Merge();
 
-                    sheet.Cells[rowStart, colStart].Value = header.Label;
+                    sheet.Cells[rowStart, colStart].Value = WebUtility.HtmlDecode(header.Label);
 
                     TextStyle(sheet.Cells[rowStart, colStart], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
                 }
                 else
                 {
-                    sheet.Cells[rowStart, colStart].Value = header.Label;
+                    sheet.Cells[rowStart, colStart].Value = WebUtility.HtmlDecode(header.Label);
 
                     TextStyle(sheet.Cells[rowStart, colStart], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, rowStart, colStart, CellBorderType.Thin, HeaderBorderTab);

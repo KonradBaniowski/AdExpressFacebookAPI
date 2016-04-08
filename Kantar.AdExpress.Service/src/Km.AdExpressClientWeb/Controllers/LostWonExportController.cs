@@ -66,7 +66,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             Workbook document = new Workbook(FileFormatType.Excel2003XML);
 
-            export.export(document, data, session);
+            export.export(document, data, session, true);
 
             string documentFileNameRoot;
             documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
