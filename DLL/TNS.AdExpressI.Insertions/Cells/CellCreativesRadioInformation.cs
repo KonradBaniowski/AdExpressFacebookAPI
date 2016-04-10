@@ -505,10 +505,6 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     str.Append(cols[l + nbLine]);
                 }
-                else
-                {
-                    str.Append("-");
-                }
                 str.Append(";");
             }
             #endregion

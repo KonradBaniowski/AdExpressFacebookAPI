@@ -528,6 +528,11 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\icon-kantar.css" />
     <Content Include="Content\img\bann_adexpress.jpg" />
+    <Content Include="Content\img\evaliantFormat\AVI.png" />
+    <Content Include="Content\img\evaliantFormat\MOV.png" />
+    <Content Include="Content\img\evaliantFormat\MP4.png" />
+    <Content Include="Content\img\evaliantFormat\FLV.png" />
+    <Content Include="Content\img\evaliantFormat\SWF.png" />
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-3.jpg" />
@@ -1401,6 +1406,7 @@
     <Content Include="IgniteUI\mobile\js\modules\infragistics.templating.js" />
     <Content Include="IgniteUI\mobile\js\modules\infragistics.ui.scroll.js" />
     <Content Include="IgniteUI\mobile\js\modules\infragistics.util.js" />
+    <Content Include="Player\playerflv.swf" />
     <Content Include="Scripts\Account\account.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
