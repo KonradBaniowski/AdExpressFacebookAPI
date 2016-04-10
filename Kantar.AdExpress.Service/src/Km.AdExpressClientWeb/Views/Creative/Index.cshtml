@@ -300,7 +300,6 @@
                         $('#PresentVehicles').html(strHTML);
                         userFilter.paramsUrl.idVehicle = idV.toString();
                         userFilter.isVehicleChanged = true;
-                        userFilter.paramsUrl.zoomDate = "";
 
                         CallCreativeResult();
                         $("#HeaderLoader").addClass("hide");
@@ -327,6 +326,7 @@
                     if (data != null) {
                         $('#subPeriodSelection').html(data);
                         $('#allSubPeriod').removeClass("hidden");
+                        userFilter.paramsUrl.zoomDate = $(".btn-default-sub-period[disabled]").attr("period");
                         $("#leave-zoom").addClass("hide");
                         $(".sub-period-btn").on('click', function (e) {
                             $(".btn-default-sub-period").prop('disabled', false);
@@ -487,8 +487,8 @@
             });
         }
 
-        CallGetPresentVehicles();
         GetSubPeriodSelection();
+        CallGetPresentVehicles();
         AutoPlayCreativeModal();
 
 

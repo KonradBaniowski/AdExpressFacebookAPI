@@ -24,7 +24,11 @@
                             <button type="button" class="btn btn-default sub-period-btn" period="@item.Period" periodlabel="@item.PeriodLabel">@item.Label</button>
                         }
                     }
-                    <button id="allSubPeriod" style="width:auto !important;" type="button" class="btn btn-default sub-period-btn hidden" period="" periodlabel="@Model.AllPeriodLabel">Tous</button>
+
+                    @if (Model.Items.Count < 5)
+                    {
+                        <button id="allSubPeriod" style="width:auto !important;" type="button" class="btn btn-default sub-period-btn hidden" period="" periodlabel="@Model.AllPeriodLabel">Tous</button>
+                    }
                 </div>
             </div>
         </div>

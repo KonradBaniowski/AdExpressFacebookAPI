@@ -97,6 +97,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 AppendPeriod(CustomerSession, periodType, currentPeriod, i, ref item, ref periodIndex, realPeriodBegin, realPeriodEnd, ref labBegin, ref labEnd, activePeriods);
 
+                if(zoomDate == "")
+                {
+                    zoomDate = item.Period;
+                }
                 if (item.Period == zoomDate)
                 {
                     item.IsSelected = true;
