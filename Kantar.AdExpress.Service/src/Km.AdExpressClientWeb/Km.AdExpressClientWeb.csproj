@@ -1600,6 +1600,22 @@
       <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
       <Name>TNS.AdExpress</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
+      <Project>{741a9674-6545-469f-8528-f96ba2db3a74}</Project>
+      <Name>TNS.Alert.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Alerts.DAL\TNS.Ares.Alerts.DAL.csproj">
+      <Project>{3edbe8fb-a516-49c9-92fc-b0b0103f7d06}</Project>
+      <Name>TNS.Ares.Alerts.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303c6b21-ca16-4d7b-8edb-e8869b2b3ec9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
+      <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\KM.AdExpress.Framework\KM.AdExpress.Framework.csproj">
       <Project>{162c80d7-64e5-4963-a991-95da1bd5f1b0}</Project>
       <Name>KM.AdExpress.Framework</Name>

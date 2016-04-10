@@ -140,6 +140,22 @@
       <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
       <Name>TNS.AdExpress</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
+      <Project>{741a9674-6545-469f-8528-f96ba2db3a74}</Project>
+      <Name>TNS.Alert.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Alerts.DAL\TNS.Ares.Alerts.DAL.csproj">
+      <Project>{3edbe8fb-a516-49c9-92fc-b0b0103f7d06}</Project>
+      <Name>TNS.Ares.Alerts.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303c6b21-ca16-4d7b-8edb-e8869b2b3ec9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
+      <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Contracts\Kantar.AdExpress.Service.Contracts.csproj">
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>
       <Name>Kantar.AdExpress.Service.Contracts</Name>
