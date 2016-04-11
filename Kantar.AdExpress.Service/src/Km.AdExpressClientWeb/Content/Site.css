@@ -2285,3 +2285,18 @@ ul.ui-selectable {
     background-color: rgba(0,0,0,0.7);
 }
 
+#modal-vehicleView .modal:nth-of-type(even) {
+    z-index: 1042 !important;
+}
+#modal-vehicleView .modal-backdrop.in:nth-of-type(even) {
+    z-index: 1041 !important;
+}
+
+#modal-vehicleView-Img > .modal-dialog  > .modal-content > .header-popup-vehicleView {
+    /*padding: 10px 15px;*/
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: rgba(0,0,0,0.7);
+}
+ 
