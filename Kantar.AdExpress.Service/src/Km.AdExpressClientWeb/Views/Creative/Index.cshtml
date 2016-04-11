@@ -44,17 +44,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="media video-audio-container">
-                        <div class="media video-audio-container">
-                            <video id="creativeStream" class="hide" width="100%" controls="controls" preload="auto" autoplay>
-                                Votre navigateur ne gère pas l'élément
-                            </video>
-                            <div id="mediaLoader">
-                                <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
-                            </div>
+                        <video id="creativeStream" width="100%" controls="controls" preload="auto" autoplay>
+                            Votre navigateur ne gère pas l'élément
+                        </video>
+                        <div id="mediaLoader">
+                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
                         </div>
+                        <OBJECT id="objectSWF" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0">
+                            <PARAM name="movie" value="">
+                            <PARAM name="play" value="true">
+                            <PARAM name="quality" value="high">
+                            <EMBED src="" play="true" swliveconnect="true" quality="high" />
+                        </OBJECT>
+                        <object id="objectFLV" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version =5,0,0,0" >
+                            <param name="flashvars" value="" />
+                            <param name="movie" value="/Player/playerflv.swf" />
+                            <param name="allowfullscreen" value="true" />
+                            <param name="allowscriptaccess" value="always" />
+                            <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always"  allowfullscreen="false"  flashvars=""  />
+                        </object>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer hide">
                     <a href="" download="" class="btn btn-valider w-full">@(@GestionWeb.GetWebWord(874, Model.SiteLanguage))&nbsp;<i class="fa fa-arrow-down"></i></a>
                 </div>
             </div>
@@ -289,7 +300,6 @@
                         $('#PresentVehicles').html(strHTML);
                         userFilter.paramsUrl.idVehicle = idV.toString();
                         userFilter.isVehicleChanged = true;
-                        userFilter.paramsUrl.zoomDate = "";
 
                         CallCreativeResult();
                         $("#HeaderLoader").addClass("hide");
@@ -316,6 +326,7 @@
                     if (data != null) {
                         $('#subPeriodSelection').html(data);
                         $('#allSubPeriod').removeClass("hidden");
+                        userFilter.paramsUrl.zoomDate = $(".btn-default-sub-period[disabled]").attr("period");
                         $("#leave-zoom").addClass("hide");
                         $(".sub-period-btn").on('click', function (e) {
                             $(".btn-default-sub-period").prop('disabled', false);
@@ -342,18 +353,22 @@
 
         function AutoPlayCreativeModal() {
             $("#creativeStream").attr('src', '');
+            $("#creativeStream").hide();
+            $("#objectSWF").hide();
+            $("#objectFLV").hide();
+            $("#mediaLoader").show();
             
             $("#creativeModal").on('shown.bs.modal', function (event) {
                 $('#creativeModal h4 > i').attr("class", 'fa iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
                 var button = $(event.relatedTarget);// Button that triggered the modal
                 var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                var format = button.data('format').toString(); // Extract info from data-* attributes
                 datas = datas.replace(/\[|\]/g, '');
                 datas = datas.split(",");
+                var url = false;
+                var urlDownload = false;
 
-                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
-                    alert("Les fichiers média ne sont pas disponibles.");
-                }
-                else {
+                function ajaxGetLinkPath() {
                     var parameters = {
                         idVersion: datas[0],
                         idVehicle: datas[2]
@@ -369,32 +384,66 @@
                         },
                         success: function (response) {
                             if (response != null) {
-                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
-                                var urlDownload = "http://adexpress.kantarmedia.fr/" + response.PathDownloadingFile;
-                                if (url) {
-                                    $("#creativeStream").attr('src', url);
-                                    $("#mediaLoader").addClass("hide");
-                                    $("#creativeStream").removeClass("hide");
-                                    $("#creativeStream").load();
-                                }
-                                if (urlDownload) {
-                                    $("#creativeModal .modal-footer").removeClass("hide");
-                                    $("#creativeModal .modal-footer > a").attr("href", urlDownload);
-                                    //$("#creativeModal .modal-footer > a").attr("download", parameters.idVersion);
-                                }
+                                url = "http://adexpress.kantarmedia.fr" + response.PathReadingFile;
+                                urlDownload = "http://adexpress.kantarmedia.fr" + response.PathDownloadingFile;
+                            }
+                            if (url) {
+                                $("#creativeStream").attr('src', url);
+                                $("#mediaLoader").hide();
+                                $("#creativeStream").show();
+                                $("#creativeStream").load();
+                            }
+                            if (urlDownload) {
+                                $("#creativeModal .modal-footer").removeClass("hide");
+                                $("#creativeModal .modal-footer > a").attr("href", urlDownload);
+                                //$("#creativeModal .modal-footer > a").attr("download", parameters.idVersion);
                             }
                         }
                     });
                 }
+
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else if(format != ""){ //url direct, sauf pour AVI
+                    switch (format) {
+                        case "AVI":
+                            ajaxGetLinkPath();
+                            break;
+                        case "SWF":
+                            $("#objectSWF param").first().attr("value", "http://adexpress.kantarmedia.fr" + datas[0]);
+                            $("#objectSWF embed").attr("src", "http://adexpress.kantarmedia.fr" +  datas[0]);
+                            $("#objectSWF").show();
+                            break;
+                        case "FLV":
+                            $("#objectFLV param").first().attr("value", "file=" + "http://adexpress.kantarmedia.fr" + datas[0]);
+                            $("#objectFLV embed").attr("flashvars", "file=" + "http://adexpress.kantarmedia.fr" + datas[0]);
+                            $("#objectFLV").show();
+                            break;
+                        default:
+                            url = "http://adexpress.kantarmedia.fr" + datas[0];
+                            $("#creativeStream").attr('src', url);
+                            $("#creativeStream").show();
+                    }
+                    $("#mediaLoader").hide()
+                }
+                else{
+                    ajaxGetLinkPath();
+                }
+
             });
 
             $("#creativeModal").on('hide.bs.modal', function () {
                 $("#creativeStream").attr('src', '');
-                $("#creativeStream").addClass("hide");
-                $("#mediaLoader").removeClass("hide");
+                $("#creativeStream").hide();
+                $("#objectSWF").hide();
+                $("#objectFLV").hide();
+                $("#mediaLoader").show();
                 $("#creativeModal .modal-footer").addClass("hide");
             });
         }
+
 
         function AutoPlayVisu() {
             $("div[datavisu]").each(function (index) {
@@ -405,35 +454,41 @@
                 visus = datas[0].replace(/\[|\]/g, '').split(",");
                 paramsLink = datas[1].replace(/\[|\]/g, '').split(",");
                 infos = datas[2].replace(/\[|\]/g, '').split(";");
+                try { format = datas[3].replace(/\[|\]/g, ''); } catch(e){ format = "";} 
 
                 //Visuels
                 if (visus.length > 1) {
                     for (i = 0; i < visus.length; i++) {
                         if (i != 0) active = "";
-                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" style="max-height:200px;max-width:300px;" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
                     }
-                } else {
+                }
+                else {
                     $(this).attr("id", "visu");
-                    if (visus[0] == "") {
-                        $(this).html('<span class="fa big iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '"></span>');
-                        if (paramsLink.length > 1)
-                            $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '">' + $(this).html() + '</a></div>');
-                    } else {
-                        $(this).html('<center><img id="pop" style="max-height:200px;max-width:300px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>');
+                    if (format != "")
+                        $(this).html('<center><img class="imgCreaInser" src="/Content/img/evaliantFormat/' + format + '.png" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>');
+                    else {
+                        if (visus[0] == "")
+                            $(this).html('<span class="fa big iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '"></span>');
+                        else
+                            $(this).html('<center><img id="pop" class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>');
                     }
+                    //Lien mp4,mp3,flv,... du visuel (onclick)
+                    if (paramsLink[0] != "")
+                        $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '" data-format="'+ format +'" >' + $(this).html() + '</a></div>');
                 }
                 //Infos
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
                         tmp = infos[j].split(":");
-                        $(this).next().prepend('<div><span style="display:inline-block;min-width:150px;">' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
                     }
                 }
             });
         }
 
-        CallGetPresentVehicles();
         GetSubPeriodSelection();
+        CallGetPresentVehicles();
         AutoPlayCreativeModal();
 
 

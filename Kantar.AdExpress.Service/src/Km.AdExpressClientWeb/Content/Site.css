@@ -1987,6 +1987,15 @@ ul.ui-selectable {
         height: 100%;
     }
 
+.imgCreaInser{
+    max-height:200px;
+    max-width:300px;
+}
+.infoCreaInser{
+    display:inline-block;
+    min-width:150px;
+}
+
 /****Carousel****/
 .carousel-control.right,
 .carousel-control.left {
@@ -2120,3 +2129,4 @@ ul.ui-selectable {
 .iconInsertionCreative3:before { /*TV*/
     content: "\f008";
 }
+
