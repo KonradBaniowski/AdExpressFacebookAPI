@@ -748,10 +748,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             webSession = (WebSession)WebSession.Load(webSessionId);
             AlertResponse result = new AlertResponse
             {
-             Alerts = new List<Core.Domain.Alert>(),
+             Alerts = new List<Core.Domain.Alert>(),             
              SiteLanguage = webSession.SiteLanguage 
             };
-            
             #region Alerts
             if (AlertConfiguration.IsActivated)
             { 
@@ -763,7 +762,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     result.ErrorMessage = GestionWeb.GetWebWord(833, result.SiteLanguage);
                 else
                 {
-                    List<Core.Domain.Alert> myAlerts = Mapper.Map<List<Core.Domain.Alert>>(alerts);
+                    var alertsModel = Mapper.Map<List<Core.Domain.Alert>>(alerts);
+                    foreach (var alert in alertsModel)
+                    {
+                        var occurences = alertDAL.GetOccurrences(alert.Id);
+                        alert.Occurrences = Mapper.Map<List<Occurence>>(occurences);
+                    }
+                    result.Alerts = alertsModel;
                 }
             }
             #endregion

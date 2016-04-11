@@ -27,7 +27,14 @@ namespace Km.AdExpressClientWeb.App_Start
             Mapper.CreateMap<VM.UniversLevel, Domain.UniversLevel>();
             Mapper.CreateMap<VM.UniversItem, Domain.UniversItem>();
             Mapper.CreateMap<Domain.UniversItem, VM.UniversItem>();
-            Mapper.CreateMap<TNS.Alert.Domain.Alert, Domain.Alert>();
+            Mapper.CreateMap<TNS.Alert.Domain.Alert, Domain.Alert>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AlertId));
+            Mapper.CreateMap<TNS.Alert.Domain.AlertOccurence, Domain.Occurence>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AlertOccurrenceId))
+                .ForMember(dest => dest.AlertId, opt => opt.MapFrom(src => src.AlertId))
+                .ForMember(dest => dest.SendDate, opt => opt.MapFrom(src => src.DateSend))
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.DateBeginStudy))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.DateEndStudy));
         }
     }
 }
