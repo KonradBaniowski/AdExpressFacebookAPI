@@ -13,8 +13,16 @@ namespace TNS.AdExpress.Constantes.Web
         #region Please insert any new code in the correct order
         public const long Cancel = 000;
         public const long Submit = 000;
+        public const long NameCode = 67;
+        public const long CompanyCode = 68;
+        public const long CountryCode = 70;
+        public const long PhoneNumberCode = 71;
+        public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
+        public const long QuestionTag3Code = 647;
         public const long MonAdExpressCode = 761;
+        public const long ContactLabelCode = 763;
+        public const long ContactDescriptionCode = 764;
         public const long SaveUniversCode = 769;
         public const long LoadUniversCode = 770;
         public const long MyResultsDescription = 827;
@@ -28,7 +36,9 @@ namespace TNS.AdExpress.Constantes.Web
         public const long KeyWordLabelCode = 972;
         public const long Capacity = 1000;
         public const long MediaRequiredCode = 1052;
+        public const long MailCode = 1136;
         public const long MediaSelected = 1487;
+        public const long JobTitleCode = 1976;
         public const long RefineCode = 2053;
         public const long PresentAbsentCode = 2167;
         public const long LostWonCode = 2169;
@@ -50,7 +60,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ExcludedElements = 2282;
         public const long SecurityMsg = 2285;
         public const long OverLimitMsgCode = 2286;
-        public const long KeyWordDescriptionCode = 2287;        
+        public const long KeyWordDescriptionCode = 2287;
         public const long MininumInclude = 2299;
         public const long UnityError = 2541;
         public const long AlertsCode = 2585;
@@ -60,12 +70,11 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSupport = 3035;
         public const long ErrorOnlyOneItemAllowed = 3036;
         public const long AddConcurrentCode = 3037;
-        /// <summary>
-        /// Support is defined in another tree
-        /// </summary>
         public const long SupportAlreadyDefine = 3038;
         public const long Referent = 3039;
-        
+        public const long QuestionTagCode = 3041;
+        public const long QuestionTag1Code = 3042;
+        public const long QuestionTag2Code = 3043;
         #endregion
     }
 }

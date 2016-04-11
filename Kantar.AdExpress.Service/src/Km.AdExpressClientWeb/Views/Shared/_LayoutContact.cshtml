@@ -10,9 +10,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" /> 
 </head>
 
-<body class="container-kantar-home">
+<body class="container-kantar-contact">
     <nav class="navbar navbar-default navbar-static-top navbar-color">
         <div class="container">
+            @*ROMAIN*@
+            <div class="bb-alert alert alert-info" style="display:none;">
+                <span>The examples populate this alert with dummy content</span>
+            </div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -24,13 +28,14 @@
             <a class="navbar-brand" style="font-weight:bold;" href="/">AdExpress</a>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#"><i class="glyphicon glyphicon-th"></i></a></li>
+                    <li><a href="/"><i class="glyphicon glyphicon-th"></i></a></li>
                     <li>
                         <a href="@Url.Action("MyAdExpress", "Home")">
                             <i class="glyphicon glyphicon-user"></i>
                         </a>
+                    </li>
                     <li>
-                        <a href="@Url.Action("Index", "Contact")">
+                        <a href="#">
                             <i class="glyphicon glyphicon-comment"></i>
                         </a>
                     </li>
@@ -58,10 +63,23 @@
     <div class="container">
         @RenderBody()
     </div>
+    <div class="modal fade" id="loader" tabindex="-1">
+        <div class="modal-dialog">
+            <div id="spinner-loader">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </div>
+        <div class="modal-footer" hidden>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        </div>
+
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ajax")
 
 
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

@@ -160,6 +160,12 @@
     background-size: cover;
 }
 
+.container-kantar-contact {
+    background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;
+    color: #ffffff;
+    background-size: cover;
+}
+
 .header-kantar-popup {
     padding: 10px 15px;
     border-bottom: 1px solid transparent;
@@ -282,7 +288,7 @@ input {
 }
 
 .bg-orange {
-    background: #ff8c00 !important;
+    background: #ff8c00;
 }
 
 .green {
@@ -298,7 +304,7 @@ input {
 }
 
 .orange {
-    color: #ff8c00 !important;
+    color: #ff8c00;
 }
 
 .tile-third.bg-green {
@@ -2097,6 +2103,58 @@ ul.ui-selectable {
     padding: 5px 15px;
 }
 
+
+/*PAGE CONTACT*/
+.bg-contact {
+    background-color: rgba(0,0,0,0.6);
+    padding: 15px;
+    margin-top: 15px;
+}
+
+    .bg-contact .form-control {
+        color: white;
+        border: none;
+    }
+
+        .bg-contact .form-control:focus {
+            background-color: rgba(255,255,255,0.1);
+            border-color: #cfdadd;
+            box-shadow:none;
+        }
+
+    .bg-contact input, .bg-contact textarea, .bg-contact select {
+        background-color: rgba(255,255,255,0.2);
+    }
+
+    .bg-contact option {
+        background-color:#13c18b;
+    }
+
+    .bg-contact .btn, .bg-contact .btn:hover
+    {
+        border:none;
+        background-color:#ff8c00;
+    }
+
+.green-contact {
+    color: #13c18b;
+}
+
+.membres-icon {
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    width: 80px;
+    height: 80px;
+    padding: 19px;
+    margin: 15px auto;
+}
+
+.member-line {
+    width: 20%;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    margin: 14px auto;
+}
 
 /*Images Creative (class = iconCreative+[numero_du_vehicle])*/
 .iconInsertionCreativ, .big {

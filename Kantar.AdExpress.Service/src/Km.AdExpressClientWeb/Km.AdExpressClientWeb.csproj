@@ -176,6 +176,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CreativeController.cs" />
     <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -184,9 +185,13 @@
     <Compile Include="Controllers\LostWonController.cs" />
     <Compile Include="Controllers\LostWonExportController.cs" />
     <Compile Include="Controllers\MediaSchedulePopUpController.cs" />
+    <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\PortfolioExportController.cs" />
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
+    <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="I18n\LabelsHelper.cs" />
+    <Compile Include="Models\Contact\ContactViewModel.cs" />
     <Compile Include="Models\Home\MyAdExpressViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
@@ -532,6 +537,7 @@
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-3.jpg" />
     <Content Include="Content\img\kantarmedia-bg-4.jpg" />
+    <Content Include="Content\img\kantarmedia-bg-contact.jpg" />
     <Content Include="Content\img\no_visu.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
@@ -1433,6 +1439,7 @@
     <Content Include="IgniteUI\mobile\css\themes\ios6\infragistics.mobile.theme.less" />
     <Content Include="IgniteUI\mobile\css\themes\ios\infragistics.mobile.theme.less" />
     <EmbeddedResource Include="Aspose.Cells.lic" />
+    <Content Include="Content\pdf\cerfa.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\component-selectable\common-actions.js" />
@@ -1470,7 +1477,9 @@
     <Content Include="Scripts\market\market-optional.js" />
     <Content Include="Scripts\market\market-required.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1537,12 +1546,16 @@
     <Content Include="Views\MediaSchedulePopUp\Index.cshtml" />
     <Content Include="Views\MediaSchedulePopUp\_ResultOptions.cshtml" />
     <Content Include="Views\Shared\_LayoutResults.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
     <Folder Include="Views\InsertionsExport\" />
+    <Folder Include="Views\Pdf\" />
+    <Folder Include="Views\Public\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
