@@ -78,7 +78,7 @@ namespace TNS.Ares.Alerts.DAL
         {
             // Creating select query
             StringBuilder sql = new StringBuilder(500);
-            sql.AppendFormat("SELECT {0}.id_alert, {0}.alert, {0}.id_login, {0}.email_list, {0}.date_creation, {1}.date_end_module as date_end, {0}.date_validate, {0}.session_, {0}.id_type_periodicity, {0}.expiry, {0}.activation, {0}.id_alert_schedule ",
+            sql.AppendFormat("SELECT {0}.id_alert, {0}.alert, {0}.id_login, {0}.email_list, {0}.date_creation, {1}.date_end_module as date_end, {0}.date_validate, {0}.session_, {0}.id_type_periodicity, {0}.expiry, {0}.activation, {0}.id_alert_schedule, {0}.id_module ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
                 DataBaseConfiguration.DataBase.GetTable(TableIds.rightModuleAssignment).Prefix);
             sql.AppendFormat("FROM {0}, {1} ", 

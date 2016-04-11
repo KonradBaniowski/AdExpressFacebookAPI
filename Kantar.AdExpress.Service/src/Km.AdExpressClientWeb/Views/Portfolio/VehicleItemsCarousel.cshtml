@@ -155,47 +155,44 @@
     <!--/col-md-12-->
 </div>
 
-<!-- Modal vehcile  view  -->
-<div class="modal fade" id="modal-vehicleView" tabindex="-1" role="dialog" aria-labelledby="Titre" aria-hidden="true" >
+<!-- Modal vehicle  view  -->
+<div class="modal fade" id="modal-vehicleView" >
     <div class="modal-dialog">
         <div class="modal-content">
-            @*<div class="modal-header header-kantar-popup">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-                <h4 class="modal-title" id="myModalLabel">EQuipe - 10/04/216</h4>
-            </div>*@
             <div class="modal-header panel-heading header-popup-vehicleView">
-                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-                <i class="fa fa-file-text blue"></i>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt" id="myModalLabel">Figaro Magazine - 19/02/2016</h4>
-                <p class="pull-right text-white">Nombre de page : 144</p>
+                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>               
+                <h4 class="modal-title font-normal m-t-none m-b-md text-primary-lt" id="myModalLabel">
+                <i class="fa fa-file-text blue"></i>Figaro Magazine - 19/02/2016</h4>  
+                <p class="pull-right text-white">Nombre de page : 144</p>            
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
-                    <div class="col-md-4"> </div>
-                    <div class="col-md-4" href="#modal-vehicleView-Img1" data-toggle="modal">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4" href="#modal-vehicleView-Img" data-toggle="modal">
                         <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg">
                     </div>
-                    <div class="col-md-4"> </div>
-                    <div class="modal fade" id="modal-vehicleView-Img1" style="display: none;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header panel-heading">
-                                    <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-                                    <i class="fa fa-file-text blue"></i>
-                                    <h4 class="font-normal m-t-none m-b-md text-primary-lt">Figaro Magazine - 19/02/2016</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <img class="img-full" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-md-4"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--/modal-vehicleView-->
 
+<div class="modal fade" id="modal-vehicleView-Img" style="display: none;" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header panel-heading header-popup-vehicleView">
+                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>              
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"><i class="fa fa-file-text blue"></i>Figaro Magazine - 19/02/2016</h4>
+            </div>
+            <div class="modal-body">
+                <img class="img-full" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+<!--/modal-vehicleView-Img1-->
 @section Scripts {
     <script>
         if (typeof jQuery === "undefined") { throw new Error("Vehicle view modal requires jQuery") }
