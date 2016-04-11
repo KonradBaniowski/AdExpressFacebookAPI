@@ -214,7 +214,16 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExpirationDate = GestionWeb.GetWebWord(LanguageConstantes.ExpirationDate, siteLanguage),
                 AlertType = GestionWeb.GetWebWord(LanguageConstantes.AlertType, siteLanguage),
                 Receiver= GestionWeb.GetWebWord(LanguageConstantes.Receiver, siteLanguage),
-                TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage)
+                TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage),
+                MoveSelectedResult = GestionWeb.GetWebWord(LanguageConstantes.MoveSelectedResult, siteLanguage),
+                MoveResultTitle = GestionWeb.GetWebWord(LanguageConstantes.MoveSelectedResult, siteLanguage),
+                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
+                RenameFolderTitle= GestionWeb.GetWebWord(LanguageConstantes.RenameFolderTitle, siteLanguage),
+                RenameNewFodler= GestionWeb.GetWebWord(LanguageConstantes.RenameNewFodler, siteLanguage),
+                SelectFolderToDelete= GestionWeb.GetWebWord(LanguageConstantes.SelectFolderToDelete, siteLanguage),
+                SelectFolder= GestionWeb.GetWebWord(LanguageConstantes.SelectFolder, siteLanguage),
+                RenameSelectedFolder= GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
+                ErrorMsgNoFolderCreated= GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage)
             };
             return result;
         }

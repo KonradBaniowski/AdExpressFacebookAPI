@@ -64,6 +64,14 @@ namespace Km.AdExpressClientWeb.Models
         public string Folder { get; set; }//TBD
         public string Results { get; set; }//TBD
         public string TimeSchedule { get; set; }//w2614
+        public string MoveSelectedResult { get; set; }//911
+        public string MoveResultTitle { get; set; }//Déplacer le résultat
+        public string RenameFolderTitle { get; set; }//698
+        public string RenameNewFodler { get; set; }//700
+        public string SelectFolderToDelete { get; set; }//701
+        public string SelectFolder { get; set; } // 702
+        public string RenameSelectedFolder { get; set; }//703
+        public string ErrorMsgNoFolderCreated { get; set; } // 711
 
     }
 }

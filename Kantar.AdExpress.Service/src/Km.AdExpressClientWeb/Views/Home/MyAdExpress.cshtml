@@ -16,11 +16,6 @@
         <li role="presentation"><a href="#profile" data-toggle="tab">@Model.Labels.UserUniversCode</a></li>
         <li role="presentation"><a href="#alertes" data-toggle="tab">@Model.Labels.AlertsCode</a></li>
     </ul>
-    @*TAG OBLIGATOIRE
-        tab-content-myadexpress
-        panel panel-default panel-tab
-        panel-heading resume
-    *@
     <div id="tab-content-myadexpress" class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
             <div class="panel panel-default panel-tab">
@@ -79,7 +74,7 @@
                                                                         <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
                                                                             <i class="fa icon-share-alt fa-lg"></i>
                                                                         </a>
-                                                                        <a data-id="@univers.Id">
+                                                                        <a href="#myModal5" data-toggle="modal" data-id="@univers.Id">
                                                                             <i class="fa fa-pencil fa-lg"></i>
                                                                         </a>
                                                                         <a data-id="@univers.Id">
@@ -105,7 +100,7 @@
                                                                         <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
                                                                             <i class="fa icon-share-alt fa-lg"></i>
                                                                         </a>
-                                                                        <a data-id="@univers.Id">
+                                                                        <a href="#myModal5" data-toggle="modal" data-id="@univers.Id">
                                                                             <i class="fa fa-pencil fa-lg"></i>
                                                                         </a>
                                                                         <a data-id="@univers.Id">
@@ -194,7 +189,7 @@
                                                                 <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
                                                                     <i class="fa icon-share-alt fa-lg"></i>
                                                                 </a>
-                                                                <a data-id="@univers.Id">
+                                                                <a href="#myModal5" data-toggle="modal" data-id="@univers.Id">
                                                                     <i class="fa fa-pencil fa-lg"></i>
                                                                 </a>
                                                                 <a data-id="@univers.Id">
@@ -220,7 +215,7 @@
                                                                 <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
                                                                     <i class="fa icon-share-alt fa-lg"></i>
                                                                 </a>
-                                                                <a data-id="@univers.Id">
+                                                                <a href="#myModal5" data-toggle="modal" data-id="@univers.Id">
                                                                     <i class="fa fa-pencil fa-lg"></i>
                                                                 </a>
                                                                 <a data-id="@univers.Id">
@@ -352,6 +347,55 @@
                     }
                 </div>
 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myModal4" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <i class="fa icon-share-alt white"></i>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.MoveResultTitle</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Model.Labels.MoveSelectedResult</p>
+                <div class="dropdown">
+                    <button type="button" class="btn selecteur-repertoire" data-toggle="dropdown" aria-expanded="false">
+                        Répertoire 1
+                        <span class="caret pull-right"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="">Répertoire 2</a></li>
+                        <li><a href="">Répertoire 3</a></li>
+                        <li><a href="">Répertoire 4</a></li>
+                    </ul>
+                    <p></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal5" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <i class="fa  icon-pencil white"></i>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">Renommer le résultat</h4>
+            </div>
+            <div class="modal-body">
+                <p>Renommer le résultat sélectionné :</p>
+                <input type="text" class="form-control" placeholder="Entrez un nom">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" data-dismiss="modal">Valider</button>
             </div>
         </div>
     </div>

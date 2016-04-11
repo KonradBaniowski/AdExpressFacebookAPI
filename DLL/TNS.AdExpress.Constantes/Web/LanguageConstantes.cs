@@ -12,8 +12,13 @@ namespace TNS.AdExpress.Constantes.Web
     {
         #region Please insert any new code in the correct order
         public const long Cancel = 000;
-        public const long Submit = 000;
         public const long MediaScheduleCode = 150;
+        public const long RenameFolderTitle = 698;
+        public const long RenameNewFodler = 700;
+        public const long SelectFolderToDelete = 701;
+        public const long SelectFolder = 702;
+        public const long RenameSelectedFolder = 703;
+        public const long ErrorMsgNoFolderCreated = 711;
         public const long MonAdExpressCode = 761;
         public const long SaveUniversCode = 769;
         public const long LoadUniversCode = 770;
@@ -22,6 +27,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long UserUniversCode = 875;
         public const long UserSavedUniversCode = 893;
         public const long MonAdExpressDescription = 904;
+        public const long MoveSelectedResult = 911; 
         public const long SelectUniversGroup = 917;
         public const long ExceptionMsg = 922;
         public const long NoSavedUniversCode = 930;
@@ -83,10 +89,12 @@ namespace TNS.AdExpress.Constantes.Web
         /// </summary>
         public const long SupportAlreadyDefine = 3038;
         public const long Referent = 3039;
+        public const long Submit = 3040;
 
         public const long Folder = 000000;
         public const long Results =000000;
         public const long EveryDay = 000000;
+        public const long MoveResultTitle = 00000;
 
         
         
