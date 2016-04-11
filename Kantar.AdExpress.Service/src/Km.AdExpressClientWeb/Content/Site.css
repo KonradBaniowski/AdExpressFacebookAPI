@@ -1767,6 +1767,10 @@ ul.ui-selectable {
     width: 1140px;
 }
 
+.modal-evaliant {
+    width: 100%;
+}
+
 .item {
     position: relative;
     -webkit-transition: all 0.2s ease-in-out 0s;
@@ -2128,5 +2132,98 @@ ul.ui-selectable {
 
 .iconInsertionCreative3:before { /*TV*/
     content: "\f008";
+}
+
+/**Carousel Chemin de fer du support*/
+#carou-vehicleView {
+    /* background-color: rgba(0,0,0,0.6);*/
+    border-bottom: 0px;
+}
+
+    #carou-vehicleView .panel {
+        border-radius: 0px;
+        background-color: transparent;
+    }
+
+        #carou-vehicleView .panel .panel-default {
+            border-radius: 0px;
+            border: none;
+        }
+
+            #carou-vehicleView .panel.panel-default.panel-tab {
+                background: transparent;
+                border: none;
+            }
+
+    #carou-vehicleView .panel-heading.resume {
+        /*background: rgba(0,0,0,0.7);
+        border-bottom: 0px;*/
+        border-radius: 2px 2px 0 0;
+        border-bottom: 0px solid #edf1f2;
+        background-color: rgba(0,0,0,0.7);
+        padding: 25px !important;
+        color: white;
+    }
+
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading > .panel-title {
+    color: #00c1ff;
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#carou-vehicleView .panel-group .panel-primary .panel-body {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
+    color: white;
+}
+
+
+#carou-vehicleView .panel-body {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.padder-v-mi {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.img-full {
+    width: 100%;
+}
+#carou-vehicleView   .row.no-gutter {
+    margin-right: 0;
+    margin-left: 0;
+}
+#carou-vehicleView  img {
+    vertical-align: middle;
+}
+#carou-vehicleView  img {
+    border: 0;
+}
+/* Mopdal VBehicle View */
+
+
+#modal-vehicleView > .modal-dialog  > .modal-content{
+    width: 1000px;
+    margin: 0 auto;
+    height:900px;
+    overflow-y: scroll;
+}
+
+#modal-vehicleView > .modal-dialog  > .modal-content > .header-popup-vehicleView {
+    /*padding: 10px 15px;*/
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: rgba(0,0,0,0.7);
 }
 

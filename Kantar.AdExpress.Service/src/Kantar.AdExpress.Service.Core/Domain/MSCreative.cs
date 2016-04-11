@@ -20,5 +20,9 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<string> Visuals { get; set; }
 
         public string Class { get; set; }
+
+        public string Format { get; set; }
+
+        public string Dimension { get; set; }
     }
 }

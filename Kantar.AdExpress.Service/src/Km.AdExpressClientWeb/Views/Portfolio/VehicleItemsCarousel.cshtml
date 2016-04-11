@@ -1,95 +1,208 @@
-﻿
+﻿@using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "Results";
 }
 
 <div class="container">
-    <div class="col-md-12">
-      
+    <div class="col-md-12" id="carou-vehicleView">
 
-        <div class="panel text-left">
-            <div class="panel-heading text-left">
-                <i class="fa fa-file-text text-lg text-primary-lt "></i>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt">Chemin de fer du support</h4>
+
+        <div class="panel panel-default panel-tab">
+
+            <div class="panel-heading resume">
+                <h3 class="panel-title pull-left">
+                    <i class="fa fa-file-text text-lg text-primary-lt "></i> Chemin de fer du support
+                </h3>
             </div>
             <!--/panel-heading text-left-->
+            <div class="panel-body">
+                <div class="panel-group">
+                    <div id="vhCarousel" class="carousel">
+                        <!--slide-->
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="text-center text-white">
+                                            <div class="bg-black-only padder-v-mi">
+                                                Vendredi 26/02/2016
+                                            </div>
+                                        </div>
+                                        <!--/text-center text-white-->
+                                        <div class="row no-gutter">
+                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" class="img-full" alt="Equipe"></div>
+                                        </div>
+                                        @* <a href="#x"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>*@
 
-            <div id="vhCarousel" class="carousel slide">
-                <!-- Carousel items -->
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <a href="#x"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                        <div class="text-center padder-v-mi">
+                                            <p>Nombre d'insertion : <strong>12</strong></p>
+                                            <p>Total investissement : <strong>123456789</strong></p>
+                                        </div>
+                                        <!--/text-center padder-v-mi-->
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="text-center text-white">
+                                            <div class="bg-black-only padder-v-mi">
+                                                Jeudi 25/02/2016
+                                            </div>
+                                        </div>
+                                        <!--/text-center text-white-->
+                                        <div class="row no-gutter">
+                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160225/imagette/coe001.jpg" class="img-full" alt="Equipe"></div>
+                                        </div>
+
+                                        <div class="text-center padder-v-mi">
+                                            <p>Nombre d'insertion : <strong>12</strong></p>
+                                            <p>Total investissement : <strong>123456789</strong></p>
+                                        </div>
+                                        <!--/text-center padder-v-mi-->
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="text-center text-white">
+                                            <div class="bg-black-only padder-v-mi">
+                                                Mardi 23/02/2016
+                                            </div>
+                                        </div>
+                                        <!--/text-center text-white-->
+                                        <div class="row no-gutter">
+                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160223/imagette/coe001.jpg" class="img-full" alt="Equipe"></div>
+                                        </div>
+
+                                        <div class="text-center padder-v-mi">
+                                            <p>Nombre d'insertion : <strong>12</strong></p>
+                                            <p>Total investissement : <strong>123456789</strong></p>
+                                        </div>
+                                        <!--/text-center padder-v-mi-->
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="text-center text-white">
+                                            <div class="bg-black-only padder-v-mi">
+                                                Jeudi 19/02/2016
+                                            </div>
+                                        </div>
+                                        <!--/text-center text-white-->
+                                        <div class="row no-gutter">
+                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160219/imagette/coe001.jpg" class="img-full" alt="Equipe"></div>
+                                        </div>
+
+                                        <div class="text-center padder-v-mi">
+                                            <p>Nombre d'insertion : <strong>12</strong></p>
+                                            <p>Total investissement : <strong>123456789</strong></p>
+                                        </div>
+                                        <!--/text-center padder-v-mi-->
+                                    </div>
+                                </div>
+                                <!--/row-->
                             </div>
-                            <div class="col-sm-3">
-                                <a href="#x"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160225/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                            <!--/item-->
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160218/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160211/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160210/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160209/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                    </div>
+                                </div>
+                                <!--/row-->
                             </div>
-                            <div class="col-sm-3">
-                                <a href="#x"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160223/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                            <!--/item-->
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160205/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160204/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160203/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160202/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
+                                    </div>
+                                </div>
+                                <!--/row-->
                             </div>
-                            <div class="col-sm-3">
-                                <a href="#x"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160219/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                                <h3>Vendredi 12/02/0216</h3>
-                            </div>
+                            <!--/item-->
                         </div>
-                        <!--/row-->
+                        <!--/carousel-inner-->
+                        <a class="left carousel-control" href="#vhCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#vhCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
-                    <!--/item-->
-                    <div class="item">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160218/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                            </div>
-                            <div class="col-sm-3">
-                                <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160211/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                            </div>
-                            <div class="col-sm-3">
-                                <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160210/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                            </div>
-                            <div class="col-sm-3">
-                                <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160209/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                            </div>
-                        </div>
-                        <!--/row-->
-                    </div>
-                    <!--/item-->
-                    <div class="item">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160205/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                            </div>
-                            <div class="col-sm-3">
-                                <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160204/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                            </div>
-                            <div class="col-sm-3">
-                                <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160203/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                            </div>
-                            <div class="col-sm-3">
-                                <a href="#x" class="thumbnail"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160202/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>
-                            </div>
-                        </div>
-                        <!--/row-->
-                    </div>
-                    <!--/item-->
+
                 </div>
-                <!--/carousel-inner-->
-                <a class="left carousel-control" href="#vhCarousel" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#vhCarousel" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                <!--/vhCarousel-->
             </div>
-            <!--/vhCarousel-->
+            <!--/panel-body-->
         </div>
-        <!--/panel text-left-->
+        <!--/panel panel-default panel-tab-->
+
+    </div>
+    <!--/col-md-12-->
+</div>
+
+<!-- Modal vehcile  view  -->
+<div class="modal fade" id="modal-vehicleView" tabindex="-1" role="dialog" aria-labelledby="Titre" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*<div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                <h4 class="modal-title" id="myModalLabel">EQuipe - 10/04/216</h4>
+            </div>*@
+            <div class="modal-header panel-heading header-popup-vehicleView">
+                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                <i class="fa fa-file-text blue"></i>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt" id="myModalLabel">Figaro Magazine - 19/02/2016</h4>
+                <p class="pull-right text-white">Nombre de page : 144</p>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="col-md-4"> </div>
+                    <div class="col-md-4" href="#modal-vehicleView-Img1" data-toggle="modal">
+                        <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg">
+                    </div>
+                    <div class="col-md-4"> </div>
+                    <div class="modal fade" id="modal-vehicleView-Img1" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header panel-heading">
+                                    <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                                    <i class="fa fa-file-text blue"></i>
+                                    <h4 class="font-normal m-t-none m-b-md text-primary-lt">Figaro Magazine - 19/02/2016</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <img class="img-full" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts {
+    <script>
+        if (typeof jQuery === "undefined") { throw new Error("Vehicle view modal requires jQuery") }
+        function OpenVehicleViewModal() {
 
 
- }
+        }
+    </script>
+
+}
