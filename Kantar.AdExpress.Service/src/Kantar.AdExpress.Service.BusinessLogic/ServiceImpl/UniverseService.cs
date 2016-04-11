@@ -14,9 +14,13 @@ using TNS.AdExpressI.Classification.DAL;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using AutoMapper;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using KM.AdExpressI.MyAdExpress;
+using LS = TNS.Ares.Domain.LS;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.Ares.Alerts.DAL;
+using TNS.Alert.Domain;
+using AutoMapper;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -28,8 +32,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const long SecurityMsg = 2285;
         private const long OverLimitMsgCode = 2286;
         public const long ElementLabelCode = 2278;
-        //public const int MaxIncludeNbr = 2;
-        //public const int MaxExcludeNbr = 1;
 
         public List<UniversItem> GetItems(int universeLevelId, string keyWord, string idSession, Dimension dimension, List<int> idMedias, out int nbItems)
         {
@@ -741,9 +743,35 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<Alert> GetUserAlerts(string webSessionId)
+        public AlertResponse GetUserAlerts(string webSessionId)
         {
-            List<Alert> result = new List<Alert>();
+            webSession = (WebSession)WebSession.Load(webSessionId);
+            AlertResponse result = new AlertResponse
+            {
+             Alerts = new List<Core.Domain.Alert>(),             
+             SiteLanguage = webSession.SiteLanguage 
+            };
+            #region Alerts
+            if (AlertConfiguration.IsActivated)
+            { 
+                var layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
+                TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                var alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+                AlertCollection alerts = alertDAL.GetAlerts(webSession.CustomerLogin.IdLogin);
+                if (alerts.Count == 0)
+                    result.ErrorMessage = GestionWeb.GetWebWord(833, result.SiteLanguage);
+                else
+                {
+                    var alertsModel = Mapper.Map<List<Core.Domain.Alert>>(alerts);
+                    foreach (var alert in alertsModel)
+                    {
+                        var occurences = alertDAL.GetOccurrences(alert.Id);
+                        alert.Occurrences = Mapper.Map<List<Occurence>>(occurences);
+                    }
+                    result.Alerts = alertsModel;
+                }
+            }
+            #endregion
             return result;
         }
         #region private methods

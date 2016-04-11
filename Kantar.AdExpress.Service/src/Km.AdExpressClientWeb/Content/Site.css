@@ -1987,6 +1987,15 @@ ul.ui-selectable {
         height: 100%;
     }
 
+.imgCreaInser{
+    max-height:200px;
+    max-width:300px;
+}
+.infoCreaInser{
+    display:inline-block;
+    min-width:150px;
+}
+
 /****Carousel****/
 .carousel-control.right,
 .carousel-control.left {
@@ -2120,6 +2129,7 @@ ul.ui-selectable {
 .iconInsertionCreative3:before { /*TV*/
     content: "\f008";
 }
+
 /**Carousel Chemin de fer du support*/
 #carou-vehicleView {
     /* background-color: rgba(0,0,0,0.6);*/
@@ -2212,3 +2222,4 @@ ul.ui-selectable {
     border-top-left-radius: 3px;
     background-color: rgba(0,0,0,0.7);
 }
+
