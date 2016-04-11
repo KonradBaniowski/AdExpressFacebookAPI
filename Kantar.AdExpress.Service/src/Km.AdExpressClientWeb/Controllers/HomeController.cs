@@ -163,8 +163,8 @@ namespace Km.AdExpressClientWeb.Controllers
             model.SavedUnivers = univers;
             #endregion
             #region Alerts
-            var alertsResposne = _universService.GetUserAlerts(idWebSession);
-            model.Alerts = alertsResposne.Alerts;
+            var alertsResponse = _universService.GetUserAlerts(idWebSession);
+            model.Alerts = alertsResponse.Alerts;
             #endregion
             model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
             model.Labels = LoadPageLabels(result.SiteLanguage);
