@@ -24,7 +24,7 @@ namespace Km.AdExpressClientWeb.Models
         public string CleanSelectionMsg { get; set; }
         public string IncludedElements { get; set; }
         public string ExcludedElements { get; set; }
-        public string Results { get; set; }
+        public string MyResults { get; set; }
         public string Refine { get; set; }
         public string ErrorMessageLimitKeyword { get; set; }//1370
         public string ErrorMessageLimitUniverses { get; set; }
@@ -44,5 +44,34 @@ namespace Km.AdExpressClientWeb.Models
         public string MyResultsDescription { get; set; }//827
         public string AlertsCode { get; set; }//2585
         public string UnityError { get; set; }
+        public string Periodicity { get; set; }//1293
+        public string Daily { get; set; }//w2579
+        public string Weekly { get; set; }//2580
+        public string SaveAlert { get; set; }//2581
+        public string Monthly { get; set; }//1294
+        public string Quartly { get; set; }//1293
+        public string Receiver { get; set; } //2483
+        public string NoAlerts { get; set; }//2587
+        public string SendDate { get; set; }//2588
+        public string Occurrence { get; set; }//2600
+        public string Occurrences { get; set; }//2601
+        public string AlertsDetails { get; set; }//2602
+        public string Deadline { get; set; }//2603
+        public string EveryWeek { get; set; }//2604
+        public string EveryMonth { get; set; }//2605
+        public string ExpirationDate { get; set; }//2606
+        public string AlertType { get; set; }//2607
+        public string Folder { get; set; }//TBD
+        public string Results { get; set; }//TBD
+        public string TimeSchedule { get; set; }//w2614
+        public string MoveSelectedResult { get; set; }//911
+        public string MoveResultTitle { get; set; }//Déplacer le résultat
+        public string RenameFolderTitle { get; set; }//698
+        public string RenameNewFodler { get; set; }//700
+        public string SelectFolderToDelete { get; set; }//701
+        public string SelectFolder { get; set; } // 702
+        public string RenameSelectedFolder { get; set; }//703
+        public string ErrorMsgNoFolderCreated { get; set; } // 711
+
     }
 }
