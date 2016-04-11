@@ -1761,6 +1761,10 @@ ul.ui-selectable {
     width: 1140px;
 }
 
+.modal-evaliant {
+    width: 100%;
+}
+
 .item {
     position: relative;
     -webkit-transition: all 0.2s ease-in-out 0s;

@@ -114,6 +114,24 @@ namespace TNS.AdExpressI.Insertions.Cells
         Int64 _universId = -1;
         #endregion
 
+        #region Accessors
+        /// <summary>
+        /// Get Format
+        /// </summary>
+        public string Format
+        {
+            get { return _format; }
+        }
+
+        /// <summary>
+        /// Get Dimension
+        /// </summary>
+        public string Dimension
+        {
+            get { return _dimension; }
+        }
+        #endregion
+
         #region Constructeur
         /// <summary>
         /// Constructeur

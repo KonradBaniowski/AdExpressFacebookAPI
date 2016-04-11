@@ -292,6 +292,9 @@
                     $("#creative-btn").prop('disabled', true);
 
                     AutoPlayCreativeModal();
+                    AutoPlayCreativeMP4Modal();
+                    AutoPlayCreativeFlashModal();
+                    AutoPlayCreativeFlvModal();
 
                     $("#creative-btn").on('click', function (e) {
                         $('#msCreativesResult').addClass("hide");
@@ -473,7 +476,120 @@
             });
         }
 
-        
+        function AutoPlayCreativeMP4Modal() {
+
+            $("#creativeStream").attr('src', '');
+
+            $("#creativeMP4Modal").on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var url = "http://adexpress.kantarmedia.fr/" + datas[0];
+                    if (url) {
+                        $("#creativeStream").attr('src', url);
+                        $('#creativeModal h4').text("Spot");
+                        $("#mediaLoader").addClass("hide");
+                    }
+                }
+            });
+
+            $("#creativeMP4Modal").on('hide.bs.modal', function () {
+                $("#creativeStream").attr('src', '');
+                $("#mediaLoader").removeClass("hide");
+            });
+        }
+
+        function AutoPlayCreativeFlashModal() {
+
+            $("#creativeFlashModal").on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var url = "http://adexpress.kantarmedia.fr/" + datas[0];
+                    var width;
+                    var height;
+                    if (datas[1].length > 0)
+                    {
+                        var dimensionValue = datas[1].split('*');
+                        width = dimensionValue[0];
+                        height = dimensionValue[1];
+                        if (url) {
+                            $("#flashEmbedContainer").html(' <embed id="flashEmbed" src="' + url + '" play="true" swliveconnect="true" quality="high" width="' + width + '" height="' + height + '">');
+                        }
+                    }
+                }
+            });
+
+            $("#creativeFlashModal").on('hide.bs.modal', function () {
+                $("#flashEmbedContainer").html('');
+            });
+        }
+
+        function AutoPlayCreativeFlvModal() {
+
+            $("#creativeFlvModal").on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var url = "http://adexpress.kantarmedia.fr/" + datas[0];
+                    var versionId = datas[1];
+                    var format = datas[3];
+                    var width;
+                    var height;
+                    var embededType;
+
+                    if (format == "FLV")
+                        embededType = "application/x-shockwave-flash";
+                    else if (format == "MOV")
+                        embededType = "video/quicktime";
+
+                    if (datas[2].length > 0) {
+                        var dimensionValue = datas[2].split('*');
+                        width = dimensionValue[0];
+                        height = dimensionValue[1];
+                        if (url) {
+                            var content = '<object id="video_' + versionId + '" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0" width="' + width + '" height="' + height + '>';
+                            content += '<param name="movie" value="/Player/playerflv.swf" />';
+                            content += '<param name="allowfullscreen" value="true" />"';
+                            content += '<param name="allowscriptaccess" value="always" />';
+                            content += '<param name="flashvars" value="file='+url+'" />';
+                            content += '<embed type="'+embededType+'"';
+                            content += 'src="/Player/playerflv.swf"';
+                            content += 'width="' + width + '"';
+                            content += 'height="' + height + '"';
+                            content += 'allowscriptaccess="always"';
+                            content += 'allowfullscreen="false"';
+                            content += 'flashvars="file=' + url + '"';
+                            content += '/>';
+                            content += '</object>';
+                            $("#flvContainer").html(content);
+                        }
+                    }
+                }
+            });
+
+            $("#creativeFlvModal").on('hide.bs.modal', function () {
+                $("#flvContainer").html('');
+            });
+        }
 
         $('#periodDetailType').selectpicker();
 
