@@ -23,6 +23,7 @@ using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
 using System.Linq;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
+using TNS.AdExpress.Domain;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -41,90 +42,99 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             bool success = false;
             try
             {
+                List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
+                bool isAllCommun = mediaIds.All(e => commun.Contains(e));
                 var _webSession = (WebSession)WebSession.Load(webSessionId);
-                if (mediaSupportRequired && !trees.Any())
+                if (!isAllCommun && mediaIds.Count()>1)
                 {
-                    response.ErrorMessage = GestionWeb.GetWebWord(MediaRequiredCode, _webSession.SiteLanguage);
+                    response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
                 }
                 else
                 {
-                    #region Save Media Selection in WebSession
-                    WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
-                    _webSession.Insert = CstWeb.CustomerSessions.Insert.total;
-                    List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
-                    System.Windows.Forms.TreeNode tmpNode;
-                    bool containsSearch = false;
-                    bool containsSocial = false;
-                    foreach (var item in mediaIds)
+                    if (mediaSupportRequired && !trees.Any())
                     {
-                        tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
-                        tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
-                        tmpNode.Checked = true;
-                        levelsSelected.Add(tmpNode);
-                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.search)
-                            && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.search).DatabaseId.ToString())
-                            containsSearch = true;
-                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.social)
-                            && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.social).DatabaseId.ToString())
-                            containsSocial = true;
-
+                        response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MediaRequiredCode, _webSession.SiteLanguage);
                     }
-                    if (levelsSelected.Count == 0)
+                    else
                     {
-                        response.ErrorMessage = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage);
-                    }
-                    else if (containsSearch && levelsSelected.Count > 1)
-                    {
-                        response.ErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage);
-                    }
-                    else if (containsSocial && levelsSelected.Count > 1)
-                    {
-                        response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
-                    }
-                    else {
-
-                        //Reinitialize banners selection if change vehicle
-                        Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
-                        if (mediaIds.Count != vehicleInformationList.Count)
+                        #region Save Media Selection in WebSession
+                        WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
+                        _webSession.Insert = CstWeb.CustomerSessions.Insert.total;
+                        List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
+                        System.Windows.Forms.TreeNode tmpNode;
+                        bool containsSearch = false;
+                        bool containsSocial = false;
+                        foreach (var item in mediaIds)
                         {
-                            foreach (System.Windows.Forms.TreeNode node in levelsSelected)
+                            tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
+                            tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
+                            tmpNode.Checked = true;
+                            levelsSelected.Add(tmpNode);
+                            if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.search)
+                                && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.search).DatabaseId.ToString())
+                                containsSearch = true;
+                            if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.social)
+                                && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.social).DatabaseId.ToString())
+                                containsSocial = true;
+
+                        }
+                        if (levelsSelected.Count == 0)
+                        {
+                            response.ErrorMessage = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage);
+                        }
+                        else if (containsSearch && levelsSelected.Count > 1)
+                        {
+                            response.ErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage);
+                        }
+                        else if (containsSocial && levelsSelected.Count > 1)
+                        {
+                            response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
+                        }
+                        else {
+
+                            //Reinitialize banners selection if change vehicle
+                            Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
+                            if (mediaIds.Count != vehicleInformationList.Count)
                             {
-                                if (!vehicleInformationList.ContainsKey(((LevelInformation)node.Tag).ID))
+                                foreach (System.Windows.Forms.TreeNode node in levelsSelected)
                                 {
-                                    _webSession.SelectedBannersFormatList = string.Empty;
-                                    break;
+                                    if (!vehicleInformationList.ContainsKey(((LevelInformation)node.Tag).ID))
+                                    {
+                                        _webSession.SelectedBannersFormatList = string.Empty;
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        else
-                        {
-                            _webSession.SelectedBannersFormatList = string.Empty;
-                        }
+                            else
+                            {
+                                _webSession.SelectedBannersFormatList = string.Empty;
+                            }
 
-                        // Sauvegarde de la sélection dans la session
-                        //Si la sélection comporte des éléments, on la vide
-                        _webSession.SelectionUniversMedia.Nodes.Clear();
+                            // Sauvegarde de la sélection dans la session
+                            //Si la sélection comporte des éléments, on la vide
+                            _webSession.SelectionUniversMedia.Nodes.Clear();
 
-                        foreach (System.Windows.Forms.TreeNode node in levelsSelected)
-                        {
-                            _webSession.SelectionUniversMedia.Nodes.Add(node);
-                            // Tracking
-                            _webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
-                        }
+                            foreach (System.Windows.Forms.TreeNode node in levelsSelected)
+                            {
+                                _webSession.SelectionUniversMedia.Nodes.Add(node);
+                                // Tracking
+                                _webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
+                            }
 
-                        //verification que l unite deja sélectionnée convient pour tous les medias
-                        var vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess);
+                            //verification que l unite deja sélectionnée convient pour tous les medias
+                            var vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess);
 
-                        List<CstWeb.CustomerSessions.Unit> unitList = FctUtilities.Units.getUnitsFromVehicleSelection(vehicleSelection);
-                        unitList = GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
-                        if (unitList.Count == 0)
-                        {
-                            response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
+                            List<CstWeb.CustomerSessions.Unit> unitList = FctUtilities.Units.getUnitsFromVehicleSelection(vehicleSelection);
+                            unitList = GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
+                            if (unitList.Count == 0)
+                            {
+                                response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
 
-                        }
-                        else
-                        {
-                            success = true;
+                            }
+                            else
+                            {
+                                success = true;
+                            }
                         }
                     }
                     #endregion
@@ -163,7 +173,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             _webSession.PrincipalMediaUniverses = universes;
                             success = true;
                         }
-                            //AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
+                        //AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
                         //if (univers != null && univers.Count() > 0)
                         //{
                         //    bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
@@ -207,7 +217,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
-        public WebSessionResponse SaveMarketSelection(string webSessionId,List<Tree> trees, Dimension dimension, Security security, bool required )
+        public WebSessionResponse SaveMarketSelection(string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool required)
         {
             WebSessionResponse response = new WebSessionResponse
             {
@@ -215,83 +225,83 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             var _webSession = (WebSession)WebSession.Load(webSessionId);
             bool isValid = (required) ? (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any()) : true;
-            
-                if (isValid)
+
+            if (isValid)
+            {
+                #region Fix max items per level
+                if (trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
                 {
-                    #region Fix max items per level
-                    if (trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
-                    {
-                        response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
-                    }
-                    #endregion
-                    #region try catch block
-                    else
-                    {
-                        AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
-                        try
-                        {                            
-                                if (univers != null && univers.Count() > 0)
-                                {
-                                    bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
-                                    List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
-                                    if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
-                                    {
-                                        Dictionary<int, AdExpressUniverse>
-                                                universDictionary = new Dictionary<int, AdExpressUniverse>();
-                                        universDictionary.Add(universDictionary.Count, univers);
-
-                                        if (!IsValidUniverseLevels(univers, _webSession))
-                                        {
-                                            response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
-                                        }
-                                        else
-                                        {
-                                            _webSession.PrincipalProductUniverses = universDictionary;
-                                            response.Success = true;
-                                            _webSession.Save();
-                                            _webSession.Source.Close();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
-                                    }
-                                }
-                                else if(required)
-                                {
-                                    response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
-                                }
-                                else
-                                    {
-                                    response.Success = true;
-                                 }
-                            
-                        }
-
-                        catch (SecurityException)
-                        {
-                            _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
-                            _webSession.Save();
-                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
-                        }
-                        catch (CapacityException)
-                        {
-                            _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-                            _webSession.Save();
-                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
-                        }
-                        catch (Exception)
-                        {
-                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
-                        }
-                    }
-                    #endregion
+                    response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
                 }
+                #endregion
+                #region try catch block
                 else
                 {
-                    response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                    AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
+                    try
+                    {
+                        if (univers != null && univers.Count() > 0)
+                        {
+                            bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
+                            List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
+                            if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
+                            {
+                                Dictionary<int, AdExpressUniverse>
+                                        universDictionary = new Dictionary<int, AdExpressUniverse>();
+                                universDictionary.Add(universDictionary.Count, univers);
+
+                                if (!IsValidUniverseLevels(univers, _webSession))
+                                {
+                                    response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
+                                }
+                                else
+                                {
+                                    _webSession.PrincipalProductUniverses = universDictionary;
+                                    response.Success = true;
+                                    _webSession.Save();
+                                    _webSession.Source.Close();
+                                }
+                            }
+                            else
+                            {
+                                response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                            }
+                        }
+                        else if (required)
+                        {
+                            response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
+                        }
+                        else
+                        {
+                            response.Success = true;
+                        }
+
+                    }
+
+                    catch (SecurityException)
+                    {
+                        _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
+                        _webSession.Save();
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
+                    }
+                    catch (CapacityException)
+                    {
+                        _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                        _webSession.Save();
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
+                    }
+                    catch (Exception)
+                    {
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
+                    }
                 }
-            
+                #endregion
+            }
+            else
+            {
+                response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+            }
+
             return response;
         }
 
@@ -694,12 +704,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         #endregion
 
         #region Private Methods
-        private AdExpressUniverse GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension,Security security)
+        private AdExpressUniverse GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
         {
             AdExpressUniverse univers = new AdExpressUniverse(dimension);
             try
             {
-                NomenclatureElementsGroup group = null;                
+                NomenclatureElementsGroup group = null;
                 univers.Security = security;
                 int index = 0;
                 foreach (Tree tree in trees)
@@ -707,7 +717,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     group = new NomenclatureElementsGroup(index, tree.AccessType);
                     if (tree.UniversLevels.Any())
                     {
-                        foreach (var level in tree.UniversLevels.Where(x=>x.UniversItems !=null))
+                        foreach (var level in tree.UniversLevels.Where(x => x.UniversItems != null))
                         {
                             if (level.UniversItems != null && level.UniversItems.Count > _nbMaxItemByLevel)
                                 throw new CapacityException("Dépassement du nombre d'éléments autorisés pour un niveau");
@@ -753,11 +763,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
         {
-            if ( webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
+            if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
             {
                 var vehiclesSelected = webSession.GetVehiclesSelected();
 
-                if (vehiclesSelected!=null && vehiclesSelected.Count > 0)
+                if (vehiclesSelected != null && vehiclesSelected.Count > 0)
                 {
                     var param = new object[1];
                     param[0] = _webSession;
@@ -792,7 +802,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     AdExpressUniverse adExpressUniverse = new AdExpressUniverse(dimension)
                     {
-                        Security=security                        
+                        Security = security
                     };
                     Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
                     NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(index, tree.AccessType);
@@ -814,10 +824,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (treeNomenclatureEG != null && treeNomenclatureEG.Count() > 0)
                     {
                         adExpressUniverse.AddGroup(index, treeNomenclatureEG);
-                        adExpressUniverses.Add(index,adExpressUniverse);
+                        adExpressUniverses.Add(index, adExpressUniverse);
                         index++;
                     }
-                    }
+                }
             }
             catch
             {

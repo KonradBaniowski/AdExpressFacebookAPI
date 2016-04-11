@@ -528,12 +528,17 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\icon-kantar.css" />
     <Content Include="Content\img\bann_adexpress.jpg" />
+    <Content Include="Content\img\evaliantFormat\AVI.png" />
+    <Content Include="Content\img\evaliantFormat\MOV.png" />
+    <Content Include="Content\img\evaliantFormat\MP4.png" />
+    <Content Include="Content\img\evaliantFormat\FLV.png" />
+    <Content Include="Content\img\evaliantFormat\SWF.png" />
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
-    <Content Include="Content\img\kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\kantarmedia-bg-3.jpg" />
     <Content Include="Content\img\kantarmedia-bg-4.jpg" />
     <Content Include="Content\img\no_visu.jpg" />
-    <Content Include="Content\img\OLD_kantarmedia-bg-2.jpg" />
+    <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
@@ -1537,12 +1542,13 @@
     <Content Include="Views\Shared\_LayoutMyAdExpress.cshtml" />
     <Content Include="Views\MediaSchedulePopUp\Index.cshtml" />
     <Content Include="Views\MediaSchedulePopUp\_ResultOptions.cshtml" />
+    <Content Include="Views\Shared\_LayoutResults.cshtml" />
+    <Content Include="Views\InsertionsExport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
-    <Folder Include="Views\InsertionsExport\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
@@ -1593,6 +1599,22 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
       <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
+      <Project>{741a9674-6545-469f-8528-f96ba2db3a74}</Project>
+      <Name>TNS.Alert.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Alerts.DAL\TNS.Ares.Alerts.DAL.csproj">
+      <Project>{3edbe8fb-a516-49c9-92fc-b0b0103f7d06}</Project>
+      <Name>TNS.Ares.Alerts.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303c6b21-ca16-4d7b-8edb-e8869b2b3ec9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
+      <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\KM.AdExpress.Framework\KM.AdExpress.Framework.csproj">
       <Project>{162c80d7-64e5-4963-a991-95da1bd5f1b0}</Project>

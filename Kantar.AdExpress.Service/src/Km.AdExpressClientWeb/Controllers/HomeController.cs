@@ -23,12 +23,14 @@ namespace Km.AdExpressClientWeb.Controllers
         private IRightService _rightService;
         private IApplicationUserManager _userManager;
         private IWebSessionService _webSessionService;
+        private IUniverseService _universService;
 
-        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService)
+        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService, IUniverseService universService)
         {
             _userManager = applicationUserManager;
             _rightService = rightService;
             _webSessionService = webSessionService;
+            _universService = universService;
         }
 
         public ActionResult Index()
@@ -134,10 +136,37 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>() },
                 SavedUnivers = new Domain.AdExpressUniversResponse { UniversType = Domain.UniversType.Univers, UniversGroups = new List<Domain.UserUniversGroup>() },
-                Alerts = new List<Domain.Alert>(),
-                PresentationModel = LoadPresentationBar(33, false),
-                Labels = LoadPageLabels(33)
+                Alerts = new List<Domain.Alert>()
             };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            #region Saved Reuslt Queries
+            var result = _universService.GetResultUnivers(idWebSession);
+            foreach (var group in result.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model.SavedResults = result;
+            #endregion
+            #region Saved Univers (Market & Media)
+            string branch = "2";
+            string listUniversClientDescription = string.Empty;
+            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
+            foreach (var group in univers.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model.SavedUnivers = univers;
+            #endregion
+            #region Alerts
+            var alerts = _universService.GetUserAlerts(idWebSession);
+            #endregion
+            model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
+            model.Labels = LoadPageLabels(result.SiteLanguage);
             return View(model);
         }
 

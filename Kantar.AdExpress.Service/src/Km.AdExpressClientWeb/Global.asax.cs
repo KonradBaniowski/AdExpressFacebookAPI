@@ -15,6 +15,9 @@ using TNS.AdExpress.Domain.XmlLoader;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Date;
+using TNS.Alert.Domain;
+using TNS.Ares.Domain.DataBase;
+using TNS.Ares.Domain.LS;
 using TNS.FrameWork.DB.Common;
 
 namespace Km.AdExpressClientWeb
@@ -113,9 +116,9 @@ namespace Km.AdExpressClientWeb
                 ResultOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.RESULT_OPTIONS_CONFIGURATION_FILENAME));
 
                 // Loading Ares Config configuration
-               //PluginConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
-                //AlertConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.ALERTE_CONFIGURATION));
-               // DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
+                PluginConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
+                AlertConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.ALERTE_CONFIGURATION));
+                DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
 
                 //Campaign  types
                 CampaignTypesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.CAMPAIGN_TYPES_CONFIGURATION_FILENAME));

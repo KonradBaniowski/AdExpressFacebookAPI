@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TNS.Classification.Universe;
 
 namespace Kantar.AdExpress.Service.Core.Domain
@@ -13,6 +10,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public int Count { get; set; }
         public string Description { get; set; }
         public List<UserUnivers> UserUnivers { get; set; }
+        public int FirstColumnSize { get; set; }
+        public int SecondeColumnSize { get; set; }
     }
 
     public class UserUnivers
@@ -40,7 +39,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public long UniversGroupId { get; set; }
         public long? UserUniversId { get; set; }
-        public List<Tree> Trees { get; set;}
+        public List<Tree> Trees { get; set; }
         public string Name { get; set; }
         public Dimension Dimension { get; set; }
         public string WebSessionId { get; set; }
@@ -60,41 +59,17 @@ namespace Kantar.AdExpress.Service.Core.Domain
     public class AdExpressUniversResponse
     {
         public long NbrFolder { get; set; }
-        public long NbrUniversGroups { get; set; }
+        public long NbrUnivers { get; set; }
         public List<UserUniversGroup> UniversGroups { get; set; }
-
         public UniversType UniversType { get; set; }
+        public int SiteLanguage { get; set; }
     }
-    public class Alert
-    {
-        public List<DateTime> Occurrences { get; set; }
-        public AlertDetails Details { get; set; }
-        public long NbrOccurrences { get; set; }
-        
-    }
+    
     public enum UniversType
     {
         Result,
         Univers,
         Alert
-    }
-    public enum Periodicity
-    {
-        Daily,
-        Weekly,
-        Biweekly,
-        Monthly,
-        Quartly,
-        Biannually,
-        Annually
-    }
-
-    public class AlertDetails
-    {
-        public Periodicity Periodicity { get; set; }
-        public DateTime EndDate { get; set; }
-        public string Description { get; set; }
-        public string ReceiverEmailAddress { get; set; }
-    }
+    }   
 
 }

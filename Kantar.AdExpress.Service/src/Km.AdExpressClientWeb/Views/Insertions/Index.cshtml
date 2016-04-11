@@ -23,12 +23,17 @@
             <div id="detailLevelItem" class="col-md-12 bg-orange" style="background-color:black; color:white;"></div>
         </div>
 
+        <div class="col-md-12">
+            <div class="pull-right custom-button">
+                <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            </div>
+        </div>
         <div class="col-md-12" style="margin-top:10px;">
             <center>
                 <p id="gridEmpty" class="hide">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
                 <div id="grid" class="hide"></div>
                 <div id="gridLoader" class="hide">
-                    <img src="~/IgniteUI/css/structure/images/igLoadingSmall.gif" />
+                    <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
                 </div>
             </center>
         </div>
@@ -85,7 +90,7 @@
 
     <script id="colSpotTmpl" type="text/template">
         {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
-            <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa fa-2x'></i></a>
+            <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa'></i></a>
         {{else}}
             ${Spot}
         {{/if}}
@@ -302,7 +307,6 @@
                         $('#PresentVehicles').html(strHTML);
                         userFilter.paramsUrl.idVehicle = idV.toString();
                         userFilter.isVehicleChanged = true;
-                        userFilter.paramsUrl.zoomDate = "";
 
                         GetDetailLevelItem();
                         CallInsertionsResult();
@@ -331,6 +335,7 @@
                     if (data != null) {
                         $('#subPeriodSelection').html(data);
                         $('#allSubPeriod').removeClass("hidden");
+                        userFilter.paramsUrl.zoomDate = $(".btn-default-sub-period[disabled]").attr("period");
                         $("#leave-zoom").addClass("hide");
                         $(".sub-period-btn").on('click', function (e) {
                             $(".btn-default-sub-period").prop('disabled', false);
@@ -460,23 +465,23 @@
                 if (visus.length > 1) {
                     for (i = 0; i < visus.length; i++) {
                         if (i != 0) active = "";
-                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop"  class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
                     }
                 } else {
                     $(this).attr("id", "visu");
-                    $(this).html('<center><img id="pop" style="max-height:200px;" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
+                    $(this).html('<center><img id="pop" class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
                 }
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
                         tmp = infos[j].split(":");
-                        $(this).next().prepend('<div><span style="display:inline-block;min-width:100px;">' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
                     }
                 }
             });
         }
 
-        CallGetPresentVehicles();
         GetSubPeriodSelection();
+        CallGetPresentVehicles();
         AutoPlayCreativeModal();
 
 
@@ -548,6 +553,12 @@
             $("#grid").addClass("hide");
             $("#gridLoader").removeClass("hide");
             CallSetDetailLvl();
+        });
+
+
+        //Export btn
+        $('#btn-export').on('click', function (e) {
+           window.open('@Url.Action("InsertionsResult", "InsertionsExport")?ids='+userFilter.paramsUrl.ids+'&zoomDate='+userFilter.paramsUrl.zoomDate+'&idUnivers='+userFilter.paramsUrl.idUnivers+'&moduleId='+userFilter.paramsUrl.moduleId+'&idVehicle='+userFilter.paramsUrl.idVehicle, "_blank");
         });
 
     </script>

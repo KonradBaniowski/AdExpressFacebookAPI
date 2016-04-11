@@ -148,6 +148,12 @@
     background-size: cover;
 }
 
+.container-kantar-results {
+    background: url('../Content/img/kantarmedia-bg-3.jpg') no-repeat;
+    color: #ffffff;
+    background-size: cover;
+}
+
 .container-kantar-myadexpress {
     background: url('../Content/img/kantarmedia-bg-4.jpg') no-repeat;
     color: #ffffff;
@@ -1976,6 +1982,7 @@ ul.ui-selectable {
     height: 0;
     overflow: hidden;
 }
+
     .media.video-audio-container iframe, .video-audio-container object, .video-audio-container embed {
         position: absolute;
         top: 0;
@@ -1983,6 +1990,15 @@ ul.ui-selectable {
         width: 100%;
         height: 100%;
     }
+
+.imgCreaInser{
+    max-height:200px;
+    max-width:300px;
+}
+.infoCreaInser{
+    display:inline-block;
+    min-width:150px;
+}
 
 /****Carousel****/
 .carousel-control.right,
@@ -2058,32 +2074,156 @@ ul.ui-selectable {
         }
 
         #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title {
-             color: #00c1ff;
+            color: #00c1ff;
         }
 
-        #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
-           color:white;
-        }
+            #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
+                color: white;
+            }
 
 
     #tab-content-myadexpress .panel-group .panel + .panel {
         margin-top: 0px;
     }
+
+#tab-content-myadexpress .list-group {
+    background-color: transparent;
+    margin-bottom: 0px;
+}
+
+    #tab-content-myadexpress .list-group.b-r {
+        border-right: 1px solid rgba(0,0,0,0.2);
+    }
+
+    #tab-content-myadexpress .list-group li.list-group-item {
+        background-color: transparent;
+        border: none;
+        padding: 1px 15px;
+    }
+
+        #tab-content-myadexpress .list-group li.list-group-item:first-child,
+        #tab-content-myadexpress .list-group li.list-group-item:last-child {
+            border-radius: 0px;
+        }
+
+#tab-content-myadexpress h5, #tab-content-myadexpress h4 {
+    padding: 5px 15px;
+}
+
+
 /*Images Creative (class = iconCreative+[numero_du_vehicle])*/
-.iconInsertionCreativ, .big{
+.iconInsertionCreativ, .big {
     font-size: 10em;
 }
-.iconInsertionCreative:before{ 
+
+.iconInsertionCreative:before {
     content: "\f01d"; /*Defaut*/
 }
-.iconInsertionCreative0:before{
+
+.iconInsertionCreative0:before {
 }
-.iconInsertionCreative1:before{ 
+
+.iconInsertionCreative1:before {
 }
-.iconInsertionCreative2:before{ /*Radio*/
+
+.iconInsertionCreative2:before { /*Radio*/
     content: "\f001";
 }
-.iconInsertionCreative3:before{ /*TV*/
+
+.iconInsertionCreative3:before { /*TV*/
     content: "\f008";
+}
+
+/**Carousel Chemin de fer du support*/
+#carou-vehicleView {
+    /* background-color: rgba(0,0,0,0.6);*/
+    border-bottom: 0px;
+}
+
+    #carou-vehicleView .panel {
+        border-radius: 0px;
+        background-color: transparent;
+    }
+
+        #carou-vehicleView .panel .panel-default {
+            border-radius: 0px;
+            border: none;
+        }
+
+            #carou-vehicleView .panel.panel-default.panel-tab {
+                background: transparent;
+                border: none;
+            }
+
+    #carou-vehicleView .panel-heading.resume {
+        /*background: rgba(0,0,0,0.7);
+        border-bottom: 0px;*/
+        border-radius: 2px 2px 0 0;
+        border-bottom: 0px solid #edf1f2;
+        background-color: rgba(0,0,0,0.7);
+        padding: 25px !important;
+        color: white;
+    }
+
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading > .panel-title {
+    color: #00c1ff;
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#carou-vehicleView .panel-group .panel-primary .panel-body {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
+    color: white;
+}
+
+
+#carou-vehicleView .panel-body {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.padder-v-mi {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.img-full {
+    width: 100%;
+}
+#carou-vehicleView   .row.no-gutter {
+    margin-right: 0;
+    margin-left: 0;
+}
+#carou-vehicleView  img {
+    vertical-align: middle;
+}
+#carou-vehicleView  img {
+    border: 0;
+}
+/* Mopdal VBehicle View */
+
+
+#modal-vehicleView > .modal-dialog  > .modal-content{
+    width: 1000px;
+    margin: 0 auto;
+    height:900px;
+    overflow-y: scroll;
+}
+
+#modal-vehicleView > .modal-dialog  > .modal-content > .header-popup-vehicleView {
+    /*padding: 10px 15px;*/
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: rgba(0,0,0,0.7);
 }
 
