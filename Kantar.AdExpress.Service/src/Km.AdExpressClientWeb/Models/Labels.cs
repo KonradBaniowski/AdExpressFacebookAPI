@@ -43,6 +43,17 @@ namespace Km.AdExpressClientWeb.Models
         public string UserUniversCode { get; set; }//875
         public string MyResultsDescription { get; set; }//827
         public string AlertsCode { get; set; }//2585
+        public string CompanyDescription { get; set; } //w68
+        public string NameDescription { get; set; } //w67
+        public string JobTitleDescription { get; set; } //w1976
+        public string PhoneNumberDescription { get; set; } //w71
+        public string MailDescription { get; set; }  //w1136
+        public string CountryDescription { get; set; } //w70
+        public string CommentDescription { get; set; } //w74
+        public string QuestionTagDefault { get; set; } //w3041
+        public string QuestionTag1 { get; set; } //w3042
+        public string QuestionTag2 { get; set; } //w3043
+        public string QuestionTag3 { get; set; } //w647
         public string UnityError { get; set; }
         public string Periodicity { get; set; }//1293
         public string Daily { get; set; }//w2579
@@ -72,6 +83,5 @@ namespace Km.AdExpressClientWeb.Models
         public string SelectFolder { get; set; } // 702
         public string RenameSelectedFolder { get; set; }//703
         public string ErrorMsgNoFolderCreated { get; set; } // 711
-
     }
 }

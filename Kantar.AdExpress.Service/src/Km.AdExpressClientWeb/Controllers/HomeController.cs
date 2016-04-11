@@ -108,7 +108,19 @@ namespace Km.AdExpressClientWeb.Controllers
                     {
                         Id = 3,
                         Label = "Documents",
-                        InfosNews = null
+                        InfosNews = new List<InfosNews>()
+                        {
+                            new InfosNews()
+                            {
+                                Label = "files1",
+                                Url = "cerfa.pdf"
+                            },
+                            new InfosNews()
+                            {
+                                Label = "files2",
+                                Url = "test.pdf"
+                            }
+                        }
                     }
                 }
             };
