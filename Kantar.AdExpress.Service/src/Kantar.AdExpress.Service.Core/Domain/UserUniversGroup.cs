@@ -73,6 +73,19 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public AlertDetails Details { get; set; }
         public long NbrOccurrences { get; set; }
 
+        
+        public string Title { get; set; }
+        public int Id { get; set; }
+        public int CustomerId { get; set; }
+        public string Recipients { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
+        public DateTime ValidationDate { get; set; }
+        public AlertStatus Status { get; set; }
+        public Periodicity Periodicity { get; set; }
+        public int PeriodicityValue { get; set; }
+        public Int64 IdAlertSchedule { get; set; }
+
     }
     public enum UniversType
     {
@@ -80,15 +93,30 @@ namespace Kantar.AdExpress.Service.Core.Domain
         Univers,
         Alert
     }
+    public enum AlertType
+    {
+        Portfolio = 1,
+        AdExpressAlert = 2
+    }
+
+    /// <summary>
+    /// Defines the periodicity of an alert
+    /// </summary>
     public enum Periodicity
     {
-        Daily,
-        Weekly,
-        Biweekly,
-        Monthly,
-        Quartly,
-        Biannually,
-        Annually
+        Daily = 10,
+        Weekly = 20,
+        Monthly = 30
+    }
+
+    /// <summary>
+    /// Defines the status of an alert
+    /// </summary>
+    public enum AlertStatus
+    {
+        Activated = 0,
+        New = 10,
+        ToDelete = 50
     }
 
     public class AlertDetails

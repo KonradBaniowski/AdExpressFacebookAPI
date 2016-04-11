@@ -20,6 +20,7 @@ using LS = TNS.Ares.Domain.LS;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.Ares.Alerts.DAL;
 using TNS.Alert.Domain;
+using AutoMapper;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -760,6 +761,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 AlertCollection alerts = alertDAL.GetAlerts(webSession.CustomerLogin.IdLogin);
                 if (alerts.Count == 0)
                     result.ErrorMessage = GestionWeb.GetWebWord(833, result.SiteLanguage);
+                else
+                {
+                    List<Core.Domain.Alert> myAlerts = Mapper.Map<List<Core.Domain.Alert>>(alerts);
+                }
             }
             #endregion
             return result;

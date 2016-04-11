@@ -27,6 +27,7 @@ namespace Km.AdExpressClientWeb.App_Start
             Mapper.CreateMap<VM.UniversLevel, Domain.UniversLevel>();
             Mapper.CreateMap<VM.UniversItem, Domain.UniversItem>();
             Mapper.CreateMap<Domain.UniversItem, VM.UniversItem>();
+            Mapper.CreateMap<TNS.Alert.Domain.Alert, Domain.Alert>();
         }
     }
 }
