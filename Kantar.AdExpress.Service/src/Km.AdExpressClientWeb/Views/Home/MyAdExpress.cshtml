@@ -356,23 +356,37 @@
 <div id="myModal4" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header panel-heading">
+            <div class="modal-header header-kantar-popup">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <i class="fa icon-share-alt white"></i>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.MoveResultTitle</h4>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"> @Model.Labels.MoveResultTitle </h4>
             </div>
             <div class="modal-body">
                 <p>@Model.Labels.MoveSelectedResult</p>
-                <div class="dropdown">
-                    <button type="button" class="btn selecteur-repertoire" data-toggle="dropdown" aria-expanded="false">
+                <div class="input-group-btn dropdown">
+                    <button type="button" class="form-control" data-toggle="dropdown" aria-expanded="false">
                         Répertoire 1
                         <span class="caret pull-right"></span>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu bg-blue form-control">
                         <li><a href="">Répertoire 2</a></li>
                         <li><a href="">Répertoire 3</a></li>
                         <li><a href="">Répertoire 4</a></li>
                     </ul>
+                    @*<ul class="dropdown-menu bg-blue pull-right">
+                        @foreach (var item in Model.Branches)
+                        {
+                            if (item.IsSelected)
+                            {
+                                <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
+                            }
+                            else
+                            {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                            }
+                        }
+                    </ul>*@
+
                     <p></p>
                 </div>
             </div>
@@ -388,14 +402,14 @@
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <i class="fa  icon-pencil white"></i>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt">Renommer le résultat</h4>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle</h4>
             </div>
             <div class="modal-body">
-                <p>Renommer le résultat sélectionné :</p>
+                <p> @Model.Labels.RenameSelectedFolder</p>
                 <input type="text" class="form-control" placeholder="Entrez un nom">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-valider" data-dismiss="modal">Valider</button>
+                <button type="button" class="btn btn-valider" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
         </div>
     </div>
