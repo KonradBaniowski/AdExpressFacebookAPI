@@ -13,7 +13,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     {
         
         InsertionCreativeResponse GetInsertionsGridResult(string idWebSession,string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged = false);
-        List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId);
+        List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId, bool slogan = false);
 
         ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle);
 

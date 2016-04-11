@@ -462,7 +462,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
                 ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
-                Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
+                MyResults = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
@@ -473,7 +473,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 DeleteAll = GestionWeb.GetWebWord(LanguageConstantes.DeleteAllcode, siteLanguage),
                 ErrorOnlyOneItemAllowed = GestionWeb.GetWebWord(LanguageConstantes.ErrorOnlyOneItemAllowed, siteLanguage),
                 ErrorOverLimit = GestionWeb.GetWebWord(LanguageConstantes.ErrorOverLimit, siteLanguage),
-                SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode,siteLanguage)
+                SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode,siteLanguage),
+                UnityError =GestionWeb.GetWebWord(LanguageConstantes.UnityError,siteLanguage)
             };
             return result;
         }

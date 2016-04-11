@@ -33,6 +33,8 @@ namespace Kantar.AdExpress.Service.DataAccess
         public IAddressRepository AddressRepository { get; set; }
         public ILoginRepository LoginRepository { get; set; }
 
+        public IMyResultsRepository MyResultRepository { get; set; }
+
 
         public void Save()
         {

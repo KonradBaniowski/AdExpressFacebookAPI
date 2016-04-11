@@ -23,12 +23,14 @@ namespace Km.AdExpressClientWeb.Controllers
         private IRightService _rightService;
         private IApplicationUserManager _userManager;
         private IWebSessionService _webSessionService;
+        private IUniverseService _universService;
 
-        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService)
+        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService, IUniverseService universService)
         {
             _userManager = applicationUserManager;
             _rightService = rightService;
             _webSessionService = webSessionService;
+            _universService = universService;
         }
 
         public ActionResult Index()
@@ -146,10 +148,38 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>() },
                 SavedUnivers = new Domain.AdExpressUniversResponse { UniversType = Domain.UniversType.Univers, UniversGroups = new List<Domain.UserUniversGroup>() },
-                Alerts = new List<Domain.Alert>(),
-                PresentationModel = LoadPresentationBar(33, false),
-                Labels = LoadPageLabels(33)
+                Alerts = new List<Domain.Alert>()
             };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            #region Saved Reuslt Queries
+            var result = _universService.GetResultUnivers(idWebSession);
+            foreach (var group in result.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model.SavedResults = result;
+            #endregion
+            #region Saved Univers (Market & Media)
+            string branch = "2";
+            string listUniversClientDescription = string.Empty;
+            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
+            foreach (var group in univers.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model.SavedUnivers = univers;
+            #endregion
+            #region Alerts
+            var alertsResponse = _universService.GetUserAlerts(idWebSession);
+            model.Alerts = alertsResponse.Alerts;
+            #endregion
+            model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
+            model.Labels = LoadPageLabels(result.SiteLanguage);
             return View(model);
         }
 
@@ -173,12 +203,39 @@ namespace Km.AdExpressClientWeb.Controllers
             var result = new Labels
             {
                 Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),                
-                Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),               
+                MyResults = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),               
                 SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 UserUniversCode = GestionWeb.GetWebWord(LanguageConstantes.UserSavedUniversCode, siteLanguage),
                 MyResultsDescription = GestionWeb.GetWebWord(LanguageConstantes.MyResultsDescription, siteLanguage),
                 AlertsCode= GestionWeb.GetWebWord(LanguageConstantes.AlertsCode, siteLanguage),
-                NoSavedUnivers = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage)
+                NoSavedUnivers = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage),
+                Periodicity = GestionWeb.GetWebWord(LanguageConstantes.Periodicity, siteLanguage),
+                Daily = GestionWeb.GetWebWord(LanguageConstantes.Daily, siteLanguage),
+                Weekly =GestionWeb.GetWebWord(LanguageConstantes.Weekly, siteLanguage),
+                Monthly = GestionWeb.GetWebWord(LanguageConstantes.Monthly, siteLanguage),
+                Quartly = GestionWeb.GetWebWord(LanguageConstantes.Quartly, siteLanguage),
+                SaveAlert = GestionWeb.GetWebWord(LanguageConstantes.SaveAlert, siteLanguage),
+                NoAlerts = GestionWeb.GetWebWord(LanguageConstantes.NoAlerts, siteLanguage),
+                SendDate= GestionWeb.GetWebWord(LanguageConstantes.SendDate, siteLanguage),
+                Occurrence = GestionWeb.GetWebWord(LanguageConstantes.Occurrence, siteLanguage),
+                Occurrences = GestionWeb.GetWebWord(LanguageConstantes.Occurrences, siteLanguage),
+                AlertsDetails = GestionWeb.GetWebWord(LanguageConstantes.AlertDetails, siteLanguage),
+                Deadline = GestionWeb.GetWebWord(LanguageConstantes.Deadline, siteLanguage),
+                EveryWeek= GestionWeb.GetWebWord(LanguageConstantes.EveryWeek, siteLanguage),
+                EveryMonth = GestionWeb.GetWebWord(LanguageConstantes.EveryMonth, siteLanguage),
+                ExpirationDate = GestionWeb.GetWebWord(LanguageConstantes.ExpirationDate, siteLanguage),
+                AlertType = GestionWeb.GetWebWord(LanguageConstantes.AlertType, siteLanguage),
+                Receiver= GestionWeb.GetWebWord(LanguageConstantes.Receiver, siteLanguage),
+                TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage),
+                MoveSelectedResult = GestionWeb.GetWebWord(LanguageConstantes.MoveSelectedResult, siteLanguage),
+                MoveResultTitle = GestionWeb.GetWebWord(LanguageConstantes.MoveSelectedResult, siteLanguage),
+                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
+                RenameFolderTitle= GestionWeb.GetWebWord(LanguageConstantes.RenameFolderTitle, siteLanguage),
+                RenameNewFodler= GestionWeb.GetWebWord(LanguageConstantes.RenameNewFodler, siteLanguage),
+                SelectFolderToDelete= GestionWeb.GetWebWord(LanguageConstantes.SelectFolderToDelete, siteLanguage),
+                SelectFolder= GestionWeb.GetWebWord(LanguageConstantes.SelectFolder, siteLanguage),
+                RenameSelectedFolder= GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
+                ErrorMsgNoFolderCreated= GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage)
             };
             return result;
         }

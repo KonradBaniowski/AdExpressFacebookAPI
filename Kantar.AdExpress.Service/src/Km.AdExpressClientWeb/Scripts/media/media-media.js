@@ -1,4 +1,6 @@
 ﻿var idList = null;
+
+var idMedias = [];
 $(document).ready(function () {
     var searchId = '18';
     //var socialId=TBD
@@ -92,7 +94,7 @@ $('#btnSubmitMediaSelection').on('click', function (e) {
     else {
         var selectedMediaSupportTrees = getSelectedMediaSupport();
         var params = {
-            selectedMedia: idList,
+            selectedMedia: idMedias,
             mediaSupport: selectedMediaSupportTrees,
             nextStep: "PeriodSelection"
         };
@@ -117,7 +119,6 @@ $('#btnSubmitMediaSelection').on('click', function (e) {
 });
 //VALIDER TODO
 
-var idMedias = [];
 //FIL D ARRIANE
 $('#Market').on('click', function (e) {
     e.preventDefault();

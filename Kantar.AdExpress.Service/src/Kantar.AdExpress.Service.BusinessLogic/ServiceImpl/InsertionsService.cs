@@ -206,9 +206,36 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle)
         {
-           
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
             VehicleInformation vehicle = VehiclesInformation.Get(idVehicle);
+
+
+            //date
+            TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType = _customerWebSession.PeriodType;
+            string periodBegin = _customerWebSession.PeriodBeginningDate;
+            string periodEnd = _customerWebSession.PeriodEndDate;
+
+            if (!string.IsNullOrEmpty(zoomDate))
+            {
+                periodType = _customerWebSession.DetailPeriod == TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.weekly
+                    ? TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateWeek : TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateMonth;
+                _fromDate = Convert.ToInt32(
+                    Dates.Max(Dates.getZoomBeginningDate(zoomDate, periodType),
+                        Dates.getPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                    );
+                _toDate = Convert.ToInt32(
+                    Dates.Min(Dates.getZoomEndDate(zoomDate, periodType),
+                        Dates.getPeriodEndDate(periodEnd, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                    );
+            }
+            else
+            {
+                _fromDate = Convert.ToInt32(Dates.getZoomBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
+                _toDate = Convert.ToInt32(Dates.getZoomEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
+            }
+
+
             return insertionResult.GetInsertions(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
            
         }
@@ -255,12 +282,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         }
 
-        public List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId)
+        public List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId, bool slogan = false)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId);
 
-            List<VehicleInformation> Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, false);
+            List<VehicleInformation> Vehicles = insertionResult.GetPresentVehicles(ids, idUnivers, slogan);
 
             List<List<string>> ListRetour = new List<List<string>>();
             string vehicle = string.Empty;

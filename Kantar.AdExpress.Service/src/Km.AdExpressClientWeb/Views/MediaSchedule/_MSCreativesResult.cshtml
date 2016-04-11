@@ -6,6 +6,17 @@
     string modalHref = "";
     string creativeIcon = "";
     string modalCreative = "";
+    const string JPEG_ID = "JPEG";
+    const string GIF_ID = "GIF";
+    const string FLASH_ID = "SWF";
+    const string FLV_ID = "FLV";
+    const string MULTIPART_ID = "MULTIPART";
+    const string JPEG_TEXT = "JPEG";
+    const string GIF_TEXT = "GIF";
+    const string FLASH_TEXT = "FLASH";
+    const string AVI_ID = "AVI";
+    const string MP4_ID = "MP4";
+    const string MOV_ID = "MOV";
 }
 
 <div class="row">
@@ -80,9 +91,7 @@
                 }
                 else if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv
                     || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile)
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio)
                 {
                     <div class="row no-gutter">
                         @foreach (var creative in Model.Items)
@@ -148,6 +157,133 @@
                                             </div>
                                         </div>
                                     </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+                else if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack
+                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile)
+                {
+                    <div class="row no-gutter">
+                        @foreach (var creative in Model.Items)
+                        {
+                            <div class="col-xs-1">
+                                <div class="panel press">
+                                    <div class="item">
+                                        <div class="select-affiner">
+                                            <input id="@creative.Id" name="creative" type="checkbox" class="with-font" value="@creative.Id" />
+                                            <label for="@creative.Id"></label>
+                                        </div>
+                                        <div class="bottom text-white">
+                                            <div class="@creative.Class">@creative.Id</div>
+                                        </div>
+                                        <div class="row no-gutter">
+                                            @switch (Model.VehicleId)
+                                            {
+                                                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                                                    creativeIcon = "iconkantar-monitor74";
+                                                    break;
+                                                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                                                    creativeIcon = "iconkantar-cellphone55";
+                                                    break;
+
+                                            }
+                                            @if (creative.NbVisuals == 0)
+                                            {
+                                                <div class="col-xs-1 creative-background"><i class="fa @creativeIcon creative-icon creative-unavailable-icon"></i></div>
+                                            }
+                                            else
+                                            {
+                                                switch (creative.Format)
+                                                {
+                                                    case FLASH_ID:
+                                                        <div class="col-xs-1 creative-background" href="#creativeFlashModal" data-toggle="modal" data-creative="[@creative.Visuals[0],@creative.Dimension]"><i class="fa @creativeIcon creative-icon"></i></div>
+                                                        break;
+                                                    case FLV_ID:
+                                                    case MOV_ID:
+                                                    <div class="col-xs-1 creative-background" href="#creativeFlvModal" data-toggle="modal" data-creative="[@creative.Visuals[0],@creative.Id,@creative.Dimension,@creative.Format]"><i class="fa @creativeIcon creative-icon"></i></div>
+                                                        break;
+                                                    case MP4_ID:
+                                                        <div class="col-xs-1 creative-background" href="#creativeMP4Modal" data-toggle="modal" data-creative="[@creative.Visuals[0]]"><i class="fa @creativeIcon creative-icon"></i></div>
+                                                        break;
+                                                    default:
+                                                        modalHref = "#myModalIMG" + @creative.Id;
+                                                        <div class="col-xs-1 creative-background" href="@modalHref" data-toggle="modal" data-creative="[@creative.Id,@creative.SessionId,@creative.Vehicle.DatabaseId]"><i class="fa @creativeIcon creative-icon"></i></div>
+                                                        break;
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @switch (creative.Format)
+                                {
+                                    case FLASH_ID:
+                                        <div id="creativeFlashModal" class="modal fade">
+                                            <div class="modal-dialog modal-evaliant">
+                                                <div class="modal-content">
+                                                    <div class="modal-body modal-body-align">
+                                                        @*<object id="creativeObj" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version =5,0,0,0">
+                                                            <param name="movie" value="-">
+                                                            <param name="play" value="true">
+                                                            <param name="quality" value="high">
+                                                        </object>*@
+                                                        <div id="flashEmbedContainer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        break;
+                                    case FLV_ID:
+                                    case MOV_ID:
+                                    <div id="creativeFlvModal" class="modal fade">
+                                        <div class="modal-dialog modal-evaliant">
+                                            <div class="modal-content">
+                                                <div class="modal-body modal-body-align">
+                                                    <div id="flvContainer">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        break;
+                                    case MP4_ID:
+                                        <div id="creativeMP4Modal" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header header-kantar-popup">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="font-normal" style="color:white;">Spot</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="media video-audio-container">
+                                                            <iframe id="creativeStream" src="" frameborder="0" allowfullscreen></iframe>
+                                                            <div id="mediaLoader">
+                                                                <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        break;
+                                    default:
+                                        for (int i = 0; i < creative.Visuals.Count; i++)
+                                        {
+                                            modalHref = "myModalIMG" + @creative.Id;
+
+                                            <div id="@modalHref" class="modal fade">
+                                                <div class="modal-dialog modal-evaliant">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body modal-body-align">
+                                                            <img src="http://www.tnsadexpress.com/@creative.Visuals[i]" class="img-full">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        break;
                                 }
                             </div>
                         }
