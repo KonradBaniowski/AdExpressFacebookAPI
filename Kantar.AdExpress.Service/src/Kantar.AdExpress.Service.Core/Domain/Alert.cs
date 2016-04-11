@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace Kantar.AdExpress.Service.Core.Domain
 {
     public class Alert
     {
-        public long NbrOccurrences { get; set; }
         public string Title { get; set; }
         public int Id { get; set; }
         public int CustomerId { get; set; }
@@ -18,10 +18,14 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public DateTime ValidationDate { get; set; }
         public AlertStatus Status { get; set; }
         public Periodicity Periodicity { get; set; }
-        public int PeriodicityValue { get; set; }
+        public string PeriodicityDescription { get; set; }//Daily, Weekly, Monthly
+        public int PeriodicityValue { get; set; } // on 21st
+        public string Frequency { get; set; }//EveryDay, EveryWeek, EveryMonth
         public Int64 IdAlertSchedule { get; set; }
         public List<Occurence> Occurrences { get; set; }
-
+        public long IdModule { get; set; }
+        public string TimeSchedule { get; set; }
+        public string Module { get; set; }
     }
     public enum Periodicity
     {

@@ -20,6 +20,7 @@ using LS = TNS.Ares.Domain.LS;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.Ares.Alerts.DAL;
 using TNS.Alert.Domain;
+using TNS.AdExpress.Domain.Web.Navigation;
 using AutoMapper;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
@@ -767,8 +768,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         var occurences = alertDAL.GetOccurrences(alert.Id);
                         alert.Occurrences = Mapper.Map<List<Occurence>>(occurences);
+                        alert.TimeSchedule =  (new DateTime(alertDAL.GetAlertHours().FirstOrDefault(p => p.IdAlertSchedule ==alert.IdAlertSchedule).HoursSchedule.Ticks)).ToShortTimeString();
+                        alert.Module = GestionWeb.GetWebWord(ModulesList.GetModule(alert.IdModule).IdWebText, webSession.SiteLanguage);
+                        switch (alert.Periodicity)
+                        {
+                            case Periodicity.Daily:
+                                alert.Frequency = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.EveryDay, result.SiteLanguage);
+                                alert.PeriodicityDescription = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Daily,result.SiteLanguage);
+                                break;
+                            case Periodicity.Weekly:
+                                alert.Frequency = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.EveryWeek, result.SiteLanguage);
+                                alert.PeriodicityDescription = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Weekly, result.SiteLanguage);
+                                break;
+                            case Periodicity.Monthly:
+                                alert.Frequency = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.EveryMonth, result.SiteLanguage);
+                                alert.PeriodicityDescription = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Monthly, result.SiteLanguage);
+                                break;
+                        };
                     }
                     result.Alerts = alertsModel;
+                    
                 }
             }
             #endregion

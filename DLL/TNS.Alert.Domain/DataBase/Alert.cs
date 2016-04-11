@@ -167,6 +167,15 @@ namespace TNS.Alert.Domain
 
         #endregion
 
+        #region IdModule
+        /// <summary>
+        /// Get IdModule
+        /// </summary>
+        public Int64 IdModule
+        {
+            get { return (Int64.Parse(this._row["id_module"].ToString())); }
+        }
+        #endregion
         #endregion
 
     }
