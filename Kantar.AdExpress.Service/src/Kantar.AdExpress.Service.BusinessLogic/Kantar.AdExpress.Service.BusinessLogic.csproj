@@ -72,10 +72,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl\CreativeService.cs" />
     <Compile Include="ServiceImpl\DetailLevelService.cs" />
+    <Compile Include="ServiceImpl\InfosNewsService.cs" />
     <Compile Include="ServiceImpl\InsertionsService.cs" />
     <Compile Include="ServiceImpl\LostWonService.cs" />
     <Compile Include="ServiceImpl\MediaScheduleService.cs" />
     <Compile Include="ServiceImpl\MediaService.cs" />
+    <Compile Include="ServiceImpl\MyAdExpressService.cs" />
     <Compile Include="ServiceImpl\OptionMediaScheduleService.cs" />
     <Compile Include="ServiceImpl\OptionService.cs" />
     <Compile Include="ServiceImpl\OptionService.PresentAbsent.cs" />

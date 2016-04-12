@@ -54,10 +54,12 @@
     <Compile Include="BusinessService\IApplicationUserManager.cs" />
     <Compile Include="BusinessService\ICreativeService.cs" />
     <Compile Include="BusinessService\IDetailLevelService.cs" />
+    <Compile Include="BusinessService\IInfosNewsService.cs" />
     <Compile Include="BusinessService\IInsertionsService.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
     <Compile Include="BusinessService\ILostWonService.cs" />
     <Compile Include="BusinessService\IMediaScheduleService.cs" />
+    <Compile Include="BusinessService\IMyAdExpressService.cs" />
     <Compile Include="BusinessService\IOptionMediaScheduleService.cs" />
     <Compile Include="BusinessService\IOptionService.cs" />
     <Compile Include="BusinessService\IPortfolioService.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Domain\Alert.cs" />
     <Compile Include="Domain\DetailLevel.cs" />
     <Compile Include="Domain\DetailLevelItems.cs" />
+    <Compile Include="Domain\Documents.cs" />
     <Compile Include="Domain\Identity\ApplicationAuthenticationDescription.cs" />
     <Compile Include="Domain\Identity\ApplicationExternalLoginInfo.cs" />
     <Compile Include="Domain\Identity\ApplicationIdentityResult.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="Domain\Identity\ApplicationUserLoginInfo.cs" />
     <Compile Include="Domain\Identity\ApplicationUserRole.cs" />
     <Compile Include="Domain\Identity\AppUser.cs" />
+    <Compile Include="Domain\InfosNews.cs" />
     <Compile Include="Domain\InsertionCreativeResponse.cs" />
     <Compile Include="Domain\Mau\Login.cs" />
     <Compile Include="Domain\Mau\Module.cs" />

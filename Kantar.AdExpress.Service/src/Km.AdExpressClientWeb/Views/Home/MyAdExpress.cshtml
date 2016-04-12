@@ -71,10 +71,10 @@
                                                                         <a data-id="@univers.Id">
                                                                             <i class="fa fa-search fa-lg"></i>
                                                                         </a>
-                                                                        <a  data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" title="Déplacer le résultat">
+                                                                        <a  class="btnMoveResult" data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" title="Déplacer le résultat">
                                                                             <i class="fa icon-share-alt fa-lg"></i>
                                                                         </a>
-                                                                        <a href="#renameResult" data-toggle="modal" data-id="@univers.Id">
+                                                                        <a  class="btnRenameResult" data-toggle="modal" id="btnRenameResult" data-id="@univers.Id">
                                                                             <i class="fa fa-pencil fa-lg"></i>
                                                                         </a>
                                                                         <a data-id="@univers.Id">
@@ -83,8 +83,6 @@
                                                                     </div>
                                                                 </li>
                                                             }
-
-
                                                         </ul>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -97,10 +95,10 @@
                                                                         <a data-id="@univers.Id">
                                                                             <i class="fa fa-search fa-lg"></i>
                                                                         </a>
-                                                                        <a  data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" title="Déplacer le résultat">
+                                                                        <a  class="btnMoveResult" data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" title="Déplacer le résultat">
                                                                             <i class="fa icon-share-alt fa-lg"></i>
                                                                         </a>
-                                                                        <a href="#renameResult" data-toggle="modal" data-id="@univers.Id">
+                                                                        <a class="btnRenameResult" data-toggle="modal"  id="btnRenameResult" data-id="@univers.Id">
                                                                             <i class="fa fa-pencil fa-lg"></i>
                                                                         </a>
                                                                         <a data-id="@univers.Id">
@@ -361,9 +359,12 @@
                 <h4 class="font-normal m-t-none m-b-md text-primary-lt"> @Model.Labels.MoveResultTitle </h4>
             </div>
             <div class="modal-body">
-                <p>@Model.Labels.MoveSelectedResult</p>
                 <div class="input-group-btn dropdown" dropdown="">
-                    <button id="branch" type="button" class="btn btn-default select-recherche form-control" data-branch="@Model.SavedResults.UniversGroups.FirstOrDefault().Id" data-toggle="dropdown">@Model.SavedResults.UniversGroups.FirstOrDefault().Description <span class="caret"></span></button>
+                    <button id="result" type="button" class="btn btn-default form-control bg-black-only"
+                             data-result="@Model.SavedResults.UniversGroups.FirstOrDefault().Id"
+                             data-toggle="dropdown">
+                            @Model.SavedResults.UniversGroups.FirstOrDefault().Description
+                    </button>
                     <ul class="dropdown-menu bg-blue form-control">
                         @foreach (var item in Model.SavedResults.UniversGroups)
                         {
@@ -377,12 +378,11 @@
                             }
                         }
                     </ul>
-
                     <p></p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-valider" data-dismiss="modal">@Model.Labels.Submit</button>
+                <button type="button" class="btn btn-valider" id="btnMoveUnivers" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
         </div>
     </div>
@@ -396,10 +396,10 @@
             </div>
             <div class="modal-body">
                 <p> @Model.Labels.RenameSelectedFolder</p>
-                <input type="text" class="form-control" id ="folderName"placeholder="Entrez un nom">
+                <input type="text" class="form-control" id ="universName" placeholder="Entrez un nom">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-valider" id="btnRenameResultFodler" data-dismiss="modal">@Model.Labels.Submit</button>
+                <button type="button" class="btn btn-valider" id="btnRenameUnivers" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
         </div>
     </div>
