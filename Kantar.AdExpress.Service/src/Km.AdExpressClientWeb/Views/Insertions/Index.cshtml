@@ -9,7 +9,7 @@
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
-    <div class="container-full">
+    <div class="col-md-12">
         <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
             <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @(@GestionWeb.GetWebWord(2245, Model.SiteLanguage))</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
@@ -18,27 +18,27 @@
             <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
         </div>
 
-        <div id="HeaderElmt" class="hide">
+        <div id="HeaderElmt" style="display:none">
             <div id="subPeriodSelection" style="background-color:grey"></div>
             <div id="detailLevelItem" class="col-md-12 bg-orange" style="background-color:black; color:white;"></div>
         </div>
+    </div>
 
-        <div class="col-md-12">
-            <div class="pull-right custom-button">
-                <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+    <div class="col-md-12" style="margin-top:10px;">
+        <div class="pull-right custom-button">
+            <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+        </div>
+    </div>
+
+    <div class="col-md-12" style="margin-top:10px;">
+        <center>
+            <p id="gridEmpty" style="display:none">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
+            <div id="grid" style="display:none"></div>
+            <div id="gridLoader" style="display:none">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
             </div>
-        </div>
-        <div class="col-md-12" style="margin-top:10px;">
-            <center>
-                <p id="gridEmpty" class="hide">@(@GestionWeb.GetWebWord(2106, Model.SiteLanguage))</p>
-                <div id="grid" class="hide"></div>
-                <div id="gridLoader" class="hide">
-                    <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
-                </div>
-            </center>
-        </div>
-
-    </div> <!-- /container full -->
+        </center>
+    </div>
 
     <!-- Modal lien video radio -->
     <div id="creativeModal" class="modal fade">
@@ -161,8 +161,8 @@
             if (success) {
 
                 $("#grid").igTreeGrid("destroy");
-                $("#gridLoader").addClass("hide");
-                $("#grid").removeClass("hide");
+                $("#gridLoader").hide();
+                $("#grid").show();
                 if (needFixedColumns) {
                     $("#grid").igTreeGrid({
                         dataSource: ds.dataView(),
@@ -216,7 +216,7 @@
         }
 
         function CallInsertionsResult() {
-            $("#gridEmpty").addClass("hide");
+            $("#gridEmpty").hide();
             var parameters = {
                 ids: userFilter.paramsUrl.ids,
                 zoomDate: userFilter.paramsUrl.zoomDate,
@@ -263,9 +263,9 @@
                         ds.dataBind();
                     }
                     else {
-                        $("#gridLoader").addClass("hide");
-                        $("#gridEmpty").removeClass("hide");
-                        $("#grid").addClass("hide");
+                        $("#gridLoader").hide();
+                        $("#gridEmpty").show();
+                        $("#grid").hide();
                     }
                 }
             });
@@ -311,9 +311,9 @@
                         GetDetailLevelItem();
                         CallInsertionsResult();
 
-                        $("#HeaderLoader").addClass("hide");
-                        $("#HeaderElmt").removeClass("hide");
-                        $("#gridLoader").removeClass("hide");
+                        $("#HeaderLoader").hide();
+                        $("#HeaderElmt").show();
+                        $("#gridLoader").show();
                     }
                 }
             });
@@ -342,8 +342,8 @@
                             $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
                             $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
                             $(this).prop('disabled', true);
-                            $("#grid").addClass("hide");
-                            $("#gridLoader").removeClass("hide");
+                            $("#grid").hide();
+                            $("#gridLoader").show();
                             userFilter.paramsUrl.zoomDate = $(this).attr("period");
                             userFilter.isVehicleChange = false;
                             CallInsertionsResult();
@@ -512,8 +512,8 @@
             return e.target || e.srcElement;
         }
         $(document).on("click", "#PresentVehicles li a", function () {
-            $("#grid").addClass("hide");
-            $("#gridLoader").removeClass("hide");
+            $("#grid").hide();
+            $("#gridLoader").show();
             userFilter.isVehicleChanged = true;
             userFilter.paramsUrl.idVehicle = $(this).attr('id');
             GetDetailLevelItem();
@@ -550,8 +550,8 @@
 
         //Changement de Level
         $(document).on("click", "#submitLvl", function (e) {
-            $("#grid").addClass("hide");
-            $("#gridLoader").removeClass("hide");
+            $("#grid").hide();
+            $("#gridLoader").show();
             CallSetDetailLvl();
         });
 

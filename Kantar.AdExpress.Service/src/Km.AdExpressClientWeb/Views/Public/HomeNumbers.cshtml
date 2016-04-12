@@ -1,0 +1,11 @@
+﻿@model Km.AdExpressClientWeb.Models.HomeNumbersViewModel
+
+<div class="row">
+    @foreach (var item in Model.Numbers)
+    {
+        <div class="col-lg-4">
+            <h3>@item.Value</h3>
+            <span><br />@item.Key</span>
+        </div>
+    }
+</div>

@@ -59,6 +59,7 @@
     <Compile Include="BusinessService\ILoginService.cs" />
     <Compile Include="BusinessService\ILostWonService.cs" />
     <Compile Include="BusinessService\IMediaScheduleService.cs" />
+    <Compile Include="BusinessService\IMyAdExpressService.cs" />
     <Compile Include="BusinessService\IOptionMediaScheduleService.cs" />
     <Compile Include="BusinessService\IOptionService.cs" />
     <Compile Include="BusinessService\IPortfolioService.cs" />

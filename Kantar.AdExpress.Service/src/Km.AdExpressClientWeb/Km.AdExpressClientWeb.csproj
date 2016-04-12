@@ -192,6 +192,7 @@
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
+    <Compile Include="Models\HomeNumbersViewModel.cs" />
     <Compile Include="Models\Home\MyAdExpressViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
@@ -1415,6 +1416,7 @@
     <Content Include="IgniteUI\mobile\js\modules\infragistics.util.js" />
     <Content Include="Player\playerflv.swf" />
     <Content Include="Scripts\Account\account.js" />
+    <Content Include="Scripts\Account\myAdExpress.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\app\layout.js" />
@@ -1556,13 +1558,13 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutContact.cshtml" />
     <Content Include="Views\InsertionsExport\Index.cshtml" />
+    <Content Include="Views\Public\HomeNumbers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
     <Folder Include="Views\Pdf\" />
-    <Folder Include="Views\Public\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>

@@ -2293,6 +2293,10 @@ ul.ui-selectable {
 #modal-vehicleView .modal:nth-of-type(even) {
     z-index: 1042 !important;
 }
+
+#modal-vehicleView > .modal-dialog  > .modal-content > .modal-body > .col-md-12 > .no-padder {
+    padding: 0 !important;
+}
 #modal-vehicleView .modal-backdrop.in:nth-of-type(even) {
     z-index: 1041 !important;
 }

@@ -4,6 +4,8 @@
 }
 
 <div class="container">
+    
+    <!--/col-md-12-->
     <div class="col-md-12" id="carou-vehicleView">
 
 
@@ -31,10 +33,9 @@
                                         </div>
                                         <!--/text-center text-white-->
                                         <div class="row no-gutter">
-                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" class="img-full" alt="Equipe"></div>
+                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" class="img-full" alt="Equipe">
+                                            </div>
                                         </div>
-                                        @* <a href="#x"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" alt="Equipe" width="235" class="img-responsive"></a>*@
-
                                         <div class="text-center padder-v-mi">
                                             <p>Nombre d'insertion : <strong>12</strong></p>
                                             <p>Total investissement : <strong>123456789</strong></p>
@@ -156,16 +157,18 @@
 </div>
 
 <!-- Modal vehicle  view  -->
-<div class="modal fade" id="modal-vehicleView" >
+<div class="modal fade" id="modal-vehicleView">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header panel-heading header-popup-vehicleView">
-                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>               
+                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title font-normal m-t-none m-b-md text-primary-lt" id="myModalLabel">
-                <i class="fa fa-file-text blue"></i>Figaro Magazine - 19/02/2016</h4>  
-                <p class="pull-right text-white">Nombre de page : 144</p>            
+                    <i class="fa fa-file-text blue"></i>Figaro Magazine - 19/02/2016
+                </h4>
+                <p class="pull-right text-white">Nombre de page : 144</p>
             </div>
             <div class="modal-body">
+                <!--/Ligne 1-->
                 <div class="col-md-12">
                     <div class="col-md-4"></div>
                     <div class="col-md-4" href="#modal-vehicleView-Img" data-toggle="modal">
@@ -173,17 +176,43 @@
                     </div>
                     <div class="col-md-4"></div>
                 </div>
+                <!--/col-md-12-->
+                <div class="col-md-12">
+                    <div class="col-md-4 no-padder" href="#modal-vehicleView-Img" data-toggle="modal">
+                        <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe002.jpg">
+                    </div>
+                    <div class="col-md-4 no-padder" href="#modal-vehicleView-Img" data-toggle="modal">
+                        <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor003.jpg">
+                    </div>
+                    <div class="col-md-4 no-padder" href="#modal-vehicleView-Img" data-toggle="modal">
+                        <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor004.jpg">
+                    </div>
+                </div>
+                <!--/col-md-12-->
+                <div class="col-md-12">
+                    <div class="col-md-4 no-padder" href="#modal-vehicleView-Img" data-toggle="modal">
+                        <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor005.jpg">
+                    </div>
+                    <div class="col-md-4 no-padder" href="#modal-vehicleView-Img" data-toggle="modal">
+                        <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor006.jpg">
+                    </div>
+                    <div class="col-md-4 no-padder" href="#modal-vehicleView-Img" data-toggle="modal">
+                        <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg">
+                    </div>
+                </div>
+                <!--/col-md-12-->
             </div>
         </div>
     </div>
 </div>
+
 <!--/modal-vehicleView-->
 
 <div class="modal fade" id="modal-vehicleView-Img" style="display: none;" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header panel-heading header-popup-vehicleView">
-                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>              
+                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 <h4 class="font-normal m-t-none m-b-md text-primary-lt"><i class="fa fa-file-text blue"></i>Figaro Magazine - 19/02/2016</h4>
             </div>
             <div class="modal-body">
@@ -195,11 +224,43 @@
 <!--/modal-vehicleView-Img1-->
 @section Scripts {
     <script>
-        if (typeof jQuery === "undefined") { throw new Error("Vehicle view modal requires jQuery") }
-        function OpenVehicleViewModal() {
+        $(function () {
+            if (typeof jQuery === "undefined") { throw new Error("Vehicle view modal requires jQuery") }
+            $("#carou-vehicleView").hide();
+            var htmlArr = [];
+            $(".carousel-inner").empty();
+            htmlArr.push("<div class='item active'><div class='row'> <div class='col-sm-3'>");
+            htmlArr.push("<div class='text-center text-white'><div class='bg-black-only padder-v-mi'>");
+            htmlArr.push(" Vendredi 26/02/2016");
+            htmlArr.push("</div></div>");
+            //<!--text-center text-white-->
+            htmlArr.push(" <div class='row no-gutter'><div class='col-xs-12' href='#modal-vehicleView' data-toggle='modal'>");
+            htmlArr.push(" <img src='http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg' class='img-full' alt='Equipe'>");
+            htmlArr.push("</div></div>");
+
+            //var item = $(".carousel-inner").html("<p>All new content. <em>You bet!</em></p>");
+          
+
+            var vhCarouselData = [
+                    { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "123456789" },
+                     { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160225/imagette/coe001.jpg", "NbInsertion": 15, "Investment": "1234564789" },
+                      { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160223/imagette/coe001.jpg", "NbInsertion": 14, "Investment": "123456789" },
+                       { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160219/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "45454545" },
+                        { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160218/imagette/coe001.jpg", "NbInsertion": 5, "Investment": "784524222" },
+                         { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160211/imagette/coe001.jpg", "NbInsertion": 10, "Investment": "123456789" },
+                          { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160210/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "4242424242" },
+                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160209/imagette/coe001.jpg", "NbInsertion": 5, "Investment": "123456789" },
+                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160205/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "123456789" },
+                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160204/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "155424242" },
+                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160203/imagette/coe001.jpg", "NbInsertion": 13, "Investment": "215755" },
+                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160202/imagette/coe001.jpg", "NbInsertion": 11, "Investment": "84545454" }
+            ];
+            function OpenVehicleViewModal() {
 
 
-        }
+            }
+
+        });
     </script>
 
 }

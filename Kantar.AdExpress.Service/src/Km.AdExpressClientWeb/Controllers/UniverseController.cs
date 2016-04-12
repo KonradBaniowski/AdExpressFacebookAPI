@@ -194,5 +194,21 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             return result;
         }
+        [HttpPost]
+        public string RenameUnivers(string name, string universId)
+        {
+            string result = "";
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            return result;
+        }
+
+        public string MoveUnivers(string groupUniversId, string universId)
+        {
+            string result = "";
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            return result;
+        }
     }
 }
