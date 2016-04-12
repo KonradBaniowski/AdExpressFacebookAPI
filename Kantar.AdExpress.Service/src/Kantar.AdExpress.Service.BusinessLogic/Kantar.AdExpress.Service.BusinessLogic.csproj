@@ -76,6 +76,7 @@
     <Compile Include="ServiceImpl\LostWonService.cs" />
     <Compile Include="ServiceImpl\MediaScheduleService.cs" />
     <Compile Include="ServiceImpl\MediaService.cs" />
+    <Compile Include="ServiceImpl\MyAdExpressService.cs" />
     <Compile Include="ServiceImpl\OptionMediaScheduleService.cs" />
     <Compile Include="ServiceImpl\OptionService.cs" />
     <Compile Include="ServiceImpl\OptionService.PresentAbsent.cs" />
