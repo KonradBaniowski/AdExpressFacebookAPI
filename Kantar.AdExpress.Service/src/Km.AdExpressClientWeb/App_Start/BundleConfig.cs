@@ -59,6 +59,9 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/Account/account.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/myAdExpress").Include(
+                        "~/Scripts/Account/myAdExpress.js"));
+
             #region Javascript for Market & Media
             #region Plan Media
             bundles.Add(new ScriptBundle("~/bundles/planmedia-market").Include(
