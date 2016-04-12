@@ -118,7 +118,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             new InfosNews()
                             {
                                 Label = "files2",
-                                Url = "test.pdf"
+                                Url = "Planning mise à jour Adexpress.pdf"
                             }
                         }
                     }
