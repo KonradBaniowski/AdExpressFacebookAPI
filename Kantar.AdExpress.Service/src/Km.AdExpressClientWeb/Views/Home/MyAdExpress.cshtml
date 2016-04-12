@@ -71,10 +71,10 @@
                                                                         <a data-id="@univers.Id">
                                                                             <i class="fa fa-search fa-lg"></i>
                                                                         </a>
-                                                                        <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
+                                                                        <a  data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" title="Déplacer le résultat">
                                                                             <i class="fa icon-share-alt fa-lg"></i>
                                                                         </a>
-                                                                        <a href="#myModal5" data-toggle="modal" data-id="@univers.Id">
+                                                                        <a href="#renameResult" data-toggle="modal" data-id="@univers.Id">
                                                                             <i class="fa fa-pencil fa-lg"></i>
                                                                         </a>
                                                                         <a data-id="@univers.Id">
@@ -97,10 +97,10 @@
                                                                         <a data-id="@univers.Id">
                                                                             <i class="fa fa-search fa-lg"></i>
                                                                         </a>
-                                                                        <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
+                                                                        <a  data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" title="Déplacer le résultat">
                                                                             <i class="fa icon-share-alt fa-lg"></i>
                                                                         </a>
-                                                                        <a href="#myModal5" data-toggle="modal" data-id="@univers.Id">
+                                                                        <a href="#renameResult" data-toggle="modal" data-id="@univers.Id">
                                                                             <i class="fa fa-pencil fa-lg"></i>
                                                                         </a>
                                                                         <a data-id="@univers.Id">
@@ -353,26 +353,31 @@
 </div>
 
 
-<div id="myModal4" class="modal fade">
+<div id="moveResult" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header panel-heading">
+            <div class="modal-header header-kantar-popup">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <i class="fa icon-share-alt white"></i>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.MoveResultTitle</h4>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"> @Model.Labels.MoveResultTitle </h4>
             </div>
             <div class="modal-body">
                 <p>@Model.Labels.MoveSelectedResult</p>
-                <div class="dropdown">
-                    <button type="button" class="btn selecteur-repertoire" data-toggle="dropdown" aria-expanded="false">
-                        Répertoire 1
-                        <span class="caret pull-right"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="">Répertoire 2</a></li>
-                        <li><a href="">Répertoire 3</a></li>
-                        <li><a href="">Répertoire 4</a></li>
+                <div class="input-group-btn dropdown" dropdown="">
+                    <button id="branch" type="button" class="btn btn-default select-recherche form-control" data-branch="@Model.SavedResults.UniversGroups.FirstOrDefault().Id" data-toggle="dropdown">@Model.SavedResults.UniversGroups.FirstOrDefault().Description <span class="caret"></span></button>
+                    <ul class="dropdown-menu bg-blue form-control">
+                        @foreach (var item in Model.SavedResults.UniversGroups)
+                        {
+                            if (item== Model.SavedResults.UniversGroups.FirstOrDefault())
+                            {
+                                <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                            else
+                            {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                        }
                     </ul>
+
                     <p></p>
                 </div>
             </div>
@@ -382,21 +387,23 @@
         </div>
     </div>
 </div>
-<div id="myModal5" class="modal fade">
+<div id="renameResult" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header panel-heading">
+            <div class="modal-header header-kantar-popup">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <i class="fa  icon-pencil white"></i>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt">Renommer le résultat</h4>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle</h4>
             </div>
             <div class="modal-body">
-                <p>Renommer le résultat sélectionné :</p>
-                <input type="text" class="form-control" placeholder="Entrez un nom">
+                <p> @Model.Labels.RenameSelectedFolder</p>
+                <input type="text" class="form-control" id ="folderName"placeholder="Entrez un nom">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-valider" data-dismiss="modal">Valider</button>
+                <button type="button" class="btn btn-valider" id="btnRenameResultFodler" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
         </div>
     </div>
 </div>
+@section scripts {
+    @Scripts.Render("~/bundles/myAdExpress")
+}
