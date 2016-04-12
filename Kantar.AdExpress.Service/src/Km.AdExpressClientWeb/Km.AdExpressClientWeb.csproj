@@ -1449,6 +1449,7 @@
     <Content Include="IgniteUI\mobile\css\themes\ios\infragistics.mobile.theme.less" />
     <EmbeddedResource Include="Aspose.Cells.lic" />
     <Content Include="Content\pdf\cerfa.pdf" />
+    <Content Include="Content\pdf\Planning mise à jour Adexpress.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\component-selectable\common-actions.js" />
