@@ -105,7 +105,7 @@ namespace KM.AdExpressI.MyAdExpress
             }
             catch (System.Exception err)
             {
-                throw (new MyAdExpressDataAccessException("Impossible de Renommer une session sauvegardée", err));
+                //throw (new MyAdExpressDataAccessException("Impossible de Renommer une session sauvegardée", err));
             }
             #endregion
         }
