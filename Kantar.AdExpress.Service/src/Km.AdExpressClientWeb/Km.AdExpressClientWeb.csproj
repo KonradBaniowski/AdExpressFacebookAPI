@@ -1559,6 +1559,7 @@
     <Content Include="Views\Shared\_LayoutContact.cshtml" />
     <Content Include="Views\InsertionsExport\Index.cshtml" />
     <Content Include="Views\Public\HomeNumbers.cshtml" />
+    <Content Include="Views\Home\MyAdExpressSavedResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

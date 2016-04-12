@@ -146,7 +146,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var model = new MyAdExpressViewModel
             {
-                SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>() },
+                SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>()},
                 SavedUnivers = new Domain.AdExpressUniversResponse { UniversType = Domain.UniversType.Univers, UniversGroups = new List<Domain.UserUniversGroup>() },
                 Alerts = new List<Domain.Alert>()
             };
@@ -183,6 +183,25 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
+        public ActionResult ReloadSession()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var model = new Domain.AdExpressUniversResponse
+            {
+                UniversType = Domain.UniversType.Result,
+                UniversGroups = new List<Domain.UserUniversGroup>()
+            };
+            var result = _universService.GetResultUnivers(idWebSession);
+            foreach (var group in result.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model = result;
+            return  PartialView("MyAdExpressSavedResults", model);
+        }
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
         {
             PresentationModel result = new PresentationModel

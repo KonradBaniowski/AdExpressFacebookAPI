@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Data;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
@@ -44,6 +45,69 @@ namespace KM.AdExpressI.MyAdExpress
             }
             #endregion
 
+        }
+
+        /// <summary>
+		/// Déplace une session
+		/// </summary>
+		/// <remarks>Testée</remarks>
+		/// <param name="idOldDirectory">Identifiant du Répertoire source</param>
+		/// <param name="idNewDirectory">Identifiant du Répertoire de destination</param>
+		/// <param name="idMySession">Identifiant du résultat</param>
+		/// <param name="webSession">Session du client</param>	
+		public static bool MoveSession(Int64 idOldDirectory, Int64 idNewDirectory, Int64 idMySession, WebSession webSession)
+        {
+            bool result = false;
+            Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
+            #region requête
+            string sql = "UPDATE " + mySessionTable.Sql;
+            sql += " SET ID_DIRECTORY=" + idNewDirectory + ", DATE_MODIFICATION=sysdate ";
+            sql += " WHERE ID_DIRECTORY=" + idOldDirectory + "";
+            sql += " and ID_MY_SESSION=" + idMySession + "";
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                webSession.Source.Update(sql);
+                result = true;
+            }
+            catch (System.Exception err)
+            {
+                //throw (new MyAdExpressDataAccessException("Impossible de Déplace une session", err));
+            }
+            return result;
+            #endregion
+        }
+
+        /// <summary>
+		///  Renomme une session
+		/// </summary>
+		/// <remarks>Testé</remarks>
+		/// <param name="newName">Nouveau nom de la session</param>
+		/// <param name="idMySession">Identifiant de la session</param>
+		/// <param name="webSession">web Session</param>
+		public static void RenameSession(string newName, Int64 idMySession, WebSession webSession)
+        {
+            Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
+            #region requête
+            string sql = "UPDATE " + mySessionTable.Sql;
+            sql += " SET MY_SESSION ='" + newName + "', DATE_MODIFICATION=sysdate ";
+            sql += " WHERE ID_MY_SESSION=" + idMySession + "";
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                webSession.Source.Update(sql);
+            }
+            catch (System.Exception err)
+            {
+                throw (new MyAdExpressDataAccessException("Impossible de Renommer une session sauvegardée", err));
+            }
+            #endregion
         }
     }
 }

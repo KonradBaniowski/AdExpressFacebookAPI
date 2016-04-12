@@ -1,8 +1,10 @@
-﻿var groupUniversId = "";
+﻿var idNewDirectory = "";
+var idOldDirectory = "";
 var universId = "";
 $('.btnMoveResult').on('click', function () {
     $('#moveResult').modal('show');
     universId = $(this).attr("data-id");
+    idOldDirectory = $(this).attr("data-directory-id");
 });
 
 
@@ -36,13 +38,14 @@ $('#btnRenameUnivers').on('click', function () {
 
 
 $('#btnMoveUnivers').on('click', function () {
-    var groupUniversId = $('.input-group-btn.dropdown > ul > li > a').attr('data-id');
+    var idNewDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only').attr("data-result");
     var params = {
-        groupUniversId: groupUniversId,
-        universId: universId
+        idOldDirectory: idOldDirectory,
+        idNewDirectory: idNewDirectory,
+        id: universId
     };
     $.ajax({
-        url: '/Universe/MoveUnivers',
+        url: '/Universe/MoveSession',
         contentType: 'application/json',
         type: 'POST',
         datatype: 'JSON',
@@ -52,8 +55,20 @@ $('#btnMoveUnivers').on('click', function () {
                     bootbox.alert("An error occurred while processing your request.");            
         },
         success: function (response) {
-                    $('#moveResult').modal('hide');
-                     bootbox.alert(response);
+                    $('#moveResult').modal('hide');                   
+            //Reload the page
+                    $.ajax({
+                        url: '/Home/ReloadSession',
+                        type: 'POST',
+                        data: params,
+                        error: function (data) {
+                            bootbox.alert(data);
+                        },
+                        success: function (data) {
+                            $("#Result").html(data);
+                        }
+                    });
+                    bootbox.alert("success");
         }
     });
 });

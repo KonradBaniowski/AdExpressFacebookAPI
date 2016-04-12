@@ -18,10 +18,12 @@ namespace Km.AdExpressClientWeb.Controllers
     public class UniverseController : Controller
     {
         private IUniverseService _universeService;
+        private IMyAdExpressService _myAdExpressService;
 
-        public UniverseController(IUniverseService universeService)
+        public UniverseController(IUniverseService universeService, IMyAdExpressService myAdExpressService)
         {
             _universeService = universeService;
+            _myAdExpressService = myAdExpressService;
         }
 
         // GET: Universe
@@ -200,14 +202,18 @@ namespace Km.AdExpressClientWeb.Controllers
             string result = "";
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            result = _myAdExpressService.RenameUnivers(name, universId, webSessionId);
             return result;
         }
 
-        public string MoveUnivers(string groupUniversId, string universId)
+        public string MoveSession(string idOldDirectory, string idNewDirectory,string id)
         {
             string result = "";
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            result = _myAdExpressService.MoveSession(id,idOldDirectory, idNewDirectory, webSessionId);
+            //if (String.IsNullOrEmpty(result))
+            //    return RedirectToAction("MyAdExpress", "Home");
             return result;
         }
     }

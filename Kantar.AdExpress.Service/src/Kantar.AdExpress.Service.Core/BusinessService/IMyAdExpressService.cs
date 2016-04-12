@@ -8,7 +8,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IMyAdExpressService
     {
-        string RenameUnivers(string name, string universId);
-        string MoveUnivers(string groupUniversId, string universId);
+        string RenameUnivers(string name, string universId, string webSessionId);
+        string MoveSession(string id, string idOldDirectory, string idNewDirectory, string webSessionId);
     }
 }
