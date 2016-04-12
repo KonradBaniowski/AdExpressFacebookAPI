@@ -1116,6 +1116,14 @@ a {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
+.information-title-width {
+    width: 420px;
+}
+
+.information-title {
+    margin-top: 0px!important;
+}
+
 .bg-period {
     border-radius: 2px;
     border: 0;
