@@ -33,7 +33,8 @@
                                         </div>
                                         <!--/text-center text-white-->
                                         <div class="row no-gutter">
-                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" class="img-full" alt="Equipe"></div>
+                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" class="img-full" alt="Equipe">
+                                            </div>
                                         </div>
                                         <div class="text-center padder-v-mi">
                                             <p>Nombre d'insertion : <strong>12</strong></p>
@@ -225,9 +226,19 @@
     <script>
         $(function () {
             if (typeof jQuery === "undefined") { throw new Error("Vehicle view modal requires jQuery") }
-            //$("#carou-vehicleView").hide();
-            $(".carousel-inner").empty(); 
-            var item = $(".carousel-inner").html("<p>All new content. <em>You bet!</em></p>");
+            $("#carou-vehicleView").hide();
+            var htmlArr = [];
+            $(".carousel-inner").empty();
+            htmlArr.push("<div class='item active'><div class='row'> <div class='col-sm-3'>");
+            htmlArr.push("<div class='text-center text-white'><div class='bg-black-only padder-v-mi'>");
+            htmlArr.push(" Vendredi 26/02/2016");
+            htmlArr.push("</div></div>");
+            //<!--text-center text-white-->
+            htmlArr.push(" <div class='row no-gutter'><div class='col-xs-12' href='#modal-vehicleView' data-toggle='modal'>");
+            htmlArr.push(" <img src='http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg' class='img-full' alt='Equipe'>");
+            htmlArr.push("</div></div>");
+
+            //var item = $(".carousel-inner").html("<p>All new content. <em>You bet!</em></p>");
           
 
             var vhCarouselData = [
