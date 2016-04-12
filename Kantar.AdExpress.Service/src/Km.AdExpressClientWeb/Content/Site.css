@@ -160,6 +160,12 @@
     background-size: cover;
 }
 
+.container-kantar-contact {
+    background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;
+    color: #ffffff;
+    background-size: cover;
+}
+
 .header-kantar-popup {
     padding: 10px 15px;
     border-bottom: 1px solid transparent;
@@ -282,7 +288,7 @@ input {
 }
 
 .bg-orange {
-    background: #ff8c00 !important;
+    background: #ff8c00;
 }
 
 .green {
@@ -298,7 +304,7 @@ input {
 }
 
 .orange {
-    color: #ff8c00 !important;
+    color: #ff8c00;
 }
 
 .tile-third.bg-green {
@@ -1767,6 +1773,10 @@ ul.ui-selectable {
     width: 1140px;
 }
 
+.modal-evaliant {
+    width: 100%;
+}
+
 .item {
     position: relative;
     -webkit-transition: all 0.2s ease-in-out 0s;
@@ -2107,6 +2117,58 @@ ul.ui-selectable {
 }
 
 
+/*PAGE CONTACT*/
+.bg-contact {
+    background-color: rgba(0,0,0,0.6);
+    padding: 15px;
+    margin-top: 15px;
+}
+
+    .bg-contact .form-control {
+        color: white;
+        border: none;
+    }
+
+        .bg-contact .form-control:focus {
+            background-color: rgba(255,255,255,0.1);
+            border-color: #cfdadd;
+            box-shadow:none;
+        }
+
+    .bg-contact input, .bg-contact textarea, .bg-contact select {
+        background-color: rgba(255,255,255,0.2);
+    }
+
+    .bg-contact option {
+        background-color:#13c18b;
+    }
+
+    .bg-contact .btn, .bg-contact .btn:hover
+    {
+        border:none;
+        background-color:#ff8c00;
+    }
+
+.green-contact {
+    color: #13c18b;
+}
+
+.membres-icon {
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    width: 80px;
+    height: 80px;
+    padding: 19px;
+    margin: 15px auto;
+}
+
+.member-line {
+    width: 20%;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    margin: 14px auto;
+}
+
 /*Images Creative (class = iconCreative+[numero_du_vehicle])*/
 .iconInsertionCreativ, .big {
     font-size: 10em;
@@ -2130,3 +2192,115 @@ ul.ui-selectable {
     content: "\f008";
 }
 
+/**Carousel Chemin de fer du support*/
+#carou-vehicleView {
+    /* background-color: rgba(0,0,0,0.6);*/
+    border-bottom: 0px;
+}
+
+    #carou-vehicleView .panel {
+        border-radius: 0px;
+        background-color: transparent;
+    }
+
+        #carou-vehicleView .panel .panel-default {
+            border-radius: 0px;
+            border: none;
+        }
+
+            #carou-vehicleView .panel.panel-default.panel-tab {
+                background: transparent;
+                border: none;
+            }
+
+    #carou-vehicleView .panel-heading.resume {
+        /*background: rgba(0,0,0,0.7);
+        border-bottom: 0px;*/
+        border-radius: 2px 2px 0 0;
+        border-bottom: 0px solid #edf1f2;
+        background-color: rgba(0,0,0,0.7);
+        padding: 25px !important;
+        color: white;
+    }
+
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading > .panel-title {
+    color: #00c1ff;
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#carou-vehicleView .panel-group .panel-primary .panel-body {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#carou-vehicleView .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
+    color: white;
+}
+
+
+#carou-vehicleView .panel-body {
+    background-color: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.padder-v-mi {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.img-full {
+    width: 100%;
+}
+#carou-vehicleView   .row.no-gutter {
+    margin-right: 0;
+    margin-left: 0;
+}
+#carou-vehicleView  img {
+    vertical-align: middle;
+}
+#carou-vehicleView  img {
+    border: 0;
+}
+/* Mopdal VBehicle View */
+
+
+#modal-vehicleView > .modal-dialog  > .modal-content{
+    width: 1000px;
+    margin: 0 auto;
+    height:900px;
+    overflow-y: scroll;
+}
+
+#modal-vehicleView > .modal-dialog  > .modal-content > .header-popup-vehicleView {
+    /*padding: 10px 15px;*/
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: rgba(0,0,0,0.7);
+}
+
+#modal-vehicleView .modal:nth-of-type(even) {
+    z-index: 1042 !important;
+}
+
+#modal-vehicleView > .modal-dialog  > .modal-content > .modal-body > .col-md-12 > .no-padder {
+    padding: 0 !important;
+}
+#modal-vehicleView .modal-backdrop.in:nth-of-type(even) {
+    z-index: 1041 !important;
+}
+
+#modal-vehicleView-Img > .modal-dialog  > .modal-content > .header-popup-vehicleView {
+    /*padding: 10px 15px;*/
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: rgba(0,0,0,0.7);
+}
+ 

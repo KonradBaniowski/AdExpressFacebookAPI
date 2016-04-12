@@ -74,6 +74,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             VehicleInformation vehicle = VehiclesInformation.Get(Int64.Parse(vehicles[0]));
             data = resultMSCreatives.GetMSCreatives(vehicle, fromDate, toDate, filters, -1, zoomDate);
 
+            switch(vehicle.Id) {
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                    return GetEvaliantCreatives(data, vehicle);
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                    return GetEvaliantMobileCreatives(data, vehicle);
+                default:
+                    return GetCreatives(data, vehicle);
+            }
+        }
+
+        private MSCreatives GetCreatives(ResultTable data, VehicleInformation vehicle)
+        {
             MSCreatives creatives = new MSCreatives();
             creatives.Items = new List<MSCreative>();
             DefaultMediaScheduleStyle style = new DefaultMediaScheduleStyle();
@@ -113,6 +125,83 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 creatives.Items = creatives.Items.OrderBy(i => i.NbVisuals).ToList();
             else
                 creatives.Items = creatives.Items.OrderByDescending(i => i.NbVisuals).ToList();
+
+            return creatives;
+
+        }
+
+        private MSCreatives GetEvaliantCreatives(ResultTable data, VehicleInformation vehicle)
+        {
+            MSCreatives creatives = new MSCreatives();
+            creatives.Items = new List<MSCreative>();
+            DefaultMediaScheduleStyle style = new DefaultMediaScheduleStyle();
+            Int64 nbVisuals = 0;
+            List<string> visuals;
+
+            creatives.VehicleId = vehicle.Id;
+
+            for (int i = 0; i < data.LinesNumber; i++)
+            {
+                CellCreativesEvaliantInformation cell = (CellCreativesEvaliantInformation)data[i, 1];
+                nbVisuals = 0;
+                visuals = new List<string>();
+
+                // Limit to 12 visuals
+                if (cell.NbVisuals <= 12)
+                {
+                    nbVisuals = cell.NbVisuals;
+                    visuals = cell.Visuals;
+                }
+                else
+                {
+                    nbVisuals = 12;
+                    visuals = cell.Visuals.Take(12).ToList();
+                }
+
+                MSCreative creative = new MSCreative { Id = cell.IdVersion, SessionId = CustomerSession.IdSession, Vehicle = cell.Vehicle, NbVisuals = nbVisuals, Visuals = visuals, Format = cell.Format, Dimension = cell.Dimension };
+                creative.Class = CustomerSession.SloganColors[cell.IdVersion].ToString();
+                creatives.Items.Add(creative);
+            }
+
+            creatives.Items = creatives.Items.OrderByDescending(i => i.NbVisuals).ToList();
+
+            return creatives;
+        }
+
+        private MSCreatives GetEvaliantMobileCreatives(ResultTable data, VehicleInformation vehicle)
+        {
+            MSCreatives creatives = new MSCreatives();
+            creatives.Items = new List<MSCreative>();
+            DefaultMediaScheduleStyle style = new DefaultMediaScheduleStyle();
+            Int64 nbVisuals = 0;
+            List<string> visuals;
+
+            creatives.VehicleId = vehicle.Id;
+
+            for (int i = 0; i < data.LinesNumber; i++)
+            {
+                CellCreativesEvaliantMobileInformation cell = (CellCreativesEvaliantMobileInformation)data[i, 1];
+                nbVisuals = 0;
+                visuals = new List<string>();
+
+                // Limit to 12 visuals
+                if (cell.NbVisuals <= 12)
+                {
+                    nbVisuals = cell.NbVisuals;
+                    visuals = cell.Visuals;
+                }
+                else
+                {
+                    nbVisuals = 12;
+                    visuals = cell.Visuals.Take(12).ToList();
+                }
+
+                MSCreative creative = new MSCreative { Id = cell.IdVersion, SessionId = CustomerSession.IdSession, Vehicle = cell.Vehicle, NbVisuals = nbVisuals, Visuals = visuals, Format = cell.Format, Dimension = cell.Dimension };
+                creative.Class = CustomerSession.SloganColors[cell.IdVersion].ToString();
+                creatives.Items.Add(creative);
+            }
+
+            creatives.Items = creatives.Items.OrderByDescending(i => i.NbVisuals).ToList();
 
             return creatives;
         }

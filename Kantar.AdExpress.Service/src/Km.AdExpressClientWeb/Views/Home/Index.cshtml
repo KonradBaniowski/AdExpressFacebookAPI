@@ -403,7 +403,7 @@
                             {
                                 foreach (var e in item.InfosNews)
                                 {
-                                    <a href="@e.Url" class="list-group-item text-left">@e.Label</a>
+                                    <a href="@Url.Action("Pdf","PDF", new { fileName = @e.Url })" class="list-group-item text-left">@e.Label</a>
                                 }
                             }
                         </div>

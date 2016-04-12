@@ -462,7 +462,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
                 ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
-                Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
+                MyResults = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),

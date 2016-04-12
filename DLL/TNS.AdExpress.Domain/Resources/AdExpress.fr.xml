@@ -2295,6 +2295,9 @@
     <item mnemonic="w3037" type="System.String">Ajouter un concurrent</item>
     <item mnemonic="w3038" type="System.String">Ce support a déjà été ajouté dans l'arbre de référence ou dans un concurrent</item>
     <item mnemonic="w3039" type="System.String">Référents</item>
-    <item mnemonic="w3040" type="System.String">Valider</item>
+    <item mnemonic="w3040" type="System.String">Valider</item>    
+    <item mnemonic="w3041" type="System.String">Votre question concerne</item>
+    <item mnemonic="w3042" type="System.String">Problème technique</item>
+    <item mnemonic="w3043" type="System.String">Souscrire à un module additionnel</item>
   </items>
 </localization>

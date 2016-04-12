@@ -12,15 +12,10 @@
 </div>
 <div class="row">
     <ul id="tab-myadexpress" class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#home" data-toggle="tab">@Model.Labels.Results</a></li>
+        <li role="presentation" class="active"><a href="#home" data-toggle="tab">@Model.Labels.MyResults</a></li>
         <li role="presentation"><a href="#profile" data-toggle="tab">@Model.Labels.UserUniversCode</a></li>
         <li role="presentation"><a href="#alertes" data-toggle="tab">@Model.Labels.AlertsCode</a></li>
     </ul>
-    @*TAG OBLIGATOIRE
-        tab-content-myadexpress
-        panel panel-default panel-tab
-        panel-heading resume
-    *@
     <div id="tab-content-myadexpress" class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
             <div class="panel panel-default panel-tab">
@@ -44,7 +39,6 @@
                     }
                     <div class="clearfix"></div>
                 </div>
-
                 <div class="panel-body">
                     @if (Model.SavedResults != null && Model.SavedResults.UniversGroups.Any())
                     {
@@ -77,10 +71,10 @@
                                                                         <a data-id="@univers.Id">
                                                                             <i class="fa fa-search fa-lg"></i>
                                                                         </a>
-                                                                        <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
+                                                                        <a  data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" title="Déplacer le résultat">
                                                                             <i class="fa icon-share-alt fa-lg"></i>
                                                                         </a>
-                                                                        <a data-id="@univers.Id">
+                                                                        <a href="#renameResult" data-toggle="modal" data-id="@univers.Id">
                                                                             <i class="fa fa-pencil fa-lg"></i>
                                                                         </a>
                                                                         <a data-id="@univers.Id">
@@ -103,127 +97,10 @@
                                                                         <a data-id="@univers.Id">
                                                                             <i class="fa fa-search fa-lg"></i>
                                                                         </a>
-                                                                        <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
+                                                                        <a  data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" title="Déplacer le résultat">
                                                                             <i class="fa icon-share-alt fa-lg"></i>
                                                                         </a>
-                                                                        <a data-id="@univers.Id">
-                                                                            <i class="fa fa-pencil fa-lg"></i>
-                                                                        </a>
-                                                                        <a data-id="@univers.Id">
-                                                                            <i class="fa fa-trash-o fa-lg"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <h3 class="panel-title text-center">
-                                                    <span>@Model.Labels.NoSavedUnivers</span>
-                                                    </h3>
-                                                }
-                                                
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    }
-                </div>
-            </div>
-
-        </div>
-
-
-        <div role="tabpanel" class="tab-pane" id="profile">
-            <div class="panel panel-default panel-tab">
-                <div class="panel-heading resume">
-                    @if (Model.SavedUnivers != null && Model.SavedUnivers.UniversGroups.Any())
-                    {
-                        <h3 class="panel-title pull-left">
-                            <span class="blue">@Model.SavedUnivers.NbrFolder</span> répertoires,  <span class="blue">@Model.SavedUnivers.NbrUnivers</span> résultats
-                        </h3>
-                        <h3 class="panel-title pull-right">
-                            <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
-                            <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
-                            <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
-                        </h3>
-                    }
-                    else
-                    {
-                        <h3 class="panel-title pull-left">
-                            <span>@Model.Labels.NoSavedUnivers</span>
-                        </h3>
-                    }
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="panel-body">
-                    @if (Model.SavedUnivers != null && Model.SavedUnivers.UniversGroups.Any())
-                    {
-                        foreach (var item in Model.SavedUnivers.UniversGroups)
-                        {
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
-                                            <a class="btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
-                                                @item.Description
-                                                <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse@(item.Id)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                        <div class="panel-body">
-                                            <div class="row">
-
-                                                @if (item.UserUnivers.Any(p => p.Id > 0))
-                                                {
-                                                    <div class="col-lg-6">
-                                                        <ul class="list-group b-r">
-
-                                                            @foreach (var univers in item.UserUnivers.Take(item.FirstColumnSize))
-                                                            {
-                                                                <li class="list-group-item">
-                                                                    <span>@univers.Description</span>
-                                                                    <div class="pull-right">
-                                                                        <a data-id="@univers.Id">
-                                                                            <i class="fa fa-search fa-lg"></i>
-                                                                        </a>
-                                                                        <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
-                                                                            <i class="fa icon-share-alt fa-lg"></i>
-                                                                        </a>
-                                                                        <a data-id="@univers.Id">
-                                                                            <i class="fa fa-pencil fa-lg"></i>
-                                                                        </a>
-                                                                        <a data-id="@univers.Id">
-                                                                            <i class="fa fa-trash-o fa-lg"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-                                                            }
-
-
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <ul class="list-group b-r">
-                                                            @foreach (var univers in item.UserUnivers.Take(item.SecondeColumnSize))
-                                                            {
-                                                                <li class="list-group-item">
-                                                                    <span>@univers.Description</span>
-                                                                    <div class="pull-right">
-                                                                        <a data-id="@univers.Id">
-                                                                            <i class="fa fa-search fa-lg"></i>
-                                                                        </a>
-                                                                        <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
-                                                                            <i class="fa icon-share-alt fa-lg"></i>
-                                                                        </a>
-                                                                        <a data-id="@univers.Id">
+                                                                        <a href="#renameResult" data-toggle="modal" data-id="@univers.Id">
                                                                             <i class="fa fa-pencil fa-lg"></i>
                                                                         </a>
                                                                         <a data-id="@univers.Id">
@@ -252,18 +129,132 @@
                     }
                 </div>
             </div>
-
         </div>
-        
+
+
+        <div role="tabpanel" class="tab-pane" id="profile">
+            <div class="panel panel-default panel-tab">
+                <div class="panel-heading resume">
+                    @if (Model.SavedUnivers != null && Model.SavedUnivers.UniversGroups.Any())
+                    {
+                    <h3 class="panel-title pull-left">
+                        <span class="blue">@Model.SavedUnivers.NbrFolder</span> répertoires,  <span class="blue">@Model.SavedUnivers.NbrUnivers</span> résultats
+                    </h3>
+                    <h3 class="panel-title pull-right">
+                        <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
+                        <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
+                        <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
+                    </h3>
+                    }
+                    else
+                    {
+                    <h3 class="panel-title pull-left">
+                        <span>@Model.Labels.NoSavedUnivers</span>
+                    </h3>
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    @if (Model.SavedUnivers != null && Model.SavedUnivers.UniversGroups.Any())
+                    {
+                        foreach (var item in Model.SavedUnivers.UniversGroups)
+                        {
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a class="btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
+                                        @item.Description
+                                        <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse@(item.Id)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <div class="row">
+
+                                        @if (item.UserUnivers.Any(p => p.Id > 0))
+                                                {
+                                        <div class="col-lg-6">
+                                            <ul class="list-group b-r">
+
+                                                @foreach (var univers in item.UserUnivers.Take(item.FirstColumnSize))
+                                                            {
+                                                        <li class="list-group-item">
+                                                            <span>@univers.Description</span>
+                                                            <div class="pull-right">
+                                                                <a data-id="@univers.Id">
+                                                                    <i class="fa fa-search fa-lg"></i>
+                                                                </a>
+                                                                <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
+                                                                    <i class="fa icon-share-alt fa-lg"></i>
+                                                                </a>
+                                                                <a href="#myModal5" data-toggle="modal" data-id="@univers.Id">
+                                                                    <i class="fa fa-pencil fa-lg"></i>
+                                                                </a>
+                                                                <a data-id="@univers.Id">
+                                                                    <i class="fa fa-trash-o fa-lg"></i>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                            }
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <ul class="list-group b-r">
+                                                @foreach (var univers in item.UserUnivers.Take(item.SecondeColumnSize))
+                                                            {
+                                                        <li class="list-group-item">
+                                                            <span>@univers.Description</span>
+                                                            <div class="pull-right">
+                                                                <a data-id="@univers.Id">
+                                                                    <i class="fa fa-search fa-lg"></i>
+                                                                </a>
+                                                                <a href="#myModal4" data-toggle="modal" data-id="@univers.Id" title="Déplacer le résultat">
+                                                                    <i class="fa icon-share-alt fa-lg"></i>
+                                                                </a>
+                                                                <a href="#myModal5" data-toggle="modal" data-id="@univers.Id">
+                                                                    <i class="fa fa-pencil fa-lg"></i>
+                                                                </a>
+                                                                <a data-id="@univers.Id">
+                                                                    <i class="fa fa-trash-o fa-lg"></i>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                            }
+                                            </ul>
+                                        </div>
+                                                }
+                                                else
+                                                {
+                                        <h3 class="panel-title text-center">
+                                            <span>@Model.Labels.NoSavedUnivers</span>
+                                        </h3>
+                                                }
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+
         <div role="tabpanel" class="tab-pane" id="alertes">
             <div class="panel panel-default panel-tab">
-                @*REPERTOIRES RESULTATS*@
                 <div class="panel-heading resume">
 
-                    @if (Model.SavedResults != null && Model.SavedResults.UniversGroups.Any())
+                    @if (Model.Alerts != null && Model.Alerts.Any())
                     {
                         <h3 class="panel-title pull-left">
-                            <span class="blue">@Model.SavedResults.NbrFolder</span> répertoires,  <span class="blue">@Model.SavedResults.NbrUnivers</span> résultats
+                            <span class="blue">@Model.Alerts.Count()</span> répertoires,  <span class="blue">@Model.Alerts.Sum(p => p.Occurrences.Count())</span> @Model.Labels.Occurrences
                         </h3>
                         <h3 class="panel-title pull-right">
                             <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
@@ -274,103 +265,82 @@
                     else
                     {
                         <h3 class="panel-title pull-left">
-                            <span>@Model.Labels.NoSavedUnivers</span>
+                            <span>@Model.Labels.NoAlerts</span>
                         </h3>
                     }
                     <div class="clearfix"></div>
                 </div>
 
                 <div class="panel-body">
-                    @if (Model.SavedResults != null && Model.SavedResults.UniversGroups.Any())
+                    @if (Model.Alerts != null && Model.Alerts.Any())
                     {
-                        foreach (var item in Model.SavedResults.UniversGroups)
+                        foreach (var item in Model.Alerts)
                         {
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading" role="tab" id="headingOne">
                                         <h4 class="panel-title">
-                                            <a class="btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                MON REPERTOIRE 1
+                                            <a class="btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
+                                                @item.Title
                                                 <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
                                             </a>
                                         </h4>
                                     </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+
+                                    <div id="collapse@(item.Id)" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                         <div class="panel-body">
+
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <h4><i class="fa fa-clock-o fa-lg"></i>&nbsp;Occurences</h4>
+                                                    <h4><i class="fa fa-clock-o fa-lg"></i>&nbsp;@Model.Labels.Occurrences</h4>
                                                     <ul class="list-group b-r">
-                                                        <li class="list-group-item">
-                                                            <span>Envoyée le 19/11/2012 à 07:55:29</span>
-                                                            <div class="pull-right">
-                                                                <a>
-                                                                    <i class="fa fa-search fa-lg"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <span>Envoyée le 19/11/2012 à 07:55:29</span>
-                                                            <div class="pull-right">
-                                                                <a>
-                                                                    <i class="fa fa-search fa-lg"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
+                                                        @foreach (var occurence in item.Occurrences)
+                                                        {
+                                                            <li class="list-group-item">
+                                                                <span>Envoyée le @occurence.SendDate.Date.ToShortDateString() </span>
+                                                                <div class="pull-right">
+                                                                    <a>
+                                                                        <i class="fa fa-search fa-lg"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </li>
+                                                        }
                                                     </ul>
                                                 </div>
+
                                                 <div class="col-lg-6">
-                                                    <h4><i class="fa fa-bell-o fa-lg"></i>&nbsp;Détails de l'alerte</h4>
+                                                    <h4><i class="fa fa-bell-o fa-lg"></i>&nbsp;@Model.Labels.AlertsDetails</h4>
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <ul class="list-group">
                                                                 <li class="list-group-item">
-                                                                    Périodicité
+                                                                    @Model.Labels.Periodicity  @item.PeriodicityDescription
                                                                 </li>
                                                                 <li class="list-group-item">
-                                                                    Planification horaire
+                                                                    @Model.Labels.Deadline @item.Frequency @item.PeriodicityValue
                                                                 </li>
                                                                 <li class="list-group-item">
-                                                                    Date d'expiration
+                                                                    @Model.Labels.TimeSchedule	@item.TimeSchedule
                                                                 </li>
                                                                 <li class="list-group-item">
-                                                                    Type d'alerte
+                                                                    @Model.Labels.ExpirationDate @item.ExpirationDate.ToShortDateString()
                                                                 </li>
                                                                 <li class="list-group-item">
-                                                                    Déstinataire
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <ul class="list-group">
-                                                                <li class="list-group-item">
-                                                                    Quotidienne
+                                                                    @Model.Labels.AlertType @item.Module
                                                                 </li>
                                                                 <li class="list-group-item">
-                                                                    16:00
+                                                                    @Model.Labels.Receiver @item.Recipients
                                                                 </li>
-                                                                <li class="list-group-item">
-                                                                    31/12/2020
-                                                                </li>
-                                                                <li class="list-group-item">
-                                                                    Bilan présents/absents
-                                                                </li>
-                                                                <li class="list-group-item">
-                                                                    guillaume.facon@tnsmi.fr
-                                                                </li>
-
-
-
-
-
                                                             </ul>
                                                         </div>
                                                     </div>
 
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         }
@@ -381,3 +351,59 @@
         </div>
     </div>
 </div>
+
+
+<div id="moveResult" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"> @Model.Labels.MoveResultTitle </h4>
+            </div>
+            <div class="modal-body">
+                <p>@Model.Labels.MoveSelectedResult</p>
+                <div class="input-group-btn dropdown" dropdown="">
+                    <button id="branch" type="button" class="btn btn-default select-recherche form-control" data-branch="@Model.SavedResults.UniversGroups.FirstOrDefault().Id" data-toggle="dropdown">@Model.SavedResults.UniversGroups.FirstOrDefault().Description <span class="caret"></span></button>
+                    <ul class="dropdown-menu bg-blue form-control">
+                        @foreach (var item in Model.SavedResults.UniversGroups)
+                        {
+                            if (item== Model.SavedResults.UniversGroups.FirstOrDefault())
+                            {
+                                <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                            else
+                            {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                        }
+                    </ul>
+
+                    <p></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="renameResult" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle</h4>
+            </div>
+            <div class="modal-body">
+                <p> @Model.Labels.RenameSelectedFolder</p>
+                <input type="text" class="form-control" id ="folderName"placeholder="Entrez un nom">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnRenameResultFodler" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    @Scripts.Render("~/bundles/myAdExpress")
+}
