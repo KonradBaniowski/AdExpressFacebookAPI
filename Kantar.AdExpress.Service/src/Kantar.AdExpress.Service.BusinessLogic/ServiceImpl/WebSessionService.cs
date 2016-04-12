@@ -305,6 +305,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
+        public WebSessionResponse GetWebSessionLanguage(string webSessionId)
+        {
+            WebSessionResponse response = new WebSessionResponse
+            {
+                MediaScheduleStep = MediaScheduleStep.Market
+            };
+            var _webSession = (WebSession)WebSession.Load(webSessionId);
+           
+
+            return response;
+        }
+
 
         public void SaveCurrentModule(string webSessionId, int moduleId)
         {
