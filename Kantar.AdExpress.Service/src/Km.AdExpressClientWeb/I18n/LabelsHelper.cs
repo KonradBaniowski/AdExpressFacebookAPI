@@ -48,7 +48,7 @@ namespace Km.AdExpressClientWeb.I18n
                 QuestionTagDefault = GestionWeb.GetWebWord(LanguageConstantes.QuestionTagCode, siteLanguage),
                 QuestionTag1 = GestionWeb.GetWebWord(LanguageConstantes.QuestionTag1Code, siteLanguage),
                 QuestionTag2 = GestionWeb.GetWebWord(LanguageConstantes.QuestionTag2Code, siteLanguage),
-                QuestionTag3 = GestionWeb.GetWebWord(LanguageConstantes.QuestionTag3Code, siteLanguage),
+                QuestionTag3 = GestionWeb.GetWebWord(LanguageConstantes.QuestionTag3Code, siteLanguage)
             };
             return result;
         }
