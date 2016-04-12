@@ -1,0 +1,114 @@
+﻿@model  Kantar.AdExpress.Service.Core.Domain.AdExpressUniversResponse
+
+<div role="tabpanel" class="tab-pane active" id="@(Model.UniversType)">
+    <div class="panel panel-default panel-tab">
+        <div class="panel-heading resume">
+            @if (Model != null && Model.UniversGroups.Any())
+            {
+                <h3 class="panel-title pull-left">
+                    <span class="blue">@Model.NbrFolder</span> répertoires,  <span class="blue">@Model.NbrUnivers</span> résultats
+                </h3>
+                            <h3 class="panel-title pull-right">
+                                <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
+                                <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
+                                <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
+                            </h3>
+            }
+            else
+            {
+                <h3 class="panel-title pull-left">
+                    <span>@Model.NoSavedUnivers</span>
+                </h3>
+            }
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            @if (Model != null && Model.UniversGroups.Any())
+            {
+                foreach (var item in Model.UniversGroups)
+                {
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a class="btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
+                                        @item.Description
+                                        <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse@(item.Id)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <div class="row">
+
+                                        @if (item.UserUnivers.Any(p => p.Id > 0))
+                                        {
+                                            <div class="col-lg-6">
+                                                <ul class="list-group b-r">
+
+                                                    @foreach (var univers in item.UserUnivers.Take(item.FirstColumnSize))
+                                                    {
+                                                        <li class="list-group-item">
+                                                            <span>@univers.Description</span>
+                                                            <div class="pull-right">
+                                                                <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                    <i class="fa fa-search fa-lg"></i>
+                                                                </a>
+                                                                <a class="btnMoveResult" data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
+                                                                    <i class="fa icon-share-alt fa-lg"></i>
+                                                                </a>
+                                                                <a class="btnRenameResult" data-toggle="modal" id="btnRenameResult" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                    <i class="fa fa-pencil fa-lg"></i>
+                                                                </a>
+                                                                <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                    <i class="fa fa-trash-o fa-lg"></i>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                                        <div class="col-lg-6">
+                                                            <ul class="list-group b-r">
+                                                                @foreach (var univers in item.UserUnivers.Take(item.SecondeColumnSize))
+                                                                {
+                                                                    <li class="list-group-item">
+                                                                        <span>@univers.Description</span>
+                                                                        <div class="pull-right">
+                                                                            <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                                <i class="fa fa-search fa-lg"></i>
+                                                                            </a>
+                                                                            <a class="btnMoveResult" data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
+                                                                                <i class="fa icon-share-alt fa-lg"></i>
+                                                                            </a>
+                                                                            <a class="btnRenameResult" data-toggle="modal" id="btnRenameResult" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                                <i class="fa fa-pencil fa-lg"></i>
+                                                                            </a>
+                                                                            <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                                <i class="fa fa-trash-o fa-lg"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                        }
+                                        else
+                                        {
+                                            <h3 class="panel-title text-center">
+                                                <span>@Model.NoSavedUnivers</span>
+                                            </h3>
+                                        }
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+

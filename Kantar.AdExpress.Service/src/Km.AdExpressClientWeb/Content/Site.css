@@ -409,6 +409,10 @@ input {
         background-color: #bb1415;
     }
 
+.tile-cursor {
+    cursor: pointer;
+}
+
 .padding-lr-10 {
     padding: 0 10px;
 }
@@ -422,7 +426,7 @@ input {
 }
 
 .flip-container, .front, .back {
-    height: 150px;
+    /*height: 150px;*/
     padding: 20px 15px;
     width: 100%;
 }
@@ -479,6 +483,7 @@ input {
 .tile-deploy a.list-group-item {
     border: none;
     background-color: #afd702;
+    font-size: 12px;
 }
 
     .tile-deploy a.list-group-item:hover {
@@ -1109,6 +1114,14 @@ a {
     color: #fff;
     -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.information-title-width {
+    width: 420px;
+}
+
+.information-title {
+    margin-top: 0px!important;
 }
 
 .bg-period {

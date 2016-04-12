@@ -643,12 +643,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public AdExpressUniversResponse GetResultUnivers(string webSessionId)
         {
+            webSession = (WebSession)WebSession.Load(webSessionId);
             var result = new AdExpressUniversResponse
             {
                 UniversType = UniversType.Result,
-                UniversGroups = new List<UserUniversGroup>()
+                UniversGroups = new List<UserUniversGroup>(),
+                NoSavedUnivers = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.NoSavedUniversCode, webSession.SiteLanguage)
             };
-            webSession = (WebSession)WebSession.Load(webSessionId);
+            
             result.SiteLanguage = webSession.SiteLanguage;
             var dsListRepertory = MyResultsDAL.GetData(webSession);
             List<UserUnivers> userUniversList = new List<UserUnivers>();
@@ -694,13 +696,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public AdExpressUniversResponse GetUnivers(string webSessionId,string branch, string listUniverseClientDescription)
         {
             #region Init
+            webSession = (WebSession)WebSession.Load(webSessionId);
             var result = new AdExpressUniversResponse
             {
                 UniversType = UniversType.Univers,
-                UniversGroups = new List<UserUniversGroup>()
+                UniversGroups = new List<UserUniversGroup>(),
+                NoSavedUnivers = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.NoSavedUniversCode, webSession.SiteLanguage)
             };
-            List<UserUnivers> userUniversList = new List<UserUnivers>();
-            webSession = (WebSession)WebSession.Load(webSessionId);
+            List<UserUnivers> userUniversList = new List<UserUnivers>();            
             result.SiteLanguage = webSession.SiteLanguage;
             #endregion
             #region Repository

@@ -18,10 +18,12 @@ namespace Km.AdExpressClientWeb.Controllers
     public class UniverseController : Controller
     {
         private IUniverseService _universeService;
+        private IMyAdExpressService _myAdExpressService;
 
-        public UniverseController(IUniverseService universeService)
+        public UniverseController(IUniverseService universeService, IMyAdExpressService myAdExpressService)
         {
             _universeService = universeService;
+            _myAdExpressService = myAdExpressService;
         }
 
         // GET: Universe
@@ -192,6 +194,26 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult result = new JsonResult();
             var claim = new ClaimsPrincipal(User.Identity);            
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            return result;
+        }
+        [HttpPost]
+        public string RenameUnivers(string name, string universId)
+        {
+            string result = "";
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            result = _myAdExpressService.RenameUnivers(name, universId, webSessionId);
+            return result;
+        }
+
+        public string MoveSession(string idOldDirectory, string idNewDirectory,string id)
+        {
+            string result = "";
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            result = _myAdExpressService.MoveSession(id,idOldDirectory, idNewDirectory, webSessionId);
+            //if (String.IsNullOrEmpty(result))
+            //    return RedirectToAction("MyAdExpress", "Home");
             return result;
         }
     }

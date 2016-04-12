@@ -14,6 +14,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Date.DAL;
+using Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -24,13 +25,15 @@ namespace Km.AdExpressClientWeb.Controllers
         private IApplicationUserManager _userManager;
         private IWebSessionService _webSessionService;
         private IUniverseService _universService;
+        private IInfosNewsService _infosNewsService;
 
-        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService, IUniverseService universService)
+        public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService, IUniverseService universService, IInfosNewsService infosNewsService)
         {
             _userManager = applicationUserManager;
             _rightService = rightService;
             _webSessionService = webSessionService;
             _universService = universService;
+            _infosNewsService = infosNewsService;
         }
 
         public ActionResult Index()
@@ -41,88 +44,33 @@ namespace Km.AdExpressClientWeb.Controllers
             var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            //var test = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)
             var resList = _rightService.GetModulesList(idWS);
             var res = _rightService.GetModules(idWS);
-            var docu = new Documents()
-            {
-                Id = 1,
-                Label = "AdExpress News",
-                InfosNews = new List<InfosNews>()
-                {
-                    new InfosNews()
-                    {
-                        Label = "Novembre 2015",
-                        Url = "/AdExNews/AdexNews_201511.pdf"
-                    },
-                    new InfosNews()
-                    {
-                        Label = "Octobre 2015",
-                        Url = "/AdExNews/AdexNews_201510.pdf"
-                    }
-                }
-            };
+            List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
+            documents.Add(new Documents()
+                        {
+                            Id = 3,
+                            Label = "Documents",
+                            InfosNews = new List<InfosNews>()
+                            {
+                                new InfosNews()
+                                {
+                                    Label = "files1",
+                                    Url = "cerfa.pdf"
+                                },
+                                new InfosNews()
+                                {
+                                    Label = "files2",
+                                    Url = "test.pdf"
+                                }
+                            }
+                        });
 
             var Home = new HomePageViewModel()
             {
                 ModuleRight = res,
                 Modules = resList,
-                Documents = new List<Documents>() {
-                    new Documents()
-                    {
-                        Id = 1,
-                        Label = "AdExpress News",
-                        InfosNews = new List<InfosNews>()
-                        {
-                            new InfosNews()
-                            {
-                                Label = "Novembre 2015",
-                                Url = "/AdExNews/AdexNews_201511.pdf"
-                            },
-                            new InfosNews()
-                            {
-                                Label = "Octobre 2015",
-                                Url = "/AdExNews/AdexNews_201510.pdf"
-                            }
-                        }
-                    },
-                    new Documents()
-                    {
-                        Id = 2,
-                        Label = "AdExpress Report",
-                        InfosNews = new List<InfosNews>()
-                        {
-                            new InfosNews()
-                            {
-                                Label = "Novembre 2015",
-                                Url = "/AdExReport/AdExReport_201511.pdf"
-                            },
-                            new InfosNews()
-                            {
-                                Label = "Octobre 2015",
-                                Url = "/AdExReport/AdExReport_201510.pdf"
-                            }
-                        }
-                    },
-                     new Documents()
-                    {
-                        Id = 3,
-                        Label = "Documents",
-                        InfosNews = new List<InfosNews>()
-                        {
-                            new InfosNews()
-                            {
-                                Label = "files1",
-                                Url = "cerfa.pdf"
-                            },
-                            new InfosNews()
-                            {
-                                Label = "files2",
-                                Url = "test.pdf"
-                            }
-                        }
-                    }
-                }
+                Documents = documents
             };
             return View(Home);
         }
@@ -146,7 +94,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var model = new MyAdExpressViewModel
             {
-                SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>() },
+                SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>()},
                 SavedUnivers = new Domain.AdExpressUniversResponse { UniversType = Domain.UniversType.Univers, UniversGroups = new List<Domain.UserUniversGroup>() },
                 Alerts = new List<Domain.Alert>()
             };
@@ -183,6 +131,25 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
+        public ActionResult ReloadSession()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var model = new Domain.AdExpressUniversResponse
+            {
+                UniversType = Domain.UniversType.Result,
+                UniversGroups = new List<Domain.UserUniversGroup>()
+            };
+            var result = _universService.GetResultUnivers(idWebSession);
+            foreach (var group in result.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model = result;
+            return  PartialView("MyAdExpressSavedResults", model);
+        }
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
         {
             PresentationModel result = new PresentationModel

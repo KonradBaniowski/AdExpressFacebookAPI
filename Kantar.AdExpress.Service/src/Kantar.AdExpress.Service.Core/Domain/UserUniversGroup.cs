@@ -63,6 +63,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<UserUniversGroup> UniversGroups { get; set; }
         public UniversType UniversType { get; set; }
         public int SiteLanguage { get; set; }
+
+        public string NoSavedUnivers { get; set; }
     }
     
     public enum UniversType

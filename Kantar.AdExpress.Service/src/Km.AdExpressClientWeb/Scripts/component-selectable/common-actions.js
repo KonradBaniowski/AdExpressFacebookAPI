@@ -32,7 +32,10 @@ function SelectedItems(event, ui) {
     this.itemIds = itemIds;
     var universeIdCalling = $(this).closest('.panel').attr('data-universe');
     var branchId = $(this).closest('.panel').attr('data-branch');
-    var universesToUpdate = $("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
+    var prevs = $(this).closest('.panel').prevAll();
+    var nextOne = $(this).closest('.panel').next();
+    var universesToUpdate = prevs.add(nextOne);
+        //$("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
     var idMedias = [];
     if ($('.tuile-medias-active').length > 0) {
         $.each($('.tuile-medias-active'), function (index, value) {
