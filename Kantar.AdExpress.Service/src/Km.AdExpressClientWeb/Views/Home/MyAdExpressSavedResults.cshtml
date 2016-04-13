@@ -17,7 +17,7 @@
             else
             {
                 <h3 class="panel-title pull-left">
-                    <span>@Model.NoSavedUnivers</span>
+                    <span>@Model.Labels.NoSavedUnivers</span>
                 </h3>
             }
             <div class="clearfix"></div>
@@ -54,10 +54,10 @@
                                                                 <a data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-search fa-lg"></i>
                                                                 </a>
-                                                                <a class="btnMoveResult" data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
+                                                                <a class="btnMove@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
                                                                     <i class="fa icon-share-alt fa-lg"></i>
                                                                 </a>
-                                                                <a class="btnRenameResult" data-toggle="modal" id="btnRenameResult" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                <a class="btnRename@(Model.UniversType)" data-toggle="modal"  data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-pencil fa-lg"></i>
                                                                 </a>
                                                                 <a data-id="@univers.Id" data-directory-id="@item.Id">
@@ -70,7 +70,7 @@
                                             </div>
                                                         <div class="col-lg-6">
                                                             <ul class="list-group b-r">
-                                                                @foreach (var univers in item.UserUnivers.Take(item.SecondeColumnSize))
+                                                                @foreach (var univers in item.UserUnivers.GetRange(item.FirstColumnSize, item.SecondeColumnSize))
                                                                 {
                                                                     <li class="list-group-item">
                                                                         <span>@univers.Description</span>
@@ -78,10 +78,10 @@
                                                                             <a data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                 <i class="fa fa-search fa-lg"></i>
                                                                             </a>
-                                                                            <a class="btnMoveResult" data-toggle="modal" id="btnMoveResult" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
+                                                                            <a class="btnMove@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
                                                                                 <i class="fa icon-share-alt fa-lg"></i>
                                                                             </a>
-                                                                            <a class="btnRenameResult" data-toggle="modal" id="btnRenameResult" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                            <a class="btnRename@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                 <i class="fa fa-pencil fa-lg"></i>
                                                                             </a>
                                                                             <a data-id="@univers.Id" data-directory-id="@item.Id">
@@ -96,7 +96,7 @@
                                         else
                                         {
                                             <h3 class="panel-title text-center">
-                                                <span>@Model.NoSavedUnivers</span>
+                                                <span>@Model.Labels.NoSavedUnivers</span>
                                             </h3>
                                         }
 
@@ -112,3 +112,56 @@
     </div>
 </div>
 
+<div id="move@(Model.UniversType)" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"> @Model.Labels.MoveResultTitle </h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group-btn dropdown" dropdown="">
+                    <button id="result" type="button" class="btn btn-default form-control bg-black-only id@(Model.UniversType)"
+                            data-result="@Model.UniversGroups.FirstOrDefault().Id"
+                            data-toggle="dropdown">
+                        @Model.UniversGroups.FirstOrDefault().Description
+                    </button>
+                    <ul class="dropdown-menu bg-blue form-control">
+                        @foreach (var item in Model.UniversGroups)
+                        {
+                            if (item == Model.UniversGroups.FirstOrDefault())
+                            {
+                                <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                            else
+                            {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                        }
+                    </ul>
+                    <p></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnMove@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="rename@(Model.UniversType)" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle</h4>
+            </div>
+            <div class="modal-body">
+                <p> @Model.Labels.RenameSelectedFolder</p>
+                <input type="text" class="form-control" id="new@(Model.UniversType)Name" placeholder="Entrez un nom">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnRename@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

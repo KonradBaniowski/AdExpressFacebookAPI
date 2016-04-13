@@ -130,61 +130,6 @@
         </div>
     </div>
 
-
-    <div id="moveResult" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header header-kantar-popup">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="font-normal m-t-none m-b-md text-primary-lt"> @Model.Labels.MoveResultTitle </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group-btn dropdown" dropdown="">
-                        <button id="result" type="button" class="btn btn-default form-control bg-black-only"
-                                data-result="@Model.SavedResults.UniversGroups.FirstOrDefault().Id"
-                                data-toggle="dropdown">
-                            @Model.SavedResults.UniversGroups.FirstOrDefault().Description
-                        </button>
-                        <ul class="dropdown-menu bg-blue form-control">
-                            @foreach (var item in Model.SavedResults.UniversGroups)
-                        {
-                            if (item== Model.SavedResults.UniversGroups.FirstOrDefault())
-                            {
-                                    <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
-                            }
-                            else
-                            {
-                                    <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
-                            }
-                        }
-                        </ul>
-                        <p></p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-valider" id="btnMoveUnivers" data-dismiss="modal">@Model.Labels.Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="renameResult" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header header-kantar-popup">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle</h4>
-                </div>
-                <div class="modal-body">
-                    <p> @Model.Labels.RenameSelectedFolder</p>
-                    <input type="text" class="form-control" id="universName" placeholder="Entrez un nom">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-valider" id="btnRenameUnivers" data-dismiss="modal">@Model.Labels.Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @section scripts {
     @Scripts.Render("~/bundles/myAdExpress")
 }

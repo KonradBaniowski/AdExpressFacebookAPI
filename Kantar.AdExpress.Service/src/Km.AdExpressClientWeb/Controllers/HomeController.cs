@@ -15,7 +15,8 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Date.DAL;
 using Kantar.AdExpress.Service.Core.Domain;
-using TNS.AdExpress.Web.Core.Utilities;
+using KM.Framework.Constantes;
+
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -159,9 +160,28 @@ namespace Km.AdExpressClientWeb.Controllers
             model = result;
             return  PartialView("MyAdExpressSavedResults", model);
         }
-        public ActionResult RedirectToOldWebSite()
+
+
+        public ActionResult ReloadUnivers()
         {
-            return new RedirectResult("http://www.google.com");
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var model = new Domain.AdExpressUniversResponse
+            {
+                UniversType = Domain.UniversType.Univers,
+                UniversGroups = new List<Domain.UserUniversGroup>()
+            }; string branch = "2";
+            string listUniversClientDescription = string.Empty;
+            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
+            foreach (var group in univers.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model= univers;
+            return PartialView("MyAdExpressSavedResults", model);
+
         }
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
         {
@@ -206,16 +226,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExpirationDate = GestionWeb.GetWebWord(LanguageConstantes.ExpirationDate, siteLanguage),
                 AlertType = GestionWeb.GetWebWord(LanguageConstantes.AlertType, siteLanguage),
                 Receiver= GestionWeb.GetWebWord(LanguageConstantes.Receiver, siteLanguage),
-                TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage),
-                MoveSelectedResult = GestionWeb.GetWebWord(LanguageConstantes.MoveSelectedResult, siteLanguage),
-                MoveResultTitle = GestionWeb.GetWebWord(LanguageConstantes.MoveSelectedResult, siteLanguage),
-                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
-                RenameFolderTitle= GestionWeb.GetWebWord(LanguageConstantes.RenameFolderTitle, siteLanguage),
-                RenameNewFodler= GestionWeb.GetWebWord(LanguageConstantes.RenameNewFodler, siteLanguage),
-                SelectFolderToDelete= GestionWeb.GetWebWord(LanguageConstantes.SelectFolderToDelete, siteLanguage),
-                SelectFolder= GestionWeb.GetWebWord(LanguageConstantes.SelectFolder, siteLanguage),
-                RenameSelectedFolder= GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
-                ErrorMsgNoFolderCreated= GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage)
+                TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage)
             };
             return result;
         }

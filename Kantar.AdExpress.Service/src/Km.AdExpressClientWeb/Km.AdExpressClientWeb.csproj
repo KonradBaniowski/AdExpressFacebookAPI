@@ -1425,8 +1425,6 @@
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -1450,8 +1448,15 @@
     <EmbeddedResource Include="Aspose.Cells.lic" />
     <Content Include="Content\pdf\cerfa.pdf" />
     <Content Include="Content\pdf\Planning mise à jour Adexpress.pdf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\component-selectable\common-actions.js" />
     <Content Include="Scripts\datepicker-fr.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -1570,9 +1575,6 @@
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -1645,6 +1647,10 @@
     <ProjectReference Include="..\Kantar.AdExpress.Service.Core\Kantar.AdExpress.Service.Core.csproj">
       <Project>{1d6fbd14-eee6-45db-88b9-d99386d23e53}</Project>
       <Name>Kantar.AdExpress.Service.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KM.Framework\KM.Framework.csproj">
+      <Project>{6a14be5e-e261-4821-8531-2fd6ab03c686}</Project>
+      <Name>KM.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
