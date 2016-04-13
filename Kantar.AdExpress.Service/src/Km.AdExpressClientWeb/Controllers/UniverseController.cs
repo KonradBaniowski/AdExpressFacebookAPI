@@ -270,5 +270,17 @@ namespace Km.AdExpressClientWeb.Controllers
                 result = _myAdExpressService.DeleteSession(universId, webSessionId);
             return result;
         }
+         public Domain.AdExpressResponse CreateDirectory(string directoryName, Domain.UniversType type)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (!String.IsNullOrEmpty(webSessionId))
+                result = _myAdExpressService.CreateDirectory(directoryName, type,webSessionId);
+            return result;
+        }
     }
 }

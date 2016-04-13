@@ -11,7 +11,7 @@
                     <span class="blue">@Model.NbrFolder</span> répertoires,  <span class="blue">@Model.NbrUnivers</span> résultats
                 </h3>
                             <h3 class="panel-title pull-right">
-                                <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
+                                <a id="btnCreateDirectory@(Model.UniversType)"data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
                                 <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
                                 <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
                             </h3>
@@ -163,6 +163,42 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-valider" id="btnRename@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="createDirectory@(Model.UniversType)" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle @Model.UniversType</h4>
+            </div>
+            <div class="modal-body">
+                <p> @Model.Labels.RenameSelectedFolder</p>
+                <input type="text" class="form-control" id="newDirectory@(Model.UniversType)Name" placeholder="Entrez un nom">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnValidCreateDirectory@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="renameDirectory@(Model.UniversType)" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle </h4>
+            </div>
+            <div class="modal-body">
+                <p> @Model.Labels.RenameSelectedFolder</p>
+                <input type="text" class="form-control" id="newDirectory@(Model.UniversType)Name" placeholder="Entrez un nom">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnCreateDirectory@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
         </div>
     </div>
