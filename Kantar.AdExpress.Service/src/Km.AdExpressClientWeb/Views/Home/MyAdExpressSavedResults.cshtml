@@ -2,7 +2,7 @@
 @using Kantar.AdExpress.Service.Core.Domain;
 @*@(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : ""*@
 
-<div role="tabpanel"  @(Model.UniversType == UniversType.Result ? "class=tab-pane active":"class=tab-pane") id="@(Model.UniversType)">
+<div role="tabpanel"  class="@(Model.UniversType == UniversType.Result ? "tab-pane active" : "tab-pane")" id="@(Model.UniversType)">
     <div class="panel panel-default panel-tab">
         <div class="panel-heading resume">
             @if (Model != null && Model.UniversGroups.Any())
