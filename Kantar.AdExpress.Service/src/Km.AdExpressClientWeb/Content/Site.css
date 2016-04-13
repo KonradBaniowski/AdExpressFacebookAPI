@@ -2047,13 +2047,17 @@ ul.ui-selectable {
     background-image: none;
 }
 
+#loader{
+    text-align:center;
+}
+
 #loader .modal-footer {
     position: relative;
     width: 100px;
     top: 50%;
     margin: -19px -100px;
-    left: 50%;
     border-top: none;
+    display:inline-block !important;
 }
 
 #tab-myadexpress {
