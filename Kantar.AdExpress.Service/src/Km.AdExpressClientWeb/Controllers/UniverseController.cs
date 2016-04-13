@@ -197,12 +197,12 @@ namespace Km.AdExpressClientWeb.Controllers
             return result;
         }
         [HttpPost]
-        public string RenameUnivers(string name, string universId)
+        public string RenameSession(string name, string universId)
         {
             string result = "";
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            result = _myAdExpressService.RenameUnivers(name, universId, webSessionId);
+            result = _myAdExpressService.RenameSession(name, universId, webSessionId);
             return result;
         }
 
@@ -212,6 +212,24 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             result = _myAdExpressService.MoveSession(id,idOldDirectory, idNewDirectory, webSessionId);
+            return result;
+        }
+
+        public string RenameUnivers(string name, string universId)
+        {
+            string result = "";
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            result = _myAdExpressService.RenameUnivers(name, universId, webSessionId);
+            return result;
+        }
+
+        public string MoveUnivers(string idOldDirectory, string idNewDirectory, string id)
+        {
+            string result = "";
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            result = _myAdExpressService.MoveUnivers(id, idOldDirectory, idNewDirectory, webSessionId);
             return result;
         }
     }

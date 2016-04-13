@@ -151,6 +151,27 @@ namespace Km.AdExpressClientWeb.Controllers
             model = result;
             return  PartialView("MyAdExpressSavedResults", model);
         }
+
+        public ActionResult ReloadUnivers()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var model = new Domain.AdExpressUniversResponse
+            {
+                UniversType = Domain.UniversType.Univers,
+                UniversGroups = new List<Domain.UserUniversGroup>()
+            }; string branch = "2";
+            string listUniversClientDescription = string.Empty;
+            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
+            foreach (var group in univers.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model= univers;
+            return PartialView("MyAdExpressSavedResults", model);
+        }
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
         {
             PresentationModel result = new PresentationModel

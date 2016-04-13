@@ -2096,6 +2096,7 @@ ul.ui-selectable {
 }
 
 #tab-content-myadexpress .panel-group {
+    margin-bottom: 0px;
 }
 
     #tab-content-myadexpress .panel-group .panel-primary {
