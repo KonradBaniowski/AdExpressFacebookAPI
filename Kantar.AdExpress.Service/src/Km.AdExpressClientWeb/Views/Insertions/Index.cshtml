@@ -557,14 +557,14 @@
         });
 
         //Change Icone DetailLevel quand hide/show collapse
-        $(document).on('shown.bs.collapse', '#lvlperso', function (e) {
+        $(document).on('show.bs.collapse', '#lvlperso', function (e) {
             $(this)
                 .parent()
                 .find(".glyphicon-chevron-right")
                 .removeClass("glyphicon-chevron-right")
                 .addClass("glyphicon-chevron-down");
         });
-        $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
+        $(document).on('hide.bs.collapse', '#lvlperso', function (e) {
             $(this)
                 .parent()
                 .find(".glyphicon-chevron-down")
