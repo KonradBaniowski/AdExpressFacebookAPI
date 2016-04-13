@@ -24,21 +24,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private List<GenericDetailLevel> defaultDetailItemList = null;
         private List<DetailLevelItemInformation> allowedDetailItemList = null;
 
-        public List<DetailLevel> GetDetailLevelItem(string idWebSession, int vehicleId)
+        public List<DetailLevel> GetDetailLevelItem(string idWebSession, int vehicleId, bool isVehicleChanged)
         {
             WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
             List<DetailLevel> detailLevelList = new List<DetailLevel>();
+            ArrayList levels = new ArrayList();
 
             allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(vehicleId);
             defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(vehicleId);
+
+            if (isVehicleChanged)
+            {
+                foreach (GenericDetailLevel detailItem in defaultDetailItemList)
+                    levels = detailItem.LevelIds;
+
+                CustomerSession.DetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
+                CustomerSession.Save();
+            }
 
             for (int i = 1; i < 4; i ++) {
                 DetailLevel detaiLevelltmp = new DetailLevel();
                 detaiLevelltmp.Items = new List<DetailLevelItems>();
                 detaiLevelltmp.level = i;
+                DetailLevelItemInformation.Levels loadDetailLevel = new DetailLevelItemInformation.Levels();
 
-            
-            
                 if (((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))
                     && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.outdoor))
                     || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INSTORE_ACCESS_FLAG))
@@ -51,16 +60,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     )
                 {
 
+                    if (CustomerSession.DetailLevel.LevelIds.Count >= i)
+                    {
+                        loadDetailLevel = (DetailLevelItemInformation.Levels)CustomerSession.DetailLevel.LevelIds[i - 1];
+                    }
+
                     foreach (DetailLevelItemInformation currentDetailLevelItem in allowedDetailItemList)
                     {
                         
                         if (CanAddDetailLevelItem(CustomerSession, currentDetailLevelItem))
                         {
-                            detaiLevelltmp.Items.Add(new DetailLevelItems
+
+                            DetailLevelItems tmpDetailLevelItems = new DetailLevelItems
                             {
                                 Label = GestionWeb.GetWebWord(currentDetailLevelItem.WebTextId, CustomerSession.SiteLanguage),
                                 DetailLevel = currentDetailLevelItem.Id.GetHashCode().ToString()
-                            });
+                            };
+
+                            if (loadDetailLevel == currentDetailLevelItem.Id)
+                            {
+                                tmpDetailLevelItems.IsSelected = true;
+                            }
+
+
+                            detaiLevelltmp.Items.Add(tmpDetailLevelItems);
                         }
                     }
                 }
