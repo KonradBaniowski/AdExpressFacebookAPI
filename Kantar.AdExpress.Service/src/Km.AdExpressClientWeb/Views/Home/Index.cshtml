@@ -2,8 +2,7 @@
 @using TNS.AdExpress.Constantes.Web
 @{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_LayoutHome.cshtml";
-    var oldSiteUrl = "http://localhost/index.aspx?";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";  
     var urlParameters = string.Format("http://localhost/index.aspx?l={0}&p={1}&m=", Model.EncryptedLogin, Model.EncryptedPassword);
 }
 
