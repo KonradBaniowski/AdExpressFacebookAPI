@@ -23,7 +23,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     var webSession = (WebSession)WebSession.Load(webSessionId);
                     result.Success = MyResultsDAL.MoveSession(Int64.Parse(idOldDirectory), Int64.Parse(idNewDirectory), Int64.Parse(id), webSession);
                     result.Message = "Success";
-                    
+
                 }
                 else
                 {
@@ -112,7 +112,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         }
                         else {
                             //Error : L'univers already exists
-                             result.Message= GestionWeb.GetWebWord(1101, webSession.SiteLanguage);
+                            result.Message = GestionWeb.GetWebWord(1101, webSession.SiteLanguage);
                         }
                     }
                     else if (name.Length == 0)
@@ -122,7 +122,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     else {
                         // Error : max field length exceeded
-                         result.Message= GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+                        result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
                     }
 
                 }
@@ -145,20 +145,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 Message = string.Empty
             };
             var webSession = (WebSession)WebSession.Load(webSessionId);
-                     
+
             try
             {
 
-                    if (!String.IsNullOrEmpty(id) && !String.IsNullOrEmpty(idOldGroupUnivers) && !String.IsNullOrEmpty(idNewGroupUnivers) && !String.IsNullOrEmpty(webSessionId))
-                    {
-                        UniversDAL.UniversListDataAccess.MoveUniverse(Int64.Parse(idOldGroupUnivers), Int64.Parse(idNewGroupUnivers), Int64.Parse(id), webSession);
-                        result.Message = "Success";
-                        result.Success = true;
-                    }
-                    else if (String.IsNullOrEmpty(id))
-                    {
-                        result.Message = GestionWeb.GetWebWord(926, webSession.SiteLanguage);
-                    }
+                if (!String.IsNullOrEmpty(id) && !String.IsNullOrEmpty(idOldGroupUnivers) && !String.IsNullOrEmpty(idNewGroupUnivers) && !String.IsNullOrEmpty(webSessionId))
+                {
+                    UniversDAL.UniversListDataAccess.MoveUniverse(Int64.Parse(idOldGroupUnivers), Int64.Parse(idNewGroupUnivers), Int64.Parse(id), webSession);
+                    result.Message = "Success";
+                    result.Success = true;
+                }
+                else if (String.IsNullOrEmpty(id))
+                {
+                    result.Message = GestionWeb.GetWebWord(926, webSession.SiteLanguage);
+                }
             }
             catch (Exception ex)
             {
@@ -167,7 +167,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public AdExpressResponse DeleteUnivers (string id, string webSessionId)
+        public AdExpressResponse DeleteUnivers(string id, string webSessionId)
         {
             var result = new AdExpressResponse
             {
@@ -219,7 +219,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (!UniversDAL.UniversListDataAccess.IsGroupUniverseExist(webSession, name))
                     {
                         UniversDAL.UniversListDataAccess.RenameGroupUniverse(name, Int64.Parse(universId), webSession);
-                        result.Message= GestionWeb.GetWebWord(934, webSession.SiteLanguage);
+                        result.Message = GestionWeb.GetWebWord(934, webSession.SiteLanguage);
                         result.Success = true;
                     }
                     else
@@ -229,7 +229,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 else
                 {
-                     result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+                    result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
                 }
             }
             catch (System.Exception ex)
@@ -241,6 +241,64 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        
+        public AdExpressResponse CreateDirectory(string directoryName, UniversType type, string webSessionId)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            try
+            {
+                if (type == UniversType.Result)
+                {
+                    result = CreateSessionDirectory(directoryName, type, webSession);
+                }
+            }
+            catch (System.Exception exc)
+            {
+                //if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                //{
+                //    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                //}
+            }
+            return result;
+        }
+
+        private AdExpressResponse CreateSessionDirectory(string directoryName, UniversType type, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            if (!String.IsNullOrEmpty(directoryName) && directoryName.Length != 0 && directoryName.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+            {
+                if (!MyResultsDAL.IsDirectoryExist(webSession, directoryName))
+                {
+                    if (MyResultsDAL.CreateDirectory(directoryName, webSession))
+                    {
+                        result.Message = GestionWeb.GetWebWord(835, webSession.SiteLanguage);
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Message = GestionWeb.GetWebWord(836, webSession.SiteLanguage);
+                    }
+                }
+                else
+                {
+                    result.Message = GestionWeb.GetWebWord(834, webSession.SiteLanguage);
+                }
+            }
+            else if (directoryName.Length == 0)
+            {
+                result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+            }
+            else
+            {
+                result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+            }
+            return result;
+        }
     }
 }
