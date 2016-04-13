@@ -1,6 +1,8 @@
-﻿@model  Kantar.AdExpress.Service.Core.Domain.AdExpressUniversResponse
+﻿@model  AdExpressUniversResponse
+@using Kantar.AdExpress.Service.Core.Domain;
+@*@(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : ""*@
 
-<div role="tabpanel" class="tab-pane active" id="@(Model.UniversType)">
+<div role="tabpanel"  class="@(Model.UniversType == UniversType.Result ? "tab-pane active" : "tab-pane")" id="@(Model.UniversType)">
     <div class="panel panel-default panel-tab">
         <div class="panel-heading resume">
             @if (Model != null && Model.UniversGroups.Any())
@@ -60,7 +62,7 @@
                                                                 <a class="btnRename@(Model.UniversType)" data-toggle="modal"  data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-pencil fa-lg"></i>
                                                                 </a>
-                                                                <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                <a class="btnDelete@(Model.UniversType)" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-trash-o fa-lg"></i>
                                                                 </a>
                                                             </div>
@@ -84,7 +86,7 @@
                                                                             <a class="btnRename@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                 <i class="fa fa-pencil fa-lg"></i>
                                                                             </a>
-                                                                            <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                            <a class="btnDelete@(Model.UniversType)" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                 <i class="fa fa-trash-o fa-lg"></i>
                                                                             </a>
                                                                         </div>

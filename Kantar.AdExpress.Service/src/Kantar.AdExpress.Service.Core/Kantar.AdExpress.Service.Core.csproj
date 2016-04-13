@@ -75,6 +75,7 @@
     <Compile Include="DataAccess\Repository\Webnav\IMyResultsRepository.cs" />
     <Compile Include="DataAccess\Repository\Mau\ILoginRepository.cs" />
     <Compile Include="Domain\Address.cs" />
+    <Compile Include="Domain\AdExpressResponse.cs" />
     <Compile Include="Domain\Alert.cs" />
     <Compile Include="Domain\DetailLevel.cs" />
     <Compile Include="Domain\DetailLevelItems.cs" />

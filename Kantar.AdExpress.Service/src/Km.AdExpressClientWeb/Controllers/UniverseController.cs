@@ -197,39 +197,77 @@ namespace Km.AdExpressClientWeb.Controllers
             return result;
         }
         [HttpPost]
-        public string RenameSession(string name, string universId)
+        public Domain.AdExpressResponse RenameSession(string name, string universId)
         {
-            string result = "";
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message=string.Empty
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             result = _myAdExpressService.RenameSession(name, universId, webSessionId);
             return result;
         }
 
-        public string MoveSession(string idOldDirectory, string idNewDirectory,string id)
+        public Domain.AdExpressResponse MoveSession(string idOldDirectory, string idNewDirectory,string id)
         {
-            string result = "";
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             result = _myAdExpressService.MoveSession(id,idOldDirectory, idNewDirectory, webSessionId);
             return result;
         }
 
-        public string RenameUnivers(string name, string universId)
+        public Domain.AdExpressResponse RenameUnivers(string name, string universId)
         {
-            string result = "";
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             result = _myAdExpressService.RenameUnivers(name, universId, webSessionId);
             return result;
         }
 
-        public string MoveUnivers(string idOldDirectory, string idNewDirectory, string id)
+        public Domain.AdExpressResponse MoveUnivers(string idOldDirectory, string idNewDirectory, string id)
         {
-            string result = "";
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             result = _myAdExpressService.MoveUnivers(id, idOldDirectory, idNewDirectory, webSessionId);
+            return result;
+        }
+
+        public Domain.AdExpressResponse DeleteUnivers( string universId)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if(!String.IsNullOrEmpty(webSessionId))
+                result = _myAdExpressService.DeleteUnivers(universId, webSessionId);
+            return result;
+        }
+
+        public Domain.AdExpressResponse DeleteSession(string universId)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (!String.IsNullOrEmpty(webSessionId))
+                result = _myAdExpressService.DeleteSession(universId, webSessionId);
             return result;
         }
     }

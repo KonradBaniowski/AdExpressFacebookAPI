@@ -112,5 +112,36 @@ namespace KM.AdExpressI.MyAdExpress
             #endregion
             return result;
         }
+
+        /// <summary>
+		/// Suppression de la sauvegarde
+		/// </summary>
+		public static bool DeleteSession(long idSession, WebSession webSession)
+        {
+            bool result = false;
+            if (idSession > 0)
+            {
+                #region Construction de la requête SQL
+                Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
+                string sql = "delete from " + mySessionTable.Sql;
+                sql += " where id_my_session=" + idSession;
+                #endregion
+
+                #region Execution de la requête
+                try
+                {
+                    webSession.Source.Delete(sql);
+                    result = true;
+                }
+                catch (System.Exception err)
+                {
+                    //throw (new MySessionDataAccessException("Impossible de supprimer la sauvegarde", err));
+                }
+            }
+            #endregion
+            
+            return result;
+        }
     }
 }

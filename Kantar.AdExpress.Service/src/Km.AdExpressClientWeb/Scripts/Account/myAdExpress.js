@@ -198,3 +198,67 @@
             }
         });
     });
+
+    $(document).on('click', '.btnDeleteUnivers', function () {
+        universId = $(this).attr("data-id");
+        var params = {
+            universId: universId
+        };
+        $.ajax({
+            url: '/Universe/DeleteUnivers',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadUnivers',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Univers").html(data);
+                    }
+                });
+                bootbox.alert("Success");
+            }
+        });
+    });
+
+    $(document).on('click', '.btnDeleteResult', function () {
+        universId = $(this).attr("data-id");
+        var params = {
+            universId: universId
+        };
+        $.ajax({
+            url: '/Universe/DeleteSession',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadSession',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Result").html(data);
+                    }
+                });
+                bootbox.alert("Success");
+            }
+        });
+    });
