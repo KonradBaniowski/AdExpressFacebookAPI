@@ -22,6 +22,7 @@ using TNS.Ares.Alerts.DAL;
 using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.Web.Navigation;
 using AutoMapper;
+using KM.Framework.Constantes;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -648,7 +649,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 UniversType = UniversType.Result,
                 UniversGroups = new List<UserUniversGroup>(),
-                NoSavedUnivers = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.NoSavedUniversCode, webSession.SiteLanguage)
+                Labels = LoadPageLabels(webSession.SiteLanguage)
             };
             
             result.SiteLanguage = webSession.SiteLanguage;
@@ -701,7 +702,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 UniversType = UniversType.Univers,
                 UniversGroups = new List<UserUniversGroup>(),
-                NoSavedUnivers = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.NoSavedUniversCode, webSession.SiteLanguage)
+                Labels =LoadPageLabels(webSession.SiteLanguage)
             };
             List<UserUnivers> userUniversList = new List<UserUnivers>();            
             result.SiteLanguage = webSession.SiteLanguage;
@@ -925,6 +926,28 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 groupIndex++;
             }
             return adExpressUniverses;
+        }
+        private Labels LoadPageLabels(int siteLanguage)
+        {
+            var result = new Labels
+            {
+                Save = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SaveUniversCode, siteLanguage),
+                MyResults = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.ResultsCode, siteLanguage),
+                SaveUnivers = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SaveUniversCode, siteLanguage),
+                UserUniversCode = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.UserSavedUniversCode, siteLanguage),
+                MyResultsDescription = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.MyResultsDescription, siteLanguage),               
+                NoSavedUnivers = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.NoSavedUniversCode, siteLanguage),
+                MoveSelectedResult = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.MoveSelectedResult, siteLanguage),
+                MoveResultTitle = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.MoveSelectedResult, siteLanguage),
+                Submit = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Submit, siteLanguage),
+                RenameFolderTitle = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameFolderTitle, siteLanguage),
+                RenameNewFodler = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameNewFodler, siteLanguage),
+                SelectFolderToDelete = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SelectFolderToDelete, siteLanguage),
+                SelectFolder = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SelectFolder, siteLanguage),
+                RenameSelectedFolder = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameSelectedFolder, siteLanguage),
+                ErrorMsgNoFolderCreated = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage)
+            };
+            return result;
         }
         #endregion
     }

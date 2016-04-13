@@ -212,8 +212,6 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             result = _myAdExpressService.MoveSession(id,idOldDirectory, idNewDirectory, webSessionId);
-            //if (String.IsNullOrEmpty(result))
-            //    return RedirectToAction("MyAdExpress", "Home");
             return result;
         }
     }
