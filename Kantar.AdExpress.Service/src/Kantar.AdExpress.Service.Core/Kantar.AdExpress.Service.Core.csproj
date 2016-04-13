@@ -147,6 +147,10 @@
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>
       <Name>Kantar.AdExpress.Service.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KM.Framework\KM.Framework.csproj">
+      <Project>{6a14be5e-e261-4821-8531-2fd6ab03c686}</Project>
+      <Name>KM.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

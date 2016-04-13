@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constantes\ConfigurationFile.cs" />
+    <Compile Include="Constantes\Labels.cs" />
     <Compile Include="DataSource\XmlReaderDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -10,7 +10,7 @@ $('.btnMoveResult').on('click', function () {
 
 $('.btnRenameResult').on('click', function () {
     $('#renameResult').modal('show');
-    idUnivers = $(this).attr("data-id");
+    universId = $(this).attr("data-id");
 });
 
 $('#btnRenameUnivers').on('click', function () {
@@ -30,8 +30,20 @@ $('#btnRenameUnivers').on('click', function () {
                     bootbox.alert("An error occurred while processing your request.");
         },
         success: function (response) {
-                    $('#renameResult').modal('hide');
-                    bootbox.alert(response);
+            $('#renameResult').modal('hide');
+            //Reload the page
+            $.ajax({
+                url: '/Home/ReloadSession',
+                type: 'POST',
+                data: params,
+                error: function (data) {
+                    bootbox.alert(data);
+                },
+                success: function (data) {
+                    $("#Result").html(data);
+                }
+            });
+                    bootbox.alert("Success");
         }
     });    
 });
@@ -68,7 +80,7 @@ $('#btnMoveUnivers').on('click', function () {
                             $("#Result").html(data);
                         }
                     });
-                    bootbox.alert("success");
+                    bootbox.alert("Success");
         }
     });
 });

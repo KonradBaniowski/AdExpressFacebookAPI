@@ -30,7 +30,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public string RenameUnivers(string name, string universId, string webSessionId)
         {
-            throw new NotImplementedException();
+            var result = string.Empty;
+            try
+            {
+                if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(universId) && !string.IsNullOrEmpty(webSessionId))
+                {
+                    var webSession = (WebSession)WebSession.Load(webSessionId);
+                    bool success = MyResultsDAL.RenameSession(name, Int64.Parse(universId), webSession);
+                }
+                else
+                {
+                    result = "Would you please select a destination directory.";
+                }
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;
         }
     }
 }

@@ -88,8 +88,9 @@ namespace KM.AdExpressI.MyAdExpress
 		/// <param name="newName">Nouveau nom de la session</param>
 		/// <param name="idMySession">Identifiant de la session</param>
 		/// <param name="webSession">web Session</param>
-		public static void RenameSession(string newName, Int64 idMySession, WebSession webSession)
+		public static bool RenameSession(string newName, Int64 idMySession, WebSession webSession)
         {
+            bool result = false;
             Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
 
             #region requête
@@ -102,12 +103,14 @@ namespace KM.AdExpressI.MyAdExpress
             try
             {
                 webSession.Source.Update(sql);
+                result = true;
             }
             catch (System.Exception err)
             {
                 //throw (new MyAdExpressDataAccessException("Impossible de Renommer une session sauvegardée", err));
             }
             #endregion
+            return result;
         }
     }
 }

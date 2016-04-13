@@ -1648,6 +1648,10 @@
       <Project>{1d6fbd14-eee6-45db-88b9-d99386d23e53}</Project>
       <Name>Kantar.AdExpress.Service.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KM.Framework\KM.Framework.csproj">
+      <Project>{6a14be5e-e261-4821-8531-2fd6ab03c686}</Project>
+      <Name>KM.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
