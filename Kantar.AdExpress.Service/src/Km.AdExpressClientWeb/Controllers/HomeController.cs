@@ -1,5 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
-using Domain=Kantar.AdExpress.Service.Core.Domain;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.Home;
 using Km.AdExpressClientWeb.Models.Shared;
@@ -15,17 +15,21 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Date.DAL;
 using Kantar.AdExpress.Service.Core.Domain;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        private const string _cryptKey = "8!b?#B$3";
+
         private IRightService _rightService;
         private IApplicationUserManager _userManager;
         private IWebSessionService _webSessionService;
         private IUniverseService _universService;
         private IInfosNewsService _infosNewsService;
+       
 
         public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService, IUniverseService universService, IInfosNewsService infosNewsService)
         {
@@ -55,22 +59,27 @@ namespace Km.AdExpressClientWeb.Controllers
                             {
                                 new InfosNews()
                                 {
-                                    Label = "files1",
+                                    Label = "Aide",
                                     Url = "cerfa.pdf"
                                 },
                                 new InfosNews()
                                 {
-                                    Label = "files2",
-                                    Url = "test.pdf"
+                                    Label = "Dates de mises à jour",
+                                    Url = "Planning mise à jour Adexpress.pdf"
                                 }
                             }
                         });
+
+            var encryptedPassword = EncryptQueryString(password);
+            var encryptedLogin = EncryptQueryString(login); 
 
             var Home = new HomePageViewModel()
             {
                 ModuleRight = res,
                 Modules = resList,
-                Documents = documents
+                Documents = documents,
+                EncryptedLogin =encryptedLogin,
+                EncryptedPassword = encryptedPassword
             };
             return View(Home);
         }
@@ -150,6 +159,10 @@ namespace Km.AdExpressClientWeb.Controllers
             model = result;
             return  PartialView("MyAdExpressSavedResults", model);
         }
+        public ActionResult RedirectToOldWebSite()
+        {
+            return new RedirectResult("http://www.google.com");
+        }
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
         {
             PresentationModel result = new PresentationModel
@@ -205,6 +218,20 @@ namespace Km.AdExpressClientWeb.Controllers
                 ErrorMsgNoFolderCreated= GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage)
             };
             return result;
+        }
+
+        public static string EncryptQueryString(string strQueryString)
+        {
+            Encryption64 oES =
+                new Encryption64();
+            return oES.Encrypt(strQueryString, _cryptKey).Replace("+", "-").Replace("/", "_");
+        }
+
+        public static string DecryptQueryString(string strQueryString)
+        {
+            Encryption64 oES =
+                new Encryption64();
+            return oES.Decrypt(strQueryString.Replace("-", "+").Replace("_", "/"), _cryptKey);
         }
     }
 }

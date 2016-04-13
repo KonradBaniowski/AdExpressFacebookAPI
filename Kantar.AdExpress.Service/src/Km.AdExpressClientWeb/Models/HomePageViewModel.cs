@@ -11,5 +11,7 @@ namespace Km.AdExpressClientWeb.Models
         public Dictionary<long, Module> ModuleRight { get; set; }
         public Dictionary<long, Module> Modules { get; set; }
         public List<Documents> Documents { get; set; }
+        public string EncryptedPassword { get; set; }
+        public string EncryptedLogin { get; set; }
     }
 }
