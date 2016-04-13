@@ -9,8 +9,8 @@
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
+    <div class="col-md-12" style="background-color:black;padding-bottom:15px;">
+        <div class="panel-heading">
             <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @(@GestionWeb.GetWebWord(2245, Model.SiteLanguage))</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
@@ -217,6 +217,7 @@
 
         function CallInsertionsResult() {
             $("#gridEmpty").hide();
+            $("#gridLoader").show();
             var parameters = {
                 ids: userFilter.paramsUrl.ids,
                 zoomDate: userFilter.paramsUrl.zoomDate,
@@ -236,7 +237,6 @@
                     alert("Erreur");
                 },
                 success: function (data) {
-                    GetDetailLevelItem();
 
                     if (data != null && data != "") {
                         dataTreeGrid = data.datagrid;
@@ -315,7 +315,6 @@
 
                         $("#HeaderLoader").hide();
                         $("#HeaderElmt").show();
-                        $("#gridLoader").show();
                     }
                 }
             });
@@ -376,7 +375,6 @@
                 },
                 success: function (data) {
                     if (data != null) {
-                        $('#detailLevelItem').empty();
                         $('#detailLevelItem').html(data);
                     }
                 },
@@ -520,8 +518,8 @@
             $("#gridLoader").show();
             userFilter.isVehicleChanged = true;
             userFilter.paramsUrl.idVehicle = $(this).attr('id');
-            CallInsertionsResult()
-            
+            CallInsertionsResult();
+            GetDetailLevelItem();
         });
 
         function ResetLnLevel(lx, ly) {
@@ -558,11 +556,28 @@
             CallSetDetailLvl();
         });
 
+        //Change Icone DetailLevel quand hide/show collapse
+        $(document).on('shown.bs.collapse', '#lvlperso', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-right")
+                .removeClass("glyphicon-chevron-right")
+                .addClass("glyphicon-chevron-down");
+        });
+        $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-down")
+                .removeClass("glyphicon-chevron-down")
+                .addClass("glyphicon-chevron-right");
+        });
 
         //Export btn
         $('#btn-export').on('click', function (e) {
            window.open('@Url.Action("InsertionsResult", "InsertionsExport")?ids='+userFilter.paramsUrl.ids+'&zoomDate='+userFilter.paramsUrl.zoomDate+'&idUnivers='+userFilter.paramsUrl.idUnivers+'&moduleId='+userFilter.paramsUrl.moduleId+'&idVehicle='+userFilter.paramsUrl.idVehicle, "_blank");
         });
+
+
 
     </script>
 }
