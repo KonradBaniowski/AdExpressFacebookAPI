@@ -16,7 +16,7 @@
                     @for (int i = 0; i < 3; i++)
                     {
                         <select id="l@(Model[i].level)Detail" class="form-control">
-                            <option value="-1" selected>--------</option>
+                            <option value="-1">--------</option>
                             @foreach (var item in Model[i].Items)
                             {
                                 if (@item.IsSelected)

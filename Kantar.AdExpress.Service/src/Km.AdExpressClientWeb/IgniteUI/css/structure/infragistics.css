@@ -279,7 +279,7 @@ li.ui-igcombo-listitem.ui-igcombo-item-in-focus+li.ui-igcombo-listitem.ui-state-
 .ui-iggrid .ui-iggrid-toolbar .ui-iggrid-results{float:right}
 .ui-iggrid .ui-iggrid-footer .ui-iggrid-results{float:left;line-height:1.9em}
 .ui-iggrid .ui-iggrid-paging,.ui-iggrid th .ui-iggrid-indicatorcontainer,.ui-iggrid th .ui-iggrid-indicatorcontainer .ui-icon{float:right}
-.ui-iggrid .ui-iggrid-paging>div,.ui-iggrid .ui-iggrid-paging .ui-iggrid-paging-item span,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdownlabels,.ui-iggrid .ui-iggrid-paging li,.ui-iggrid .ui-iggrid-results span{float:left;padding:0 .3em;line-height:1.4em;color:black;font-weight:bolder;}
+.ui-iggrid .ui-iggrid-paging>div,.ui-iggrid .ui-iggrid-paging .ui-iggrid-paging-item span,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdownlabels,.ui-iggrid .ui-iggrid-paging li,.ui-iggrid .ui-iggrid-results span{float:left;padding:0 .3em;line-height:1.4em;color:black;/*font-weight:bolder;*/}
 /*.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer .ui-igedit-container,.ui-iggrid .ui-iggrid-results .ui-igedit-container,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer{float:left}*/
 .ui-iggrid .ui-iggrid-results .ui-igedit-input,.ui-iggrid .ui-iggrid-paging .ui-igedit-input{line-height:1.7em}
 .ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer,.ui-iggrid .ui-iggrid-paging .ui-iggrid-pagedropdowncontainer .ui-igedit-input{height:100%}

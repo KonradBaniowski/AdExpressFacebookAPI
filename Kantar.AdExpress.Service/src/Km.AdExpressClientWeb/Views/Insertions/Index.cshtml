@@ -20,7 +20,7 @@
 
         <div id="HeaderElmt" style="display:none">
             <div id="subPeriodSelection" style="background-color:grey"></div>
-            <div id="detailLevelItem" class="col-md-12 bg-orange" style="background-color:black; color:white;"></div>
+            <div id="detailLevelItem" class="col-md-12 bg-orange" style="color:white;"></div>
         </div>
     </div>
 
@@ -236,6 +236,8 @@
                     alert("Erreur");
                 },
                 success: function (data) {
+                    GetDetailLevelItem();
+
                     if (data != null && data != "") {
                         dataTreeGrid = data.datagrid;
                         colsFixed = data.columnsfixed;
@@ -362,7 +364,8 @@
 
         function GetDetailLevelItem() {
             var params = {
-                idVehicle: userFilter.paramsUrl.idVehicle
+                idVehicle: userFilter.paramsUrl.idVehicle,
+                isVehicleChanged : userFilter.isVehicleChanged
             };
             $.ajax({
                 url: '@Url.Action("GetDetailLevel", "Insertions")',
@@ -373,6 +376,7 @@
                 },
                 success: function (data) {
                     if (data != null) {
+                        $('#detailLevelItem').empty();
                         $('#detailLevelItem').html(data);
                     }
                 },
@@ -516,14 +520,16 @@
             $("#gridLoader").show();
             userFilter.isVehicleChanged = true;
             userFilter.paramsUrl.idVehicle = $(this).attr('id');
-            GetDetailLevelItem();
-            CallInsertionsResult();
-
+            CallInsertionsResult()
+            
         });
 
         function ResetLnLevel(lx, ly) {
             if ($(lx).val() == $(ly).val())
                 $(ly).val('-1');
+            userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+            userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+            userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
         }
 
         //Zoom visuel
@@ -533,17 +539,14 @@
         });
 
         $(document).on("change", "#l1Detail", function (e) {
-            userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
             ResetLnLevel("#l1Detail", "#l2Detail");
             ResetLnLevel("#l1Detail", "#l3Detail");
         });
         $(document).on("change", "#l2Detail", function (e) {
-            userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
             ResetLnLevel("#l2Detail", "#l1Detail");
             ResetLnLevel("#l2Detail", "#l3Detail");
         });
         $(document).on("change", "#l3Detail", function (e) {
-            userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
             ResetLnLevel("#l3Detail", "#l1Detail");
             ResetLnLevel("#l3Detail", "#l2Detail");
         });
