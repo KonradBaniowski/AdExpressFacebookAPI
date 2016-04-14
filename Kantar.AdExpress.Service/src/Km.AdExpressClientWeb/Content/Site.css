@@ -1,12 +1,4 @@
 ﻿
-.container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-
 .bb-alert {
     position: fixed;
     bottom: 25%;
@@ -236,20 +228,6 @@
     padding-bottom: 9px;
     margin: 60px 0 20px;
 }
-
-.btn-action:hover, .btn-action:focus, .btn-action:active, .btn-action.active, .open .dropdown-toggle.btn-action {
-    color: #fff !important;
-    background-color: #21c9ff;
-}
-.btn-action {
-    color: #fff;
-    background-color: #00c1ff;
-    border: 0;
-    font-weight: bolder;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
 
 .btn-warning {
     background-color: #ff8c00;
@@ -2100,7 +2078,6 @@ ul.ui-selectable {
 }
 
 #tab-content-myadexpress .panel-group {
-    margin-bottom: 0px;
 }
 
     #tab-content-myadexpress .panel-group .panel-primary {
@@ -2229,7 +2206,7 @@ ul.ui-selectable {
 }
 
 .iconInsertionCreative3:before { /*TV*/
-    content: "\f01d";
+    content: "\f008";
 }
 
 /**Carousel Chemin de fer du support*/
@@ -2344,3 +2321,6 @@ ul.ui-selectable {
     background-color: rgba(0,0,0,0.7);
 }
  
+.module-done{
+
+}

@@ -4,60 +4,97 @@ using TNS.AdExpress.Web.Core.Sessions;
 using KM.AdExpressI.MyAdExpress;
 using UniversDAL = TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using TNS.AdExpress.Domain.Translation;
+using Kantar.AdExpress.Service.Core.Domain;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class MyAdExpressService : IMyAdExpressService
     {
-        public string MoveSession(string id, string idOldDirectory, string idNewDirectory, string webSessionId)
+        public AdExpressResponse MoveSession(string id, string idOldDirectory, string idNewDirectory, string webSessionId)
         {
-            var result = string.Empty;
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
             try
             {
                 if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(idOldDirectory) && !string.IsNullOrEmpty(idNewDirectory) && !string.IsNullOrEmpty(idNewDirectory))
                 {
                     var webSession = (WebSession)WebSession.Load(webSessionId);
-                    bool success = MyResultsDAL.MoveSession(Int64.Parse(idOldDirectory), Int64.Parse(idNewDirectory), Int64.Parse(id), webSession);
-                    result = "Success";
+                    result.Success = MyResultsDAL.MoveSession(Int64.Parse(idOldDirectory), Int64.Parse(idNewDirectory), Int64.Parse(id), webSession);
+                    result.Message = "Success";
+
                 }
                 else
                 {
-                    result = "Would you please select a destination directory.";
+                    result.Message = "Would you please select a destination directory.";
                 }
             }
             catch (Exception ex)
             {
-                result = ex.Message;
+                result.Message = ex.Message;
             }
             return result;
         }
 
-        public string RenameSession(string name, string universId, string webSessionId)
+        public AdExpressResponse RenameSession(string name, string universId, string webSessionId)
         {
-            var result = string.Empty;
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
             try
             {
                 if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(universId) && !string.IsNullOrEmpty(webSessionId))
                 {
                     var webSession = (WebSession)WebSession.Load(webSessionId);
-                    bool success = MyResultsDAL.RenameSession(name, Int64.Parse(universId), webSession);
-                    result = "Success";
+                    result.Success = MyResultsDAL.RenameSession(name, Int64.Parse(universId), webSession);
+                    result.Message = "Success";
                 }
                 else
                 {
-                    result = "Would you please select a destination directory.";
+                    result.Message = "Would you please select a destination directory.";
                 }
             }
             catch (Exception ex)
             {
-                result = ex.Message;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        public AdExpressResponse DeleteSession(string id, string webSessionId)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var webSession = (WebSession)WebSession.Load(webSessionId);
+                    result.Success = MyResultsDAL.DeleteSession(Int64.Parse(id), webSession);
+                    result.Message = "Success";
+
+                }
+                else
+                {
+                    result.Message = "Would you please select a session to delete.";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
             }
             return result;
         }
 
-        public string RenameUnivers(string name, string universId, string webSessionId)
+        public AdExpressResponse RenameUnivers(string name, string universId, string webSessionId)
         {
-            var result = string.Empty;
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
             var webSession = (WebSession)WebSession.Load(webSessionId);
             try
             {
@@ -70,65 +107,105 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         if (!UniversDAL.UniversListDataAccess.IsUniverseExist(webSession, name))
                         {
                             UniversDAL.UniversListDataAccess.RenameUniverse(name, idUnivers, webSession);
-                            result = "Success";
+                            result.Message = "Success";
+                            result.Success = true;
                         }
                         else {
                             //Error : L'univers already exists
-                            return result= GestionWeb.GetWebWord(1101, webSession.SiteLanguage);
+                            result.Message = GestionWeb.GetWebWord(1101, webSession.SiteLanguage);
                         }
                     }
                     else if (name.Length == 0)
                     {
                         // Error : Empty name field
-                        return result = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+                        result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
                     }
                     else {
                         // Error : max field length exceeded
-                        return result= GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+                        result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
                     }
 
                 }
                 else {
                     // Error : Select at least an element
-                    return result = GestionWeb.GetWebWord(926, webSession.SiteLanguage);
+                    result.Message = GestionWeb.GetWebWord(926, webSession.SiteLanguage);
                 }
             }
             catch (System.Exception ex)
             {
-                result = ex.Message;
+                result.Message = ex.Message;
             }
             return result;
         }
 
-        public string MoveUnivers(string id, string idOldGroupUnivers, string idNewGroupUnivers, string webSessionId)
+        public AdExpressResponse MoveUnivers(string id, string idOldGroupUnivers, string idNewGroupUnivers, string webSessionId)
         {
-            var result = string.Empty;
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
             var webSession = (WebSession)WebSession.Load(webSessionId);
-                     
+
             try
             {
 
-                    if (!String.IsNullOrEmpty(id) && !String.IsNullOrEmpty(idOldGroupUnivers) && !String.IsNullOrEmpty(idNewGroupUnivers) && !String.IsNullOrEmpty(webSessionId))
-                    {
-                        UniversDAL.UniversListDataAccess.MoveUniverse(Int64.Parse(idOldGroupUnivers), Int64.Parse(idNewGroupUnivers), Int64.Parse(id), webSession);
-                        result = "Success";
-                    }
-                    else if (String.IsNullOrEmpty(id))
-                    {
-                        //Erreur : Aucun univers n'a été sélectionné
-                        result = GestionWeb.GetWebWord(926, webSession.SiteLanguage);
-                    }
+                if (!String.IsNullOrEmpty(id) && !String.IsNullOrEmpty(idOldGroupUnivers) && !String.IsNullOrEmpty(idNewGroupUnivers) && !String.IsNullOrEmpty(webSessionId))
+                {
+                    UniversDAL.UniversListDataAccess.MoveUniverse(Int64.Parse(idOldGroupUnivers), Int64.Parse(idNewGroupUnivers), Int64.Parse(id), webSession);
+                    result.Message = "Success";
+                    result.Success = true;
+                }
+                else if (String.IsNullOrEmpty(id))
+                {
+                    result.Message = GestionWeb.GetWebWord(926, webSession.SiteLanguage);
+                }
             }
             catch (Exception ex)
             {
-                result = ex.Message;
+                result.Message = ex.Message;
             }
             return result;
         }
 
-        public string RenameUniversDirectory(string name, string universId, string webSessionId)
+        public AdExpressResponse DeleteUnivers(string id, string webSessionId)
         {
-            var result = string.Empty;
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            try
+            {
+                if (!String.IsNullOrEmpty(id))
+                {
+
+                    if (UniversDAL.UniversListDataAccess.DropUniverse(Int64.Parse(id), webSession))
+                    {
+                        result.Message = GestionWeb.GetWebWord(937, webSession.SiteLanguage);
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Message = GestionWeb.GetWebWord(830, webSession.SiteLanguage);
+                    }
+                }
+                else
+                {
+                    result.Message = GestionWeb.GetWebWord(831, webSession.SiteLanguage);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        public AdExpressResponse RenameUniversDirectory(string name, string universId, string webSessionId)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
             var webSession = (WebSession)WebSession.Load(webSessionId);
             try
             {
@@ -137,28 +214,89 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     webSession = (WebSession)WebSession.Load(webSessionId);
                     if (name.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
                     {
-                        return result = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+                        result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
                     }
                     if (!UniversDAL.UniversListDataAccess.IsGroupUniverseExist(webSession, name))
                     {
                         UniversDAL.UniversListDataAccess.RenameGroupUniverse(name, Int64.Parse(universId), webSession);
-                        result= GestionWeb.GetWebWord(934, webSession.SiteLanguage); 
+                        result.Message = GestionWeb.GetWebWord(934, webSession.SiteLanguage);
+                        result.Success = true;
                     }
                     else
                     {
-                        return result = GestionWeb.GetWebWord(928, webSession.SiteLanguage);
+                        result.Message = GestionWeb.GetWebWord(928, webSession.SiteLanguage);
                     }
                 }
                 else
                 {
-                    return result = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+                    result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
                 }
             }
             catch (System.Exception ex)
             {
-                result = ex.Message;
+                result.Message = ex.Message;
                 //this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
 
+            }
+            return result;
+        }
+
+        public AdExpressResponse CreateDirectory(string directoryName, UniversType type, string webSessionId)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            try
+            {
+                if (type == UniversType.Result)
+                {
+                    result = CreateSessionDirectory(directoryName, type, webSession);
+                }
+            }
+            catch (System.Exception exc)
+            {
+                //if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                //{
+                //    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                //}
+            }
+            return result;
+        }
+
+        private AdExpressResponse CreateSessionDirectory(string directoryName, UniversType type, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            if (!String.IsNullOrEmpty(directoryName) && directoryName.Length != 0 && directoryName.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+            {
+                if (!MyResultsDAL.IsDirectoryExist(webSession, directoryName))
+                {
+                    if (MyResultsDAL.CreateDirectory(directoryName, webSession))
+                    {
+                        result.Message = GestionWeb.GetWebWord(835, webSession.SiteLanguage);
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Message = GestionWeb.GetWebWord(836, webSession.SiteLanguage);
+                    }
+                }
+                else
+                {
+                    result.Message = GestionWeb.GetWebWord(834, webSession.SiteLanguage);
+                }
+            }
+            else if (directoryName.Length == 0)
+            {
+                result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+            }
+            else
+            {
+                result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
             }
             return result;
         }

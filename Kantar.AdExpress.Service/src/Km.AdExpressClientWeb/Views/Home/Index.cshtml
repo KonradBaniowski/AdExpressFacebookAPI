@@ -2,11 +2,64 @@
 @using TNS.AdExpress.Constantes.Web
 @{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";  
+   
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/module-selection")
+
+    <script>
+        function OpenOldWebSite(url) {
+            window.open(url, "_blank");
+        }
+
+        function RedirectToOldWebSite(moduleId) {
+
+            $('#' + moduleId).on('click', function (e) {
+                var lo = encodeURIComponent('@Model.EncryptedLogin');
+                var pa = encodeURIComponent('@Model.EncryptedPassword');
+                var mo = moduleId
+                var link = 'http://kmchmwbi401:88/index.aspx?l=' + lo + '&p=' + pa + '&m=' + mo;
+                window.open(link, "_blank");
+                return false;
+            });
+        }
+
+        //Redirect to ChronoPresse
+        RedirectToOldWebSite(@Module.Name.BILAN_CAMPAGNE);
+
+        //Redirect to New Creative
+        RedirectToOldWebSite(@Module.Name.NEW_CREATIVES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.TENDACES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.TENDACES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.INDICATEUR);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DYNAMIQUE);
+
+        RedirectToOldWebSite(@Module.Name.ANALYSE_DES_DISPOSITIFS);
+
+        RedirectToOldWebSite(@Module.Name.ANALYSE_DES_PROGRAMMES);
+
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PAN_EURO);
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PRESSE);
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_RADIO);
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_TELEVISION);
+
+    </script>
 }
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -17,7 +70,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PLAN_MEDIA))
                 {
-                    <a href="@Url.Action("Index", "MediaSchedule" )" class="tile-body text-center" id="@Module.Name.ANALYSE_PLAN_MEDIA">
+                    <a href="@Url.Action("Index", "MediaSchedule" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PLAN_MEDIA">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-chart sli-size blue"></i>
@@ -49,7 +102,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PORTEFEUILLE))
                 {
-                    <a href="@Url.Action("MediaSelection", "Portfolio" )" class="tile-body text-center" id="@Module.Name.ANALYSE_PORTEFEUILLE">
+                    <a href="@Url.Action("MediaSelection", "Portfolio" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PORTEFEUILLE">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-layers sli-size blue"></i>
@@ -81,7 +134,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DYNAMIQUE))
                 {
-                    <a href="@Url.Action("MediaSelection", "LostWon" )" class="tile-body text-center" id="@Module.Name.ANALYSE_DYNAMIQUE">
+                    <a href="@Url.Action("MediaSelection", "LostWon" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_DYNAMIQUE">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-calculator sli-size blue"></i>
@@ -113,7 +166,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_CONCURENTIELLE))
                 {
-                    <a href="@Url.Action("MediaSelection", "PresentAbsent" )" class="tile-body text-center" id="@Module.Name.ANALYSE_CONCURENTIELLE">
+                    <a href="@Url.Action("MediaSelection", "PresentAbsent" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_CONCURENTIELLE">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-equalizer sli-size blue"></i>
@@ -146,7 +199,9 @@
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
                 {
-                    <a href="@Url.Action("Index","Chrono")" class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">
+
+                    @* <a href="@Url.Action("Index","Chrono")" class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">*@
+                    <a class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">
                         <div class="flip-container-second">
                             <div class="front-second">
                                 <i class="icon-book-open sli-size-small green"></i>
@@ -179,7 +234,8 @@
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.NEW_CREATIVES))
                 {
-                    <a href="@Url.Action("Index", "NouvelleCrea")" class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">
+                    @*<a href="@Url.Action("Index", "NouvelleCrea")" class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">*@
+                    <a class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">
                         <div class="flip-container-second">
                             <div class="front-second">
                                 <i class="icon-picture sli-size-small green"></i>
@@ -211,7 +267,8 @@
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.TENDACES))
                 {
-                    <a href="@Url.Action("Index", "Tendances")" class="tile-body text-center" id="@Module.Name.TENDACES">
+                    @*<a href="@Url.Action("Index", "Tendances")" class="tile-body text-center" id="@Module.Name.TENDACES">*@
+                    <a  class="tile-body text-center" id="@Module.Name.TENDACES">
                         <div class="flip-container-second">
                             <div class="front-second">
                                 <i class="icon-eye sli-size-small green"></i>
@@ -459,3 +516,4 @@
         </div>
     </div>
 </div>
+

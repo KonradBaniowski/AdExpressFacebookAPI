@@ -112,5 +112,88 @@ namespace KM.AdExpressI.MyAdExpress
             #endregion
             return result;
         }
+
+        /// <summary>
+		/// Suppression de la sauvegarde
+		/// </summary>
+		public static bool DeleteSession(long idSession, WebSession webSession)
+        {
+            bool result = false;
+            if (idSession > 0)
+            {
+                #region Construction de la requête SQL
+                Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
+                string sql = "delete from " + mySessionTable.Sql;
+                sql += " where id_my_session=" + idSession;
+                #endregion
+
+                #region Execution de la requête
+                try
+                {
+                    webSession.Source.Delete(sql);
+                    result = true;
+                }
+                catch (System.Exception err)
+                {
+                    //throw (new MySessionDataAccessException("Impossible de supprimer la sauvegarde", err));
+                }
+            }
+            #endregion
+            
+            return result;
+        }
+
+        public static bool IsDirectoryExist(WebSession webSession, string DirectoryName)
+        {
+            Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+            bool result = false;
+            #region Construction de la requête
+            string sql = "select distinct " + directoryTable.Prefix + ".ID_DIRECTORY, " + directoryTable.Prefix + ".DIRECTORY ";
+            sql += "  from " + directoryTable.SqlWithPrefix;
+            sql += " where " + directoryTable.Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin;
+            sql += " and " + directoryTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+            sql += " and UPPER(" + directoryTable.Prefix + ".DIRECTORY)=UPPER('" + DirectoryName + "') ";
+            #endregion
+
+            #region Execution de la requête
+            DataSet ds;
+            try
+            {
+                ds = webSession.Source.Fill(sql);
+                if (ds.Tables[0].Rows.Count > 0)
+                    result = true;               
+            }
+            catch (System.Exception err)
+            {
+                //throw (new MyAdExpressDataAccessException("Impossible de vérifier l'existance d'un répertoire", err));
+            }
+            return result;
+            #endregion
+        }
+
+        public static bool CreateDirectory(string nameDirectory, WebSession webSession)
+        {
+            Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+            TNS.AdExpress.Domain.DataBaseDescription.Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
+            bool result = false;
+            #region Requête pour insérer les champs dans la table Group_universe_client	
+            string sql = "INSERT INTO " + directoryTable.Sql + "(ID_DIRECTORY,id_login,DIRECTORY,DATE_CREATION,ACTIVATION) ";
+            sql += "  values (" + schema.Label + ".seq_directory.nextval," + webSession.CustomerLogin.IdLogin + ",'" + nameDirectory + "',SYSDATE," + TNS.AdExpress.Constantes.DB.ActivationValues.ACTIVATED + ")";
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                webSession.Source.Insert(sql);
+                result = true;
+            }
+            catch (System.Exception)
+            {
+                
+            }
+            return result;
+            #endregion
+        }
     }
 }

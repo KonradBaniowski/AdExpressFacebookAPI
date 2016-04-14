@@ -1,6 +1,8 @@
-﻿@model  Kantar.AdExpress.Service.Core.Domain.AdExpressUniversResponse
+﻿@model  AdExpressUniversResponse
+@using Kantar.AdExpress.Service.Core.Domain;
+@*@(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : ""*@
 
-<div role="tabpanel" class="tab-pane active" id="@(Model.UniversType)">
+<div role="tabpanel"  class="@(Model.UniversType == UniversType.Result ? "tab-pane active" : "tab-pane")" id="@(Model.UniversType)">
     <div class="panel panel-default panel-tab">
         <div class="panel-heading resume">
             @if (Model != null && Model.UniversGroups.Any())
@@ -9,7 +11,7 @@
                     <span class="blue">@Model.NbrFolder</span> répertoires,  <span class="blue">@Model.NbrUnivers</span> résultats
                 </h3>
                             <h3 class="panel-title pull-right">
-                                <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
+                                <a id="btnCreateDirectory@(Model.UniversType)"data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
                                 <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
                                 <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
                             </h3>
@@ -60,7 +62,7 @@
                                                                 <a class="btnRename@(Model.UniversType)" data-toggle="modal"  data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-pencil fa-lg"></i>
                                                                 </a>
-                                                                <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                <a class="btnDelete@(Model.UniversType)" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-trash-o fa-lg"></i>
                                                                 </a>
                                                             </div>
@@ -84,7 +86,7 @@
                                                                             <a class="btnRename@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                 <i class="fa fa-pencil fa-lg"></i>
                                                                             </a>
-                                                                            <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                            <a class="btnDelete@(Model.UniversType)" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                 <i class="fa fa-trash-o fa-lg"></i>
                                                                             </a>
                                                                         </div>
@@ -161,6 +163,42 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-valider" id="btnRename@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="createDirectory@(Model.UniversType)" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle @Model.UniversType</h4>
+            </div>
+            <div class="modal-body">
+                <p> @Model.Labels.RenameSelectedFolder</p>
+                <input type="text" class="form-control" id="newDirectory@(Model.UniversType)Name" placeholder="Entrez un nom">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnValidCreateDirectory@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="renameDirectory@(Model.UniversType)" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle </h4>
+            </div>
+            <div class="modal-body">
+                <p> @Model.Labels.RenameSelectedFolder</p>
+                <input type="text" class="form-control" id="newDirectory@(Model.UniversType)Name" placeholder="Entrez un nom">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnCreateDirectory@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
         </div>
     </div>

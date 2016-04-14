@@ -198,3 +198,143 @@
             }
         });
     });
+
+    $(document).on('click', '.btnDeleteUnivers', function () {
+        universId = $(this).attr("data-id");
+        var params = {
+            universId: universId
+        };
+        $.ajax({
+            url: '/Universe/DeleteUnivers',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadUnivers',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Univers").html(data);
+                    }
+                });
+                bootbox.alert("Success");
+            }
+        });
+    });
+
+    $(document).on('click', '.btnDeleteResult', function () {
+        universId = $(this).attr("data-id");
+        var params = {
+            universId: universId
+        };
+        $.ajax({
+            url: '/Universe/DeleteSession',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadSession',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Result").html(data);
+                    }
+                });
+                bootbox.alert("Success");
+            }
+        });
+    });
+
+    $(document).on('click', '#btnCreateDirectoryResult', function () {
+        $('#createDirectoryResult').modal('show');
+    });
+
+    $(document).on('click', '#btnValidCreateDirectoryResult', function () {
+        var directoryName = $('#newDirectoryResultName').val();
+        var params = {
+            directoryName: directoryName,
+            type: "session"
+        };
+        $.ajax({
+            url: '/Universe/CreateDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadSession',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Result").html(data);
+                    }
+                });
+                bootbox.alert("Success");
+            }
+        });
+    });
+
+    $(document).on('click', '#btnCreateDirectoryUnivers', function () {
+        $('#createDirectoryUnivers').modal('show');
+    });
+
+    $(document).on('click', '#btnValidCreateDirectoryUnivers', function () {
+        var directoryName = $('#newDirectoryUniversName').val();
+        var params = {
+            directoryName: directoryName,
+            type: "univers"
+        };
+        $.ajax({
+            url: '/Universe/CreateDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadUnivers',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Univers").html(data);
+                    }
+                });
+                bootbox.alert("Success");
+            }
+        });
+    });
+
+

@@ -2,7 +2,8 @@
 
 $(function () {
 
-    $('a.tile-body.text-center').on('click', currentModule);
+    //$('a.tile-body.text-center.module-done').on('click', currentModule);
+    $('a.module-done').on('click', currentModule);
 
     function currentModule(event) {
         event.preventDefault();
