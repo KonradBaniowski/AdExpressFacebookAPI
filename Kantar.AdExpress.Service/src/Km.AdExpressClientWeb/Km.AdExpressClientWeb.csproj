@@ -221,6 +221,7 @@
     <Compile Include="Models\Portfolio\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\ErrorMessage.cs" />
     <Compile Include="Models\Shared\MediaSelectionViewModel.cs" />
+    <Compile Include="Models\Shared\SaveUserResultViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1568,6 +1569,7 @@
     <Content Include="Views\Public\HomeNumbers.cshtml" />
     <Content Include="Views\Home\MyAdExpressSavedResults.cshtml" />
     <Content Include="Views\PortfolioDetailMedia\Index.cshtml" />
+    <Content Include="Views\Shared\UserResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

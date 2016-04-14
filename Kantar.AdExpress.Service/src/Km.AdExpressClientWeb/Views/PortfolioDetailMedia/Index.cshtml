@@ -10,8 +10,9 @@
 <div class="row">
 
     <div class="col-md-12" style="margin-top:10px;">
+        <p style="font-size:10px;">@Model.Labels.IndeRadioMessage</p>
         <center>
-            <p id="gridEmpty" style="display:none">Vide</p>
+            <p id="gridEmpty" style="display:none">@Model.Labels.EmptyGrid</p>
             <div id="grid" style="display:none"></div>
             <div id="gridLoader" style="display:none">
                 <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
@@ -298,7 +299,7 @@
                     $("#visuCarou" + index.toString()).carousel("next");
                 });
             });
-
+            
             $(".triggerModal > .fa").each(function () {
                 $(this).addClass('iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
             });
