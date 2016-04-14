@@ -282,6 +282,32 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
+
+        public bool LoadSession(string idSession, UniversType type ,string webSessionId)
+        {
+            var result = false;
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            try
+            {
+                switch (type)
+                {
+                    case UniversType.Result:
+                        result = LoadSessionInfo(idSession, webSession);
+                        break;
+                    case UniversType.Univers:
+                        result = LoadUniversInfo(idSession, webSession);
+                        break;
+                };
+            }
+            catch (System.Exception exc)
+            {
+                //if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                //{
+                //    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                //}
+            }
+            return result;
+        }
         #region Private methods
         #region Handling session directories
         private AdExpressResponse CreateSessionDirectory(string directoryName, WebSession webSession)
@@ -508,6 +534,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 result.Message = ex.Message;
 
             }
+            return result;
+        }
+        #endregion
+        #region Set Websession 
+        private bool LoadSessionInfo(string idSession, WebSession webSession)
+        {
+            var result = false;
+            return result;
+        }
+        private bool LoadUniversInfo(string idSession, WebSession webSession)
+        {
+            var result = false;
             return result;
         }
         #endregion
