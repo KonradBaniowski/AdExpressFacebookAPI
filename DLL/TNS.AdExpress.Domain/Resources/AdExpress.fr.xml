@@ -2267,7 +2267,7 @@
     <item mnemonic="w3015" type="System.String">L'accès à ce magazine n’est pas autorisé par l'éditeur.&lt;br&gt; Kantar Media met tout en œuvre pour obtenir &lt;br&gt;un rétablissement de l'accès à la copie digitale de ce support.</item>
     <item mnemonic="w3016" type="System.String">Mode de vente</item>
     <item mnemonic="w3017" type="System.String">Modes de vente</item>
-    <item mnemonic="w3018" type="System.String">L&amp;rsquo;offre Nationale &amp;laquo; Les Ind&amp;eacute;s Radios &amp;raquo; recouvre plus de 120 radios locales et r&amp;eacute;gionales. L&amp;rsquo;horaire de diffusion d&amp;rsquo;un spot est communiqu&amp;eacute;  &amp;agrave; titre indicatif sur la base de l&amp;rsquo;horaire de diffusion constat&amp;eacute; sur l&amp;rsquo;une des radios pig&amp;eacute;es et ne refl&amp;egrave;te donc pas l&amp;rsquo;horaire de diffusion r&amp;eacute;el sur l&amp;rsquo;ensemble des stations composant l&amp;rsquo;offre.</item>
+    <item mnemonic="w3018" type="System.String">L'offre Nationale "Les Indés Radios" recouvre plus de 120 radios locales et régionales. L'horaire de diffusion d'un spot est communiqué à titre indicatif sur la base de l'horaire de diffusion constaté sur l'une des radios pigées et ne reflète donc pas l'horaire de diffusion réel sur l'ensemble des stations composant l'offre.</item>
     <!--PLURI MEDIA HORS mmS -->
     <item mnemonic="w3019" type="System.String">Plurimédia hors Internet Display</item>
     <item mnemonic="w3020" type="System.String">PLURIMEDIA HORS INTERNET DISPLAY</item>

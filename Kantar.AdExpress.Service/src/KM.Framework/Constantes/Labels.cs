@@ -87,5 +87,10 @@ namespace KM.Framework.Constantes
         public string MediaLabel { get; set; }
         public string AdvertiserLabel { get; set; }
         public string IndeRadioMessage { get; set; } //3018
+        public string EmptyGrid { get; set; } //2106
+        public string CreativeLabel { get; set; } //1888
+        public string DownloadLabel { get; set; } //874
+        public string VisuelLabel { get; set; } //1909
+        public string InsertionsLabel { get; set; } //
     }
 }
