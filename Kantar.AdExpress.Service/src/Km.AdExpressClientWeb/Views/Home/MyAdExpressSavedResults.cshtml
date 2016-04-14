@@ -173,7 +173,7 @@
         <div class="modal-content">
             <div class="modal-header header-kantar-popup">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle @Model.UniversType</h4>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.CreateDirectory</h4>
             </div>
             <div class="modal-body">
                 <p> @Model.Labels.RenameSelectedFolder</p>
@@ -193,29 +193,30 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.RenameFolderTitle </h4>
             </div>
-            <div class="input-group-btn dropdown" dropdown="">
-                <button id="result" type="button" class="btn btn-default form-control bg-black-only idRename@(Model.UniversType)Directory"
-                        data-result="@Model.UniversGroups.FirstOrDefault().Id"
-                        data-toggle="dropdown">
-                    @Model.UniversGroups.FirstOrDefault().Description
-                </button>
-                <ul class="dropdown-menu bg-blue form-control">
-                    @foreach (var item in Model.UniversGroups)
-                    {
-                        if (item == Model.UniversGroups.FirstOrDefault())
-                        {
-                            <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
-                        }
-                        else
-                        {
-                            <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
-                        }
-                    }
-                </ul>
-                <p></p>
-            </div>
 
             <div class="modal-body">
+                <div class="input-group-btn dropdown" dropdown="">
+                    <button id="result" type="button" class="btn btn-default form-control bg-black-only idRename@(Model.UniversType)Directory"
+                            data-result="@Model.UniversGroups.FirstOrDefault().Id"
+                            data-toggle="dropdown">
+                        @Model.UniversGroups.FirstOrDefault().Description
+                    </button>
+                    <ul class="dropdown-menu bg-blue form-control">
+                        @foreach (var item in Model.UniversGroups)
+                        {
+                            if (item == Model.UniversGroups.FirstOrDefault())
+                            {
+                                <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                            else
+                            {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                        }
+                    </ul>
+                    <p></p>
+                </div>
+
                 <p> @Model.Labels.RenameSelectedFolder</p>
                 <input type="text" class="form-control" id="new@(Model.UniversType)DirectoryName" placeholder="Entrez un nom">
             </div>
