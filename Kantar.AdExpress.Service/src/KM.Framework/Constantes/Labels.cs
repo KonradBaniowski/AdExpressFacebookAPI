@@ -83,9 +83,9 @@ namespace KM.Framework.Constantes
         public string SelectFolder { get; set; } // 702
         public string RenameSelectedFolder { get; set; }//703
         public string ErrorMsgNoFolderCreated { get; set; } // 711
-
         public string ProductLabel { get; set; }
         public string MediaLabel { get; set; }
         public string AdvertiserLabel { get; set; }
+        public string IndeRadioMessage { get; set; } //3018
     }
 }

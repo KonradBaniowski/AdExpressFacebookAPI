@@ -186,6 +186,7 @@
     <Compile Include="Controllers\LostWonExportController.cs" />
     <Compile Include="Controllers\MediaSchedulePopUpController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
+    <Compile Include="Controllers\PortfolioDetailMediaController.cs" />
     <Compile Include="Controllers\PortfolioExportController.cs" />
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
@@ -1566,6 +1567,7 @@
     <Content Include="Views\InsertionsExport\Index.cshtml" />
     <Content Include="Views\Public\HomeNumbers.cshtml" />
     <Content Include="Views\Home\MyAdExpressSavedResults.cshtml" />
+    <Content Include="Views\PortfolioDetailMedia\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

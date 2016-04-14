@@ -55,6 +55,7 @@
     <Compile Include="BusinessService\ICreativeService.cs" />
     <Compile Include="BusinessService\IDetailLevelService.cs" />
     <Compile Include="BusinessService\IInfosNewsService.cs" />
+    <Compile Include="BusinessService\IPortfolioDetailMediaService.cs" />
     <Compile Include="BusinessService\IInsertionsService.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
     <Compile Include="BusinessService\ILostWonService.cs" />
