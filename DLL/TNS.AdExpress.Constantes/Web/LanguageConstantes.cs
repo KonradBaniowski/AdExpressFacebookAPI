@@ -19,6 +19,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
         public const long QuestionTag3Code = 647;
+        public const long CreateFolder = 696;
+        public const long DropFolder = 697;
         public const long RenameFolderTitle = 698;
         public const long RenameNewFodler = 700;
         public const long SelectFolderToDelete = 701;
@@ -32,6 +34,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LoadUniversCode = 770;
         public const long MyResultsDescription = 827;
         public const long ResultsCode = 829;
+        public const long DownloadLabel = 874;
         public const long UserUniversCode = 875;
         public const long UserSavedUniversCode = 893;
         public const long MonAdExpressDescription = 904;
@@ -47,8 +50,11 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Monthly = 1294;
         public const long Quartly = 1295;
         public const long MediaSelected = 1487;
+        public const long CreativeLabel = 1888;
+        public const long VisuelLabel = 1909;
         public const long JobTitleCode = 1976;
         public const long RefineCode = 2053;
+        public const long EmptyGrid = 2106;
         public const long PresentAbsentCode = 2167;
         public const long LostWonCode = 2169;
         public const long PortfolioCode = 2170;
@@ -56,6 +62,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LostWonDescriptionCode = 2198;
         public const long PortfolioDescriptionCode = 2199;
         public const long MediaScheduleDescriptionCode = 2200;
+        public const long InsertionsLabel = 2245;
         public const long SelectUnivers = 2261;
         public const long ErrorOverLimit = 2264;//==> only 200 items
         public const long LimitUniverses = 2265;
@@ -89,6 +96,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertType = 2607;
         public const long TimeSchedule = 2614;
         public const long Concurrent = 2869;
+        public const long IndeRadioMessage = 3018;
         public const long LimitKeyword = 3033;
         public const long ItemExceeded = 3034;
         public const long NoSupport = 3035;

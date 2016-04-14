@@ -1,5 +1,6 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Km.AdExpressClientWeb.Models.Shared;
+using KM.Framework.Constantes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -41,6 +44,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
             model.SiteLanguage = result.SiteLanguage;
+            model.Labels = LoadPageLabels(result.SiteLanguage);
 
             return View(model);
         }
@@ -103,6 +107,19 @@ namespace Km.AdExpressClientWeb.Controllers
             var reponse = _creativeService.GetCreativePath(idWebSession, idVersion, idVehicle);
 
             return Json(new { PathReadingFile = reponse.PathReadingFile, PathDownloadingFile = reponse.PathDownloadingFile });
+        }
+
+        private Labels LoadPageLabels(int siteLanguage)
+        {
+            var result = new Labels
+            {
+                EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
+                CreativeLabel = GestionWeb.GetWebWord(LanguageConstantes.CreativeLabel, siteLanguage),
+                DownloadLabel = GestionWeb.GetWebWord(LanguageConstantes.DownloadLabel, siteLanguage),
+                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage)
+            };
+
+            return result;
         }
 
 

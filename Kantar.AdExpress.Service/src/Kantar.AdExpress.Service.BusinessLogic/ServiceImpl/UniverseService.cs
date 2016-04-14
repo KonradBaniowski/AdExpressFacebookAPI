@@ -22,6 +22,8 @@ using TNS.Ares.Alerts.DAL;
 using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.Web.Navigation;
 using AutoMapper;
+using KM.Framework.Constantes;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -641,14 +643,77 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
+        public string SaveUserResult(string webSessionId, string folderId, string saveAsResultId, string saveResult)
+        {
+            webSession = (WebSession)WebSession.Load(webSessionId);
+
+            if (saveResult.Length == 0 && !saveAsResultId.Equals("0"))
+            {
+                string savedSessionName = CheckedText.CheckedAccentText(MyResultsDAL.GetSession(Int64.Parse(saveAsResultId), webSession));
+                if (savedSessionName.Length > 0 && MyResultsDAL.UpdateMySession(Int64.Parse(folderId), saveAsResultId, savedSessionName, webSession))
+                {
+                    #region Tracking utilisation sauvegarde
+                    webSession.OnUseMyAdExpressSave();
+                    #endregion
+
+                    // Validation : confirmation d'enregistrement de la requête
+                    return GestionWeb.GetWebWord(826, webSession.SiteLanguage);
+                }
+                else
+                {
+                    // Erreur : Echec de l'enregistrement de la requête		
+                    return GestionWeb.GetWebWord(825, webSession.SiteLanguage);
+                }
+
+            }
+            else if (saveResult.Length != 0 && saveResult.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+            {
+                if (!MyResultsDAL.IsSessionExist(webSession, saveResult))
+                {
+                    if (MyResultsDAL.SaveMySession(Int64.Parse(folderId), saveResult, webSession))
+                    {
+
+                        #region Tracking utilisation sauvegarde
+                        webSession.OnUseMyAdExpressSave();
+                        #endregion
+
+                        // Validation : confirmation d'enregistrement de la requête
+                        return GestionWeb.GetWebWord(826, webSession.SiteLanguage);
+                    }
+                    else
+                    {
+                        // Erreur : Echec de l'enregistrement de la requête
+                        return GestionWeb.GetWebWord(825, webSession.SiteLanguage);
+                    }
+                }
+                else
+                {
+                    // Erreur : session déjà existante
+                    return GestionWeb.GetWebWord(824, webSession.SiteLanguage);
+                }
+            }
+            else if (saveResult.Length == 0)
+            {
+                // Erreur : Le champs est vide
+                return GestionWeb.GetWebWord(822, webSession.SiteLanguage);
+            }
+            else
+            {
+                // Erreur : suppérieur à 50 caractères
+                return GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+            }
+        }
+
         public AdExpressUniversResponse GetResultUnivers(string webSessionId)
         {
+            webSession = (WebSession)WebSession.Load(webSessionId);
             var result = new AdExpressUniversResponse
             {
                 UniversType = UniversType.Result,
-                UniversGroups = new List<UserUniversGroup>()
+                UniversGroups = new List<UserUniversGroup>(),
+                Labels = LoadPageLabels(webSession.SiteLanguage)
             };
-            webSession = (WebSession)WebSession.Load(webSessionId);
+            
             result.SiteLanguage = webSession.SiteLanguage;
             var dsListRepertory = MyResultsDAL.GetData(webSession);
             List<UserUnivers> userUniversList = new List<UserUnivers>();
@@ -694,17 +759,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public AdExpressUniversResponse GetUnivers(string webSessionId,string branch, string listUniverseClientDescription)
         {
             #region Init
+            webSession = (WebSession)WebSession.Load(webSessionId);
             var result = new AdExpressUniversResponse
             {
                 UniversType = UniversType.Univers,
-                UniversGroups = new List<UserUniversGroup>()
+                UniversGroups = new List<UserUniversGroup>(),
+                Labels =LoadPageLabels(webSession.SiteLanguage)
             };
-            List<UserUnivers> userUniversList = new List<UserUnivers>();
-            webSession = (WebSession)WebSession.Load(webSessionId);
+            List<UserUnivers> userUniversList = new List<UserUnivers>();            
             result.SiteLanguage = webSession.SiteLanguage;
             #endregion
             #region Repository
-            var data = UniversListDataAccess.GetData(webSession, branch, listUniverseClientDescription);
+            var data = UniversListDataAccess.GetData(webSession, branch, listUniverseClientDescription,true);
             if (data != null && data.Tables[0].AsEnumerable().Any())
             {
                 var list = data.Tables[0].AsEnumerable().Select(p => new
@@ -922,6 +988,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 groupIndex++;
             }
             return adExpressUniverses;
+        }
+        private Labels LoadPageLabels(int siteLanguage)
+        {
+            var result = new Labels
+            {
+                Save = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SaveUniversCode, siteLanguage),
+                MyResults = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.ResultsCode, siteLanguage),
+                SaveUnivers = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SaveUniversCode, siteLanguage),
+                UserUniversCode = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.UserSavedUniversCode, siteLanguage),
+                MyResultsDescription = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.MyResultsDescription, siteLanguage),               
+                NoSavedUnivers = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.NoSavedUniversCode, siteLanguage),
+                MoveSelectedResult = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.MoveSelectedResult, siteLanguage),
+                MoveResultTitle = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.MoveSelectedResult, siteLanguage),
+                Submit = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Submit, siteLanguage),
+                RenameFolderTitle = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameFolderTitle, siteLanguage),
+                RenameNewFodler = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameNewFodler, siteLanguage),
+                SelectFolderToDelete = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SelectFolderToDelete, siteLanguage),
+                SelectFolder = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SelectFolder, siteLanguage),
+                RenameSelectedFolder = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameSelectedFolder, siteLanguage),
+                ErrorMsgNoFolderCreated = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage),
+                CreateDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.CreateFolder, siteLanguage),
+                RenameDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameSelectedFolder, siteLanguage),
+                DropDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.DropFolder, siteLanguage)
+            };
+            return result;
         }
         #endregion
     }

@@ -2,11 +2,64 @@
 @using TNS.AdExpress.Constantes.Web
 @{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";  
+   
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/module-selection")
+
+    <script>
+        function OpenOldWebSite(url) {
+            window.open(url, "_blank");
+        }
+
+        function RedirectToOldWebSite(moduleId) {
+
+            $('#' + moduleId).on('click', function (e) {
+                var lo = encodeURIComponent('@Model.EncryptedLogin');
+                var pa = encodeURIComponent('@Model.EncryptedPassword');
+                var mo = moduleId
+                var link = 'http://kmchmwbi401:88/index.aspx?l=' + lo + '&p=' + pa + '&m=' + mo;
+                window.open(link, "_blank");
+                return false;
+            });
+        }
+
+        //Redirect to ChronoPresse
+        RedirectToOldWebSite(@Module.Name.BILAN_CAMPAGNE);
+
+        //Redirect to New Creative
+        RedirectToOldWebSite(@Module.Name.NEW_CREATIVES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.TENDACES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.TENDACES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.INDICATEUR);
+
+        //Redirect to Tendencies
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DYNAMIQUE);
+
+        RedirectToOldWebSite(@Module.Name.ANALYSE_DES_DISPOSITIFS);
+
+        RedirectToOldWebSite(@Module.Name.ANALYSE_DES_PROGRAMMES);
+
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PAN_EURO);
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PRESSE);
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_RADIO);
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_TELEVISION);
+
+    </script>
 }
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -17,7 +70,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PLAN_MEDIA))
                 {
-                    <a href="@Url.Action("Index", "MediaSchedule" )" class="tile-body text-center" id="@Module.Name.ANALYSE_PLAN_MEDIA">
+                    <a href="@Url.Action("Index", "MediaSchedule" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PLAN_MEDIA">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-chart sli-size blue"></i>
@@ -49,7 +102,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PORTEFEUILLE))
                 {
-                    <a href="@Url.Action("MediaSelection", "Portfolio" )" class="tile-body text-center" id="@Module.Name.ANALYSE_PORTEFEUILLE">
+                    <a href="@Url.Action("MediaSelection", "Portfolio" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PORTEFEUILLE">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-layers sli-size blue"></i>
@@ -81,7 +134,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DYNAMIQUE))
                 {
-                    <a href="@Url.Action("MediaSelection", "LostWon" )" class="tile-body text-center" id="@Module.Name.ANALYSE_DYNAMIQUE">
+                    <a href="@Url.Action("MediaSelection", "LostWon" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_DYNAMIQUE">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-calculator sli-size blue"></i>
@@ -113,7 +166,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_CONCURENTIELLE))
                 {
-                    <a href="@Url.Action("MediaSelection", "PresentAbsent" )" class="tile-body text-center" id="@Module.Name.ANALYSE_CONCURENTIELLE">
+                    <a href="@Url.Action("MediaSelection", "PresentAbsent" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_CONCURENTIELLE">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-equalizer sli-size blue"></i>
@@ -146,7 +199,9 @@
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
                 {
-                    <a href="@Url.Action("Index","Chrono")" class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">
+
+                    @* <a href="@Url.Action("Index","Chrono")" class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">*@
+                    <a class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">
                         <div class="flip-container-second">
                             <div class="front-second">
                                 <i class="icon-book-open sli-size-small green"></i>
@@ -179,7 +234,8 @@
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.NEW_CREATIVES))
                 {
-                    <a href="@Url.Action("Index", "NouvelleCrea")" class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">
+                    @*<a href="@Url.Action("Index", "NouvelleCrea")" class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">*@
+                    <a class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">
                         <div class="flip-container-second">
                             <div class="front-second">
                                 <i class="icon-picture sli-size-small green"></i>
@@ -211,7 +267,8 @@
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.TENDACES))
                 {
-                    <a href="@Url.Action("Index", "Tendances")" class="tile-body text-center" id="@Module.Name.TENDACES">
+                    @*<a href="@Url.Action("Index", "Tendances")" class="tile-body text-center" id="@Module.Name.TENDACES">*@
+                    <a  class="tile-body text-center" id="@Module.Name.TENDACES">
                         <div class="flip-container-second">
                             <div class="front-second">
                                 <i class="icon-eye sli-size-small green"></i>
@@ -349,7 +406,7 @@
         <p class="text-center">Actualités KM et publications</p>
         @*IMG ACCUEIL*@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-lr-10 padding-b-15">
-            <img src="../Content/img/bann_adexpress.jpg" class="img-responsive" alt="Ad Express - Kantar Media">
+            <img src="../Content/img/bann_adexpress_top100.jpg" class="img-responsive" alt="Ad Express - Kantar Media">
         </div>
         @*PANEL INFO*@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-lr-10">
@@ -362,19 +419,45 @@
                     <div class="media">
                         <div class="media-body">
                             <div class="date pull-left">
-                                <h4 class="text-center"><strong>10</strong></h4>
-                                <h4 class="text-center"><small>DEC</small></h4>
+                                <h4 class="text-center"><strong>12</strong></h4>
+                                <h4 class="text-center"><small>AVR</small></h4>
                             </div>
-                            <div class="title pull-left">
-                                <h4>Titre de folie</h4>
+                            <div class="title pull-left information-title-width">
+                                <h4 class="information-title">Kantar Media partenaire du Grand prix du Brand Content 2016 le 12 avril prochain</h4>
                                 <em>Par Equipe Ad Intelligence de Kantar Media</em>
                             </div>
                             <div class="clearfix"></div>
                             <div class="content">
-                                <p>Chers Clients,</p><br>
-                                <p>En début d’année, Kantar Media avait été contraint de « flouter » dans Adexpress les  chemins de fer de certains titres, faute d’accord avec le GIE PPMP, groupement de plusieurs éditeurs français (dont Le Nouvel Observateur, Challenges, 20 Minutes, etc.). En effet, nous vous rappelons que Kantar Media assure la sécurité juridique de ses clients en concluant des contrats avec l’ensemble des éditeurs du marché français et international.</p><br>
-                                <p>Aujourd'hui, nous vous informons que nous avons conclu un nouvel accord avec le GIE PPMP qui nous autorise désormais à rendre disponible les chemins de fer dans Adexpress, ceci prenant effet le lundi 19 octobre.</p><p>Nous vous remercions pour votre compréhension et restons  à votre disposition pour tout complément d’information.</p><br>
-                                <p>Cordialement,<br>Equipe Ad Intelligence de Kantar Media »</p>
+                                <p>Kantar Media sera une nouvelle fois partenaire du Grand Prix du Brand Content 2016 qui vise à récompenser les meilleures stratégies de contenu de marques, l’occasion de valoriser le talent  des acteurs dans ce domaine.</p><br>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div class="date pull-left">
+                                <h4 class="text-center"><strong>14</strong></h4>
+                                <h4 class="text-center"><small>AVR</small></h4>
+                            </div>
+                            <div class="title pull-left information-title-width">
+                                <h4 class="information-title">Printemps des études : conférence exceptionnelle de Sir Martin Sorrell, PDG du groupe WPP</h4>
+                                <em>Par Equipe Ad Intelligence de Kantar Media</em>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="content">
+                                <p>Kantar Media vous donne rendez-vous le Jeudi 14 avril de 9h30 à 10h30 au Grand Auditorium du Palais Brongniart dans lequel Sir Martin Sorrell, PDG du groupe WPP, exposera sa vision des études et du marketing.</p>
+                                <p>A 12h, Kantar Media et Millward Brown donneront une conférence au petit Auditorium sur le thème suivant : « Comment adapter vos vidéos publicitaires aux plateformes ? ».</p><br>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div class="date pull-left">
+                                <h4 class="text-center"><strong>09</strong></h4>
+                                <h4 class="text-center"><small>JUIN</small></h4>
+                            </div>
+                            <div class="title pull-left information-title-width">
+                                <h4 class="information-title">Kantar Media partenaire et membre du jury des trophées de la video online 2016 le 9 juin prochain</h4>
+                                <em>Par Equipe Ad Intelligence de Kantar Media</em>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="content">
+                                <p>Les Trophées de la vidéo online récompensent les meilleures utilisations, solutions, innovations, créations, technologies, réalisations, campagnes vidéo… combinant de façon optimale Vidéo et Internet. Kantar Media y sera, tout comme l’année précédente, partenaire premium et membre du jury.</p><br />
                             </div>
                         </div>
                     </div>
@@ -433,3 +516,4 @@
         </div>
     </div>
 </div>
+

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KM.Framework.Constantes;
+using System;
 using System.Collections.Generic;
 using TNS.Classification.Universe;
 
@@ -63,6 +64,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<UserUniversGroup> UniversGroups { get; set; }
         public UniversType UniversType { get; set; }
         public int SiteLanguage { get; set; }
+        public Labels Labels { get; set; }
     }
     
     public enum UniversType
@@ -70,6 +72,6 @@ namespace Kantar.AdExpress.Service.Core.Domain
         Result,
         Univers,
         Alert
-    }   
+    }
 
 }

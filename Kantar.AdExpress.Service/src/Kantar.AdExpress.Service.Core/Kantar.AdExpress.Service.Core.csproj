@@ -56,6 +56,7 @@
     <Compile Include="BusinessService\IDetailLevelService.cs" />
     <Compile Include="BusinessService\IDetailSelectionService.cs" />
     <Compile Include="BusinessService\IInfosNewsService.cs" />
+    <Compile Include="BusinessService\IPortfolioDetailMediaService.cs" />
     <Compile Include="BusinessService\IInsertionsService.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
     <Compile Include="BusinessService\ILostWonService.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="DataAccess\Repository\Webnav\IMyResultsRepository.cs" />
     <Compile Include="DataAccess\Repository\Mau\ILoginRepository.cs" />
     <Compile Include="Domain\Address.cs" />
+    <Compile Include="Domain\AdExpressResponse.cs" />
     <Compile Include="Domain\Alert.cs" />
     <Compile Include="Domain\DetailLevel.cs" />
     <Compile Include="Domain\DetailLevelItems.cs" />
@@ -148,6 +150,10 @@
     <ProjectReference Include="..\Kantar.AdExpress.Service.Contracts\Kantar.AdExpress.Service.Contracts.csproj">
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>
       <Name>Kantar.AdExpress.Service.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KM.Framework\KM.Framework.csproj">
+      <Project>{6a14be5e-e261-4821-8531-2fd6ab03c686}</Project>
+      <Name>KM.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

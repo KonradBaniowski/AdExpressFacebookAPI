@@ -1,6 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Models.Shared;
+using KM.Framework.Constantes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
             model.SiteLanguage = result.SiteLanguage;
+            model.Labels = LoadPageLabels(result.SiteLanguage);
 
             return View(model);
         }
@@ -111,12 +113,12 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         
-        public ActionResult GetDetailLevel(int idVehicle)
+        public ActionResult GetDetailLevel(int idVehicle, bool isVehicleChanged)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle);
+            var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle, isVehicleChanged);
 
             return PartialView("_DetailLevel", detailLevel);
         }
@@ -127,6 +129,19 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             _detailLevelService.SetDetailLevelItem(idWebSession, userFilter);
+        }
+
+        private Labels LoadPageLabels(int siteLanguage)
+        {
+            var result = new Labels
+            {
+                EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
+                InsertionsLabel = GestionWeb.GetWebWord(LanguageConstantes.InsertionsLabel, siteLanguage),
+                DownloadLabel = GestionWeb.GetWebWord(LanguageConstantes.DownloadLabel, siteLanguage),
+                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage)
+            };
+
+            return result;
         }
 
     }

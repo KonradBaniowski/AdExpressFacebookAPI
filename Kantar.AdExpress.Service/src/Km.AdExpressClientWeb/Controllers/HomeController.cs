@@ -1,5 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
-using Domain=Kantar.AdExpress.Service.Core.Domain;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.Home;
 using Km.AdExpressClientWeb.Models.Shared;
@@ -15,17 +15,22 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Date.DAL;
 using Kantar.AdExpress.Service.Core.Domain;
+using KM.Framework.Constantes;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        private const string _cryptKey = "8!b?#B$3";
+
         private IRightService _rightService;
         private IApplicationUserManager _userManager;
         private IWebSessionService _webSessionService;
         private IUniverseService _universService;
         private IInfosNewsService _infosNewsService;
+       
 
         public HomeController(IRightService rightService, IApplicationUserManager applicationUserManager, IWebSessionService webSessionService, IUniverseService universService, IInfosNewsService infosNewsService)
         {
@@ -55,22 +60,27 @@ namespace Km.AdExpressClientWeb.Controllers
                             {
                                 new InfosNews()
                                 {
-                                    Label = "files1",
+                                    Label = "Aide",
                                     Url = "cerfa.pdf"
                                 },
                                 new InfosNews()
                                 {
-                                    Label = "files2",
-                                    Url = "test.pdf"
+                                    Label = "Dates de mises à jour",
+                                    Url = "Planning mise à jour Adexpress.pdf"
                                 }
                             }
                         });
+
+            var encryptedPassword = EncryptQueryString(password);
+            var encryptedLogin = EncryptQueryString(login); 
 
             var Home = new HomePageViewModel()
             {
                 ModuleRight = res,
                 Modules = resList,
-                Documents = documents
+                Documents = documents,
+                EncryptedLogin =encryptedLogin,
+                EncryptedPassword = encryptedPassword
             };
             return View(Home);
         }
@@ -94,7 +104,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var model = new MyAdExpressViewModel
             {
-                SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>() },
+                SavedResults = new Domain.AdExpressUniversResponse {  UniversType= Domain.UniversType.Result, UniversGroups = new List<Domain.UserUniversGroup>()},
                 SavedUnivers = new Domain.AdExpressUniversResponse { UniversType = Domain.UniversType.Univers, UniversGroups = new List<Domain.UserUniversGroup>() },
                 Alerts = new List<Domain.Alert>()
             };
@@ -131,6 +141,48 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
+        public ActionResult ReloadSession()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var model = new Domain.AdExpressUniversResponse
+            {
+                UniversType = Domain.UniversType.Result,
+                UniversGroups = new List<Domain.UserUniversGroup>()
+            };
+            var result = _universService.GetResultUnivers(idWebSession);
+            foreach (var group in result.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model = result;
+            return  PartialView("MyAdExpressSavedResults", model);
+        }
+
+
+        public ActionResult ReloadUnivers()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var model = new Domain.AdExpressUniversResponse
+            {
+                UniversType = Domain.UniversType.Univers,
+                UniversGroups = new List<Domain.UserUniversGroup>()
+            }; string branch = "2";
+            string listUniversClientDescription = string.Empty;
+            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
+            foreach (var group in univers.UniversGroups)
+            {
+                int count = group.Count;
+                group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
+                group.SecondeColumnSize = count - group.FirstColumnSize;
+            }
+            model= univers;
+            return PartialView("MyAdExpressSavedResults", model);
+
+        }
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
         {
             PresentationModel result = new PresentationModel
@@ -175,17 +227,25 @@ namespace Km.AdExpressClientWeb.Controllers
                 AlertType = GestionWeb.GetWebWord(LanguageConstantes.AlertType, siteLanguage),
                 Receiver= GestionWeb.GetWebWord(LanguageConstantes.Receiver, siteLanguage),
                 TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage),
-                MoveSelectedResult = GestionWeb.GetWebWord(LanguageConstantes.MoveSelectedResult, siteLanguage),
-                MoveResultTitle = GestionWeb.GetWebWord(LanguageConstantes.MoveSelectedResult, siteLanguage),
-                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
-                RenameFolderTitle= GestionWeb.GetWebWord(LanguageConstantes.RenameFolderTitle, siteLanguage),
-                RenameNewFodler= GestionWeb.GetWebWord(LanguageConstantes.RenameNewFodler, siteLanguage),
-                SelectFolderToDelete= GestionWeb.GetWebWord(LanguageConstantes.SelectFolderToDelete, siteLanguage),
-                SelectFolder= GestionWeb.GetWebWord(LanguageConstantes.SelectFolder, siteLanguage),
-                RenameSelectedFolder= GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
-                ErrorMsgNoFolderCreated= GestionWeb.GetWebWord(LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage)
+                CreateDirectory = GestionWeb.GetWebWord(LanguageConstantes.CreateFolder, siteLanguage),
+                RenameDirectory = GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
+                DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage)
             };
             return result;
+        }
+
+        public static string EncryptQueryString(string strQueryString)
+        {
+            Encryption64 oES =
+                new Encryption64();
+            return oES.Encrypt(strQueryString, _cryptKey).Replace("+", "-").Replace("/", "_");
+        }
+
+        public static string DecryptQueryString(string strQueryString)
+        {
+            Encryption64 oES =
+                new Encryption64();
+            return oES.Decrypt(strQueryString.Replace("-", "+").Replace("_", "/"), _cryptKey);
         }
     }
 }
