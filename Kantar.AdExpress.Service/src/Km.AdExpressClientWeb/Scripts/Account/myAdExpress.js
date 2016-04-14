@@ -50,7 +50,7 @@
                         }
                     });
                 }
-                bootbox.alert(response);
+                bootbox.alert(response.Message);
             }
         });    
     });
@@ -87,7 +87,7 @@
                         $("#Result").html(data);
                     }
                 });
-                bootbox.alert("Success");
+                bootbox.alert(response.Message);
             }
         });
     });
@@ -194,7 +194,7 @@
                         $("#Univers").html(data);
                     }
                 });
-                bootbox.alert("Success");
+                bootbox.alert(response.Message);
             }
         });
     });
@@ -226,7 +226,7 @@
                         $("#Univers").html(data);
                     }
                 });
-                bootbox.alert("Success");
+                bootbox.alert(response.Message);
             }
         });
     });
@@ -258,7 +258,7 @@
                         $("#Result").html(data);
                     }
                 });
-                bootbox.alert("Success");
+                bootbox.alert(response.Message);
             }
         });
     });
@@ -372,7 +372,7 @@
                         $("#Result").html(data);
                     }
                 });
-                bootbox.alert("Success");
+                bootbox.alert(response.Message);
             }
         });
     });
@@ -410,9 +410,88 @@
                         $("#Univers").html(data);
                     }
                 });
-                bootbox.alert("Success");
+                bootbox.alert(response.Message);
             }
         });
     });
 
+// Rename Directory ( Session & univers)
 
+    $(document).on('click', '#btnRenameResultDirectory', function () {
+        $('#renameResultDirectory').modal('show');
+    });
+    $(document).on('click', '#btnValidRenameResultDirectory', function () {
+        var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idRenameResultDirectory').attr("data-result");
+        var name = $('#newResultDirectoryName').val();
+        var params = {
+            directoryName: name,
+            type: "Session",
+            idDirectory: idDirectory
+        };
+        $.ajax({
+            url: '/Universe/RenameDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#dropResultDirectory').modal('hide');
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadSession',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Result").html(data);
+                    }
+                });
+                bootbox.alert(response.Message);
+            }
+        });
+    });
+
+    $(document).on('click', '#btnRenameUniversDirectory', function () {
+        $('#renameUniversDirectory').modal('show');
+    });
+
+    $(document).on('click', '#btnValidRenameUniversDirectory', function () {
+        var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idRenameUniversDirectory').attr("data-result");
+        var name = $('#newUniversDirectoryName').val();
+        var params = {
+            directoryName: name,
+            type: "Univers",
+            idDirectory: idDirectory
+        };
+        $.ajax({
+            url: '/Universe/RenameDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#dropResultDirectory').modal('hide');
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadUnivers',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Univers").html(data);
+                    }
+                });
+                bootbox.alert(response.Message);
+            }
+        });
+    });
