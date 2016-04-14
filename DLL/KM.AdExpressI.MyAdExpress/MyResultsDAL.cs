@@ -195,5 +195,116 @@ namespace KM.AdExpressI.MyAdExpress
             return result;
             #endregion
         }
+
+        public static bool RenameDirectory(string newName, Int64 idDirectory, WebSession webSession)
+        {
+            bool result = false;
+            Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+            
+            #region Requête pour mettre à jour le nom du répertoire dans la table	
+            string sql1 = "update " + directoryTable.Sql;
+            sql1 += "  SET DIRECTORY ='" + newName + "', DATE_MODIFICATION = SYSDATE ";
+            sql1 += " where ID_DIRECTORY =" + idDirectory + "";
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                webSession.Source.Update(sql1);
+                result = true;
+            }
+            catch (System.Exception err)
+            {
+                //throw (new MyAdExpressDataAccessException("Impossible de Renommer un répertoire", err));
+            }
+            return result;
+            #endregion
+        }
+
+        public static bool DropDirectory(Int64 idDirectory, WebSession webSession)
+        {
+            bool result = false;
+            Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+
+            #region requête
+            string sql = " delete from " + directoryTable.Sql;
+            sql += " where ID_DIRECTORY=" + idDirectory + "";
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                webSession.Source.Delete(sql);
+                result = true;
+            }
+            catch (System.Exception err)
+            {
+                //throw (new MyAdExpressDataAccessException("Impossible de Supprimer un répertoire dans la table Directory", err));
+            }
+            return result;
+            #endregion
+        }
+
+        public static bool ContainsDirectories(WebSession webSession)
+        {
+            bool result = false;
+            #region Construction de la requête
+            Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+
+            //Requête pour récupérer tous les univers d'un idLogin
+            string sql = "select distinct " + directoryTable.Prefix + ".ID_DIRECTORY, " + directoryTable.Prefix + ".DIRECTORY ";
+            sql += " from " + directoryTable.SqlWithPrefix;
+            sql += " where " + directoryTable.Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin;
+            sql += " and " + directoryTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+            sql += " order by " + directoryTable.Prefix + ".DIRECTORY ";
+
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                DataSet ds =webSession.Source.Fill(sql);
+                if (ds.Tables[0].Rows.Count > 1)
+                    result = true;
+            }
+            catch (System.Exception err)
+            {
+                //throw (new MyAdExpressDataAccessException("Impossible d'obtenir la liste des répertoires", err));
+            }
+            #endregion
+            return result;
+        }
+
+        public static bool IsSessionsInDirectoryExist(WebSession webSession, Int64 idDirectory)
+        {
+            bool result = false;
+            Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+            Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
+            #region Construction de la requête
+            string sql = "select " + mySessionTable.Prefix + ".MY_SESSION from " + mySessionTable.SqlWithPrefix + ", ";
+            sql += " " + directoryTable.SqlWithPrefix;
+            sql += "  where " + directoryTable.Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin;
+            sql += " and " + directoryTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+            sql += " and " + mySessionTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+            sql += " and " + directoryTable.Prefix + ".ID_DIRECTORY = " + mySessionTable.Prefix + ".ID_DIRECTORY ";
+            sql += " and " + directoryTable.Prefix + ".ID_DIRECTORY=" + idDirectory + " ";
+            #endregion
+
+            #region Execution de la requête
+            DataSet ds;
+            try
+            {
+                ds = webSession.Source.Fill(sql);
+                if (ds.Tables[0].Rows.Count > 0)
+                    result =true;
+            }
+            catch (System.Exception err)
+            {
+                //throw (new MyAdExpressDataAccessException("Impossible de vérifier s'il existe des sessions dans un répertoire", err));
+            }
+            return result;
+            #endregion
+        }
     }
 }

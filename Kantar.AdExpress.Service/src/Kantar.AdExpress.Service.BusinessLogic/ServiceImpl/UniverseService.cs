@@ -708,7 +708,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             result.SiteLanguage = webSession.SiteLanguage;
             #endregion
             #region Repository
-            var data = UniversListDataAccess.GetData(webSession, branch, listUniverseClientDescription);
+            var data = UniversListDataAccess.GetData(webSession, branch, listUniverseClientDescription,true);
             if (data != null && data.Tables[0].AsEnumerable().Any())
             {
                 var list = data.Tables[0].AsEnumerable().Select(p => new

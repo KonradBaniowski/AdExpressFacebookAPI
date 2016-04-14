@@ -271,7 +271,7 @@
         var directoryName = $('#newDirectoryResultName').val();
         var params = {
             directoryName: directoryName,
-            type: "session"
+            type: "Session"
         };
         $.ajax({
             url: '/Universe/CreateDirectory',
@@ -332,7 +332,7 @@
                         $("#Univers").html(data);
                     }
                 });
-                bootbox.alert("Success");
+                bootbox.alert(response.Message);
             }
         });
     });
