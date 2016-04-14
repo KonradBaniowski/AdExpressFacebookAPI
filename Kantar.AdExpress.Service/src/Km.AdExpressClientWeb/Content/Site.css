@@ -81,6 +81,15 @@
     transition: all 0.2s ease-in-out 0s;
 }
 
+.btn-action {
+    color: #fff;
+    background-color: #00c1ff;
+    border: 0;
+    font-weight: bolder;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
 .tl-header span {
     font-size: 11px;
     text-transform: uppercase;

@@ -1017,9 +1017,12 @@ namespace TNS.AdExpressI.Portofolio
             {
                 for (j = 0; j < _data.NewHeaders.Root.Count; j++)
                 {
-                    columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "*" });
-                    schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
-                    columnsFixed.Add(new { columnKey = _data.NewHeaders.Root[j].Label, isFixed = true, allowFixing = true });
+                    //Key pour "Spot" = 869
+                    //key pour "Plan Media du produit" = 1478
+
+                    columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Key, dataType = "string", width = "*" });
+                    schemaFields.Add(new { name = _data.NewHeaders.Root[j].Key });
+                    columnsFixed.Add(new { columnKey = _data.NewHeaders.Root[j].Key, isFixed = true, allowFixing = true });
                 }
             }
             else
