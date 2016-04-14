@@ -18,6 +18,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         AdExpressResponse CreateDirectory(string directoryName, UniversType type, string webSessionId);
         AdExpressResponse RenameDirectory(string directoryName, UniversType type, string idDirectory, string webSessionId);
         AdExpressResponse DropDirectory(string idDirectory, UniversType type, string webSessionId);
-        bool LoadSession(string idSession, UniversType type, string webSessionId);
+        AdExpressResponse LoadSession(string idSession, UniversType type, string webSessionId);
     }
 }
