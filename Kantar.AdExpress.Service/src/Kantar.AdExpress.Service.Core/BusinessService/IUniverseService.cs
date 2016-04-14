@@ -23,6 +23,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         AdExpressUniversResponse GetResultUnivers(string webSessionId);
         AdExpressUniversResponse GetUnivers(string webSessionId, string branch, string listUniverseClientDescription);
         AlertResponse GetUserAlerts(string webSessionId);
-
+        string SaveUserResult(string webSessionId, string folderId, string saveAsResultId, string saveResult);
     }
 }

@@ -17,7 +17,7 @@ using System.Globalization;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstFrequency = TNS.AdExpress.Constantes.Customer.DB.Frequency;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-
+using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -28,6 +28,7 @@ using TNS.AdExpress.Domain.Web;
 using FrameWorkCsts = TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Domain.Layers;
 using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -830,7 +831,272 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), 1)).AddMonths(1).AddDays(-1);
             }
         }
+        #region  Dernier mois chargé
+        /// <summary>
+        /// Dernier mois chargé
+        /// </summary>
+        /// <param name="PeriodBeginningDate">date de début</param>		
+        /// <param name="PeriodEndDate">date de fin</param>	
+        ///  <param name="periodType">type de période</param>
+        public static void LastLoadedMonth(ref string PeriodBeginningDate, ref string PeriodEndDate, CstPeriodType periodType)
+        {
+            double currentWeek = ((double)DateTime.Now.Day / (double)7);
+            currentWeek = Math.Ceiling(currentWeek);
+            AtomicPeriodWeek week = new AtomicPeriodWeek(DateTime.Now);
+
+            if (DateTime.Now.Month > 2)
+            {
+                if (IsPeriodActive(currentWeek, week, periodType))
+                {
+                    PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
+                    PeriodEndDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
+                }
+                else {
+                    PeriodBeginningDate = DateTime.Now.AddMonths(-2).ToString("yyyyMM");
+                    PeriodEndDate = DateTime.Now.AddMonths(-2).ToString("yyyyMM");
+                }
+            }
+            else {
+                if (DateTime.Now.Month == 2 && IsPeriodActive(currentWeek, week, periodType))
+                {
+                    PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
+                    PeriodEndDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
+                }
+                else {
+                    if (DateTime.Now.Month == 2 || IsPeriodActive(currentWeek, week, periodType))
+                    {
+                        PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy12");
+                        PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy12");
+                    }
+                    else {
+                        PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy11");
+                        PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy11");
+                    }
+                }
+            }
+        }
+
         #endregion
+
+        #endregion
+
+        #region Période active
+        /// <summary>
+        /// Vérifie si une période peut être traitée
+        /// </summary>
+        /// <param name="currentWeek">semaine courante</param>
+        /// <param name="week">semaine </param>
+        /// <param name="periodType">type de période</param>
+        /// <returns>vrai si période active</returns>
+        private static bool IsPeriodActive(double currentWeek, AtomicPeriodWeek week, CstPeriodType periodType)
+        {
+            bool enabled = false;
+            AtomicPeriodWeek previousWeek;
+            if (currentWeek == 1 && week.FirstDay.Month == week.LastDay.Month
+                && (int.Parse(DateTime.Now.DayOfWeek.GetHashCode().ToString()) >= 5
+                || int.Parse(DateTime.Now.DayOfWeek.GetHashCode().ToString()) == 0))
+            {
+                enabled = true;
+            }
+            //2ème semaine du mois en cours
+            else if (currentWeek == 2)
+            {
+                if (((int)DateTime.Now.DayOfWeek >= 5 || (int)DateTime.Now.DayOfWeek == 0))
+                {
+                    enabled = true;
+                }
+                else {
+                    previousWeek = new AtomicPeriodWeek(DateTime.Now.AddDays(-7));
+                    if (previousWeek.FirstDay.Month == previousWeek.LastDay.Month)
+                        enabled = true;
+                }
+                //Plus de 2 semaines du  mois en cours
+            }
+            else if (currentWeek > 2 && !((CstPeriodType.previousYear == periodType || (CstPeriodType.LastLoadedMonth == periodType && week.FirstDay.Month != 12) || CstPeriodType.LastLoadedWeek == periodType) && (week.Week == 52 || week.Week == 53)))
+            {
+                enabled = true;
+            }
+            return enabled;
+        }
+        #endregion
+
+        #region Derniere semaine chargée
+        /// <summary>
+        /// Derniere semaine chargée
+        /// </summary>
+        /// <param name="PeriodBeginningDate">date de début</param>		
+        /// <param name="PeriodEndDate">date de fin</param>			
+        public static void LastLoadedWeek(ref string PeriodBeginningDate, ref string PeriodEndDate)
+        {
+            AtomicPeriodWeek currentWeek = new AtomicPeriodWeek(DateTime.Now);
+            int numberWeek = currentWeek.Week;
+            //			int LoadedWeek=0;		
+            //			AtomicPeriodWeek previousYearWeek=new AtomicPeriodWeek(DateTime.Now.AddYears(-1));
+
+            AtomicPeriodWeek previousWeek = new AtomicPeriodWeek(DateTime.Now.AddDays(-7));
+            int days = 0;
+            days = DateTime.Now.Subtract(previousWeek.LastDay).Days;
+            if (days < 5)
+            {
+                previousWeek = new AtomicPeriodWeek(DateTime.Now.AddDays(-14));
+            }
+            PeriodBeginningDate = previousWeek.Year.ToString() + ((previousWeek.Week > 9) ? "" : "0") + previousWeek.Week.ToString();
+            PeriodEndDate = previousWeek.Year.ToString() + ((previousWeek.Week > 9) ? "" : "0") + previousWeek.Week.ToString();
+        }
+        #endregion
+
+        #region Période chargement des données
+        /// <summary>
+        /// Dates de chargement des données
+        /// </summary>
+        /// <param name="webSession">session du client</param>
+        /// <param name="PeriodBeginningDate">date de début</param>		
+        /// <param name="PeriodEndDate">date de fin</param>
+        /// <param name="periodType">type de période</param>
+        public static void DownloadDates(WebSession webSession, ref string PeriodBeginningDate, ref string PeriodEndDate, CstPeriodType periodType)
+        {
+            double currentWeek = ((double)DateTime.Now.Day / (double)7);
+            currentWeek = Math.Ceiling(currentWeek);
+            AtomicPeriodWeek week = new AtomicPeriodWeek(DateTime.Now);
+
+
+            if (DateTime.Now.Month == 1)
+            {
+                if (CstPeriodType.previousYear == periodType)
+                {
+                    if (IsPeriodActive(currentWeek, week, periodType))
+                    {
+                        PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
+                        PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy12");
+                    }
+                    else {
+                        PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
+                        PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy11");
+                    }
+                }
+                else
+                    throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612, webSession.SiteLanguage));
+            }
+            else {
+                if (CstPeriodType.currentYear == periodType)
+                {
+                    if (IsPeriodActive(currentWeek, week, periodType))
+                    {
+                        PeriodBeginningDate = DateTime.Now.ToString("yyyy01");
+                        PeriodEndDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
+                    }
+                    else {
+                        if (((currentWeek == 1 || currentWeek == 2) && week.Week <= 2 && DateTime.Now.Year == week.FirstDay.Year)
+                            || (DateTime.Now.Month == 2 && !IsPeriodActive(currentWeek, week, periodType))
+                            )
+                            throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612, webSession.SiteLanguage));
+                        else {
+                            PeriodBeginningDate = DateTime.Now.ToString("yyyy01");
+                            PeriodEndDate = DateTime.Now.AddMonths(-2).ToString("yyyyMM");
+                        }
+                    }
+                }
+                else {
+                    PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
+                    PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy12");
+                }
+            }
+        }
+        #endregion
+        #region Période chargement des données sauvegardées
+        /// <summary>
+        /// Dates de chargement des données sauvegardées
+        /// </summary>
+        /// <param name="webSessionSave">session du client sauvegardée</param>
+        /// <param name="PeriodBeginningDate">date de début </param>
+        /// <param name="PeriodEndDate">date de fin</param>
+        public static void WebSessionSaveDownloadDates(WebSession webSessionSave, ref string PeriodBeginningDate, ref string PeriodEndDate)
+        {
+            //Patch Finland pour le Tableau de bord PRESSE
+            bool finland = false;
+            VehicleInformation _vehicleInformation = null;
+            DateTime downloadDate = DateTime.Now;
+            if (WebApplicationParameters.CountryCode.Equals("35") && Modules.IsDashBoardModule(webSessionSave))
+            {
+
+                long vehicleId = ((LevelInformation)webSessionSave.SelectionUniversMedia.FirstNode.Tag).ID;
+                _vehicleInformation = VehiclesInformation.Get(vehicleId);
+                if (TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList.ContainsKey(_vehicleInformation.Id))
+                {
+                    downloadDate = TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList[_vehicleInformation.Id];
+                }
+                finland = true;
+            }
+
+            switch (webSessionSave.PeriodType)
+            {
+                case CstCustomerSession.Period.Type.LastLoadedWeek:
+                    LastLoadedWeek(ref PeriodBeginningDate, ref PeriodEndDate);
+                    break;
+                case CstCustomerSession.Period.Type.LastLoadedMonth:
+                    if (finland)
+                    {
+                        //Patch Finland pour le Tableau de bord PRESSE
+                        PeriodEndDate = PeriodBeginningDate = String.Format("{0:yyyyMM}", downloadDate);
+                    }
+                    else
+                        LastLoadedMonth(ref PeriodBeginningDate, ref PeriodEndDate, webSessionSave.PeriodType);
+                    break;
+                case CstCustomerSession.Period.Type.currentYear:
+                    if (finland)
+                    {
+                        //Patch Finland pour le Tableau de bord PRESSE
+                        PeriodBeginningDate = String.Format("{0:yyyy01}", downloadDate);
+                        PeriodEndDate = String.Format("{0:yyyyMM}", downloadDate);
+                    }
+                    else
+                        DownloadDates(webSessionSave, ref PeriodBeginningDate, ref PeriodEndDate, webSessionSave.PeriodType);
+                    break;
+                case CstCustomerSession.Period.Type.previousYear:
+                    if (finland)
+                    {
+                        //Patch Finland pour le Tableau de bord PRESSE
+                        int yearN1 = downloadDate.Year - 1;
+                        PeriodBeginningDate = yearN1.ToString() + "01";
+                        PeriodEndDate = yearN1.ToString() + "12";
+                    }
+                    else
+                        DownloadDates(webSessionSave, ref PeriodBeginningDate, ref PeriodEndDate, webSessionSave.PeriodType);
+                    break;
+                case CstCustomerSession.Period.Type.nLastYear:
+                    PeriodBeginningDate = DateTime.Now.AddYears(1 - webSessionSave.PeriodLength).ToString("yyyy01");
+                    PeriodEndDate = DateTime.Now.ToString("yyyyMM");
+                    break;
+                case CstCustomerSession.Period.Type.dateToDateMonth:
+                    PeriodBeginningDate = webSessionSave.PeriodBeginningDate;
+                    PeriodEndDate = webSessionSave.PeriodEndDate;
+                    break;
+                case CstCustomerSession.Period.Type.dateToDateWeek:
+                    PeriodBeginningDate = webSessionSave.PeriodBeginningDate;
+                    PeriodEndDate = webSessionSave.PeriodEndDate;
+                    break;
+                case CstCustomerSession.Period.Type.nextToLastYear:
+                    if (finland)
+                    {
+                        //Patch Finland pour le Tableau de bord PRESSE
+                        int yearN2 = downloadDate.Year - 2;
+                        PeriodBeginningDate = yearN2.ToString() + "01";
+                        PeriodEndDate = yearN2.ToString() + "12";
+                    }
+                    else
+                    {
+                        PeriodBeginningDate = DateTime.Now.AddYears(-2).ToString("yyyy01");
+                        PeriodEndDate = DateTime.Now.AddYears(-2).ToString("yyyy12");
+                    }
+                    break;
+                case CstCustomerSession.Period.Type.dateToDate:
+                    PeriodBeginningDate = webSessionSave.PeriodBeginningDate;
+                    PeriodEndDate = webSessionSave.PeriodEndDate;
+                    break;
+            }
+        }
+        #endregion
+
 
     }
 }

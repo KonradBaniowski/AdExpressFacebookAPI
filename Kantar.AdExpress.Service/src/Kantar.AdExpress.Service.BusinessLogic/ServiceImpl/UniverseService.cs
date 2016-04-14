@@ -23,6 +23,7 @@ using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.Web.Navigation;
 using AutoMapper;
 using KM.Framework.Constantes;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -640,6 +641,67 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
             }
             return result;
+        }
+
+        public string SaveUserResult(string webSessionId, string folderId, string saveAsResultId, string saveResult)
+        {
+            webSession = (WebSession)WebSession.Load(webSessionId);
+
+            if (saveResult.Length == 0 && !saveAsResultId.Equals("0"))
+            {
+                string savedSessionName = CheckedText.CheckedAccentText(MyResultsDAL.GetSession(Int64.Parse(saveAsResultId), webSession));
+                if (savedSessionName.Length > 0 && MyResultsDAL.UpdateMySession(Int64.Parse(folderId), saveAsResultId, savedSessionName, webSession))
+                {
+                    #region Tracking utilisation sauvegarde
+                    webSession.OnUseMyAdExpressSave();
+                    #endregion
+
+                    // Validation : confirmation d'enregistrement de la requête
+                    return GestionWeb.GetWebWord(826, webSession.SiteLanguage);
+                }
+                else
+                {
+                    // Erreur : Echec de l'enregistrement de la requête		
+                    return GestionWeb.GetWebWord(825, webSession.SiteLanguage);
+                }
+
+            }
+            else if (saveResult.Length != 0 && saveResult.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+            {
+                if (!MyResultsDAL.IsSessionExist(webSession, saveResult))
+                {
+                    if (MyResultsDAL.SaveMySession(Int64.Parse(folderId), saveResult, webSession))
+                    {
+
+                        #region Tracking utilisation sauvegarde
+                        webSession.OnUseMyAdExpressSave();
+                        #endregion
+
+                        // Validation : confirmation d'enregistrement de la requête
+                        return GestionWeb.GetWebWord(826, webSession.SiteLanguage);
+                    }
+                    else
+                    {
+                        // Erreur : Echec de l'enregistrement de la requête
+                        return GestionWeb.GetWebWord(825, webSession.SiteLanguage);
+                    }
+                }
+                else
+                {
+                    // Erreur : session déjà existante
+                    return GestionWeb.GetWebWord(824, webSession.SiteLanguage);
+                }
+            }
+            else if (saveResult.Length == 0)
+            {
+                // Erreur : Le champs est vide
+                return GestionWeb.GetWebWord(822, webSession.SiteLanguage);
+            }
+            else
+            {
+                // Erreur : suppérieur à 50 caractères
+                return GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+            }
         }
 
         public AdExpressUniversResponse GetResultUnivers(string webSessionId)
