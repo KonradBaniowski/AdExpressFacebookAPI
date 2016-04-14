@@ -200,46 +200,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
-        public AdExpressResponse RenameUniversDirectory(string name, string universId, string webSessionId)
-        {
-            var result = new AdExpressResponse
-            {
-                Message = string.Empty
-            };
-            var webSession = (WebSession)WebSession.Load(webSessionId);
-            try
-            {
-                if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(universId) && !string.IsNullOrEmpty(webSessionId))
-                {
-                    webSession = (WebSession)WebSession.Load(webSessionId);
-                    if (name.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
-                    {
-                        result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
-                    }
-                    if (!UniversDAL.UniversListDataAccess.IsGroupUniverseExist(webSession, name))
-                    {
-                        UniversDAL.UniversListDataAccess.RenameGroupUniverse(name, Int64.Parse(universId), webSession);
-                        result.Message = GestionWeb.GetWebWord(934, webSession.SiteLanguage);
-                        result.Success = true;
-                    }
-                    else
-                    {
-                        result.Message = GestionWeb.GetWebWord(928, webSession.SiteLanguage);
-                    }
-                }
-                else
-                {
-                    result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
-                }
-            }
-            catch (System.Exception ex)
-            {
-                result.Message = ex.Message;
-                //this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
-
-            }
-            return result;
-        }
 
         public AdExpressResponse CreateDirectory(string directoryName, UniversType type, string webSessionId)
         {
@@ -250,10 +210,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var webSession = (WebSession)WebSession.Load(webSessionId);
             try
             {
-                if (type == UniversType.Result)
+                switch (type)
                 {
-                    result = CreateSessionDirectory(directoryName, type, webSession);
-                }
+                    case UniversType.Result:
+                        result = CreateSessionDirectory(directoryName, webSession);
+                        break;
+                    case UniversType.Univers:
+                        result = CreateUniversDirectory(directoryName, webSession);
+                        break;
+                };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        public AdExpressResponse RenameDirectory(string directoryName, UniversType type, string idDirectory, string webSessionId)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            try
+            {
+                switch (type)
+                {
+                    case UniversType.Result:
+                        result = RenameSessionDirectory(directoryName, idDirectory, webSession);
+                        break;
+                    case UniversType.Univers:
+                        result = RenameUniversDirectory(directoryName, idDirectory, webSession);
+                        break;
+                };
             }
             catch (System.Exception exc)
             {
@@ -264,8 +254,37 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
-
-        private AdExpressResponse CreateSessionDirectory(string directoryName, UniversType type, WebSession webSession)
+        public AdExpressResponse DropDirectory(string idDirectory, UniversType type, string webSessionId)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            try
+            {
+                switch (type)
+                {
+                    case UniversType.Result:
+                        result = DropSessionDirectory(idDirectory, webSession);
+                        break;
+                    case UniversType.Univers:
+                        result = DropUniversDirectory(idDirectory, webSession);
+                        break;
+                };
+            }
+            catch (System.Exception exc)
+            {
+                //if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                //{
+                //    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                //}
+            }
+            return result;
+        }
+        #region Private methods
+        #region Handling session directories
+        private AdExpressResponse CreateSessionDirectory(string directoryName, WebSession webSession)
         {
             var result = new AdExpressResponse
             {
@@ -300,5 +319,198 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
+        private AdExpressResponse RenameSessionDirectory(string directoryName, string idDirectory, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            if (!String.IsNullOrEmpty(directoryName) && directoryName.Length != 0 && directoryName.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+            {
+                if (!MyResultsDAL.IsDirectoryExist(webSession, directoryName))
+                {
+                    if (MyResultsDAL.RenameDirectory(directoryName, Int64.Parse(idDirectory), webSession))
+                    {
+                        result.Message = GestionWeb.GetWebWord(835, webSession.SiteLanguage);
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Message = GestionWeb.GetWebWord(836, webSession.SiteLanguage);
+                    }
+                }
+                else
+                {
+                    result.Message = GestionWeb.GetWebWord(834, webSession.SiteLanguage);
+                }
+            }
+            else if (directoryName.Length == 0)
+            {
+                result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+            }
+            else
+            {
+                result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+            }
+            return result;
+        }
+        private AdExpressResponse DropSessionDirectory(string idDirectory, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+
+            {
+                Message = string.Empty
+            };
+            try
+            {
+                if (!String.IsNullOrEmpty(idDirectory))
+                {
+                    if (MyResultsDAL.ContainsDirectories(webSession))
+                    {
+                        if (!MyResultsDAL.IsSessionsInDirectoryExist(webSession, Int64.Parse(idDirectory)))
+                        {
+                            MyResultsDAL.DropDirectory(Int64.Parse(idDirectory), webSession);
+                            result.Success = true;
+
+                        }
+                        else {
+                            result.Message = GestionWeb.GetWebWord(838, webSession.SiteLanguage);
+                        }
+                    }
+                    else {
+                        //Directory can't be deleted
+                        result.Message = GestionWeb.GetWebWord(840, webSession.SiteLanguage);
+                    }
+                }
+                else {
+                    //No directory has been found
+                    result.Message = GestionWeb.GetWebWord(839, webSession.SiteLanguage);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        #endregion
+        #region Handling univers directories 
+        private AdExpressResponse CreateUniversDirectory(string directoryName, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            if (!String.IsNullOrEmpty(directoryName) && directoryName.Length != 0 && directoryName.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+            {
+                if (!UniversDAL.UniversListDataAccess.IsGroupUniverseExist(webSession, directoryName))
+                {
+                    if (UniversDAL.UniversListDataAccess.CreateGroupUniverse(directoryName, webSession))
+                    {
+                        result.Message = GestionWeb.GetWebWord(835, webSession.SiteLanguage);
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Message = GestionWeb.GetWebWord(836, webSession.SiteLanguage);
+                    }
+                }
+                else
+                {
+                    result.Message = GestionWeb.GetWebWord(834, webSession.SiteLanguage);
+                }
+            }
+            else if (directoryName.Length == 0)
+            {
+                result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+            }
+            else
+            {
+                result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+            }
+            return result;
+        }
+        private AdExpressResponse RenameUniversDirectory(string name, string idDirectory, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            try
+            {
+                if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(idDirectory))
+                {
+                    if (name.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+                    {
+                        result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+                    }
+                    if (!UniversDAL.UniversListDataAccess.IsGroupUniverseExist(webSession, name))
+                    {
+                        UniversDAL.UniversListDataAccess.RenameGroupUniverse(name, Int64.Parse(idDirectory), webSession);
+                        result.Message = GestionWeb.GetWebWord(934, webSession.SiteLanguage);
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Message = GestionWeb.GetWebWord(928, webSession.SiteLanguage);
+                    }
+                }
+                else
+                {
+                    result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+                //this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+
+            }
+            return result;
+        }
+        private AdExpressResponse DropUniversDirectory(string idDirectory, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+
+            {
+                Message = string.Empty
+            };
+            try
+            {
+                if (!String.IsNullOrEmpty(idDirectory))
+                    if (UniversDAL.UniversListDataAccess.GetGroupUniverses(webSession).Tables[0].Rows.Count > 1)
+                    {
+                        if (!UniversDAL.UniversListDataAccess.IsUniversInGroupUniverseExist(webSession, Int64.Parse(idDirectory)))
+                        {
+                            UniversDAL.UniversListDataAccess.DropGroupUniverse(Int64.Parse(idDirectory), webSession);
+                            result.Success = true;
+
+                        }
+                        else
+                        {
+                            // Directory is not empty                            
+                            result.Message = GestionWeb.GetWebWord(931, webSession.SiteLanguage);
+                        }
+                    }
+                    else
+                    {
+                        // Directory can't be dropped                           
+                        result.Message = GestionWeb.GetWebWord(929, webSession.SiteLanguage);
+                    }
+                else
+                {
+                    // No Directory has been found                          
+                    result.Message = GestionWeb.GetWebWord(927, webSession.SiteLanguage);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+
+            }
+            return result;
+        }
+        #endregion
+        #endregion
     }
 }

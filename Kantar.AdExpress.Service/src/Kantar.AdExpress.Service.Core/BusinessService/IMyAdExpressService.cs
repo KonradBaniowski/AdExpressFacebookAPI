@@ -15,7 +15,8 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         AdExpressResponse RenameUnivers(string name, string universId, string webSessionId);
         AdExpressResponse MoveUnivers(string id, string idOldGroupUnivers, string idNewGroupUnivers, string webSessionId);
         AdExpressResponse DeleteUnivers(string id, string webSessionId);
-        AdExpressResponse RenameUniversDirectory(string name, string universId, string webSessionId);
         AdExpressResponse CreateDirectory(string directoryName, UniversType type, string webSessionId);
+        AdExpressResponse RenameDirectory(string directoryName, UniversType type, string idDirectory, string webSessionId);
+        AdExpressResponse DropDirectory(string idDirectory, UniversType type, string webSessionId);
     }
 }
