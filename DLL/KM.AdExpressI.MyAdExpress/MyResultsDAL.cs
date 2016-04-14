@@ -301,21 +301,13 @@ namespace KM.AdExpressI.MyAdExpress
             {
                 ds = webSession.Source.Fill(sql);
                 if (ds.Tables[0].Rows.Count > 0)
-                    result =true;
+                    result = true;
             }
             catch (System.Exception err)
             {
                 //throw (new MyAdExpressDataAccessException("Impossible de vérifier s'il existe des sessions dans un répertoire", err));
             }
             return result;
-            #endregion
-                if (ds.Tables[0].Rows.Count > 0) return (true);
-                return (false);
-            }
-            catch (System.Exception err)
-            {
-                throw (new MySessionDataAccessException("Impossible de vérifier si une session est déjà enregistrée dans la base de données", err));
-            }
             #endregion
         }
         
