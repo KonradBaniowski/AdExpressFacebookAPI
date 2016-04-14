@@ -19,6 +19,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
         public const long QuestionTag3Code = 647;
+        public const long CreateFolder = 696;
+        public const long DropFolder = 697;
         public const long RenameFolderTitle = 698;
         public const long RenameNewFodler = 700;
         public const long SelectFolderToDelete = 701;

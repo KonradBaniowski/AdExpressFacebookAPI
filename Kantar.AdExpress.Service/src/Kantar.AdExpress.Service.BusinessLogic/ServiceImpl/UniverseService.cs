@@ -945,7 +945,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 SelectFolderToDelete = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SelectFolderToDelete, siteLanguage),
                 SelectFolder = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.SelectFolder, siteLanguage),
                 RenameSelectedFolder = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameSelectedFolder, siteLanguage),
-                ErrorMsgNoFolderCreated = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage)
+                ErrorMsgNoFolderCreated = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage),
+                CreateDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.CreateFolder, siteLanguage),
+                RenameDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameSelectedFolder, siteLanguage),
+                DropDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.DropFolder, siteLanguage)
             };
             return result;
         }
