@@ -87,16 +87,13 @@ namespace KM.Framework.Constantes
         public string MediaLabel { get; set; }
         public string AdvertiserLabel { get; set; }
         public string IndeRadioMessage { get; set; } //3018
-<<<<<<< HEAD
         public string EmptyGrid { get; set; } //2106
         public string CreativeLabel { get; set; } //1888
         public string DownloadLabel { get; set; } //874
         public string VisuelLabel { get; set; } //1909
         public string InsertionsLabel { get; set; } //
-=======
         public string DropDirectory { get; set; }//697
         public string RenameDirectory { get; set; }//698
         public string CreateDirectory { get; set; }//696
->>>>>>> 83ef368b9fc71418ff3a6357d5ce7d1466fa74f6
     }
 }
