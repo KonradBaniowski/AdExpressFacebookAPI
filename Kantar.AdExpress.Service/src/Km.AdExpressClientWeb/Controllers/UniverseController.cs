@@ -210,5 +210,77 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             return result;
         }
+
+        public PartialViewResult UserResult(string id)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var data = _universeService.GetResultUnivers(webSessionId);
+            SaveUserResultViewModel model = new SaveUserResultViewModel
+            {
+                Title = GestionWeb.GetWebWord(908, data.SiteLanguage),
+                SelectFolder = GestionWeb.GetWebWord(702, data.SiteLanguage),
+                SelectResult = GestionWeb.GetWebWord(2261, data.SiteLanguage),
+                ResultLabel = GestionWeb.GetWebWord(2263, data.SiteLanguage),
+                UserFolders = new List<SelectListItem>(),
+                UserResults = new List<SelectListItem>()
+            };
+            if (data.UniversGroups.Any())
+            {
+                var items = data.UniversGroups.Select(p => new SelectListItem()
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Description
+                }).ToList();
+
+                if (id != "0")
+                {
+                    items.Where(i => i.Value == id).FirstOrDefault().Selected = true;
+                    model.SelectedUserFolderId = Int32.Parse(id);
+                }
+                else
+                    items.FirstOrDefault().Selected = true;
+
+                model.UserFolders = items;
+                if (id != "0")
+                {
+                    if (data.UniversGroups.Where(i => i.Id == Int64.Parse(id)).FirstOrDefault().UserUnivers.Any())
+                    {
+                        model.UserResults = data.UniversGroups.Where(i => i.Id == Int64.Parse(id)).FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
+                        {
+                            Value = m.Id.ToString(),
+                            Text = m.Description
+                        }).ToList();
+                        model.UserResults.FirstOrDefault().Selected = true;
+                    }
+                }
+                else
+                {
+                    if (data.UniversGroups.FirstOrDefault().UserUnivers.Any())
+                    {
+                        model.UserResults = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
+                        {
+                            Value = m.Id.ToString(),
+                            Text = m.Description
+                        }).ToList();
+                        model.UserResults.FirstOrDefault().Selected = true;
+                    }
+                }
+            }
+            return PartialView(model);
+        }
+
+        public JsonResult SaveUserResult(string folderId, string saveAsResultId, string saveResult)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            string message = _universeService.SaveUserResult(webSessionId, folderId, saveAsResultId, saveResult);
+
+            JsonResult jsonModel = new JsonResult();
+
+            jsonModel = Json(new { Message = message });
+
+            return jsonModel;
+        }
     }
 }

@@ -21,6 +21,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="pull-right custom-button">
+            <button class="btn btn-save" id="btn-save-result">Sauvegarder&nbsp;<i class="fa fa-bookmark-o"></i></button>&nbsp;
             <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
             <button class="btn btn-valider">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
@@ -45,6 +46,12 @@
                 <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
             </div>
         </center>
+    </div>
+</div>
+<div id="resultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
     </div>
 </div>
 @section Scripts {
@@ -93,7 +100,7 @@
                 this.L3DetailValue = -1;
             }
 
-            function GenericColumnDetailLevelFilter() {               
+            function GenericColumnDetailLevelFilter() {
                 this.L1DetailValue = $('#columnDetail').val();
             }
 
@@ -125,7 +132,7 @@
                 this.PurchaseModes = GetItems($('#purchaseMode').val());
             }
 
-            function UserFilter() {             
+            function UserFilter() {
                 this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
                 this.GenericColumnDetailLevelFilter = new GenericColumnDetailLevelFilter();
                 this.PeriodDetailFilter = new PeriodDetailFilter();
@@ -274,6 +281,76 @@
 
             CallPresentAbsentResult();
 
+            $("#btn-save-result").click(function () {
+                $("#resultModal").modal("show");
+            });
+
+            $("#resultModal").on('shown.bs.modal', function (event) {
+                var params = {
+                    id: 0
+                };
+                CallUserResult(params);
+            });
+
+            $("#resultModal").on('hide.bs.modal', function () {
+                $("#resultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
+            });
+
+            function SaveResultEvents() {
+                $("#folders").on('change', function (event) {
+                    var idFolder = $("#folders").val();
+                    var idResult = $('#results').val();
+                    var params = {
+                        id: idFolder
+                    };
+                    CallUserResult(params);
+                });
+            }
+
+            function CallUserResult(params) {
+                $.ajax({
+                    url: '@Url.Action("UserResult", "Universe")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "GET",
+                    datatype: "json",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        $('#resultModal').html(data);
+                        SaveResultEvents();
+                        CallSaveResult();
+                    }
+                });
+            }
+
+            function CallSaveResult() {
+                $('#btnSaveResult').on('click', function (e) {
+                    var idFolder = $("#folders").val();
+                    var idResult = $('#results').val();
+                    var resultName = $('#resultName').val();
+                    var params = {
+                        folderId: idFolder,
+                        saveAsResultId: idResult,
+                        saveResult: resultName
+                    };
+                    $.ajax({
+                        url: '@Url.Action("SaveUserResult", "Universe")',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: "POST",
+                        datatype: "json",
+                        data: params,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                        },
+                        success: function (data) {
+                            if (data != null && data != "") {
+                                bootbox.alert(data.Message);
+                            }
+                        }
+                    });
+                });
+            }
+
             $('#periodDetailType').selectpicker();
 
             $('#periodDetailType').on('change', function (e) {
@@ -333,7 +410,7 @@
 
             $('#columnDetail').selectpicker();
 
-            $('#columnDetail').on('change', function (e) {             
+            $('#columnDetail').on('change', function (e) {
                 userFilter.GenericColumnDetailLevelFilter.L1DetailValue = $('#columnDetail').val();
             });
 
