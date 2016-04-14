@@ -2025,13 +2025,17 @@ ul.ui-selectable {
     background-image: none;
 }
 
+#loader{
+    text-align:center;
+}
+
 #loader .modal-footer {
     position: relative;
     width: 100px;
     top: 50%;
     margin: -19px -100px;
-    left: 50%;
     border-top: none;
+    display:inline-block !important;
 }
 
 #tab-myadexpress {
@@ -2074,6 +2078,7 @@ ul.ui-selectable {
 }
 
 #tab-content-myadexpress .panel-group {
+    margin-bottom: 0px;
 }
 
     #tab-content-myadexpress .panel-group .panel-primary {
@@ -2202,7 +2207,7 @@ ul.ui-selectable {
 }
 
 .iconInsertionCreative3:before { /*TV*/
-    content: "\f008";
+    content: "\f01d";
 }
 
 /**Carousel Chemin de fer du support*/
@@ -2317,3 +2322,6 @@ ul.ui-selectable {
     background-color: rgba(0,0,0,0.7);
 }
  
+.module-done{
+
+}

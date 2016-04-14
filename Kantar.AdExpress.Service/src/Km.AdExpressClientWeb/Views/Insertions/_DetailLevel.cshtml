@@ -1,22 +1,21 @@
 ﻿@model List<Kantar.AdExpress.Service.Core.Domain.DetailLevel>
 
-<a data-toggle="collapse" class="collapsed" href="#lvlperso">
-    <div class="panel-heading" role="tab" id="headingOne">
-        <h5 class="panel-title">
-            Niveaux personnalisés
-            <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-        </h5>
-    </div>
-</a>
-<div id="lvlperso" data-toggle="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-    <div class="panel-body">
-        <form role="form">
+<div>
+    <a data-toggle="collapse" class="collapsed" href="#lvlperso">
+        <div id="lvlPersoHeader" class="panel-heading" role="tab" id="headingOne">
+            <h5 class="panel-title">
+                Niveaux personnalisés
+                <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+            </h5>
+        </div>
+    </a>
+    <div id="lvlperso" data-toggle="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
             <div class="form-group">
-                <label>Construction</label>
                     @for (int i = 0; i < 3; i++)
                     {
                         <select id="l@(Model[i].level)Detail" class="form-control">
-                            <option value="-1" selected>--------</option>
+                            <option value="-1">--------</option>
                             @foreach (var item in Model[i].Items)
                             {
                                 if (@item.IsSelected)
@@ -32,6 +31,6 @@
                     }
             </div>
             <button id="submitLvl" class="pull-right btn btn-action">Valider</button>
-        </form>
+        </div>
     </div>
 </div>

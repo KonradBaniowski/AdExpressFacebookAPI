@@ -73,6 +73,7 @@
     <Compile Include="ServiceImpl\CreativeService.cs" />
     <Compile Include="ServiceImpl\DetailLevelService.cs" />
     <Compile Include="ServiceImpl\InfosNewsService.cs" />
+    <Compile Include="ServiceImpl\PortfolioDetailMediaService.cs" />
     <Compile Include="ServiceImpl\InsertionsService.cs" />
     <Compile Include="ServiceImpl\LostWonService.cs" />
     <Compile Include="ServiceImpl\MediaScheduleService.cs" />
@@ -169,6 +170,10 @@
     <ProjectReference Include="..\Kantar.AdExpress.Service.DataAccess\Kantar.AdExpress.Service.DataAccess.csproj">
       <Project>{3bfb4045-54d5-43c8-a026-c2f45e76f9a2}</Project>
       <Name>Kantar.AdExpress.Service.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KM.Framework\KM.Framework.csproj">
+      <Project>{6a14be5e-e261-4821-8531-2fd6ab03c686}</Project>
+      <Name>KM.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

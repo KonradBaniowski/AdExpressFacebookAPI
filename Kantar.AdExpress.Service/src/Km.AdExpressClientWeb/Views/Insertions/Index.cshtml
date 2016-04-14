@@ -9,8 +9,8 @@
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
+    <div class="col-md-12" style="background-color:black;padding-bottom:15px;">
+        <div class="panel-heading">
             <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @(@GestionWeb.GetWebWord(2245, Model.SiteLanguage))</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
@@ -20,7 +20,7 @@
 
         <div id="HeaderElmt" style="display:none">
             <div id="subPeriodSelection" style="background-color:grey"></div>
-            <div id="detailLevelItem" class="col-md-12 bg-orange" style="background-color:black; color:white;"></div>
+            <div id="detailLevelItem" class="col-md-12 bg-orange" style="color:white;"></div>
         </div>
     </div>
 
@@ -217,6 +217,7 @@
 
         function CallInsertionsResult() {
             $("#gridEmpty").hide();
+            $("#gridLoader").show();
             var parameters = {
                 ids: userFilter.paramsUrl.ids,
                 zoomDate: userFilter.paramsUrl.zoomDate,
@@ -236,6 +237,7 @@
                     alert("Erreur");
                 },
                 success: function (data) {
+
                     if (data != null && data != "") {
                         dataTreeGrid = data.datagrid;
                         colsFixed = data.columnsfixed;
@@ -313,7 +315,6 @@
 
                         $("#HeaderLoader").hide();
                         $("#HeaderElmt").show();
-                        $("#gridLoader").show();
                     }
                 }
             });
@@ -362,7 +363,8 @@
 
         function GetDetailLevelItem() {
             var params = {
-                idVehicle: userFilter.paramsUrl.idVehicle
+                idVehicle: userFilter.paramsUrl.idVehicle,
+                isVehicleChanged : userFilter.isVehicleChanged
             };
             $.ajax({
                 url: '@Url.Action("GetDetailLevel", "Insertions")',
@@ -516,14 +518,16 @@
             $("#gridLoader").show();
             userFilter.isVehicleChanged = true;
             userFilter.paramsUrl.idVehicle = $(this).attr('id');
-            GetDetailLevelItem();
             CallInsertionsResult();
-
+            GetDetailLevelItem();
         });
 
         function ResetLnLevel(lx, ly) {
             if ($(lx).val() == $(ly).val())
                 $(ly).val('-1');
+            userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+            userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+            userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
         }
 
         //Zoom visuel
@@ -533,17 +537,14 @@
         });
 
         $(document).on("change", "#l1Detail", function (e) {
-            userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
             ResetLnLevel("#l1Detail", "#l2Detail");
             ResetLnLevel("#l1Detail", "#l3Detail");
         });
         $(document).on("change", "#l2Detail", function (e) {
-            userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
             ResetLnLevel("#l2Detail", "#l1Detail");
             ResetLnLevel("#l2Detail", "#l3Detail");
         });
         $(document).on("change", "#l3Detail", function (e) {
-            userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
             ResetLnLevel("#l3Detail", "#l1Detail");
             ResetLnLevel("#l3Detail", "#l2Detail");
         });
@@ -555,11 +556,28 @@
             CallSetDetailLvl();
         });
 
+        //Change Icone DetailLevel quand hide/show collapse
+        $(document).on('show.bs.collapse', '#lvlperso', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-right")
+                .removeClass("glyphicon-chevron-right")
+                .addClass("glyphicon-chevron-down");
+        });
+        $(document).on('hide.bs.collapse', '#lvlperso', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-down")
+                .removeClass("glyphicon-chevron-down")
+                .addClass("glyphicon-chevron-right");
+        });
 
         //Export btn
         $('#btn-export').on('click', function (e) {
            window.open('@Url.Action("InsertionsResult", "InsertionsExport")?ids='+userFilter.paramsUrl.ids+'&zoomDate='+userFilter.paramsUrl.zoomDate+'&idUnivers='+userFilter.paramsUrl.idUnivers+'&moduleId='+userFilter.paramsUrl.moduleId+'&idVehicle='+userFilter.paramsUrl.idVehicle, "_blank");
         });
+
+
 
     </script>
 }

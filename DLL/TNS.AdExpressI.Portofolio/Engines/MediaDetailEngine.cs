@@ -462,7 +462,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
             DataTable dt = null;
             StringBuilder t = new StringBuilder();
             long oldEcranCode = -1;
-            string insertionDetailPath = "/Portfolio/InsertionDetailResult";
+            string insertionDetailPath = "/PortfolioDetailMedia";
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 
 

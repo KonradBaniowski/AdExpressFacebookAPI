@@ -4,7 +4,7 @@
 }
 
 <div class="container">
-    
+
     <!--/col-md-12-->
     <div class="col-md-12" id="carou-vehicleView">
 
@@ -33,7 +33,8 @@
                                         </div>
                                         <!--/text-center text-white-->
                                         <div class="row no-gutter">
-                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal"><img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" class="img-full" alt="Equipe">
+                                            <div class="col-xs-12" href="#modal-vehicleView" data-toggle="modal">
+                                                <img src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg" class="img-full" alt="Equipe">
                                             </div>
                                         </div>
                                         <div class="text-center padder-v-mi">
@@ -160,6 +161,7 @@
 <div class="modal fade" id="modal-vehicleView">
     <div class="modal-dialog">
         <div class="modal-content">
+            @*<!--/modal-header -->
             <div class="modal-header panel-heading header-popup-vehicleView">
                 <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title font-normal m-t-none m-b-md text-primary-lt" id="myModalLabel">
@@ -201,7 +203,7 @@
                     </div>
                 </div>
                 <!--/col-md-12-->
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
@@ -221,46 +223,214 @@
         </div>
     </div>
 </div>
-<!--/modal-vehicleView-Img1-->
+<!--/modal-vehicleView-Img-->
 @section Scripts {
     <script>
         $(function () {
+
             if (typeof jQuery === "undefined") { throw new Error("Vehicle view modal requires jQuery") }
             $("#carou-vehicleView").hide();
-            var htmlArr = [];
-            $(".carousel-inner").empty();
-            htmlArr.push("<div class='item active'><div class='row'> <div class='col-sm-3'>");
-            htmlArr.push("<div class='text-center text-white'><div class='bg-black-only padder-v-mi'>");
-            htmlArr.push(" Vendredi 26/02/2016");
-            htmlArr.push("</div></div>");
-            //<!--text-center text-white-->
-            htmlArr.push(" <div class='row no-gutter'><div class='col-xs-12' href='#modal-vehicleView' data-toggle='modal'>");
-            htmlArr.push(" <img src='http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg' class='img-full' alt='Equipe'>");
-            htmlArr.push("</div></div>");
-
-            //var item = $(".carousel-inner").html("<p>All new content. <em>You bet!</em></p>");
-          
-
             var vhCarouselData = [
-                    { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "123456789" },
-                     { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160225/imagette/coe001.jpg", "NbInsertion": 15, "Investment": "1234564789" },
-                      { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160223/imagette/coe001.jpg", "NbInsertion": 14, "Investment": "123456789" },
-                       { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160219/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "45454545" },
-                        { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160218/imagette/coe001.jpg", "NbInsertion": 5, "Investment": "784524222" },
-                         { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160211/imagette/coe001.jpg", "NbInsertion": 10, "Investment": "123456789" },
-                          { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160210/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "4242424242" },
-                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160209/imagette/coe001.jpg", "NbInsertion": 5, "Investment": "123456789" },
-                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160205/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "123456789" },
-                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160204/imagette/coe001.jpg", "NbInsertion": 12, "Investment": "155424242" },
-                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160203/imagette/coe001.jpg", "NbInsertion": 13, "Investment": "215755" },
-                           { "parutionDate": "Vendredi 26/02/2016", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160202/imagette/coe001.jpg", "NbInsertion": 11, "Investment": "84545454" }
+                    { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "nbInser": 12, "invest": "123456789" },
+                     { "mId": 24904, "pDate": "Vendredi 25/02/2016", "dayN": "20160325", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160225/imagette/coe001.jpg", "nbInser": 15, "invest": "1234564789" },
+                      { "mId": 24904, "pDate": "Vendredi 23/02/2016", "dayN": "20160323", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160223/imagette/coe001.jpg", "nbInser": 14, "invest": "123456789" },
+                       { "mId": 24904, "pDate": "Vendredi 19/02/2016", "dayN": "20160319", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160219/imagette/coe001.jpg", "nbInser": 12, "invest": "45454545" },
+                        { "mId": 24904, "pDate": "Vendredi 18/02/2016", "dayN": "20160318", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160218/imagette/coe001.jpg", "nbInser": 5, "invest": "784524222" },
+                         { "mId": 24904, "pDate": "Vendredi 11/02/2016", "dayN": "20160311", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160211/imagette/coe001.jpg", "nbInser": 10, "invest": "123456789" },
+                          { "mId": 24904, "pDate": "Vendredi 10/02/2016", "dayN": "20160310", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160210/imagette/coe001.jpg", "nbInser": 12, "invest": "4242424242" },
+                           { "mId": 24904, "pDate": "Vendredi 09/02/2016", "dayN": "20160309", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160209/imagette/coe001.jpg", "nbInser": 5, "invest": "123456789" },
+                           { "mId": 24904, "pDate": "Vendredi 05/02/2016", "dayN": "20160305", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160205/imagette/coe001.jpg", "nbInser": 12, "invest": "123456789" },
+                           { "mId": 24904,  "pDate": "Vendredi 04/02/2016", "dayN": "20160304", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160204/imagette/coe001.jpg", "nbInser": 12, "invest": "155424242" },
+                           { "mId": 24904, "pDate": "Vendredi 03/02/2016", "dayN": "20160303", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160203/imagette/coe001.jpg", "nbInser": 13, "invest": "215755" },
+                           { "mId": 24904, "pDate": "Vendredi 02/02/2016", "dayN": "20160302", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160202/imagette/coe001.jpg", "nbInser": 11, "invest": "84545454" }
             ];
-            function OpenVehicleViewModal() {
+            var htmlArr = [];
 
 
+            $(".carousel-inner").empty();
+            var colNb = 0;
+            $.each(vhCarouselData, function (i, val) {
+
+                colNb++;
+
+                if (colNb == 1) {
+                    if (i == 0) {
+
+                        htmlArr.push("<div class='item active'><div class='row'> ");
+                    }
+                    else htmlArr.push("<div class='item'><div class='row'>");
+                }
+
+                htmlArr.push(" <div class='col-sm-3'>");
+
+                htmlArr.push("<div class='text-center text-white'><div class='bg-black-only padder-v-mi'>");
+                htmlArr.push(val.pDate);
+                htmlArr.push("</div></div>");
+
+
+                //<!--text-center text-white-->
+                htmlArr.push(" <div class='row no-gutter'><div class='col-xs-12' href='#modal-vehicleView' data-toggle='modal' ");
+                //data-dayN
+                htmlArr.push(" data-dayN='");
+                htmlArr.push(val.dayN);
+                htmlArr.push("'");
+                //data-mId
+                htmlArr.push(" data-mId='");
+                htmlArr.push(val.mId);
+                htmlArr.push("'");
+                //data-nbInser
+                htmlArr.push(" data-nbInser='");
+                htmlArr.push(val.nbInser);
+                htmlArr.push("'");
+                htmlArr.push(" ><img src='");
+                htmlArr.push(val.src);
+                htmlArr.push("' class='img-full' alt='Equipe'>");
+                htmlArr.push("</div></div>");
+                htmlArr.push(" <div class='text-center padder-v-mi'><p>");
+                htmlArr.push("Nombre d'insertion : ");
+                htmlArr.push("<strong>");
+                htmlArr.push(val.nbInser);
+                htmlArr.push("</strong></p> <p>");
+                htmlArr.push("Total investissement : <strong>");
+                htmlArr.push(val.invest);
+                htmlArr.push("</strong></p>");
+                htmlArr.push("</div> </div>");
+                // <!--/text-center padder-v-mi  et /col-sm-3 -->
+
+                if (colNb == 4) {
+                    colNb = 0;
+                    htmlArr.push("</div></div>");
+                }
+                // <!-- row et item-->
+
+            });
+
+            if (colNb > 0) {
+                htmlArr.push("</div></div>");
+                // <!--/col-sm-3 et row et item-->
             }
+            $(".carousel-inner").html(htmlArr.join(""));
+            $("#carou-vehicleView").show();
+
+            OpenVehicleViewModal();
+
+            OpenZoomImageModal();
 
         });
+
+        function OpenVehicleViewModal() {
+
+            $("#modal-vehicleView > .modal-dialog > .modal-content").empty();
+
+            $("#modal-vehicleView").on('shown.bs.modal', function (event) {
+
+                var vehicleItemsData = [
+                     { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg", "nbPage": 44, "title": "EQUIPE" },
+                      { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe002.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe002.jpg", "nbPage": 44, "title": "EQUIPE" },
+                       { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor003.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor003.jpg", "nbPage": 44, "title": "EQUIPE" },
+                      { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor004.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor004.jpg", "nbPage": 44, "title": "EQUIPE" },
+                          { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor005.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor005.jpg", "nbPage": 44, "title": "EQUIPE" },
+                      { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor006.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor006.jpg", "nbPage": 44, "title": "EQUIPE" },
+                       { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor007.jpg", "nbPage": 44, "title": "EQUIPE" },
+                ];
+                var colNb = 0;
+                var htmlArr = [];
+                $.each(vehicleItemsData, function (i, val) {
+
+                    //<!--/modal-header -->
+                  
+                    if (i == 0) {
+                        htmlArr.push("<div class='modal-header panel-heading header-popup-vehicleView'>");
+                        htmlArr.push(" <button class='close' aria-hidden'true' type='button' data-dismiss='modal'><span aria-hidden='true'>&times;</span></button>");
+                        htmlArr.push(" <h4 class='modal-title font-normal m-t-none m-b-md text-primary-lt' id='myModalLabel'>");
+                        htmlArr.push("<i class='fa fa-file-text blue'></i>  ");
+                        htmlArr.push(val.title);
+                        htmlArr.push(" - ");
+                        htmlArr.push(val.pDate);
+                        htmlArr.push("</h4><p class='pull-right text-white'>");
+                        htmlArr.push("  Nombre de page : ");
+                        htmlArr.push(val.nbPage);
+                        htmlArr.push(" </p>  </div>");
+
+                        //Modal body
+                        htmlArr.push(" <div class='modal-body'>");
+
+                        //<!--/Ligne 1-->
+
+                        htmlArr.push("   <div class='col-md-12'>");
+                        htmlArr.push("  <div class='col-md-4'></div>");
+                        htmlArr.push("  <div class='col-md-4' href='#modal-vehicleView-Img' data-toggle='modal' data-srcZoom='");
+                        htmlArr.push(val.srcZoom);
+                        htmlArr.push("'  data-title='");
+                        htmlArr.push(val.title);
+                        htmlArr.push("'  data-pDate='");
+                        htmlArr.push(val.pDate);
+                        htmlArr.push("'> ");
+                        htmlArr.push("  <img class='img-full' alt='image 01' src='");
+                        htmlArr.push(val.src);
+                        htmlArr.push("'>");
+                        htmlArr.push("  </div> <div class='col-md-4'></div> </div>");
+                    }
+                    else {
+                        colNb++;
+                        //<!--/col-md-12-->
+                        if (colNb == 1) {
+                            htmlArr.push("  <div class='col-md-12'> ");
+                        }
+
+                        htmlArr.push("   <div class='col-md-4 no-padder' href='#modal-vehicleView-Img' data-toggle='modal' data-srcZoom='");
+                        htmlArr.push(val.srcZoom);
+                        htmlArr.push("'  data-title='");
+                        htmlArr.push(val.title);
+                        htmlArr.push("'  data-pDate='");
+                        htmlArr.push(val.pDate);
+                        htmlArr.push("'> ");
+                        htmlArr.push("  <img class='img-full' alt='image 01' src='");
+                        htmlArr.push(val.src);
+                        htmlArr.push("'> </div>");
+
+                        if (colNb == 3) {
+                            colNb = 0;
+                            htmlArr.push("     </div>");//END  //<!--/col-md-12-->
+                        }
+                    }
+                });
+
+                if (colNb > 0) {
+                    htmlArr.push(" </div>");//END  //<!--/col-md-12-->
+
+                }
+
+                if ( vehicleItemsData.length > 0) {
+                    htmlArr.push("  </div>");  //end Modal body
+                }
+
+                $("#modal-vehicleView > .modal-dialog > .modal-content").html(htmlArr.join(""));
+            });
+
+            $("#modal-vehicleView").on('hide.bs.modal', function () {
+                $("#modal-vehicleView > .modal-dialog > .modal-content").empty();               
+            });
+        }
+
+        function OpenZoomImageModal() {
+            $("#modal-vehicleView-Img > .modal-dialog > .modal-content > .modal-body > .img-full").attr('src', '');
+
+            $("#modal-vehicleView-Img").on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var srcZoom = button.attr('data-srcZoom').toString(); // Extract info from data-* attributes
+                var pDate = button.attr('data-pDate').toString(); // Extract info from data-* attributes
+                var title = button.attr('data-title').toString(); // Extract info from data-* attributes
+                $("#modal-vehicleView-Img > .modal-dialog > .modal-content > .modal-body > .img-full").attr('src', srcZoom);
+                $("#modal-vehicleView-Img h4 ").html("<i class='fa fa-file-text blue'></i>" + title + " - " + pDate);
+            });
+
+            $("#modal-vehicleView-Img").on('hide.bs.modal', function () {
+                $("#modal-vehicleView-Img > .modal-dialog > .modal-content > .modal-body > .img-full").attr('src', '');
+            });
+         
+        }
+
     </script>
 
 }

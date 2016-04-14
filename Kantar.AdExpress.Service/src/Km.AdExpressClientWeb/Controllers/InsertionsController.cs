@@ -111,12 +111,12 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         
-        public ActionResult GetDetailLevel(int idVehicle)
+        public ActionResult GetDetailLevel(int idVehicle, bool isVehicleChanged)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle);
+            var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle, isVehicleChanged);
 
             return PartialView("_DetailLevel", detailLevel);
         }

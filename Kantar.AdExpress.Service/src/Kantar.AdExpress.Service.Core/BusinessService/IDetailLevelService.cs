@@ -10,7 +10,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IDetailLevelService
     {
-        List<DetailLevel> GetDetailLevelItem(string idWebSession, int vehicleId);
+        List<DetailLevel> GetDetailLevelItem(string idWebSession, int vehicleId, bool isVehicleChanged);
 
         void SetDetailLevelItem(string idWebSession, UserFilter userFilter);
     }

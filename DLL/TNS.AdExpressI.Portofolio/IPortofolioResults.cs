@@ -76,8 +76,11 @@ namespace TNS.AdExpressI.Portofolio {
         /// Get detail media grid result
         /// </summary>
         /// <param name="excel">True for excel result</param>
-        /// <returns>HTML Code</returns>
         GridResult GetDetailMediaGridResult(bool excel);
+        /// <summary>
+        /// Get detail media PopUp grid result 
+        /// </summary>
+        GridResult GetDetailMediaPopUpGridResult();
         /// <summary>
         /// Get visual list
         /// </summary>

@@ -19,6 +19,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
         public const long QuestionTag3Code = 647;
+        public const long CreateFolder = 696;
+        public const long DropFolder = 697;
         public const long RenameFolderTitle = 698;
         public const long RenameNewFodler = 700;
         public const long SelectFolderToDelete = 701;
@@ -89,6 +91,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertType = 2607;
         public const long TimeSchedule = 2614;
         public const long Concurrent = 2869;
+        public const long IndeRadioMessage = 3018;
         public const long LimitKeyword = 3033;
         public const long ItemExceeded = 3034;
         public const long NoSupport = 3035;

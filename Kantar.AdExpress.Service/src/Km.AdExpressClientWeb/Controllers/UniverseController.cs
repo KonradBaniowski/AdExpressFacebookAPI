@@ -18,10 +18,12 @@ namespace Km.AdExpressClientWeb.Controllers
     public class UniverseController : Controller
     {
         private IUniverseService _universeService;
+        private IMyAdExpressService _myAdExpressService;
 
-        public UniverseController(IUniverseService universeService)
+        public UniverseController(IUniverseService universeService, IMyAdExpressService myAdExpressService)
         {
             _universeService = universeService;
+            _myAdExpressService = myAdExpressService;
         }
 
         // GET: Universe
@@ -195,20 +197,118 @@ namespace Km.AdExpressClientWeb.Controllers
             return result;
         }
         [HttpPost]
-        public string RenameUnivers(string name, string universId)
+        public JsonResult RenameSession(string name, string universId)
         {
-            string result = "";
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message=string.Empty
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            return result;
+            result = _myAdExpressService.RenameSession(name, universId, webSessionId);
+            return Json(result);
         }
 
-        public string MoveUnivers(string groupUniversId, string universId)
+        public JsonResult MoveSession(string idOldDirectory, string idNewDirectory,string id)
         {
-            string result = "";
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            return result;
+            result = _myAdExpressService.MoveSession(id,idOldDirectory, idNewDirectory, webSessionId);
+            return Json(result);
+        }
+
+        public JsonResult RenameUnivers(string name, string universId)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            result = _myAdExpressService.RenameUnivers(name, universId, webSessionId);
+            return Json(result);
+        }
+
+        public JsonResult MoveUnivers(string idOldDirectory, string idNewDirectory, string id)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            result = _myAdExpressService.MoveUnivers(id, idOldDirectory, idNewDirectory, webSessionId);
+            return Json(result);
+        }
+
+        public JsonResult DeleteUnivers( string universId)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if(!String.IsNullOrEmpty(webSessionId))
+                result = _myAdExpressService.DeleteUnivers(universId, webSessionId);
+            return Json(result);
+        }
+
+        public JsonResult DeleteSession(string universId)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (!String.IsNullOrEmpty(webSessionId))
+                result = _myAdExpressService.DeleteSession(universId, webSessionId);
+            return Json(result);
+        }
+         public JsonResult CreateDirectory(string directoryName, string type)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var universType = (type == "Session") ? Domain.UniversType.Result : Domain.UniversType.Univers;
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (!String.IsNullOrEmpty(webSessionId))
+                result = _myAdExpressService.CreateDirectory(directoryName, universType, webSessionId);
+            return Json(result);
+        }
+
+        public JsonResult RenameDirectory(string directoryName, string type, string idDirectory)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var universType = (type == "Session") ? Domain.UniversType.Result : Domain.UniversType.Univers;
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (!String.IsNullOrEmpty(webSessionId))
+                result = _myAdExpressService.RenameDirectory(directoryName, universType, idDirectory, webSessionId);
+            return Json(result);
+        }
+        public JsonResult DropDirectory(string idDirectory, string type)
+        {
+            Domain.AdExpressResponse result = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var universType = (type == "Session") ? Domain.UniversType.Result : Domain.UniversType.Univers;
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (!String.IsNullOrEmpty(webSessionId))
+                result = _myAdExpressService.DropDirectory(idDirectory, universType, webSessionId);
+            return Json(result);
         }
 
         public PartialViewResult UserResult(string id)

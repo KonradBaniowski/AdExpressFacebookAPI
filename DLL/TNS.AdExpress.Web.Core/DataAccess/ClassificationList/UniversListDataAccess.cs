@@ -99,7 +99,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
         /// <param name="branch">Branch used (media, product)</param>
         /// <param name="ListUniverseClientDescription">ID_UNIVERSE_CLIENT_DESCRIPTION</param>
         /// <returns>Universes list</returns>
-        public static DataSet GetData(WebSession webSession, string branch, string ListUniverseClientDescription)
+        public static DataSet GetData(WebSession webSession, string branch, string ListUniverseClientDescription, bool getAll = false)
         {
 
             #region Request construction		
@@ -124,7 +124,10 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
             }
             if (branch.Length > 0)
             {
-                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".id_type_universe_client in (" + branch + ")";
+                if (!getAll)
+                    sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".id_type_universe_client in (" + branch + ")";
+                else
+                    sql += " and (" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".id_type_universe_client in (" + branch + ")" + "or " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".id_type_universe_client is null )";
             }
             sql += " order by " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
             #endregion
