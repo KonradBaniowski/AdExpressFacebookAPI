@@ -56,6 +56,14 @@ namespace Km.AdExpressClientWeb.Controllers
             model.SiteLanguage = customerSession.SiteLanguage;
             model.Labels = LoadPageLabels(customerSession.SiteLanguage);
 
+            var isRadio = _portfolioDetailMediaService.IsIndeRadioMessage(idWebSession);
+
+            //Les indes Radio
+            if (isRadio)
+            {
+                model.Labels.IndeRadioMessage = GestionWeb.GetWebWord(LanguageConstantes.IndeRadioMessage, customerSession.SiteLanguage);
+            }
+
             return View(model);
         }
 
@@ -92,8 +100,9 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var result = new Labels
             {
-                IndeRadioMessage = GestionWeb.GetWebWord(LanguageConstantes.IndeRadioMessage, siteLanguage),
+                EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage)
             };
+
             return result;
         }
 

@@ -58,5 +58,45 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return portofolioResult;
         }
 
+        public bool IsIndeRadioMessage(string idWebSession)
+        {
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+
+            //Les indes Radio
+            if (WebApplicationParameters.CountryCode.Equals(WebCst.CountryCode.FRANCE)
+                && Vehicle == CstDBClassif.Vehicles.names.radio
+                //&& (_customerWebSession.GenericInsertionColumns != null && _customerWebSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.idTopDiffusion)) 
+                )
+            {
+                #region Columns levels (Generic)
+                VehicleInformation vehicleInfos = VehiclesInformation.Get(Vehicle);
+                var columnItems = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(vehicleInfos.DetailColumnId);
+                var isColumnTopDif = columnItems.Any(column => column.Id == GenericColumnItemInformation.Columns.idTopDiffusion);
+                #endregion
+
+                if (isColumnTopDif)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private CstDBClassif.Vehicles.names Vehicle
+        {
+            get
+            {
+                #region Obtention du vehicle
+
+                string vehicleSelection = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new TNS.AdExpress.Exceptions.AdExpressCustomerException("La sélection de médias est incorrecte"));
+                CstDBClassif.Vehicles.names vehicle = VehiclesInformation.DatabaseIdToEnum(long.Parse(vehicleSelection));
+
+                #endregion
+
+                return vehicle;
+            }
+        }
+
     }
 }
