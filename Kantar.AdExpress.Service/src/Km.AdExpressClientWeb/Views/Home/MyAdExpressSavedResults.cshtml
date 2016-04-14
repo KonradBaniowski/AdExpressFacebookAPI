@@ -11,9 +11,9 @@
                     <span class="blue">@Model.NbrFolder</span> répertoires,  <span class="blue">@Model.NbrUnivers</span> résultats
                 </h3>
                             <h3 class="panel-title pull-right">
-                                <a id="btnCreateDirectory@(Model.UniversType)"data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
-                                <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
-                                <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
+                                <a id="btnCreate@(Model.UniversType)Directory"data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
+                                <a id="btnRename@(Model.UniversType)Directory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
+                                <a id="btnDrop@(Model.UniversType)Directory" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
                             </h3>
             }
             else
@@ -168,7 +168,7 @@
     </div>
 </div>
 
-<div id="createDirectory@(Model.UniversType)" class="modal fade">
+<div id="create@(Model.UniversType)Directory" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header header-kantar-popup">
@@ -180,13 +180,13 @@
                 <input type="text" class="form-control" id="newDirectory@(Model.UniversType)Name" placeholder="Entrez un nom">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-valider" id="btnValidCreateDirectory@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
+                <button type="button" class="btn btn-valider" id="btnValidCreate@(Model.UniversType)Directory" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-<div id="renameDirectory@(Model.UniversType)" class="modal fade">
+<div id="rename@(Model.UniversType)Directory" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header header-kantar-popup">
@@ -199,6 +199,43 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-valider" id="btnCreateDirectory@(Model.UniversType)" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="drop@(Model.UniversType)Directory" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"> @Model.Labels.DropDirectory </h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group-btn dropdown" dropdown="">
+                    <button id="result" type="button" class="btn btn-default form-control bg-black-only idDrop@(Model.UniversType)Directory"
+                            data-result="@Model.UniversGroups.FirstOrDefault().Id"
+                            data-toggle="dropdown">
+                        @Model.UniversGroups.FirstOrDefault().Description
+                    </button>
+                    <ul class="dropdown-menu bg-blue form-control">
+                        @foreach (var item in Model.UniversGroups)
+                        {
+                            if (item == Model.UniversGroups.FirstOrDefault())
+                            {
+                                <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                            else
+                            {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
+                            }
+                        }
+                    </ul>
+                    <p></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnValidDrop@(Model.UniversType)Directory" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
         </div>
     </div>

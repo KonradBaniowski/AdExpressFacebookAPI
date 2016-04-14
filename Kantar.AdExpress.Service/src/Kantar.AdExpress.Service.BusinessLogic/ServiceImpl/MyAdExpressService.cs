@@ -371,7 +371,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             MyResultsDAL.DropDirectory(Int64.Parse(idDirectory), webSession);
                             result.Success = true;
-
+                            result.Message = "Success";
                         }
                         else {
                             result.Message = GestionWeb.GetWebWord(838, webSession.SiteLanguage);
@@ -484,7 +484,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             UniversDAL.UniversListDataAccess.DropGroupUniverse(Int64.Parse(idDirectory), webSession);
                             result.Success = true;
-
+                            result.Message = "Success";
                         }
                         else
                         {

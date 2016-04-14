@@ -263,11 +263,11 @@
         });
     });
 
-    $(document).on('click', '#btnCreateDirectoryResult', function () {
-        $('#createDirectoryResult').modal('show');
+    $(document).on('click', '#btnCreateResultDirectory', function () {
+        $('#createResultDirectory').modal('show');
     });
 
-    $(document).on('click', '#btnValidCreateDirectoryResult', function () {
+    $(document).on('click', '#btnValidCreateResultDirectory', function () {
         var directoryName = $('#newDirectoryResultName').val();
         var params = {
             directoryName: directoryName,
@@ -283,6 +283,83 @@
                 bootbox.alert("An error occurred while processing your request.");
             },
             success: function (response) {
+                $('#createResultDirectory').modal('hide');
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadSession',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Result").html(data);
+                    }
+                });
+                bootbox.alert(response.Message);
+            }
+        });
+    });
+
+    $(document).on('click', '#btnCreateUniversDirectory', function () {
+        $('#createUniversDirectory').modal('show');
+    });
+
+    $(document).on('click', '#btnValidCreateUniversDirectory', function () {
+        var directoryName = $('#newDirectoryUniversName').val();
+        var params = {
+            directoryName: directoryName,
+            type: "univers"
+        };
+        $.ajax({
+            url: '/Universe/CreateDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#createUniversDirectory').modal('hide');
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadUnivers',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Univers").html(data);
+                    }
+                });
+                bootbox.alert(response.Message);
+            }
+        });
+    });
+
+
+    $(document).on('click', '#btnDropResultDirectory', function () {
+        $('#dropResultDirectory').modal('show');
+    });
+    $(document).on('click', '#btnValidDropResultDirectory', function () {
+        var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idDropResultDirectory').attr("data-result");
+        var params = {
+            idDirectory: idDirectory,
+            type: "Session"
+        };
+        $.ajax({
+            url: '/Universe/DropDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#dropResultDirectory').modal('hide');
                 //Reload the page
                 $.ajax({
                     url: '/Home/ReloadSession',
@@ -300,18 +377,18 @@
         });
     });
 
-    $(document).on('click', '#btnCreateDirectoryUnivers', function () {
-        $('#createDirectoryUnivers').modal('show');
+    $(document).on('click', '#btnDropUniversDirectory', function () {
+        $('#dropUniversDirectory').modal('show');
     });
 
-    $(document).on('click', '#btnValidCreateDirectoryUnivers', function () {
-        var directoryName = $('#newDirectoryUniversName').val();
+    $(document).on('click', '#btnValidDropUniversDirectory', function () {
+        var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idDropUniversDirectory').attr("data-result");
         var params = {
-            directoryName: directoryName,
-            type: "univers"
+            idDirectory: idDirectory,
+            type: "Univers"
         };
         $.ajax({
-            url: '/Universe/CreateDirectory',
+            url: '/Universe/DropDirectory',
             contentType: 'application/json',
             type: 'POST',
             datatype: 'JSON',
@@ -320,6 +397,7 @@
                 bootbox.alert("An error occurred while processing your request.");
             },
             success: function (response) {
+                $('#dropUniversDirectory').modal('hide');
                 //Reload the page
                 $.ajax({
                     url: '/Home/ReloadUnivers',
@@ -332,7 +410,7 @@
                         $("#Univers").html(data);
                     }
                 });
-                bootbox.alert(response.Message);
+                bootbox.alert("Success");
             }
         });
     });

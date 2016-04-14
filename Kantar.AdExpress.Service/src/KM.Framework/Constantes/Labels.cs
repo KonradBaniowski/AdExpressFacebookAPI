@@ -87,5 +87,8 @@ namespace KM.Framework.Constantes
         public string MediaLabel { get; set; }
         public string AdvertiserLabel { get; set; }
         public string IndeRadioMessage { get; set; } //3018
+        public string DropDirectory { get; set; }
+        public string RenameDirectory { get; set; }
+        public string CreateDirectory { get; set; }
     }
 }
