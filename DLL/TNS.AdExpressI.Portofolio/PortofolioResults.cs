@@ -995,6 +995,92 @@ namespace TNS.AdExpressI.Portofolio
         }
 
 
+        private void ComputeGridData(GridResult gridResult, ResultTable _data)
+        {
+            _data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+
+            int i, j, k;
+            //int creativeIndexInResultTable = -1;
+            object[,] gridData = new object[_data.LinesNumber, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+            List<object> columns = new List<object>();
+            List<object> schemaFields = new List<object>();
+            List<object> columnsFixed = new List<object>();
+
+
+            columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "ID" });
+            columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "PID" });
+
+            if (_data.NewHeaders != null)
+            {
+                for (j = 0; j < _data.NewHeaders.Root.Count; j++)
+                {
+                    columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Label, dataType = "string", width = "*" });
+                    schemaFields.Add(new { name = _data.NewHeaders.Root[j].Label });
+                    columnsFixed.Add(new { columnKey = _data.NewHeaders.Root[j].Label, isFixed = true, allowFixing = true });
+                }
+            }
+            else
+            {
+                columns.Add(new { headerText = "", key = "Visu", dataType = "string", width = "*" });
+                schemaFields.Add(new { name = "Visu" });
+            }
+
+            try
+            {
+                for (i = 0; i < _data.LinesNumber; i++) //_data.LinesNumber
+                {
+                    gridData[i, 0] = i; // Pour column ID
+                    gridData[i, 1] = _data.GetSortedParentIndex(i); // Pour column PID
+
+                    for (k = 1; k < _data.ColumnsNumber - 1; k++)
+                    {
+                        gridData[i, k + 1] = _data[i, k].RenderString();
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                throw (new Exception(err.Message));
+            }
+
+            //if (columns.Count > 10)
+            //    gridResult.NeedFixedColumns = true;
+            gridResult.NeedFixedColumns = false;
+
+            gridResult.HasData = true;
+            gridResult.Columns = columns;
+            gridResult.Schema = schemaFields;
+            gridResult.ColumnsFixed = columnsFixed;
+            gridResult.Data = gridData;
+        }
+
+
+        #region GridResult
+        public GridResult GetDetailMediaPopUpGridResult()
+        {
+            GridResult gridResult = new GridResult();
+            gridResult.HasData = false;
+
+            ResultTable _data = GetInsertionDetailResultTable(false);
+
+            if (_data != null)
+            {
+                ComputeGridData(gridResult, _data);
+            }
+            else
+            {
+                gridResult.HasData = false;
+                return (gridResult);
+            }
+
+            return gridResult;
+
+        }
+        #endregion
+
         #endregion
 
 

@@ -89,6 +89,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertType = 2607;
         public const long TimeSchedule = 2614;
         public const long Concurrent = 2869;
+        public const long IndeRadioMessage = 3018;
         public const long LimitKeyword = 3033;
         public const long ItemExceeded = 3034;
         public const long NoSupport = 3035;

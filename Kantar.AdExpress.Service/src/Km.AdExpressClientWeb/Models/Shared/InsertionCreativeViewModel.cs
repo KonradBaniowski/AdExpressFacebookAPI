@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using Km.AdExpressClientWeb.Models.Shared;
+using KM.Framework.Constantes;
 
 namespace Km.AdExpressClientWeb.Models.Shared
 {
@@ -8,7 +9,7 @@ namespace Km.AdExpressClientWeb.Models.Shared
     {
         public List<string> paramsUrl { get; set; }
         public int SiteLanguage { get; set; }
-
+        public Labels Labels { get; set; }
     }
 
 }

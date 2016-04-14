@@ -73,6 +73,7 @@
     <Compile Include="ServiceImpl\CreativeService.cs" />
     <Compile Include="ServiceImpl\DetailLevelService.cs" />
     <Compile Include="ServiceImpl\InfosNewsService.cs" />
+    <Compile Include="ServiceImpl\PortfolioDetailMediaService.cs" />
     <Compile Include="ServiceImpl\InsertionsService.cs" />
     <Compile Include="ServiceImpl\LostWonService.cs" />
     <Compile Include="ServiceImpl\MediaScheduleService.cs" />

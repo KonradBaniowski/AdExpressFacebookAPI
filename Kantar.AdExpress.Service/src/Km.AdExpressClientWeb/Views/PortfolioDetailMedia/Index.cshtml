@@ -1,0 +1,309 @@
+﻿@model Km.AdExpressClientWeb.Models.Shared.InsertionCreativeViewModel
+
+@{
+    ViewBag.Title = "Insertions";
+    Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
+}
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
+
+<div class="row">
+
+    <div class="col-md-12" style="margin-top:10px;">
+        <center>
+            <p id="gridEmpty" style="display:none">Vide</p>
+            <div id="grid" style="display:none"></div>
+            <div id="gridLoader" style="display:none">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </center>
+    </div>
+
+    <!-- Modal lien video radio -->
+    <div id="creativeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header header-kantar-popup">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white !important;">&times;</button>
+                    <h4 class="font-normal" style="color:white;"><i></i></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="media video-audio-container">
+                        <video id="creativeStream" class="hide" width="100%" controls="controls" preload="auto" autoplay>
+                            Votre navigateur ne gère pas l'élément
+                        </video>
+                        <div id="mediaLoader">
+                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+
+    <script id="colSpotTmpl" type="text/template">
+        {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
+        <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa'></i></a>
+        {{else}}
+        ${Spot}
+        {{/if}}
+    </script>
+
+    <script>
+    if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
+
+        $("#grid").igTreeGrid({
+            //dataSource: data,
+            primaryKey: "Id",
+            width: "95%",
+            defaultColumnWidth: 200,
+            avgRowHeight: 60,
+            autoGenerateColumns: true
+        });
+
+        var ds;
+        var cols;
+        var colsFixed;
+        var needFixedColumns = false;
+
+        function paramsUrl() {
+            this.idMedia = "@(Model.paramsUrl[0])";
+            this.dayOfWeek = "@(Model.paramsUrl[1])";
+            this.ecran = "@(Model.paramsUrl[2])";
+        }
+
+        function UserFilter() {
+            this.paramsUrl = new paramsUrl();
+        }
+
+        var userFilter = new UserFilter();
+
+        var renderGrid = function (success, error) {
+            if (success) {
+
+                $("#grid").igTreeGrid("destroy");
+                $("#gridLoader").hide();
+                $("#grid").show();
+                if (needFixedColumns) {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: "650px",
+                        autoGenerateColumns: false,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        width: "95%",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 25
+                            },
+                            {
+                                name: "ColumnFixing",
+                                fixingDirection: "left",
+                                columnSettings: colsFixed
+                            }
+                        ]
+                    })
+                }
+                else {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: "650px",
+                        autoGenerateColumns: true,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        width: "95%",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 25
+                            }
+                        ]
+                    })
+                }
+            } else {
+                alert("Error");
+            }
+        }
+
+        function CallDetailMediaResult() {
+            $("#gridEmpty").hide();
+            $("#gridLoader").show();
+            var parameters = {
+                idMedia: userFilter.paramsUrl.idMedia,
+                dayOfWeek: userFilter.paramsUrl.dayOfWeek,
+                ecran: userFilter.paramsUrl.ecran
+            };
+
+            $.ajax({
+                url: '@Url.Action("DetailMediaResult", "PortfolioDetailMedia")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("Erreur");
+                },
+                success: function (data) {
+
+                    if (data != null && data != "") {
+                        dataTreeGrid = data.datagrid;
+                        colsFixed = data.columnsfixed;
+                        needFixedColumns = data.needfixedcolumns;
+
+                        var schema = new $.ig.DataSchema("array", {
+                            fields: data.schema
+                        });
+
+                        cols = data.columns
+                        for (i = 0; i < cols.length; i++) {
+                            if (cols[i].key == "Spot")
+                                cols[i].template = $("#colSpotTmpl").html();
+                            else if(cols[i].key == "Visu")
+                                cols[i].template = $("#colVisuTmpl").html();
+                        }
+
+                        ds = new $.ig.DataSource({
+                            type: "json",
+                            schema: schema,
+                            dataSource: dataTreeGrid,
+                            callback: renderGrid
+                        });
+
+                        ds.dataBind();
+                    }
+                    else {
+                        $("#gridLoader").hide();
+                        $("#gridEmpty").show();
+                        $("#grid").hide();
+                    }
+                }
+            });
+        }
+
+        function AutoPlayCreativeModal() {
+            $("#creativeStream").attr('src', '');
+
+            $("#creativeModal").on('shown.bs.modal', function (event) {
+                $('#creativeModal h4 > i').attr("class", 'fa iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var parameters = {
+                        idVersion: datas[0],
+                        idVehicle: datas[2]
+                    };
+                    $.ajax({
+                        url: '@Url.Action("GetCreativePath", "Insertions")',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: parameters,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                            alert("Erreur lors de la recuperation de url de la version");
+                        },
+                        success: function (response) {
+                            if (response != null) {
+                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
+                                var urlDownload = "http://adexpress.kantarmedia.fr/" + response.PathDownloadingFile;
+                                if (url) {
+                                    $("#creativeStream").attr('src', url);
+                                    $("#mediaLoader").addClass("hide");
+                                    $("#creativeStream").removeClass("hide");
+                                    $("#creativeStream").load();
+                                }
+                                if (urlDownload) {
+                                    $("#creativeModal .modal-footer").removeClass("hide");
+                                    $("#creativeModal .modal-footer > a").attr("href", urlDownload);
+                                    //$("#creativeModal .modal-footer > a").attr("download", parameters.idVersion);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            $("#creativeModal").on('hide.bs.modal', function () {
+                $("#creativeStream").attr('src', '');
+                $("#creativeStream").addClass("hide");
+                $("#mediaLoader").removeClass("hide");
+                $("#creativeModal .modal-footer").addClass("hide");
+            });
+        }
+
+
+        function AutoPlayVisu() {
+            $("div[datavisu]").each(function (index) {
+                var datas = $(this).attr('datavisu').toString();
+                $(this).attr("id", "visuCarou" + index);
+                var active = "active";
+                datas = datas.split('],[');
+                visus = datas[0].replace(/\[|\]/g, '').split(",");
+                infos = datas[1].replace(/\[|\]/g, '').split(";");
+                if (visus.length > 1) {
+                    for (i = 0; i < visus.length; i++) {
+                        if (i != 0) active = "";
+                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop"  class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                    }
+                } else {
+                    $(this).attr("id", "visu");
+                    $(this).html('<center><img id="pop" class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
+                }
+                for (j = infos.length - 1; j >= 0; j--) {
+                    if (infos[j] != "" && (infos[j].indexOf(":") >= 0)) {
+                        tmp = infos[j].split(":");
+                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                    }
+                }
+            });
+        }
+
+        CallDetailMediaResult();
+        AutoPlayCreativeModal();
+
+        //** Important charge les images au fur et a mesure que le teableau s'affiche
+        $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
+            AutoPlayVisu();
+
+            $(".carousel").each(function (index) {
+                $("#visuCarou" + index.toString()).carousel("pause");
+                $("#visuCarou" + index.toString()).find('.left').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("prev");
+                });
+                $("#visuCarou" + index.toString()).find('.right').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("next");
+                });
+            });
+
+            $(".triggerModal > .fa").each(function () {
+                $(this).addClass('iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
+            });
+
+        });
+
+    </script>
+}
