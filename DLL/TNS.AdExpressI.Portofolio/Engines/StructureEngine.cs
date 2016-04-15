@@ -288,6 +288,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             int currentLineIndex = -1;
             int parentColumnIndex = -1;
             int k = 0;
+            int nbHeaders = 0;
 
             if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
             object[] parameters = new object[6];
@@ -305,7 +306,18 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
             {
                 dt = ds.Tables[0];
-                object[,] gridData = new object[dt.Rows.Count, dt.Columns.Count + 2]; //+2 car ID et PID en plus
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (oldIdVentilationType != int.Parse(dr["ventilationType"].ToString()))
+                    {
+                        nbHeaders++;                       
+                    }
+                    oldIdVentilationType = int.Parse(dr["ventilationType"].ToString());
+                }
+                oldIdVentilationType = -1;
+
+                object[,] gridData = new object[dt.Rows.Count + nbHeaders, dt.Columns.Count + 2]; //+2 car ID et PID en plus
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
@@ -315,7 +327,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
                 schemaFields.Add(new { name = "PID" });
 
-               string colKey = "LabelKey";
+                string colKey = "LabelKey";
                 columns.Add(new { headerText = string.Empty, key = colKey, dataType = "string", width = "*" });
                 schemaFields.Add(new { name = colKey });
 
@@ -325,6 +337,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
                 foreach (DataRow dr in dt.Rows)
                 {
+                    
                     if (oldIdVentilationType != int.Parse(dr["ventilationType"].ToString()))
                     {
                         currentLineIndex++;
@@ -369,6 +382,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
                     k++;
                     gridData[currentLineIndex, k] = parentColumnIndex; // Pour column PID
+
+                    k++;
                     if (dr["ventilation"] != null)
                     {
                         gridData[currentLineIndex, k] = dr["ventilation"].ToString();
@@ -377,7 +392,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     {
                         gridData[currentLineIndex, k] = string.Empty;
                     }
-                      
+
+                    k++;
                     UnitInformation unitInformation = UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion);
                     if (dr[unitInformation.Id.ToString()] != null)
                     {
