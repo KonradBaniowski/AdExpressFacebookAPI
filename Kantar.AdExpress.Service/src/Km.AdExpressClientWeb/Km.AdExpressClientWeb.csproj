@@ -1579,13 +1579,14 @@
     <Content Include="Views\Shared\UserResult.cshtml" />
     <Content Include="Views\Portfolio\_GraphResults.cshtml" />
     <Content Include="Views\Shared\GadInfos.cshtml" />
+    <Content Include="Views\Home\MyAdExpressAlerts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
     <Folder Include="Views\DetailSelection\" />
-    <Folder Include="Views\Gad\" />    
+    <Folder Include="Views\Gad\" />
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
