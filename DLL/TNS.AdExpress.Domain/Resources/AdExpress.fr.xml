@@ -2299,5 +2299,7 @@
     <item mnemonic="w3041" type="System.String">Votre question concerne</item>
     <item mnemonic="w3042" type="System.String">Problème technique</item>
     <item mnemonic="w3043" type="System.String">Souscrire à un module additionnel</item>
+    <item mnemonic="w3044" type="System.String">Résultats</item>
+    <item mnemonic="w3045" type="System.String">Répertoires</item>
   </items>
 </localization>
