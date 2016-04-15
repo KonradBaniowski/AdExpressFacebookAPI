@@ -1462,6 +1462,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\component-selectable\common-actions.js" />
+    <Content Include="Scripts\countUp.js" />
+    <Content Include="Scripts\countUp.min.js" />
     <Content Include="Scripts\datepicker-fr.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
