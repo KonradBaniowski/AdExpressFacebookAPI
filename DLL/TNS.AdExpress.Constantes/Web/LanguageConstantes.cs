@@ -18,6 +18,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long PhoneNumberCode = 71;
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
+        public const long DroppedSuccessfully = 286;
         public const long QuestionTag3Code = 647;
         public const long CreateFolder = 696;
         public const long DropFolder = 697;
@@ -34,6 +35,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LoadUniversCode = 770;
         public const long MyResultsDescription = 827;
         public const long ResultsCode = 829;
+        public const long DroppingFailed = 830;
         public const long NoQueryErrorMsg = 831;
         public const long RequiredPermission = 832;
         public const long CantLoadSession = 851;

@@ -11,8 +11,8 @@
                     <span class="blue">@Model.Alerts.Count()</span> @Model.Labels.Directories,  <span class="blue">@Model.Alerts.Sum(p => p.Occurrences.Count())</span> @Model.Labels.Occurrences
                 </h3>
                             <h3 class="panel-title pull-right">
-                                <a id="btnCreateAlertsDirectory" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>
-                                <a id="btnRenameAlertsDirectory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-pencil text-md"></i></a>
+                                @*<a id="btnCreateAlertsDirectory" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>
+                                <a id="btnRenameAlertsDirectory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-pencil text-md"></i></a>*@
                                 <a id="btnDropAlertsDirectory" title="Supprimer un répertoire"><i class="fa icon-trash text-md adExpress-tools"></i></a>
                             </h3>
             }

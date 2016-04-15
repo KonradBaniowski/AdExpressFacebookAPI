@@ -293,6 +293,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case UniversType.Univers:
                         result = DropUniversDirectory(idDirectory, webSession);
                         break;
+                    case UniversType.Alert:
+                        result = DropAlertsDirectory(idDirectory, webSession);
+                        break;
                 };
             }
             catch (System.Exception exc)
@@ -1706,6 +1709,47 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         #endregion
         #endregion
-        #endregion
+
+        private AdExpressResponse DropAlertsDirectory(string idDirectory, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = String.Empty
+            };
+            try { 
+            if (!String.IsNullOrEmpty(idDirectory))
+                {
+                    DomainLayers.DataAccessLayer layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
+                    TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                    var alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+                    //alertDAL.DeleteOccurrences
+                    try
+                    {
+                        alertDAL.DeleteOccurrences(Int32.Parse(idDirectory));
+                        alertDAL.Delete(Int32.Parse(idDirectory), false);
+                        result.Message = GestionWeb.GetWebWord(LanguageConstantes.DroppedSuccessfully, webSession.SiteLanguage) + "\");");
+                        result.Success = true;
+                    }
+                    catch
+                    {
+                    result.Message = GestionWeb.GetWebWord(LanguageConstantes.DroppingFailed, webSession.SiteLanguage);
+                    }
+                }
+                else {
+                result.Message = GestionWeb.GetWebWord(LanguageConstantes.NoQueryErrorMsg, webSession.SiteLanguage) + "\");");
+                   
+                }
+            }
+            catch (System.Exception ex)
+            {
+                //if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                //{
+                //    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                //}
+            }
+        return result;        
+        
     }
+    #endregion
+}
 }
