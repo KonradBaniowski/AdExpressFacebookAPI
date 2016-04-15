@@ -54,6 +54,12 @@
         </div>
     </div>
 </div>
+<div id="gadModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 @section Scripts {
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
@@ -284,6 +290,50 @@
             }
 
             CallLostWonResult();
+
+            $("#gadModal").on('shown.bs.modal', function (event) {
+                var link = $(event.relatedTarget);// Button that triggered the modal
+                var datas = link.data('gad').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les infos Gad ne sont pas disponibles.");
+                }
+                else {
+                    var params = {
+                        advertiser: datas[1],
+                        idAddress: datas[2]
+                    };
+                    CallGadInfos(params);
+                }
+            });
+
+            function CallGadInfos(params) {
+                $.ajax({
+                    url: '@Url.Action("GadInfos", "Gad")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "GET",
+                    datatype: "json",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        $('#gadModal').html(data);
+                        $("#btn-gad-detail").click(function (event) {
+                            var link = $(event.target);// Button that triggered the modal
+                            var datas = link.data('gad').toString(); // Extract info from data-* attributes
+
+                            if (datas === null || datas == "" || datas == 0 || datas == "0") {
+                                alert("Le lien vers Gad n'est pas disponible.");
+                            }
+                            else {
+                                window.open(datas, "_blank");
+                            }
+                        });
+                    }
+                });
+            }
 
             $("#btn-save-result").click(function () {
                 $("#resultModal").modal("show");

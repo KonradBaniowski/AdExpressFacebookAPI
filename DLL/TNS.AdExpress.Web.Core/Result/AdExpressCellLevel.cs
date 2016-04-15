@@ -248,6 +248,29 @@ namespace TNS.AdExpress.Web.Core.Result{
 			}
 			return html.ToString();
 		}
-		#endregion
-	}
+        #endregion
+
+        /// <summary>
+        /// RenderString
+        /// </summary>
+        /// <returns></returns>
+        public override string RenderString()
+        {
+            StringBuilder html = new StringBuilder(100);
+            if (_genericDetailLevel == null) _genericDetailLevel = _webSession.GenericProductDetailLevel;
+            if ((_webSession != null && _addressId > 0
+                && _genericDetailLevel.GetDetailLevelItemInformation(this.Level).Equals(DetailLevelItemInformation.Levels.advertiser)
+                )
+                || (_webSession == null && _addressId > 0))
+            {
+                html.AppendFormat("<span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\"> ", _webSession.IdSession, _label, _addressId);
+                html.AppendFormat("> {0}</span>", this._label);
+            }
+            else
+            {
+                return this._label;
+            }
+            return html.ToString();
+        }
+    }
 }

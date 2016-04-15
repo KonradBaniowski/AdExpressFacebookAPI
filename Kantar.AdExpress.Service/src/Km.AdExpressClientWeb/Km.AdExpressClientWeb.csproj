@@ -180,6 +180,7 @@
     <Compile Include="Controllers\CreativeController.cs" />
     <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\DetailSelectionController.cs" />
+    <Compile Include="Controllers\GadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
     <Compile Include="Controllers\InsertionsExportController.cs" />
@@ -538,11 +539,13 @@
     <Content Include="Content\HomePageValues\HomeNumbers.xml" />
     <Content Include="Content\icon-kantar.css" />
     <Content Include="Content\img\bann_adexpress.jpg" />
+    <Content Include="Content\img\bann_adexpress_top100.jpg" />
     <Content Include="Content\img\evaliantFormat\AVI.png" />
     <Content Include="Content\img\evaliantFormat\MOV.png" />
     <Content Include="Content\img\evaliantFormat\MP4.png" />
     <Content Include="Content\img\evaliantFormat\FLV.png" />
     <Content Include="Content\img\evaliantFormat\SWF.png" />
+    <Content Include="Content\img\Gad.jpg" />
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-3.jpg" />
@@ -1575,12 +1578,14 @@
     <Content Include="Views\PortfolioDetailMedia\Index.cshtml" />
     <Content Include="Views\Shared\UserResult.cshtml" />
     <Content Include="Views\Portfolio\_GraphResults.cshtml" />
+    <Content Include="Views\Shared\GadInfos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
     <Folder Include="Views\DetailSelection\" />
+    <Folder Include="Views\Gad\" />    
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
@@ -1621,6 +1626,14 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date\TNS.AdExpressI.Date.csproj">
       <Project>{d24531cc-e000-4aef-8218-56885d87dfcb}</Project>
       <Name>TNS.AdExpressI.Date</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.GAD.DAL.Default\TNS.AdExpressI.GAD.DAL.Default.csproj">
+      <Project>{82b2d8cf-ca72-41b1-9111-fe9a4cd941f8}</Project>
+      <Name>TNS.AdExpressI.GAD.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.GAD.DAL\TNS.AdExpressI.GAD.DAL.csproj">
+      <Project>{c28e12a2-821a-451b-a1a6-c401173283e6}</Project>
+      <Name>TNS.AdExpressI.GAD.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
       <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>

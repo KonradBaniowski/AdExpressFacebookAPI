@@ -499,8 +499,10 @@
 // Load Session
     $(document).on('click', '.btnLoadSession', function () {
         idSession = $(this).attr("data-id");
+        var type = $(this).attr("data-type");
         var params = {
-            idSession: idSession
+            idSession: idSession,
+            type: type
         };
         $.ajax({
             url: '/Universe/LoadSession',
@@ -512,7 +514,6 @@
                 bootbox.alert("An error occurred while processing your request.");
             },
             success: function (response) {
-                console.log(response)
                 window.location.href = response;
                 bootbox.alert("Redirecting to the results page.");
             }

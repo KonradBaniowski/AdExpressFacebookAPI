@@ -234,7 +234,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage),
                 CreateDirectory = GestionWeb.GetWebWord(LanguageConstantes.CreateFolder, siteLanguage),
                 RenameDirectory = GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
-                DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage)
+                DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage),
+                Directories = GestionWeb.GetWebWord(LanguageConstantes.Directories, siteLanguage)
             };
             return result;
         }

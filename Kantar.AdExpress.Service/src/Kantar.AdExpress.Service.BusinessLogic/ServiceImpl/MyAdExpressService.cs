@@ -20,8 +20,13 @@ using DBClassifConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpressI.Date;
 using System.Reflection;
-//using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Utilities;
+using LS = TNS.Ares.Domain.LS;
+using DomainLayers = TNS.Ares.Domain.Layers;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.Ares.Alerts.DAL;
+using TNS.Alert.Domain;
+using ModuleName = TNS.AdExpress.Constantes.Web.Module.Name;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -314,9 +319,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case UniversType.Result:
                         result = LoadSessionInfo(idSession, webSession);
                         break;
+                    case UniversType.Alert:
+                        result = LoadAlertSession(idSession, webSession);
+                        break;
                 };
             }
-            catch (System.Exception exc)
+            catch (System.Exception ex)
             {
                 //if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
                 //{
@@ -611,7 +619,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     #endregion
 
                     //Patch page de résultats Tableaux dynamiques
-                    if (webSessionSave != null && webSessionSave.LastReachedResultUrl.Length > 0 && webSessionSave.LastReachedResultUrl.IndexOf("ASDynamicTables.aspx") >= 0)
+                    if (webSessionSave != null && webSessionSave.LastReachedResultUrl.Length > 0)
                     {
                         webSessionSave.LastReachedResultUrl = webSessionSave.LastReachedResultUrl.Replace("ASDynamicTables.aspx", "ProductClassReport.aspx");
                     }
@@ -649,8 +657,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     #region Niveau de détail media (Generic)
                     try
                     {
-                        if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE ||
-                           webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE)
+                        if (webSessionSave.CurrentModule == ModuleName.ANALYSE_PLAN_MEDIA_CONCURENTIELLE ||
+                           webSessionSave.CurrentModule == ModuleName.ALERTE_PLAN_MEDIA_CONCURENTIELLE)
                         {
                             ArrayList levels = new ArrayList();
                             levels.Add(1);
@@ -722,8 +730,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     #endregion
 
                     #region Niveau de détail colonne (Generic)
-                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE ||
-                           webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+                    if (webSessionSave.CurrentModule == ModuleName.ANALYSE_CONCURENTIELLE ||
+                           webSessionSave.CurrentModule == ModuleName.ANALYSE_DYNAMIQUE)
                     {
                         try
                         {
@@ -746,7 +754,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     #endregion
 
-                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS && (webSessionSave.SelectionUniversMedia.FirstNode == null || webSessionSave.SelectionUniversMedia.FirstNode.Tag == null))
+                    if (webSessionSave.CurrentModule == ModuleName.ANALYSE_DES_DISPOSITIFS && (webSessionSave.SelectionUniversMedia.FirstNode == null || webSessionSave.SelectionUniversMedia.FirstNode.Tag == null))
                     {
                         webSession.SelectionUniversMedia.Nodes.Clear();
                         System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("TELEVISION");
@@ -779,18 +787,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
                     #region Période sélectionnée (GlobalDateSelection)
-                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES
-                          || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES)
+                    if (webSessionSave.CurrentModule == ModuleName.ANALYSE_CONCURENTIELLE
+                        || webSessionSave.CurrentModule == ModuleName.ANALYSE_DYNAMIQUE
+                        || webSessionSave.CurrentModule == ModuleName.ANALYSE_PORTEFEUILLE
+                        || webSessionSave.CurrentModule == ModuleName.ANALYSE_PLAN_MEDIA
+                        || webSessionSave.CurrentModule == ModuleName.ANALYSE_MANDATAIRES
+                        || webSessionSave.CurrentModule == ModuleName.NEW_CREATIVES
+                          || webSessionSave.CurrentModule == ModuleName.CELEBRITIES)
                     {
 
                         int oldYear = 2000;
                         long selectedVehicle = ((LevelInformation)webSessionSave.SelectionUniversMedia.FirstNode.Tag).ID;
-                        if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+                        if (webSessionSave.CurrentModule == ModuleName.ANALYSE_DYNAMIQUE)
                             //FirstDayNotEnable = Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,webSession.Source); 
                             FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(new List<Int64>(new Int64[] { selectedVehicle }), oldYear);
 
@@ -865,7 +873,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     tmpEndDate = new DateTime(Convert.ToInt32(webSession.PeriodEndDate.Substring(0, 4)), Convert.ToInt32(webSession.PeriodEndDate.Substring(4, 2)), Convert.ToInt32(webSession.PeriodEndDate.Substring(6, 2)));
                                     tmpBeginDate = new DateTime(Convert.ToInt32(webSession.PeriodBeginningDate.Substring(0, 4)), Convert.ToInt32(webSession.PeriodBeginningDate.Substring(4, 2)), Convert.ToInt32(webSession.PeriodBeginningDate.Substring(6, 2)));
 
-                                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+                                    if (webSessionSave.CurrentModule == ModuleName.ANALYSE_DYNAMIQUE)
                                     {
 
                                         if (webSessionSave.DetailPeriod == CstCustomerSession.Period.DisplayLevel.monthly)
@@ -923,8 +931,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     #endregion
 
 
-                    if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-                        || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+                    if (webSession.CurrentModule == ModuleName.INDICATEUR
+                        || webSession.CurrentModule == ModuleName.TABLEAU_DYNAMIQUE)
                     {
 
                         long levelInfoId = ((LevelInformation)webSession.SelectionUniversMedia.Nodes[0].Tag).ID;
@@ -940,18 +948,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                     }
 
-                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES)
+                    if (webSessionSave.CurrentModule == ModuleName.ANALYSE_CONCURENTIELLE
+                        || webSessionSave.CurrentModule == ModuleName.ANALYSE_DYNAMIQUE
+                        || webSessionSave.CurrentModule == ModuleName.ANALYSE_PORTEFEUILLE
+                        || webSessionSave.CurrentModule == ModuleName.ANALYSE_PLAN_MEDIA
+                        || webSessionSave.CurrentModule == ModuleName.ANALYSE_MANDATAIRES
+                        || webSessionSave.CurrentModule == ModuleName.NEW_CREATIVES
+                        || webSessionSave.CurrentModule == ModuleName.CELEBRITIES)
                     {
                         if (!verifCustomerPeriod)
                             UpdateGlobalDates(webSessionSave.PeriodType, webSessionSave, FirstDayNotEnable, webSession);
                     }
-                    else if (!Modules.IsDashBoardModule(webSessionSave) && webSessionSave.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+                    else if (!Modules.IsDashBoardModule(webSessionSave) && webSessionSave.CurrentModule != ModuleName.ANALYSE_DYNAMIQUE)
                     {
                         switch (webSessionSave.PeriodType)
                         {
@@ -961,7 +969,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-(webSessionSave.PeriodLength - 1)).ToString("yyyyMM");
                                 webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
 
-                                if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+                                if (webSessionSave.CurrentModule == ModuleName.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == ModuleName.INDICATEUR)
                                 {
                                     UpdateRecapDates(CstCustomerSession.Period.Type.nLastMonth, ref notValidPeriod, ref invalidPeriodMessage, webSession);
                                 }
@@ -972,7 +980,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSessionSave.PeriodLength).ToString("yyyy01");
                                 webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
 
-                                if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+                                if (webSessionSave.CurrentModule == ModuleName.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == ModuleName.INDICATEUR)
                                 {
                                     UpdateRecapDates(CstCustomerSession.Period.Type.currentYear, ref notValidPeriod, ref invalidPeriodMessage, webSession);
                                 }
@@ -989,7 +997,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                             case CstCustomerSession.Period.Type.previousYear:
 
-                               if ((webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+                               if ((webSessionSave.CurrentModule == ModuleName.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == ModuleName.INDICATEUR)
                                     && (DateTime.Now.AddYears(-1).Year == webSession.DownLoadDate)
                                     )
                                 {
@@ -1004,7 +1012,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 break;
 
                             case CstCustomerSession.Period.Type.nextToLastYear:
-                                if ((webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+                                if ((webSessionSave.CurrentModule == ModuleName.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == ModuleName.INDICATEUR)
                                     && (DateTime.Now.AddYears(-1).Year == webSession.DownLoadDate)
                                     )
                                 {
@@ -1023,7 +1031,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 webSession.PeriodBeginningDate = webSessionSave.PeriodBeginningDate;
                                 webSession.PeriodEndDate = webSessionSave.PeriodEndDate;
 
-                                if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+                                if (webSessionSave.CurrentModule == ModuleName.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule == ModuleName.INDICATEUR)
                                 {
                                     UpdateRecapDates(CstCustomerSession.Period.Type.dateToDateMonth, ref notValidPeriod, ref invalidPeriodMessage, webSession);
                                 }
@@ -1104,7 +1112,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             if (webSession.PeriodType == CstCustomerSession.Period.Type.LastLoadedWeek || webSession.PeriodType == CstCustomerSession.Period.Type.LastLoadedMonth)
                                 webSession.DetailPeriodBeginningDate = webSession.DetailPeriodEndDate = "";
                         }
-                        else if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+                        else if (webSessionSave.CurrentModule == ModuleName.ANALYSE_DYNAMIQUE)
                         {
                             try
                             {
@@ -1212,28 +1220,28 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             else
                             {
                                 //Error :The  requested session can't be loaded.
-                                result.Message = GestionWeb.GetWebWord(851, webSession.SiteLanguage);
+                                result.Message = GestionWeb.GetWebWord(LanguageConstantes.CantLoadSession, webSession.SiteLanguage);
                             }
                         }
                         else
                         {
                             //Error :The  requested session is no more available.
-                            result.Message = GestionWeb.GetWebWord(2455, webSession.SiteLanguage);
+                            result.Message = GestionWeb.GetWebWord(LanguageConstantes.NotAvailableSession, webSession.SiteLanguage);
                         }
                     }
                     else {
                         //Error :You have not the required permissions
-                        result.Message = GestionWeb.GetWebWord(832, webSession.SiteLanguage);                        
+                        result.Message = GestionWeb.GetWebWord(LanguageConstantes.RequiredPermission, webSession.SiteLanguage);   ///832                     
                     }
                 }
                 else {
                     //Error : Please select a session to load.
-                    result.Message = GestionWeb.GetWebWord(831, webSession.SiteLanguage);                    
+                    result.Message = GestionWeb.GetWebWord(LanguageConstantes.NoQueryErrorMsg, webSession.SiteLanguage);                    
                 }
             }
             catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
             {
-                result.Message = GestionWeb.GetWebWord(1787, webSession.SiteLanguage);
+                result.Message = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
             }
             catch (System.Exception ex)
             {
@@ -1242,7 +1250,157 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         
             return result;
         }
-        
+
+        private AdExpressResponse LoadAlertSession(string idSession, WebSession webSession)
+        {
+            var result = new AdExpressResponse
+            {
+                Message = String.Empty
+            };
+            
+            try
+            {
+                int idOccurrence = 0;
+                // Loading alert data access layer
+                DomainLayers.DataAccessLayer layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
+                TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                var alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+                var siteLanguage = webSession.SiteLanguage;
+                if (!String.IsNullOrEmpty(idSession) && int.TryParse(idSession, out idOccurrence))
+                {
+                    // Checking if the query string contains information
+                    // about an alert
+                    //if (Request.QueryString["idAlert"] == null || int.TryParse(Request.QueryString["idAlert"], out idAlert) == false)
+                    //    idAlert = -1;                    
+                    AlertOccurence occ = alertDAL.GetOccurrence(idOccurrence);
+                    if (occ != null)
+                    {
+                        var alert = alertDAL.GetAlert(occ.AlertId);
+                        if (alert != null)
+                        {
+                            WebSession session = (WebSession)alert.Session;
+                            session.IdSession = webSession.IdSession;
+                            if (webSession == null)
+                            {
+                                TNS.AdExpress.Right newRight = new TNS.AdExpress.Right(session.CustomerLogin.Login, session.CustomerLogin.PassWord, session.SiteLanguage);
+                                if (!newRight.CanAccessToAdExpress())
+                                {
+                                    result.Message = GestionWeb.GetWebWord(LanguageConstantes.RequiredPermission, siteLanguage);
+                                }
+                                else
+                                {
+                                    newRight.SetModuleRights();
+                                    newRight.SetFlagsRights();
+                                    newRight.SetRights();
+                                    if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                                        newRight.SetBannersAssignement();
+                                }
+                                webSession = new WebSession(newRight);
+                            }
+
+
+                            TNS.AdExpress.Right CustomerLogin = webSession.CustomerLogin;
+                            idSession = webSession.IdSession;
+                            webSession = session;
+                            webSession.CustomerLogin = CustomerLogin;
+                            webSession.Source = webSession.CustomerLogin.Source;                            
+                            webSession.IdSession = idSession;
+
+
+                            // Opening connection
+                            webSession.Source.Open();
+
+                            TNS.AdExpress.Domain.Web.Navigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+                            TNS.AdExpress.Domain.Web.Navigation.ResultPageInformation info = module.GetResultPageInformation(webSession.CurrentTab);
+
+                            // Updating session information
+                            DateTime FirstDayNotEnable = DateTime.Now;
+                            if (webSession.CurrentModule != ModuleName.JUSTIFICATIFS_PRESSE)
+                                if (webSession.CurrentModule == ModuleName.ANALYSE_DYNAMIQUE)
+                                {
+                                    try
+                                    {
+                                        int oldYear = 2000;
+                                        long selectedVehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+                                        FirstDayNotEnable = Date.GetFirstDayNotEnabled(webSession, selectedVehicle, oldYear, webSession.Source);
+                                    }
+                                    catch { }
+                                }
+
+                            switch (webSession.CurrentModule)
+                            {
+                                case ModuleName.INDICATEUR:
+                                case ModuleName.TABLEAU_DYNAMIQUE:
+                                    webSession.PeriodType = CustomerSessions.Period.Type.dateToDateMonth;
+                                    webSession.PeriodBeginningDate = occ.DateBeginStudy.ToString("yyyyMM");
+                                    webSession.PeriodEndDate = occ.DateEndStudy.ToString("yyyyMM");
+                                    break;
+                                case ModuleName.ANALYSE_PLAN_MEDIA:
+                                case ModuleName.ANALYSE_DYNAMIQUE:
+                                case ModuleName.ANALYSE_CONCURENTIELLE:
+                                case ModuleName.JUSTIFICATIFS_PRESSE:
+                                case ModuleName.ANALYSE_PORTEFEUILLE:
+                                case ModuleName.TENDACES:
+                                case ModuleName.ANALYSE_DES_DISPOSITIFS:
+                                case ModuleName.ANALYSE_DES_PROGRAMMES:
+                                case ModuleName.NEW_CREATIVES:
+                                case ModuleName.ANALYSE_MANDATAIRES:
+                                    webSession.PeriodType = CustomerSessions.Period.Type.dateToDate;
+                                    webSession.PeriodBeginningDate = occ.DateBeginStudy.ToString("yyyyMMdd");
+                                    webSession.PeriodEndDate = occ.DateEndStudy.ToString("yyyyMMdd");
+                                    break;
+                                case ModuleName.BILAN_CAMPAGNE:
+                                case ModuleName.DONNEES_DE_CADRAGE:
+                                    TNS.FrameWork.Date.AtomicPeriodWeek dateBegin = new TNS.FrameWork.Date.AtomicPeriodWeek(occ.DateBeginStudy);
+                                    TNS.FrameWork.Date.AtomicPeriodWeek dateEnd = new TNS.FrameWork.Date.AtomicPeriodWeek(occ.DateEndStudy);
+                                    webSession.PeriodType = CustomerSessions.Period.Type.dateToDateWeek;
+                                    webSession.PeriodBeginningDate = TNS.FrameWork.Date.DateString.AtomicPeriodWeekToYYYYWW(dateBegin);
+                                    webSession.PeriodEndDate = TNS.FrameWork.Date.DateString.AtomicPeriodWeekToYYYYWW(dateEnd);
+                                    break;
+                            }
+
+                            switch (webSession.CurrentModule)
+                            {
+                                case ModuleName.ANALYSE_DYNAMIQUE:
+                                case ModuleName.ANALYSE_PLAN_MEDIA:
+                                case ModuleName.ANALYSE_CONCURENTIELLE:
+                                case ModuleName.ANALYSE_PORTEFEUILLE:
+                                case ModuleName.NEW_CREATIVES:
+                                case ModuleName.ANALYSE_MANDATAIRES:
+                                    // Updated customer period (module use globalCalendar)
+                                    //TODO: Vérifier pour fusion Dev=>Trunk
+                                    if (session.CustomerPeriodSelected.WithComparativePeriodPersonnalized)
+                                    {
+                                        session.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
+                                                                           session.CustomerPeriodSelected.ComparativeStartDate, session.CustomerPeriodSelected.ComparativeEndDate);
+                                    }
+                                    else {
+                                        session.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
+                                                                                                               session.CustomerPeriodSelected.WithComparativePeriod, session.CustomerPeriodSelected.ComparativePeriodType,
+                                                                                                           session.CustomerPeriodSelected.PeriodDisponibilityType);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            webSession.Save();
+                            result.ModuleId = webSession.CurrentModule;
+                            result.Success = true;
+                        }
+                    }
+                }
+                //else
+                    //Response.Redirect("/Private/Alerts/ShowAlerts.aspx?idSession=" + Request.QueryString["idSession"].ToString());
+            }
+            catch (System.Exception ex)
+            {
+                //if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                //{
+                //    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, webSession));
+                //}
+            }
+            return result;
+        }
         private bool CompareDateEnd(DateTime dateBegin, DateTime dateEnd)
         {
             if (dateEnd < dateBegin)
