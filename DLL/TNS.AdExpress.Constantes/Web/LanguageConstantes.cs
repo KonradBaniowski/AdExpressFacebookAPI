@@ -108,8 +108,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long QuestionTagCode = 3041;
         public const long QuestionTag1Code = 3042;
         public const long QuestionTag2Code = 3043;
-        public const long Folder = 000000;
-        public const long Results =000000;
+        public const long Results = 3044;
+        public const long Directories = 3045;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion
