@@ -8,7 +8,7 @@ $(function () {
         type: 'GET',
         data: params,
         error: function (xmlHttpRequest, errorText, thrownError) {
-            alert("error");
+            //alert("error");
         },
         success: function (response) {
             $('#monunivers .modal-content').empty();

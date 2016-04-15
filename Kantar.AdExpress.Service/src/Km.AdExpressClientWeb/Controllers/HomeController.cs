@@ -61,12 +61,17 @@ namespace Km.AdExpressClientWeb.Controllers
                                 new InfosNews()
                                 {
                                     Label = "Aide",
-                                    Url = "cerfa.pdf"
+                                    Url = "Page_aide.pdf"
                                 },
                                 new InfosNews()
                                 {
                                     Label = "Dates de mises à jour",
                                     Url = "Planning mise à jour Adexpress.pdf"
+                                },
+                                 new InfosNews()
+                                {
+                                    Label = "Configuration",
+                                    Url = "Configuration.pdf"
                                 }
                             }
                         });
@@ -229,7 +234,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage),
                 CreateDirectory = GestionWeb.GetWebWord(LanguageConstantes.CreateFolder, siteLanguage),
                 RenameDirectory = GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
-                DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage)
+                DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage),
+                Directories = GestionWeb.GetWebWord(LanguageConstantes.Directories, siteLanguage)
             };
             return result;
         }

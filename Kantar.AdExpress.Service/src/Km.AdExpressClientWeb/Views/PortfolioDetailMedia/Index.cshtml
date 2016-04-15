@@ -51,10 +51,22 @@
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 
     <script id="colSpotTmpl" type="text/template">
-        {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
-        <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa'></i></a>
+        {{if ${869}.startsWith('[') && ${869}.endsWith(']') }}
+        <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${869}"><i class='fa'></i></a>
         {{else}}
-        ${Spot}
+        ${869}
+        {{/if}}
+    </script>
+
+    <script id="colPlanMediaPopUpTmpl" type="text/template">
+        {{if ${1478}.startsWith('[') && ${1478}.endsWith(']') }}
+        <center>
+            <a class="linkPlanMediaPopUp" href='' data-url="${1478}">
+                <span class='fa fa-search-plus'></span>
+            </a>
+        </center>
+        {{else}}
+        ${1478}
         {{/if}}
     </script>
 
@@ -176,9 +188,11 @@
 
                         cols = data.columns
                         for (i = 0; i < cols.length; i++) {
-                            if (cols[i].key == "Spot")
+                            if (cols[i].key == "869") //Spot = 869
                                 cols[i].template = $("#colSpotTmpl").html();
-                            else if(cols[i].key == "Visu")
+                            else if(cols[i].key == "1478") //Plan Media du produit = 1478
+                                cols[i].template = $("#colPlanMediaPopUpTmpl").html();
+                            else if (cols[i].key == "Visu")
                                 cols[i].template = $("#colVisuTmpl").html();
                         }
 
@@ -304,6 +318,15 @@
                 $(this).addClass('iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
             });
 
+            //PlanMedia link
+            $(".linkPlanMediaPopUp").each(function () {
+                var datas = $(this).data('url').toString();
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+                $(this).attr("href", 'javascript: window.open("/MediaSchedulePopUp?idSession=' + datas[0] + '&id=' + datas[1] + '&Level=' + datas[2] + '", "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700"); void (0);');
+            });
+
+            
         });
 
     </script>

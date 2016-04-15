@@ -1,11 +1,13 @@
 ﻿@model Km.AdExpressClientWeb.Models.HomeNumbersViewModel
 
 <div class="row">
+    @{int i = 0;}
     @foreach (var item in Model.Numbers)
     {
         <div class="col-lg-4">
-            <h3>@item.Value</h3>
+            <h3 class="animationFun" id="#fun@(i)"data-value="@item.Value"></h3>
             <span><br />@item.Key</span>
         </div>
+        i++;
     }
 </div>

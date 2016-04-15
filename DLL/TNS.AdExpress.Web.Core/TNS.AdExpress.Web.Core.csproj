@@ -158,12 +158,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\PurchaseModeListDataAccess.cs" />
+    <Compile Include="DataAccess\Selections\Medias\MediaPublicationDatesDataAccess.cs" />
     <Compile Include="Exceptions\BannersFormatException.cs" />
     <Compile Include="Exceptions\PurchaseModeListDataAccessException.cs" />
     <Compile Include="Exceptions\VehicleException.cs" />
     <Compile Include="PurchaseModeList.cs" />
     <Compile Include="Utilities\Converters.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
+    <Compile Include="Utilities\Modules.cs" />
     <Compile Include="Utilities\QueryStringEncryption.cs" />
     <Compile Include="Utilities\SessionExtensionMethods.cs" />
     <Compile Include="VehicleFormatList.cs" />

@@ -2,8 +2,8 @@
 @using TNS.AdExpress.Constantes.Web
 @{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_LayoutHome.cshtml";  
-   
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+
 }
 
 @section Scripts {
@@ -268,7 +268,7 @@
                 @if (Model.ModuleRight.ContainsKey(Module.Name.TENDACES))
                 {
                     @*<a href="@Url.Action("Index", "Tendances")" class="tile-body text-center" id="@Module.Name.TENDACES">*@
-                    <a  class="tile-body text-center" id="@Module.Name.TENDACES">
+                    <a class="tile-body text-center" id="@Module.Name.TENDACES">
                         <div class="flip-container-second">
                             <div class="front-second">
                                 <i class="icon-eye sli-size-small green"></i>
@@ -507,8 +507,10 @@
                 <div class="tile-body text-center">
                     <div class="flip-container">
                         <div class="front">
-                            <i class="icon-bubbles sli-size-small"></i>
-                            <h5>Contactez nous</h5>
+                            <a href="@Url.Action("Index", "Contact")">
+                                <i class="icon-bubbles sli-size-small"></i>                           
+                                <h5>Contactez nous</h5>
+                            </a>
                         </div>
                     </div>
                 </div>

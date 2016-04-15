@@ -1,6 +1,7 @@
 ﻿
 using KM.AdExpressI.MyAdExpress.Exceptions;
 using Oracle.DataAccess.Client;
+using Oracle.DataAccess.Types;
 using System;
 using System.Data;
 using System.IO;
@@ -578,5 +579,105 @@ namespace KM.AdExpressI.MyAdExpress
             }
             #endregion
         }
+
+        #region Récupération d'un session
+        /// <summary>
+        /// Méthode pour la récupération et la "deserialization" d'un objet WebSession à partir du champ BLOB de la table des sessions
+        /// </summary>
+        /// <returns>Retourne l'objet récupéré ou null si il y a eu un problème non géré</returns>
+        /// <param name="idWebSession">Identifiant de la session</param>
+        /// <param name="webSession">Session à la connexion d l'utilisateur</param>
+        public static Object GetResultMySession(string idWebSession, WebSession webSession)
+        {
+
+            #region Open data base connection
+            bool DBToClosed = false;
+            OracleConnection cnx = (OracleConnection)webSession.Source.GetSource();
+
+            if (cnx.State == ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("WebSession.Load(...) : Impossible d'ouvrir la base de données", e));
+                }
+            }
+            #endregion
+
+            #region Chargement et deserialization de l'objet
+            OracleCommand sqlCommand = null;
+            MemoryStream ms = null;
+            BinaryFormatter bf = null;
+            byte[] binaryData = null;
+            Object result = null;
+            try
+            {
+                Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
+                binaryData = new byte[0];
+                //create anonymous PL/SQL command
+                string block = " BEGIN " +
+                    " SELECT Blob_content INTO :1 FROM " + mySessionTable.Sql + " WHERE id_my_session = " + idWebSession + "; " +
+                    " END; ";
+                sqlCommand = new OracleCommand(block);
+                sqlCommand.Connection = cnx;
+                sqlCommand.CommandType = CommandType.Text;
+                //Initialize parametres
+                OracleParameter param = sqlCommand.Parameters.Add("blobfromdb1", OracleDbType.Blob);
+                param.Direction = ParameterDirection.Output;
+
+                //Execute PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+                //Récupération des octets du blob
+                binaryData = (byte[])((OracleBlob)(sqlCommand.Parameters[0].Value)).Value;
+
+                //Deserialization oft the object
+                ms = new MemoryStream();
+                ms.Write(binaryData, 0, binaryData.Length);
+                bf = new BinaryFormatter();
+                ms.Position = 0;
+                result = bf.Deserialize(ms);
+            }
+            #endregion
+
+            #region Gestion des erreurs de chargement et de deserialization de l'objet
+            catch (System.Exception e)
+            {
+                try
+                {
+                    // Fermeture des structures
+                    if (ms != null) ms.Close();
+                    if (bf != null) bf = null;
+                    if (binaryData != null) binaryData = null;
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw (new MySessionDataAccessException("WebSession.Load(...) : Impossible de libérer les ressources après échec de la méthode", ex));
+                }
+                throw (new MySessionDataAccessException("WebSession.Load(...) : Problème au chargement de la session à partir de la base de données", e));
+            }
+            try
+            {
+                // dispose
+                if (ms != null) ms.Close();
+                if (bf != null) bf = null;
+                if (binaryData != null) binaryData = null;
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+            }
+            catch (System.Exception ex)
+            {
+                throw (new MySessionDataAccessException("WebSession.Load(...) : Impossible de fermer la base de données", ex));
+            }
+            #endregion
+            return (result);
+        }
+        #endregion
     }
 }

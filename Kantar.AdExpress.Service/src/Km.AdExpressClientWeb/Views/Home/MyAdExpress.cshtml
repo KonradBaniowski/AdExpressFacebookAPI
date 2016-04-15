@@ -32,12 +32,12 @@
                         @if (Model.Alerts != null && Model.Alerts.Any())
                     {
                             <h3 class="panel-title pull-left">
-                                <span class="blue">@Model.Alerts.Count()</span> répertoires,  <span class="blue">@Model.Alerts.Sum(p => p.Occurrences.Count())</span> @Model.Labels.Occurrences
+                                <span class="blue">@Model.Alerts.Count()</span> @Model.Labels.Directories,  <span class="blue">@Model.Alerts.Sum(p => p.Occurrences.Count())</span> @Model.Labels.Occurrences
                             </h3>
                             <h3 class="panel-title pull-right">
-                                <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
-                                <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
-                                <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
+                                <a href="#myModal1" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>
+                                <a href="#myModal3" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-pencil text-md"></i></a>
+                                <a href="#myModal2" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md adExpress-tools"></i></a>
                             </h3>
                     }
                     else
@@ -75,9 +75,9 @@
                                                             @foreach (var occurence in item.Occurrences)
                                                         {
                                                                 <li class="list-group-item">
-                                                                    <span>Envoyée le @occurence.SendDate.Date.ToShortDateString() </span>
+                                                                    <span> @Model.Labels.SendDate @occurence.SendDate.Date.ToShortDateString() </span>
                                                                     <div class="pull-right">
-                                                                        <a>
+                                                                        <a data-id="@occurence.Id" class="btnLoadSession" data-type="Alerts">
                                                                             <i class="fa fa-search fa-lg"></i>
                                                                         </a>
                                                                     </div>

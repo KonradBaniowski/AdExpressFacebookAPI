@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CreativeController.cs" />
     <Compile Include="Controllers\CustomerAreaController.cs" />
+    <Compile Include="Controllers\DetailSelectionController.cs" />
     <Compile Include="Controllers\GadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
@@ -1451,18 +1452,21 @@
     <Content Include="IgniteUI\mobile\css\themes\ios6\infragistics.mobile.theme.less" />
     <Content Include="IgniteUI\mobile\css\themes\ios\infragistics.mobile.theme.less" />
     <EmbeddedResource Include="Aspose.Cells.lic" />
-    <Content Include="Content\pdf\cerfa.pdf" />
     <Content Include="Content\pdf\Planning mise à jour Adexpress.pdf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\pdf\Page_aide.pdf" />
+    <Content Include="Content\pdf\Configuration.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\component-selectable\common-actions.js" />
+    <Content Include="Scripts\countUp.js" />
+    <Content Include="Scripts\countUp.min.js" />
     <Content Include="Scripts\datepicker-fr.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1579,7 +1583,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
-    <Folder Include="Views\Gad\" />
+    <Folder Include="Views\DetailSelection\" />
+    <Folder Include="Views\Gad\" />    
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>

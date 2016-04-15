@@ -31,6 +31,7 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/respond.js",
                         "~/Scripts/moment.js",
+                        "~/Scripts/countUp.js",
                         "~/Scripts/moment-with-locales.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
                         "~/Scripts/bootstrap-select.js",
