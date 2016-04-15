@@ -11,9 +11,9 @@
                     <span class="blue">@Model.NbrFolder</span> @Model.Labels.Directories,  <span class="blue">@Model.NbrUnivers</span> @Model.Labels.Results
                 </h3>
                             <h3 class="panel-title pull-right">
-                                <a id="btnCreate@(Model.UniversType)Directory"data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
-                                <a id="btnRename@(Model.UniversType)Directory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs"><i class="fa icon-pencil text-md"></i></a>
-                                <a id="btnDrop@(Model.UniversType)Directory" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md"></i></a>
+                                <a id="btnCreate@(Model.UniversType)Directory"data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>
+                                <a id="btnRename@(Model.UniversType)Directory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-pencil text-md"></i></a>
+                                <a id="btnDrop@(Model.UniversType)Directory" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md adExpress-tools"></i></a>
                             </h3>
             }
             else
@@ -55,17 +55,17 @@
                                                             <div class="pull-right">
                                                                 @if (Model.UniversType == UniversType.Result)
                                                                 {
-                                                                <a class="btnLoadSession"data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                <a class="btnLoadSession adExpress-tools"data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-search fa-lg"></i>
                                                                 </a>
                                                                 }
-                                                                <a class="btnMove@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
+                                                                <a class="btnMove@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
                                                                     <i class="fa icon-share-alt fa-lg"></i>
                                                                 </a>
-                                                                <a class="btnRename@(Model.UniversType)" data-toggle="modal"  data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                <a class="btnRename@(Model.UniversType) adExpress-tools" data-toggle="modal"  data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-pencil fa-lg"></i>
                                                                 </a>
-                                                                <a class="btnDelete@(Model.UniversType)" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                <a class="btnDelete@(Model.UniversType) adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-trash-o fa-lg"></i>
                                                                 </a>
                                                             </div>
@@ -82,17 +82,17 @@
                                                                         <div class="pull-right">
                                                                             @if (Model.UniversType == UniversType.Result)
                                                                             {
-                                                                                <a class="btnLoadSession" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                                <a class="btnLoadSession adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                     <i class="fa fa-search fa-lg"></i>
                                                                                 </a>
                                                                             }
-                                                                            <a class="btnMove@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
+                                                                            <a class="btnMove@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
                                                                                 <i class="fa icon-share-alt fa-lg"></i>
                                                                             </a>
-                                                                            <a class="btnRename@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                            <a class="btnRename@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                 <i class="fa fa-pencil fa-lg"></i>
                                                                             </a>
-                                                                            <a class="btnDelete@(Model.UniversType)" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                            <a class="btnDelete@(Model.UniversType) adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
                                                                                 <i class="fa fa-trash-o fa-lg"></i>
                                                                             </a>
                                                                         </div>
