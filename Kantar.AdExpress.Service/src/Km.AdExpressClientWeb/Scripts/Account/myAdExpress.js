@@ -495,3 +495,26 @@
             }
         });
     });
+
+// Load Session
+    $(document).on('click', '.btnLoadSession', function () {
+        idSession = $(this).attr("data-id");
+        var params = {
+            idSession: idSession
+        };
+        $.ajax({
+            url: '/Universe/LoadSession',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                console.log(response)
+                window.location.href = response;
+                bootbox.alert("Redirecting to the results page.");
+            }
+        });
+    });
