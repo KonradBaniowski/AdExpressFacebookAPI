@@ -88,10 +88,10 @@
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 
     <script id="colSpotTmpl" type="text/template">
-        {{if ${Spot}.startsWith('[') && ${Spot}.endsWith(']') }}
-            <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${Spot}"><i class='fa'></i></a>
+        {{if ${10}.startsWith('[') && ${10}.endsWith(']') }}
+        <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${10}"><i class='fa'></i></a>
         {{else}}
-            ${Spot}
+        ${10}
         {{/if}}
     </script>
     <script id="colVisuTmpl" type="text/template">
@@ -248,9 +248,9 @@
 
                         cols = data.columns
                         for (i = 0; i < cols.length; i++) {
-                            if (cols[i].key == "Spot")
+                            if (cols[i].key == "10") //Spot = 10
                                 cols[i].template = $("#colSpotTmpl").html();
-                            else if(cols[i].key == "Visu")
+                            else if (cols[i].key == "Visu")
                                 cols[i].template = $("#colVisuTmpl").html();
                         }
 
