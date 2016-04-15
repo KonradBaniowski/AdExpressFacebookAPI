@@ -47,6 +47,15 @@
             </div>
         </center>
     </div>
+
+    <div class="col-md-12">
+        <center>
+            <div id="graphResult">
+
+            </div>
+        </center>
+    </div>
+
 </div>
 <div id="resultModal" class="modal fade">
     <div class="modal-dialog">
@@ -262,6 +271,26 @@
                     }
                 });
             }
+            
+
+            @*function CallPortfolioGridResult() {
+                $.ajax({
+                    url: '@Url.Action("PortfolioGraphResult", _controller)',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null) {
+                            $('#graphResult').html(data);
+                        }
+                        else {
+                            alert("Erreur Génération du graphique")
+                        }
+                    }
+                });
+            }*@
 
 
             function CallSetOptions() {
@@ -275,6 +304,8 @@
                     },
                     success: function (data) {
                         CallPortfolioResult();
+                        //if(userFilter.ResultTypeFilter.ResultType == "4")
+                        //    CallPortfolioGraphResult();
                     }
                 });
             }

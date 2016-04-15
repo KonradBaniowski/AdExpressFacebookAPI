@@ -1,0 +1,68 @@
+﻿@model System.Web.Mvc.JsonResult
+
+
+
+
+<div id="chart">
+
+</div>
+
+
+
+
+
+<script>
+
+
+    var renderGrid = function (success, error) {
+        if (success) {
+                $("#grid").igTreeGrid({
+                    dataSource: ds.dataView(),
+                    valueMemberPath: "ValKey",
+                    labelMemberPath: "LabelKey"
+                })
+
+
+        } else {
+            alert(error);
+        }
+
+    }
+
+
+    $("#chart").igPieChart({
+        width: "435px",
+        height: "435px",
+        dataSource: data, 
+        valueMemberPath: "ValKey",
+        labelMemberPath: "LabelKey"
+    });
+
+    function setDataGraph(data) {
+        if (data != null && data != "") {
+            dataGrid = data.datachart;
+
+            var schema = new $.ig.DataSchema("array", {
+                fields: data.schema
+            });
+
+            ds = new $.ig.DataSource({
+                type: "json",
+                schema: schema,
+                dataSource: dataChart,
+                callback: renderChart
+            });
+
+            ds.dataBind();
+        }
+        else {
+            alert("Erreur");
+        }
+    }
+
+
+    setDataGraph(@Model)
+
+</script>
+
+

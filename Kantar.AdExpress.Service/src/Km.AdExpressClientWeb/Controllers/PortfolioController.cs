@@ -256,6 +256,32 @@ namespace Km.AdExpressClientWeb.Controllers
                 return null;
             }
         }
+
+        
+        public ActionResult PortfolioGraphResult()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var gridResult = _portofolioService.GetGraphGridResult(idWebSession);
+
+            try
+            {
+                if (!gridResult.HasData)
+                    return null;
+
+                string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+                var obj = new { datachart= jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+                JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return PartialView("_DetailLevel", jsonModel);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public ActionResult ResultOptions()
         {
             var claim = new ClaimsPrincipal(User.Identity);

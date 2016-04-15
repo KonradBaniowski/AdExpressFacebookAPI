@@ -1574,6 +1574,7 @@
     <Content Include="Views\Home\MyAdExpressSavedResults.cshtml" />
     <Content Include="Views\PortfolioDetailMedia\Index.cshtml" />
     <Content Include="Views\Shared\UserResult.cshtml" />
+    <Content Include="Views\Portfolio\_GraphResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
