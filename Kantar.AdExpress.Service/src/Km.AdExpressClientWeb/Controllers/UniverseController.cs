@@ -382,5 +382,43 @@ namespace Km.AdExpressClientWeb.Controllers
 
             return jsonModel;
         }
+
+        public JsonResult LoadSession(string idSession)
+        {
+            var response = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            var redirectUrl = string.Empty;
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (!String.IsNullOrEmpty(webSessionId))
+                response = _myAdExpressService.LoadSession(idSession, Domain.UniversType.Result, webSessionId);
+            if (response.Success && response.ModuleId > 0)
+            {
+                var controller = string.Empty;
+                var action = "Results";
+                switch (response.ModuleId)
+                {
+                    case Module.Name.ANALYSE_PLAN_MEDIA:
+                        controller = "MediaSchedule";
+                        break;
+                    case Module.Name.ANALYSE_PORTEFEUILLE:
+                        controller = "Portfolio";
+                        break;
+                    case Module.Name.ANALYSE_CONCURENTIELLE:
+                        controller = "PresentAbsent";
+                        break;
+                    case Module.Name.ANALYSE_DYNAMIQUE:
+                        controller = "LostWon";
+                        break;
+                };
+                response.Message = "Redirecting to the result page.";
+                //redirectUrl = new UrlHelper(Request.RequestContext).Action(action, controller);
+                //return Json(new { Url = redirectUrl });
+                return Json(Url.Action(action,controller),JsonRequestBehavior.AllowGet);
+            }
+            return Json(response.Message);
+        }
     }
 }

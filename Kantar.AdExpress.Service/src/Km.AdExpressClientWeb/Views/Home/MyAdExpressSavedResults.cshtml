@@ -8,7 +8,7 @@
             @if (Model != null && Model.UniversGroups.Any())
             {
                 <h3 class="panel-title pull-left">
-                    <span class="blue">@Model.NbrFolder</span> répertoires,  <span class="blue">@Model.NbrUnivers</span> résultats
+                    <span class="blue">@Model.NbrFolder</span> @Model.Labels.Directories,  <span class="blue">@Model.NbrUnivers</span> @Model.Labels.Results
                 </h3>
                             <h3 class="panel-title pull-right">
                                 <a id="btnCreate@(Model.UniversType)Directory"data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs"><i class="fa icon-plus text-md"></i></a>
@@ -53,9 +53,12 @@
                                                         <li class="list-group-item">
                                                             <span>@univers.Description</span>
                                                             <div class="pull-right">
-                                                                <a data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                @if (Model.UniversType == UniversType.Result)
+                                                                {
+                                                                <a class="btnLoadSession"data-id="@univers.Id" data-directory-id="@item.Id">
                                                                     <i class="fa fa-search fa-lg"></i>
                                                                 </a>
+                                                                }
                                                                 <a class="btnMove@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
                                                                     <i class="fa icon-share-alt fa-lg"></i>
                                                                 </a>
@@ -77,9 +80,12 @@
                                                                     <li class="list-group-item">
                                                                         <span>@univers.Description</span>
                                                                         <div class="pull-right">
-                                                                            <a data-id="@univers.Id" data-directory-id="@item.Id">
-                                                                                <i class="fa fa-search fa-lg"></i>
-                                                                            </a>
+                                                                            @if (Model.UniversType == UniversType.Result)
+                                                                            {
+                                                                                <a class="btnLoadSession" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                                    <i class="fa fa-search fa-lg"></i>
+                                                                                </a>
+                                                                            }
                                                                             <a class="btnMove@(Model.UniversType)" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
                                                                                 <i class="fa icon-share-alt fa-lg"></i>
                                                                             </a>
