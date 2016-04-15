@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl\CreativeService.cs" />
     <Compile Include="ServiceImpl\DetailLevelService.cs" />
+    <Compile Include="ServiceImpl\GadService.cs" />
     <Compile Include="ServiceImpl\InfosNewsService.cs" />
     <Compile Include="ServiceImpl\PortfolioDetailMediaService.cs" />
     <Compile Include="ServiceImpl\InsertionsService.cs" />
@@ -118,6 +119,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date\TNS.AdExpressI.Date.csproj">
       <Project>{d24531cc-e000-4aef-8218-56885d87dfcb}</Project>
       <Name>TNS.AdExpressI.Date</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.GAD.DAL\TNS.AdExpressI.GAD.DAL.csproj">
+      <Project>{c28e12a2-821a-451b-a1a6-c401173283e6}</Project>
+      <Name>TNS.AdExpressI.GAD.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
       <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
