@@ -420,6 +420,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 return gridResult;
         }
 
+
         #region GetStructureHtml
             /// <summary>
             /// Get structure html

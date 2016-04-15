@@ -93,6 +93,8 @@ namespace TNS.AdExpressI.Portofolio {
         /// </summary>
         /// <returns>cover items</returns>
         List<VehicleView.VehicleItem> GetVehicleItems();
-	
+
+        GridResult GetGraphGridResult();
+
     }
 }

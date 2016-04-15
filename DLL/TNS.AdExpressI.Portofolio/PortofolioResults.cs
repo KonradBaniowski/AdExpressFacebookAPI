@@ -1083,6 +1083,97 @@ namespace TNS.AdExpressI.Portofolio
             return gridResult;
 
         }
+
+
+        GridResult GetGraphGridResult()
+        {
+            System.Data.DataTable dt = null;
+            GridResult gridResult = null;
+            long oldUnitId = -1;
+            Dictionary<long, int> valuesListSize = new Dictionary<long, int>();
+            int nbItem = 0, numberofChart = 0;
+            double[] yValues = null;
+            string[] xValues = null;
+            int currentLine = 0;
+            string oldUnitLabel = "";
+            object[,] gridData = null;
+            List<object> schemaFields = new List<object>();
+
+
+            #region Set Graph values
+
+            dt = GetStructureChartData();
+
+            string idVehicle = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                //No data to show
+                gridResult.HasData = false;
+            }
+            else
+            {
+
+                string colKey = "LabelKey";
+                schemaFields.Add(new { name = colKey });
+
+                string valColKey = "ValKey";
+                schemaFields.Add(new { name = valColKey });
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (oldUnitId != long.Parse(dr["idUnit"].ToString()))
+                    {
+                        valuesListSize.Add(oldUnitId, nbItem);
+                        nbItem = 0;
+                    }
+                    if (oldUnitId != long.Parse(dr["idUnit"].ToString()))
+                        numberofChart++;
+
+                    nbItem++;
+                    oldUnitId = long.Parse(dr["idUnit"].ToString());
+
+                }
+
+                if (!valuesListSize.ContainsKey(oldUnitId))
+                    valuesListSize.Add(oldUnitId, nbItem);
+
+                //Set chart values
+                oldUnitId = -1;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (oldUnitId != long.Parse(dr["idUnit"].ToString()))
+                    {
+                        xValues = new string[valuesListSize[long.Parse(dr["idUnit"].ToString())]];
+                        yValues = new double[valuesListSize[long.Parse(dr["idUnit"].ToString())]];
+                        gridData = new object[xValues.Length, yValues.Length];
+                        currentLine = 0;
+                    }
+
+                    gridData[currentLine, 0] = dr["chartDataLabel"].ToString();
+                    gridData[currentLine, 1] = double.Parse(dr["chartDataValue"].ToString());
+
+                    oldUnitLabel = dr["unitLabel"].ToString();
+                    oldUnitId = long.Parse(dr["idUnit"].ToString());
+                    currentLine++;
+                }
+            }
+            #endregion
+
+            gridResult.HasData = true;
+            gridResult.Schema = schemaFields;
+            //gridResult.ColumnsFixed = columnsFixed;
+            gridResult.Data = gridData;
+
+
+            return gridResult;
+
+        }
+
+        GridResult IPortofolioResults.GetGraphGridResult()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion

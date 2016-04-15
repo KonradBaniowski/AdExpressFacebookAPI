@@ -9,5 +9,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         GridResult GetGridResult(string idWebSession);
 
         ResultTable GetResultTable(string idWebSession);
+        GridResult GetGraphGridResult(string idWebSession);
     }
 }
