@@ -72,8 +72,6 @@ namespace KM.Framework.Constantes
         public string EveryMonth { get; set; }//2605
         public string ExpirationDate { get; set; }//2606
         public string AlertType { get; set; }//2607
-        public string Folder { get; set; }//TBD
-        public string Results { get; set; }//TBD
         public string TimeSchedule { get; set; }//w2614
         public string MoveSelectedResult { get; set; }//911
         public string MoveResultTitle { get; set; }//Déplacer le résultat
@@ -95,5 +93,7 @@ namespace KM.Framework.Constantes
         public string DropDirectory { get; set; }//697
         public string RenameDirectory { get; set; }//698
         public string CreateDirectory { get; set; }//696
+        public string Directories { get; set; } //TBD
+        public string Results { get; set; }//TBD
     }
 }

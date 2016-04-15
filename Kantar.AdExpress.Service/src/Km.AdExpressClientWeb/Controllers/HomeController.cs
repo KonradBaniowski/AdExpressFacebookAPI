@@ -61,12 +61,17 @@ namespace Km.AdExpressClientWeb.Controllers
                                 new InfosNews()
                                 {
                                     Label = "Aide",
-                                    Url = "cerfa.pdf"
+                                    Url = "Page_aide.pdf"
                                 },
                                 new InfosNews()
                                 {
                                     Label = "Dates de mises à jour",
                                     Url = "Planning mise à jour Adexpress.pdf"
+                                },
+                                 new InfosNews()
+                                {
+                                    Label = "Configuration",
+                                    Url = "Configuration.pdf"
                                 }
                             }
                         });

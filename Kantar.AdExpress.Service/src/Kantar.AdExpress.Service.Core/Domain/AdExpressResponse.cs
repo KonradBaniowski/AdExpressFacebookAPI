@@ -11,5 +11,6 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public bool Success { get; set; }
         
         public string Message { get; set;} 
+        public long ModuleId { get; set; }
     }
 }

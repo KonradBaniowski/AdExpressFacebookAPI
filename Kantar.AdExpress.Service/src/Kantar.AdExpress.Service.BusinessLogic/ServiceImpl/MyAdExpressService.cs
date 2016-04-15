@@ -591,7 +591,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     idMySession = Int64.Parse(idSession);
                     webSessionSave = (WebSession)MyResultsDAL.GetResultMySession(idMySession.ToString(), webSession);
-
+                    
                     DataTable dtModulesList = right.GetCustomerModuleListHierarchy();
 
                     #region Vérification des droits sur les modules
@@ -1207,7 +1207,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             if (webSession.LastReachedResultUrl.Length != 0)
                             {
                                 result.Success = true;
-                                //Response.Redirect(webSession.LastReachedResultUrl + "?idSession=" + webSession.IdSession);
+                                result.ModuleId = webSessionSave.CurrentModule;
                             }
                             else
                             {
