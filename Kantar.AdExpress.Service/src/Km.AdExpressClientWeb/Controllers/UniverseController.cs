@@ -383,7 +383,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public JsonResult LoadSession(string idSession)
+        public JsonResult LoadSession(string idSession, string type)
         {
             var response = new Domain.AdExpressResponse
             {
@@ -391,9 +391,10 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var redirectUrl = string.Empty;
             var claim = new ClaimsPrincipal(User.Identity);
+            var requestedSessionType = (type.ToUpper() == "SESSION") ? Domain.UniversType.Result : Domain.UniversType.Alert;
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             if (!String.IsNullOrEmpty(webSessionId))
-                response = _myAdExpressService.LoadSession(idSession, Domain.UniversType.Result, webSessionId);
+                response = _myAdExpressService.LoadSession(idSession, requestedSessionType, webSessionId);
             if (response.Success && response.ModuleId > 0)
             {
                 var controller = string.Empty;
@@ -420,5 +421,6 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             return Json(response.Message);
         }
+        
     }
 }
