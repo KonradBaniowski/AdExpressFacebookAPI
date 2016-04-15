@@ -1010,7 +1010,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 ErrorMsgNoFolderCreated = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.ErrorMsgNoFolderCreated, siteLanguage),
                 CreateDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.CreateFolder, siteLanguage),
                 RenameDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.RenameSelectedFolder, siteLanguage),
-                DropDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.DropFolder, siteLanguage)
+                DropDirectory = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.DropFolder, siteLanguage),
+                Results = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Results, siteLanguage),
+                Directories = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Directories, siteLanguage)
             };
             return result;
         }
