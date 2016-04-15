@@ -971,12 +971,13 @@ namespace TNS.AdExpressI.Portofolio
                 case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
+                    //result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
                     //TODO : Gérer le lien vars de détails insertion
                     //result.GetAllPeriodInsertions(t, GestionWeb.GetWebWord(1837, _webSession.SiteLanguage));
                     //return t.ToString();
-                    return null;
-
+                     GridResult gridResult = new GridResult();
+                    gridResult.HasData = false;
+                    return gridResult;
                 case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.radioGeneral:
                 case DBClassificationConstantes.Vehicles.names.radioSponsorship:
