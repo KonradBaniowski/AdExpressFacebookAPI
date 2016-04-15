@@ -25,8 +25,10 @@ var idMedias = [];
 //MAJ des boxes adjacentes
 function SelectedItems(event, ui) {
     var itemIds = [];
-    $(".ui-selected").each(function (index, elem) {
+    $(this).closest('.panel').find($(".ui-selected")).each(function (index, elem) {
         itemIds.push($(elem).attr('data-id'));
+
+    //$(".ui-selected")
     });
     var DIS = this;
     this.itemIds = itemIds;
@@ -35,7 +37,20 @@ function SelectedItems(event, ui) {
     var prevs = $(this).closest('.panel').prevAll();
     var nextOne = $(this).closest('.panel').next();
     var universesToUpdate = prevs.add(nextOne);
-        //$("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
+    var others = $("[id^='groupSelectable'][data-branch='" + branchId + "'][data-universe!='" + universeIdCalling + "']");
+    var test = $("[id^='groupSelectable'][data-branch='" + branchId + "']");
+    var id = nextOne.attr("data-universe");
+    var clean = false;
+    $.each(test, function (index, value) {
+        if ($(value).attr("data-universe") === id) {
+            clean = true;
+        }
+        else if(clean) {
+            $(value).find($('.badge.bg-blue')).html('');
+            $(value).find($('.panel-body > ul')).html('');
+            $(value).find($('small')).html('');
+        }
+    });
     var idMedias = [];
     if ($('.tuile-medias-active').length > 0) {
         $.each($('.tuile-medias-active'), function (index, value) {
