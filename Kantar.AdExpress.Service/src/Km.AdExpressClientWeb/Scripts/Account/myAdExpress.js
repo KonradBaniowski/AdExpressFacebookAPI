@@ -263,10 +263,10 @@
         });
     });
 
+// Create Directory ( Session, Univers & Alerts)
     $(document).on('click', '#btnCreateResultDirectory', function () {
         $('#createResultDirectory').modal('show');
     });
-
     $(document).on('click', '#btnValidCreateResultDirectory', function () {
         var directoryName = $('#newDirectoryResultName').val();
         var params = {
@@ -304,7 +304,6 @@
     $(document).on('click', '#btnCreateUniversDirectory', function () {
         $('#createUniversDirectory').modal('show');
     });
-
     $(document).on('click', '#btnValidCreateUniversDirectory', function () {
         var directoryName = $('#newDirectoryUniversName').val();
         var params = {
@@ -339,7 +338,44 @@
         });
     });
 
+    $(document).on('click', '#btnCreateAlertsDirectory', function () {
+        $('#createAlertsDirectory').modal('show');
+    });
+    $(document).on('click', '#btnValidCreateAlertsDirectory', function () {
+        var directoryName = $('#newDirectoryAlertsName').val();
+        var params = {
+            directoryName: directoryName,
+            type: "Alerts"
+        };
+        $.ajax({
+            url: '/Universe/CreateDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#createAlertsDirectory').modal('hide');
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadAlerts',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Alerts").html(data);
+                    }
+                });
+                bootbox.alert(response.Message);
+            }
+        });
+    });
 
+// Drop Directory ( Session, Univers & Alerts)
     $(document).on('click', '#btnDropResultDirectory', function () {
         $('#dropResultDirectory').modal('show');
     });
@@ -380,7 +416,6 @@
     $(document).on('click', '#btnDropUniversDirectory', function () {
         $('#dropUniversDirectory').modal('show');
     });
-
     $(document).on('click', '#btnValidDropUniversDirectory', function () {
         var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idDropUniversDirectory').attr("data-result");
         var params = {
@@ -415,8 +450,44 @@
         });
     });
 
-// Rename Directory ( Session & univers)
+    $(document).on('click', '#btnDropAlertsDirectory', function () {
+        $('#dropAlertsDirectory').modal('show');
+    });
+    $(document).on('click', '#btnValidDropAlertsDirectory', function () {
+        var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idDropAlertsDirectory').attr("data-result");
+        var params = {
+            idDirectory: idDirectory,
+            type: "Alerts"
+        };
+        $.ajax({
+            url: '/Universe/DropDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#dropAlertsDirectory').modal('hide');
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadAlerts',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Alerts").html(data);
+                    }
+                });
+                bootbox.alert(response.Message);
+            }
+        });
+    });
 
+// Rename Directory ( Session, Univers & Alerts)
     $(document).on('click', '#btnRenameResultDirectory', function () {
         $('#renameResultDirectory').modal('show');
     });
@@ -454,12 +525,11 @@
                 bootbox.alert(response.Message);
             }
         });
-    });
+    });    
 
     $(document).on('click', '#btnRenameUniversDirectory', function () {
         $('#renameUniversDirectory').modal('show');
     });
-
     $(document).on('click', '#btnValidRenameUniversDirectory', function () {
         var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idRenameUniversDirectory').attr("data-result");
         var name = $('#newUniversDirectoryName').val();
@@ -489,6 +559,45 @@
                     },
                     success: function (data) {
                         $("#Univers").html(data);
+                    }
+                });
+                bootbox.alert(response.Message);
+            }
+        });
+    });
+
+    $(document).on('click', '#btnRenameAlertsDirectory', function () {
+        $('#renameAlertsDirectory').modal('show');
+    });
+    $(document).on('click', '#btnValidRenameAlertsDirectory', function () {
+        var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idRenameAlertsDirectory').attr("data-result");
+        var name = $('#newAlertsDirectoryName').val();
+        var params = {
+            directoryName: name,
+            type: "Alerts",
+            idDirectory: idDirectory
+        };
+        $.ajax({
+            url: '/Universe/RenameDirectory',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#renameAlertsDirectory').modal('hide');
+                //Reload the page
+                $.ajax({
+                    url: '/Home/ReloadAlerts',
+                    type: 'POST',
+                    data: params,
+                    error: function (data) {
+                        bootbox.alert(data);
+                    },
+                    success: function (data) {
+                        $("#Alerts").html(data);
                     }
                 });
                 bootbox.alert(response.Message);
