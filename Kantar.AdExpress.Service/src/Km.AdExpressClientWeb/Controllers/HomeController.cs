@@ -171,6 +171,17 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var model = new List<Domain.Alert>();
+            var alertsResponse = _universService.GetUserAlerts(idWebSession);
+            model= alertsResponse.Alerts;
+            return PartialView("MyAdExpressAlerts", model);
+
+        }
+
+        public ActionResult ReloadAlerts()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var model = new Domain.AdExpressUniversResponse
             {
                 UniversType = Domain.UniversType.Univers,
@@ -184,7 +195,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 group.FirstColumnSize = (count % 2 == 0) ? count / 2 : (count / 2) + 1;
                 group.SecondeColumnSize = count - group.FirstColumnSize;
             }
-            model= univers;
+            model = univers;
             return PartialView("MyAdExpressSavedResults", model);
 
         }

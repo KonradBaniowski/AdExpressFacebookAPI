@@ -1727,7 +1727,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         alertDAL.DeleteOccurrences(Int32.Parse(idDirectory));
                         alertDAL.Delete(Int32.Parse(idDirectory), false);
-                        result.Message = GestionWeb.GetWebWord(LanguageConstantes.DroppedSuccessfully, webSession.SiteLanguage) + "\");");
+                        result.Message = GestionWeb.GetWebWord(LanguageConstantes.DroppedSuccessfully, webSession.SiteLanguage);
                         result.Success = true;
                     }
                     catch
@@ -1736,7 +1736,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                 }
                 else {
-                result.Message = GestionWeb.GetWebWord(LanguageConstantes.NoQueryErrorMsg, webSession.SiteLanguage) + "\");");
+                    result.Message = GestionWeb.GetWebWord(LanguageConstantes.NoQueryErrorMsg, webSession.SiteLanguage);
                    
                 }
             }
