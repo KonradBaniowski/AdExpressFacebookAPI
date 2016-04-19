@@ -18,6 +18,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long PhoneNumberCode = 71;
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
+        public const long DroppedSuccessfully = 286;
         public const long QuestionTag3Code = 647;
         public const long CreateFolder = 696;
         public const long DropFolder = 697;
@@ -34,6 +35,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LoadUniversCode = 770;
         public const long MyResultsDescription = 827;
         public const long ResultsCode = 829;
+        public const long DroppingFailed = 830;
+        public const long NoQueryErrorMsg = 831;
+        public const long RequiredPermission = 832;
+        public const long CantLoadSession = 851;
         public const long DownloadLabel = 874;
         public const long UserUniversCode = 875;
         public const long UserSavedUniversCode = 893;
@@ -50,6 +55,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Monthly = 1294;
         public const long Quartly = 1295;
         public const long MediaSelected = 1487;
+        public const long IncompleteDataForQuery = 1787;
         public const long CreativeLabel = 1888;
         public const long VisuelLabel = 1909;
         public const long JobTitleCode = 1976;
@@ -78,6 +84,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long OverLimitMsgCode = 2286;
         public const long KeyWordDescriptionCode = 2287;
         public const long MininumInclude = 2299;
+        public const long NotAvailableSession = 2455;
         public const long Receiver = 2483;
         public const long UnityError = 2541;
         public const long Daily = 2579;

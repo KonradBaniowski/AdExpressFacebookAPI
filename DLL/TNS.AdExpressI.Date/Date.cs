@@ -21,6 +21,8 @@ using System.Data;
 using TNS.AdExpressI.Date.Exception;
 using TNS.AdExpress.Web.Core.Utilities;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using MediaSelection = TNS.AdExpress.Web.Core.DataAccess.Selections.Medias;
+using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpressI.Date {
 
@@ -591,6 +593,71 @@ namespace TNS.AdExpressI.Date {
                 return true;
             else
                 return false;
+        }
+        #endregion
+
+        #region GetFirstDayNotEnable
+        /// <summary>
+        /// Renvoie le premier jour du calendrier à partir duquel les données ne sont pas encore chargées
+        /// </summary>
+        /// <returns>Le premier jour du calendrier à partir duquel les données ne sont pas encore chargées</returns>
+		public static DateTime GetFirstDayNotEnabled(WebSession webSession, long selectedVehicle, int startYear, IDataSource dataSource) {
+            AtomicPeriodWeek week = new AtomicPeriodWeek(DateTime.Now);
+            DateTime firstDayOfWeek = week.FirstDay;
+            DateTime publicationDate;
+            string lastDate = string.Empty;
+
+            switch(VehiclesInformation.DatabaseIdToEnum(selectedVehicle)) {
+                case Vehicles.names.press:
+                case Vehicles.names.newspaper:
+                case Vehicles.names.magazine:
+                case Vehicles.names.internationalPress:
+                case Vehicles.names.radio:
+                case Vehicles.names.radioGeneral:
+                case Vehicles.names.radioSponsorship:
+                case Vehicles.names.radioMusic:
+                case Vehicles.names.tv:
+                case Vehicles.names.tvGeneral:
+                case Vehicles.names.tvSponsorship:
+                case Vehicles.names.tvAnnounces:
+                case Vehicles.names.tvNonTerrestrials:
+                case Vehicles.names.others:
+                case Vehicles.names.outdoor:
+                case Vehicles.names.instore:
+                case Vehicles.names.indoor:
+                case Vehicles.names.cinema:
+                case Vehicles.names.adnettrack:
+                case Vehicles.names.evaliantMobile:
+                case Vehicles.names.mms:
+                case Vehicles.names.search:
+                case Vehicles.names.social:
+					lastDate = MediaSelection.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);
+                    startYear--;
+                    if (lastDate.Length == 0) lastDate = startYear + "1231";
+                    publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
+                    firstDayOfWeek = publicationDate.AddDays(1);
+                    return firstDayOfWeek;
+                case Vehicles.names.directMarketing:
+					lastDate = MediaSelection.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);
+                    startYear--;
+                    if (lastDate.Length == 0) lastDate = startYear + "1231";
+                    publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
+                    firstDayOfWeek = publicationDate.AddDays(7);
+                    return firstDayOfWeek;
+                case Vehicles.names.czinternet:
+                case Vehicles.names.internet:
+                case Vehicles.names.mailValo:
+                    lastDate = MediaSelection.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle,dataSource);
+                    startYear--;
+                    if (lastDate.Length == 0) lastDate = startYear + "1231";
+                    publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
+                    publicationDate = publicationDate.AddMonths(1);
+                    firstDayOfWeek = new DateTime(publicationDate.Year, publicationDate.Month, 1);
+                    return firstDayOfWeek;
+            }
+
+            return firstDayOfWeek;
+
         }
         #endregion
     }

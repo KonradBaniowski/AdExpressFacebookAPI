@@ -12,6 +12,7 @@ using TNS.Classification.Universe;
 using System.Collections.Generic;
 using TNS.AdExpress.Domain.Level;
 using System.Collections;
+using System.Data;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -80,6 +81,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             }
            
+        }
+
+        public GridResult GetGraphGridResult(string idWebSession)
+        {
+
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+
+            
+
+            TNS.AdExpress.Domain.Web.Navigation.Module module = _customerSession.CustomerLogin.GetModule(_customerSession.CurrentModule);
+            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+            object[] parameters = new object[1];
+            parameters[0] = _customerSession;
+            IPortofolioResults portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+
+
+            return portofolioResult.GetGraphGridResult();
+
         }
 
 

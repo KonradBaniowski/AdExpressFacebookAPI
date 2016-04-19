@@ -2338,3 +2338,54 @@ ul.ui-selectable {
 {
     margin-left:10px;
 }
+
+.infoGad{
+    display:inline-block;
+    min-width:150px;
+    font-size: 12px;
+    color: #000;
+    padding-left: 6px;
+}
+
+.infoGadAddressStreet {
+    padding-left: 4px;
+}
+
+.infoGadAddress {
+    padding-left: 16px;
+}
+
+.gadIcon {
+    color: #00c1ff;
+}
+
+.gadLeftContainer {
+    float: left;
+    width: 220px;
+    padding-right: 6px;
+}
+
+.gadBtnContainer {
+    padding-top: 26px;
+    text-align: right;
+}
+
+.gadBtn {
+    background-color: #00c1ff;
+}
+
+.gadLink {
+    color: inherit;
+    cursor: pointer;
+    outline-style: none;
+}
+
+.gadExternalLink {
+    font-size: 12px;
+    color: #00c1ff;
+}
+
+.gadExternalLink:hover {
+    font-size: 12px;
+    color: #ff8c00;
+}

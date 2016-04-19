@@ -1,0 +1,144 @@
+﻿@model  Km.AdExpressClientWeb.Models.Home.MyAdExpressViewModel
+@using Kantar.AdExpress.Service.Core.Domain;
+
+<div role="tabpanel" class="tab-pane" id="alertes">
+    <div class="panel panel-default panel-tab">
+        <div class="panel-heading resume">
+
+            @if (Model.Alerts != null && Model.Alerts.Any())
+            {
+                <h3 class="panel-title pull-left">
+                    <span class="blue">@Model.Alerts.Count()</span> @Model.Labels.Directories,  <span class="blue">@Model.Alerts.Sum(p => p.Occurrences.Count())</span> @Model.Labels.Occurrences
+                </h3>
+                            <h3 class="panel-title pull-right">
+                                @*<a id="btnCreateAlertsDirectory" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>
+                                <a id="btnRenameAlertsDirectory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-pencil text-md"></i></a>*@
+                                <a id="btnDropAlertsDirectory" title="Supprimer un répertoire"><i class="fa icon-trash text-md adExpress-tools"></i></a>
+                            </h3>
+            }
+            else
+            {
+                <h3 class="panel-title pull-left">
+                    <span>@Model.Labels.NoAlerts</span>
+                </h3>
+            }
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body">
+            @if (Model.Alerts != null && Model.Alerts.Any())
+            {
+                foreach (var item in Model.Alerts)
+                {
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a class="btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
+                                        @item.Title
+                                        <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse@(item.Id)" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h4><i class="fa fa-clock-o fa-lg"></i>&nbsp;@Model.Labels.Occurrences</h4>
+                                            <ul class="list-group b-r">
+                                                @foreach (var occurence in item.Occurrences)
+                                                {
+                                                    <li class="list-group-item">
+                                                        <span> @Model.Labels.SendDate @occurence.SendDate.Date.ToShortDateString() </span>
+                                                        <div class="pull-right">
+                                                            <a data-id="@occurence.Id" class="btnLoadSession" data-type="Alerts">
+                                                                <i class="fa fa-search fa-lg"></i>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <h4><i class="fa fa-bell-o fa-lg"></i>&nbsp;@Model.Labels.AlertsDetails</h4>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item">
+                                                            @Model.Labels.Periodicity  @item.PeriodicityDescription
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            @Model.Labels.Deadline @item.Frequency @item.PeriodicityValue
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            @Model.Labels.TimeSchedule	@item.TimeSchedule
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            @Model.Labels.ExpirationDate @item.ExpirationDate.ToShortDateString()
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            @Model.Labels.AlertType @item.Module
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            @Model.Labels.Receiver @item.Recipients
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+</div>
+@if (Model.Alerts != null && Model.Alerts.Any())
+{
+<div id="dropAlertsDirectory" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"> @Model.Labels.DropDirectory </h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group-btn dropdown" dropdown="">
+                    <button id="result" type="button" class="btn btn-default form-control bg-black-only idDropAlertsDirectory"
+                            data-result="@Model.Alerts.FirstOrDefault().Id"
+                            data-toggle="dropdown">
+                        @Model.Alerts.FirstOrDefault().Title
+                    </button>
+                    <ul class="dropdown-menu bg-blue form-control">
+                        @foreach (var item in Model.Alerts)
+                        {
+                            if (item == Model.Alerts.FirstOrDefault())
+                            {
+                                <li id="default" hidden><a data-id="@item.Id">@item.Title</a></li>
+                            }
+                            else
+                            {
+                                <li id="@item.Id"><a data-id="@item.Id">@item.Title</a></li>
+                            }
+                        }
+                    </ul>
+                    <p></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnValidDropAlertsDirectory" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+}

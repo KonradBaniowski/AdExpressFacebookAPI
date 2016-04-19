@@ -1,0 +1,43 @@
+﻿@model Kantar.AdExpress.Service.Core.Domain.Gad
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header header-kantar-popup">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="font-normal">@Model.Advertiser</h4>
+        </div>
+        <div class="modal-body panel-group">
+            <div class="gadLeftContainer">
+                <img src="~/Content/img/Gad.jpg" />
+                <div>
+                    <a href="http://www.editiondapres.com" target="_blank" class="gadExternalLink"><span id="linkGadLabel">http://www.editiondapres.com</span></a><br>
+                    <a href="mailto:contact@editionsdapres.com" target="_blank" class="gadExternalLink"><span id="emailGadLabel">contact@editionsdapres.com</span></a>
+                </div>
+            </div>
+            <div style="margin-left:250px;" class="infos">
+                <div>
+                    <i class="fa fa-bookmark gadIcon"></i><span class="infoGad">@Model.Company</span>
+                </div>
+                <div>
+                    <i class="fa fa-map-marker gadIcon"></i>
+                    <span class="infoGad infoGadAddressStreet">@Model.Street&nbsp;@Model.Street2</span><br />
+                    <span class="infoGad infoGadAddress">@Model.CodePostal&nbsp;@Model.Town</span>
+                </div>
+                <div>
+                    <i class="fa fa-phone gadIcon"></i><span class="infoGad">@Model.Phone</span>
+                </div>
+                <div>
+                    <i class="fa fa-fax gadIcon"></i><span class="infoGad">@Model.Fax</span>
+                </div>
+                <div>
+                    <i class="fa fa-envelope gadIcon"></i><span class="infoGad">@Model.Email</span>
+                </div>
+            </div>
+            <div class="gadBtnContainer">
+                <button class="btn gadBtn" id="btn-gad-detail" data-gad="@Model.DocMarketingTarget">Fiche détailée&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+
+
