@@ -18,10 +18,6 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 
         #region Variables
         /// <summary>
-        /// Default Connection Id
-        /// </summary>
-        private DefaultConnectionIds _id; 
-        /// <summary>
         /// Database user name
         /// </summary>
         private string _login;
@@ -37,7 +33,6 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Constructor
         /// </summary>
         public DefaultConnection(DefaultConnectionIds id){
-            _id=id;
         } 
         #endregion
 

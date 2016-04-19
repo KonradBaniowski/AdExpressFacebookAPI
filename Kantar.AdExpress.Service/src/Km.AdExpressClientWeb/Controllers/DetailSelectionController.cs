@@ -20,8 +20,8 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            _detailSelectionService.GetDetailSelection(idWS);
-            return View();
+            var result = _detailSelectionService.GetDetailSelection(idWS);
+            return PartialView(result);
         }
     }
 }

@@ -13,6 +13,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Classification.DAL;
 using TNS.Classification.Universe;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
@@ -21,7 +22,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class DetailSelectionService : IDetailSelectionService
     {
-        public void GetDetailSelection(string idWebSession)
+        public DetailSelectionResponse GetDetailSelection(string idWebSession)
         {
             var _webSession = (WebSession)WebSession.Load(idWebSession);
             var domain = new DetailSelectionResponse();
@@ -31,6 +32,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             object[] param = new object[2];
             param[0] = _webSession.Source;
             param[1] = _webSession.SiteLanguage;
+
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
 
@@ -39,7 +41,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region Niveau détaillés par :
-            var excel = false;
             ArrayList detailSelections = null;
             TNS.AdExpress.Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
             try
@@ -176,6 +177,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.MediasSelected = GetLabels(_webSession.SelectionUniversMedia, _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
             #endregion
 
+            #region Période sélectionnée :
+            domain.DateBegin = !string.IsNullOrEmpty(_webSession.PeriodBeginningDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodBeginningDate) : null;
+            domain.DateEnd = !string.IsNullOrEmpty(_webSession.PeriodEndDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodEndDate) : null;
+            if (Dates.isPeriodSet(domain.DateBegin, domain.DateEnd))
+            {
+                domain.Dates = Dates.GetPeriodDetail(_webSession);
+            }
+            #endregion
+
+            return domain;
         }
 
         private List<TextData> GetLabels(System.Windows.Forms.TreeNode elem, int idLanguage, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source)
