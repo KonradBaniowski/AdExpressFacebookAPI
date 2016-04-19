@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IDetailSelectionService
     {
-        void GetDetailSelection(string idWebSession);
+        DetailSelectionResponse GetDetailSelection(string idWebSession);
     }
 }

@@ -396,7 +396,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			//une colonne par date de parution
 			parutions.Sort();
 			foreach (Int32 parution in parutions) {
-				headers.Root.Add(new Header(true, Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString(), _webSession.SiteLanguage), (long)parution));
+				headers.Root.Add(new Header(true, Dates.DateToString(Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString()).Value, _webSession.SiteLanguage), (long)parution));
 			}
 			if (!_webSession.Percentage) {
                 cellFactory = _webSession.GetCellUnitFactory();

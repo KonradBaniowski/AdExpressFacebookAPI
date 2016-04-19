@@ -28,7 +28,9 @@ using TNS.AdExpress.Domain.Web;
 using FrameWorkCsts = TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Domain.Layers;
 using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -38,6 +40,116 @@ namespace TNS.AdExpress.Web.Core.Utilities
     /// </summary>
     public class Dates
     {
+        /// <summary>
+        /// Check if two dates are set, normally begin and end date
+        /// </summary>
+        /// <param name="begin"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public static bool isPeriodSet(DateTime? begin, DateTime? end)
+        {
+            return (begin.HasValue && end.HasValue) ?true : false;
+        }
+
+        #region 
+        public static string GetPeriodDetail(WebSession webSession)
+        {
+            try
+            {
+                string str = "";
+                CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+
+                switch (webSession.PeriodType)
+                {
+                    case CustomerSessions.Period.Type.nLastMonth:
+                        return webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(783, webSession.SiteLanguage);
+                    case CustomerSessions.Period.Type.nLastYear:
+                        return webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(781, webSession.SiteLanguage);
+                    case CustomerSessions.Period.Type.previousMonth:
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(788, webSession.SiteLanguage));
+                    // Année courante		
+                    case CustomerSessions.Period.Type.currentYear:
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1228, webSession.SiteLanguage));
+                    // Année N-1
+                    case CustomerSessions.Period.Type.previousYear:
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(787, webSession.SiteLanguage));
+                    // Année N-2
+                    case CustomerSessions.Period.Type.nextToLastYear:
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1229, webSession.SiteLanguage));
+
+                    case CustomerSessions.Period.Type.dateToDateMonth:
+                        string monthBegin;
+                        string monthEnd;
+                        string yearBegin;
+                        string yearEnd;
+                        if (int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4, 2)) < 10)
+                        {
+                            monthBegin = MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(5, 1)), cultureInfo, 10);
+                            yearBegin = webSession.PeriodBeginningDate.ToString().Substring(0, 4);
+                        }
+                        else {
+                            monthBegin = MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4, 2)), cultureInfo, 10);
+                            yearBegin = webSession.PeriodBeginningDate.ToString().Substring(0, 4);
+                        }
+                        if (int.Parse(webSession.PeriodEndDate.ToString().Substring(4, 2)) < 10)
+                        {
+                            monthEnd = MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(5, 1)), cultureInfo, 10);
+                            yearEnd = webSession.PeriodEndDate.ToString().Substring(0, 4);
+                        }
+                        else {
+                            monthEnd = MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(4, 2)), cultureInfo, 10);
+                            yearEnd = webSession.PeriodEndDate.ToString().Substring(0, 4);
+                        }
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(846, webSession.SiteLanguage) + " " + monthBegin + " " + yearBegin + " " + GestionWeb.GetWebWord(847, webSession.SiteLanguage) + " " + monthEnd + " " + yearEnd);
+                    case CustomerSessions.Period.Type.dateToDateWeek:
+                        AtomicPeriodWeek tmp = new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4, 2)));
+                        str = FctUtilities.Dates.DateToString(tmp.FirstDay.Date, webSession.SiteLanguage);
+                        tmp = new AtomicPeriodWeek(int.Parse(webSession.PeriodEndDate.Substring(0, 4)), int.Parse(webSession.PeriodEndDate.ToString().Substring(4, 2)));
+                        str += " " + GestionWeb.GetWebWord(125, webSession.SiteLanguage) + "";
+                        str += " " + FctUtilities.Dates.DateToString(tmp.LastDay.Date, webSession.SiteLanguage) + "";
+                        return str;
+                    case CustomerSessions.Period.Type.nLastWeek:
+                        return Convertion.ToHtmlString(webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(784, webSession.SiteLanguage));
+                    case CustomerSessions.Period.Type.previousWeek:
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(789, webSession.SiteLanguage));
+                    case CustomerSessions.Period.Type.dateToDate:
+                    case CustomerSessions.Period.Type.cumlDate:
+                    case CustomerSessions.Period.Type.personalize:
+                        string dateBegin;
+                        string dateEnd;
+                        dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY2(webSession.PeriodBeginningDate.ToString(), webSession.SiteLanguage);
+                        dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY2(webSession.PeriodEndDate.ToString(), webSession.SiteLanguage);
+                        if (!dateBegin.Equals(dateEnd))
+                            return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd);
+                        else return " " + dateBegin;
+                    case CustomerSessions.Period.Type.previousDay:
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1975, webSession.SiteLanguage));
+                    case CustomerSessions.Period.Type.nLastDays:
+                        return Convertion.ToHtmlString(webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(1974, webSession.SiteLanguage));
+                    case CustomerSessions.Period.Type.LastLoadedMonth:
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1619, webSession.SiteLanguage));
+                    case CustomerSessions.Period.Type.LastLoadedWeek:
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1618, webSession.SiteLanguage));
+                    case CustomerSessions.Period.Type.cumulWithNextMonth:
+                    case CustomerSessions.Period.Type.allHistoric:
+                    case CustomerSessions.Period.Type.currentMonth:
+                        foreach (DateConfiguration cVpDateConfiguration in WebApplicationParameters.VpDateConfigurations.VpDateConfigurationList)
+                        {
+                            if (cVpDateConfiguration.DateType == webSession.PeriodType)
+                                return Convertion.ToHtmlString(GestionWeb.GetWebWord(cVpDateConfiguration.TextId, webSession.SiteLanguage));
+                        }
+                        return "";
+                    default:
+                        return "";
+                }
+            }
+            catch (System.Exception e)
+            {
+                throw (new Exception("Unable to generate the html code for period detail", e));
+            }
+        }
+        #endregion
+
         #region YYYYMM => "Month, Year" ou YYYYSS => "Week nn, Year"
         /// <summary>
         /// Transforme une periode  sous forme YYYYMM ou YYYYSS en "Month, Yeaar" ou "Week nn, Year"
@@ -628,11 +740,22 @@ namespace TNS.AdExpress.Web.Core.Utilities
 		/// <param name="date">Date à convertir</param>
 		/// <param name="language">Identifiant de la langue</param>
 		/// <returns>Date convertie</returns>
-		public static string YYYYMMDDToDD_MM_YYYY(string date, int language) {
+		public static string YYYYMMDDToDD_MM_YYYY2(string date, int language) {
 			if (date.Length != 8) throw (new ArgumentException("La date en entrée n'est pas valide"));
 			return DateToString(new DateTime(int.Parse(date.Substring(0, 4)), int.Parse(date.Substring(4, 2)), int.Parse(date.Substring(6, 2))), language);
 		}
-		#endregion
+
+        /// <summary>
+        /// New method refacto without Datetostring
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static DateTime? YYYYMMDDToDD_MM_YYYY(string date)
+        {
+            if (date.Length != 8) throw (new ArgumentException("La date en entrée n'est pas valide"));
+            return new DateTime(int.Parse(date.Substring(0, 4)), int.Parse(date.Substring(4, 2)), int.Parse(date.Substring(6, 2)));
+        }
+        #endregion
 
         #region GetPreviousYearDate
         /// <summary>

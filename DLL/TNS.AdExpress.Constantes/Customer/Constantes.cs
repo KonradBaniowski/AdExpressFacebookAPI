@@ -168,9 +168,10 @@ namespace TNS.AdExpress.Constantes.Customer{
 			/// forme de parrainage en exception
 			/// </summary>
 			sponsorshipFormException,
-			/// Basic media in access
-			/// </summary>
-			basicMediaAccess,
+            /// <summary>
+            /// Basic media in access
+            /// </summary>
+            basicMediaAccess,
 			/// <summary>
 			/// Basic media in exception
 			/// </summary>
