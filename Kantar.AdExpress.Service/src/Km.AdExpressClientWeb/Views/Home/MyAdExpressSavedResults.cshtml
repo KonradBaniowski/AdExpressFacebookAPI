@@ -1,6 +1,5 @@
 ﻿@model  AdExpressUniversResponse
 @using Kantar.AdExpress.Service.Core.Domain;
-@*@(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : ""*@
 
 <div role="tabpanel"  class="@(Model.UniversType == UniversType.Result ? "tab-pane active" : "tab-pane")" id="@(Model.UniversType)">
     <div class="panel panel-default panel-tab">
@@ -76,7 +75,7 @@
                                                     }
                                                 </ul>
                                             </div>
-                                                        <div class="col-lg-6">
+                                            <div class="col-lg-6">
                                                             <ul class="list-group b-r">
                                                                 @foreach (var univers in item.UserUnivers.GetRange(item.FirstColumnSize, item.SecondeColumnSize))
                                                                 {

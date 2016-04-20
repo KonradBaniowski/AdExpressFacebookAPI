@@ -44,7 +44,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
             var model = _universeService.GetItems(universeId, keyWord, idSession, dimension, idMedias, out totalItems);
-            return Json(new { data = model, total = totalItems } , JsonRequestBehavior.AllowGet);
+            return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
-            var model = _universeService.GetItems(levelId, selectedClassification,selectedLevelId, idSession, dimension, idMedias, out totalItems);
+            var model = _universeService.GetItems(levelId, selectedClassification, selectedLevelId, idSession, dimension, idMedias, out totalItems);
             return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
 
@@ -192,7 +192,7 @@ namespace Km.AdExpressClientWeb.Controllers
         public JsonResult GetResultUnivers()
         {
             JsonResult result = new JsonResult();
-            var claim = new ClaimsPrincipal(User.Identity);            
+            var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             return result;
         }
@@ -201,7 +201,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             Domain.AdExpressResponse result = new Domain.AdExpressResponse
             {
-                Message=string.Empty
+                Message = string.Empty
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -209,7 +209,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return Json(result);
         }
 
-        public JsonResult MoveSession(string idOldDirectory, string idNewDirectory,string id)
+        public JsonResult MoveSession(string idOldDirectory, string idNewDirectory, string id)
         {
             Domain.AdExpressResponse result = new Domain.AdExpressResponse
             {
@@ -217,7 +217,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            result = _myAdExpressService.MoveSession(id,idOldDirectory, idNewDirectory, webSessionId);
+            result = _myAdExpressService.MoveSession(id, idOldDirectory, idNewDirectory, webSessionId);
             return Json(result);
         }
 
@@ -245,7 +245,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return Json(result);
         }
 
-        public JsonResult DeleteUnivers( string universId)
+        public JsonResult DeleteUnivers(string universId)
         {
             Domain.AdExpressResponse result = new Domain.AdExpressResponse
             {
@@ -253,7 +253,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            if(!String.IsNullOrEmpty(webSessionId))
+            if (!String.IsNullOrEmpty(webSessionId))
                 result = _myAdExpressService.DeleteUnivers(universId, webSessionId);
             return Json(result);
         }
@@ -270,7 +270,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 result = _myAdExpressService.DeleteSession(universId, webSessionId);
             return Json(result);
         }
-         public JsonResult CreateDirectory(string directoryName, string type)
+        public JsonResult CreateDirectory(string directoryName, string type)
         {
             Domain.AdExpressResponse result = new Domain.AdExpressResponse
             {
@@ -417,10 +417,18 @@ namespace Km.AdExpressClientWeb.Controllers
                 response.Message = "Redirecting to the result page.";
                 //redirectUrl = new UrlHelper(Request.RequestContext).Action(action, controller);
                 //return Json(new { Url = redirectUrl });
-                return Json(Url.Action(action,controller),JsonRequestBehavior.AllowGet);
+                return Json(Url.Action(action, controller), JsonRequestBehavior.AllowGet);
             }
             return Json(response.Message);
         }
-        
+
+        public JsonResult LoadDetails(string idSession, string type)
+        {
+            var response = new Domain.AdExpressResponse
+            {
+                Message = string.Empty
+            };
+            return Json(response);
+        }
     }
 }

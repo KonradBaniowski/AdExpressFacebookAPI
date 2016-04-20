@@ -11,7 +11,6 @@ $(function () {
             //alert("error");
         },
         success: function (response) {
-            $('#monunivers .modal-content').empty();
             $('#monunivers .modal-content').append(response);
         }
 
@@ -212,6 +211,12 @@ $(document).on('click', '#LoadUnivers', function (event) {
     });
 });
 
+
+$(document).on('click', '#myUnivers', function (event) {
+    event.preventDefault();
+    $('#monunivers').modal('show');
+}); 
+
 function SetUniversItems(data, panel) {
     if (data.UniversItems.length > 0) {
         for (var i = 0; i < data.UniversItems.length; i++) {
@@ -229,3 +234,9 @@ function SetUniversItems(data, panel) {
         }
     }
 }
+
+
+$(document).on('click', '.accordion-toggle', function (e) {
+    event.preventDefault();
+    $('#accordion').find('.accordion-body.collapse.in').collapse('hide');
+});

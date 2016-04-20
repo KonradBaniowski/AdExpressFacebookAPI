@@ -3,48 +3,50 @@
 
 @if (Model.UserUniversGroups.Any())
 {
-    foreach (var item in Model.UserUniversGroups)
-    {
-        <div class="modal-body panel-group panel-univers-select" id="accordion">
-            <div class="panel panel-primary panel-univers-select">
-                <div class="panel-heading head-univers-select">
+    <div id="accordion">
+        @foreach (var item in Model.UserUniversGroups)
+        {
+        <div class="modal-body panel-group  modal-content-kantar">
+            <div class="panel">
+                <div class="modal-panel-heading">
                     <h6 class="panel-title famille">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)">
-                            @item.Description <span class="badge bg-orange white">@item.Count</span>
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#collapse@(item.Id)">
+                            @item.Description <span class="badge orange">@item.Count</span>
                             <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
                         </a>
                     </h6>
                 </div>
-                <div id="collapse@(item.Id)" class="panel-collapse collapse">
+                <div id="collapse@(item.Id)" class="modal-scroll panel-collapse accordion-body collapse">
                     <div class="col-sm-6 no-padder">
                         @foreach (var level in item.UserUnivers.Take(item.FirstColumnSize))
                         {
-                            <div class="radio modal-radio">
-                                <label class="popup-text">
-                                    <input type="radio" name="universOpt" value="@level.Id">
-                                    <i></i>
-                                    @level.Description
-                                </label>
-                            </div>
+                        <div class="radio modal-radio">
+                            <label class="popup-text">
+                                <input type="radio" name="universOpt" value="@level.Id">
+                                <i></i>
+                                @level.Description
+                            </label>
+                        </div>
                         }
                     </div>
                     <div class="col-sm-6 no-padder">
                         @foreach (var level in item.UserUnivers.GetRange(item.FirstColumnSize, item.SecondeColumnSize))
                         {
-                            <div class="radio modal-radio">
-                                <label class="popup-text">
-                                    <input type="radio" name="universOpt" value="@level.Id">
-                                    <i></i>
-                                    @level.Description
-                                </label>
-                            </div>
+                        <div class="radio modal-radio">
+                            <label class="popup-text">
+                                <input type="radio" name="universOpt" value="@level.Id">
+                                <i></i>
+                                @level.Description
+                            </label>
+                        </div>
                         }
                     </div>
 
                 </div>
             </div>
         </div>
-    }
+        }
+    </div>
     <div class="modal-footer">
         <button type="button" id="LoadUnivers"class="btn btn-valider" data-dismiss="modal">@GestionWeb.GetWebWord(Model.LoadUniversCode, Model.SiteLanguage)</button>
     </div>
