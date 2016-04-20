@@ -10,6 +10,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public string Advertiser { get; set; }
 
+        public string Siret { get; set; }
+
         public string Company { get; set; }
 
         public string Street { get; set; }

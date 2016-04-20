@@ -25,6 +25,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (cl == null) throw (new NullReferenceException("Core layer is null for the gad DAL"));
             dynamic gadDal = (IGadDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             DataSet data = gadDal.GetData();
+            string siret = string.Empty;
             string company = string.Empty;
             string street = string.Empty;
             string street2 = string.Empty;
@@ -39,6 +40,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             foreach (DataRow myRow in data.Tables[0].Rows)
             {
+                siret = myRow["siret_number"].ToString();
                 company = myRow["company"].ToString();
                 street = myRow["street"].ToString();
                 street2 = myRow["street2"].ToString();
@@ -66,6 +68,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             Gad gad = new Gad
             {
                 Advertiser = advertiser,
+                Siret = siret,
                 Company = company,
                 Street = street,
                 Street2 = street2,

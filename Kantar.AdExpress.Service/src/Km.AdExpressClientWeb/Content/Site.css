@@ -2380,6 +2380,13 @@ ul.ui-selectable {
     outline-style: none;
 }
 
+.gadCreativeLink {
+    color: inherit;
+    cursor: pointer;
+    outline-style: none;
+    text-decoration: underline;
+}
+
 .gadExternalLink {
     font-size: 12px;
     color: #00c1ff;
