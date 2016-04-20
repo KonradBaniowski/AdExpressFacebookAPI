@@ -40,7 +40,7 @@ namespace TNS.AdExpressI.GAD.DAL
 
             #region Construction de la requête
             var sql = new StringBuilder();
-            sql.Append("select ad.company, ad.street, ad.street2, ad.code_postal, ad.town,");
+            sql.Append("select distinct adv.siret_number,ad.company, ad.street, ad.street2, ad.code_postal, ad.town,");
             sql.Append(" ct.telephone, ct.fax, ct.email ");
             // intégration Doc Marketing 
             sql.AppendFormat(", gd.id_gad");
@@ -53,7 +53,10 @@ namespace TNS.AdExpressI.GAD.DAL
             sql.AppendFormat(",{0}.GAD gd", adexSchema);
             //fin modif
 
+            sql.AppendFormat(",{0}.ADVERTISER adv", adexSchema);
+
             sql.AppendFormat(" where ad.id_address={0}", _idAddress);
+            sql.Append(" and gd.id_advertiser=adv.id_advertiser ");
             sql.Append(" and ad.id_address=ct.id_address ");
             sql.AppendFormat(" and ad.activation<{0}" , DBConstantes.ActivationValues.UNACTIVATED);
             sql.AppendFormat(" and ct.activation<{0}" , DBConstantes.ActivationValues.UNACTIVATED);

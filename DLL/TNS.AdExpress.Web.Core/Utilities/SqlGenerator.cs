@@ -3088,7 +3088,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <summary>
         /// Détermine la table contenant les adresses Gad des annonceurs
         /// </summary>
-        /// <exception cref="TNS.AdExpress.Web.Exceptions.SQLGeneratorException">Le niveau de détail produit demandé ne gère pas les données du gad</exception>
+        /// <exception cref="/TNS.AdExpress.Web.Exceptions.SQLGeneratorException">Le niveau de détail produit demandé ne gère pas les données du gad</exception>
         /// <param name="webSession">Session du client</param>
         /// <returns>Nom de la table</returns>
         public static string GetTablesForGad(WebSession webSession)

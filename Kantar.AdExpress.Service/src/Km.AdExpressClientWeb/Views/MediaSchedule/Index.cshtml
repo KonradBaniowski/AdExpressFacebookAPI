@@ -12,6 +12,7 @@
     <div>
         @Html.Partial("Presentation", Model.Presentation)
         @Html.Partial("UserUniversGroups", Model.UniversGroups)
+        @Html.Partial("DetailSelection")
     </div>
     @*BREADCRUM*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
@@ -28,26 +29,26 @@
                 <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp; @Model.Labels.KeyWordLabel </h4>
                 <h5 class="pull-right"> @Model.Labels.KeyWordDescription</h5>
                 <div class="clearfix"></div>
-                    <div class="input-group">
-                        <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
-                        <div class="input-group-btn dropdown" dropdown="">
-                            <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
-                            <ul class="dropdown-menu bg-blue pull-right">
-                                @foreach (var item in Model.Branches)
+                <div class="input-group">
+                    <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
+                    <div class="input-group-btn dropdown" dropdown="">
+                        <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
+                        <ul class="dropdown-menu bg-blue pull-right">
+                            @foreach (var item in Model.Branches)
+                            {
+                                if (item.IsSelected)
                                 {
-                                    if (item.IsSelected)
-                                    {
-                                        <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
-                                    }
+                                    <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
                                 }
-                            </ul>
-                            <button type="submit" class="btn btn-default btn-recherche" ><i class="fa fa-search blue "></i></button>
-                        </div>
+                                else
+                                {
+                                    <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                                }
+                            }
+                        </ul>
+                        <button type="submit" class="btn btn-default btn-recherche"><i class="fa fa-search blue "></i></button>
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -60,14 +61,14 @@
                     </div>
                     @foreach (var item in Model.Branches)
                     {
-                    <div id="branch@(item.Id)" class="universes" style="display:none">
-                        @foreach (var level in item.UniversLevels)
+                        <div id="branch@(item.Id)" class="universes" style="display:none">
+                            @foreach (var level in item.UniversLevels)
                             {
-                            <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"
-                                 data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default">
-                            </div>
+                                <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"
+                                     data-universe="@(level.Id)" data-branch="@(item.Id)" class="panel panel-default">
+                                </div>
                             }
-                    </div>
+                        </div>
                     }
                 </div>
             </div>
@@ -86,15 +87,15 @@
                     <ul class="nav nav-tabs" role="tablist">
                         @foreach (var tree in Model.Trees)
                         {
-                        <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
-                            <a data-target="#tab-@(tree.Id)"
-                               data-tab="@(tree.Id)"
-                               role="tab"
-                               data-toggle="tab"
-                               aria-expanded="true">
-                                @tree.Label
-                            </a>
-                        </li>
+                            <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
+                                <a data-target="#tab-@(tree.Id)"
+                                   data-tab="@(tree.Id)"
+                                   role="tab"
+                                   data-toggle="tab"
+                                   aria-expanded="true">
+                                    @tree.Label
+                                </a>
+                            </li>
                         }
                     </ul>
                 </div>
@@ -104,48 +105,48 @@
                     }
                     @foreach (var tree in Model.Trees)
                     {
-                    <div role="tabpanel"
-                         class="tab-pane @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? multi : "")"
-                         id="tab-@(tree.Id)">
-                        <div class="panel-group panel-group-results"
-                             id="tree-@(tree.Id)"
-                             data-access-type="@((int)tree.AccessType)"
-                             role="tablist"
-                             aria-multiselectable="true">
-                            @foreach (var level in tree.UniversLevels)
+                        <div role="tabpanel"
+                             class="tab-pane @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? multi : "")"
+                             id="tab-@(tree.Id)">
+                            <div class="panel-group panel-group-results"
+                                 id="tree-@(tree.Id)"
+                                 data-access-type="@((int)tree.AccessType)"
+                                 role="tablist"
+                                 aria-multiselectable="true">
+                                @foreach (var level in tree.UniversLevels)
                                 {
-                                <div class="panel panel-primary panel-results">
-                                    <div class="panel-heading head-results"
-                                         role="tab"
-                                         id="heading-@(level.Id)"
-                                         data-id="@level.Id">
-                                        <h6 class="panel-title famille ">
-                                            <a role="button"
-                                               data-toggle="collapse"
-                                               data-parent="#tree-@(tree.Id)"
-                                               href="#collapse-@(level.Id)-@(tree.Id)"
-                                               aria-expanded="true"
-                                               aria-controls="collapse-@(level.Id)">
-                                                @level.Label
-                                                <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                            </a>
-                                        </h6>
-                                    </div>
-                                    <div id="collapse-@(level.Id)-@(tree.Id)"
-                                         class="panel-collapse collapse"
-                                         role="tabpanel"
-                                         aria-labelledby="heading-@(level.Id)">
-                                        <div class="panel-body" data-tree="@(tree.Id)" data-level="@(level.Id)">
-                                            <ul class="items-famille"></ul>
+                                    <div class="panel panel-primary panel-results">
+                                        <div class="panel-heading head-results"
+                                             role="tab"
+                                             id="heading-@(level.Id)"
+                                             data-id="@level.Id">
+                                            <h6 class="panel-title famille ">
+                                                <a role="button"
+                                                   data-toggle="collapse"
+                                                   data-parent="#tree-@(tree.Id)"
+                                                   href="#collapse-@(level.Id)-@(tree.Id)"
+                                                   aria-expanded="true"
+                                                   aria-controls="collapse-@(level.Id)">
+                                                    @level.Label
+                                                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div id="collapse-@(level.Id)-@(tree.Id)"
+                                             class="panel-collapse collapse"
+                                             role="tabpanel"
+                                             aria-labelledby="heading-@(level.Id)">
+                                            <div class="panel-body" data-tree="@(tree.Id)" data-level="@(level.Id)">
+                                                <ul class="items-famille"></ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 }
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" class="tout-suppr"><span>@Model.Labels.DeleteAll</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
+                            </div>
                         </div>
-                        <div class="pull-right">
-                            <button type="button" class="tout-suppr"><span>@Model.Labels.DeleteAll</span>&nbsp;<i class="fa fa-times-circle red text-based"></i></button>
-                        </div>
-                    </div>
                     }
                 </div>
 
@@ -172,4 +173,5 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/planmedia-market")
+    @Scripts.Render("~/bundles/detail-selection")
 }

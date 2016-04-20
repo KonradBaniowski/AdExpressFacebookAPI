@@ -17,8 +17,8 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/ajax").Include(
-                        "~/Scripts/app/layout.js"));                    
-            
+                        "~/Scripts/app/layout.js"));
+
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -39,7 +39,7 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/bootbox.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/period-selector").Include(
-                      "~/Scripts/period-selector.js"));            
+                      "~/Scripts/period-selector.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -89,7 +89,7 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/universe/universe-market.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/portfolio-media").Include(
-                        "~/Scripts/universe/listbox.js",                        
+                        "~/Scripts/universe/listbox.js",
                         "~/Scripts/component-selectable/common-actions.js",
                         "~/Scripts/media/media-portfolio.js",
                         "~/Scripts/universe/universe-media.js"));
@@ -125,6 +125,11 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/media/add-tree.js",
                         "~/Scripts/universe/universe-media.js"));
             #endregion
+            #endregion
+
+            #region Javascript Event for detail Selection 
+            bundles.Add(new ScriptBundle("~/bundles/detail-selection").Include(
+                        "~/Scripts/detail-selection/detail-selection.js"));
             #endregion
         }
     }

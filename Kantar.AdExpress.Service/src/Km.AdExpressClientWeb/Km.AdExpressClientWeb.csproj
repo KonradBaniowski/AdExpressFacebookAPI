@@ -1468,6 +1468,7 @@
     <Content Include="Scripts\countUp.js" />
     <Content Include="Scripts\countUp.min.js" />
     <Content Include="Scripts\datepicker-fr.js" />
+    <Content Include="Scripts\detail-selection\detail-selection.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -1577,6 +1578,8 @@
     <Content Include="Views\Home\MyAdExpressSavedResults.cshtml" />
     <Content Include="Views\PortfolioDetailMedia\Index.cshtml" />
     <Content Include="Views\Shared\UserResult.cshtml" />
+    <Content Include="Views\DetailSelection\GetDetailSelection.cshtml" />
+    <Content Include="Views\Shared\DetailSelection.cshtml" />
     <Content Include="Views\Portfolio\_GraphResults.cshtml" />
     <Content Include="Views\Shared\GadInfos.cshtml" />
     <Content Include="Views\Home\MyAdExpressAlerts.cshtml" />

@@ -56,9 +56,12 @@
                                                                 @if (Model.UniversType == UniversType.Result)
                                                                 {
                                                                 <a class="btnLoadSession adExpress-tools"data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
-                                                                    <i class="fa fa-search fa-lg"></i>
+                                                                    <i class="fa fa-cogs fa-lg"></i>
                                                                 </a>
                                                                 }
+                                                                <a class="btnLoadDetails adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
+                                                                    <i class="fa fa-info-circle fa-lg"></i>
+                                                                </a>
                                                                 <a class="btnMove@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
                                                                     <i class="fa icon-share-alt fa-lg"></i>
                                                                 </a>
@@ -83,9 +86,12 @@
                                                                             @if (Model.UniversType == UniversType.Result)
                                                                             {
                                                                                 <a class="btnLoadSession adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
-                                                                                    <i class="fa fa-search fa-lg"></i>
+                                                                                    <i class="fa fa-cogs fa-lg"></i>
                                                                                 </a>
                                                                             }
+                                                                            <a class="btnLoadDetails adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
+                                                                                <i class="fa fa-info-circle fa-lg"></i>
+                                                                            </a>
                                                                             <a class="btnMove@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
                                                                                 <i class="fa icon-share-alt fa-lg"></i>
                                                                             </a>

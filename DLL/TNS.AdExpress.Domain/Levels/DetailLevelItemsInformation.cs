@@ -399,7 +399,6 @@ namespace TNS.AdExpress.Domain.Level {
                     break;
                 default:
                     throw (new ArgumentException("Performated detail not supported"));
-                    break;
             }
             return levels;
         }
