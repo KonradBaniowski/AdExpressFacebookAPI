@@ -2383,6 +2383,13 @@ ul.ui-selectable {
     outline-style: none;
 }
 
+.gadCreativeLink {
+    color: inherit;
+    cursor: pointer;
+    outline-style: none;
+    text-decoration: underline;
+}
+
 .gadExternalLink {
     font-size: 12px;
     color: #00c1ff;
@@ -2392,7 +2399,7 @@ ul.ui-selectable {
         font-size: 12px;
         color: #ff8c00;
     }
-
+        
 .modal-express .modal-body {
     color: black;
     padding: 15px;
@@ -2412,3 +2419,22 @@ ul.ui-selectable {
         .modal-express .modal-body .panel.panel-default .form-horizontal .form-group {
             margin-bottom: 0;
         }
+
+
+
+.modal-content-kantar {
+    padding: 5px;
+    margin-bottom: 0px;
+}
+
+.modal-panel-heading {
+    background-color: #89959E;
+    padding: 10px 15px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.modal-scroll {
+    max-height: 250px;
+    overflow-y: scroll;
+}

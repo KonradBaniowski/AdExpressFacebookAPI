@@ -11,8 +11,6 @@
                     <span class="blue">@Model.Alerts.Count()</span> @Model.Labels.Directories,  <span class="blue">@Model.Alerts.Sum(p => p.Occurrences.Count())</span> @Model.Labels.Occurrences
                 </h3>
                             <h3 class="panel-title pull-right">
-                                @*<a id="btnCreateAlertsDirectory" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>
-                                <a id="btnRenameAlertsDirectory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-pencil text-md"></i></a>*@
                                 <a id="btnDropAlertsDirectory" title="Supprimer un répertoire"><i class="fa icon-trash text-md adExpress-tools"></i></a>
                             </h3>
             }
@@ -54,7 +52,7 @@
                                                         <span> @Model.Labels.SendDate @occurence.SendDate.Date.ToShortDateString() </span>
                                                         <div class="pull-right">
                                                             <a data-id="@occurence.Id" class="btnLoadSession" data-type="Alerts">
-                                                                <i class="fa fa-search fa-lg"></i>
+                                                                <i class="fa fa-cogs fa-lg"></i>
                                                             </a>
                                                         </div>
                                                     </li>
@@ -63,7 +61,7 @@
                                         </div>
 
                                         <div class="col-lg-6">
-                                            <h4><i class="fa fa-bell-o fa-lg"></i>&nbsp;@Model.Labels.AlertsDetails</h4>
+                                            <h4><i class="fa fa-info-circle fa-lg"></i>&nbsp;@Model.Labels.AlertsDetails</h4>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <ul class="list-group">

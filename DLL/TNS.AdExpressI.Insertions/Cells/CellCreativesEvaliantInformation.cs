@@ -99,6 +99,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         private const string MOV_ID = "MOV";
         /// <summary>
+        /// HTML5 id
+        /// </summary>
+        private const string HTML5_ID = "HTML5";
+        /// <summary>
         /// Chemin de la page des plans médias AdNetTrack
         /// </summary>
         private const string MEDIA_SCHEDULE_PATH = "/Private/Results/AdNetTrackMediaSchedule.aspx";
@@ -352,6 +356,10 @@ namespace TNS.AdExpressI.Insertions.Cells
                                 GestionWeb.GetWebWord(SAVE_LINK_LABEL_HELP_ID, _session.SiteLanguage),
                                 GestionWeb.GetWebWord(2830, _session.SiteLanguage));
                         }
+                    }
+                    else if (_format.ToUpper() == HTML5_ID)
+                    {
+                        output.AppendFormat("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" ></iframe>", _visuals[0].Replace("\\", "/"), width, height);
                     }
                     else
                     {

@@ -11,7 +11,6 @@ $(function () {
             //alert("error");
         },
         success: function (response) {
-            $('#monunivers .modal-content').empty();
             $('#monunivers .modal-content').append(response);
         }
 
@@ -21,6 +20,10 @@ $(function () {
 $('#save-universe').on('click', function (event) {
     event.preventDefault();
     $('#save-universe').off('click');
+    var dimension = $('#Dimension').val();
+    var params = {
+        dimension: dimension
+    };
     $.ajax({
         url: '/Universe/SaveUserUnivers',
         type: 'GET',
@@ -110,21 +113,29 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         data: params,
         success: function (response) {
             $('#saveunivers').modal('hide');
+            //$.ajax({
+            //    url: '/Universe/LoadUserUniversGroups',
+            //    type: 'POST',
+            //    data: params,
+            //    error: function (data) {
+            //        bootbox.alert(data);
+            //    },
+            //    success: function (data) {
+            //        $('#monunivers .modal-content').append(data);
+            //    }
+            //});
             $.ajax({
-                url: '/Universe/LoadUserUniversGroups',
-                type: 'POST',
+                url: '/Universe/SaveUserUnivers',
+                type: 'GET',
                 data: params,
-                error: function (data) {
-                    bootbox.alert(data);
-                },
-                success: function (data) {
-                    $('#monunivers .modal-content').empty();
-                    $('#monunivers .modal-content').append(data);
+                success: function (response) {
+                    $('#saveunivers').append(response);
+                    $('#saveunivers').modal('show');
                 }
             });
             bootbox.alert(response);
         }
-    });
+    });    
 });
 
 $(document).on('click', '#LoadUnivers', function (event) {
@@ -212,6 +223,12 @@ $(document).on('click', '#LoadUnivers', function (event) {
     });
 });
 
+
+$(document).on('click', '#myUnivers', function (event) {
+    event.preventDefault();
+    $('#monunivers').modal('show');
+}); 
+
 function SetUniversItems(data, panel) {
     if (data.UniversItems.length > 0) {
         for (var i = 0; i < data.UniversItems.length; i++) {
@@ -229,3 +246,9 @@ function SetUniversItems(data, panel) {
         }
     }
 }
+
+
+$(document).on('click', '.accordion-toggle', function (e) {
+    event.preventDefault();
+    $('#accordion').find('.accordion-body.collapse.in').collapse('hide');
+});

@@ -33,7 +33,7 @@
                     <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
                     <div class="input-group-btn dropdown" dropdown="">
                         <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
-                        <ul class="dropdown-menu bg-blue pull-right">
+                        <ul class="dropdown-menu bg-blue">
                             @foreach (var item in Model.Branches)
                             {
                                 if (item.IsSelected)
