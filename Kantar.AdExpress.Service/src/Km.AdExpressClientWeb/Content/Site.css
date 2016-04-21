@@ -291,7 +291,9 @@ input {
 .blue {
     color: #00c1ff;
 }
-
+.black {
+    color: #000000;
+}
 .bg-blue {
     background-color: #00c1ff;
 }
@@ -2034,6 +2036,8 @@ ul.ui-selectable {
     background-image: none;
 }
 
+
+
 #loader{
     text-align:center;
 }
@@ -2276,6 +2280,11 @@ ul.ui-selectable {
     border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 
+#carou-vehicleView .carousel-control.left {margin-left: -115px;}
+#carou-vehicleView  .carousel-control.right {margin-right: -125px;} 
+ #carou-vehicleView-OneVehicle .carousel-control.left {margin-left: -65px;}
+ #carou-vehicleView-OneVehicle .carousel-control.right {margin-right: -75px;} 
+
 .padder-v-mi {
     padding-top: 5px;
     padding-bottom: 5px;
@@ -2297,10 +2306,10 @@ ul.ui-selectable {
 /* Mopdal VBehicle View */
 
 
-#modal-vehicleView > .modal-dialog  > .modal-content{
-    width: 1000px;
+#modal-vehicleView .modal-content{
+    width: 850px;
     margin: 0 auto;
-    height:900px;
+    /*height: 600px;*/
     overflow-y: scroll;
 }
 
