@@ -20,6 +20,10 @@ $(function () {
 $('#save-universe').on('click', function (event) {
     event.preventDefault();
     $('#save-universe').off('click');
+    var dimension = $('#Dimension').val();
+    var params = {
+        dimension: dimension
+    };
     $.ajax({
         url: '/Universe/SaveUserUnivers',
         type: 'GET',
@@ -109,21 +113,29 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         data: params,
         success: function (response) {
             $('#saveunivers').modal('hide');
+            //$.ajax({
+            //    url: '/Universe/LoadUserUniversGroups',
+            //    type: 'POST',
+            //    data: params,
+            //    error: function (data) {
+            //        bootbox.alert(data);
+            //    },
+            //    success: function (data) {
+            //        $('#monunivers .modal-content').append(data);
+            //    }
+            //});
             $.ajax({
-                url: '/Universe/LoadUserUniversGroups',
-                type: 'POST',
+                url: '/Universe/SaveUserUnivers',
+                type: 'GET',
                 data: params,
-                error: function (data) {
-                    bootbox.alert(data);
-                },
-                success: function (data) {
-                    $('#monunivers .modal-content').empty();
-                    $('#monunivers .modal-content').append(data);
+                success: function (response) {
+                    $('#saveunivers').append(response);
+                    $('#saveunivers').modal('show');
                 }
             });
             bootbox.alert(response);
         }
-    });
+    });    
 });
 
 $(document).on('click', '#LoadUnivers', function (event) {
