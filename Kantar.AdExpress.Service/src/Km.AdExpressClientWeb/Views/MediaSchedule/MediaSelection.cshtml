@@ -6,17 +6,19 @@
     var _controller = Model.NavigationBar.First().Controller;
 }
 <div class="row">
-    @Html.HiddenFor(e => e.Dimension)
-    @Html.HiddenFor(e => e.Multiple)
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("UserUniversGroups", Model.UniversGroups)
+    @Html.Partial("DetailSelection")
+
+    @Html.HiddenFor(e => e.Dimension)
+    @Html.HiddenFor(e => e.Multiple)
     @Html.HiddenFor(e => e.Labels.ErrorMessageLimitKeyword)
     @Html.HiddenFor(e => e.Labels.ErrorMediaSelected)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
-        
+
         @foreach (int i in Model.IdMediasCommon)
         {
             <input type="hidden" name="HiddenIntList" value="@i" />
@@ -71,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-primary panel-results" >
+            <div class="panel panel-primary panel-results">
                 <div class="panel-heading head-results" role="tab" id="headingTwo">
                     <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -217,7 +219,7 @@
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
                                 <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-bookmark-o"></i></a>                                   
+                                    <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-bookmark-o"></i></a>
 
                                 </div>
                             </div>
@@ -226,7 +228,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
             <input id="btnSubmitMediaSelection" type="submit" value="Valider" class="btn btn-default btn-valider pull-right" />
         </div>
@@ -241,6 +243,6 @@
 </div>
 
 @section scripts {
-   
     @Scripts.Render("~/bundles/planmedia-media")
+    @Scripts.Render("~/bundles/detail-selection")
 }

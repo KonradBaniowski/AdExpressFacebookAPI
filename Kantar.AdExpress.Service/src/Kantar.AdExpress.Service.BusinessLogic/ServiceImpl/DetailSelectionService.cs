@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
@@ -27,6 +28,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var _webSession = (WebSession)WebSession.Load(idWebSession);
             var domain = new DetailSelectionResponse();
 
+            domain.SiteLanguage = _webSession.SiteLanguage;
+
             CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[2];
@@ -34,7 +37,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             param[1] = _webSession.SiteLanguage;
 
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
+            //TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
 
             #region Choix de l'étude :
             domain.ModuleLabel = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage);
@@ -80,50 +83,46 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.UniteLabel = GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage);
             #endregion
 
-            #region Univers Produit :
-            domain.UniversMarche = new List<Core.Domain.Tree>();
-            List<long> itemIdList = null;
-            for (int k = 0; k < _webSession.PrincipalProductUniverses.Count; k++)
+            #region Univers Market :
+            domain.UniversMarket = new List<Core.Domain.Tree>();
+            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, domain.UniversMarket, factoryLevels, _webSession.SiteLanguage);
+            #endregion
+
+            #region Media : 
+            domain.MediasSelected = GetLabels(_webSession.SelectionUniversMedia, _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
+            domain.UniversMedia = new List<Core.Domain.Tree>();
+            domain.MediasSelectedLabel = string.Join(",", domain.MediasSelected.Select(_ => _.Label));
+
+            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalMediaUniverses, domain.UniversMedia, factoryLevels, _webSession.SiteLanguage);
+            #endregion
+
+            #region Période sélectionnée :
+            domain.DateBegin = !string.IsNullOrEmpty(_webSession.PeriodBeginningDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodBeginningDate) : null;
+            domain.DateEnd = !string.IsNullOrEmpty(_webSession.PeriodEndDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodEndDate) : null;
+            if (Dates.isPeriodSet(domain.DateBegin, domain.DateEnd))
             {
-                #region IF ? 
-                //if (_webSession.PrincipalProductUniverses.Count > 1)
-                //{
-                //    if (_webSession.PrincipalProductUniverses.ContainsKey(k))
-                //    {
-                //        if (k > 0)
-                //        {
-                //            nameProduct = GestionWeb.GetWebWord(2301, _webSession.SiteLanguage);
-                //        }
-                //        else {
-                //            nameProduct = GestionWeb.GetWebWord(2302, _webSession.SiteLanguage);
-                //        }
+                domain.Dates = Dates.GetPeriodDetail(_webSession);
+            }
+            #endregion
 
-                //        t.Append("<TR>");
-                //        t.Append("<TD class=\"txtViolet11Bold\" >&nbsp;");
-                //        t.Append("<label>" + nameProduct + "</label></TD>");
-                //        t.Append("</TR>");
+            #region defined
+            domain.ShowDate = Dates.isPeriodSet(domain.DateBegin, domain.DateEnd);
+            domain.ShowUnivers = !(domain.MediasSelected.Count == 0);
+            domain.ShowUniversDetails = (!(domain.MediasSelected.Count == 0) && !(domain.UniversMedia.Count == 0));
+            domain.ShowMarket = (domain.UniversMarket.Count > 0);
+            #endregion
 
-                //        // Universe Label
-                //        if (_webSession.PrincipalProductUniverses[k].Label != null && _webSession.PrincipalProductUniverses[k].Label.Length > 0)
-                //        {
-                //            t.Append("<TR>");
-                //            t.Append("<TD class=\"txtViolet11Bold\" >&nbsp;");
-                //            t.Append("<Label>" + _webSession.PrincipalProductUniverses[k].Label + "</Label>");
-                //            t.Append("</TD></TR>");
-                //        }
+            return domain;
+        }
 
-                //        // Render universe html code
-                //        t.Append("<TR height=\"20\">");
-                //        t.Append("<TD vAlign=\"top\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession)) + "</TD>");
-                //        t.Append("</TR>");
-                //        t.Append("<TR height=\"10\"><TD></TD></TR>");
-                //    }
-                //}
-                #endregion
-                //else {
-                if (_webSession.PrincipalProductUniverses.ContainsKey(k))
+        private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage)
+        {
+            List<long> itemIdList = null;
+            for (int k = 0; k < Principal.Count; k++)
+            {
+                if (Principal.ContainsKey(k))
                 {
-                    var result = _webSession.PrincipalProductUniverses[k].ElementsGroupDictionary;
+                    var result = Principal[k].ElementsGroupDictionary;
                     if (result != null && result.Count > 0)
                     {
                         for (int i = 0; i < result.Count; i++)
@@ -133,22 +132,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             model.AccessType = result[i].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
                             if (model.AccessType == AccessType.excludes)
                             {
-                                model.LabelId = 2270;
+                                model.Label = GestionWeb.GetWebWord(2269, SiteLanguage);
+                                model.LabelId = 2269;
                             }
                             else
                             {
-                                model.LabelId = 2269;
+                                model.Label = GestionWeb.GetWebWord(2270, SiteLanguage);
+                                model.LabelId = 2270;
                             }
                             model.UniversLevels = new List<Core.Domain.UniversLevel>();
                             if (levelIdsList != null)
                             {
                                 for (int j = 0; j < levelIdsList.Count; j++)
                                 {
-                                    //MAPPING
                                     var universLevel = new UniversLevel();
                                     universLevel.LabelId = UniverseLevels.Get(levelIdsList[j]).LabelId;
                                     universLevel.UniversItems = new List<UniversItem>();
-                                    universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[i].GetAsString(levelIdsList[j]));
+                                    universLevel.Label = GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, SiteLanguage);
+                                    TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[i].GetAsString(levelIdsList[j]));
                                     if (universeItems != null)
                                     {
                                         itemIdList = universeItems.IdListOrderByClassificationItem;
@@ -165,28 +166,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     model.UniversLevels.Add(universLevel);
                                 }
                             }
-                            domain.UniversMarche.Add(model);
+                            treeDefined.Add(model);
                         }
                     }
                 }
-                //}
             }
-            #endregion
-
-            #region Media : 
-            domain.MediasSelected = GetLabels(_webSession.SelectionUniversMedia, _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
-            #endregion
-
-            #region Période sélectionnée :
-            domain.DateBegin = !string.IsNullOrEmpty(_webSession.PeriodBeginningDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodBeginningDate) : null;
-            domain.DateEnd = !string.IsNullOrEmpty(_webSession.PeriodEndDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodEndDate) : null;
-            if (Dates.isPeriodSet(domain.DateBegin, domain.DateEnd))
-            {
-                domain.Dates = Dates.GetPeriodDetail(_webSession);
-            }
-            #endregion
-
-            return domain;
         }
 
         private List<TextData> GetLabels(System.Windows.Forms.TreeNode elem, int idLanguage, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source)
