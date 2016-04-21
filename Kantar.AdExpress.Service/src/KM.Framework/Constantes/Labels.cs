@@ -95,5 +95,12 @@ namespace KM.Framework.Constantes
         public string CreateDirectory { get; set; }//696
         public string Directories { get; set; } //3045
         public string Results { get; set; }//3044
+        public string StudySelectionLabel { get; set; } //842
+        public string PeriodSelectionLabel { get; set; } //2275
+        public string LevelDetailsLabel { get; set; }//w1886
+        public string UnitLabel { get; set; }//w849
+        public string InsertionLabel { get; set; }//w1400
+        public string UniversProductLabel { get; set; }//w1759
+        public string UniversSupportLabel { get; set; } //w2540
     }
 }

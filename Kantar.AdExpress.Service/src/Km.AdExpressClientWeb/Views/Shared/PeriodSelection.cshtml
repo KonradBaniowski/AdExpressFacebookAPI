@@ -8,6 +8,7 @@
 
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("DetailSelection")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             <div class="row center-block">
@@ -62,9 +63,9 @@
                                 <select id="year-sliding" class="selectdatepicker" selectedperiod="0">
                                     <option>--</option>
                                     @for (int i = 1; i <= Model.PeriodViewModel.SlidingYearsNb; i++)
-                                        {
+                                    {
                                         <option>@i</option>
-                                        }
+                                    }
                                 </select>
                                 <label class="col-sm-8">@GestionWeb.GetWebWord(781, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
@@ -72,9 +73,9 @@
                                 <select id="month-sliding" class="selectdatepicker" selectedperiod="1">
                                     <option>--</option>
                                     @for (int i = 1; i <= Model.PeriodViewModel.SlidingMonthsNb; i++)
-                                        {
+                                    {
                                         <option>@i</option>
-                                        }
+                                    }
                                 </select>
                                 <label class="col-sm-8">@GestionWeb.GetWebWord(783, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
@@ -82,9 +83,9 @@
                                 <select id="week-sliding" class="selectdatepicker" selectedperiod="2">
                                     <option>--</option>
                                     @for (int i = 1; i <= Model.PeriodViewModel.SlidingWeeksNb; i++)
-                                        {
+                                    {
                                         <option>@i</option>
-                                        }
+                                    }
                                 </select>
                                 <label class="col-sm-8">@GestionWeb.GetWebWord(784, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
@@ -92,9 +93,9 @@
                                 <select id="day-sliding" class="selectdatepicker" selectedperiod="3">
                                     <option>--</option>
                                     @for (int i = 1; i <= Model.PeriodViewModel.SlidingDaysNb; i++)
-                                        {
+                                    {
                                         <option>@i</option>
-                                        }
+                                    }
                                 </select>
                                 <label class="col-sm-8">@GestionWeb.GetWebWord(1974, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
@@ -378,4 +379,5 @@
                     }
                 });
             </script>
+            @Scripts.Render("~/bundles/detail-selection")
         }
