@@ -10,5 +10,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     public interface IDetailSelectionService
     {
         DetailSelectionResponse GetDetailSelection(string idWebSession);
+        DetailSelectionResponse LoadSessionDetails(string idSession, string idWebSession);
     }
 }
