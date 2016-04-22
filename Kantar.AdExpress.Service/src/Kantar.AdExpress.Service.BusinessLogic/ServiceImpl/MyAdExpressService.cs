@@ -1246,7 +1246,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             break;
                         default:
                             result.ModuleId = webSessionSave.CurrentModule;
-                            result.Message = "Not available yet.";//GestionWeb.GetWebWord(LanguageConstantes.NotAvailableYet, webSession.SiteLanguage); ;//TODO
+                            result.Message = GestionWeb.GetWebWord(LanguageConstantes.NotAvailableYet, webSession.SiteLanguage);
                             break;
                     }
                 }

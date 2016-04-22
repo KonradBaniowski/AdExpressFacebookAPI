@@ -35,13 +35,15 @@ namespace Km.AdExpressClientWeb.Controllers
             var vm = new DetailSelectionViewModel();
             if (!String.IsNullOrEmpty(sessionId))
             {
-                var result = _detailSelectionService.GetDetailSelection(sessionId);
+                var cp = new ClaimsPrincipal(User.Identity);
+                var idWebSession = cp.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                var result = _detailSelectionService.LoadSessionDetails(sessionId, idWebSession);
                 vm.DetailSelectionWSModel = AutoMapper.Mapper.Map<DetailSelectionWSModel>(result);
                 vm.Labels = LabelsHelper.LoadPageLabels(vm.DetailSelectionWSModel.SiteLanguage);
             }
             else
                 vm.Message = "Invalid selection";
-            return PartialView(vm);
+            return PartialView("GetDetailSelection", vm);
         }
     }
 }

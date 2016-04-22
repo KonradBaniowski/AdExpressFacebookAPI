@@ -1,6 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain;
 using Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain;
+using KM.AdExpressI.MyAdExpress;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +27,25 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public DetailSelectionResponse GetDetailSelection(string idWebSession)
         {
             var _webSession = (WebSession)WebSession.Load(idWebSession);
+            var result = LoadDetailsSelection(_webSession);
+            return result;
+        }
+        public DetailSelectionResponse LoadSessionDetails(string idSession, string idWebSession)
+        {
+            Int64 idMySession = 0;
+            DetailSelectionResponse result = new DetailSelectionResponse();            
+            if (!String.IsNullOrEmpty(idSession) && !String.IsNullOrWhiteSpace(idWebSession))
+            {
+                idMySession = Int64.Parse(idSession);
+                var webSession= (WebSession)WebSession.Load(idWebSession);
+                var webSessionSave = (WebSession)MyResultsDAL.GetResultMySession(idMySession.ToString(), webSession);
+                result = LoadDetailsSelection(webSessionSave);
+            }
+            return result;
+        }
+
+        private DetailSelectionResponse LoadDetailsSelection(WebSession _webSession)
+        {
             var domain = new DetailSelectionResponse();
 
             domain.SiteLanguage = _webSession.SiteLanguage;
