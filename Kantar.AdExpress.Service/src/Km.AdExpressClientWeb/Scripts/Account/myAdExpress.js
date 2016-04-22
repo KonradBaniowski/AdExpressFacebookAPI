@@ -623,22 +623,26 @@
                 bootbox.alert("An error occurred while processing your request.");
             },
             success: function (response) {
-                window.location.href = response;
-                bootbox.alert("Redirecting to the results page.");
+                if (response.Success) {
+                    window.location.href = response.RedirectUrl;
+                    bootbox.alert("Redirecting to the results page.");
+                }
+                else
+                    bootbox.alert(response.Message);
             }
         });
     });
 
     // Load Details
-    $(document).on('click', '.btnLoadDetails', function () {
-        idSession = $(this).attr("data-id");
-        var type = $(this).attr("data-type");
+    $(document).on('click', '.btnLoadDetails.adExpress-tools', function () {
+        sessionId = $(this).attr("data-id");
+        //var type = $(this).attr("data-type");
         var params = {
-            idSession: idSession,
-            type: type
+            sessionId: sessionId
+            //,type: type
         };
         $.ajax({
-            url: '/Universe/LoadDetails',
+            url: '/DetailSelection/LoadSessionDetails',
             contentType: 'application/json',
             type: 'POST',
             datatype: 'JSON',
@@ -646,9 +650,13 @@
             error: function (xmlHttpRequest, errorText, thrownError) {
                 bootbox.alert("An error occurred while processing your request.");
             },
-            success: function (response) {
-                //window.location.href = response;
-                bootbox.alert("Redirecting to the results page.");
+            success: function (data) {
+                $('#detail-selection .modal-body').html('');
+                $('#detail-selection .modal-body').append(data);
+                $('.treeview').each(function () {
+                    var tree = $(this);
+                    tree.treeview();
+                })
             }
         });
     });

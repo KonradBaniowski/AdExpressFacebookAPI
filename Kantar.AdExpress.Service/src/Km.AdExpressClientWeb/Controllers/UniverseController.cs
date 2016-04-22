@@ -387,7 +387,8 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var response = new Domain.AdExpressResponse
             {
-                Message = string.Empty
+                Message = string.Empty,
+                RedirectUrl = string.Empty               
             };
             var redirectUrl = string.Empty;
             var claim = new ClaimsPrincipal(User.Identity);
@@ -415,11 +416,11 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                 };
                 response.Message = "Redirecting to the result page.";
-                //redirectUrl = new UrlHelper(Request.RequestContext).Action(action, controller);
+                response.RedirectUrl = new UrlHelper(Request.RequestContext).Action(action, controller);
                 //return Json(new { Url = redirectUrl });
-                return Json(Url.Action(action, controller), JsonRequestBehavior.AllowGet);
+                return Json(response, JsonRequestBehavior.AllowGet);
             }
-            return Json(response.Message);
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoadDetails(string idSession, string type)
