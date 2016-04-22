@@ -49,11 +49,8 @@
     </div>
 
     <div class="col-md-12">
-        <center>
-            <div id="graphResult">
-
-            </div>
-        </center>
+        <div id="listCharts">
+        </div>
     </div>
 
 </div>
@@ -72,6 +69,7 @@
 @section Scripts {
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.dv.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
 
     <script>
@@ -279,7 +277,7 @@
             }
             
 
-            @*function CallPortfolioGridResult() {
+            function CallPortfolioGraphResult() {
                 $.ajax({
                     url: '@Url.Action("PortfolioGraphResult", _controller)',
                     contentType: "application/x-www-form-urlencoded",
@@ -288,15 +286,54 @@
                     error: function (xmlHttpRequest, errorText, thrownError) {
                     },
                     success: function (data) {
-                        if (data != null) {
-                            $('#graphResult').html(data);
+
+                        if (data != null && data != "") {
+
+                            for (i = 0; i < data.length; i++) {
+                                dataChart = data[i].datachart;
+
+                                var schema = new $.ig.DataSchema("array", {
+                                    fields: data[0].schema
+                                });
+
+                                $("#listCharts").append("<div class='col-md-12'><div id='chart" + i + "' class='chart' ></div><div id='legendChart" + i + "' class='legendChart' ></div></div>");
+                                ds = new $.ig.DataSource({
+                                    type: "json",
+                                    schema: schema,
+                                    dataSource: dataChart
+                                });
+                                ds.dataBind();
+
+                                $("#chart" + i).igPieChart({
+                                    dataSource: ds.dataView(),
+                                    width: '600px',
+                                    height: '400px',
+                                    radiusFactor: .55,
+                                    valueMemberPath: "ValKey",
+                                    labelMemberPath: "LabelKey",
+                                    labelsPosition: "outsideEnd",
+                                    leaderLineType: "straightLine",
+                                    othersCategoryThreshold: 0,
+                                    othersCategoryType: "number",
+                                    legend: { element: 'legendChart' + i, type: "item" },
+                                    formatLabel: function (context) {
+                                        var num = context.percentValue
+                                        num = parseFloat(Math.round(num * 100) / 100).toFixed(2);
+                                        return num + " % : " + context.itemLabel;
+                                    },
+                                    showTooltip: true,
+                                    tooltipTemplate: "<div class='ui-chart-tooltip'><strong>${item.LabelKey}</strong><div>Nombre d'insertions: <label>${item.ValKey}</label></div></div>"
+                                });
+
+                                
+                            }
                         }
                         else {
-                            alert("Erreur Génération du graphique")
+                            alert("Erreur");
                         }
                     }
                 });
-            }*@
+            }
 
 
             function CallSetOptions() {
@@ -310,8 +347,8 @@
                     },
                     success: function (data) {
                         CallPortfolioResult();
-                        //if(userFilter.ResultTypeFilter.ResultType == "4")
-                        //    CallPortfolioGraphResult();
+                        if(userFilter.ResultTypeFilter.ResultType == "4")
+                            CallPortfolioGraphResult();
                     }
                 });
             }

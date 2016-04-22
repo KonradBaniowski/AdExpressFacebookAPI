@@ -2411,3 +2411,22 @@ ul.ui-selectable {
     max-height: 250px;
     overflow-y: scroll;
 }
+
+
+/***Chart***/
+.chart {
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color:white;
+}
+.legendChart.ui-corner-all.ui-widget-content.ui-chart-legend{
+    display: inline-block;
+    color:black;
+    background-color:white !important;
+}
+.ui-chart-tooltip{
+    background-color:white;
+}
