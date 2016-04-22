@@ -462,31 +462,40 @@
                         else htmlArr.push("<div class='item'><div class='row'>");
                     }
 
-                    if (vehicleItemsData.length > 0) {
 
-                        htmlArr.push("  </div>"); //<!--/carousel-inner-->
 
-                        //<!--left carousel-control-->
-                        htmlArr.push(" <a class='left carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='prev'>");
-                        htmlArr.push("   <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>");
-                        htmlArr.push("  <span class='sr-only'>Previous</span>");
-                        htmlArr.push("  </a>");
-                        //<!--/left carousel-control-->
-
-                        //<!--right carousel-control-->
-                        htmlArr.push(" <a class='right carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='next'>");
-                        htmlArr.push("   <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>");
-                        htmlArr.push("  <span class='sr-only'>Next</span>");
-                        htmlArr.push("  </a>");
-                        //<!--/right carousel-control-->
-
-                        htmlArr.push("  </div>"); //<!--/carou-vehicleView-OneVehicle-->
-                        htmlArr.push("  </div>");   //<!--/modal-body -->
+                    if (colNb == 3) {
+                        colNb = 0;
+                        htmlArr.push("</div></div>");
                     }
 
-                    $("#modal-vehicleView > .modal-dialog > .modal-content").html(htmlArr.join(""));
+                  
 
                 });
+
+                if (vehicleItemsData.length > 0) {
+
+                    htmlArr.push("  </div>"); //<!--/carousel-inner-->
+
+                    //<!--left carousel-control-->
+                    htmlArr.push(" <a class='left carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='prev'>");
+                    htmlArr.push("   <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>");
+                    htmlArr.push("  <span class='sr-only'>Previous</span>");
+                    htmlArr.push("  </a>");
+                    //<!--/left carousel-control-->
+
+                    //<!--right carousel-control-->
+                    htmlArr.push(" <a class='right carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='next'>");
+                    htmlArr.push("   <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>");
+                    htmlArr.push("  <span class='sr-only'>Next</span>");
+                    htmlArr.push("  </a>");
+                    //<!--/right carousel-control-->
+
+                    htmlArr.push("  </div>"); //<!--/carou-vehicleView-OneVehicle-->
+                    htmlArr.push("  </div>");   //<!--/modal-body -->
+                }
+
+                $("#modal-vehicleView > .modal-dialog > .modal-content").html(htmlArr.join(""));
 
             });
 
