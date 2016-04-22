@@ -15,6 +15,7 @@ namespace Km.AdExpressClientWeb.Models.DetailSelection
         }
         public Labels Labels { get; set; }
         public DetailSelectionWSModel DetailSelectionWSModel { get; set; }
+        public string Message { get; set; }
     }
 
     public class DetailSelectionWSModel
