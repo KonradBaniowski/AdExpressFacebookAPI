@@ -161,7 +161,7 @@
 <div class="modal fade" id="modal-vehicleView">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!--/modal-header -->
+            <!--modal-header -->
             <div class="modal-header panel-heading header-popup-vehicleView">
                 <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title font-normal m-t-none m-b-md text-primary-lt" id="myModalLabel">
@@ -169,6 +169,8 @@
                 </h4>
                 <p class="pull-right text-white">Nombre de page : 144</p>
             </div>
+            <!--/modal-header -->
+            <!--modal-body -->
             <div class="modal-body">
                 @*<!--/Ligne 1-->
                     <div class="col-md-12">
@@ -204,7 +206,7 @@
                     </div>
                     <!--/col-md-12-->*@
 
-                <!----Carousel pages d'un magazine en Carousel-->
+                <!--carou-vehicleView-OneVehicle-->
                 <div id="carou-vehicleView-OneVehicle" class="carousel">
                     <!--carousel-inner-->
                     <div class="carousel-inner">
@@ -231,7 +233,6 @@
                             <!--/row-->
                         </div>
                         <!--/item active-->
-
                         <!--item -->
                         <div class="item">
                             <!--row-->
@@ -263,7 +264,7 @@
                                 <div class="col-md-4" href="#modal-vehicleView-Img" data-toggle="modal">
                                     <img class="img-full" alt="image 01" src="http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg">
                                 </div>
-                                <!--/col-md-4-->                               
+                                <!--/col-md-4-->
                             </div>
                             <!--/row-->
                         </div>
@@ -273,7 +274,7 @@
                     <!--left carousel-control-->
                     <a class="left carousel-control black" href="#carou-vehicleView-OneVehicle" role="button" data-slide="prev">
                         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>                     
+                        <span class="sr-only">Previous</span>
                     </a>
                     <!--/left carousel-control-->
                     <!--right carousel-control-->
@@ -283,8 +284,9 @@
                     </a>
                     <!--/right carousel-control-->
                 </div>
-                <!----/Carousel pages d'un magazine en Carousel-->
+                <!--/carou-vehicleView-OneVehicle-->
             </div>
+            <!--/modal-body -->
         </div>
     </div>
 </div>
@@ -311,7 +313,7 @@
 
             if (typeof jQuery === "undefined") { throw new Error("Vehicle view modal requires jQuery") }
 
-           // ShowVehicleCarousel();
+            // ShowVehicleCarousel();
 
             //OpenVehicleViewModal();
 
@@ -420,6 +422,71 @@
                 ];
 
                 var htmlArr = [];
+                var colNb = 0;
+                $.each(vehicleItemsData, function (i, val) {
+
+                    if (i == 0) {
+                        //<!--modal-header -->
+                        htmlArr.push("<div class='modal-header panel-heading header-popup-vehicleView'>");
+                        htmlArr.push(" <button class='close' aria-hidden'true' type='button' data-dismiss='modal'><span aria-hidden='true'>&times;</span></button>");
+                        htmlArr.push(" <h4 class='modal-title font-normal m-t-none m-b-md text-primary-lt' id='myModalLabel'>");
+                        htmlArr.push("<i class='fa fa-file-text blue'></i>  ");
+                        htmlArr.push(val.title);
+                        htmlArr.push(" - ");
+                        htmlArr.push(val.pDate);
+                        htmlArr.push("</h4><p class='pull-right text-white'>");
+                        htmlArr.push("  Nombre de page : ");
+                        htmlArr.push(val.nbPage);
+                        htmlArr.push(" </p>  </div>");
+                        //<!--/modal-header -->
+
+                        //<!--modal-body -->
+                        htmlArr.push(" <div class='modal-body'>");
+
+                        //<!--carou-vehicleView-OneVehicle-->
+                        htmlArr.push("  <div id='carou-vehicleView-OneVehicle' class='carousel'>");
+
+                        //<!--carousel-inner-->
+                        htmlArr.push("<div class='carousel-inner'>");
+
+
+                    }
+
+                    colNb++;
+
+                    if (colNb == 1) {
+                        if (i == 0) {
+
+                            htmlArr.push("<div class='item active'><div class='row'> ");
+                        }
+                        else htmlArr.push("<div class='item'><div class='row'>");
+                    }
+
+                    if (vehicleItemsData.length > 0) {
+
+                        htmlArr.push("  </div>"); //<!--/carousel-inner-->
+
+                        //<!--left carousel-control-->
+                        htmlArr.push(" <a class='left carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='prev'>");
+                        htmlArr.push("   <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>");
+                        htmlArr.push("  <span class='sr-only'>Previous</span>");
+                        htmlArr.push("  </a>");
+                        //<!--/left carousel-control-->
+
+                        //<!--right carousel-control-->
+                        htmlArr.push(" <a class='right carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='next'>");
+                        htmlArr.push("   <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>");
+                        htmlArr.push("  <span class='sr-only'>Next</span>");
+                        htmlArr.push("  </a>");
+                        //<!--/right carousel-control-->
+
+                        htmlArr.push("  </div>"); //<!--/carou-vehicleView-OneVehicle-->
+                        htmlArr.push("  </div>");   //<!--/modal-body -->
+                    }
+
+                    $("#modal-vehicleView > .modal-dialog > .modal-content").html(htmlArr.join(""));
+
+                });
 
             });
 
@@ -435,13 +502,13 @@
             $("#modal-vehicleView").on('shown.bs.modal', function (event) {
 
                 var vehicleItemsData = [
-                     { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg", "nbPage": 44, "title": "EQUIPE" },
-                      { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe002.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe002.jpg", "nbPage": 44, "title": "EQUIPE" },
-                       { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor003.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor003.jpg", "nbPage": 44, "title": "EQUIPE" },
-                      { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor004.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor004.jpg", "nbPage": 44, "title": "EQUIPE" },
-                          { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor005.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor005.jpg", "nbPage": 44, "title": "EQUIPE" },
-                      { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor006.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor006.jpg", "nbPage": 44, "title": "EQUIPE" },
-                       { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor007.jpg", "nbPage": 44, "title": "EQUIPE" },
+                  { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg", "nbPage": 44, "title": "EQUIPE" },
+                  { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe002.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe002.jpg", "nbPage": 44, "title": "EQUIPE" },
+                  { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor003.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor003.jpg", "nbPage": 44, "title": "EQUIPE" },
+                  { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor004.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor004.jpg", "nbPage": 44, "title": "EQUIPE" },
+                  { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor005.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor005.jpg", "nbPage": 44, "title": "EQUIPE" },
+                  { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor006.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor006.jpg", "nbPage": 44, "title": "EQUIPE" },
+                  { "mId": 24904, "pDate": "Vendredi 26/02/2016", "dayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg", "srcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor007.jpg", "nbPage": 44, "title": "EQUIPE" },
                 ];
                 var colNb = 0;
                 var htmlArr = [];
