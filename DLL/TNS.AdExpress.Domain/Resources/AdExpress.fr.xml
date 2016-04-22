@@ -2301,5 +2301,6 @@
     <item mnemonic="w3043" type="System.String">Souscrire à un module additionnel</item>
     <item mnemonic="w3044" type="System.String">Résultats</item>
     <item mnemonic="w3045" type="System.String">Répertoires</item>
+    <item mnemonic="w3046" type="System.String">Ce résultat n'est pas encore disponible pour ce site, veuillez le consulter sur l'ancien site.</item>
   </items>
 </localization>
