@@ -109,7 +109,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         str += " " + FctUtilities.Dates.DateToString(tmp.LastDay.Date, webSession.SiteLanguage) + "";
                         return str;
                     case CustomerSessions.Period.Type.nLastWeek:
-                        return Convertion.ToHtmlString(webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(784, webSession.SiteLanguage));
+                        //return Convertion.ToHtmlString(webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(784, webSession.SiteLanguage));
+                        return webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(784, webSession.SiteLanguage);
                     case CustomerSessions.Period.Type.previousWeek:
                         return Convertion.ToHtmlString(GestionWeb.GetWebWord(789, webSession.SiteLanguage));
                     case CustomerSessions.Period.Type.dateToDate:

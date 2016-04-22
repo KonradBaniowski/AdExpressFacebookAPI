@@ -8,8 +8,10 @@
 <div class="row">
     @Html.HiddenFor(e => e.Dimension)
     @Html.HiddenFor(e => e.Multiple)
+
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("UserUniversGroups", Model.UniversGroups)
+    @Html.Partial("DetailSelection")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
@@ -241,6 +243,7 @@
     </div>
 </div>
 
-@section scripts {    
-   @Scripts.Render("~/bundles/lostwon-media")
+@section scripts {
+    @Scripts.Render("~/bundles/lostwon-media")
+    @Scripts.Render("~/bundles/detail-selection")
 }

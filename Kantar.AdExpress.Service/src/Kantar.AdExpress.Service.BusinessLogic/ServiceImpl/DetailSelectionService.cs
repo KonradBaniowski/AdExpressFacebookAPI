@@ -69,6 +69,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     //    break;
                     case WebConstantes.DetailSelection.Type.genericMediaLevelDetail:
                         domain.NiveauDetailLabel = _webSession.GenericMediaDetailLevel.GetLabel(_webSession.SiteLanguage);
+
                         break;
                     case WebConstantes.DetailSelection.Type.genericProductLevelDetail:
                         domain.NiveauDetailLabel = _webSession.GenericProductDetailLevel.GetLabel(_webSession.SiteLanguage);
@@ -110,6 +111,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.ShowUnivers = !(domain.MediasSelected.Count == 0);
             domain.ShowUniversDetails = (!(domain.MediasSelected.Count == 0) && !(domain.UniversMedia.Count == 0));
             domain.ShowMarket = (domain.UniversMarket.Count > 0);
+            domain.ShowGenericlevelDetail = !string.IsNullOrEmpty(domain.NiveauDetailLabel);
+
             #endregion
 
             return domain;

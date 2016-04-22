@@ -18,6 +18,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long PhoneNumberCode = 71;
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
+        public const long MediaCode = 190;
         public const long DroppedSuccessfully = 286;
         public const long QuestionTag3Code = 647;
         public const long CreateFolder = 696;

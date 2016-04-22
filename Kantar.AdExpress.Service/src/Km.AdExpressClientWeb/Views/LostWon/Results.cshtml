@@ -12,6 +12,7 @@
 
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("DetailSelection")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -542,4 +543,5 @@
 
 
     </script>
+    @Scripts.Render("~/bundles/detail-selection")
 }

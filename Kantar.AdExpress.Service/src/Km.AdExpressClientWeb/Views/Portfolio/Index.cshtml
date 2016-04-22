@@ -9,10 +9,10 @@
 
     <input type="hidden" id="siteLanguage" value="@Model.Presentation.SiteLanguage" />
     @*PRESENTATION*@
-    <div>
-        @Html.Partial("Presentation", Model.Presentation)
-        @Html.Partial("UserUniversGroups", Model.UniversGroups)
-    </div>
+    @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("UserUniversGroups", Model.UniversGroups)
+    @Html.Partial("DetailSelection")
+
     @*BREADCRUM*@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
@@ -184,4 +184,5 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/portfolio-market")
+    @Scripts.Render("~/bundles/detail-selection")
 }
