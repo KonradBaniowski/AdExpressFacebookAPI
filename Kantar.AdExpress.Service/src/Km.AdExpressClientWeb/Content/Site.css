@@ -2037,15 +2037,8 @@ ul.ui-selectable {
     background-image: none;
 }
 
-<<<<<<< HEAD
-
-
 #loader{
     text-align:center;
-=======
-#loader {
-    text-align: center;
->>>>>>> f97cd9d74e3075f53869b13e8fbce3d6819c694b
 }
 
     #loader .modal-footer {
