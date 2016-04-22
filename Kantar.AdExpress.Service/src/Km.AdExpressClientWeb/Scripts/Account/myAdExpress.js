@@ -636,10 +636,8 @@
     // Load Details
     $(document).on('click', '.btnLoadDetails.adExpress-tools', function () {
         sessionId = $(this).attr("data-id");
-        //var type = $(this).attr("data-type");
         var params = {
             sessionId: sessionId
-            //,type: type
         };
         $.ajax({
             url: '/DetailSelection/LoadSessionDetails',
@@ -657,6 +655,7 @@
                     var tree = $(this);
                     tree.treeview();
                 })
+                $('#detail-selection').modal('show');
             }
         });
     });
