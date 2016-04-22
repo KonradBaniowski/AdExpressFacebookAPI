@@ -291,7 +291,9 @@ input {
 .blue {
     color: #00c1ff;
 }
-
+.black {
+    color: #000000;
+}
 .bg-blue {
     background-color: #00c1ff;
 }
@@ -1130,7 +1132,7 @@ a {
 }
 
 .information-title {
-    margin-top: 0px!important;
+    margin-top: 0px !important;
 }
 
 .bg-period {
@@ -2019,13 +2021,14 @@ ul.ui-selectable {
         height: 100%;
     }
 
-.imgCreaInser{
-    max-height:200px;
-    max-width:300px;
+.imgCreaInser {
+    max-height: 200px;
+    max-width: 300px;
 }
-.infoCreaInser{
-    display:inline-block;
-    min-width:150px;
+
+.infoCreaInser {
+    display: inline-block;
+    min-width: 150px;
 }
 
 /****Carousel****/
@@ -2038,14 +2041,14 @@ ul.ui-selectable {
     text-align:center;
 }
 
-#loader .modal-footer {
-    position: relative;
-    width: 100px;
-    top: 50%;
-    margin: -19px -100px;
-    border-top: none;
-    display:inline-block !important;
-}
+    #loader .modal-footer {
+        position: relative;
+        width: 100px;
+        top: 50%;
+        margin: -19px -100px;
+        border-top: none;
+        display: inline-block !important;
+    }
 
 #tab-myadexpress {
     background-color: rgba(0,0,0,0.6);
@@ -2159,7 +2162,7 @@ ul.ui-selectable {
         .bg-contact .form-control:focus {
             background-color: rgba(255,255,255,0.1);
             border-color: #cfdadd;
-            box-shadow:none;
+            box-shadow: none;
         }
 
     .bg-contact input, .bg-contact textarea, .bg-contact select {
@@ -2167,13 +2170,12 @@ ul.ui-selectable {
     }
 
     .bg-contact option {
-        background-color:#13c18b;
+        background-color: #13c18b;
     }
 
-    .bg-contact .btn, .bg-contact .btn:hover
-    {
-        border:none;
-        background-color:#ff8c00;
+    .bg-contact .btn, .bg-contact .btn:hover {
+        border: none;
+        background-color: #ff8c00;
     }
 
 .green-contact {
@@ -2276,6 +2278,11 @@ ul.ui-selectable {
     border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 
+#carou-vehicleView .carousel-control.left {margin-left: -115px;}
+#carou-vehicleView  .carousel-control.right {margin-right: -125px;} 
+ #carou-vehicleView-OneVehicle .carousel-control.left {margin-left: -65px;}
+ #carou-vehicleView-OneVehicle .carousel-control.right {margin-right: -75px;} 
+
 .padder-v-mi {
     padding-top: 5px;
     padding-bottom: 5px;
@@ -2284,64 +2291,66 @@ ul.ui-selectable {
 .img-full {
     width: 100%;
 }
-#carou-vehicleView   .row.no-gutter {
+
+#carou-vehicleView .row.no-gutter {
     margin-right: 0;
     margin-left: 0;
 }
-#carou-vehicleView  img {
+
+#carou-vehicleView img {
     vertical-align: middle;
 }
-#carou-vehicleView  img {
+
+#carou-vehicleView img {
     border: 0;
 }
 /* Mopdal VBehicle View */
 
 
-#modal-vehicleView > .modal-dialog  > .modal-content{
-    width: 1000px;
+#modal-vehicleView .modal-content{
+    width: 850px;
     margin: 0 auto;
-    height:900px;
     overflow-y: scroll;
 }
 
-#modal-vehicleView > .modal-dialog  > .modal-content > .header-popup-vehicleView {
-    /*padding: 10px 15px;*/
-    border-bottom: 1px solid transparent;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    background-color: rgba(0,0,0,0.7);
-}
+    #modal-vehicleView > .modal-dialog > .modal-content > .header-popup-vehicleView {
+        /*padding: 10px 15px;*/
+        border-bottom: 1px solid transparent;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+        background-color: rgba(0,0,0,0.7);
+    }
 
 #modal-vehicleView .modal:nth-of-type(even) {
     z-index: 1042 !important;
 }
 
-#modal-vehicleView > .modal-dialog  > .modal-content > .modal-body > .col-md-12 > .no-padder {
+#modal-vehicleView > .modal-dialog > .modal-content > .modal-body > .col-md-12 > .no-padder {
     padding: 0 !important;
 }
+
 #modal-vehicleView .modal-backdrop.in:nth-of-type(even) {
     z-index: 1041 !important;
 }
 
-#modal-vehicleView-Img > .modal-dialog  > .modal-content > .header-popup-vehicleView {
+#modal-vehicleView-Img > .modal-dialog > .modal-content > .header-popup-vehicleView {
     /*padding: 10px 15px;*/
     border-bottom: 1px solid transparent;
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
     background-color: rgba(0,0,0,0.7);
 }
- 
-.module-done{
 
-}
-.adExpress-tools
-{
-    margin-left:10px;
+.module-done {
 }
 
-.infoGad{
-    display:inline-block;
-    min-width:150px;
+.adExpress-tools {
+    margin-left: 10px;
+}
+
+.infoGad {
+    display: inline-block;
+    min-width: 150px;
     font-size: 12px;
     color: #000;
     padding-left: 6px;
@@ -2392,22 +2401,46 @@ ul.ui-selectable {
     color: #00c1ff;
 }
 
-.gadExternalLink:hover {
-    font-size: 12px;
-    color: #ff8c00;
+    .gadExternalLink:hover {
+        font-size: 12px;
+        color: #ff8c00;
+    }
+        
+.modal-express .modal-body {
+    color: black;
+    padding: 15px;
+    background: rgba(0,0,0,0.1);
 }
+
+    .modal-express .modal-body .panel.panel-default {
+        margin-bottom: 0;
+        border: none;
+        border-radius: 0;
+    }
+
+        .modal-express .modal-body .panel.panel-default .form-horizontal .control-label.text-left {
+            text-align: left;
+        }
+
+        .modal-express .modal-body .panel.panel-default .form-horizontal .form-group {
+            margin-bottom: 0;
+        }
+
+
+
 .modal-content-kantar {
-    padding:5px;
-    margin-bottom:0px;
+    padding: 5px;
+    margin-bottom: 0px;
 }
 
 .modal-panel-heading {
-    background-color:#89959E;
+    background-color: #89959E;
     padding: 10px 15px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
-.modal-scroll{
+
+.modal-scroll {
     max-height: 250px;
     overflow-y: scroll;
 }

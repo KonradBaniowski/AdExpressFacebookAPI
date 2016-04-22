@@ -195,6 +195,7 @@
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
+    <Compile Include="Models\DetailSelection\DetailSelectionViewModel.cs" />
     <Compile Include="Models\HomeNumbersViewModel.cs" />
     <Compile Include="Models\Home\MyAdExpressViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
@@ -591,6 +592,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\treeview.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1495,6 +1497,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
+    <Content Include="Scripts\tree-view\tree-view.js" />
     <Content Include="Scripts\universe\listbox.js" />
     <Content Include="Scripts\universe\universe-loading.js" />
     <Content Include="Scripts\universe\universe-market.js" />

@@ -43,7 +43,7 @@
                         </button>
                         @if (Model.Branches.Count > 1)
                         {
-                            <ul class="dropdown-menu bg-blue pull-right">
+                            <ul class="dropdown-menu bg-blue">
                                 @foreach (var item in Model.Branches)
                                 {
                                     if (item.IsSelected)
@@ -129,7 +129,7 @@
                                     <div class="panel panel-primary panel-results">
                                         <div class="panel-heading head-results"
                                              role="tab"
-                                             id="heading-@(level.Id)"
+                                             id="heading-@(level.Id)-@(tree.Id)"
                                              data-id="@level.Id">
                                             <h6 class="panel-title famille ">
                                                 <a role="button"
@@ -167,7 +167,7 @@
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
         <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
-            <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">Enregistrer l'univers <i class="fa fa-bookmark-o"></i></a>
+            <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-floppy-o"></i></a>
             @Html.ActionLink("Valider", "MediaSelection", null, new { id = "btnSubmitMarketSelection", @class = "btn btn-default btn-valider pull-right" })
 
         </div>

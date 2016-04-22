@@ -1,5 +1,5 @@
 ﻿//CHANGER DE SECTEUR
-$(".dropdown-menu.bg-blue.pull-right li > a").on('click', function (e) {
+$(".dropdown-menu.bg-blue li > a").on('click', function (e) {
     e.preventDefault();
     var selText = $(this).text();
     var selValue = $(this).attr("data-id");

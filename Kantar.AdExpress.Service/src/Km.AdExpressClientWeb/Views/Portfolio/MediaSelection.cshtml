@@ -99,7 +99,7 @@
                                                     @Model.Branches.FirstOrDefault(p => p.IsSelected).Label
                                                     <span class="caret"></span>
                                                 </button>
-                                                <ul class="dropdown-menu bg-blue pull-right">
+                                                <ul class="dropdown-menu bg-blue">
                                                     @foreach (var item in Model.Branches)
                                                     {
                                                         if (item.IsSelected)
@@ -184,7 +184,7 @@
                                                             <div class="panel panel-primary panel-results">
                                                                 <div class="panel-heading head-results"
                                                                      role="tab"
-                                                                     id="heading-@(level.Id)">
+                                                                     id="heading-@(level.Id)-@(tree.Id)">
                                                                     <h6 class="panel-title famille ">
                                                                         <a role="button"
                                                                            data-toggle="collapse"
