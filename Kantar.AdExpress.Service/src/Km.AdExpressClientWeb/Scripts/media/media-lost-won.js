@@ -237,6 +237,7 @@ $('#move-item').on('click', function () {
                 return
             }
             $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
+            $('#heading-' + universSrc + '-' + tabSelected).find('.panel-title').addClass('orange');
             $.each(levelSrc, function (index, value) {
                 var item = $(value).clone();
                 var find = false;

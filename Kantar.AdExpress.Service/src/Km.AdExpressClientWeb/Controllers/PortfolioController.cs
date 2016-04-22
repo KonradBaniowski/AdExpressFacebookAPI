@@ -260,21 +260,29 @@ namespace Km.AdExpressClientWeb.Controllers
         
         public ActionResult PortfolioGraphResult()
         {
+            int i = -1;
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var gridResult = _portofolioService.GetGraphGridResult(idWebSession);
+            List<object> objList = new List<object>();
 
             try
             {
-                if (!gridResult.HasData)
+                if (!gridResult[0].HasData)
                     return null;
 
-                string jsonData = JsonConvert.SerializeObject(gridResult.Data);
-                var obj = new { datachart= jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
-                JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                foreach (var gr in gridResult)
+                {
+                    i++;
+                    string jsonData = JsonConvert.SerializeObject(gridResult[i].Data);
+                    object obj = new { datachart = jsonData, schema = gridResult[i].Schema, title = gridResult[i].Title };
+                    objList.Add(obj);
+                }
+                
+                JsonResult jsonModel = Json(objList, JsonRequestBehavior.AllowGet);
                 jsonModel.MaxJsonLength = Int32.MaxValue;
 
-                return PartialView("_DetailLevel", jsonModel);
+                return jsonModel;
             }
             catch (Exception ex)
             {

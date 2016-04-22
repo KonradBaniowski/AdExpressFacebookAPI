@@ -83,7 +83,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
            
         }
 
-        public GridResult GetGraphGridResult(string idWebSession)
+        public List<GridResult> GetGraphGridResult(string idWebSession)
         {
 
             _customerSession = (WebSession)WebSession.Load(idWebSession);

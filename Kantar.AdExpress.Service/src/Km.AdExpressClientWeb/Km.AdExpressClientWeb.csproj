@@ -1583,7 +1583,6 @@
     <Content Include="Views\Shared\UserResult.cshtml" />
     <Content Include="Views\DetailSelection\GetDetailSelection.cshtml" />
     <Content Include="Views\Shared\DetailSelection.cshtml" />
-    <Content Include="Views\Portfolio\_GraphResults.cshtml" />
     <Content Include="Views\Shared\GadInfos.cshtml" />
     <Content Include="Views\Home\MyAdExpressAlerts.cshtml" />
   </ItemGroup>

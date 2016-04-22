@@ -125,6 +125,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long QuestionTag2Code = 3043;
         public const long Results = 3044;
         public const long Directories = 3045;
+        public const long NotAvailableYet = 3046;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion
