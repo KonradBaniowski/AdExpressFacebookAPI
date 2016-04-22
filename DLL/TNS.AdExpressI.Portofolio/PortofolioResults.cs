@@ -1085,20 +1085,17 @@ namespace TNS.AdExpressI.Portofolio
         }
 
 
-        GridResult GetGraphGridResult()
+        public List<GridResult> GetGraphGridResult()
         {
             System.Data.DataTable dt = null;
-            GridResult gridResult = null;
+            List<GridResult> gridResult = new List<GridResult>();
             long oldUnitId = -1;
             Dictionary<long, int> valuesListSize = new Dictionary<long, int>();
-            int nbItem = 0, numberofChart = 0;
-            double[] yValues = null;
+            int nbItem = 0, nbChart = 0;
             string[] xValues = null;
-            int currentLine = 0;
-            string oldUnitLabel = "";
-            object[,] gridData = null;
+            int currentLine = -1;
             List<object> schemaFields = new List<object>();
-
+            int i = -1;
 
             #region Set Graph values
 
@@ -1108,7 +1105,9 @@ namespace TNS.AdExpressI.Portofolio
             if (dt == null || dt.Rows.Count == 0)
             {
                 //No data to show
-                gridResult.HasData = false;
+                GridResult gr = new GridResult();
+                gridResult.Add(gr);
+                gridResult[0].HasData = false;
             }
             else
             {
@@ -1123,19 +1122,17 @@ namespace TNS.AdExpressI.Portofolio
                 {
                     if (oldUnitId != long.Parse(dr["idUnit"].ToString()))
                     {
-                        valuesListSize.Add(oldUnitId, nbItem);
+                        valuesListSize[oldUnitId] = nbItem;
                         nbItem = 0;
+                        nbChart++;
                     }
-                    if (oldUnitId != long.Parse(dr["idUnit"].ToString()))
-                        numberofChart++;
-
                     nbItem++;
                     oldUnitId = long.Parse(dr["idUnit"].ToString());
 
+                    if (!valuesListSize.ContainsKey(oldUnitId))
+                        valuesListSize.Add(oldUnitId, nbItem);
                 }
-
-                if (!valuesListSize.ContainsKey(oldUnitId))
-                    valuesListSize.Add(oldUnitId, nbItem);
+                valuesListSize[oldUnitId] = nbItem; 
 
                 //Set chart values
                 oldUnitId = -1;
@@ -1143,35 +1140,29 @@ namespace TNS.AdExpressI.Portofolio
                 {
                     if (oldUnitId != long.Parse(dr["idUnit"].ToString()))
                     {
+                        i++;
+                        var gr = new GridResult();
                         xValues = new string[valuesListSize[long.Parse(dr["idUnit"].ToString())]];
-                        yValues = new double[valuesListSize[long.Parse(dr["idUnit"].ToString())]];
-                        gridData = new object[xValues.Length, yValues.Length];
+                        gr.Data = new object[xValues.Length , 2];
+                        gridResult.Add(gr);
                         currentLine = 0;
                     }
 
-                    gridData[currentLine, 0] = dr["chartDataLabel"].ToString();
-                    gridData[currentLine, 1] = double.Parse(dr["chartDataValue"].ToString());
+                    gridResult[i].Data[currentLine, 0] = dr["chartDataLabel"].ToString();
+                    gridResult[i].Data[currentLine, 1] = int.Parse(dr["chartDataValue"].ToString());
 
-                    oldUnitLabel = dr["unitLabel"].ToString();
                     oldUnitId = long.Parse(dr["idUnit"].ToString());
                     currentLine++;
+                    
                 }
             }
             #endregion
 
-            gridResult.HasData = true;
-            gridResult.Schema = schemaFields;
-            //gridResult.ColumnsFixed = columnsFixed;
-            gridResult.Data = gridData;
-
+            gridResult[0].HasData = true;
+            gridResult[0].Schema = schemaFields;
 
             return gridResult;
 
-        }
-
-        GridResult IPortofolioResults.GetGraphGridResult()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

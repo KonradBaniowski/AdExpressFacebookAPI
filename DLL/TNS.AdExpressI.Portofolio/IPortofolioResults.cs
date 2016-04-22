@@ -94,7 +94,7 @@ namespace TNS.AdExpressI.Portofolio {
         /// <returns>cover items</returns>
         List<VehicleView.VehicleItem> GetVehicleItems();
 
-        GridResult GetGraphGridResult();
+        List<GridResult> GetGraphGridResult();
 
     }
 }
