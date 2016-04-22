@@ -275,7 +275,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     i++;
                     string jsonData = JsonConvert.SerializeObject(gridResult[i].Data);
-                    object obj = new { datachart = jsonData, schema = gridResult[i].Schema};
+                    object obj = new { datachart = jsonData, schema = gridResult[i].Schema, title = gridResult[i].Title };
                     objList.Add(obj);
                 }
                 

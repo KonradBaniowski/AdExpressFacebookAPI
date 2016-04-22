@@ -1142,6 +1142,7 @@ namespace TNS.AdExpressI.Portofolio
                     {
                         i++;
                         var gr = new GridResult();
+                        gr.Title = dr["unitLabel"].ToString();
                         xValues = new string[valuesListSize[long.Parse(dr["idUnit"].ToString())]];
                         gr.Data = new object[xValues.Length , 2];
                         gridResult.Add(gr);

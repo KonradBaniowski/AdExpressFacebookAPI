@@ -323,8 +323,7 @@
                                 var schema = new $.ig.DataSchema("array", {
                                     fields: data[0].schema
                                 });
-
-                                $("#listCharts").append("<div class='col-md-12'><div id='chart" + i + "' class='chart' ></div><div id='legendChart" + i + "' class='legendChart' ></div></div>");
+                                $("#listCharts").append("<div class='col-md-12'><div style='text-align: center; width: 100%;'>"+data[i].title+"</div><div id='chart" + i + "' class='chart' ></div><div id='legendChart" + i + "' class='legendChart' ></div></div>");
                                 ds = new $.ig.DataSource({
                                     type: "json",
                                     schema: schema,
@@ -353,7 +352,7 @@
                                         return num + " % : " + context.itemLabel;
                                     },
                                     showTooltip: true,
-                                    tooltipTemplate: "<div class='ui-chart-tooltip'><strong>${item.LabelKey}</strong><div>@GestionWeb.GetWebWord(1398, Model.Presentation.SiteLanguage): <label>${item.ValKey}</label></div></div>"
+                                    tooltipTemplate: "<div class='ui-chart-tooltip'><strong>${item.LabelKey}</strong><div>" + data[i].title + ": <label>${item.ValKey}</label></div></div>"
                                 });
 
                             }
