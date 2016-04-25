@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using TNS.AdExpress.Classification;
 
 namespace Kantar.AdExpress.Service.Core.Domain
 {
@@ -21,5 +18,16 @@ namespace Kantar.AdExpress.Service.Core.Domain
         Media,
         Period,
         Result
+    }
+
+    public class AdExpressUnivers
+    {
+        public AdExpressUnivers (TNS.Classification.Universe.Dimension dimension)
+        {
+            AdExpressUniverse = new AdExpressUniverse(dimension);
+        }
+        public AdExpressUniverse AdExpressUniverse { get; set; }
+        public bool Success { get; set; }
+        public string Message { get;set;}
     }
 }

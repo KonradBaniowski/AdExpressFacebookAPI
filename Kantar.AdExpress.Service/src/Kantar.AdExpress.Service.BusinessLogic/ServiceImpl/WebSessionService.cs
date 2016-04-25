@@ -146,14 +146,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         long idModule = _webSession.CurrentModule;
                         if (idModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA || idModule == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE || idModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE)
                         {
-                            AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
-                            if (univers != null && univers.Count() > 0)
+                            AdExpressUnivers univers = GetUnivers(trees, _webSession, dimension, security);
+                            if (univers.AdExpressUniverse != null && univers.AdExpressUniverse.Count() > 0)
                             {
                                 bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
-                                List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
+                                List<NomenclatureElementsGroup> nGroups = univers.AdExpressUniverse.GetIncludes();
                                 if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
                                 {
-                                    universDictionary.Add(universDictionary.Count, univers);
+                                    universDictionary.Add(universDictionary.Count, univers.AdExpressUniverse);
                                     _webSession.PrincipalMediaUniverses = universDictionary;
                                     success = true;
                                 }
@@ -237,62 +237,70 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region try catch block
                 else
                 {
-                    AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
-                    try
+                    AdExpressUnivers univers = GetUnivers(trees, _webSession, dimension, security);
+                    //var univers = uni.AdExpressUniverse;
+                    if (univers.Success)
                     {
-                        if (univers != null && univers.Count() > 0)
+                        try
                         {
-                            bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
-                            List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
-                            if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
+                            if (univers.AdExpressUniverse != null && univers.AdExpressUniverse.Count() > 0)
                             {
-                                Dictionary<int, AdExpressUniverse>
-                                        universDictionary = new Dictionary<int, AdExpressUniverse>();
-                                universDictionary.Add(universDictionary.Count, univers);
-
-                                if (!IsValidUniverseLevels(univers, _webSession))
+                                bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
+                                List<NomenclatureElementsGroup> nGroups = univers.AdExpressUniverse.GetIncludes();
+                                if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
                                 {
-                                    response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
+                                    Dictionary<int, AdExpressUniverse>
+                                            universDictionary = new Dictionary<int, AdExpressUniverse>();
+                                    universDictionary.Add(universDictionary.Count, univers.AdExpressUniverse);
+
+                                    if (!IsValidUniverseLevels(univers.AdExpressUniverse, _webSession))
+                                    {
+                                        response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
+                                    }
+                                    else
+                                    {
+                                        _webSession.PrincipalProductUniverses = universDictionary;
+                                        response.Success = true;
+                                        _webSession.Save();
+                                        _webSession.Source.Close();
+                                    }
                                 }
                                 else
                                 {
-                                    _webSession.PrincipalProductUniverses = universDictionary;
-                                    response.Success = true;
-                                    _webSession.Save();
-                                    _webSession.Source.Close();
+                                    response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
                                 }
+                            }
+                            else if (required)
+                            {
+                                response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
                             }
                             else
                             {
-                                response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                                response.Success = true;
                             }
-                        }
-                        else if (required)
-                        {
-                            response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
-                        }
-                        else
-                        {
-                            response.Success = true;
+
                         }
 
+                        catch (SecurityException)
+                        {
+                            _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
+                            _webSession.Save();
+                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
+                        }
+                        catch (CapacityException)
+                        {
+                            _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                            _webSession.Save();
+                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
+                        }
+                        catch (Exception)
+                        {
+                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
+                        }
                     }
-
-                    catch (SecurityException)
+                    else
                     {
-                        _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
-                        _webSession.Save();
                         response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
-                    }
-                    catch (CapacityException)
-                    {
-                        _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-                        _webSession.Save();
-                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
-                    }
-                    catch (Exception)
-                    {
-                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
                     }
                 }
                 #endregion
@@ -716,13 +724,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         #endregion
 
         #region Private Methods
-        private AdExpressUniverse GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
+        private AdExpressUnivers GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
         {
-            AdExpressUniverse univers = new AdExpressUniverse(dimension);
+            AdExpressUnivers result = new AdExpressUnivers(dimension);
+            //AdExpressUniverse univers = new AdExpressUniverse(dimension);
+
             try
             {
                 NomenclatureElementsGroup group = null;
-                univers.Security = security;
+                result.AdExpressUniverse.Security = security;
                 int index = 0;
                 foreach (Tree tree in trees)
                 {
@@ -744,14 +754,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     index++;
                     if (group != null && group.Count() > 0)
-                        univers.AddGroup(univers.Count(), group);
+                        result.AdExpressUniverse.AddGroup(result.AdExpressUniverse.Count(), group);
                 }
+                result.Success = true;
+                //result.AdExpressUniverse = univers;
             }
-            catch
+            catch (Exception ex)
             {
-
+                result.Success = false;
+                result.Message = ex.Message;
             }
-            return univers;
+            return result;
         }
 
         private bool MustSelectIncludeItems(WebSession webSession)
