@@ -32,5 +32,6 @@ namespace Km.AdExpressClientWeb.Models.DetailSelection
         public bool ShowUnivers { get; set; }
         public bool ShowUniversDetails { get; set; }
         public bool ShowMarket { get; set; }
+        public bool ShowGenericlevelDetail { get; set; }
     }
 }

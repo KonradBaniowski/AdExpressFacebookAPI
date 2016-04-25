@@ -55,6 +55,7 @@ namespace Km.AdExpressClientWeb.I18n
                 StudySelectionLabel = GestionWeb.GetWebWord(LanguageConstantes.StudySelection, siteLanguage),
                 PeriodSelectionLabel = GestionWeb.GetWebWord(LanguageConstantes.PeriodSelection, siteLanguage),
                 LevelDetailsLabel = GestionWeb.GetWebWord(LanguageConstantes.LevelDetails, siteLanguage),
+                MediaLabel = GestionWeb.GetWebWord(LanguageConstantes.MediaCode, siteLanguage),
                 UnitLabel = GestionWeb.GetWebWord(LanguageConstantes.Unit, siteLanguage),
                 InsertionLabel = GestionWeb.GetWebWord(LanguageConstantes.Insertion, siteLanguage),
                 UniversProductLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversProduct, siteLanguage),
