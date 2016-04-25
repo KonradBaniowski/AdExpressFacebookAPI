@@ -1,56 +1,116 @@
-﻿@model Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain.DetailSelectionResponse
+﻿@model Km.AdExpressClientWeb.Models.DetailSelection.DetailSelectionViewModel
 
-<div>
-    <h4>DetailSelectionResponse</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ModuleLabel)
-        </dt>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.StudySelectionLabel)</strong></label>
+                <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.ModuleLabel)</strong></label>
+            </div>
+            @if (Model.DetailSelectionWSModel.ShowDate)
+            {
+                <div class="form-group">
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.PeriodSelectionLabel)</strong></label>
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.Dates)</strong></label>
+                </div>
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.ModuleLabel)
-        </dd>
+            @if (Model.DetailSelectionWSModel.ShowUnivers)
+            {
+                <div class="form-group">
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.MediaLabel)</strong></label>
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(_ => _.DetailSelectionWSModel.MediasSelectedLabel)</strong></label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UniversSupportLabel)</strong></label>
+                </div>
+                if (Model.DetailSelectionWSModel.ShowUniversDetails)
+                {
+                    var size = (12 / Model.DetailSelectionWSModel.UniversMedia.Count);
+                    <div class="form-group">
+                        <label class="col-sm-@(size) control-label text-left">
+                            @for (int i = 0; i < Model.DetailSelectionWSModel.UniversMedia.Count; i++)
+                            {
+                                <label class="col-sm-@(size) control-label text-left">
+                                    <ul class="treeview">
+                                        <li>
+                                            <a href="#">@Model.DetailSelectionWSModel.UniversMedia[i].Label</a>
+                                            <ul>
+                                                @for (int j = 0; j < Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels.Count; j++)
+                                                {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NiveauDetailLabel)
-        </dt>
+                                                    <li>
+                                                        <a href="#">@Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].Label</a>
+                                                        <ul>
+                                                            @for (int z = 0; z < Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].UniversItems.Count; z++)
+                                                            {
+                                                                <li>
+                                                                    <a href="#">@Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].UniversItems[z].Label</a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </label>
+                            }
 
-        <dd>
-            @Html.DisplayFor(model => model.NiveauDetailLabel)
-        </dd>
+                    </div>
+                }
+            }
+            @if (Model.DetailSelectionWSModel.ShowGenericlevelDetail)
+            {
+                <div class="form-group">
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.LevelDetailsLabel)</strong></label>
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.NiveauDetailLabel)</strong></label>
+                </div>
+            }
+            <div class="form-group">
+                <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UnitLabel)</strong></label>
+                <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.UniteLabel)</strong></label>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UniteLabel)
-        </dt>
+            @if (Model.DetailSelectionWSModel.ShowMarket)
+            {
+                <div class="form-group">
+                    <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UniversProductLabel)</strong></label>
+                </div>
+                var size = (12 / Model.DetailSelectionWSModel.UniversMarket.Count);
+                <div class="form-group">
 
-        <dd>
-            @Html.DisplayFor(model => model.UniteLabel)
-        </dd>
+                    @for (int i = 0; i < Model.DetailSelectionWSModel.UniversMarket.Count; i++)
+                    {
+                        <label class="col-sm-@(size) control-label text-left">
+                            <ul class="treeview">
+                                <li>
+                                    <a href="#">@Model.DetailSelectionWSModel.UniversMarket[i].Label</a>
+                                    <ul>
+                                        @for (int j = 0; j < Model.DetailSelectionWSModel.UniversMarket[i].UniversLevels.Count; j++)
+                                        {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateBegin)
-        </dt>
+                                            <li>
+                                                <a href="#">@Model.DetailSelectionWSModel.UniversMarket[i].UniversLevels[j].Label</a>
+                                                <ul>
+                                                    @for (int z = 0; z < Model.DetailSelectionWSModel.UniversMarket[i].UniversLevels[j].UniversItems.Count; z++)
+                                                    {
+                                                        <li>
+                                                            <a href="#">@Model.DetailSelectionWSModel.UniversMarket[i].UniversLevels[j].UniversItems[z].Label</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                        </label>
+                    }
+                </div>
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.DateBegin)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateEnd)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateEnd)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dates)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dates)
-        </dd>
-
-    </dl>
+        </form>
+    </div>
 </div>

@@ -8,8 +8,10 @@
 <div class="row">
     @Html.HiddenFor(e => e.Dimension)
     @Html.HiddenFor(e => e.Multiple)
+
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("UserUniversGroups", Model.UniversGroups)
+    @Html.Partial("DetailSelection")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
@@ -99,7 +101,7 @@
                                                     @Model.Branches.FirstOrDefault(p => p.IsSelected).Label
                                                     <span class="caret"></span>
                                                 </button>
-                                                <ul class="dropdown-menu bg-blue pull-right">
+                                                <ul class="dropdown-menu bg-blue">
                                                     @foreach (var item in Model.Branches)
                                                     {
                                                         if (item.IsSelected)
@@ -184,7 +186,7 @@
                                                             <div class="panel panel-primary panel-results">
                                                                 <div class="panel-heading head-results"
                                                                      role="tab"
-                                                                     id="heading-@(level.Id)">
+                                                                     id="heading-@(level.Id)-@(tree.Id)">
                                                                     <h6 class="panel-title famille ">
                                                                         <a role="button"
                                                                            data-toggle="collapse"
@@ -221,7 +223,7 @@
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
                                 <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-bookmark-o"></i></a>
+                                    <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-floppy-o"></i></a>
 
                                 </div>
                             </div>
@@ -241,6 +243,7 @@
     </div>
 </div>
 
-@section scripts {    
-   @Scripts.Render("~/bundles/lostwon-media")
+@section scripts {
+    @Scripts.Render("~/bundles/lostwon-media")
+    @Scripts.Render("~/bundles/detail-selection")
 }

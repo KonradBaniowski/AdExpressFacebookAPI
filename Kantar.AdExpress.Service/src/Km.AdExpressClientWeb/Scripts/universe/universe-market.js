@@ -3,7 +3,6 @@ var dimension = $('#Dimension').val();
 //Déplacer un élement marché
 $('#move-item').on('click', function () {
     var levelSrc = $('.panel-marche .ui-selectee.ui-selected');
-    console.log(levelSrc);
     if (levelSrc.length >= 1) {
         var universSrc = $('.ui-selectee.ui-selected').closest('.panel-default').attr('data-universe');
         var tabSelected = $('ul > li[class="active"] > a').attr('data-tab');
@@ -16,6 +15,7 @@ $('#move-item').on('click', function () {
             return
         }
         $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
+        $('#heading-' + universSrc + '-' + tabSelected).find('.panel-title').addClass('orange');
         $.each(levelSrc, function (index, value) {
             var item = $(value).clone();
             var find = false;

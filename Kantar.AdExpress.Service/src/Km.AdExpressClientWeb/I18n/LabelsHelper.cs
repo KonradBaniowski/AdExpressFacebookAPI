@@ -49,7 +49,19 @@ namespace Km.AdExpressClientWeb.I18n
                 QuestionTagDefault = GestionWeb.GetWebWord(LanguageConstantes.QuestionTagCode, siteLanguage),
                 QuestionTag1 = GestionWeb.GetWebWord(LanguageConstantes.QuestionTag1Code, siteLanguage),
                 QuestionTag2 = GestionWeb.GetWebWord(LanguageConstantes.QuestionTag2Code, siteLanguage),
-                QuestionTag3 = GestionWeb.GetWebWord(LanguageConstantes.QuestionTag3Code, siteLanguage)
+                QuestionTag3 = GestionWeb.GetWebWord(LanguageConstantes.QuestionTag3Code, siteLanguage),
+
+                //RAPPEL DE SELECTION
+                StudySelectionLabel = GestionWeb.GetWebWord(LanguageConstantes.StudySelection, siteLanguage),
+                PeriodSelectionLabel = GestionWeb.GetWebWord(LanguageConstantes.PeriodSelection, siteLanguage),
+                LevelDetailsLabel = GestionWeb.GetWebWord(LanguageConstantes.LevelDetails, siteLanguage),
+                MediaLabel = GestionWeb.GetWebWord(LanguageConstantes.MediaCode, siteLanguage),
+                UnitLabel = GestionWeb.GetWebWord(LanguageConstantes.Unit, siteLanguage),
+                InsertionLabel = GestionWeb.GetWebWord(LanguageConstantes.Insertion, siteLanguage),
+                UniversProductLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversProduct, siteLanguage),
+                UniversSupportLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversSupport, siteLanguage),
+
+
             };
             return result;
         }

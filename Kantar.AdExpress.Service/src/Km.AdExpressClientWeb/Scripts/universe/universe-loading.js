@@ -2,24 +2,37 @@
 var params = {
     dimension: dimension
 };
-$(function () {
-    $.ajax({
-        url: '/Universe/LoadUserUniversGroups',
-        type: 'GET',
-        data: params,
-        error: function (xmlHttpRequest, errorText, thrownError) {
-            //alert("error");
-        },
-        success: function (response) {
-            $('#monunivers .modal-content').append(response);
-        }
 
-    });
+$(document).on('click', '#myUnivers', function (event) {
+    event.preventDefault();
+    $('#myUnivers').off('click');
+    var dimension = $('#Dimension').val();
+    var params = {
+        dimension: dimension
+    };
+        $.ajax({
+            url: '/Universe/LoadUserUniversGroups',
+            type: 'GET',
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#universList').html('');
+                $('#monunivers .modal-content').append(response);
+                $('#monunivers').modal('show');
+            }
+
+        });
 });
 
 $('#save-universe').on('click', function (event) {
     event.preventDefault();
     $('#save-universe').off('click');
+    var dimension = $('#Dimension').val();
+    var params = {
+        dimension: dimension
+    };
     $.ajax({
         url: '/Universe/SaveUserUnivers',
         type: 'GET',
@@ -108,22 +121,19 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         type: 'POST',
         data: params,
         success: function (response) {
-            $('#saveunivers').modal('hide');
+            $('#saveunivers').modal('hide');            
             $.ajax({
-                url: '/Universe/LoadUserUniversGroups',
-                type: 'POST',
+                url: '/Universe/SaveUserUnivers',
+                type: 'GET',
                 data: params,
-                error: function (data) {
-                    bootbox.alert(data);
-                },
-                success: function (data) {
-                    $('#monunivers .modal-content').empty();
-                    $('#monunivers .modal-content').append(data);
+                success: function (response) {
+                    $('#saveunivers').append(response);
+                    $('#saveunivers').modal('show');
                 }
             });
             bootbox.alert(response);
         }
-    });
+    });    
 });
 
 $(document).on('click', '#LoadUnivers', function (event) {
@@ -197,6 +207,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
                     var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
                     panel.html('');
                     $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
+                    $('#heading-' + uniLvl.Id + '-' + id).find('.panel-title').addClass('orange');
                     SetUniversItems(uniLvl, panel);
                 });
 
@@ -210,12 +221,6 @@ $(document).on('click', '#LoadUnivers', function (event) {
         }
     });
 });
-
-
-$(document).on('click', '#myUnivers', function (event) {
-    event.preventDefault();
-    $('#monunivers').modal('show');
-}); 
 
 function SetUniversItems(data, panel) {
     if (data.UniversItems.length > 0) {
@@ -234,8 +239,6 @@ function SetUniversItems(data, panel) {
         }
     }
 }
-
-
 $(document).on('click', '.accordion-toggle', function (e) {
     event.preventDefault();
     $('#accordion').find('.accordion-body.collapse.in').collapse('hide');

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using VM = Km.AdExpressClientWeb.Models.Shared;
 using TNS.Classification.Universe;
+using Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain;
+using Km.AdExpressClientWeb.Models.DetailSelection;
 
 namespace Km.AdExpressClientWeb.App_Start
 {
@@ -35,6 +37,7 @@ namespace Km.AdExpressClientWeb.App_Start
                 .ForMember(dest => dest.SendDate, opt => opt.MapFrom(src => src.DateSend))
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.DateBeginStudy))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.DateEndStudy));
+            Mapper.CreateMap<DetailSelectionResponse, DetailSelectionWSModel>();
         }
     }
 }

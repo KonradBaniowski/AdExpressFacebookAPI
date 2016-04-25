@@ -18,6 +18,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long PhoneNumberCode = 71;
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
+        public const long MediaCode = 190;
         public const long DroppedSuccessfully = 286;
         public const long QuestionTag3Code = 647;
         public const long CreateFolder = 696;
@@ -38,6 +39,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long DroppingFailed = 830;
         public const long NoQueryErrorMsg = 831;
         public const long RequiredPermission = 832;
+        public const long StudySelection = 842;
+        public const long Unit = 849;
         public const long CantLoadSession = 851;
         public const long DownloadLabel = 874;
         public const long UserUniversCode = 875;
@@ -54,8 +57,11 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Periodicity = 1293;
         public const long Monthly = 1294;
         public const long Quartly = 1295;
+        public const long Insertion = 1400;
         public const long MediaSelected = 1487;
+        public const long UniversProduct = 1759;
         public const long IncompleteDataForQuery = 1787;
+        public const long LevelDetails = 1886;
         public const long CreativeLabel = 1888;
         public const long VisuelLabel = 1909;
         public const long JobTitleCode = 1976;
@@ -68,6 +74,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LostWonDescriptionCode = 2198;
         public const long PortfolioDescriptionCode = 2199;
         public const long MediaScheduleDescriptionCode = 2200;
+        public const long UniversSupport = 2540;
         public const long InsertionsLabel = 2245;
         public const long SelectUnivers = 2261;
         public const long ErrorOverLimit = 2264;//==> only 200 items
@@ -76,6 +83,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ExcludeCode = 2269;
         public const long IncludeCode = 2270;
         public const long BranchLabelCode = 2272;
+        public const long PeriodSelection = 2275;
         public const long ElementLabelCode = 2278;
         public const long DeleteAllcode = 2279;
         public const long IncludedElements = 2281;
@@ -117,6 +125,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long QuestionTag2Code = 3043;
         public const long Results = 3044;
         public const long Directories = 3045;
+        public const long NotAvailableYet = 3046;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion

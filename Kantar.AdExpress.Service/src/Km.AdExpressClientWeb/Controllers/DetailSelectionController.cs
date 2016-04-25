@@ -1,4 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain;
+using Km.AdExpressClientWeb.I18n;
+using Km.AdExpressClientWeb.Models.DetailSelection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +21,30 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult GetDetailSelection()
         {
+            var vm = new DetailSelectionViewModel();
             var cla = new ClaimsPrincipal(User.Identity);
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var result = _detailSelectionService.GetDetailSelection(idWS);
-            return PartialView(result);
+            vm.DetailSelectionWSModel = AutoMapper.Mapper.Map<DetailSelectionWSModel>(result);
+            vm.Labels = LabelsHelper.LoadPageLabels(vm.DetailSelectionWSModel.SiteLanguage);
+
+            return PartialView(vm);
+        }
+
+        public ActionResult LoadSessionDetails(string sessionId)
+        {
+            var vm = new DetailSelectionViewModel();
+            if (!String.IsNullOrEmpty(sessionId))
+            {
+                var cp = new ClaimsPrincipal(User.Identity);
+                var idWebSession = cp.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                var result = _detailSelectionService.LoadSessionDetails(sessionId, idWebSession);
+                vm.DetailSelectionWSModel = AutoMapper.Mapper.Map<DetailSelectionWSModel>(result);
+                vm.Labels = LabelsHelper.LoadPageLabels(vm.DetailSelectionWSModel.SiteLanguage);
+            }
+            else
+                vm.Message = "Invalid selection";
+            return PartialView("GetDetailSelection", vm);
         }
     }
 }

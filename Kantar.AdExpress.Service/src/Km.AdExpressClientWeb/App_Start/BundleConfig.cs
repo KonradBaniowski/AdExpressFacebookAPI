@@ -36,7 +36,8 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/bootstrap-datetimepicker.js",
                         "~/Scripts/bootstrap-select.js",
                         "~/Scripts/spin.js",
-                        "~/Scripts/bootbox.js"));
+                        "~/Scripts/bootbox.js",
+                        "~/Scripts/tree-view/tree-view.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/period-selector").Include(
                       "~/Scripts/period-selector.js"));
@@ -51,6 +52,7 @@ namespace Km.AdExpressClientWeb
                       "~/Content/themes/base/theme.css",
                       "~/Content/bootstrap-select.css",
                       "~/Content/treegrid.css",
+                      "~/Content/treeview.css",
                       "~/Content/options-control.css",
                       "~/Content/spinner.css"));
 

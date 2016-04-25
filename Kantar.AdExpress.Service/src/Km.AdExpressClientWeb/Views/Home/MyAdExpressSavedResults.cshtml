@@ -1,7 +1,7 @@
 ﻿@model  AdExpressUniversResponse
 @using Kantar.AdExpress.Service.Core.Domain;
 
-<div role="tabpanel"  class="@(Model.UniversType == UniversType.Result ? "tab-pane active" : "tab-pane")" id="@(Model.UniversType)">
+<div role="tabpanel" class="@(Model.UniversType == UniversType.Result ? "tab-pane active" : "tab-pane")" id="@(Model.UniversType)">
     <div class="panel panel-default panel-tab">
         <div class="panel-heading resume">
             @if (Model != null && Model.UniversGroups.Any())
@@ -9,11 +9,11 @@
                 <h3 class="panel-title pull-left">
                     <span class="blue">@Model.NbrFolder</span> @Model.Labels.Directories,  <span class="blue">@Model.NbrUnivers</span> @Model.Labels.Results
                 </h3>
-                            <h3 class="panel-title pull-right">
-                                <a id="btnCreate@(Model.UniversType)Directory"data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>
-                                <a id="btnRename@(Model.UniversType)Directory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-pencil text-md"></i></a>
-                                <a id="btnDrop@(Model.UniversType)Directory" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md adExpress-tools"></i></a>
-                            </h3>
+                <h3 class="panel-title pull-right">
+                    <a id="btnCreate@(Model.UniversType)Directory" data-toggle="modal" title="Ajouter un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>
+                    <a id="btnRename@(Model.UniversType)Directory" data-toggle="modal" title="Renommer un répertoire" class="m-r-xs adExpress-tools"><i class="fa icon-pencil text-md"></i></a>
+                    <a id="btnDrop@(Model.UniversType)Directory" data-toggle="modal" title="Supprimer un répertoire"><i class="fa icon-trash text-md adExpress-tools"></i></a>
+                </h3>
             }
             else
             {
@@ -28,97 +28,97 @@
             {
                 foreach (var item in Model.UniversGroups)
                 {
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-                                    <a class="btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
-                                        @item.Description
-                                        <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse@(item.Id)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    <div class="row">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a class="btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
+                                @item.Description
+                                <i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse@(item.Id)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <div class="row">
 
-                                        @if (item.UserUnivers.Any(p => p.Id > 0))
+                                @if (item.UserUnivers.Any(p => p.Id > 0))
                                         {
-                                            <div class="col-lg-6">
-                                                <ul class="list-group b-r">
+                                        <div class="col-lg-6">
+                                            <ul class="list-group b-r">
 
-                                                    @foreach (var univers in item.UserUnivers.Take(item.FirstColumnSize))
+                                                @foreach (var univers in item.UserUnivers.Take(item.FirstColumnSize))
                                                     {
-                                                        <li class="list-group-item">
-                                                            <span>@univers.Description</span>
-                                                            <div class="pull-right">
-                                                                @if (Model.UniversType == UniversType.Result)
+                                                    <li class="list-group-item">
+                                                        <span>@univers.Description</span>
+                                                        <div class="pull-right">
+                                                            @if (Model.UniversType == UniversType.Result)
                                                                 {
-                                                                <a class="btnLoadSession adExpress-tools"data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
+                                                                <a class="btnLoadSession adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
                                                                     <i class="fa fa-cogs fa-lg"></i>
                                                                 </a>
                                                                 }
-                                                                <a class="btnLoadDetails adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
-                                                                    <i class="fa fa-info-circle fa-lg"></i>
-                                                                </a>
-                                                                <a class="btnMove@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
-                                                                    <i class="fa icon-share-alt fa-lg"></i>
-                                                                </a>
-                                                                <a class="btnRename@(Model.UniversType) adExpress-tools" data-toggle="modal"  data-id="@univers.Id" data-directory-id="@item.Id">
-                                                                    <i class="fa fa-pencil fa-lg"></i>
-                                                                </a>
-                                                                <a class="btnDelete@(Model.UniversType) adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
-                                                                    <i class="fa fa-trash-o fa-lg"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    }
-                                                </ul>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                            <ul class="list-group b-r">
-                                                                @foreach (var univers in item.UserUnivers.GetRange(item.FirstColumnSize, item.SecondeColumnSize))
-                                                                {
-                                                                    <li class="list-group-item">
-                                                                        <span>@univers.Description</span>
-                                                                        <div class="pull-right">
-                                                                            @if (Model.UniversType == UniversType.Result)
-                                                                            {
-                                                                                <a class="btnLoadSession adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
-                                                                                    <i class="fa fa-cogs fa-lg"></i>
-                                                                                </a>
-                                                                            }
-                                                                            <a class="btnLoadDetails adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
-                                                                                <i class="fa fa-info-circle fa-lg"></i>
-                                                                            </a>
-                                                                            <a class="btnMove@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
-                                                                                <i class="fa icon-share-alt fa-lg"></i>
-                                                                            </a>
-                                                                            <a class="btnRename@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id">
-                                                                                <i class="fa fa-pencil fa-lg"></i>
-                                                                            </a>
-                                                                            <a class="btnDelete@(Model.UniversType) adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
-                                                                                <i class="fa fa-trash-o fa-lg"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </li>
-                                                                }
-                                                            </ul>
+                                                            <a class="btnLoadDetails adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
+                                                                <i class="fa fa-info-circle fa-lg"></i>
+                                                            </a>
+                                                            <a class="btnMove@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
+                                                                <i class="fa icon-share-alt fa-lg"></i>
+                                                            </a>
+                                                            <a class="btnRename@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                <i class="fa fa-pencil fa-lg"></i>
+                                                            </a>
+                                                            <a class="btnDelete@(Model.UniversType) adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                <i class="fa fa-trash-o fa-lg"></i>
+                                                            </a>
                                                         </div>
+                                                    </li>
+                                                    }
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <ul class="list-group b-r">
+                                                @foreach (var univers in item.UserUnivers.GetRange(item.FirstColumnSize, item.SecondeColumnSize))
+                                                                {
+                                                                <li class="list-group-item">
+                                                                    <span>@univers.Description</span>
+                                                                    <div class="pull-right">
+                                                                        @if (Model.UniversType == UniversType.Result)
+                                                                            {
+                                                                            <a class="btnLoadSession adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                                <i class="fa fa-cogs fa-lg"></i>
+                                                                            </a>
+                                                                            }
+                                                                        <a class="btnLoadDetails adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id" data-type="Session">
+                                                                            <i class="fa fa-info-circle fa-lg"></i>
+                                                                        </a>
+                                                                        <a class="btnMove@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id" title="Déplacer le résultat">
+                                                                            <i class="fa icon-share-alt fa-lg"></i>
+                                                                        </a>
+                                                                        <a class="btnRename@(Model.UniversType) adExpress-tools" data-toggle="modal" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                            <i class="fa fa-pencil fa-lg"></i>
+                                                                        </a>
+                                                                        <a class="btnDelete@(Model.UniversType) adExpress-tools" data-id="@univers.Id" data-directory-id="@item.Id">
+                                                                            <i class="fa fa-trash-o fa-lg"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                                }
+                                            </ul>
+                                        </div>
                                         }
                                         else
                                         {
-                                            <h3 class="panel-title text-center">
-                                                <span>@Model.Labels.NoSavedUnivers</span>
-                                            </h3>
+                                        <h3 class="panel-title text-center">
+                                            <span>@Model.Labels.NoSavedUnivers</span>
+                                        </h3>
                                         }
 
 
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
                 }
             }
         </div>
@@ -144,11 +144,11 @@
                         {
                             if (item == Model.UniversGroups.FirstOrDefault())
                             {
-                                <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
+                        <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
                             }
                             else
                             {
-                                <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
+                        <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
                             }
                         }
                     </ul>
@@ -217,11 +217,11 @@
                         {
                             if (item == Model.UniversGroups.FirstOrDefault())
                             {
-                                <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
+                        <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
                             }
                             else
                             {
-                                <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
+                        <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
                             }
                         }
                     </ul>
@@ -257,11 +257,11 @@
                         {
                             if (item == Model.UniversGroups.FirstOrDefault())
                             {
-                                <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
+                        <li id="default" hidden><a data-id="@item.Id">@item.Description</a></li>
                             }
                             else
                             {
-                                <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
+                        <li id="@item.Id"><a data-id="@item.Id">@item.Description</a></li>
                             }
                         }
                     </ul>
@@ -271,6 +271,12 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-valider" id="btnValidDrop@(Model.UniversType)Directory" data-dismiss="modal">@Model.Labels.Submit</button>
             </div>
+        </div>
+    </div>
+</div>
+<div id="detail-selection" class="modal fade modal-express">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-body">
         </div>
     </div>
 </div>

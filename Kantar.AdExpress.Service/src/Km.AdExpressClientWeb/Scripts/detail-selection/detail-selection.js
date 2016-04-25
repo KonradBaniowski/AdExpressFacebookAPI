@@ -8,13 +8,16 @@ $("#load-detail-selection").on('click', function (e) {
         contentType: 'application/json',
         type: 'POST',
         datatype: 'JSON',
-        //data: JSON.stringify(params),
         error: function (xmlHttpRequest, errorText, thrownError) {
             bootbox.alert("An error occurred while processing your request.");
         },
         success: function (data) {
-
+            $('#detail-selection .modal-body').html('');
             $('#detail-selection .modal-body').append(data);
+            $('.treeview').each(function () {
+                var tree = $(this);
+                tree.treeview();
+            })
         }
     });
 });
