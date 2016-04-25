@@ -33,11 +33,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public DetailSelectionResponse LoadSessionDetails(string idSession, string idWebSession)
         {
             Int64 idMySession = 0;
-            DetailSelectionResponse result = new DetailSelectionResponse();            
+            DetailSelectionResponse result = new DetailSelectionResponse();
             if (!String.IsNullOrEmpty(idSession) && !String.IsNullOrWhiteSpace(idWebSession))
             {
                 idMySession = Int64.Parse(idSession);
-                var webSession= (WebSession)WebSession.Load(idWebSession);
+                var webSession = (WebSession)WebSession.Load(idWebSession);
                 var webSessionSave = (WebSession)MyResultsDAL.GetResultMySession(idMySession.ToString(), webSession);
                 result = LoadDetailsSelection(webSessionSave);
             }
@@ -79,25 +79,23 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 switch ((WebConstantes.DetailSelection.Type)currentType)
                 {
-                    //case WebConstantes.DetailSelection.Type.genericMediaLevelDetail:
-                    //    domain.NiveauDetailLabel = (excel) ? Convertion.ToHtmlString(_webSession.GenericMediaDetailLevel.GetLabel(_webSession.SiteLanguage))
-                    //        : _webSession.GenericMediaDetailLevel.GetLabel(_webSession.SiteLanguage);
-                    //    break;
-                    //case WebConstantes.DetailSelection.Type.genericProductLevelDetail:
-                    //    domain.NiveauDetailLabel = (excel) ? Convertion.ToHtmlString(_webSession.GenericProductDetailLevel.GetLabel(_webSession.SiteLanguage))
-                    //        : _webSession.GenericProductDetailLevel.GetLabel(_webSession.SiteLanguage);
-                    //    break;
                     case WebConstantes.DetailSelection.Type.genericMediaLevelDetail:
                         domain.NiveauDetailLabel = _webSession.GenericMediaDetailLevel.GetLabel(_webSession.SiteLanguage);
-
                         break;
                     case WebConstantes.DetailSelection.Type.genericProductLevelDetail:
                         domain.NiveauDetailLabel = _webSession.GenericProductDetailLevel.GetLabel(_webSession.SiteLanguage);
+                        break;
+                    case WebConstantes.DetailSelection.Type.genericColumnLevelDetail:
+                        domain.GenericLevelDetailColumn = _webSession.GenericColumnDetailLevel.GetLabel(_webSession.SiteLanguage);
                         break;
                     default:
                         break;
                 }
             }
+            #endregion
+
+            #region Niveaux de détail colonne générique
+            //WebFunctions.MediaDetailLevel.GetGenericLevelDetailColumn(_webSession, ref displayGenericlevelDetailColumnLabel, genericlevelDetailColumnLabel, false);
             #endregion
 
             #region Unité :
@@ -126,13 +124,33 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             #endregion
 
+            #region StudyPeriod: 
+            domain.StudyPeriod = ManageStudyPeriod(_webSession);
+            #endregion
+
+            #region ComparativePeriod:
+            domain.ComparativePeriod = ManageComparativePeriod(_webSession);
+            #endregion
+
+            #region ComparativePeriodType:
+            domain.ComparativePeriodType = ManageComparativePeriodType(_webSession);
+            #endregion
+
+            #region PeriodDisponibilityType:
+            domain.PeriodDisponibilityType = ManagePeriodDisponibilityType(_webSession);
+            #endregion
+
             #region defined
             domain.ShowDate = Dates.isPeriodSet(domain.DateBegin, domain.DateEnd);
             domain.ShowUnivers = !(domain.MediasSelected.Count == 0);
             domain.ShowUniversDetails = (!(domain.MediasSelected.Count == 0) && !(domain.UniversMedia.Count == 0));
             domain.ShowMarket = (domain.UniversMarket.Count > 0);
             domain.ShowGenericlevelDetail = !string.IsNullOrEmpty(domain.NiveauDetailLabel);
-
+            domain.ShowGenericLevelDetailColumn = !string.IsNullOrEmpty(domain.GenericLevelDetailColumn);
+            domain.ShowStudyPeriod = !string.IsNullOrEmpty(domain.StudyPeriod);
+            domain.ShowComparativePeriod = !string.IsNullOrEmpty(domain.ComparativePeriod);
+            domain.ShowComparativePeriodType = !string.IsNullOrEmpty(domain.ComparativePeriodType);
+            domain.ShowPeriodDisponibilityType = !string.IsNullOrEmpty(domain.PeriodDisponibilityType);
             #endregion
 
             return domain;
@@ -214,6 +232,69 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var dal = factoryLevels.CreateClassificationLevelListDAL(key, string.Join(",", searchTodo[key]));
 
             return searchTodo[key].Select(_ => new TextData { Id = _, Label = dal[_] }).ToList();
+        }
+
+        private string ManageStudyPeriod(WebSession webSession)
+        {
+            string StudyPeriod = string.Empty;
+            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
+                if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule)
+                    StudyPeriod = Dates.GetStudyPeriodDetail(webSession, webSession.CurrentModule);
+            }
+            else if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
+                || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
+                || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
+                )
+            {
+                if (webSession.isStudyPeriodSelected())
+                    StudyPeriod = Dates.GetStudyPeriodDetail(webSession, webSession.CurrentModule);
+            }
+            return StudyPeriod;
+        }
+        private string ManageComparativePeriod(WebSession webSession)
+        {
+            string ComparativePeriod = string.Empty;
+            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
+                if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule)
+                    ComparativePeriod = Dates.GetComparativePeriodDetail(webSession, webSession.CurrentModule);
+            }
+            else if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+            {
+                if (webSession.isPeriodComparative())
+                    ComparativePeriod = Dates.GetComparativePeriodDetail(webSession, webSession.CurrentModule);
+            }
+            return ComparativePeriod;
+        }
+
+        private string ManageComparativePeriodType(WebSession webSession)
+        {
+            string ComparativePeriodType = string.Empty;
+            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
+                if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule)
+                    ComparativePeriodType = Dates.GetComparativePeriodTypeDetail(webSession, webSession.CurrentModule);
+            }
+            else if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+            {
+                if (webSession.isComparativePeriodTypeSelected())
+                    ComparativePeriodType = Dates.GetComparativePeriodTypeDetail(webSession, webSession.CurrentModule);
+            }
+            return ComparativePeriodType;
+        }
+
+        private string ManagePeriodDisponibilityType(WebSession webSession)
+        {
+            string PeriodDisponibilityType = string.Empty;
+            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+            {
+                if (webSession.isPeriodDisponibilityTypeSelected())
+                {
+                    PeriodDisponibilityType = Dates.GetPeriodDisponibilityTypeDetail(webSession);
+                }
+            }
+            return PeriodDisponibilityType;
         }
     }
 }

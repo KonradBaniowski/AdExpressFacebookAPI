@@ -13,6 +13,7 @@
 
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("DetailSelection")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -243,9 +244,9 @@
                                     pageSize: 25
                                 },
                                  {
-                                    name: "Sorting",
-                                    type: "local" ,
-                                    applySortedColumnCss : false
+                                     name: "Sorting",
+                                     type: "local",
+                                     applySortedColumnCss: false
                                  }
                                    ,
                                 {
@@ -303,7 +304,7 @@
                     }
                 });
             }
-            
+
 
             function CallPortfolioGraphResult() {
                 $.ajax({
@@ -323,7 +324,7 @@
                                 var schema = new $.ig.DataSchema("array", {
                                     fields: data[0].schema
                                 });
-                                $("#listCharts").append("<div class='col-md-12'><div style='text-align: center; width: 100%;'>"+data[i].title+"</div><div id='chart" + i + "' class='chart' ></div><div id='legendChart" + i + "' class='legendChart' ></div></div>");
+                                $("#listCharts").append("<div class='col-md-12'><div style='text-align: center; width: 100%;'>" + data[i].title + "</div><div id='chart" + i + "' class='chart' ></div><div id='legendChart" + i + "' class='legendChart' ></div></div>");
                                 ds = new $.ig.DataSource({
                                     type: "json",
                                     schema: schema,
@@ -344,7 +345,7 @@
                                     leaderLineType: "straightLine",
                                     othersCategoryThreshold: 0,
                                     othersCategoryType: "number",
-                                    brushes: ["#FFE100", "#FF0080", "#B8DC00", "#00C8FF", "#FF8C00", "#9C1E8D","#14C896", "#3C6BBF", "#B8292F", "#51266B", "#2B6077", "#2D2B62", "#000000", "#787878", "#E7E7E7"],
+                                    brushes: ["#FFE100", "#FF0080", "#B8DC00", "#00C8FF", "#FF8C00", "#9C1E8D", "#14C896", "#3C6BBF", "#B8292F", "#51266B", "#2B6077", "#2D2B62", "#000000", "#787878", "#E7E7E7"],
                                     legend: { element: 'legendChart' + i, type: "item" },
                                     formatLabel: function (context) {
                                         var num = context.percentValue
@@ -636,4 +637,5 @@
 
 
     </script>
+    @Scripts.Render("~/bundles/detail-selection")
 }

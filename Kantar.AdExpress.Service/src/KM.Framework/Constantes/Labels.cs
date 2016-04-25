@@ -102,5 +102,14 @@ namespace KM.Framework.Constantes
         public string InsertionLabel { get; set; }//w1400
         public string UniversProductLabel { get; set; }//w1759
         public string UniversSupportLabel { get; set; } //w2540
+        public string StudyPeriodLabel { get; set; } //w2291
+        public string ComparativePeriodLabel { get; set; } //w2292
+        public string ComparativePeriodTypeLabel { get; set; } //w2293
+        public string PeriodDisponibilityTypeLabel { get; set; } //w2296
+        public string GenericLevelDetailColumnLabel { get; set; } //w2300
+
+
+
+
     }
 }

@@ -1487,12 +1487,12 @@
     <item mnemonic="w2288" type="System.String">Période détaillée par :</item>
     <item mnemonic="w2289" type="System.String">Jour</item>
     <item mnemonic="w2290" type="System.String">Mois</item>
-    <item mnemonic="w2291" type="System.String">P&amp;eacute;riode de l'&amp;eacute;tude :</item>
-    <item mnemonic="w2292" type="System.String">P&amp;eacute;riode comparative :</item>
-    <item mnemonic="w2293" type="System.String">Type de la s&amp;eacute;lection comparative :</item>
+    <item mnemonic="w2291" type="System.String">Période de l'étude :</item>
+    <item mnemonic="w2292" type="System.String">Période comparative :</item>
+    <item mnemonic="w2293" type="System.String">Type de la sélection comparative :</item>
     <item mnemonic="w2294" type="System.String">Date à date</item>
     <item mnemonic="w2295" type="System.String">Date semaine comparative</item>
-    <item mnemonic="w2296" type="System.String">Type de la disponibilit&amp;eacute; des donn&amp;eacute;es :</item>
+    <item mnemonic="w2296" type="System.String">Type de la disponibilité des données :</item>
     <item mnemonic="w2297" type="System.String">Dernier jour calendaire</item>
     <item mnemonic="w2298" type="System.String">Dernière période complète disponible</item>
     <item mnemonic="w2299" type="System.String">Vous devez selectionner au moins un élément en inclusion.</item>
