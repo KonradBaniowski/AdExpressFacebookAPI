@@ -27,6 +27,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var result = _detailSelectionService.GetDetailSelection(idWS);
             vm.DetailSelectionWSModel = AutoMapper.Mapper.Map<DetailSelectionWSModel>(result);
             vm.Labels = LabelsHelper.LoadPageLabels(vm.DetailSelectionWSModel.SiteLanguage);
+
             return PartialView(vm);
         }
 

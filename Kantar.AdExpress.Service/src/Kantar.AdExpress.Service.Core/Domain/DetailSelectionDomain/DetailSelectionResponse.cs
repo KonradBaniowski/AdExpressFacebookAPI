@@ -25,6 +25,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain
         public bool ShowUnivers { get; set; }
         public bool ShowUniversDetails { get; set; }
         public bool ShowMarket { get; set; }
+        public bool ShowGenericlevelDetail { get; set; }
     }
 
     public class TextData
