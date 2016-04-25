@@ -102,5 +102,7 @@ namespace KM.Framework.Constantes
         public string InsertionLabel { get; set; }//w1400
         public string UniversProductLabel { get; set; }//w1759
         public string UniversSupportLabel { get; set; } //w2540
+        public string SelectMedia { get;set; }//1017
+        public string PreSelection { get; set; }//2571
     }
 }
