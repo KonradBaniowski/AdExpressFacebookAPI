@@ -100,6 +100,7 @@ $(document).on('click', '.tab-content li > .pull-right', function () {
 
     if (parent.find('li').length == 0) {
         header.find('[id^=collapse-].in').collapse('hide');
+        header.find('.panel-title.famille.orange').removeClass('orange')
     }
 });
 
@@ -109,5 +110,6 @@ $(document).on('click', 'button.tout-suppr', function () {
     var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
     console.log(idTree);
     test.find('li').remove();
+    test.find('.panel-title.famille.orange').removeClass('orange');
     $("#" + idTree + " [id^='collapse'].in").collapse('hide');
 });
