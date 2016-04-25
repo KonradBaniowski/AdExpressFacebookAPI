@@ -13,6 +13,7 @@
 
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("DetailSelection")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -40,7 +41,7 @@
 </div>
 
 
-<div class="panel-group panel-group-results" id="resaccord">
+<div class="panel-group panel-group-results" id="resaccord" style="margin-bottom:20px;">
     <div class="panel panel-primary panel-results">
         <div class="panel-heading head-results">
             <h3 class="panel-title pull-left">
@@ -53,6 +54,7 @@
         <div id="accord1" class="panel-collapse collapse in">
             <div class="panel-body">
                 <center>
+                    <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
                     <div id="grid" class="hide">
                     </div>
                     <div id="gridLoader">
@@ -243,9 +245,9 @@
                                     pageSize: 25
                                 },
                                  {
-                                    name: "Sorting",
-                                    type: "local" ,
-                                    applySortedColumnCss : false
+                                     name: "Sorting",
+                                     type: "local",
+                                     applySortedColumnCss: false
                                  }
                                    ,
                                 {
@@ -268,6 +270,7 @@
             }
 
             function CallPortfolioResult() {
+                $("#gridEmpty").hide();
                 $.ajax({
                     url: '@Url.Action("PortfolioResult", _controller)',
                     contentType: "application/x-www-form-urlencoded",
@@ -297,13 +300,13 @@
                         }
                         else {
                             $("#gridLoader").addClass("hide");
-                            $("#grid").removeClass("hide");
-                            $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
+                            $("#grid").addClass("hide");
+                            $("#gridEmpty").show();
                         }
                     }
                 });
             }
-            
+
 
             function CallPortfolioGraphResult() {
                 $.ajax({
@@ -323,7 +326,7 @@
                                 var schema = new $.ig.DataSchema("array", {
                                     fields: data[0].schema
                                 });
-                                $("#listCharts").append("<div class='col-md-12'><div style='text-align: center; width: 100%;'>"+data[i].title+"</div><div id='chart" + i + "' class='chart' ></div><div id='legendChart" + i + "' class='legendChart' ></div></div>");
+                                $("#listCharts").append("<div class='col-md-12'><div style='text-align: center; width: 100%;'>" + data[i].title + "</div><div id='chart" + i + "' class='chart' ></div><div id='legendChart" + i + "' class='legendChart' ></div></div>");
                                 ds = new $.ig.DataSource({
                                     type: "json",
                                     schema: schema,
@@ -331,8 +334,6 @@
                                 });
                                 ds.dataBind();
 
-                                $("#listCharts").show();
-                                $("#listChartsLoader").hide();
                                 $("#chart" + i).igPieChart({
                                     dataSource: ds.dataView(),
                                     width: '600px',
@@ -344,7 +345,7 @@
                                     leaderLineType: "straightLine",
                                     othersCategoryThreshold: 0,
                                     othersCategoryType: "number",
-                                    brushes: ["#FFE100", "#FF0080", "#B8DC00", "#00C8FF", "#FF8C00", "#9C1E8D","#14C896", "#3C6BBF", "#B8292F", "#51266B", "#2B6077", "#2D2B62", "#000000", "#787878", "#E7E7E7"],
+                                    brushes: ["#FFE100", "#FF0080", "#B8DC00", "#00C8FF", "#FF8C00", "#9C1E8D", "#14C896", "#3C6BBF", "#B8292F", "#51266B", "#2B6077", "#2D2B62", "#000000", "#787878", "#E7E7E7"],
                                     legend: { element: 'legendChart' + i, type: "item" },
                                     formatLabel: function (context) {
                                         var num = context.percentValue
@@ -354,8 +355,9 @@
                                     showTooltip: true,
                                     tooltipTemplate: "<div class='ui-chart-tooltip'><strong>${item.LabelKey}</strong><div>" + data[i].title + ": <label>${item.ValKey}</label></div></div>"
                                 });
-
                             }
+                            $("#listCharts").show();
+                            $("#listChartsLoader").hide();
                         }
                         else {
                             alert("Erreur");
@@ -636,4 +638,5 @@
 
 
     </script>
+    @Scripts.Render("~/bundles/detail-selection")
 }

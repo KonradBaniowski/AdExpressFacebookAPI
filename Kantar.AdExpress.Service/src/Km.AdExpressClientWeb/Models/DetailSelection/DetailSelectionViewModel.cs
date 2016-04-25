@@ -23,15 +23,26 @@ namespace Km.AdExpressClientWeb.Models.DetailSelection
         public int SiteLanguage { get; set; }
         public string ModuleLabel { get; set; }
         public string NiveauDetailLabel { get; set; }
+        public string GenericLevelDetailColumn { get; set; }
         public string UniteLabel { get; set; }
         public List<Tree> UniversMarket { get; set; }
         public List<Tree> UniversMedia { get; set; }
         public string MediasSelectedLabel { get; set; }
         public string Dates { get; set; }
+        public string StudyPeriod { get; set; }
+        public string ComparativePeriod { get; set; }
+        public string ComparativePeriodType { get; set; }
+        public string PeriodDisponibilityType { get; set; }
+
         public bool ShowDate { get; set; }
         public bool ShowUnivers { get; set; }
         public bool ShowUniversDetails { get; set; }
         public bool ShowMarket { get; set; }
         public bool ShowGenericlevelDetail { get; set; }
+        public bool ShowGenericLevelDetailColumn { get; set; }
+        public bool ShowStudyPeriod { get; set; }
+        public bool ShowComparativePeriod { get; set; }
+        public bool ShowComparativePeriodType { get; set; }
+        public bool ShowPeriodDisponibilityType { get; set; }
     }
 }

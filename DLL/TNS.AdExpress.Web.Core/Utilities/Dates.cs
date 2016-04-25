@@ -41,6 +41,144 @@ namespace TNS.AdExpress.Web.Core.Utilities
     public class Dates
     {
         /// <summary>
+        ///  func to manage PeriodDisponibilityType
+        /// </summary>
+        /// <param name="webSession"></param>
+        /// <returns></returns>
+        public static string GetPeriodDisponibilityTypeDetail(WebSession webSession)
+        {
+            try
+            {
+                switch (webSession.CustomerPeriodSelected.PeriodDisponibilityType)
+                {
+                    case globalCalendar.periodDisponibilityType.currentDay:
+                        return GestionWeb.GetWebWord(2297, webSession.SiteLanguage);
+                    case globalCalendar.periodDisponibilityType.lastCompletePeriod:
+                        return GestionWeb.GetWebWord(2298, webSession.SiteLanguage);
+                    default:
+                        return "";
+                }
+            }
+            catch (System.Exception e)
+            {
+                throw (new Exception("Unable to generate the html code for period disponibility type detail", e));
+            }
+        }
+
+        /// <summary>
+        ///  func to manage comparativePeriodType
+        /// </summary>
+        /// <param name="webSession"></param>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
+        public static string GetComparativePeriodTypeDetail(WebSession webSession, long moduleId)
+        {
+            try
+            {
+                globalCalendar.comparativePeriodType comparativePeriodType;
+
+                if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    comparativePeriodType = webSession.ComparativePeriodType;
+                else
+                    comparativePeriodType = webSession.CustomerPeriodSelected.ComparativePeriodType;
+
+                switch (comparativePeriodType)
+                {
+                    case globalCalendar.comparativePeriodType.comparativeWeekDate:
+                        return GestionWeb.GetWebWord(2295, webSession.SiteLanguage);
+                    case globalCalendar.comparativePeriodType.dateToDate:
+                        return GestionWeb.GetWebWord(2294, webSession.SiteLanguage);
+                    default:
+                        return "";
+                }
+            }
+            catch (System.Exception e)
+            {
+                throw (new Exception("Unable to generate the html code for study period detail", e));
+            }
+        }
+
+        /// <summary>
+        /// func to manage comparativePeriod
+        /// </summary>
+        /// <param name="webSession"></param>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
+        public static string GetComparativePeriodDetail(WebSession webSession, long moduleId)
+        {
+            try
+            {
+                string dateBegin;
+                string dateEnd;
+                DateTime dateBeginDT;
+                DateTime dateEndDT;
+
+                if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                {
+                    // get date begin and date end according to period type
+                    dateBeginDT = Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                    dateEndDT = Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+
+                    // get comparative date begin and date end
+                    dateBeginDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateBeginDT.Date, webSession.ComparativePeriodType);
+                    dateEndDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateEndDT.Date, webSession.ComparativePeriodType);
+
+                    // Formating date begin and date end
+                    dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY2(dateBeginDT.ToString("yyyyMMdd"), webSession.SiteLanguage);
+                    dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY2(dateEndDT.ToString("yyyyMMdd"), webSession.SiteLanguage);
+
+                }
+                else {
+                    dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY2(webSession.CustomerPeriodSelected.ComparativeStartDate.ToString(), webSession.SiteLanguage);
+                    dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY2(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
+                }
+
+                if (!dateBegin.Equals(dateEnd))
+                    return GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd;
+                else return " " + dateBegin;
+
+            }
+            catch (System.Exception e)
+            {
+                throw (new Exception("Unable to generate the html code for comparative period type detail", e));
+            }
+        }
+
+        /// <summary>
+        ///  func to manage StudyPeriod
+        /// </summary>
+        /// <param name="webSession"></param>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
+        public static string GetStudyPeriodDetail(WebSession webSession, long moduleId)
+        {
+            try
+            {
+                string dateBegin;
+                string dateEnd;
+
+                if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                {
+                    dateBegin = Dates.YYYYMMDDToDD_MM_YYYY2(webSession.PeriodBeginningDate.ToString(), webSession.SiteLanguage);
+                    dateEnd = Dates.YYYYMMDDToDD_MM_YYYY2(webSession.PeriodEndDate.ToString(), webSession.SiteLanguage);
+                }
+                else {
+                    dateBegin = Dates.YYYYMMDDToDD_MM_YYYY2(webSession.CustomerPeriodSelected.StartDate.ToString(), webSession.SiteLanguage);
+                    dateEnd = Dates.YYYYMMDDToDD_MM_YYYY2(webSession.CustomerPeriodSelected.EndDate.ToString(), webSession.SiteLanguage);
+                }
+
+                if (!dateBegin.Equals(dateEnd))
+                    return GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd;
+                else return " " + dateBegin;
+            }
+            catch (System.Exception e)
+            {
+                throw (new Exception("Unable to generate the html code for study period detail", e));
+            }
+        }
+
+
+        /// <summary>
         /// Check if two dates are set, normally begin and end date
         /// </summary>
         /// <param name="begin"></param>

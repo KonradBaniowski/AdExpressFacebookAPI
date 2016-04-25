@@ -60,8 +60,11 @@ namespace Km.AdExpressClientWeb.I18n
                 InsertionLabel = GestionWeb.GetWebWord(LanguageConstantes.Insertion, siteLanguage),
                 UniversProductLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversProduct, siteLanguage),
                 UniversSupportLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversSupport, siteLanguage),
-
-
+                StudyPeriodLabel = GestionWeb.GetWebWord(LanguageConstantes.StudyPeriodCode, siteLanguage),
+                ComparativePeriodLabel = GestionWeb.GetWebWord(LanguageConstantes.ComparativePeriodCode, siteLanguage),
+                ComparativePeriodTypeLabel = GestionWeb.GetWebWord(LanguageConstantes.ComparativePeriodTypeCode, siteLanguage),
+                PeriodDisponibilityTypeLabel = GestionWeb.GetWebWord(LanguageConstantes.PeriodDisponibilityTypecode, siteLanguage),
+                GenericLevelDetailColumnLabel = GestionWeb.GetWebWord(LanguageConstantes.GenericLevelDetailColumnCode, siteLanguage)
             };
             return result;
         }
