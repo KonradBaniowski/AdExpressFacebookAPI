@@ -139,14 +139,18 @@
 
                     var selectedValue = -1;
                     var selectedPeriod = -1;
+                    var minDate = new Date('@Model.PeriodViewModel.StartYear');
+                    var maxDate = new Date('@Model.PeriodViewModel.EndYear');
+                    minDate.setHours(0, 0, 0);
+                    maxDate.setHours(0, 0, 0);
 
                     $('#datetimepicker-begin').datetimepicker({
                         inline: true,
                         locale: 'fr',
                         format: 'DD/MM/YYYY',
                         useCurrent: false,
-                        minDate: new Date('@Model.PeriodViewModel.StartYear'),
-                        maxDate: new Date('@Model.PeriodViewModel.EndYear')
+                        minDate: minDate,
+                        maxDate: maxDate
                     }).on('dp.change', function (e) {
                         $('#begin-date-value').val($('#datetimepicker-begin').data('date'));
                     });
@@ -161,8 +165,8 @@
                         locale: 'fr',
                         format: 'DD/MM/YYYY',
                         useCurrent: false,
-                        minDate: new Date('@Model.PeriodViewModel.StartYear'),
-                        maxDate: new Date('@Model.PeriodViewModel.EndYear')
+                        minDate: minDate,
+                        maxDate: maxDate
                     }).on('dp.change', function (e) {
                         $('#end-date-value').val($('#datetimepicker-end').data('date'));
                     });

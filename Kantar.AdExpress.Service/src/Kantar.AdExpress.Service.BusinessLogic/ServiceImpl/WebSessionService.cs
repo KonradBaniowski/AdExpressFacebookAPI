@@ -238,7 +238,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 else
                 {
                     AdExpressUnivers univers = GetUnivers(trees, _webSession, dimension, security);
-                    //var univers = uni.AdExpressUniverse;
                     if (univers.Success)
                     {
                         try
@@ -300,7 +299,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     else
                     {
-                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
+                        response.ErrorMessage = String.Format(GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
                     }
                 }
                 #endregion
@@ -727,8 +726,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private AdExpressUnivers GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
         {
             AdExpressUnivers result = new AdExpressUnivers(dimension);
-            //AdExpressUniverse univers = new AdExpressUniverse(dimension);
-
             try
             {
                 NomenclatureElementsGroup group = null;
@@ -757,7 +754,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         result.AdExpressUniverse.AddGroup(result.AdExpressUniverse.Count(), group);
                 }
                 result.Success = true;
-                //result.AdExpressUniverse = univers;
             }
             catch (Exception ex)
             {
