@@ -16,7 +16,7 @@ $(".dropdown-menu.bg-blue li > a").on('click', function (e) {
 //Touche ENTER 
 $('#keyword').off('keyup');
 
-$('#keyword').on('keyup', function () {
+$('#keyword').on('keyup', function (event) {
     if (event.keyCode == 13) {
         $(".btn-recherche").click();
     }
