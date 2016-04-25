@@ -107,9 +107,7 @@ namespace KM.Framework.Constantes
         public string ComparativePeriodTypeLabel { get; set; } //w2293
         public string PeriodDisponibilityTypeLabel { get; set; } //w2296
         public string GenericLevelDetailColumnLabel { get; set; } //w2300
-
-
-
-
+        public string SelectMedia { get;set; }//1017
+        public string PreSelection { get; set; }//2571
     }
 }

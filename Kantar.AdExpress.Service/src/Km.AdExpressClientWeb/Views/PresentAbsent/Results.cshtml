@@ -41,6 +41,7 @@
 <div class="row">
     <div class="col-md-12">
         <center>
+            <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
             <div id="grid" class="hide">
             </div>
             <div id="gridLoader">
@@ -234,6 +235,7 @@
             }
 
             function CallPresentAbsentResult() {
+                $("#gridEmpty").hide();
                 $.ajax({
                     url: '@Url.Action("PresentAbsentResult", _controller)',
                     contentType: "application/x-www-form-urlencoded",
@@ -263,8 +265,8 @@
                         }
                         else {
                             $("#gridLoader").addClass("hide");
-                            $("#grid").removeClass("hide");
-                            $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
+                            $("#grid").addClass("hide");
+                            $("#gridEmpty").show();
                         }
                     }
                 });

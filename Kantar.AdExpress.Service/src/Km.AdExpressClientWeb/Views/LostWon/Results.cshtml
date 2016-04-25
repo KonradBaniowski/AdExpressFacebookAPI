@@ -41,6 +41,7 @@
 <div class="row">
     <div class="col-md-12">
         <center>
+            <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
             <div id="grid" class="hide">
             </div>
             <div id="gridLoader">
@@ -238,6 +239,7 @@
             }
 
             function CallLostWonResult() {
+                $("#gridEmpty").hide();
                 $.ajax({
                     url: '@Url.Action("LostWonResult", _controller)',
                     contentType: "application/x-www-form-urlencoded",
@@ -267,8 +269,8 @@
                         }
                         else {
                             $("#gridLoader").addClass("hide");
-                            $("#grid").removeClass("hide");
-                            $("#grid").html("@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)");
+                            $("#grid").addClass("hide");
+                            $("#gridEmpty").show();
                         }
                     }
                 });

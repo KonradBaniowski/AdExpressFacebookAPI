@@ -3,8 +3,10 @@
 $(".btn-recherche").on('click', function (event) {
     event.preventDefault();
     var keyword = $('#keyword').val();
-    if (keyword.length < 2)
+    if (keyword.length < 2) {
+        bootbox.alert($('#Labels_ErrorMessageLimitKeyword').val());
         return;
+    }
     var branchId = $('#branch').attr("data-branch");
     $(".universes").hide();
     $("#branch" + branchId).show();

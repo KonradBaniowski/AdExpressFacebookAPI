@@ -1,6 +1,7 @@
 ﻿@model Km.AdExpressClientWeb.Models.Shared.UserUniversGroupsModel
 @using TNS.AdExpress.Domain.Translation;
 
+<div id="universList">
 @if (Model.UserUniversGroups.Any())
 {
     <div id="accordion">
@@ -55,4 +56,4 @@ else
 {
     <div class="modal-content-alert popup-text alert alert-warning center-block" role="alert">@GestionWeb.GetWebWord(Model.ErrorMsgCode, Model.SiteLanguage)</div>
 }
-
+    </div>

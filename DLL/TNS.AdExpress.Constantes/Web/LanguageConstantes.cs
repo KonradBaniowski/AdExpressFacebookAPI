@@ -52,6 +52,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
         public const long Capacity = 1000;
+        public const long SelectMedia=1017;
         public const long MediaRequiredCode = 1052;
         public const long MailCode = 1136;
         public const long Periodicity = 1293;
@@ -100,6 +101,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NotAvailableSession = 2455;
         public const long Receiver = 2483;
         public const long UnityError = 2541;
+        public const long PreSelection = 2571;
         public const long Daily = 2579;
         public const long Weekly = 2580;
         public const long SaveAlert = 2581;
