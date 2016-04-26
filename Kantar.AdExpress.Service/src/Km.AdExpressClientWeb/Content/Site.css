@@ -1234,7 +1234,7 @@ a {
     background: none;
     border: 1px solid rgba(255,255,255,0.2);
     border-radius: 50px;
-    color: #00c1ff;
+    color: #fff;
     display: block;
     vertical-align: middle;
     margin: 0 0 2px 0;
@@ -2462,4 +2462,8 @@ ul.ui-selectable {
 }
 .ui-chart-tooltip{
     background-color:white;
+}
+
+.b-r-w {
+    border-right: 1px solid rgba(255,255,255,0.4);
 }

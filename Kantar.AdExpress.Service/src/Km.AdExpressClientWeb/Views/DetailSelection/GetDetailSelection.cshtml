@@ -48,11 +48,12 @@
                     <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.MediaLabel)</strong></label>
                     <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(_ => _.DetailSelectionWSModel.MediasSelectedLabel)</strong></label>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UniversSupportLabel)</strong></label>
-                </div>
+
                 if (Model.DetailSelectionWSModel.ShowUniversDetails)
                 {
+                    <div class="form-group">
+                        <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UniversSupportLabel)</strong></label>
+                    </div>
                     var size = (12 / Model.DetailSelectionWSModel.UniversMedia.Count);
                     <div class="form-group">
                         @for (int i = 0; i < Model.DetailSelectionWSModel.UniversMedia.Count; i++)
@@ -113,7 +114,6 @@
                 </div>
                 var size = (12 / Model.DetailSelectionWSModel.UniversMarket.Count);
                 <div class="form-group">
-
                     @for (int i = 0; i < Model.DetailSelectionWSModel.UniversMarket.Count; i++)
                     {
                         <div class="col-sm-@(size) control-label text-left">
