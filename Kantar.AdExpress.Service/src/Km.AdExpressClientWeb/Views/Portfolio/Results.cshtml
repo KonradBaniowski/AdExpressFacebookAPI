@@ -22,11 +22,13 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="pull-right custom-button">
-            <button class="btn btn-save" id="btn-save-result">Sauvegarder&nbsp;<i class="fa fa-bookmark-o"></i></button>&nbsp;
-            <button class="btn btn-save" id="btn-brut">Brut&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
-            <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
-            <button class="btn btn-valider">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
+        <div class="pull-right custom-button selectexporttype">
+            <select id="export-type" class="selectdatepicker hide">
+                <option value="1">Résultat Formaté</option>
+                <option value="2">Résultat brut</option>
+            </select>&nbsp;
+            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>&nbsp;
+            <button class="btn btn-valider" id="btn-save-result">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
         </div>
     </div>
 </div>
@@ -511,12 +513,22 @@
                 userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
             });
 
-            $('#btn-export').on('click', function (e) {
-                window.open('@Url.Action("Index", _exportController)', "_blank");
-            });
+            $('#export-type').removeClass("hide");
+            $('#export-type').selectpicker();
 
-            $('#btn-brut').on('click', function (e) {
-                window.open('@Url.Action("ResultBrut", _exportController)', "_blank");
+            $('#btn-export').on('click', function (e) {
+                var selectedValue = $('#export-type').val();
+                switch (selectedValue) {
+                    case "1":
+                        window.open('@Url.Action("Index", _exportController)', "_blank");
+                        break;
+                    case "2":
+                        window.open('@Url.Action("ResultBrut", _exportController)', "_blank");
+                        break;
+                    default:
+                        window.open('@Url.Action("Index", _exportController)', "_blank");
+                        break;
+                }
             });
 
             $('#validate-options').on('click', function (e) {
