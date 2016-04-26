@@ -3,10 +3,13 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <form class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.StudySelectionLabel)</strong></label>
-                <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.ModuleLabel)</strong></label>
-            </div>
+            @if (Model.DetailSelectionWSModel.ShowStudyType)
+            {
+                <div class="form-group">
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.StudySelectionLabel)</strong></label>
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.ModuleLabel)</strong></label>
+                </div>
+            }
             @if (Model.DetailSelectionWSModel.ShowDate)
             {
                 <div class="form-group">
@@ -101,11 +104,13 @@
                     <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.GenericLevelDetailColumn)</strong></label>
                 </div>
             }
-
-            <div class="form-group">
-                <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UnitLabel)</strong></label>
-                <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.UniteLabel)</strong></label>
-            </div>
+            @if (Model.DetailSelectionWSModel.ShowUnity)
+            {
+                <div class="form-group">
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UnitLabel)</strong></label>
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.UniteLabel)</strong></label>
+                </div>
+            }
 
             @if (Model.DetailSelectionWSModel.ShowMarket)
             {

@@ -635,12 +635,14 @@
 
     // Load Details
     $(document).on('click', '.btnLoadDetails.adExpress-tools', function () {
-        sessionId = $(this).attr("data-id");
+        var id = $(this).attr("data-id");
+        var type = $(this).attr("data-type");
         var params = {
-            sessionId: sessionId
+            id: id,
+            type : type
         };
         $.ajax({
-            url: '/DetailSelection/LoadSessionDetails',
+            url: '/DetailSelection/LoadDetails',
             contentType: 'application/json',
             type: 'POST',
             datatype: 'JSON',
