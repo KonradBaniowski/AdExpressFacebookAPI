@@ -157,6 +157,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\Helpers\Functions.cs" />
     <Compile Include="DataAccess\PurchaseModeListDataAccess.cs" />
     <Compile Include="DataAccess\Selections\Medias\MediaPublicationDatesDataAccess.cs" />
     <Compile Include="Exceptions\BannersFormatException.cs" />

@@ -456,3 +456,79 @@ box-shadow:none  !important;
 .padder-btn {
     padding: 10px 25px;
 }
+
+.selectexporttype {
+    /*height: 36px !important;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.selectexporttype button {
+    /*outline: none;*/
+    height: 38px;
+    padding: 0px 12px;
+    background-image: none !important;
+    outline: 0 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size:12px !important;
+}
+
+.selectexporttype.form-control:focus {
+    box-shadow: none;
+}
+
+.selectexporttype .bootstrap-select .btn.selectpicker {
+    background-color: transparent !important;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+.selectexporttype .bootstrap-radio > .btn.btn-link {
+    color: #fff;
+}
+
+.selectexporttype .selectdatepicker {
+    width: 180px !important;
+    float: left !important;
+}
+
+.selectexporttype .dropdown-menu > li > a {
+    color: #fff;
+    background-color: #FF6600;
+    font-size:12px !important;
+}
+
+.selectexporttype .bootstrap-select.btn-group .dropdown-menu {
+    background-color: #CC5200 !important;
+    border: 1px solid #CC5200; /* @beegray*/
+    padding: 0;
+}
+
+.selectexporttype .dropdown-menu > li > a:hover,
+.selectexporttype .dropdown-menu > li > a:focus {
+    text-decoration: none;
+    color: #fff;
+    background-color: transparent !important;
+    outline: none !important;
+}
+
+.selectexporttype .dropdown-menu > li.selected > a {
+    color: #fff;
+    outline: none !important;
+}
+
+.selectexporttype .glyphicon {
+    font-size: 10px;
+}
+
+.selectexporttype .bootstrap-select .dropdown-toggle:focus {
+    background-image: none !important;
+    outline: 0 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.fa-file-excel-size {
+    font-size: 16px!important;
+}
