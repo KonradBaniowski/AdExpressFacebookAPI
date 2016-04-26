@@ -36,6 +36,8 @@ namespace Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain
         public bool ShowComparativePeriod { get; set; }
         public bool ShowComparativePeriodType { get; set; }
         public bool ShowPeriodDisponibilityType { get; set; }
+        public bool ShowUnity { get; set; }
+        public bool ShowStudyType { get; set; }
     }
 
     public class TextData
