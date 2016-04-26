@@ -11,5 +11,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     {
         DetailSelectionResponse GetDetailSelection(string idWebSession);
         DetailSelectionResponse LoadSessionDetails(string idSession, string idWebSession);
+        DetailSelectionResponse LoadUniversDetails(string idUnivers, string idWebSession);
     }
 }
