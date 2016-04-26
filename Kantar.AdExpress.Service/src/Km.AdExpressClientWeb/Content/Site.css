@@ -2463,3 +2463,7 @@ ul.ui-selectable {
 .ui-chart-tooltip{
     background-color:white;
 }
+
+.b-r-w {
+    border-right: 1px solid rgba(255,255,255,0.4);
+}
