@@ -297,9 +297,9 @@
             </div>
         </div>
         @*Two pdf stuff*@
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10" data-toggle="collapse" data-target="#Analyses">
-            <div class="tile-third">
-
+        
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10 dropdown">
+            <div class="tile-third" data-toggle="dropdown">
                 <div class="tile-body text-center">
                     <div class="flip-container">
                         <div class="front">
@@ -308,9 +308,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="tile-deploy collapse" id="Analyses">
+            <div class="tile-deploy dropdown-menu">
                 <div class="tile-body text-center">
                     <div class="list-group">
                         @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
@@ -353,8 +352,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10" data-toggle="collapse" data-target="#board">
-            <div class="tile-third">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10 dropdown">
+            <div class="tile-third" data-toggle="dropdown">
                 <div class="tile-body text-center">
                     <div class="flip-container">
                         <div class="front">
@@ -364,7 +363,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tile-deploy collapse" id="board">
+            <div class="tile-deploy dropdown-menu">
                 <div class="tile-body text-center">
                     <div class="list-group">
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
@@ -468,8 +467,9 @@
         @*PDF*@
         @foreach (var item in Model.Documents)
         {
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-2" data-toggle="collapse" data-target="#X@(item.Id)">
-                <div class="tile-pdf">
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-2 dropdown">
+                <div class="tile-pdf" data-toggle="dropdown">
                     <div class="tile-body text-center">
                         <div class="flip-container">
                             <div class="front tile-cursor">
@@ -479,7 +479,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tile-deploy pdf collapse" id="X@(item.Id)">
+                <div class="tile-deploy pdf dropdown-menu" id="X@(item.Id)">
                     <div class="tile-body text-center">
                         <div class="list-group">
                             @if (item.InfosNews != null)
