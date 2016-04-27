@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -31,15 +32,32 @@ namespace Km.AdExpressClientWeb.Controllers
             return PartialView(vm);
         }
 
-        public ActionResult LoadSessionDetails(string sessionId)
+        public ActionResult LoadDetails(string id, string type)
         {
             var vm = new DetailSelectionViewModel();
-            if (!String.IsNullOrEmpty(sessionId))
+            if (!String.IsNullOrEmpty(id))
             {
+                DetailSelectionResponse response = new DetailSelectionResponse();
                 var cp = new ClaimsPrincipal(User.Identity);
                 var idWebSession = cp.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var result = _detailSelectionService.LoadSessionDetails(sessionId, idWebSession);
-                vm.DetailSelectionWSModel = AutoMapper.Mapper.Map<DetailSelectionWSModel>(result);
+                var requestType  = (Domain.UniversType)Enum.Parse(typeof(Domain.UniversType), type);
+                switch (requestType)
+                {
+                    case Domain.UniversType.Result:
+                        response = _detailSelectionService.LoadSessionDetails(id, idWebSession);
+                        break;
+                    case Domain.UniversType.Univers:
+                        response = _detailSelectionService.LoadUniversDetails(id, idWebSession);
+                        break;
+                    case Domain.UniversType.Alert:
+                        response = _detailSelectionService.LoadAlertDetails(id, idWebSession);
+                        break;
+                    default:
+                        vm.Message = "Not avaiable";
+                        break;
+                }
+                
+                vm.DetailSelectionWSModel = AutoMapper.Mapper.Map<DetailSelectionWSModel>(response);
                 vm.Labels = LabelsHelper.LoadPageLabels(vm.DetailSelectionWSModel.SiteLanguage);
             }
             else

@@ -398,7 +398,7 @@ input {
 }
 
 
-.tile-deploy {
+.tile-deploy.dropdown-menu {
     background-color: #afd702;
     height: 100px;
     color: #000000;

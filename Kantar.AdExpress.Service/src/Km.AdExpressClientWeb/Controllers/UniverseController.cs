@@ -19,11 +19,13 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IUniverseService _universeService;
         private IMyAdExpressService _myAdExpressService;
+        private IDetailSelectionService _detailSelectionService;
 
-        public UniverseController(IUniverseService universeService, IMyAdExpressService myAdExpressService)
+        public UniverseController(IUniverseService universeService, IMyAdExpressService myAdExpressService, IDetailSelectionService detailSelectionService)
         {
             _universeService = universeService;
             _myAdExpressService = myAdExpressService;
+            _detailSelectionService = detailSelectionService;
         }
 
         // GET: Universe
@@ -392,10 +394,11 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var redirectUrl = string.Empty;
             var claim = new ClaimsPrincipal(User.Identity);
-            var requestedSessionType = (type.ToUpper() == "SESSION") ? Domain.UniversType.Result : Domain.UniversType.Alert;
+            //var requestedSessionType = (type.ToUpper() == "SESSION") ? Domain.UniversType.Result : Domain.UniversType.Alert;
+            var requestType = (Domain.UniversType)Enum.Parse(typeof(Domain.UniversType), type);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             if (!String.IsNullOrEmpty(webSessionId))
-                response = _myAdExpressService.LoadSession(idSession, requestedSessionType, webSessionId);
+                response = _myAdExpressService.LoadSession(idSession, requestType, webSessionId);
             if (response.Success && response.ModuleId > 0)
             {
                 var controller = string.Empty;
@@ -423,13 +426,6 @@ namespace Km.AdExpressClientWeb.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult LoadDetails(string idSession, string type)
-        {
-            var response = new Domain.AdExpressResponse
-            {
-                Message = string.Empty
-            };
-            return Json(response);
-        }
+        
     }
 }

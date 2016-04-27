@@ -8,8 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Translation;
@@ -20,7 +19,10 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Classification.DAL;
 using TNS.Classification.Universe;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Web.Core.DataAccess.Helpers;
+using LS = TNS.Ares.Domain.LS;
+using TNS.Ares.Alerts.DAL;
+using TNSDomain = TNS.Alert.Domain;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -52,15 +54,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (!String.IsNullOrEmpty(idUnivers) && !String.IsNullOrWhiteSpace(idWebSession))
             {
                 long id = Int64.Parse(idUnivers);
-                //var webSession = (WebSession)WebSession.Load(idWebSession);
-                //result = LoadDetailsSelection(webSession);
+                var webSession = (WebSession)WebSession.Load(idWebSession);
+                Dictionary<int, AdExpressUniverse> adExpressUniverse = null;
+                if (TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.IsUniverseBelongToClientDescription(webSession, id, WebConstantes.LoadableUnivers.GENERIC_UNIVERSE))
+                {
+                    adExpressUniverse = (Dictionary<int, AdExpressUniverse>)TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(id, webSession);
+                    if (adExpressUniverse !=null && adExpressUniverse.Count>0)
+                        result = GetUniversDetails(webSession, adExpressUniverse);
+                } 
+            }
+            return result;
+        }
+        public DetailSelectionResponse LoadAlertDetails(string id, string idWebSession)
+        {
+            DetailSelectionResponse result = new DetailSelectionResponse();
+            if (!String.IsNullOrEmpty(id) && !String.IsNullOrWhiteSpace(idWebSession) && TNS.Alert.Domain.AlertConfiguration.IsActivated)
+            {
+                int idAlert = Int32.Parse(id);
+                TNS.Ares.Domain.Layers.DataAccessLayer layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
+                TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+                TNSDomain.Alert alert = alertDAL.GetAlert(idAlert);
+                var webSessionSave = (WebSession)alert.Session;
+                result = LoadDetailsSelection(webSessionSave);
             }
             return result;
         }
 
-        private DetailSelectionResponse LoadDetailsSelection(WebSession _webSession)
+        private DetailSelectionResponse LoadDetailsSelection(WebSession _webSession, bool showUnity=true, bool showStudyType =true)
         {
-            var domain = new DetailSelectionResponse();
+            var domain = new DetailSelectionResponse
+            {
+                ShowUnity = showUnity,
+                ShowStudyType = showStudyType
+            };
 
             domain.SiteLanguage = _webSession.SiteLanguage;
 
@@ -310,94 +337,37 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return PeriodDisponibilityType;
         }
-
-        private DetailSelectionResponse GetUniversDetails(long id, string idWebSession)
+        private DetailSelectionResponse GetUniversDetails(WebSession webSession, Dictionary<int, AdExpressUniverse> adExpressUniverse)
         {
-            DetailSelectionResponse result = new DetailSelectionResponse();
-            var webSession = (WebSession)WebSession.Load(idWebSession);            
-            System.Windows.Forms.TreeNode treeNodeUniverse = null;
-            Dictionary<int, AdExpressUniverse> adExpressUniverse = null;
-            if (TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.IsUniverseBelongToClientDescription(webSession, id, WebConstantes.LoadableUnivers.GENERIC_UNIVERSE))
-                adExpressUniverse = (Dictionary<int, AdExpressUniverse>)TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(id, webSession);
-            else treeNodeUniverse = (System.Windows.Forms.TreeNode)((ArrayList)TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetTreeNodeUniverse(id, webSession))[0];
-            ShowUnivers(adExpressUniverse, webSession.DataLanguage, Functions.GetDataSource(webSession));
-            return result;
-        }
-
-        private void ShowUnivers(Dictionary<int, AdExpressUniverse> adExpressUniverse, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source)
-        {
-            DataSet ds = null;
-            int treeViewId = 0;
-            AccessType accessType;
-            List<NomenclatureElementsGroup> groups = null;
-
+            var result = new DetailSelectionResponse();
+            result.SiteLanguage = webSession.SiteLanguage;
             CoreLayer cl = WebApplicationParameters.CoreLayers[WebConstantes.Layers.Id.classificationLevelList];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[2];
-            param[0] = source;
-            param[1] = dataLanguage;
-            ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-            ClassificationLevelListDAL universeItems = null;
-            List<long> itemIdList = null;
-            //Groups of items excludes
-            groups = adExpressUniverse[0].GetExludes();
-
-            if (groups != null && groups.Count > 0)
+            param[0] = webSession.Source;
+            param[1] = webSession.SiteLanguage;
+            ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);            
+            result.ModuleLabel = adExpressUniverse.FirstOrDefault().Value.UniverseDimension.ToString();
+            switch (adExpressUniverse.FirstOrDefault().Value.UniverseDimension)
             {
-                for (int i = 0; i < groups.Count; i++)
-                {
-                    List<long> levelIdsList = groups[i].GetLevelIdsList();
-                    accessType = AccessType.excludes;
-                    if (levelIdsList != null)
-                    {
-                        for (int j = 0; j < levelIdsList.Count; j++)
-                        {
-
-                            universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), groups[i].GetAsString(levelIdsList[j]));
-                            if (universeItems != null)
-                            {
-                                itemIdList = universeItems.IdListOrderByClassificationItem;
-                                if (itemIdList != null && itemIdList.Count > 0)
-                                {
-                                    for (int k = 0; k < itemIdList.Count; k++)
-                                    {
-                                        //TODO
-                                    }
-                                }
-                            }
-                        }
-
-                        treeViewId++;
-                    }
-                }
+                case Dimension.product:
+                    result.UniversMarket = new List<Tree>();
+                    result.ShowMarket = true;
+                    result.ModuleLabel = GestionWeb.GetWebWord(468, webSession.SiteLanguage);
+                    ExtractTreeFromAdExpressUniverse(adExpressUniverse, result.UniversMarket, factoryLevels, webSession.SiteLanguage);
+                    break;
+                case Dimension.media:
+                    //TODO //result.MediasSelected = GetLabels(webSession.SelectionUniversMedia, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource);
+                    //TODO //result.MediasSelectedLabel = string.Join(",", result.MediasSelected.Select(p => p.Label));
+                    result.UniversMedia = new List<Tree>();
+                    result.ShowUnivers = true;
+                    result.ModuleLabel = GestionWeb.GetWebWord(363, webSession.SiteLanguage);                
+                    ExtractTreeFromAdExpressUniverse(adExpressUniverse, result.UniversMedia, factoryLevels, webSession.SiteLanguage);
+                    break;
+                default:
+                    return result;
             }
-
-            //Groups of items includes
-            groups = adExpressUniverse[0].GetIncludes();
-
-            if (groups != null && groups.Count > 0)
-            {
-                for (int i = 0; i < groups.Count; i++)
-                {
-                    List<long> levelIdsList = groups[i].GetLevelIdsList();
-                    accessType = AccessType.includes;
-                    
-
-                    if (levelIdsList != null)
-                    {
-                        for (int j = 0; j < levelIdsList.Count; j++)
-                        {
-
-                            universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), groups[i].GetAsString(levelIdsList[j]));
-                            if (universeItems != null)
-                            {
-                                //TODO
-                            }
-                        }
-                        treeViewId++;
-                    }
-                }
-            }
+            return result;
         }
     }
 }
