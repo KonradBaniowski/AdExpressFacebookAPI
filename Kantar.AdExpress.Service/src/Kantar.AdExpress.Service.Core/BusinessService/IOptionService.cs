@@ -13,5 +13,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     {
         Options GetOptions(string idWebSession);
         void SetOptions(string idWebSession, UserFilter userFilter);
+        SaveLevelsResponse SaveCustomDetailLevels(string idWebSession, string detailLevel, string detailLevelType);
+        string RemoveCustomDetailLevels(string idWebSession, string detailLevel);
     }
 }

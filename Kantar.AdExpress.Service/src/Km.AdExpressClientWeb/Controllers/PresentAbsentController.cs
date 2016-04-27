@@ -271,6 +271,30 @@ namespace Km.AdExpressClientWeb.Controllers
             _optionService.SetOptions(idWebSession, userFilter);
         }
 
+        public JsonResult SaveCustomDetailLevels(string levels, string type)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            JsonResult jsonModel = new JsonResult();
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            Domain.SaveLevelsResponse response = _optionService.SaveCustomDetailLevels(idWebSession, levels, type);
+            jsonModel = Json(new { Id = response.CustomDetailLavelsId, Label = response.CustomDetailLavelsLabel, Message = response.Message });
+
+            return jsonModel;
+        }
+
+        public JsonResult RemoveCustomDetailLevels(string detailLevel)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            JsonResult jsonModel = new JsonResult();
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            string message = _optionService.RemoveCustomDetailLevels(idWebSession, detailLevel);
+            jsonModel = Json(new { Message = message });
+
+            return jsonModel;
+        }
+
         public JsonResult SaveMediaSelection(List<long> selectedMedia, List<Domain.Tree> mediaSupport, string nextStep)
         {
             string url = string.Empty;

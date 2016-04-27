@@ -129,6 +129,7 @@
     <Compile Include="Domain\ResultOptions\UnitFilter.cs" />
     <Compile Include="Domain\ResultOptions\UnitOption.cs" />
     <Compile Include="Domain\ResultOptions\UserFilter.cs" />
+    <Compile Include="Domain\SaveLevelsResponse.cs" />
     <Compile Include="Domain\SpotResponse.cs" />
     <Compile Include="Domain\SubPeriod.cs" />
     <Compile Include="Domain\SubPeriodItem.cs" />
