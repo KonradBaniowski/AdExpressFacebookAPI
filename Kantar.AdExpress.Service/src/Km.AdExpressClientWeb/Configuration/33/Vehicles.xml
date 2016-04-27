@@ -364,22 +364,22 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- MEDIA TACTIQUE -->
-  <vehicle id="mediasTactics" databaseId="4" showInsertions="false" showCreations="false">
-    <!-- Units-->
+  <!--<vehicle id="mediasTactics" databaseId="4" showInsertions="false" showCreations="false">
+    --><!-- Units--><!--
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        <!-- Media -->
+        --><!-- Media --><!--
         <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
-        <!-- Categorie -->
+        --><!-- Categorie --><!--
         <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>
-        <!-- Support -->
+        --><!-- Support --><!--
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
-    <!--Allowed universe levels-->
+    --><!--Allowed universe levels--><!--
     <allowedUniverseLevels>
       <allowedUniverseLevel id="1" name="sector"/>
       <allowedUniverseLevel id="2" name="subsector"/>
@@ -394,7 +394,7 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
-  </vehicle>
+  </vehicle>-->
   <!-- OTHERS -->
   <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true" mediaAgencyFlag="304">
     <!-- Units-->
@@ -594,92 +594,92 @@
     <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>
   </vehicle>
   <!-- INTERNET -->
-  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true" mediaAgencyFlag="302">
-    <!-- Units-->
+  <!--<vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true" mediaAgencyFlag="302">
+    --><!-- Units--><!--
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
-    <!-- Media detail level in results-->
+    --><!-- Media detail level in results--><!--
     <allowedMediaDetailLevels>
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>
-        <!-- Media -->
+        --><!-- Media --><!--
         <allowedMediaLevelItem>category</allowedMediaLevelItem>
-        <!-- Categorie -->
+        --><!-- Categorie --><!--
         <allowedMediaLevelItem>media</allowedMediaLevelItem>
-        <!-- Support -->
+        --><!-- Support --><!--
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>
-        <!-- Centre d'interet -->
+        --><!-- Centre d'interet --><!--
         <allowedMediaLevelItem>mediaGroup</allowedMediaLevelItem>
-        <!-- Media Group -->
+        --><!-- Media Group --><!--
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>
-        <!-- Régie -->
+        --><!-- Régie --><!--
         <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
-        <!-- Version -->
+        --><!-- Version --><!--
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>
-        <!-- Groupe de société -->
+        --><!-- Groupe de société --><!--
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>
-        <!-- Annonceur -->
+        --><!-- Annonceur --><!--
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>
-        <!-- Marque -->
+        --><!-- Marque --><!--
         <allowedMediaLevelItem>product</allowedMediaLevelItem>
-        <!-- Produit -->
+        --><!-- Produit --><!--
         <allowedMediaLevelItem>sector</allowedMediaLevelItem>
-        <!-- Famille -->
+        --><!-- Famille --><!--
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>
-        <!-- Classe -->
+        --><!-- Classe --><!--
         <allowedMediaLevelItem>group</allowedMediaLevelItem>
-        <!-- Groupe -->
+        --><!-- Groupe --><!--
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>
-        <!-- Variété -->
+        --><!-- Variété --><!--
         <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>
-        <!-- Groupe d'agences -->
+        --><!-- Groupe d'agences --><!--
         <allowedMediaLevelItem>agency</allowedMediaLevelItem>
-        <!-- Agence -->
+        --><!-- Agence --><!--
         <allowedMediaLevelItem>title</allowedMediaLevelItem>
-        <!-- Titre -->
+        --><!-- Titre --><!--
         <allowedMediaLevelItem>country</allowedMediaLevelItem>
-        <!-- Pays -->
+        --><!-- Pays --><!--
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
-    <!-- Selection hierarchy-->
+    --><!-- Selection hierarchy--><!--
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>
-      <!-- Centre d'interet -->
+      --><!-- Centre d'interet --><!--
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>
-      <!-- Régie -->
-      <!--<MediaSelectionParent>title</MediaSelectionParent>-->
-      <!-- Titre -->
+      --><!-- Régie --><!--
+      --><!--<MediaSelectionParent>title</MediaSelectionParent>--><!--
+      --><!-- Titre --><!--
     </MediaSelectionParents>
-    <!--Media detail level in selection-->
+    --><!--Media detail level in selection--><!--
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
-        <!--<defaultMediaSelectionDetailLevel id="24" name="titre\support" />-->
+        --><!--<defaultMediaSelectionDetailLevel id="24" name="titre\support" />--><!--
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/>
-        <!-- Support -->
+        --><!-- Support --><!--
         <allowedMediaSelectionLevelItem id="4"/>
-        <!-- Centre d 'interet -->
+        --><!-- Centre d 'interet --><!--
         <allowedMediaSelectionLevelItem id="5"/>
-        <!-- Régie -->
-        <!--<allowedMediaSelectionLevelItem id="17"/>-->
-        <!-- Titre -->
+        --><!-- Régie --><!--
+        --><!--<allowedMediaSelectionLevelItem id="17"/>--><!--
+        --><!-- Titre --><!--
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
-    <!--Media detail level allowed in recap's modules-->
+    --><!--Media detail level allowed in recap's modules--><!--
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        <!-- Media -->
+        --><!-- Media --><!--
         <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
-        <!-- Categorie -->
+        --><!-- Categorie --><!--
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
-    <!--Allowed universe levels-->
+    --><!--Allowed universe levels--><!--
     <allowedUniverseLevels>
       <allowedUniverseLevel id="1" name="sector"/>
       <allowedUniverseLevel id="2" name="subsector"/>
@@ -694,7 +694,7 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
-    <!--Allowed column broken down-->
+    --><!--Allowed column broken down--><!--
     <ColumnDetailLevel>
       <allowedColumnDetailLevelItems>
         <allowedColumnDetailLevelItem id="2" name="Categorie"/>
@@ -704,7 +704,7 @@
         <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
-  </vehicle>
+  </vehicle>-->
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true" mediaAgencyFlag="301">
     <!-- Units-->

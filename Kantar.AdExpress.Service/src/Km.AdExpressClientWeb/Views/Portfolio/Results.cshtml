@@ -531,6 +531,59 @@
                 }
             });
 
+            $('#save-custom-detail-levels').on('click', function (e) {
+                var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val();
+                var type = 2;
+
+                var params = {
+                    levels: levels,
+                    type: type
+                };
+                $.ajax({
+                    url: '@Url.Action("SaveCustomDetailLevels", "Portfolio")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null && data != "") {
+                            $("#customDetail")
+                            .append('<option value="' + data.Id + '">' + data.Label + '</option>')
+                            .selectpicker('refresh');
+                            bootbox.alert(data.Message);
+                        }
+                    }
+                });
+            });
+
+            $('#remove-custom-detail-levels').on('click', function (e) {
+                var detailLevel = $('#customDetail').val();
+
+                var params = {
+                    detailLevel: detailLevel
+                };
+                $.ajax({
+                    url: '@Url.Action("RemoveCustomDetailLevels", "Portfolio")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        if (data != null && data != "") {
+                            if (!(data.Message.indexOf("Impossible") > -1)) {
+                                $('#customDetail').find('[value=' + detailLevel + ']').remove();
+                                $('#customDetail').selectpicker('refresh');
+                            }
+                            bootbox.alert(data.Message);
+                        }
+                    }
+                });
+            });
+
             $('#validate-options').on('click', function (e) {
                 $("#grid").addClass("hide");
                 $("#listCharts").hide();

@@ -49,7 +49,11 @@ namespace Km.AdExpressClientWeb.Controllers
                     case Domain.UniversType.Univers:
                         response = _detailSelectionService.LoadUniversDetails(id, idWebSession);
                         break;
+                    case Domain.UniversType.Alert:
+                        response = _detailSelectionService.LoadAlertDetails(id, idWebSession);
+                        break;
                     default:
+                        vm.Message = "Not avaiable";
                         break;
                 }
                 

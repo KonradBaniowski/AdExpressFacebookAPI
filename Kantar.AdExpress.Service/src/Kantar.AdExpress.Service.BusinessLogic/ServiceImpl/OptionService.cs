@@ -26,6 +26,7 @@ using TNS.AdExpress.Constantes.Classification.DB;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 using FrameWorkResults = TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.Classification.Universe;
+using Kantar.AdExpress.Service.Core.Domain;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -551,6 +552,97 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             _customerWebSession.Save();
         }
+
+        public SaveLevelsResponse SaveCustomDetailLevels(string idWebSession, string levels, string type)
+        {
+            SaveLevelsResponse response = new SaveLevelsResponse();
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+
+            if (levels.Length > 0 && type.Length > 0)
+            {
+                WebConstantes.GenericDetailLevel.Type detailLevelType = (WebConstantes.GenericDetailLevel.Type)int.Parse(type);
+                int levelId;
+                string[] levelList = levels.Split(',');
+                ArrayList levelIds = new ArrayList();
+                foreach (string currentLevel in levelList)
+                {
+                    if (currentLevel.Length > 0)
+                    {
+                        levelId = int.Parse(currentLevel);
+                        if (levelId > 0) levelIds.Add(levelId);
+                    }
+                }
+
+                if (levelIds.Count > 0)
+                {
+                    GenericDetailLevel genericDetailLevel = new GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.savedLevels, detailLevelType);
+                    if (IsDetailLevelsAlreadySaved(genericDetailLevel))
+                    {//Tests if detail levels are already saved
+                        response.CustomDetailLavelsId = -1;
+                        response.Message = GestionWeb.GetWebWord(2256, _customerWebSession.SiteLanguage);
+                    }
+                    else
+                    {
+                        Int64 listId = TNS.AdExpress.Web.Core.DataAccess.Session.GenericDetailLevelDataAccess.Save(_customerWebSession, genericDetailLevel);
+
+                        response.CustomDetailLavelsId = listId;
+                        response.CustomDetailLavelsLabel = genericDetailLevel.GetLabel(_customerWebSession.SiteLanguage);
+                        response.Message = "Le niveau de détail a bien été enregistré";
+                    }
+                }
+                else
+                {
+                    response.CustomDetailLavelsId = -1;
+                    response.Message = GestionWeb.GetWebWord(1945, _customerWebSession.SiteLanguage);
+                }
+            }
+
+            return response;
+        }
+
+        public string RemoveCustomDetailLevels(string idWebSession, string detailLevel)
+        {
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+
+            if (detailLevel.Length > 0 && int.Parse(detailLevel) != -1)
+            {
+                TNS.AdExpress.Web.Core.DataAccess.Session.GenericDetailLevelDataAccess.Remove(_customerWebSession, Int64.Parse(detailLevel));
+                return "Le niveau de détail a bien été supprimé";
+            }
+
+            return "Impossible de supprimer le niveau de détail";
+        }
+
+        #region IsDetailLevelsAlreadySaved
+        private bool IsDetailLevelsAlreadySaved(GenericDetailLevel toTest)
+        {
+            DataSet ds;
+            int currentLevelId;
+            Int64 currentId = -1;
+            int currentIndex = 0;
+            ArrayList genericDetailLevelsSaved = new ArrayList();
+
+            ds = GenericDetailLevelDataAccess.Load(_customerWebSession);
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow currentRow in ds.Tables[0].Rows)
+                {
+
+                    if (currentId != Int64.Parse(currentRow["id_list"].ToString()))
+                    {
+                        if (currentId > -1 && ((GenericDetailLevelSaved)genericDetailLevelsSaved[currentIndex]).EqualLevelItems(toTest)) return true;
+                        currentId = Int64.Parse(currentRow["id_list"].ToString());
+                        currentIndex = genericDetailLevelsSaved.Add(new GenericDetailLevelSaved(currentId, new ArrayList()));
+                    }
+                    currentLevelId = int.Parse(currentRow["id_type_level"].ToString());
+                    ((GenericDetailLevelSaved)genericDetailLevelsSaved[currentIndex]).AddLevel(currentLevelId);
+                }
+                if (currentId > -1 && ((GenericDetailLevelSaved)genericDetailLevelsSaved[currentIndex]).EqualLevelItems(toTest)) return true;
+            }
+
+            return false;
+        }
+        #endregion
 
         #region Generic Detail Level Option Methodes
         private bool CanAddDetailLevel(GenericDetailLevel currentDetailLevel, Int64 module)
