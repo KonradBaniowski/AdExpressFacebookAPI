@@ -19,7 +19,10 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Classification.DAL;
 using TNS.Classification.Universe;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Web.Core.DataAccess.Helpers;
+using LS = TNS.Ares.Domain.LS;
+using TNS.Ares.Alerts.DAL;
+using TNSDomain = TNS.Alert.Domain;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -59,6 +62,21 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (adExpressUniverse !=null && adExpressUniverse.Count>0)
                         result = GetUniversDetails(webSession, adExpressUniverse);
                 } 
+            }
+            return result;
+        }
+        public DetailSelectionResponse LoadAlertDetails(string id, string idWebSession)
+        {
+            DetailSelectionResponse result = new DetailSelectionResponse();
+            if (!String.IsNullOrEmpty(id) && !String.IsNullOrWhiteSpace(idWebSession) && TNS.Alert.Domain.AlertConfiguration.IsActivated)
+            {
+                int idAlert = Int32.Parse(id);
+                TNS.Ares.Domain.Layers.DataAccessLayer layer = LS.PluginConfiguration.GetDataAccessLayer(LS.PluginDataAccessLayerName.Alert);
+                TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+                TNSDomain.Alert alert = alertDAL.GetAlert(idAlert);
+                var webSessionSave = (WebSession)alert.Session;
+                result = LoadDetailsSelection(webSessionSave);
             }
             return result;
         }

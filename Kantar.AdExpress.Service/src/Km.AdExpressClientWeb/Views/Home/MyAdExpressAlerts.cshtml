@@ -39,7 +39,7 @@
                                 </h4>
                             </div>
 
-                            <div id="collapse@(item.Id)" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div id="collapse@(item.Id)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
 
                                     <div class="row">
@@ -51,7 +51,7 @@
                                                     <li class="list-group-item">
                                                         <span> @Model.Labels.SendDate @occurence.SendDate.Date.ToShortDateString() </span>
                                                         <div class="pull-right">
-                                                            <a data-id="@occurence.Id" class="btnLoadSession" data-type="Alerts">
+                                                            <a data-id="@occurence.Id" class="btnLoadSession" data-type="Alert">
                                                                 <i class="fa fa-cogs fa-lg"></i>
                                                             </a>
                                                         </div>
@@ -61,7 +61,7 @@
                                         </div>
 
                                         <div class="col-lg-6">
-                                            <h4><i class="fa fa-info-circle fa-lg"></i>&nbsp;@Model.Labels.AlertsDetails</h4>
+                                            <h4><i class="btnLoadDetails adExpress-tools fa fa-info-circle fa-lg" data-id="@(item.Id)" data-type="Alert"></i>&nbsp;@Model.Labels.AlertsDetails</h4>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <ul class="list-group">
