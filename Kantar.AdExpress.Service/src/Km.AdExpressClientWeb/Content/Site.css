@@ -291,9 +291,11 @@ input {
 .blue {
     color: #00c1ff;
 }
+
 .black {
     color: #000000;
 }
+
 .bg-blue {
     background-color: #00c1ff;
 }
@@ -415,10 +417,10 @@ input {
     opacity: 0.8;
 }
 
-    .tile-deploy.pdf {
-        color: white;
-        background-color: #bb1415;
-    }
+.tile-deploy.pdf {
+    color: white;
+    background-color: #bb1415;
+}
 
 .tile-cursor {
     cursor: pointer;
@@ -742,7 +744,7 @@ input {
 
 .panel-marche .panel-body {
     height: 180px;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
 }
 
 .panel-marche .panel-heading {
@@ -1467,6 +1469,10 @@ input[type=checkbox].with-font {
 
 ul.ui-selectable {
     padding-left: 10px;
+    overflow-y: auto;
+    height: inherit;
+    margin: -15px;
+    padding: 15px;
 }
 
     ul.ui-selectable li {
@@ -2037,8 +2043,8 @@ ul.ui-selectable {
     background-image: none;
 }
 
-#loader{
-    text-align:center;
+#loader {
+    text-align: center;
 }
 
     #loader .modal-footer {
@@ -2278,10 +2284,21 @@ ul.ui-selectable {
     border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 
-#carou-vehicleView .carousel-control.left {margin-left: -115px;}
-#carou-vehicleView  .carousel-control.right {margin-right: -125px;} 
- #carou-vehicleView-OneVehicle .carousel-control.left {margin-left: -65px;}
- #carou-vehicleView-OneVehicle .carousel-control.right {margin-right: -75px;} 
+#carou-vehicleView .carousel-control.left {
+    margin-left: -115px;
+}
+
+#carou-vehicleView .carousel-control.right {
+    margin-right: -125px;
+}
+
+#carou-vehicleView-OneVehicle .carousel-control.left {
+    margin-left: -65px;
+}
+
+#carou-vehicleView-OneVehicle .carousel-control.right {
+    margin-right: -75px;
+}
 
 .padder-v-mi {
     padding-top: 5px;
@@ -2307,19 +2324,19 @@ ul.ui-selectable {
 /* Mopdal VBehicle View */
 
 
-#modal-vehicleView .modal-content{
+#modal-vehicleView .modal-content {
     width: 850px;
     margin: 0 auto;
     overflow-y: scroll;
 }
 
-    #modal-vehicleView > .modal-dialog > .modal-content > .header-popup-vehicleView {
-        /*padding: 10px 15px;*/
-        border-bottom: 1px solid transparent;
-        border-top-right-radius: 3px;
-        border-top-left-radius: 3px;
-        background-color: rgba(0,0,0,0.7);
-    }
+#modal-vehicleView > .modal-dialog > .modal-content > .header-popup-vehicleView {
+    /*padding: 10px 15px;*/
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: rgba(0,0,0,0.7);
+}
 
 #modal-vehicleView .modal:nth-of-type(even) {
     z-index: 1042 !important;
@@ -2405,7 +2422,7 @@ ul.ui-selectable {
         font-size: 12px;
         color: #ff8c00;
     }
-        
+
 .modal-express .modal-body {
     color: black;
     padding: 15px;
@@ -2453,17 +2470,23 @@ ul.ui-selectable {
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
-    background-color:white;
+    background-color: white;
 }
-.legendChart.ui-corner-all.ui-widget-content.ui-chart-legend{
+
+.legendChart.ui-corner-all.ui-widget-content.ui-chart-legend {
     display: inline-block;
-    color:black;
-    background-color:white !important;
+    color: black;
+    background-color: white !important;
 }
-.ui-chart-tooltip{
-    background-color:white;
+
+.ui-chart-tooltip {
+    background-color: white;
 }
 
 .b-r-w {
     border-right: 1px solid rgba(255,255,255,0.4);
+}
+
+.modal.fcour {
+    overflow-y: hidden;
 }

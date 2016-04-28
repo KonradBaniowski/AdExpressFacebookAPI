@@ -11,6 +11,7 @@ using System;
 using System.Reflection;
 using System.Security.Claims;
 using TNS.AdExpress.Domain.Translation;
+using Km.AdExpressClientWeb.I18n;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -26,13 +27,14 @@ namespace Km.AdExpressClientWeb.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl, int siteLanguage = 33)
         {
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.ReturnUrl = returnUrl;
             LoginViewModel model = new LoginViewModel
             {
-                ErrorMessage = GestionWeb.GetWebWord(880, 33)
+                ErrorMessage = GestionWeb.GetWebWord(880, siteLanguage),
+                Labels = LabelsHelper.LoadPageLabels(siteLanguage)
             };
             return View(model);
         }

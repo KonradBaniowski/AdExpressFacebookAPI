@@ -28,7 +28,7 @@ function SelectedItems(event, ui) {
     $(this).closest('.panel').find($(".ui-selected")).each(function (index, elem) {
         itemIds.push($(elem).attr('data-id'));
 
-    //$(".ui-selected")
+        //$(".ui-selected")
     });
     var DIS = this;
     this.itemIds = itemIds;
@@ -45,7 +45,7 @@ function SelectedItems(event, ui) {
         if ($(value).attr("data-universe") === id) {
             clean = true;
         }
-        else if(clean) {
+        else if (clean) {
             $(value).find($('.badge.bg-blue')).html('');
             $(value).find($('.panel-body > ul')).html('');
             $(value).find($('small')).html('');
@@ -82,14 +82,30 @@ function SelectedItems(event, ui) {
             success: function (response) {
                 $("#containerSelectable" + universe).html('');
                 $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
-                $('#selectable' + univerIndex).selectable(
-                {
+                $('#selectable' + univerIndex).selectableScroll({
+                    filter: 'li',
                     stop: SelectedItems
                 });
+                //    .selectable(
+                //{
+                //    stop: SelectedItems
+                //});
+
             }
         });
     });
 };
+
+function SelectSelectableElement(selectableContainer, elementsToSelect) {
+    // add unselecting class to all elements in the styleboard canvas except the ones to select
+    $(".ui-selected", selectableContainer).not(elementsToSelect).removeClass("ui-selected").addClass("ui-unselecting");
+
+    // add ui-selecting class to the elements to select
+    $(elementsToSelect).not(".ui-selected").addClass("ui-selecting");
+
+    // trigger the mouse stop event (this will select all .ui-selecting elements, and deselect all .ui-unselecting elements)
+    selectableContainer.data("selectable")._mouseStop(null);
+}
 
 //clean l element selectionnée
 $(document).on('click', '.tab-content li > .pull-right', function () {

@@ -76,10 +76,9 @@ $(".btn-recherche").on('click', function (event) {
 
                     DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
                 }
-                $('#selectable' + universe).selectable(
-                    {
-                        stop: SelectedItems
-                    });
+                $('#selectable' + universe).selectableScroll({
+                    stop: SelectedItems
+                });
 
             }
         });

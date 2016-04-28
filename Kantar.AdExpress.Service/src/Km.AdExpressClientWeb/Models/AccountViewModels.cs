@@ -1,27 +1,32 @@
 using Kantar.AdExpress.Service.Core.Domain.Identity;
+using KM.Framework.Constantes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Km.AdExpressClientWeb.Models
 {
-    public class ExternalLoginConfirmationViewModel {
+    public class ExternalLoginConfirmationViewModel
+    {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
-    public class ExternalLoginListViewModel {
+    public class ExternalLoginListViewModel
+    {
         public string ReturnUrl { get; set; }
         public IEnumerable<ApplicationAuthenticationDescription> LoginProviders { get; set; }
     }
 
-    public class SendCodeViewModel {
+    public class SendCodeViewModel
+    {
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
         public string ReturnUrl { get; set; }
     }
 
-    public class VerifyCodeViewModel {
+    public class VerifyCodeViewModel
+    {
         [Required]
         public string Provider { get; set; }
 
@@ -34,30 +39,24 @@ namespace Km.AdExpressClientWeb.Models
         public bool RememberBrowser { get; set; }
     }
 
-    public class ForgotViewModel {
+    public class ForgotViewModel
+    {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
-    public class LoginViewModel {
-        //[Required]
-        //[Display(Name = "Email")]
-        //[EmailAddress]
+    public class LoginViewModel
+    {
         public string Email { get; set; }
-
-        //[Required]
-        //[DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
         public string ErrorMessage { get; set; }
-
-        //[Display(Name = "Remember me?")]
-        //public bool RememberMe { get; set; }
+        public Labels Labels { get; set; }
     }
 
-    public class RegisterViewModel {
+    public class RegisterViewModel
+    {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -75,7 +74,8 @@ namespace Km.AdExpressClientWeb.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ResetPasswordViewModel {
+    public class ResetPasswordViewModel
+    {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -95,7 +95,8 @@ namespace Km.AdExpressClientWeb.Models
         public string Code { get; set; }
     }
 
-    public class ForgotPasswordViewModel {
+    public class ForgotPasswordViewModel
+    {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
