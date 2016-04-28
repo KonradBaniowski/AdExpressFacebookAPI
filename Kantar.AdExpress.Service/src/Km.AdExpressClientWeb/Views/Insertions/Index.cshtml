@@ -157,12 +157,12 @@
         var userFilter = new UserFilter();
 
         var renderGrid = function (success, error) {
-            var height = window.innerHeight - 230;
+            
             if (success) {
-
                 $("#grid").igTreeGrid("destroy");
                 $("#gridLoader").hide();
                 $("#grid").show();
+                var height = window.innerHeight - $("#grid").offset().top - 10;
                 if (needFixedColumns) {
                     $("#grid").igTreeGrid({
                         dataSource: ds.dataView(),
@@ -579,10 +579,8 @@
 
         //Resize de la page, la longuer du tableau egalament
         $(window).resize(function () {
-            $("#grid").igTreeGrid("option", "height", window.innerHeight - 230);
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
         });
-
-
 
     </script>
 }
