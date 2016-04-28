@@ -2302,5 +2302,6 @@
     <item mnemonic="w3044" type="System.String">Résultats</item>
     <item mnemonic="w3045" type="System.String">Répertoires</item>
     <item mnemonic="w3046" type="System.String">Ce résultat n'est pas encore disponible pour ce site, veuillez le consulter sur l'ancien site.</item>
+    <item mnemonic="w3047" type="System.String">AdExpress, monitoring cross média des campagnes publicitaires</item>
   </items>
 </localization>

@@ -157,20 +157,21 @@
         var userFilter = new UserFilter();
 
         var renderGrid = function (success, error) {
+            
             if (success) {
-
                 $("#grid").igTreeGrid("destroy");
                 $("#gridLoader").hide();
                 $("#grid").show();
+                var height = window.innerHeight - $("#grid").offset().top - 10;
                 if (needFixedColumns) {
                     $("#grid").igTreeGrid({
                         dataSource: ds.dataView(),
                         columns: cols,
-                        height: "650px",
+                        height: height,
                         autoGenerateColumns: false,
                         primaryKey: "ID",
                         foreignKey: "PID",
-                        width: "95%",
+                        width: "100%",
                         features: [
                             {
                                 name: "MultiColumnHeaders"
@@ -178,7 +179,7 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 25
+                                pageSize: 100
                             },
                             {
                                 name: "ColumnFixing",
@@ -192,11 +193,11 @@
                     $("#grid").igTreeGrid({
                         dataSource: ds.dataView(),
                         columns: cols,
-                        height: "650px",
+                        height: height,
                         autoGenerateColumns: true,
                         primaryKey: "ID",
                         foreignKey: "PID",
-                        width: "95%",
+                        width: "100%",
                         features: [
                             {
                                 name: "MultiColumnHeaders"
@@ -204,7 +205,7 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 25
+                                pageSize: 100
                             }
                         ]
                     })
@@ -576,7 +577,10 @@
            window.open('@Url.Action("InsertionsResult", "InsertionsExport")?ids='+userFilter.paramsUrl.ids+'&zoomDate='+userFilter.paramsUrl.zoomDate+'&idUnivers='+userFilter.paramsUrl.idUnivers+'&moduleId='+userFilter.paramsUrl.moduleId+'&idVehicle='+userFilter.paramsUrl.idVehicle, "_blank");
         });
 
-
+        //Resize de la page, la longuer du tableau egalament
+        $(window).resize(function () {
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
 
     </script>
 }

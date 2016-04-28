@@ -11,6 +11,7 @@ namespace TNS.AdExpress.Constantes.Web
     public class LanguageConstantes
     {
         #region Please insert any new code in the correct order
+        
         public const long Cancel = 000;
         public const long NameCode = 67;
         public const long CompanyCode = 68;
@@ -133,6 +134,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Results = 3044;
         public const long Directories = 3045;
         public const long NotAvailableYet = 3046;
+        public const long HomeCode = 3047;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion

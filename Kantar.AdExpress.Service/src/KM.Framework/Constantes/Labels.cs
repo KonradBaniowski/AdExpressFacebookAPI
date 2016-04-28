@@ -109,5 +109,6 @@ namespace KM.Framework.Constantes
         public string GenericLevelDetailColumnLabel { get; set; } //w2300
         public string SelectMedia { get;set; }//1017
         public string PreSelection { get; set; }//2571
+        public string HomeLabel { get; set; } // 3047
     }
 }

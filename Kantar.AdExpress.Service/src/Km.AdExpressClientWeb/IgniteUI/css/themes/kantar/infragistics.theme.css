@@ -860,7 +860,7 @@ tr[aria-level] td {
     border-bottom: 1px solid rgba(0,0,0,0.3);
     border-top: 0;
     padding: 1px 10px;
-    font-weight: bolder;
+    /*font-weight: bolder;*/
     font-size:12px;/*dede*/
     height:20px;
     white-space: nowrap;
@@ -905,7 +905,7 @@ tr[aria-level="3"] td{
     background:white;
     border:1px solid rgba(0,0,0,0.3);
     padding-left:3px;
-    font-weight:bolder;
+    /*font-weight:bolder;*/
 }
 
 .ui-iggrid td.ui-state-hover .glyphicon:hover, .ui-iggrid td.ui-state-hover .glyphicon:focus {

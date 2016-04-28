@@ -38,8 +38,8 @@
         @Html.Action("ResultOptions", "MediaSchedule")
     </div>
 </div>
-<div id="subPeriodSelection" class="h20">
-</div>
+<div id="subPeriodSelection" class="h20" style="min-height: 70px; display:none;"></div>
+<div style="margin-bottom:10px;"></div>
 <div id="msCreativesResult" class="hide">
 </div>
 <div class="row">
@@ -393,7 +393,7 @@
                 });
             }
 
-            CallMediaScheduleResult(zoomDate);
+            @*CallMediaScheduleResult(zoomDate);
 
             function GetSubPeriodSelection(zoomDateParam) {
                 var params = {
@@ -437,7 +437,7 @@
                         }
                     }
                 });
-            }
+            }*@
 
             function AutoPlayCreativeModal() {
 
@@ -615,6 +615,53 @@
             $("#resultModal").on('hide.bs.modal', function () {
                 $("#resultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
             });
+            CallMediaScheduleResult(zoomDate);
+
+            function GetSubPeriodSelection(zoomDateParam) {
+                var params = {
+                    zoomDate: zoomDateParam
+                };
+                $.ajax({
+                    url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        $("#subPeriodSelection").show();
+                        if (data != null) {
+                            $('#subPeriodSelection').html(data);
+                            $('#leave-zoom').on('click', function (e) {
+                                $("#perioddetailTypeContainer").removeClass("hide").addClass("show");
+                                $("#leave-zoom").addClass("hide");
+                                $("#sub-period-container").addClass("hide");
+                                $("#grid").addClass("hide");
+                                $("#gridLoader").removeClass("hide");
+                                $("#subPeriodSelection").hide();
+                                zoomDate = '';
+                                CallMediaScheduleResult(zoomDate);
+                            });
+                            $(".sub-period-btn").on('click', function (e) {
+                                $(".btn-default-sub-period").prop('disabled', false);
+                                $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+                                $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+                                $(this).prop('disabled', true);
+                                $("#grid").addClass("hide");
+                                $("#gridLoader").removeClass("hide");
+                                CallMediaScheduleResult($(this).attr("period"));
+                            });
+                            $(".sub-period-btn").on('mouseenter', function (e) {
+                                previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+                                $("#subPeriodLabel").text($(this).attr("periodlabel"));
+                            });
+                            $(".sub-period-btn").on('mouseleave', function (e) {
+                                $("#subPeriodLabel").text(previousSubPeriodLabel);
+                            });
+                        }
+                    }
+                });
+            }
 
             function SaveResultEvents() {
                 $("#folders").on('change', function (event) {
@@ -896,8 +943,7 @@
         }
 
     });
-
-    //});
+        
 
     /***************************************** Old script ********************************************/
 

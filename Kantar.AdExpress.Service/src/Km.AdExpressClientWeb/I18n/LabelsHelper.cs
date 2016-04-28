@@ -64,7 +64,10 @@ namespace Km.AdExpressClientWeb.I18n
                 ComparativePeriodLabel = GestionWeb.GetWebWord(LanguageConstantes.ComparativePeriodCode, siteLanguage),
                 ComparativePeriodTypeLabel = GestionWeb.GetWebWord(LanguageConstantes.ComparativePeriodTypeCode, siteLanguage),
                 PeriodDisponibilityTypeLabel = GestionWeb.GetWebWord(LanguageConstantes.PeriodDisponibilityTypecode, siteLanguage),
-                GenericLevelDetailColumnLabel = GestionWeb.GetWebWord(LanguageConstantes.GenericLevelDetailColumnCode, siteLanguage)
+                GenericLevelDetailColumnLabel = GestionWeb.GetWebWord(LanguageConstantes.GenericLevelDetailColumnCode, siteLanguage),
+
+                //PAGE D ACCUEIL
+                HomeLabel = GestionWeb.GetWebWord(LanguageConstantes.HomeCode, siteLanguage),
             };
             return result;
         }
