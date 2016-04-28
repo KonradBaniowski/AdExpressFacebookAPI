@@ -649,7 +649,6 @@
     <Content Include="IgniteUI\css\structure\images\igHtmlEditor\text_list_numbers.png" />
     <Content Include="IgniteUI\css\structure\images\igHtmlEditor\text_strikethrough.png" />
     <Content Include="IgniteUI\css\structure\images\igHtmlEditor\text_underline.png" />
-    <Content Include="IgniteUI\css\structure\images\igLoadingSmall.gif" />
     <Content Include="IgniteUI\css\structure\images\igPivot\dataselector-sprite.png" />
     <Content Include="IgniteUI\css\structure\images\igPivot\kpi-icons.png" />
     <Content Include="IgniteUI\css\structure\images\igPivot\pivot-header-icons.png" />
@@ -662,6 +661,7 @@
     <Content Include="IgniteUI\css\structure\images\igRating\ig-rating-touchx2.png" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igBigPauseButton.png" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igBigPlayButton.png" />
+    <Content Include="IgniteUI\css\structure\images\igLoadingSmall.gif" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igLoadingSmall.gif" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igPlayButton24.png" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igPlayButton32.png" />
