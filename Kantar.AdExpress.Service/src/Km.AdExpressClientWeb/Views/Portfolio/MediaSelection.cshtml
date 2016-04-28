@@ -155,7 +155,7 @@
                                             <ul class="nav nav-tabs" role="tablist">
                                                 @foreach (var tree in Model.Trees)
                                                 {
-                                                    <li @(tree == Model.Trees.First() ? "class=active" : "" )>
+                                                    <li @(tree == Model.Trees.FirstOrDefault(p=>p.AccessType == AccessType.includes) ? "class=active" : "" )>
                                                         <a data-target="#tab-@(tree.Id)"
                                                            data-tab="@(tree.Id)"
                                                            role="tab"

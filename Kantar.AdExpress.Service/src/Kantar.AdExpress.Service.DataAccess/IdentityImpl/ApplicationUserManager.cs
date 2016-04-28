@@ -279,12 +279,15 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
             //OVERRIDE MAU
             var user = await _uow.LoginRepository.GetLogin(userName);
             ApplicationIdentityUser aIdentityUser = new ApplicationIdentityUser();
-            aIdentityUser.Id = user.Id;
-            aIdentityUser.Email = user.LoginName;
-            aIdentityUser.TwoFactorEnabled = false;
-            aIdentityUser.LockoutEnabled = false;
-            aIdentityUser.UserName = user.LoginName;
-            aIdentityUser.SecurityStamp = Guid.NewGuid().ToString("D");
+            if (user != null)
+            {
+                aIdentityUser.Id = user.Id;
+                aIdentityUser.Email = user.LoginName;
+                aIdentityUser.TwoFactorEnabled = false;
+                aIdentityUser.LockoutEnabled = false;
+                aIdentityUser.UserName = user.LoginName;
+                aIdentityUser.SecurityStamp = Guid.NewGuid().ToString("D");
+            }
             return aIdentityUser.ToAppUser();
         }
 
