@@ -438,7 +438,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 ErrorOverLimit = GestionWeb.GetWebWord(LanguageConstantes.ErrorOverLimit, siteLanguage),
                 SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 SelectMedia = GestionWeb.GetWebWord(LanguageConstantes.SelectMedia, siteLanguage),
-                PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage)
+                PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage),
+                Results = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage)
             };
             return result;
         }
