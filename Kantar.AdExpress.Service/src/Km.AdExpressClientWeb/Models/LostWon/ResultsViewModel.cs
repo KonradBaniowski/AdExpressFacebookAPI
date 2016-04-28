@@ -1,4 +1,5 @@
 ﻿using Km.AdExpressClientWeb.Models.Shared;
+using KM.Framework.Constantes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Km.AdExpressClientWeb.Models.LostWon
     {
         public List<NavigationNode> NavigationBar { get; set; }
         public PresentationModel Presentation { get; set; }
+
+        public Labels Labels { get; set; }
     }
 }

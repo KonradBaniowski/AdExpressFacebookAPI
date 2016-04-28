@@ -65,6 +65,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long IncompleteDataForQuery = 1787;
         public const long LevelDetails = 1886;
         public const long CreativeLabel = 1888;
+        public const long Save = 1990;
         public const long VisuelLabel = 1909;
         public const long JobTitleCode = 1976;
         public const long RefineCode = 2053;
@@ -103,6 +104,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Receiver = 2483;
         public const long UnityError = 2541;
         public const long PreSelection = 2571;
+        public const long CreateAlert = 2578;
         public const long Daily = 2579;
         public const long Weekly = 2580;
         public const long SaveAlert = 2581;
