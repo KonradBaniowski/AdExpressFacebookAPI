@@ -38,7 +38,6 @@ $(function () {
             return;
         }
         var things = [];
-        var spinner = new Spinner().spin(dis);
         $('#btnSubmitMarketSelection').off('click');
         var trees = [];
         $.each($('.nav.nav-tabs > li a'), function (index, elem) {
@@ -79,11 +78,9 @@ $(function () {
             type: 'POST',
             data: params,
             error: function (data) {
-                spinner.stop();
                 bootbox.alert(data.ErrorMessage);
             },
             success: function (data) {
-                spinner.stop();
                 if (data.ErrorMessage != null && data.ErrorMessage != "") {
                     bootbox.alert(data.ErrorMessage);
                 }

@@ -22,9 +22,9 @@ jQuery.fn.extend({
         divTitleHtml.html('');
         var nbElemHtml = $('<span/>');
         nbElemHtml.addClass('badge bg-blue');
+        titleText = titleText.replace('{NB_ELEM}', '       {NB_ELEM}');
         var listElem = undefined;
         var warningHtml = undefined;
-
         if (total > nbElemMax) {
             //listElem = GetHtmlSelectableFromObject(datas.slice(0, nbElemMax), classNameSelection, idSelection);
             listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);

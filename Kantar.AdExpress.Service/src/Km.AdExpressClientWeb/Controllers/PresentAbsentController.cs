@@ -450,7 +450,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
                 Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent,siteLanguage),
                 SelectMedia= GestionWeb.GetWebWord(LanguageConstantes.SelectMedia, siteLanguage),
-                PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage)
+                PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage),
+                Results = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage)
             };
             return result;
         }
