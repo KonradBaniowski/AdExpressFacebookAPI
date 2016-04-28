@@ -1774,8 +1774,8 @@
     <item mnemonic="w2586" type="System.String">Mes alertes liste toutes les alertes que vous avez préalablement enregistrées. Les alertes en cours de validation sont affichées dans une zone bien distincte </item>
     <item mnemonic="w2587" type="System.String">Aucune occurrence disponible pour cette alerte</item>
     <item mnemonic="w2588" type="System.String">Envoyée le </item>
-    <item mnemonic="w2589" type="System.String">AdExNews</item>
-    <item mnemonic="w2590" type="System.String">AdExReport</item>
+    <item mnemonic="w2589" type="System.String">Adex news</item>
+    <item mnemonic="w2590" type="System.String">Adex Report</item>
     <item mnemonic="w2591" type="System.String">AdExReview</item>
     <item mnemonic="w2592" type="System.String">Nouveautes</item>
     <item mnemonic="w2593" type="System.String">Dépenses publicitaires par catégorie</item>
