@@ -1564,6 +1564,11 @@ ul.ui-selectable {
     margin-top: -10%;
 }
 
+.logoNavBar{
+    max-width:240px;
+    margin:-10px auto auto auto;
+}
+
 .h20 {
     height: 20px;
 }
