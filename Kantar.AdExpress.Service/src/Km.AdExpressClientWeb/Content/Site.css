@@ -438,7 +438,7 @@ input {
     padding: 0 1px 0 10px;
 }
 
-.flip-container, .front, .back {
+.flip-container, .front {
     /*height: 150px;*/
     padding: 20px 15px;
     width: 100%;
@@ -450,7 +450,8 @@ input {
     width: 100%;
 }
 
-.front, .back, .front-second, .back-second {
+
+.front, .front-second, .back-second {
     top: 0;
     left: 0;
     transition: -webkit-transform 1s;
@@ -459,6 +460,22 @@ input {
     transform-style: preserve-3d;
     backface-visibility: hidden;
     position: absolute;
+}
+
+.flip-container .back{
+    height: 100px;
+    transition: -webkit-transform 1s;
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    display: table;
+    width: 100%;
+}
+
+.flip-container .back .backText{
+    display: table-cell;
+    vertical-align:middle;
 }
 
 .front, .front-second {
