@@ -110,5 +110,7 @@ namespace KM.Framework.Constantes
         public string SelectMedia { get;set; }//1017
         public string PreSelection { get; set; }//2571
         public string HomeLabel { get; set; } // 3047
+
+        public string CreateAlert { get; set; }//1990
     }
 }

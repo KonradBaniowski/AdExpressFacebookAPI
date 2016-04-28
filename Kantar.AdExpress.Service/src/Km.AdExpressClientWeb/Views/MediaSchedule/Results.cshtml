@@ -27,7 +27,8 @@
                 <option value="3">Résultat brut</option>
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>&nbsp;
-            <button class="btn btn-valider" id="btn-save-result">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
+            <button class="btn btn-valider" id="btn-save-result"> @Model.Labels.Save  <i class="fa fa-arrow-down"></i></button>
+            <button class="btn btn-valider" id="btn-save-alert"> @Model.Labels.CreateAlert  <i class="fa fa-exclamation-circle"></i></button>
         </div>
     </div>
 </div>
@@ -60,11 +61,17 @@
         </div>
     </div>
 </div>
+<div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 @section Scripts {
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
-
+    @Scripts.Render("~/bundles/results")
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
         $(document).ready(function () {

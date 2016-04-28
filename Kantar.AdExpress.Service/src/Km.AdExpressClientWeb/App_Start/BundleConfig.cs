@@ -134,6 +134,9 @@ namespace Km.AdExpressClientWeb
             bundles.Add(new ScriptBundle("~/bundles/detail-selection").Include(
                         "~/Scripts/detail-selection/detail-selection.js"));
             #endregion
+
+            bundles.Add(new ScriptBundle("~/bundles/results").Include(
+                        "~/Scripts/Results/result.js"));
         }
     }
 }

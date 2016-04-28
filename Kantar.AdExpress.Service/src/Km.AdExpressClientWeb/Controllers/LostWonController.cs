@@ -225,7 +225,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var model = new Models.LostWon.ResultsViewModel
             {
                 NavigationBar = LoadNavBar(resultNode.Position),
-                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage)
+                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage),
+                Labels =LoadPageLabels(CustomerSession.SiteLanguage)
             };
 
             return View(model);
@@ -422,7 +423,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Include = GestionWeb.GetWebWord(LanguageConstantes.IncludeCode, siteLanguage),
                 Exclude = GestionWeb.GetWebWord(LanguageConstantes.ExcludeCode, siteLanguage),
                 LoadUnivers = GestionWeb.GetWebWord(LanguageConstantes.LoadUniversCode, siteLanguage),
-                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
+                SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
                 ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
                 MyResults = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
@@ -436,10 +437,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 DeleteAll = GestionWeb.GetWebWord(LanguageConstantes.DeleteAllcode, siteLanguage),
                 ErrorOnlyOneItemAllowed = GestionWeb.GetWebWord(LanguageConstantes.ErrorOnlyOneItemAllowed, siteLanguage),
                 ErrorOverLimit = GestionWeb.GetWebWord(LanguageConstantes.ErrorOverLimit, siteLanguage),
-                SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 SelectMedia = GestionWeb.GetWebWord(LanguageConstantes.SelectMedia, siteLanguage),
                 PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage),
-                Results = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage)
+                Results = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage),
+                Save = GestionWeb.GetWebWord(LanguageConstantes.Save, siteLanguage),
+                CreateAlert = GestionWeb.GetWebWord(LanguageConstantes.CreateAlert, siteLanguage)
             };
             return result;
         }
