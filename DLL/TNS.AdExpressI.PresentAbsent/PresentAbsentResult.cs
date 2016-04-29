@@ -2057,7 +2057,7 @@ namespace TNS.AdExpressI.PresentAbsent
                         for (int g = 0; g < nbGroupItems; g++)
                         {
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "200" });
+                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
                             schemaFields.Add(new { name = colKey });
                         }
                         //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
@@ -2067,9 +2067,17 @@ namespace TNS.AdExpressI.PresentAbsent
                     else
                     {
                         colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "200" });
+                        if (j == 0)
+                        {
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350" });
+                            columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                        }
+                        else
+                        {
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                            columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
+                        }
                         schemaFields.Add(new { name = colKey });
-                        if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                     }
 
                 }
