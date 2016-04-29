@@ -325,7 +325,7 @@ input {
 }
 
 .information-fixed {
-    height: 220px;
+    height: 265px;
     overflow-y: scroll;
 }
 
@@ -582,7 +582,7 @@ input {
 .nav > li > form {
     position: relative;
     display: block;
-    padding: 10px 15px;
+    padding:8px 15px;
 }
 
 
@@ -1494,6 +1494,7 @@ ul.ui-selectable {
 
     ul.ui-selectable li {
         list-style: none;
+        cursor:pointer;
     }
 
 .select-recherche .caret {
