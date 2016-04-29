@@ -1,13 +1,18 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Km.AdExpressClientWeb.Models.Alert;
+using KM.Framework.Constantes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Alert.Domain;
@@ -21,11 +26,13 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IAlertService _alertService;
         private IApplicationUserManager _userManager;
+        private IWebSessionService _webSessionService;
 
-        public AlertController(IAlertService alertService, IApplicationUserManager userManager)
+        public AlertController(IAlertService alertService, IApplicationUserManager userManager, IWebSessionService webSessionService)
         {
             _alertService = alertService;
             _userManager = userManager;
+            _webSessionService = webSessionService;
         }
 
         public async Task<ActionResult> Index(string idSession, int? idOcc, int? idAlert)
@@ -79,7 +86,36 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult CreateAlert()
         {
-            return PartialView();
+            var cp = new ClaimsPrincipal(User.Identity);
+            var idWebSession = cp.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var siteLanguage = 33;
+            CreateAlertModel model = new CreateAlertModel
+            {
+                Labels = LoadPageLabels(siteLanguage)
+            };
+            return PartialView(model);
+        }
+        private Labels LoadPageLabels(int siteLanguage)
+        {
+            Regex regex = new System.Text.RegularExpressions.Regex(@"(<br />|<br/>|</ br>|</br>)");
+
+            var result = new Labels
+            {
+                SaveAlert2 = GestionWeb.GetWebWord(LanguageConstantes.SaveAlert2, siteLanguage),
+                FileName = GestionWeb.GetWebWord(LanguageConstantes.FileName, siteLanguage),
+                Email = GestionWeb.GetWebWord(LanguageConstantes.MailCode, siteLanguage),
+                Periodicity = GestionWeb.GetWebWord(LanguageConstantes.Periodicity, siteLanguage),
+                Daily = GestionWeb.GetWebWord(LanguageConstantes.Daily, siteLanguage),
+                Weekly = GestionWeb.GetWebWord(LanguageConstantes.Weekly, siteLanguage),
+                Monthly = GestionWeb.GetWebWord(LanguageConstantes.Monthly, siteLanguage),
+                SelectDayInWeek = GestionWeb.GetWebWord(LanguageConstantes.SelectDayInWeek, siteLanguage),
+                SelectDayInMonth = GestionWeb.GetWebWord(LanguageConstantes.SelectDayInMonth, siteLanguage),
+                AlertInfoMessage = regex.Replace(GestionWeb.GetWebWord(LanguageConstantes.AlertInfoMessage, siteLanguage),"\r\n"),
+                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
+                Close = GestionWeb.GetWebWord(LanguageConstantes.Close, siteLanguage),
+                CreateAlert = GestionWeb.GetWebWord(LanguageConstantes.CreateAlert, siteLanguage)
+            };
+            return result;
         }
     }
 }

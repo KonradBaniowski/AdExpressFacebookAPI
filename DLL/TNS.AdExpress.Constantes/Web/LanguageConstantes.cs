@@ -61,6 +61,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Quartly = 1295;
         public const long Insertion = 1400;
         public const long MediaSelected = 1487;
+        public const long FileName = 1746;
         public const long UniversProduct = 1759;
         public const long IncompleteDataForQuery = 1787;
         public const long LevelDetails = 1886;
@@ -100,6 +101,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long OverLimitMsgCode = 2286;
         public const long KeyWordDescriptionCode = 2287;
         public const long MininumInclude = 2299;
+        public const long Close = 2371;
         public const long NotAvailableSession = 2455;
         public const long Receiver = 2483;
         public const long UnityError = 2541;
@@ -108,6 +110,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Daily = 2579;
         public const long Weekly = 2580;
         public const long SaveAlert = 2581;
+        public const long SelectDayInWeek = 2582;
+        public const long SelectDayInMonth = 2583;
         public const long AlertsCode = 2585;
         public const long NoAlerts = 2587;
         public const long SendDate = 2588;
@@ -119,7 +123,9 @@ namespace TNS.AdExpress.Constantes.Web
         public const long EveryMonth = 2605;
         public const long ExpirationDate = 2606;
         public const long AlertType = 2607;
+        public const long SaveAlert2 = 2609;
         public const long TimeSchedule = 2614;
+        public const long AlertInfoMessage = 2616;
         public const long Concurrent = 2869;
         public const long IndeRadioMessage = 3018;
         public const long LimitKeyword = 3033;
