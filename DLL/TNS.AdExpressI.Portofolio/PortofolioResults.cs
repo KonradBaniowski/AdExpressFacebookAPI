@@ -270,6 +270,9 @@ namespace TNS.AdExpressI.Portofolio
                 string colWidth = "200";
                 if(_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
                     colWidth = "50%";
+                if (_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR 
+                    || _webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO)
+                    colWidth = "*";
 
                 if (resultTable.NewHeaders != null)
                 {
@@ -296,9 +299,17 @@ namespace TNS.AdExpressI.Portofolio
                         else
                         {
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = colWidth });
+                            if (j == 0)
+                            {
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350" });
+                                columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                            }
+                            else
+                            {
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = colWidth });
+                                columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
+                            }
                             schemaFields.Add(new { name = colKey });
-                            if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                             tableWidth = tableWidth + 150;
                         }
 
