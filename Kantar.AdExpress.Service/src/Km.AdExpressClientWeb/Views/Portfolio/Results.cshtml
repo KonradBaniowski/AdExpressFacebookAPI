@@ -300,6 +300,13 @@
                             });
 
                             ds.dataBind();
+
+                            if (userFilter.ResultTypeFilter.ResultType == "4") {
+                                $("#ChartPanel").show();
+                                $("#accord1").collapse('hide');
+                                $("#accord2").collapse('hide');
+                                CallPortfolioGraphResult();
+                            }
                         }
                         else {
                             $("#gridLoader").addClass("hide");
@@ -372,11 +379,11 @@
 
             function CallSetOptions() {
                 $("#ChartPanel").hide();
+                $("#accord1").collapse('show');
                 if (userFilter.ResultTypeFilter.ResultType == "4") {
                     $("#ChartPanel").show();
                     $("#accord1").collapse('hide');
                     $("#accord2").collapse('hide');
-                    CallPortfolioGraphResult();
                 }
                 $.ajax({
                     url: '@Url.Action("SetResultOptions", _controller)',
