@@ -76,5 +76,10 @@ namespace Km.AdExpressClientWeb.Controllers
             var redirectUrl = _alertService.GetRedirectUrl(session, idWS, occ);
             return RedirectToAction("Results", redirectUrl);
         }
+
+        public ActionResult CreateAlert()
+        {
+            return PartialView();
+        }
     }
 }

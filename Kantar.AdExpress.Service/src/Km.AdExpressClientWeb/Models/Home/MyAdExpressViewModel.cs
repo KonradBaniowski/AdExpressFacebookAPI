@@ -1,4 +1,4 @@
-﻿using Kantar.AdExpress.Service.Core.Domain;
+﻿using Domain=Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
 using System;
@@ -12,8 +12,8 @@ namespace Km.AdExpressClientWeb.Models.Home
     {
         public PresentationModel PresentationModel { get; set; }
         public Labels Labels { get; set; }
-        public AdExpressUniversResponse SavedResults { get; set; }
-        public AdExpressUniversResponse SavedUnivers { get; set; }
-        public List<Alert> Alerts { get; set; }
+        public Domain.AdExpressUniversResponse SavedResults { get; set; }
+        public Domain.AdExpressUniversResponse SavedUnivers { get; set; }
+        public List<Domain.Alert> Alerts { get; set; }
     }
 }
