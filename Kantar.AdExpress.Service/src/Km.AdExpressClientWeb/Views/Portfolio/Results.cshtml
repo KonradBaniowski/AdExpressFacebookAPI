@@ -300,6 +300,10 @@
                             });
 
                             ds.dataBind();
+
+                            if (userFilter.ResultTypeFilter.ResultType == "4") {
+                                CallPortfolioGraphResult();
+                            }
                         }
                         else {
                             $("#gridLoader").addClass("hide");
@@ -376,7 +380,6 @@
                     $("#ChartPanel").show();
                     $("#accord1").collapse('hide');
                     $("#accord2").collapse('hide');
-                    CallPortfolioGraphResult();
                 }
                 $.ajax({
                     url: '@Url.Action("SetResultOptions", _controller)',
