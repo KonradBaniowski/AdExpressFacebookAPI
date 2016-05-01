@@ -2452,29 +2452,29 @@ namespace TNS.AdExpressI.MediaSchedule {
                 {
                     gridData[line - 1, gridColumnId++] = "";
                 }
-                if (!_isExcelReport)
-                {
-                    //Evolution
-                    if (evol > 0) //hausse
-                        if (_isPDFReport)
-                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/g.gif\">");
-                        else
-                            str.Append("<img src=\"/I/g.gif\">");
-                    else if (evol < 0) //baisse
-                        if (_isPDFReport)
-                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/r.gif\">");
-                        else
-                            str.Append("<img src=\"/I/r.gif\">");
-                    else if (!Double.IsNaN(evol)) // 0 exactement
-                        if (_isPDFReport)
-                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/o.gif\">");
-                        else
-                            str.Append("<img src=\"/I/o.gif\">");
-                    else
-                        str.Append("&nbsp;");
-                }
-                //Evol
-                gridData[line - 1, gridColumnId++] = str.ToString();
+                //if (!_isExcelReport)
+                //{
+                //    //Evolution
+                //    if (evol > 0) //hausse
+                //        if (_isPDFReport)
+                //            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/g.gif\">");
+                //        else
+                //            str.Append("<img src=\"/I/g.gif\">");
+                //    else if (evol < 0) //baisse
+                //        if (_isPDFReport)
+                //            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/r.gif\">");
+                //        else
+                //            str.Append("<img src=\"/I/r.gif\">");
+                //    else if (!Double.IsNaN(evol)) // 0 exactement
+                //        if (_isPDFReport)
+                //            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/o.gif\">");
+                //        else
+                //            str.Append("<img src=\"/I/o.gif\">");
+                //    else
+                //        str.Append("&nbsp;");
+                //}
+                ////Evol
+                //gridData[line - 1, gridColumnId++] = str.ToString();
             }
         }
 

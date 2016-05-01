@@ -2514,3 +2514,59 @@ ul.ui-selectable {
 .modal.fcour {
     overflow-y: hidden;
 }
+
+.media-schedule-option input[type=checkbox].with-font,
+.media-schedule-option input[type=radio].with-font {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.media-schedule-option input[type=radio].with-font ~ label:before {
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f1db";
+        letter-spacing: 10px;
+        font-size: 1.2em;
+        width: 1.4em;
+    }
+
+.media-schedule-option input[type=checkbox].with-font ~ label:before  {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f0c8";
+    letter-spacing: 10px;
+    font-size: 1.2em;
+    width: 1.4em;
+}
+
+.media-schedule-option input[type=radio].with-font:checked ~ label:before {
+        content: "\f192";
+        font-size: 1.2em;
+        color: #FF8C1C!important;
+        letter-spacing: 10px;
+    }
+
+.media-schedule-option input[type=checkbox].with-font:checked ~ label:before {
+    content: "\f14a";
+    font-size: 1.2em;
+    color: #FF8C1C!important;
+    letter-spacing: 10px;
+}
+
+.media-schedule-option input[type=checkbox].with-font ~ label:before {
+    content: "\f0c8";
+    color: #FFF;
+}
+
+.media-schedule-option input[type=checkbox].with-font:focus ~ label:before,
+.media-schedule-option input[type=checkbox].with-font:focus ~ label,
+.media-schedule-option input[type=radio].with-font:focus ~ label:before,
+.media-schedule-option input[type=radio].with-font:focus ~ label {
+    color: #FFF;
+}

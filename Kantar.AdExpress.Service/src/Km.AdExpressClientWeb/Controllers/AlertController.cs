@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Domain=Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models.Alert;
 using KM.Framework.Constantes;
 using System;
@@ -19,6 +20,7 @@ using TNS.Alert.Domain;
 using TNS.Ares.Alerts.DAL;
 using TNS.Ares.Domain.Layers;
 using TNS.Ares.Domain.LS;
+using TNS.Ares.Constantes;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -88,11 +90,32 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cp = new ClaimsPrincipal(User.Identity);
             var idWebSession = cp.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var siteLanguage = 33;
+            var webSession = (WebSession)WebSession.Load(idWebSession);
             CreateAlertModel model = new CreateAlertModel
             {
-                Labels = LoadPageLabels(siteLanguage)
+                Labels = LoadPageLabels(webSession.SiteLanguage),
+                Periodicity= new List<SelectListItem>()
             };
+            var daily = new SelectListItem
+            {
+                Text = GestionWeb.GetWebWord(LanguageConstantes.Daily, webSession.SiteLanguage),
+                Value = TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Daily.GetHashCode().ToString(),
+                Selected =true
+            };
+            var weekly = new SelectListItem
+            {
+                Text = GestionWeb.GetWebWord(LanguageConstantes.Weekly, webSession.SiteLanguage),
+                Value = TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Weekly.GetHashCode().ToString()
+            };
+            var monthly = new SelectListItem
+            {
+                Text = GestionWeb.GetWebWord(LanguageConstantes.Monthly, webSession.SiteLanguage),
+                Value = TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Monthly.GetHashCode().ToString()
+            };
+
+            model.Periodicity.Add(daily);
+            model.Periodicity.Add(weekly);
+            model.Periodicity.Add(monthly);
             return PartialView(model);
         }
         private Labels LoadPageLabels(int siteLanguage)

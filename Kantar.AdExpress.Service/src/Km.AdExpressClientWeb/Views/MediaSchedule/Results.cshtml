@@ -150,6 +150,8 @@
                 this.AutoPromoFilter = new AutoPromoFilter();
                 this.FormatFilter = new FormatFilter();
                 this.PurchaseModeFilter = new PurchaseModeFilter();
+                this.ComparativeStudy = false;
+                this.ComparativePeriodType = 1;
             }
 
             var userFilter = new UserFilter();
@@ -622,7 +624,19 @@
             $("#resultModal").on('hide.bs.modal', function () {
                 $("#resultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
             });
+
             CallMediaScheduleResult(zoomDate);
+            
+            $("#comparative-study").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.ComparativeStudy = true;
+                    $("#comparative-period-type").removeClass("hide");
+                }
+                else {
+                    userFilter.ComparativeStudy = false;
+                    $("#comparative-period-type").addClass("hide");
+                }
+            });
 
             function GetSubPeriodSelection(zoomDateParam) {
                 var params = {
@@ -811,6 +825,16 @@
             $("#gridLoader").removeClass("hide");
             $("#collapseContainerOne").collapse('hide');
             CallSetOptions();
+        });
+
+        $('#date-to-date').on('click', function (e) {
+            $('#comparative-week-date').prop('checked', false);
+            userFilter.ComparativePeriodType = 1;
+        });
+
+        $('#comparative-week-date').on('click', function (e) {
+            $('#date-to-date').prop('checked', false);
+            userFilter.ComparativePeriodType = 0;
         });
 
         $('#unit').selectpicker();
