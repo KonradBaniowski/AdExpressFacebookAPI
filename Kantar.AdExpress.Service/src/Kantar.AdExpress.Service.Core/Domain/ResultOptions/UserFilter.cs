@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Constantes.Web;
 
 namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 {
@@ -25,5 +26,9 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public PurchaseModeFilter PurchaseModeFilter { get; set; }
 
         public ResultTypeFilter ResultTypeFilter { get; set; }
+
+        public bool ComparativeStudy { get; set; }
+
+        public int ComparativePeriodType { get; set; }
     }
 }

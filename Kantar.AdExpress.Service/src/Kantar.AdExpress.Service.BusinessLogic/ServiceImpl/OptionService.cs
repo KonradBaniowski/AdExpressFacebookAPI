@@ -409,6 +409,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
             }
 
+            options.ComparativeStudy = _customerWebSession.ComparativeStudy;
+            _customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
+            options.ComparativePeriodType = _customerWebSession.ComparativePeriodType;
+
             _customerWebSession.Save();
 
             return options;
@@ -549,6 +553,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId) && string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes))
                 _customerWebSession.SelectedPurchaseModeList = userFilter.PurchaseModeFilter.PurchaseModes;
             #endregion
+
+            _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
+            _customerWebSession.ComparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userFilter.ComparativePeriodType;
 
             _customerWebSession.Save();
         }

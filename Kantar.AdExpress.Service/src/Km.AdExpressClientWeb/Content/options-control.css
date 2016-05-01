@@ -286,6 +286,11 @@ box-shadow:none  !important;
   padding-left: 15px ;
 }
 
+.options-control .padder-radio {
+  padding-right: 25px;
+  padding-left: 25px ;
+}
+
 .options-control .btn-options button{
   width:100%;
 }
