@@ -78,21 +78,23 @@
             if (typeof jQuery === "undefined") { throw new Error("Vehicle view modal requires jQuery") }
 
             var vhCarouselData = [
-                   { "Id": 24904, "ParutionDate": "Vendredi 26/02/2016", "DayN": "20160326", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "nbInser": 12, "invest": "123456789" },
-                    { "Id": 24904, "ParutionDate": "Vendredi 25/02/2016", "DayN": "20160325", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160225/imagette/coe001.jpg", "nbInser": 15, "invest": "1234564789" },
-                     { "Id": 24904, "ParutionDate": "Vendredi 23/02/2016", "DayN": "20160323", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160223/imagette/coe001.jpg", "nbInser": 14, "invest": "123456789" },
-                      { "Id": 24904, "ParutionDate": "Vendredi 19/02/2016", "DayN": "20160319", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160219/imagette/coe001.jpg", "nbInser": 12, "invest": "45454545" },
-                       { "Id": 24904, "ParutionDate": "Vendredi 18/02/2016", "DayN": "20160318", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160218/imagette/coe001.jpg", "nbInser": 5, "invest": "784524222" },
-                        { "Id": 24904, "ParutionDate": "Vendredi 11/02/2016", "DayN": "20160311", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160211/imagette/coe001.jpg", "nbInser": 10, "invest": "123456789" },
-                         { "Id": 24904, "ParutionDate": "Vendredi 10/02/2016", "DayN": "20160310", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160210/imagette/coe001.jpg", "nbInser": 12, "invest": "4242424242" },
-                          { "Id": 24904, "ParutionDate": "Vendredi 09/02/2016", "DayN": "20160309", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160209/imagette/coe001.jpg", "nbInser": 5, "invest": "123456789" },
-                          { "Id": 24904, "ParutionDate": "Vendredi 05/02/2016", "DayN": "20160305", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160205/imagette/coe001.jpg", "nbInser": 12, "invest": "123456789" },
-                          { "Id": 24904, "ParutionDate": "Vendredi 04/02/2016", "DayN": "20160304", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160204/imagette/coe001.jpg", "nbInser": 12, "invest": "155424242" },
-                          { "Id": 24904, "ParutionDate": "Vendredi 03/02/2016", "DayN": "20160303", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160203/imagette/coe001.jpg", "nbInser": 13, "invest": "215755" },
-                          { "Id": 24904, "ParutionDate": "Vendredi 02/02/2016", "DayN": "20160302", "src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160202/imagette/coe001.jpg", "nbInser": 11, "invest": "84545454" }
+                   { "Id": 24904, "ParutionDate": "Vendredi 26/02/2016", "DayN": "20160326", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "NbInser": 12, "Invest": "123456789" },
+                    { "Id": 24904, "ParutionDate": "Vendredi 25/02/2016", "DayN": "20160325", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160225/imagette/coe001.jpg", "NbInser": 15, "Invest": "1234564789" },
+                     { "Id": 24904, "ParutionDate": "Vendredi 23/02/2016", "DayN": "20160323", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160223/imagette/coe001.jpg", "NbInser": 14, "Invest": "123456789" },
+                      { "Id": 24904, "ParutionDate": "Vendredi 19/02/2016", "DayN": "20160319", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160219/imagette/coe001.jpg", "NbInser": 12, "Invest": "45454545" },
+                       { "Id": 24904, "ParutionDate": "Vendredi 18/02/2016", "DayN": "20160318", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160218/imagette/coe001.jpg", "NbInser": 5, "Invest": "784524222" },
+                        { "Id": 24904, "ParutionDate": "Vendredi 11/02/2016", "DayN": "20160311", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160211/imagette/coe001.jpg", "NbInser": 10, "Invest": "123456789" },
+                         { "Id": 24904, "ParutionDate": "Vendredi 10/02/2016", "DayN": "20160310", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160210/imagette/coe001.jpg", "NbInser": 12, "Invest": "4242424242" },
+                          { "Id": 24904, "ParutionDate": "Vendredi 09/02/2016", "DayN": "20160309", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160209/imagette/coe001.jpg", "NbInser": 5, "Invest": "123456789" },
+                          { "Id": 24904, "ParutionDate": "Vendredi 05/02/2016", "DayN": "20160305", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160205/imagette/coe001.jpg", "NbInser": 12, "Invest": "123456789" },
+                          { "Id": 24904, "ParutionDate": "Vendredi 04/02/2016", "DayN": "20160304", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160204/imagette/coe001.jpg", "NbInser": 12, "Invest": "155424242" },
+                          { "Id": 24904, "ParutionDate": "Vendredi 03/02/2016", "DayN": "20160303", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160203/imagette/coe001.jpg", "NbInser": 13, "Invest": "215755" },
+                          { "Id": 24904, "ParutionDate": "Vendredi 02/02/2016", "DayN": "20160302", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160202/imagette/coe001.jpg", "NbInser": 11, "Invest": "84545454" }
             ];
 
-            ShowVehicleCarousel(vhCarouselData);
+            var LABEL_NB_INSERTION = "Nombre d'insertion :";
+            var LABEL_TOTAL_INVEST = "Total investissement : ";
+            ShowVehicleCarousel(vhCarouselData, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
 
             var vehicleItemsData = [
                  { "ParutionDate": "Vendredi 26/02/2016",  "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg", "NbPage": 44, "Title": "EQUIPE" },
@@ -104,9 +106,11 @@
                    {  "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor007.jpg", "NbPage": 44, "Title": "EQUIPE" },
             ];
 
-            OpenOneVehicleModalCarousel(vehicleItemsData);
+            var LABEL_NB_PAGES = "  Nombre de page : ";
+            var LABEL_NEXT = "Suivant";
+            var LABEL_PREV = "Précédent";
 
-          
+            OpenOneVehicleModalCarousel(vehicleItemsData, LABEL_NB_PAGES, LABEL_NEXT, LABEL_PREV);
 
             OpenZoomImageModal();
 
@@ -114,7 +118,7 @@
 
         });
 
-        function ShowVehicleCarousel(vhCarouselData) {
+        function ShowVehicleCarousel(vhCarouselData, labelNbInsertion,labelTotalInvest) {
             $("#carou-vehicleView").hide();
            
             var htmlArr = [];
@@ -153,19 +157,20 @@
                 htmlArr.push("'");
                 //data-nbInser
                 htmlArr.push(" data-nbInser='");
-                htmlArr.push(val.nbInser);
+                htmlArr.push(val.NbInser);
                 htmlArr.push("'");
                 htmlArr.push(" ><img src='");
-                htmlArr.push(val.src);
+                htmlArr.push(val.Src);
                 htmlArr.push("' class='img-full' alt='Equipe'>");
                 htmlArr.push("</div></div>");
                 htmlArr.push(" <div class='text-center padder-v-mi'><p>");
-                htmlArr.push("Nombre d'insertion : ");
+                htmlArr.push(labelNbInsertion);
                 htmlArr.push("<strong>");
-                htmlArr.push(val.nbInser);
-                htmlArr.push("</strong></p> <p>");
-                htmlArr.push("Total investissement : <strong>");
-                htmlArr.push(val.invest);
+                htmlArr.push(val.NbInser);
+                htmlArr.push("</strong></p><p>");
+                htmlArr.push(labelTotalInvest);
+                htmlArr.push("<strong>");
+                htmlArr.push(val.Invest);
                 htmlArr.push("</strong></p>");
                 htmlArr.push("</div> </div>");
                 // <!--/text-center padder-v-mi  et /col-sm-3 -->
@@ -186,7 +191,7 @@
             $("#carou-vehicleView").show();
         }
 
-        function OpenOneVehicleModalCarousel(vehicleItemsData) {
+        function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, labelPrev) {
             $("#modal-vehicleView > .modal-dialog > .modal-content").empty();
 
             $("#modal-vehicleView").on('shown.bs.modal', function (event) {
@@ -207,7 +212,7 @@
                         htmlArr.push(" - ");
                         htmlArr.push(val.ParutionDate);
                         htmlArr.push("</h4><p class='pull-right text-white'>");
-                        htmlArr.push("  Nombre de page : ");
+                        htmlArr.push(labelNbPages);
                         htmlArr.push(val.NbPage);
                         htmlArr.push(" </p>  </div>");
                         //<!--/modal-header -->
@@ -264,16 +269,16 @@
 
                     //<!--left carousel-control-->
                     htmlArr.push(" <a class='left carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='prev'>");
-                    htmlArr.push("   <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>");
-                    htmlArr.push("  <span class='sr-only'>Previous</span>");
-                    htmlArr.push("  </a>");
+                    htmlArr.push("   <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span> <span class='sr-only'>");
+                    htmlArr.push(labelPrev);
+                    htmlArr.push("</span>  </a>");
                     //<!--/left carousel-control-->
 
                     //<!--right carousel-control-->
                     htmlArr.push(" <a class='right carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='next'>");
-                    htmlArr.push("   <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>");
-                    htmlArr.push("  <span class='sr-only'>Next</span>");
-                    htmlArr.push("  </a>");
+                    htmlArr.push("   <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span> <span class='sr-only'>");
+                    htmlArr.push(labelNext);
+                    htmlArr.push("</span></a>");
                     //<!--/right carousel-control-->
 
                     htmlArr.push("  </div>"); //<!--/carou-vehicleView-OneVehicle-->
