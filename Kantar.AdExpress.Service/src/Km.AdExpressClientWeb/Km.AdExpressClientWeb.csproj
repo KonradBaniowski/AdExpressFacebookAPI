@@ -194,6 +194,7 @@
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Helpers\NavigationHelper.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
@@ -1498,6 +1499,7 @@
     <Content Include="Scripts\period-selector.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Results\portfolio-vehicle-view.js" />
     <Content Include="Scripts\Results\result.js" />
     <Content Include="Scripts\selectableScroll.js" />
     <Content Include="Scripts\spin.js" />

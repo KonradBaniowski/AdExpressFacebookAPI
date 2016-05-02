@@ -21,6 +21,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MediaScheduleCode = 150;
         public const long MediaCode = 190;
         public const long DroppedSuccessfully = 286;
+        public const long Media = 363;
         public const long QuestionTag3Code = 647;
         public const long CreateFolder = 696;
         public const long DropFolder = 697;
@@ -127,6 +128,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long TimeSchedule = 2614;
         public const long AlertInfoMessage = 2616;
         public const long Concurrent = 2869;
+        public const long Dates = 2882;
         public const long IndeRadioMessage = 3018;
         public const long LimitKeyword = 3033;
         public const long ItemExceeded = 3034;
@@ -143,6 +145,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Directories = 3045;
         public const long NotAvailableYet = 3046;
         public const long HomeCode = 3047;
+        public const long Market = 3048;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion

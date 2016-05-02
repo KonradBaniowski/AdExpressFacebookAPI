@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-  <languages default="33" defaultDataLanguage="33">
+  <languages default="44" defaultDataLanguage="44">
     <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="FRENCH" NumberDecimalSeparator="," NumberGroupSeparator=" "  PercentDecimalSeparator=",">
       <rss display="false" filePath="\\frmitch-ws003\Web\France\AdExpress\Rss\33\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/33/AdExpressFeed.xml"/>
       <unitformats>

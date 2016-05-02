@@ -81,6 +81,8 @@
     <Compile Include="Domain\Address.cs" />
     <Compile Include="Domain\AdExpressResponse.cs" />
     <Compile Include="Domain\Alert.cs" />
+    <Compile Include="Domain\Creative\VehicleCover.cs" />
+    <Compile Include="Domain\Creative\VehiclePage.cs" />
     <Compile Include="Domain\DetailLevel.cs" />
     <Compile Include="Domain\DetailLevelItems.cs" />
     <Compile Include="Domain\DetailSelectionDomain\DetailSelectionResponse.cs" />
