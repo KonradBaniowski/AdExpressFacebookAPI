@@ -1,20 +1,25 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain;
 using Kantar.AdExpress.Service.DataAccess.IdentityImpl;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Utilities;
+using FrameworkDB = TNS.FrameWork.DB.Common;
 using TNS.Alert.Domain;
 using TNS.Ares.Alerts.DAL;
 using TNS.Ares.Domain.Layers;
 using TNS.Ares.Domain.LS;
 using ModuleName = TNS.AdExpress.Constantes.Web.Module.Name;
+using TNS.Ares.Constantes;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -153,6 +158,86 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
 
             return redirectUrl;
+        }
+
+        public SaveAlertResponse SaveAlert(SaveAlertRequest request)
+        {
+            var response = new SaveAlertResponse();
+            var webSession = (WebSession)WebSession.Load(request.IdWebSession);
+            if (ValidateFields(request))
+            {
+                if(!IsValidEmail(request.Email))
+                {
+                    response.Message = GestionWeb.GetWebWord(LanguageConstantes.NotValidEmail, webSession.SiteLanguage);
+                    return response;
+                }
+                else
+                {
+                    response = SaveAlertData(request,webSession);
+                }
+            }
+            else
+            {
+                response.Message = GestionWeb.GetWebWord(LanguageConstantes.AlertEmptyFields, webSession.SiteLanguage);
+            }
+            return response;
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            bool result = false;
+            if (!String.IsNullOrEmpty(email))
+            {
+                Regex regex = new Regex(@"^[\w_.~-]+@[\w][\w.\-]*[\w]\.[\w][\w.]*[a-zA-Z]$");
+                result = regex.IsMatch(email);
+            }
+            return result;
+        }
+
+        private SaveAlertResponse SaveAlertData (SaveAlertRequest request, WebSession webSession)
+        {
+            #region Init
+            var result = new SaveAlertResponse();
+            webSession.ExportedPDFFileName = request.AlertTitle;
+            string[] mails = new string[1];
+            mails[0] = request.Email;
+            webSession.EmailRecipient = mails;
+            int occurrenceDate = -1;
+            #endregion
+
+            DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
+            FrameworkDB.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+            IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
+            if (alertDAL.GetAlerts(webSession.CustomerLogin.IdLogin).Count >= webSession.CustomerLogin.GetNbAlertsAdExpress())
+            {
+                result.Message = GestionWeb.GetWebWord(LanguageConstantes.MaxAlertLimit, webSession.SiteLanguage);
+                return result;
+            }
+            else
+            {
+                occurrenceDate = (request.Type == Constantes.Alerts.AlertPeriodicity.Monthly || request.Type == Constantes.Alerts.AlertPeriodicity.Weekly) ?int.Parse(request.OccurrenceDate):-1;
+                Int64 idAlertSchedule = 0;
+                AlertHourCollection alertHourCollection = alertDAL.GetAlertHours();
+                for (int i = 0; i < alertHourCollection.Count; i++)
+                {
+                    if (alertHourCollection[i].HoursSchedule.Ticks == (new TimeSpan(18, 0, 0)).Ticks)
+                    {
+                        idAlertSchedule = alertHourCollection[i].IdAlertSchedule;
+                    }
+                }
+                //var periodicityType = (TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity), request.Type);
+                alertDAL.InsertAlertData(request.AlertTitle, webSession.ToBinaryData(), webSession.CurrentModule,request.Type,
+                                               int.Parse(request.OccurrenceDate), request.Email, webSession.CustomerLogin.IdLogin, idAlertSchedule);
+            }
+            return result;
+        }       
+
+        private bool ValidateFields (SaveAlertRequest request)
+        {
+            bool result = (!String.IsNullOrEmpty(request.AlertTitle) && !String.IsNullOrEmpty(request.Email))? true :false;
+            if (request.Type == Constantes.Alerts.AlertPeriodicity.Monthly || request.Type == Constantes.Alerts.AlertPeriodicity.Weekly)
+                result = result && !String.IsNullOrEmpty(request.OccurrenceDate);
+            return result;
         }
     }
 }

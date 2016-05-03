@@ -136,7 +136,9 @@ namespace Km.AdExpressClientWeb
             #endregion
 
             bundles.Add(new ScriptBundle("~/bundles/results").Include(
-                        "~/Scripts/Results/result.js"));
+                        "~/Scripts/Results/result.js",
+                        "~/Scripts/bootstrap-datetimepicker.js",
+                        "~/Scripts/moment-with-locales.js"));
         }
     }
 }

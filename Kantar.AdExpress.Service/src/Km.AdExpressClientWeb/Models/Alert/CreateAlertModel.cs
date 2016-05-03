@@ -19,6 +19,7 @@ namespace Km.AdExpressClientWeb.Models.Alert
         public Labels Labels { get; set; }
         public int SelectedPeriodicityId { get; set;}
         public List<SelectListItem> Periodicity { get; set; }
+        public List<SelectListItem> WeekDays { get; set; }
 
     }
 }
