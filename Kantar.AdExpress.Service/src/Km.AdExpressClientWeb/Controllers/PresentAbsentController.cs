@@ -93,7 +93,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             var marketNode = new NavigationNode { Position = 1 };
             var navigationHelper = new Helpers.NavigationHelper();
-            model.NavigationBar = navigationHelper.LoadNavBar(marketNode.Position, _controller, _siteLanguage);       
+            model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage);       
             return View(model);
         }
 
@@ -136,7 +136,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             var mediaNode = new NavigationNode { Position = 2 };
             var navigationHelper = new Helpers.NavigationHelper();
-            model.NavigationBar = navigationHelper.LoadNavBar(mediaNode.Position, _controller, _siteLanguage);
+            model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(1052, result.SiteLanguage),
@@ -178,7 +178,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
             var navigationHelper = new Helpers.NavigationHelper();
-            var navBarModel = navigationHelper.LoadNavBar(periodeNode.Position, _controller, _siteLanguage);
+            var navBarModel = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage);
           
 
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
@@ -237,7 +237,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var navigationHelper = new Helpers.NavigationHelper();           
             var model = new Models.PresentAbsent.ResultsViewModel
             {
-                NavigationBar = navigationHelper.LoadNavBar(resultNode.Position, _controller, _siteLanguage),
+                NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage),
                 Presentation = LoadPresentationBar(CustomerSession.SiteLanguage),
                 Labels = LoadPageLabels(CustomerSession.SiteLanguage)
             };

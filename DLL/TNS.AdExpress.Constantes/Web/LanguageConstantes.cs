@@ -63,6 +63,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Insertion = 1400;
         public const long MediaSelected = 1487;
         public const long FileName = 1746;
+        public const long AlertEmptyFields = 1748;
         public const long UniversProduct = 1759;
         public const long IncompleteDataForQuery = 1787;
         public const long LevelDetails = 1886;
@@ -70,6 +71,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Save = 1990;
         public const long VisuelLabel = 1909;
         public const long JobTitleCode = 1976;
+        public const long NotValidEmail = 2041;
         public const long RefineCode = 2053;
         public const long EmptyGrid = 2106;
         public const long PresentAbsentCode = 2167;
@@ -126,6 +128,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertType = 2607;
         public const long SaveAlert2 = 2609;
         public const long TimeSchedule = 2614;
+        public const long MaxAlertLimit = 2615;
         public const long AlertInfoMessage = 2616;
         public const long Concurrent = 2869;
         public const long Dates = 2882;

@@ -142,12 +142,28 @@ $('#Dates').on('click', function (e) {
 
 $('#Results').on('click', function (e) {
     e.preventDefault();
-    var dis = this;
-    var nextUrl = $(this).attr('href').split('/').pop();
-    if (nextUrl === "MediaSchedule") {
-        nextUrl = "Index";
+    var gotoResult=true;
+    var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
+    $.each(items, function (index, value) {
+        var page = $(value).attr('id');
+        if (page == "Dates" || page =="Market")
+        {
+            gotoResult = false;
+            return;
+        }
+    });
+    if(gotoResult)
+    {
+        var nextUrl = $(this).attr('href').split('/').pop();
+        if (nextUrl === "MediaSchedule") {
+            nextUrl = "Index";
+        }
+        NextStep(nextUrl, dis)
     }
-    NextStep(nextUrl, dis)
+    else
+    {
+        bootbox.alert("Missing data");
+    }
 });
 
 function getSelectedMediaSupport() {

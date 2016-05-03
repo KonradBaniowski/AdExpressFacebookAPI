@@ -24,6 +24,7 @@ using TNS.Ares.Constantes;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class AlertController : Controller
     {
         private IAlertService _alertService;
@@ -94,29 +95,75 @@ namespace Km.AdExpressClientWeb.Controllers
             CreateAlertModel model = new CreateAlertModel
             {
                 Labels = LoadPageLabels(webSession.SiteLanguage),
-                Periodicity= new List<SelectListItem>()
+                Periodicity = GetAlertPeriodicity(webSession.SiteLanguage),
+                WeekDays = GetWeekDays(webSession.SiteLanguage)
             };
-            var daily = new SelectListItem
-            {
-                Text = GestionWeb.GetWebWord(LanguageConstantes.Daily, webSession.SiteLanguage),
-                Value = TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Daily.GetHashCode().ToString(),
-                Selected =true
-            };
-            var weekly = new SelectListItem
-            {
-                Text = GestionWeb.GetWebWord(LanguageConstantes.Weekly, webSession.SiteLanguage),
-                Value = TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Weekly.GetHashCode().ToString()
-            };
-            var monthly = new SelectListItem
-            {
-                Text = GestionWeb.GetWebWord(LanguageConstantes.Monthly, webSession.SiteLanguage),
-                Value = TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Monthly.GetHashCode().ToString()
-            };
-
-            model.Periodicity.Add(daily);
-            model.Periodicity.Add(weekly);
-            model.Periodicity.Add(monthly);
+            
             return PartialView(model);
+        }
+
+        private List<SelectListItem> GetAlertPeriodicity(int siteLanguage)
+        {
+            var result = new List<SelectListItem>();
+            var values = Enum.GetValues(typeof(Constantes.Alerts.AlertPeriodicity));
+            foreach (var value in values)
+            {
+                var selectListItem = new SelectListItem
+                {
+                    Value = value.GetHashCode().ToString()
+                };
+                switch (value.GetHashCode())
+                {
+                    case 10:
+                        selectListItem.Text = GestionWeb.GetWebWord(LanguageConstantes.Daily, siteLanguage);
+                        selectListItem.Selected = true;
+                        break;
+                    case 20:
+                        selectListItem.Text = GestionWeb.GetWebWord(LanguageConstantes.Weekly, siteLanguage);
+                        break;
+                    case 30:
+                        selectListItem.Text = GestionWeb.GetWebWord(LanguageConstantes.Monthly, siteLanguage);
+                        break;
+                    default:
+                        break;
+                }
+                result.Add(selectListItem);
+            }
+            return result;
+        }
+
+        private List<SelectListItem> GetWeekDays (int siteLanguage)
+        {
+            var week = new List<SelectListItem>();
+            const int start = 653;
+            for (var i=1;i<8;i++)
+            {
+                SelectListItem day = new SelectListItem
+                {
+                    Text = GestionWeb.GetWebWord(start+i, siteLanguage),
+                    Value = i.ToString()
+                };
+                week.Add(day);
+            }
+            return week;
+        }
+
+        public JsonResult SaveAlert(string title, string email, string type, string date)
+        {
+            JsonResult result = new JsonResult();
+            var cla = new ClaimsPrincipal(User.Identity);
+            var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var periodicityType = (Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(Constantes.Alerts.AlertPeriodicity), type);
+            var request = new Domain.SaveAlertRequest
+                {
+                    AlertTitle = title,
+                    Email = email,
+                    IdWebSession= idWS,
+                    Type =periodicityType,
+                    OccurrenceDate = date
+                };
+            var response = _alertService.SaveAlert(request);           
+            return result;
         }
         private Labels LoadPageLabels(int siteLanguage)
         {
@@ -136,7 +183,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 AlertInfoMessage = regex.Replace(GestionWeb.GetWebWord(LanguageConstantes.AlertInfoMessage, siteLanguage),"\r\n"),
                 Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
                 Close = GestionWeb.GetWebWord(LanguageConstantes.Close, siteLanguage),
-                CreateAlert = GestionWeb.GetWebWord(LanguageConstantes.CreateAlert, siteLanguage)
+                CreateAlert = GestionWeb.GetWebWord(LanguageConstantes.CreateAlert, siteLanguage),
+                EveryWeek = GestionWeb.GetWebWord(LanguageConstantes.EveryWeek,siteLanguage),
+                EveryMonth =GestionWeb.GetWebWord(LanguageConstantes.EveryMonth,siteLanguage)
             };
             return result;
         }

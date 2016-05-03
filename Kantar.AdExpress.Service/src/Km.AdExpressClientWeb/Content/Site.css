@@ -566,6 +566,11 @@ input {
         margin: 5px 5px;
     }
 
+    .date-picker {
+    padding: 0px 0px;
+    display:none;
+}
+
 .title {
     margin-left: 10px;
 }

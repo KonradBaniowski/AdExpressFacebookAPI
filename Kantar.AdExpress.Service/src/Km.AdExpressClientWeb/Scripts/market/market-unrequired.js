@@ -61,9 +61,22 @@
 
     $('#Results').on('click', function (e) {
         e.preventDefault();
-        var dis = this;
-        var nextUrl = $(this).attr('href').split('/').pop();
-        NextStep(nextUrl, dis)
+        var gotoResult = true;
+        var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
+        $.each(items, function (index, value) {
+            var page = $(value).attr('id');
+            if (page == "Dates" || page=="Media") {
+                gotoResult = false;
+            }
+        });
+        if (gotoResult) {
+            var dis = this;
+            var nextUrl = $(this).attr('href').split('/').pop();
+            NextStep(nextUrl, dis)
+        }
+        else {
+            bootbox.alert("Missing data");
+        }
     });
 
     function NextStep(nextUrl, dis) {
