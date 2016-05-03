@@ -11,5 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         WebSessionResponse SaveMarketSelection(string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool required=false);
 
         void SaveCurrentModule(string webSessionId, int moduleId);
+
+        void UpdateSiteLanguage(string webSessionId, int siteLanguage);
     }
 }

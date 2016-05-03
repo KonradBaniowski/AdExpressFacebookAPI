@@ -12,7 +12,7 @@ namespace Km.AdExpressClientWeb.Helpers
     {
         public List<NavigationNode> LoadNavBar(int currentPosition, string controller, int siteLanguage = 33)
         {
-           
+
             var model = new List<NavigationNode>();
             //TODO Update Navbar according to the country selection
             #region Hardcoded  nav Bar.
@@ -66,6 +66,15 @@ namespace Km.AdExpressClientWeb.Helpers
             }
             #endregion
             return model;
+        }
+
+        public static string GetSiteLanguageName(int siteLanguage)
+        {
+            switch (siteLanguage)
+            {
+                case 44: return "EN";
+                default: return "FR";
+            }
         }
     }
 }

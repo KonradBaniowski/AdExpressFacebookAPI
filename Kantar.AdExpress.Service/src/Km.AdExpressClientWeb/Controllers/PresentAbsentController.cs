@@ -36,7 +36,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const int MediaPageId = 6;
         private const int MaxIncludeNbr = 1;
         private const int MaxExcludeNbr = 0;
-        private int _siteLanguage = 44;
+        private int _siteLanguage = 33;
 
         public PresentAbsentController(IPresentAbsentService presentAbsentService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {

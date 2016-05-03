@@ -17,6 +17,7 @@ using TNS.AdExpressI.Date.DAL;
 using Kantar.AdExpress.Service.Core.Domain;
 using KM.Framework.Constantes;
 using TNS.AdExpress.Web.Core.Utilities;
+using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -41,6 +42,17 @@ namespace Km.AdExpressClientWeb.Controllers
             _infosNewsService = infosNewsService;
         }
 
+        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = 33)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            _webSessionService.UpdateSiteLanguage(idWebSession, siteLanguage);           
+            
+            JsonResult jsonModel = Json(new { RedirectUrl = returnUrl });
+           
+            return jsonModel;
+        }
+
         public ActionResult Index()
         {
             var cla = new ClaimsPrincipal(User.Identity);
@@ -49,9 +61,13 @@ namespace Km.AdExpressClientWeb.Controllers
             var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
+         
+
             var resList = _rightService.GetModulesList(idWS);
             var res = _rightService.GetModules(idWS);
             List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
+
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(resList.First().Value.SiteLanguage);
             documents.Add(new Documents()
                         {
                             Id = 3,

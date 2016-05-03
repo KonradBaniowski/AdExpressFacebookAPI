@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Security.Claims;
 using TNS.AdExpress.Domain.Translation;
 using Km.AdExpressClientWeb.I18n;
+using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -31,6 +32,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(siteLanguage);
             LoginViewModel model = new LoginViewModel
             {
                 ErrorMessage = GestionWeb.GetWebWord(880, siteLanguage),

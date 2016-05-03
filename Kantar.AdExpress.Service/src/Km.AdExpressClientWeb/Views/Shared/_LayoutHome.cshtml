@@ -7,9 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     @Styles.Render("~/Content/css")
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.2.3/css/simple-line-icons.css">
-    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" />
 </head>
-
 <body class="container-kantar-home">
     <nav class="navbar navbar-default navbar-static-top navbar-color">
         <div class="container">
@@ -39,10 +38,20 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FR<span class="caret"></span></a>
+                        <a href="#" id="language-choice" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag.SiteLanguageName<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="active">FR</a></li>
-                            <li><a href="#">EN</a></li>
+                            @if (ViewBag.SiteLanguageName == "FR")
+                            {
+                                <li><a href="#" data-language-id="33" class="active">FR</a></li>
+                                <li><a href="#" data-language-id="44">EN</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="#" data-language-id="33">FR</a></li>
+                                <li><a href="#" data-language-id="44" class="active">EN</a></li>
+
+                            }
+
                         </ul>
                     </li>
 

@@ -51,7 +51,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 Description = GestionWeb.GetWebWord(kvp.Value.DescriptionWebTextId, webSession.SiteLanguage),
                 Title = GestionWeb.GetWebWord(kvp.Value.IdWebText, webSession.SiteLanguage),
-                NextUrl = kvp.Value.UrlNextPage
+                NextUrl = kvp.Value.UrlNextPage,
+                SiteLanguage = webSession.SiteLanguage
             });
             return modules;
         }

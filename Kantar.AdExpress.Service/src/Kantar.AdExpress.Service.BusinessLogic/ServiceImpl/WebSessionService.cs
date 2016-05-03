@@ -45,7 +45,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
                 bool isAllCommun = mediaIds.All(e => commun.Contains(e));
                 var _webSession = (WebSession)WebSession.Load(webSessionId);
-                if (!isAllCommun && mediaIds.Count()>1)
+                if (!isAllCommun && mediaIds.Count() > 1)
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
                 }
@@ -90,7 +90,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
                         }
-                        else {
+                        else
+                        {
 
                             //Reinitialize banners selection if change vehicle
                             Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
@@ -319,7 +320,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 MediaScheduleStep = MediaScheduleStep.Market
             };
             var _webSession = (WebSession)WebSession.Load(webSessionId);
-           
+
 
             return response;
         }
@@ -855,6 +856,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             }
             return adExpressUniverses;
+        }
+
+        public void UpdateSiteLanguage(string webSessionId, int siteLanguage)
+        {
+            _webSession = (WebSession)WebSession.Load(webSessionId);
+            _webSession.SiteLanguage = siteLanguage;
+            _webSession.Save();
         }
         #endregion
     }

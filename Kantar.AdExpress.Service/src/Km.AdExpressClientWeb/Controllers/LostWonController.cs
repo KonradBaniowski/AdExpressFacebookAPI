@@ -36,7 +36,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const int MediaPageId = 6;
         private const int MaxIncludeNbr = 2;
         private const int MaxExcludeNbr = 1;
-        private int _siteLanguage = 44;
+        private int _siteLanguage = 33;
 
         public LostWonController(ILostWonService lostWonService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {

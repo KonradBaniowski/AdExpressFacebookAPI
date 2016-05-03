@@ -35,7 +35,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string _controller = "Portfolio";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
-        private int _siteLanguage = 44;
+        private int _siteLanguage = 33;
 
         public PortfolioController(IPortfolioService portofolioService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {

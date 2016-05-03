@@ -54,7 +54,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string _controller = "MediaSchedule";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
-        private int _siteLanguage = 44;
+        private int _siteLanguage = 33;
 
         private string icon;
         public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionService optionService, ISubPeriodService subPeriodService)
