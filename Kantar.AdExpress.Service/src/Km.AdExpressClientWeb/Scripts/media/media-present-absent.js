@@ -171,13 +171,26 @@ $('#Dates').on('click', function (e) {
 });
 
 $('#Results').on('click', function (e) {
-    e.preventDefault();
-    var dis = this;
-    var nextUrl = $(this).attr('href').split('/').pop();
-    if (nextUrl === "PresentAbsent") {
-        nextUrl = "Index";
+    e.preventDefault();    
+    var gotoResult = true;
+    var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
+    $.each(items, function (index, value) {
+        var page = $(value).attr('id');
+        if (page == "Dates") {
+            gotoResult = false;
+        }
+    });
+    if (gotoResult) {
+        var nextUrl = $(this).attr('href').split('/').pop();
+        if (nextUrl === "PresentAbsent") {
+            nextUrl = "Index";
+        }
+        var dis = this;
+        NextStep(nextUrl, dis)
     }
-    NextStep(nextUrl, dis)
+    else {
+        bootbox.alert("Missing data");
+    }
 });
 function getSelectedMediaSupport() {
     var trees = [];
