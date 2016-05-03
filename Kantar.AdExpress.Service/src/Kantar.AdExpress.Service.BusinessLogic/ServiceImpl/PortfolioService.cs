@@ -8,17 +8,21 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpressI.Portofolio;
 using System.Reflection;
-using TNS.Classification.Universe;
 using System.Collections.Generic;
-using TNS.AdExpress.Domain.Level;
-using System.Collections;
-using System.Data;
+using Kantar.AdExpress.Service.Core.Domain.Creative;
+using TNS.AdExpress.Constantes.DB;
+using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Domain.Classification;
+using CustomerConstantes = TNS.AdExpress.Constantes.Customer;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class PortfolioService : IPortfolioService
     {
-        private WebSession _customerSession = null;
+        private WebSession _customerSession = null;       
+        protected VehicleInformation _vehicleInformation;
 
         public GridResult GetGridResult(string idWebSession)
         {
@@ -26,39 +30,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
             _customerSession = (WebSession)WebSession.Load(idWebSession);
 
-#if Debug
-            ////TODO : Resultat pour calendrier d'actiion : a enlever apres tests
-            //// _customerSession.CurrentTab = 6;
-
-            //_customerSession.SelectionUniversMedia.Nodes.Clear();
-            //System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("RADIO");
-            //tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, 2, "RADIO");
-            //_customerSession.SelectionUniversMedia.Nodes.Add(tmpNode);
-            //_customerSession.CurrentUniversMedia = _customerSession.SelectionUniversMedia;
-
-            ////TODO :  selection support :  : a enlever apres tests
-            //TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
-            //Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-
-            //int groupIndex = 0;
-            //Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
-            //NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
-            //Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
-            //List<long> idUniversItems = new List<long>();
-            //idUniversItems.Add(2003);//EUROPE 1
-            //treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
-            //adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
-            //universes.Add(universes.Count, adExpressUniverse);
-            //_customerSession.PrincipalMediaUniverses = universes;
-
-            ////ArrayList levelIds = new ArrayList();
-            ////levelIds.Add(11);
-            ////levelIds.Add(12);
-            ////levelIds.Add(10);            
-            ////_customerSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-
-            //_customerSession.Save();
-#endif
 
             if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
             var parameters = new object[1];
@@ -107,41 +78,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             ResultTable data = null;
             var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
             _customerSession = (WebSession)WebSession.Load(idWebSession);
-#if Debug
-            ////TODO : Resultat pour calendrier d'actiion : a enlever apres tests
-            //// _customerSession.CurrentTab = 6;
-
-            //_customerSession.SelectionUniversMedia.Nodes.Clear();
-            //System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("RADIO");
-            //tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, 2, "RADIO");
-            //_customerSession.SelectionUniversMedia.Nodes.Add(tmpNode);
-            //_customerSession.CurrentUniversMedia = _customerSession.SelectionUniversMedia;
-
-            ////TODO :  selection support :  : a enlever apres tests
-            //TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
-            //Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-
-            //int groupIndex = 0;
-            //Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
-            //NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
-            //Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
-            //List<long> idUniversItems = new List<long>();
-            //idUniversItems.Add(2003);//EUROPE 1
-            //treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
-            //adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
-            //universes.Add(universes.Count, adExpressUniverse);
-            //_customerSession.PrincipalMediaUniverses = universes;
-
-            ////ArrayList levelIds = new ArrayList();
-            ////levelIds.Add(11);
-            ////levelIds.Add(12);
-            ////levelIds.Add(10);            
-            ////_customerSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-
-            //_customerSession.Save();
-#endif
-
-
 
             if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
             var parameters = new object[1];
@@ -152,5 +88,87 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             data = portofolioResult.GetResultTable();
             return data;
         }
+
+        public List<VehicleCover> GetVehicleCovers(string idWebSession, int resultType)
+        {
+            List<VehicleCover> vehicleCovers = null;
+           _customerSession = (WebSession)WebSession.Load(idWebSession);
+            _vehicleInformation = GetVehicleInformation();
+
+            if (ShowVehicleItems(resultType))
+            {
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                      || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                      || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                      || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                      )
+                {
+                    vehicleCovers = new List<VehicleCover>();
+                    TNS.AdExpress.Domain.Web.Navigation.Module module = _customerSession.CustomerLogin.GetModule(_customerSession.CurrentModule);
+                    object[] parameters = new object[2];
+                    parameters[0] = _customerSession;
+                    parameters[1] = resultType;
+                    var portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain
+                         .CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory
+                         , module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false,
+                         BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+
+                    var itemsCollection = portofolioResult.GetVehicleItems();
+
+                    itemsCollection.ForEach(p =>
+                    {
+                        //Set vehicle cover
+                        var vehicleCover = new VehicleCover();
+                      
+                    });
+
+
+                }
+            }
+
+            return vehicleCovers;
+        }
+
+        /// <summary>
+        /// Check if can Show Vehicle Items
+        /// </summary>
+        /// <returns></returns>
+        private bool ShowVehicleItems(int resultType)
+        {
+            if (TNS.AdExpress.Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG))
+            {
+                if (resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA) return true;//Will be managed in The Rules
+                return _customerSession.CustomerLogin.ShowVehiclePages(_vehicleInformation.Id);
+            }
+            return _customerSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id);
+        }
+
+        #region Vehicle Selection
+        /// <summary>
+        /// Get Vehicle Selection
+        /// </summary>
+        /// <returns>Vehicle label</returns>
+        private string GetVehicle()
+        {
+            string vehicleSelection = _customerSession.GetSelection(_customerSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
+            if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new Exception("The media selection is invalid"));
+            return (vehicleSelection);
+        }
+        /// <summary>
+        /// Get vehicle selection
+        /// </summary>
+        /// <returns>Vehicle</returns>
+        private VehicleInformation GetVehicleInformation()
+        {
+            try
+            {
+                return (VehiclesInformation.Get(Int64.Parse(GetVehicle())));
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exception("Impossible to retreive vehicle selection", err));
+            }
+        }
+        #endregion
     }
 }

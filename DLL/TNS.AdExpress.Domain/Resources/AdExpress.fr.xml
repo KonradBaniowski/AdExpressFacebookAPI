@@ -678,7 +678,7 @@
     <item mnemonic="w1397" type="System.String">CHEMIN DE FER DU SUPPORT</item>
     <item mnemonic="w1398" type="System.String">Nombre d'insertions</item>
     <item mnemonic="w1399" type="System.String">Total investissement</item>
-    <item mnemonic="w1400" type="System.String">Insertion :</item>
+    <item mnemonic="w1400" type="System.String">Insertion</item>
     <item mnemonic="w1401" type="System.String">Total</item>
     <item mnemonic="w1402" type="System.String">Encart</item>
     <item mnemonic="w1403" type="System.String">Hors encart</item>
@@ -1113,7 +1113,7 @@
     <item mnemonic="w1882" type="System.String">Aucun résultats : vous n'avez pas les droits suffisants pour accéder aux détails des insertions de la Publicité Extérieure.</item>
     <item mnemonic="w1884" type="System.String">Ce bouton vous permet d'exporter le tableau de résultats tel qu'il se présente à l'écran afin de l'imprimer. En cliquant sur ce bouton, les valeurs du calendrier seront copiées dans une feuille Excel ouverte automatiquement. Vous pourrez ensuite l'enregistrer pour la conserver.</item>
     <item mnemonic="w1885" type="System.String">Dans un plan media présenté par version, la présence d'une version est symbolisée par un X sur fond coloré. Ce symbole est placé dans la période où se trouve l'investissement. Les versions sont différenciées par des couleurs distinctes (20 couleurs au maximum).&lt;br&gt;Les versions sont présentées par N° de versions. Si un spot n'est pas pigé à la version, un niveau théorique est créé. Il porte le N° 0. Le code couleur utilisé est le suivant : &lt;br&gt;&lt;IMG src="/Images/Common/Help/accroche0.gif"&gt;&lt;br&gt;Le plan media par accroche est proposé à partir d'une sélection d'éléments de niveaux marques ou produits.</item>
-    <item mnemonic="w1886" type="System.String">Niveaux détaillés par:</item>
+    <item mnemonic="w1886" type="System.String">Niveaux détaillés par</item>
     <item mnemonic="w1887" type="System.String">C. intérêt</item>
     <item mnemonic="w1888" type="System.String">Version</item>
     <item mnemonic="w1889" type="System.String">Marque</item>
@@ -1484,7 +1484,7 @@
     <item mnemonic="w2285" type="System.String">Impossible d'avoir des elements de même niveaux dans des groupes en inclusion.</item>
     <item mnemonic="w2286" type="System.String">Vous ne pouvez sélectionner au maximum que 100 éléments par niveau.</item>
     <item mnemonic="w2287" type="System.String">Mot-clé seul = Recherche « commençant par ». Mot-clé précédé d'une * = Recherche « par contenant ».</item>
-    <item mnemonic="w2288" type="System.String">Période détaillée par :</item>
+    <item mnemonic="w2288" type="System.String">Période détaillée par</item>
     <item mnemonic="w2289" type="System.String">Jour</item>
     <item mnemonic="w2290" type="System.String">Mois</item>
     <item mnemonic="w2291" type="System.String">Période de l'étude :</item>
@@ -2303,5 +2303,6 @@
     <item mnemonic="w3045" type="System.String">Répertoires</item>
     <item mnemonic="w3046" type="System.String">Ce résultat n'est pas encore disponible pour ce site, veuillez le consulter sur l'ancien site.</item>
     <item mnemonic="w3047" type="System.String">AdExpress, monitoring cross média des campagnes publicitaires</item>
+    <item mnemonic="w3048" type="System.String">Marché</item>
   </items>
 </localization>

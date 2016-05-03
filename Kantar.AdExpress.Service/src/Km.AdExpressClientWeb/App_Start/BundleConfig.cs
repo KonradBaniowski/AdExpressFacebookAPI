@@ -96,6 +96,9 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/component-selectable/common-actions.js",
                         "~/Scripts/media/media-portfolio.js",
                         "~/Scripts/universe/universe-media.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/portfolio-vehicle-view").Include(
+                       "~/Scripts/Results/portfolio-vehicle-view.js"));
             #endregion
             #region LostWon
             bundles.Add(new ScriptBundle("~/bundles/lostWon-market").Include(

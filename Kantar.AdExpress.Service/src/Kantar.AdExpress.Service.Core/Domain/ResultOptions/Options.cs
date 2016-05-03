@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Constantes.Web;
 
 namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 {
@@ -27,5 +28,9 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public ResultTypeOption ResultTypeOption { get; set; }
 
         public int SiteLanguage { get; set; }
+
+        public bool ComparativeStudy { get; set; }
+
+        public globalCalendar.comparativePeriodType ComparativePeriodType { get; set; }
     }
 }

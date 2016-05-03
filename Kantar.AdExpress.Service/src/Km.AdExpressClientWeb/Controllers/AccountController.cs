@@ -106,14 +106,14 @@ namespace Km.AdExpressClientWeb.Controllers
                 //newRight.HasModuleAssignmentAlertsAdExpress();
                 if (_webSession == null) _webSession = new WebSession(right);
                 _webSession.IdSession = idWS;
-                //_webSession.SiteLanguage = _siteLanguage;
+                _webSession.SiteLanguage = _siteLanguage;
                 // Année courante pour les recaps                    
                 TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
                 _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
                 // On met à jour IDataSource à partir de la session elle même.
-                _webSession.Source = right.Source;
+                _webSession.Source = right.Source;                
                 //Sauvegarder la session
                 _webSession.Save();
                 // Tracking (NewConnection)

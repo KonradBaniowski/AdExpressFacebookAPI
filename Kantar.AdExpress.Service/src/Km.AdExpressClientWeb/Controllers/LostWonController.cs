@@ -36,6 +36,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const int MediaPageId = 6;
         private const int MaxIncludeNbr = 2;
         private const int MaxExcludeNbr = 1;
+        private int _siteLanguage = 44;
 
         public LostWonController(ILostWonService lostWonService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {
@@ -91,7 +92,8 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             #endregion
             var marketNode = new NavigationNode { Position = 1 };
-            model.NavigationBar = LoadNavBar(marketNode.Position);
+            var navigationHelper = new Helpers.NavigationHelper();
+            model.NavigationBar = navigationHelper.LoadNavBar(marketNode.Position, _controller, _siteLanguage);
             return View(model);
         }
 
@@ -128,7 +130,8 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             var mediaNode = new NavigationNode { Position = 2 };
-            model.NavigationBar = LoadNavBar(mediaNode.Position);
+            var navigationHelper = new Helpers.NavigationHelper();
+            model.NavigationBar = navigationHelper.LoadNavBar(mediaNode.Position, _controller, _siteLanguage);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(1052, result.SiteLanguage),
@@ -168,7 +171,8 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
 
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
-            var navBarModel = LoadNavBar(periodeNode.Position);
+            var navigationHelper = new Helpers.NavigationHelper();
+            var navBarModel = navigationHelper.LoadNavBar(periodeNode.Position, _controller, _siteLanguage);
 
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
@@ -222,9 +226,10 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
             var resultNode = new NavigationNode { Position = 4 };
+            var navigationHelper = new Helpers.NavigationHelper();          
             var model = new Models.LostWon.ResultsViewModel
             {
-                NavigationBar = LoadNavBar(resultNode.Position),
+                NavigationBar = navigationHelper.LoadNavBar(resultNode.Position, _controller, _siteLanguage),
                 Presentation = LoadPresentationBar(CustomerSession.SiteLanguage),
                 Labels =LoadPageLabels(CustomerSession.SiteLanguage)
             };
@@ -352,63 +357,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         #region Private methodes
-        private List<NavigationNode> LoadNavBar(int currentPosition)
-        {
-            var model = new List<NavigationNode>();
-            //TODO Update Navbar according to the country selection
-            #region Hardcoded  nav Bar.
-            var market = new NavigationNode
-            {
-                Id = 1,
-                IsActive = false,
-                Description = "Market",
-                Title = "Marché",
-                Action = "Index",
-                Controller = _controller,
-                IconCssClass = "fa fa-file-text"
-            };
-            model.Add(market);
-            var media = new NavigationNode
-            {
-                Id = 2,
-                IsActive = false,
-                Description = "Media",
-                Title = "Media",
-                Action = "MediaSelection",
-                Controller = _controller,
-                IconCssClass = "fa fa-eye"
-            };
-            model.Add(media);
-            var dates = new NavigationNode
-            {
-                Id = 3,
-                IsActive = false,
-                Description = "Dates",
-                Title = "Dates",
-                Action = "PeriodSelection",
-                Controller = _controller,
-                IconCssClass = "fa fa-calendar"
-            };
-            model.Add(dates);
-            var result = new NavigationNode
-            {
-                Id = 4,
-                IsActive = false,
-                Description = "Results",
-                Title = "Resultats",
-                Action = "Results",
-                Controller = _controller,
-                IconCssClass = "fa fa-check"
-            };
-            model.Add(result);
-            foreach (var nav in model)
-            {
-                nav.IsActive = (nav.Id > currentPosition) ? false : true;
-            }
-            #endregion
-            return model;
-        }
-
+      
         private Labels LoadPageLabels(int siteLanguage)
         {
             var result = new Labels
