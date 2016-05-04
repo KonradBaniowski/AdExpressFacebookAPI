@@ -31,6 +31,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectFolder = 702;
         public const long RenameSelectedFolder = 703;
         public const long ErrorMsgNoFolderCreated = 711;
+        public const long ModuleLabel = 760;
         public const long MonAdExpressCode = 761;
         public const long ContactLabelCode = 763;
         public const long ContactDescriptionCode = 764;
@@ -73,6 +74,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long JobTitleCode = 1976;
         public const long NotValidEmail = 2041;
         public const long RefineCode = 2053;
+        public const long NewsLabel = 2080;
         public const long EmptyGrid = 2106;
         public const long PresentAbsentCode = 2167;
         public const long LostWonCode = 2169;
@@ -149,6 +151,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NotAvailableYet = 3046;
         public const long HomeCode = 3047;
         public const long Market = 3048;
+        public const long YourModule = 3051;
+        public const long NewsDescr = 3052;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion

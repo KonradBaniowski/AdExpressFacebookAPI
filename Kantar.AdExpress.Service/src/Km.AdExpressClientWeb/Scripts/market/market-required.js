@@ -25,11 +25,13 @@ $(function () {
 
     $('#Results').on('click', function (e) {
          e.preventDefault();
-        var gotoResult = true;
+         var gotoResult = true;
+         strHtml = "";
         var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
         $.each(items, function (index, value) {
             var page = $(value).attr('id');
-            if (page == "Dates" || page=="Media") {
+            if (page == "Dates" || page == "Media") {
+                strHtml += "<li>" + page + "</li>";
                 gotoResult = false;
             }
         });
@@ -39,7 +41,8 @@ $(function () {
             NextStep(nextUrl, dis)
         }
         else {
-            bootbox.alert("Missing data");
+            strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>" + strHtml + "</ul>";
+            bootbox.alert(strHtml);
         }
     });
 

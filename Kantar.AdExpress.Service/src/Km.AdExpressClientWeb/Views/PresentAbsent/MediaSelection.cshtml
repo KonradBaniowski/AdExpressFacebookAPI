@@ -30,14 +30,14 @@
         <div class="panel-group panel-group-results" id="media-accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-primary panel-results">
                 <div class="panel-heading head-results" role="tab" id="headingOne">
-                    <h3 class="panel-title pull-left orange">
+                    <h3 class="panel-title pull-left">
                         <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             <i class="fa fa-eye"></i> @Model.Labels.SelectMedia
                         </a>
                     </h3>
                     @if (Model.Multiple)
                     {
-                        <span class="pull-right orange">
+                        <span class="pull-right">
                             <small class="v-super"> @Model.Labels.PreSelection</small>
                             <label class="i-switch" id="switch">
                                 <input type="checkbox" for="switch" id="preselection">
@@ -79,7 +79,7 @@
             </div>
             <div class="panel panel-primary panel-results">
                 <div class="panel-heading head-results" role="tab" id="headingTwo">
-                    <h4 class="panel-title orange">
+                    <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             <i class="fa fa-search"></i> @Model.Labels.Refine
                         </a>

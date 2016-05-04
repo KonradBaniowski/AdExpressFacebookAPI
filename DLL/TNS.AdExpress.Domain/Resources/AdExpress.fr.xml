@@ -2304,5 +2304,11 @@
     <item mnemonic="w3046" type="System.String">Ce résultat n'est pas encore disponible pour ce site, veuillez le consulter sur l'ancien site.</item>
     <item mnemonic="w3047" type="System.String">AdExpress, monitoring cross média des campagnes publicitaires</item>
     <item mnemonic="w3048" type="System.String">Marché</item>
+    <item mnemonic="w3049" type="System.String">DOOH</item>
+    <item mnemonic="w3050" type="System.String">Aucun résultats : vous n'avez pas les droits suffisants pour accéder aux détails des insertions du DOOH.</item>
+    <item mnemonic="w3051" type="System.String">Vos modules d’analyse</item>
+    <item mnemonic="w3052" type="System.String">L’actualité Kantar Media</item>
+    <item mnemonic="w3053" type="System.String">Veuillez compléter le(s) paramètre(s) suivant(s):</item>
+    <item mnemonic="w3054" type="System.String">Détail des versions du DOOH</item>
   </items>
 </localization>

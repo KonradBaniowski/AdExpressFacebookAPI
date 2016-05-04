@@ -118,5 +118,11 @@ namespace KM.Framework.Constantes
         public string SelectDayInMonth { get; set; }//2583
         public string AlertInfoMessage { get; set; }//2616
         public string Close { get; set; }
+        public string ModuleLabel { get; set; }//760
+        public string NewsLabel { get; set; }//2080
+        public string YourModule { get; set; }//3051
+        public string NewsDescr { get; set; } //3052
+
+
     }
 }

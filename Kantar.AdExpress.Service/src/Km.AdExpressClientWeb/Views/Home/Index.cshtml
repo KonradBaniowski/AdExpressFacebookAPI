@@ -65,8 +65,8 @@
 }
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <h4 class="text-center">Modules</h4>
-        <p class="text-center">Vos modules d’analyse</p>
+        <h4 class="text-center">@(Model.Labels.ModuleLabel)</h4>
+        <p class="text-center">@(Model.Labels.YourModule)</p>
         @*Four Mostly Importants*@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
@@ -411,8 +411,8 @@
     </div>
     @*RIGHT SIDE*@
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <h4 class="text-center">Actualités</h4>
-        <p class="text-center">L’actualité Kantar Media</p>
+        <h4 class="text-center">>@(Model.Labels.NewsLabel)</h4>
+        <p class="text-center">>@(Model.Labels.NewsDescr)</p>
         @*IMG ACCUEIL*@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-lr-10 padding-b-15">
             <img src="../Content/img/bann_adexpress_top100.jpg" class="img-responsive" alt="Ad Express - Kantar Media">

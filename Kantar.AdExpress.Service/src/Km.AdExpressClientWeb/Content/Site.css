@@ -248,6 +248,11 @@
         background-color: transparent;
         border-color: #ff8c00;
     }
+    .hovered{
+        color: #ff8c00;
+        background-color: transparent;
+        border-color: #ff8c00 !important;
+    }
 
 .btn-orange, .btn-orange:hover {
     background-color: #ff8c00;
