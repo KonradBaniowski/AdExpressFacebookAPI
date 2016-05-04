@@ -8,6 +8,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/module-selection")
+ 
 
     <script>
         function OpenOldWebSite(url) {
@@ -59,7 +60,7 @@
         RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_RADIO);
         RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_TELEVISION);
 
-        
+
     </script>
 }
 <div class="row">
@@ -298,7 +299,7 @@
             </div>
         </div>
         @*Two pdf stuff*@
-        
+
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10 dropdown">
             <div class="tile-third" data-toggle="dropdown">
                 <div class="tile-body text-center">
@@ -317,14 +318,16 @@
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_MANDATAIRES">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.INDICATEUR))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.INDICATEUR">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.INDICATEUR)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
@@ -339,14 +342,16 @@
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_DISPOSITIFS">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_PROGRAMMES))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</div>
                         }
                     </div>
@@ -371,28 +376,32 @@
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_PAN_EURO">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PRESSE))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_PRESSE">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_RADIO))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_RADIO">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_RADIO)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_RADIO)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_TELEVISION))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_TELEVISION">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_TELEVISION)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_TELEVISION)].Title</div>
                         }
                     </div>
@@ -509,7 +518,7 @@
                     <div class="flip-container">
                         <div class="front">
                             <a href="@Url.Action("Index", "Contact")">
-                                <i class="icon-bubbles sli-size-small"></i>                           
+                                <i class="icon-bubbles sli-size-small"></i>
                                 <h5>Contactez nous</h5>
                             </a>
                         </div>
@@ -520,5 +529,5 @@
     </div>
 </div>
 
-<input type="hidden" id="current-url" value="/Home/Index" />
+
 
