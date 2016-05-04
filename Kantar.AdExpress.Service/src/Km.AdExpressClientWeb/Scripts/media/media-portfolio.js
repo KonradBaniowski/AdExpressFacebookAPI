@@ -172,10 +172,12 @@ $('#Dates').on('click', function (e) {
 $('#Results').on('click', function (e) {
     e.preventDefault();    
     var gotoResult = true;
+    strHtml = "";
     var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
     $.each(items, function (index, value) {
         var page = $(value).attr('id');
         if (page == "Dates") {
+            strHtml += "<li>" + page + "</li>";
             gotoResult = false;
         }
     });
@@ -188,7 +190,8 @@ $('#Results').on('click', function (e) {
         NextStep(nextUrl, dis)
     }
     else {
-        bootbox.alert("Missing data");
+        strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>" + strHtml + "</ul>";
+        bootbox.alert(strHtml);
     }
 });
 

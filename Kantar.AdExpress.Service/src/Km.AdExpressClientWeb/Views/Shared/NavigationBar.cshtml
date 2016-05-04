@@ -6,9 +6,15 @@
             <ul class="timeline">
                 @foreach (var navigation in Model)
                 {
-                    if (navigation.IsActive)
+                    var currentPosition = "";
+                    if (navigation.Position == navigation.Id)
                     {
-                        if (navigation.Id > 1)
+                        currentPosition = "hovered";
+                    }
+
+                    if (navigation.Id > 1)
+                    {
+                        if (navigation.Id <= navigation.Position)
                         {
                             <li class="tl-item">
                                 <div class="tl-wrap tl-active">
@@ -17,16 +23,7 @@
                                 </div>
                             </li>
                         }
-                        <li class="tl-header">
-                            <a id=@(navigation.Description) class="btn btn-warning btn-circle" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
-                                <i class="@(navigation.IconCssClass)"></i>
-                            </a>
-                            <p class="lead">@navigation.Title</p>
-                        </li>
-                    }
-                    else
-                    {
-                        if (navigation.Id > 1)
+                        else
                         {
                             <li class="tl-item">
                                 <div class="tl-wrap">
@@ -35,8 +32,21 @@
                                 </div>
                             </li>
                         }
+                    }
+
+                    if (navigation.IsActive)
+                    {
                         <li class="tl-header">
-                            <a id=@(navigation.Description) class="btn btn-warning btn-circle btn-empty" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                            <a id=@(navigation.Description) class="btn btn-warning btn-circle @(currentPosition)" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                                <i class="@(navigation.IconCssClass)"></i>
+                            </a>
+                            <p class="lead">@navigation.Title</p>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="tl-header">
+                            <a id=@(navigation.Description) class="btn btn-warning btn-circle btn-empty @(currentPosition)" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
                                 <i class="@(navigation.IconCssClass)"></i>
                             </a>
                             <p class="lead">@navigation.Title</p>

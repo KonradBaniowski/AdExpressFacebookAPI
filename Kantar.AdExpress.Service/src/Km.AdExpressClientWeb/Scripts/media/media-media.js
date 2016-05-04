@@ -142,7 +142,8 @@ $('#Dates').on('click', function (e) {
 
 $('#Results').on('click', function (e) {
     e.preventDefault();
-    var gotoResult=true;
+    var gotoResult = true;
+    strHtml = "";
     var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
     $.each(items, function (index, value) {
         var page = $(value).attr('id');
@@ -156,13 +157,16 @@ $('#Results').on('click', function (e) {
     {
         var nextUrl = $(this).attr('href').split('/').pop();
         if (nextUrl === "MediaSchedule") {
+            strHtml += "<li>" + page + "</li>";
             nextUrl = "Index";
         }
+        var dis = this;
         NextStep(nextUrl, dis)
     }
     else
     {
-        bootbox.alert("Missing data");
+        strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>" + strHtml + "</ul>";
+        bootbox.alert(strHtml);
     }
 });
 

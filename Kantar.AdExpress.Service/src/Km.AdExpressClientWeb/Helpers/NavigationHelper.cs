@@ -11,7 +11,7 @@ namespace Km.AdExpressClientWeb.Helpers
 {
     public class NavigationHelper
     {
-        public List<NavigationNode> LoadNavBar(string idWebSession, string controller, int siteLanguage = 33)
+        public List<NavigationNode> LoadNavBar(string idWebSession, string controller, int siteLanguage = 33, int CurrentPosition = 0)
         {
 
             var model = new List<NavigationNode>();
@@ -26,7 +26,8 @@ namespace Km.AdExpressClientWeb.Helpers
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Market, siteLanguage),
                 Action = "Index",
                 Controller = controller,
-                IconCssClass = "fa fa-file-text"
+                IconCssClass = "fa fa-file-text",
+                Position = CurrentPosition
             };
             model.Add(market);
             var media = new NavigationNode
@@ -37,7 +38,8 @@ namespace Km.AdExpressClientWeb.Helpers
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Media, siteLanguage),
                 Action = "MediaSelection",
                 Controller = controller,
-                IconCssClass = "fa fa-eye"
+                IconCssClass = "fa fa-eye",
+                Position = CurrentPosition
             };
             model.Add(media);
             var dates = new NavigationNode
@@ -48,7 +50,8 @@ namespace Km.AdExpressClientWeb.Helpers
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Dates, siteLanguage),
                 Action = "PeriodSelection",
                 Controller = controller,
-                IconCssClass = "fa fa-calendar"
+                IconCssClass = "fa fa-calendar",
+                Position = CurrentPosition
             };
             model.Add(dates);
             var result = new NavigationNode
@@ -59,7 +62,8 @@ namespace Km.AdExpressClientWeb.Helpers
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage),
                 Action = "Results",
                 Controller = controller,
-                IconCssClass = "fa fa-check"
+                IconCssClass = "fa fa-check",
+                Position = CurrentPosition
             };
             model.Add(result);
             #endregion
