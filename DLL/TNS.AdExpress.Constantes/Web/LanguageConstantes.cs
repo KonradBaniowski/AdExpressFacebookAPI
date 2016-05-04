@@ -153,6 +153,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Market = 3048;
         public const long YourModule = 3051;
         public const long NewsDescr = 3052;
+        public const long ContactUsLabel = 3055;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion

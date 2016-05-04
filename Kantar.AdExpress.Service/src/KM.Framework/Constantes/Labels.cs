@@ -122,7 +122,6 @@ namespace KM.Framework.Constantes
         public string NewsLabel { get; set; }//2080
         public string YourModule { get; set; }//3051
         public string NewsDescr { get; set; } //3052
-
-
+        public string ContactUsLabel { get; set; } //3055
     }
 }
