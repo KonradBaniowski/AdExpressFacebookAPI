@@ -2304,5 +2304,6 @@
     <item mnemonic="w3046" type="System.String">Ce résultat n'est pas encore disponible pour ce site, veuillez le consulter sur l'ancien site.</item>
     <item mnemonic="w3047" type="System.String">AdExpress, monitoring cross média des campagnes publicitaires</item>
     <item mnemonic="w3048" type="System.String">Marché</item>
+    <item mnemonic="w3049" type="System.String">DOOH</item>
   </items>
 </localization>
