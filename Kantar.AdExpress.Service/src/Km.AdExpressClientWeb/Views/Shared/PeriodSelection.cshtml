@@ -399,7 +399,7 @@
                             }
                         });
                         if (!gotoResult) {
-                            strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>"+strHtml+"</ul>";
+                            strHtml =  @GestionWeb.GetWebWord(3053, Model.PeriodViewModel.SiteLanguage) + "<ul>"+strHtml+"</ul>";
                             bootbox.alert(strHtml);
                             return false;
                         }

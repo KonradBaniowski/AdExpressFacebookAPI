@@ -61,8 +61,6 @@ namespace Km.AdExpressClientWeb.Controllers
             var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-         
-
             var resList = _rightService.GetModulesList(idWS);
             var res = _rightService.GetModules(idWS);
             List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
@@ -101,8 +99,13 @@ namespace Km.AdExpressClientWeb.Controllers
                 Modules = resList,
                 Documents = documents,
                 EncryptedLogin =encryptedLogin,
-                EncryptedPassword = encryptedPassword
+                EncryptedPassword = encryptedPassword,
+                SiteLanguage = 33, // Default
             };
+
+            Home.SiteLanguage = resList.First().Value.SiteLanguage;
+            Home.Labels = LoadPageLabels(Home.SiteLanguage);
+
             return View(Home);
         }
 
@@ -262,7 +265,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 CreateDirectory = GestionWeb.GetWebWord(LanguageConstantes.CreateFolder, siteLanguage),
                 RenameDirectory = GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
                 DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage),
-                Directories = GestionWeb.GetWebWord(LanguageConstantes.Directories, siteLanguage)
+                Directories = GestionWeb.GetWebWord(LanguageConstantes.Directories, siteLanguage),
+                ModuleLabel = GestionWeb.GetWebWord(LanguageConstantes.ModuleLabel, siteLanguage),
+                NewsLabel = GestionWeb.GetWebWord(LanguageConstantes.NewsLabel, siteLanguage),
+                YourModule = GestionWeb.GetWebWord(LanguageConstantes.YourModule, siteLanguage),
+                NewsDescr = GestionWeb.GetWebWord(LanguageConstantes.NewsDescr, siteLanguage)
             };
             return result;
         }

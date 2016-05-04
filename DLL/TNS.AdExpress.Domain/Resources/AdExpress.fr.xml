@@ -2309,5 +2309,6 @@
     <item mnemonic="w3051" type="System.String">Vos modules d’analyse</item>
     <item mnemonic="w3052" type="System.String">L’actualité Kantar Media</item>
     <item mnemonic="w3053" type="System.String">Veuillez compléter le(s) paramètre(s) suivant(s):</item>
+    <item mnemonic="w3054" type="System.String">Détail des versions du DOOH</item>
   </items>
 </localization>
