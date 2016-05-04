@@ -58,7 +58,7 @@ namespace Km.AdExpressClientWeb
                       "~/Content/spinner.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
-                  "~/Scripts/module-selection/module-selection.js"));
+                  "~/Scripts/module-selection/module-selection.js")); 
             bundles.Add(new ScriptBundle("~/bundles/account").Include(
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/Account/account.js"));
@@ -142,6 +142,9 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/Results/result.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
                         "~/Scripts/moment-with-locales.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/language-choice").Include(
+                  "~/Scripts/app/language-choice.js"));
         }
     }
 }

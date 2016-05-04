@@ -1431,6 +1431,7 @@
     <Content Include="Scripts\Account\myAdExpress.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\app\language-choice.js" />
     <Content Include="Scripts\app\layout.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
