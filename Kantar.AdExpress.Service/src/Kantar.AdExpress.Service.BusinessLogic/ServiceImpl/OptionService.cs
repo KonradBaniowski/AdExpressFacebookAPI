@@ -130,7 +130,43 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = currentLevel.GetLabel(_customerWebSession.SiteLanguage), Value = DefaultDetailLevelId.ToString() });
                 DefaultDetailLevelId++;
             }
-            genericDetailLevelOption.DefaultDetail.SelectedId = "0";
+            switch (_componentProfile)
+            {
+                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
+                    _customerGenericDetailLevel = _customerWebSession.GenericMediaDetailLevel;
+                    break;
+                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
+                    _customerGenericDetailLevel = _customerWebSession.GenericProductDetailLevel;
+                    break;
+            }
+            if (_customerWebSession.GenericMediaDetailLevel.FromControlItem == WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels)
+            {
+                int index = -1;
+                foreach (GenericDetailLevel currentLevel in DefaultDetailLevels)
+                {
+                    index++;
+                    if (currentLevel.EqualLevelItems(_customerGenericDetailLevel))
+                        genericDetailLevelOption.DefaultDetail.SelectedId = index.ToString();
+                }
+            }
+            if (_customerGenericDetailLevel.FromControlItem == WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels)
+            {
+                //						
+                foreach (GenericDetailLevelSaved currentLevel in _genericDetailLevelsSaved.Values)
+                {
+                    if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule) && currentLevel.EqualLevelItems(_customerWebSession.GenericMediaDetailLevel))
+                        genericDetailLevelOption.DefaultDetail.SelectedId = currentLevel.Id.ToString();
+                }
+            }
+            switch (_componentProfile)
+            {
+                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
+                    _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
+                    break;
+                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
+                    _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
+                    break;
+            }
             #endregion
 
             #region Niveau de détaille par personnalisé
