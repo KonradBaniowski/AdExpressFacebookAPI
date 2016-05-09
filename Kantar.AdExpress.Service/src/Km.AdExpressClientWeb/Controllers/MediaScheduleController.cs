@@ -84,8 +84,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Load Branches
             var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
             #endregion
-            _siteLanguage = result.SiteLanguage;
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+          
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
             model.Branches = Mapper.Map<List<UniversBranch>>(result.Branches);
@@ -112,6 +111,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 SiteLanguage = result.SiteLanguage
             };
             #endregion
+            _siteLanguage = result.SiteLanguage;
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
             var marketNode = new NavigationNode { Position = 1 };
             var navigationHelper = new Helpers.NavigationHelper();
            
@@ -254,11 +255,10 @@ namespace Km.AdExpressClientWeb.Controllers
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            var resultNode = new NavigationNode { Position = 4 };
-            var navigationHelper = new Helpers.NavigationHelper();
-
             _siteLanguage = CustomerSession.SiteLanguage;
             ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+            var resultNode = new NavigationNode { Position = 4 };
+            var navigationHelper = new Helpers.NavigationHelper();         
             var model = new VM.ResultsViewModel
             {
                 NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),

@@ -5,6 +5,7 @@
     var _controller = Model.NavigationBar.First().Controller;
     var _exportController = "LostWonExport";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
+    var lostWonResults = string.Format("/{0}/Results", _controller);
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -71,7 +72,7 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" id="current-url" value="@lostWonResults" />
 @section Scripts {
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>

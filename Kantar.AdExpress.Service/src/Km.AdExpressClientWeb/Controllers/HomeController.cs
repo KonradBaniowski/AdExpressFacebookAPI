@@ -160,6 +160,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var alertsResponse = _universService.GetUserAlerts(idWebSession);
             model.Alerts = alertsResponse.Alerts;
             #endregion
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(result.SiteLanguage);
             model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
             model.Labels = LoadPageLabels(result.SiteLanguage);
             return View(model);

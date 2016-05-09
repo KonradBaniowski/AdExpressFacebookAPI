@@ -3,6 +3,7 @@
 @using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "MarketSelection";
+    var _controller = Model.NavigationBar.First().Controller;
 }
 
 <div class="row">
@@ -170,7 +171,7 @@
 
     </div>
 </div>
-
+<input type="hidden" id="current-url" value="/@_controller/Index" />
 @section scripts {
     @Scripts.Render("~/bundles/presentabsent-market")
 }

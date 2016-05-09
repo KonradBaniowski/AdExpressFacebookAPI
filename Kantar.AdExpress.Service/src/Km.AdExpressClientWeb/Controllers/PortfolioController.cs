@@ -20,6 +20,7 @@ using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
+using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -131,6 +132,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 e.icon = IconSelector.getIcon(e.MediaEnum);
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
+            _siteLanguage = result.SiteLanguage;
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
             var mediaNode = new NavigationNode { Position = 2 };
             var navigationHelper = new Helpers.NavigationHelper();
             model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage,2);
@@ -172,6 +175,8 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
 
+            _siteLanguage = result.SiteLanguage;
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
             var navigationHelper = new Helpers.NavigationHelper();         
             var navBarModel = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage,3);
@@ -227,6 +232,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
+            _siteLanguage = CustomerSession.SiteLanguage;
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
             var resultNode = new NavigationNode { Position = 4 };
             var navigationHelper = new Helpers.NavigationHelper();
             var model = new Models.Portfolio.ResultsViewModel
