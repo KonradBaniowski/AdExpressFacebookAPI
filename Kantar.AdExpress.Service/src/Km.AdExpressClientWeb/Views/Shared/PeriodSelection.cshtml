@@ -132,7 +132,7 @@
                 </div>
             </div>
         </div>
-
+        <input type="hidden" id="current-url" value="/@_controller/PeriodSelection" />
         @section scripts {
             <script type="text/javascript">
                 $(document).ready(function () {
@@ -399,7 +399,7 @@
                             }
                         });
                         if (!gotoResult) {
-                            strHtml =  @GestionWeb.GetWebWord(3053, Model.PeriodViewModel.SiteLanguage) + "<ul>"+strHtml+"</ul>";
+                            strHtml =  "@GestionWeb.GetWebWord(3053, Model.PeriodViewModel.SiteLanguage)" + "<ul>"+strHtml+"</ul>";
                             bootbox.alert(strHtml);
                             return false;
                         }

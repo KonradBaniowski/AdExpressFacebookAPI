@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
+    var _controller = "MediaSchedule";
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -36,7 +37,7 @@
 </div>*@
 <div class="row">
     <div class="col-md-12">
-        @Html.Action("ResultOptions", "MediaSchedule")
+        @Html.Action("ResultOptions", _controller)
     </div>
 </div>
 <div id="subPeriodSelection" class="h20" style="min-height: 70px; display:none;"></div>
@@ -67,6 +68,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="current-url" value="/@_controller/Results" />
 @section Scripts {
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
