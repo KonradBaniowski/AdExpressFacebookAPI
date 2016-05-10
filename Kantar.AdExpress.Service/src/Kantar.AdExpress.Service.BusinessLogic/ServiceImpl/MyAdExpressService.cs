@@ -1221,16 +1221,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 if (validResultPage)
                                 {
                                     webSession.Save();
-                                    if (webSession.LastReachedResultUrl.Length != 0)
-                                    {
+                                    //if (webSession.LastReachedResultUrl.Length != 0 && webSession.CurrentModule == )
+                                    //{
                                         result.Success = true;
                                         result.ModuleId = webSessionSave.CurrentModule;
-                                    }
-                                    else
-                                    {
-                                        //Error :The  requested session can't be loaded.
-                                        result.Message = GestionWeb.GetWebWord(LanguageConstantes.CantLoadSession, webSession.SiteLanguage);
-                                    }
+                                    //}
+                                    //else
+                                    //{
+                                    //    //Error :The  requested session can't be loaded.
+                                    //    result.Message = GestionWeb.GetWebWord(LanguageConstantes.CantLoadSession, webSession.SiteLanguage);
+                                    //}
                                 }
                                 else
                                 {
