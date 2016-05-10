@@ -202,7 +202,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             string[] mails = new string[1];
             mails[0] = request.Email;
             webSession.EmailRecipient = mails;
-            int occurrenceDate = -1;
+            //int occurrenceDate = -1;
             #endregion
 
             DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
@@ -215,7 +215,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             else
             {
-                occurrenceDate = (request.Type == Constantes.Alerts.AlertPeriodicity.Monthly || request.Type == Constantes.Alerts.AlertPeriodicity.Weekly) ?int.Parse(request.OccurrenceDate):-1;
+                //occurrenceDate = (request.Type == Constantes.Alerts.AlertPeriodicity.Monthly || request.Type == Constantes.Alerts.AlertPeriodicity.Weekly) ?request.OccurrenceDate):-1;
                 Int64 idAlertSchedule = 0;
                 AlertHourCollection alertHourCollection = alertDAL.GetAlertHours();
                 for (int i = 0; i < alertHourCollection.Count; i++)
@@ -226,8 +226,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                 }
                 //var periodicityType = (TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity), request.Type);
-                alertDAL.InsertAlertData(request.AlertTitle, webSession.ToBinaryData(), webSession.CurrentModule,request.Type,
-                                               int.Parse(request.OccurrenceDate), request.Email, webSession.CustomerLogin.IdLogin, idAlertSchedule);
+                 var idAlert= alertDAL.InsertAlertData(request.AlertTitle, webSession.ToBinaryData(), webSession.CurrentModule,request.Type,
+                                               request.OccurrenceDate, request.Email, webSession.CustomerLogin.IdLogin, idAlertSchedule);
+                if (idAlert > 0)
+                {
+                    result.Success = true;
+                    result.Message = GestionWeb.GetWebWord(LanguageConstantes.AlertCreationSucceeded, webSession.SiteLanguage);
+                }
             }
             return result;
         }       
@@ -236,7 +241,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             bool result = (!String.IsNullOrEmpty(request.AlertTitle) && !String.IsNullOrEmpty(request.Email))? true :false;
             if (request.Type == Constantes.Alerts.AlertPeriodicity.Monthly || request.Type == Constantes.Alerts.AlertPeriodicity.Weekly)
-                result = result && !String.IsNullOrEmpty(request.OccurrenceDate);
+                result = result && request.OccurrenceDate>-1;
             return result;
         }
     }

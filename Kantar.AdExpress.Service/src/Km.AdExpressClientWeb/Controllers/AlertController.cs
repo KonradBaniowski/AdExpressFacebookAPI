@@ -155,15 +155,15 @@ namespace Km.AdExpressClientWeb.Controllers
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var periodicityType = (Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(Constantes.Alerts.AlertPeriodicity), type);
             var request = new Domain.SaveAlertRequest
-                {
-                    AlertTitle = title,
-                    Email = email,
-                    IdWebSession= idWS,
-                    Type =periodicityType,
-                    OccurrenceDate = date
+            {
+                AlertTitle = title,
+                Email = email,
+                IdWebSession = idWS,
+                Type = periodicityType,
+                OccurrenceDate = !String.IsNullOrEmpty(date) ? int.Parse(date) : -1
                 };
             var response = _alertService.SaveAlert(request);           
-            return result;
+            return Json(response,JsonRequestBehavior.AllowGet);
         }
         private Labels LoadPageLabels(int siteLanguage)
         {

@@ -77,7 +77,7 @@ $(document).on('click', '#btnSaveAlert', function (event) {
         },
         success: function (response) {
             $('#alertModal').modal('hide');
-            bootbox.alert(response);
+            bootbox.alert(response.Message);
         }
     });
 });

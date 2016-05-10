@@ -132,6 +132,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long TimeSchedule = 2614;
         public const long MaxAlertLimit = 2615;
         public const long AlertInfoMessage = 2616;
+        public const long AlertCreationSucceeded = 2660;
         public const long Concurrent = 2869;
         public const long Dates = 2882;
         public const long IndeRadioMessage = 3018;
