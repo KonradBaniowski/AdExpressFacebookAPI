@@ -123,5 +123,10 @@ namespace KM.Framework.Constantes
         public string YourModule { get; set; }//3051
         public string NewsDescr { get; set; } //3052
         public string ContactUsLabel { get; set; } //3055
+        public string ExportFormattedResult { get; set; }//1996
+        public string ExportResultWithValue { get; set; }//1997
+        public string ExportGrossResult { get; set; }//2014
+        public string ExportPdfResult { get; set; }//2017
+        public string ExportPptResult { get; set; }//3031
     }
 }

@@ -72,6 +72,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Save = 1990;
         public const long VisuelLabel = 1909;
         public const long JobTitleCode = 1976;
+        public const long ExportFormattedResult = 1996;
+        public const long ExportResultWithValue = 1997;
+        public const long ExportGrossResult = 2014;
+        public const long ExportPdfResult = 2017;
         public const long NotValidEmail = 2041;
         public const long RefineCode = 2053;
         public const long NewsLabel = 2080;
@@ -136,6 +140,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Concurrent = 2869;
         public const long Dates = 2882;
         public const long IndeRadioMessage = 3018;
+        public const long ExportPptResult = 3031;
         public const long LimitKeyword = 3033;
         public const long ItemExceeded = 3034;
         public const long NoSupport = 3035;

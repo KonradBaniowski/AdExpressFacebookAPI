@@ -23,9 +23,9 @@
     <div class="col-md-12">
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
-                <option value="1">Résultat Formaté</option>
-                <option value="2">Résultat avec valeurs</option>
-                <option value="3">Résultat brut</option>
+                <option value="1">@Model.Labels.ExportFormattedResult</option>
+                <option value="2">@Model.Labels.ExportResultWithValue</option>
+                <option value="3">@Model.Labels.ExportGrossResult</option>
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>

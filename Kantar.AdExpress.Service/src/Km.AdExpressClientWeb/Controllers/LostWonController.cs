@@ -400,7 +400,12 @@ namespace Km.AdExpressClientWeb.Controllers
                 PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage),
                 Results = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage),
                 Save = GestionWeb.GetWebWord(LanguageConstantes.Save, siteLanguage),
-                CreateAlert = GestionWeb.GetWebWord(LanguageConstantes.CreateAlert, siteLanguage)
+                CreateAlert = GestionWeb.GetWebWord(LanguageConstantes.CreateAlert, siteLanguage),
+                ExportFormattedResult = GestionWeb.GetWebWord(LanguageConstantes.ExportFormattedResult, siteLanguage),
+                ExportResultWithValue = GestionWeb.GetWebWord(LanguageConstantes.ExportResultWithValue, siteLanguage),
+                ExportGrossResult = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage),
+                ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
+                ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage)
             };
             return result;
         }
