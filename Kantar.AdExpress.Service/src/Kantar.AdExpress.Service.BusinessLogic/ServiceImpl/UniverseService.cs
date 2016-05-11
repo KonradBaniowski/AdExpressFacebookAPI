@@ -599,7 +599,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 UniversGroups = new List<UserUniversGroup>(),
                 SiteLanguage = tuple.Item4
-            };
+            };            
             List<UserUnivers> userUniversList = new List<UserUnivers>();
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
@@ -636,6 +636,21 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         Description = item.FirstOrDefault().ParentDescription,
                         UserUnivers = item.ToList(),
                         Count = item.Count()
+                    };
+                    result.UniversGroups.Add(universGroup);
+                }
+            }
+            else
+            {
+                var ds = UniversListDataAccess.GetGroupUniverses(tuple.Item3);
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    UserUniversGroup universGroup = new UserUniversGroup
+                    {
+                        Id = (long)row[0],
+                        Description = row[1].ToString(),
+                        UserUnivers  = new List<UserUnivers>(),
+                        Count=0
                     };
                     result.UniversGroups.Add(universGroup);
                 }
