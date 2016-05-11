@@ -56,6 +56,7 @@
     <Compile Include="BusinessService\ICreativeService.cs" />
     <Compile Include="BusinessService\IDetailLevelService.cs" />
     <Compile Include="BusinessService\IDetailSelectionService.cs" />
+    <Compile Include="BusinessService\IExportService.cs" />
     <Compile Include="BusinessService\IGadService.cs" />
     <Compile Include="BusinessService\IInfosNewsService.cs" />
     <Compile Include="BusinessService\IPortfolioDetailMediaService.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Domain\DetailLevelItems.cs" />
     <Compile Include="Domain\DetailSelectionDomain\DetailSelectionResponse.cs" />
     <Compile Include="Domain\Documents.cs" />
+    <Compile Include="Domain\ExportRequest.cs" />
     <Compile Include="Domain\Gad.cs" />
     <Compile Include="Domain\Identity\ApplicationAuthenticationDescription.cs" />
     <Compile Include="Domain\Identity\ApplicationExternalLoginInfo.cs" />

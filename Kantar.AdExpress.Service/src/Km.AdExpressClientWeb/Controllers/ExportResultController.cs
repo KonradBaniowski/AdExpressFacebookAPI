@@ -10,15 +10,18 @@ using KM.Framework.Constantes;
 using TNS.AdExpress.Constantes.Web;
 using System.Text.RegularExpressions;
 using TNS.AdExpress.Domain.Translation;
+using Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
     public class ExportResultController : Controller
     {
         private IWebSessionService _webSessionService;
-        public ExportResultController(IWebSessionService webSessionService)
+        private IExportService _exportService;
+        public ExportResultController(IWebSessionService webSessionService, IExportService exportService)
         {
             _webSessionService = webSessionService;
+            _exportService = exportService;
         }
         public ActionResult CreateExport(string exportType)
         {
@@ -32,6 +35,21 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 : GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage)
             };
             return PartialView("ExportResult", model);
+        }
+
+        public JsonResult Export( string fileName, string email, string type)
+        {
+            var cla = new ClaimsPrincipal(User.Identity);
+            var webSessionId = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var request = new ExportRequest
+            {
+                FileName =fileName??string.Empty,
+                Email =email??string.Empty,
+                ExportType =type??string.Empty,
+                WebSessionId = webSessionId
+            };            
+            var response = _exportService.Export(request);
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         private Labels LoadPageLabels(int siteLanguage)

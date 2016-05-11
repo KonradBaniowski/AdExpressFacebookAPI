@@ -25,18 +25,12 @@
                         </div>
                     </div>
                 </li>
-                @*<li role="separator" class="divider"></li>
-                <li>
-                    <div class="form-group">
-                        <label class="control-label col-sm-6 col-sm-6 popup-text">@Model.Labels.Export</label>
-                        <label class="control-label col-sm-6 col-sm-6 popup-text">@Model.ExportType</label>
-                    </div>
-                </li>*@
             </ul>
         </div>
         <div class="modal-save-univers-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">@Model.Labels.Close</button>
-            <button id="btnSaveAlert" type="button" class="btn btn-submit" data-dismiss="modal">@Model.Labels.Submit</button>
+            <button id="btnExport" type="button" class="btn btn-submit" data-dismiss="modal">@Model.Labels.Submit</button>
         </div>
     </div>
+    @Html.Hidden("ExportType",@Model.ExportType)
 </div>

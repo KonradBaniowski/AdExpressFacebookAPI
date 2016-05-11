@@ -122,3 +122,29 @@ $(document).on('click','#btn-export', function (event) {
             break;
     }
 });
+
+$(document).on('click','#btnExport', function (event) {
+    event.preventDefault();
+    var fileName = $('#fileName').val();
+    var email = $('#email').val();
+    var type = $('#ExportType').val();
+    var params = {
+        fileName: fileName,
+        email: email,
+        type: type
+    };
+    $.ajax({
+        url: '/ExportResult/Export',
+        contentType: 'application/json',
+        type: 'POST',
+        datatype: 'JSON',
+        data: JSON.stringify(params),
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert("An error occurred while processing your request.");
+        },
+        success: function (response) {
+            $('#alertModal').modal('hide');
+            bootbox.alert(response.Message);
+        }
+    });
+    });
