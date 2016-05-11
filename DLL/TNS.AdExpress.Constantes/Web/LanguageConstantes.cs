@@ -144,6 +144,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertCreationSucceeded = 2660;
         public const long Concurrent = 2869;
         public const long Dates = 2882;
+        public const long MaxLengthExceeded = 2946;
         public const long IndeRadioMessage = 3018;
         public const long ExportPptResult = 3031;
         public const long LimitKeyword = 3033;

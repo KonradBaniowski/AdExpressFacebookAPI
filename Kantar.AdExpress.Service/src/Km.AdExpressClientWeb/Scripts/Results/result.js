@@ -143,7 +143,7 @@ $(document).on('click','#btnExport', function (event) {
             bootbox.alert("An error occurred while processing your request.");
         },
         success: function (response) {
-            $('#alertModal').modal('hide');
+            $('#alertExportModal').modal('hide');
             bootbox.alert(response.Message);
         }
     });

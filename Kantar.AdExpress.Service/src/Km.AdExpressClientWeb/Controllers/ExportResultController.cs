@@ -45,7 +45,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 FileName =fileName??string.Empty,
                 Email =email??string.Empty,
-                ExportType =type??string.Empty,
+                ExportType =type,
                 WebSessionId = webSessionId
             };            
             var response = _exportService.Export(request);

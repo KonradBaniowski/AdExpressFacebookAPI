@@ -99,6 +99,14 @@
       <Project>{02b3e71a-f7e6-4de6-b42d-b421d94ed9f2}</Project>
       <Name>KM.AdExpressI.MyAdExpress</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Anubis.Constantes\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716ac8-b9d2-432c-84f7-885a73b77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Anubis\TNS.AdExpress.Anubis.csproj">
+      <Project>{614b37cf-80a5-4252-ac63-f1811b073f5d}</Project>
+      <Name>TNS.AdExpress.Anubis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
