@@ -26,6 +26,8 @@
                 <option value="1">@Model.Labels.ExportFormattedResult</option>
                 <option value="2">@Model.Labels.ExportResultWithValue</option>
                 <option value="3">@Model.Labels.ExportGrossResult</option>
+                <option value="4">@Model.Labels.ExportPdfResult</option>
+                <option value="5">@Model.Labels.ExportPptResult</option>
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
@@ -63,6 +65,12 @@
     </div>
 </div>
 <div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="exportResult" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
         </div>
@@ -762,6 +770,10 @@
                         break;
                     case "3":
                         window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
+                        break;
+                    case "4":
+                    case "5":
+                        //TODO
                         break;
                     default:
                         window.open('@Url.Action("Index", "TestExport")', "_blank");

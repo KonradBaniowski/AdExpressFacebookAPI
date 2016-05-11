@@ -215,6 +215,7 @@
     <Compile Include="Models\LostWon\ResultsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
+    <Compile Include="Models\Shared\ExportResultModel.cs" />
     <Compile Include="Models\Shared\InsertionCreativeViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
@@ -1594,6 +1595,7 @@
     <Content Include="Views\Shared\GadInfos.cshtml" />
     <Content Include="Views\Home\MyAdExpressAlerts.cshtml" />
     <Content Include="Views\Alert\CreateAlert.cshtml" />
+    <Content Include="Views\Shared\ExportResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
