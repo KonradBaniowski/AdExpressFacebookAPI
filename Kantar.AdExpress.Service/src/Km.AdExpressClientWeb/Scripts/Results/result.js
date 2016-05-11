@@ -81,3 +81,44 @@ $(document).on('click', '#btnSaveAlert', function (event) {
         }
     });
 });
+
+$(document).on('click','#btn-export', function (event) {
+    event.preventDefault();
+    var selectedValue = $('#export-type').val();
+    var params = {
+        exportType:selectedValue
+    };
+    var controller = $('#ExportController').val();
+    switch (selectedValue) {
+        case "1":
+            window.open('/' + controller + '/Index', "_blank");
+            break;
+        case "2":
+            window.open('/' + controller + '/ResultValue', "_blank");
+            break;
+        case "3":
+            window.open('/' + controller + '/ResultBrut', "_blank");
+            break;
+        case "4":
+        case "5":            
+            $.ajax({
+                url: '/ExportResult/CreateExport',
+                contentType: 'application/json',
+                type: 'POST',
+                datatype: 'JSON',
+                data: JSON.stringify(params),
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    bootbox.alert("An error occurred while processing your request.");
+                },
+                success: function (response) {
+                    $('#exportResultModal .modal-content').html('');
+                    $('#exportResultModal .modal-content').append(response);
+                    $('#exportResultModal').modal('show');
+                }
+            });            
+            break;
+        default:
+            window.open('@Url.Action("Index", "TestExport")', "_blank");
+            break;
+    }
+});

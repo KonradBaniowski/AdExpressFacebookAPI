@@ -14,8 +14,7 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public string FileName { get; set; }
         [Required]
         public string Email { get; set; }
-        public List<SelectListItem> ExportType { get; set; }
-        public int SelectedExportTypeId { get; set; }
+        public string ExportType { get; set; }
         public Labels Labels { get; set; }
     }
 }

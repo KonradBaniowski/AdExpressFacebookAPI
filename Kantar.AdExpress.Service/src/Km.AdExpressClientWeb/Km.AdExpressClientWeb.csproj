@@ -181,6 +181,7 @@
     <Compile Include="Controllers\CreativeController.cs" />
     <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\DetailSelectionController.cs" />
+    <Compile Include="Controllers\ExportResultController.cs" />
     <Compile Include="Controllers\GadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
@@ -1601,6 +1602,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
+    <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\Universe\" />

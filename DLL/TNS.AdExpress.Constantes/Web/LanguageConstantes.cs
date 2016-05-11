@@ -74,6 +74,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LevelDetails = 1886;
         public const long CreativeLabel = 1888;
         public const long Save = 1990;
+        public const long Export = 1992;
         public const long VisuelLabel = 1909;
         public const long JobTitleCode = 1976;
         public const long ExportFormattedResult = 1996;

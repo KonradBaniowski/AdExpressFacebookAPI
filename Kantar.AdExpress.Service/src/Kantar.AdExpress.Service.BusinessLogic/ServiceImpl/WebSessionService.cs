@@ -559,6 +559,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession.Save();
         }
 
+        public int GetSiteLanguage(string webSessionId)
+        {
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            return webSession.SiteLanguage;
+        }
+
         //#region Méthodes internes
         ///// <summary>
         ///// Set default media selection
