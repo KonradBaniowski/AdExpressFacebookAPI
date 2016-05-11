@@ -187,7 +187,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
 
-        public ActionResult ReloadUnivers()
+        public ActionResult ReloadAlerts()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -198,7 +198,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-        public ActionResult ReloadAlerts()
+        public ActionResult ReloadUnivers()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -206,7 +206,8 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 UniversType = Domain.UniversType.Univers,
                 UniversGroups = new List<Domain.UserUniversGroup>()
-            }; string branch = "2";
+            };
+            string branch = "2";
             string listUniversClientDescription = string.Empty;
             var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
             foreach (var group in univers.UniversGroups)
