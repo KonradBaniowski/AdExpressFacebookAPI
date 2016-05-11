@@ -42,6 +42,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long DroppingFailed = 830;
         public const long NoQueryErrorMsg = 831;
         public const long RequiredPermission = 832;
+        public const long EmptyField = 837;
         public const long StudySelection = 842;
         public const long Unit = 849;
         public const long CantLoadSession = 851;
@@ -52,6 +53,9 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MoveSelectedResult = 911; 
         public const long SelectUniversGroup = 917;
         public const long ExceptionMsg = 922;
+        public const long NoUniversGroup = 925;
+        public const long NoSelectedUnivers = 926;
+        public const long EmptyUnivers = 927;
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
         public const long Capacity = 1000;

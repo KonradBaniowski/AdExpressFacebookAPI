@@ -24,6 +24,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using AutoMapper;
 using KM.Framework.Constantes;
 using TNS.AdExpress.Web.Core.Utilities;
+using System.Text;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -436,158 +437,176 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public UniversGroupSaveResponse SaveUserUnivers(UniversGroupSaveRequest request)
         {
             UniversGroupSaveResponse result = new UniversGroupSaveResponse();
+            webSession = (WebSession)WebSession.Load(request.WebSessionId);
             #region To be Refactored
-            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            try
+            if (request.Trees.Any() && request.Trees.Where(p => p.UniversLevels != null).Any() && request.UniversGroupId>0 && (request.UserUniversId>0 || !String.IsNullOrEmpty(request.Name)))
             {
-                if (request.Trees.Count > 0)
+                Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                #region Try block
+                try
                 {
-                    webSession = (WebSession)WebSession.Load(request.WebSessionId);
-                    long idModule = webSession.CurrentModule;
-                    long idSelectedUniverse = request.UserUniversId ?? 0;
-                    long idSelectedDirectory = request.UniversGroupId;
-                    string mediaIds = null;
-                    if (request.MediaIds.Any())
-                        mediaIds = string.Join(", ", request.MediaIds);
-                    string levels = null;
-                    foreach (var item in request.Trees)
+                    if (request.Trees.Count > 0)
                     {
-                        levels = string.Join(", ", item.UniversLevels.Where(d => d.UniversItems.Any()).Select(x => x.Id));
-                    }
-                    //Identification de la branche de l'univers					
-                    TNS.AdExpress.Constantes.Classification.Branch.type branchType = GetBrancheType(request.Dimension);
-
-                    //Get universe to save
-                    List<TNS.AdExpress.Classification.AdExpressUniverse> adExpressUniverses = new List<TNS.AdExpress.Classification.AdExpressUniverse>();
-                    TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(request.Dimension);
-                    if (idModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || idModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE || idModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
-                    {
-                        adExpressUniverse = GetUniverseToSave(request);
-                        if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
+                        long idModule = webSession.CurrentModule;
+                        long idSelectedUniverse = request.UserUniversId ?? 0;
+                        long idSelectedDirectory = request.UniversGroupId;
+                        string mediaIds = null;
+                        if (request.MediaIds.Any())
+                            mediaIds = string.Join(", ", request.MediaIds);
+                        string levels = null;
+                        foreach (var item in request.Trees)
                         {
-                            // Erreur : Aucun groupe d'univers, veuillez en créer un.
-                            result.ErrorMessage = GestionWeb.GetWebWord(927, webSession.SiteLanguage);
-                            result.Success = false;
+                            levels = string.Join(", ", item.UniversLevels.Where(d => d.UniversItems.Any()).Select(x => x.Id));
                         }
-                        else
-                        {
-                            universes.Add(universes.Count, adExpressUniverse);
-                        }
-                    }
-                    else
-                    if (idModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
-                    {
-                        adExpressUniverses = GetConcurrentUniversesToSave(request);
-                        int id = 0;
-                        foreach (var item in adExpressUniverses)
-                        {
-                            universes.Add(id, item);
-                            id++;
-                        }
-                    }
-                    if (universes.Any())
-                    {
-                        #region Sauvegarde de l'univers
+                        //Identification de la branche de l'univers					
+                        TNS.AdExpress.Constantes.Classification.Branch.type branchType = GetBrancheType(request.Dimension);
 
-                        string universeName = request.Name;
-                        if (String.IsNullOrEmpty(request.Name) && idSelectedUniverse != 0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
+                        //Get universe to save
+                        List<TNS.AdExpress.Classification.AdExpressUniverse> adExpressUniverses = new List<TNS.AdExpress.Classification.AdExpressUniverse>();
+                        TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(request.Dimension);
+                        if (idModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || idModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE || idModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
                         {
-
-                            //Add AdExpress universe to collection
-                            universes.Add(universes.Count, adExpressUniverse);
-
-                            if (UniversListDataAccess.UpdateUniverse(idSelectedUniverse, webSession, request.IdUniverseClientDescription, branchType.GetHashCode(), universes))
+                            adExpressUniverse = GetUniverseToSave(request);
+                            if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
                             {
-
-                                // Validation : confirmation d'enregistrement de la requête
-                                webSession.Source.Close();
-                                result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
-                                result.Success = true;
-                            }
-                            else {
-                                // Erreur : Echec de l'enregistrement de la requête	
-                                webSession.Source.Close();
-                                result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
+                                // Erreur : Aucun groupe d'univers, veuillez en créer un.
+                                result.ErrorMessage = GestionWeb.GetWebWord(927, webSession.SiteLanguage);
                                 result.Success = false;
                             }
+                            else
+                            {
+                                universes.Add(universes.Count, adExpressUniverse);
+                            }
                         }
-                        else if (universeName.Length != 0 && universeName.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+                        else
+                        if (idModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
                         {
-                            if (!UniversListDataAccess.IsUniverseExist(webSession, universeName))
+                            adExpressUniverses = GetConcurrentUniversesToSave(request);
+                            int id = 0;
+                            foreach (var item in adExpressUniverses)
+                            {
+                                universes.Add(id, item);
+                                id++;
+                            }
+                        }
+                        if (universes.Any())
+                        {
+                            #region Sauvegarde de l'univers
+
+                            string universeName = request.Name;
+                            if (String.IsNullOrEmpty(request.Name) && idSelectedUniverse != 0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
                             {
 
                                 //Add AdExpress universe to collection
                                 universes.Add(universes.Count, adExpressUniverse);
-                                if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, levels, mediaIds))
-                                //if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession))
+
+                                if (UniversListDataAccess.UpdateUniverse(idSelectedUniverse, webSession, request.IdUniverseClientDescription, branchType.GetHashCode(), universes))
                                 {
-                                    // Validation : confirmation d'enregistrement de l'univers
+
+                                    // Validation : confirmation d'enregistrement de la requête
                                     webSession.Source.Close();
                                     result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
                                     result.Success = true;
                                 }
                                 else {
-                                    // Erreur : Echec de l'enregistrement de l'univers
+                                    // Erreur : Echec de l'enregistrement de la requête	
                                     webSession.Source.Close();
                                     result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
                                     result.Success = false;
                                 }
                             }
-                            else {
-                                // Erreur : univers déjà existant
+                            else if (universeName.Length != 0 && universeName.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
+                            {
+                                if (!UniversListDataAccess.IsUniverseExist(webSession, universeName))
+                                {
+
+                                    //Add AdExpress universe to collection
+                                    universes.Add(universes.Count, adExpressUniverse);
+                                    if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, levels, mediaIds))
+                                    //if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession))
+                                    {
+                                        // Validation : confirmation d'enregistrement de l'univers
+                                        webSession.Source.Close();
+                                        result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
+                                        result.Success = true;
+                                    }
+                                    else {
+                                        // Erreur : Echec de l'enregistrement de l'univers
+                                        webSession.Source.Close();
+                                        result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
+                                        result.Success = false;
+                                    }
+                                }
+                                else {
+                                    // Erreur : univers déjà existant
+                                    webSession.Source.Close();
+                                    result.ErrorMessage = GestionWeb.GetWebWord(923, webSession.SiteLanguage);
+                                    result.Success = false;
+                                }
+                            }
+                            else if (universeName.Length == 0)
+                            {
+                                // Erreur : Le champs est vide
                                 webSession.Source.Close();
-                                result.ErrorMessage = GestionWeb.GetWebWord(923, webSession.SiteLanguage);
+                                result.ErrorMessage = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
                                 result.Success = false;
                             }
-                        }
-                        else if (universeName.Length == 0)
-                        {
-                            // Erreur : Le champs est vide
-                            webSession.Source.Close();
-                            result.ErrorMessage = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
-                            result.Success = false;
-                        }
-                        else {
-                            // Erreur : suppérieur à 50 caractères
-                            webSession.Source.Close();
-                            result.ErrorMessage = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
-                            result.Success = false;
-                        }
+                            else {
+                                // Erreur : suppérieur à 50 caractères
+                                webSession.Source.Close();
+                                result.ErrorMessage = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+                                result.Success = false;
+                            }
 
-                        #endregion
+                            #endregion
+                        }
+                    }
+
+                    else {
+                        // Erreur : Impossible de sauvegarder, pas de groupe d'univers créé
+                        result.ErrorMessage = GestionWeb.GetWebWord(925, webSession.SiteLanguage);
+                        result.Success = false;
                     }
                 }
-
-                else {
-                    // Erreur : Impossible de sauvegarder, pas de groupe d'univers créé
-                    result.ErrorMessage = GestionWeb.GetWebWord(925, webSession.SiteLanguage);
-                    result.Success = false;
+                #endregion
+                #region catch block
+                catch (System.Exception err)
+                {
+                    if (err.GetType() == typeof(TNS.Classification.Universe.SecurityException) ||
+                            err.GetBaseException().GetType() == typeof(TNS.Classification.Universe.SecurityException))
+                    {
+                        webSession.Source.Close();
+                        result.ErrorMessage = GestionWeb.GetWebWord(2285, webSession.SiteLanguage);
+                        result.Success = false;
+                    }
+                    else if (err.GetType() == typeof(TNS.Classification.Universe.CapacityException))
+                    {
+                        webSession.Source.Close();
+                        result.ErrorMessage = GestionWeb.GetWebWord(2286, webSession.SiteLanguage);
+                        result.Success = false;
+                    }
+                    else if (err.GetType() != typeof(System.Threading.ThreadAbortException))
+                    {
+                        //TODO SendEmail(err.Message);
+                        result.ErrorMessage = err.Message;
+                        result.Success = false;
+                    }
                 }
+                #endregion
             }
-            #region catch block
-            catch (System.Exception err)
+            else
             {
-                if (err.GetType() == typeof(TNS.Classification.Universe.SecurityException) ||
-                        err.GetBaseException().GetType() == typeof(TNS.Classification.Universe.SecurityException))
+                var message = string.Empty;
+                if (request.UserUniversId==0 && string.IsNullOrEmpty(request.Name))
                 {
-                    webSession.Source.Close();
-                    result.ErrorMessage = GestionWeb.GetWebWord(2285, webSession.SiteLanguage);
-                    result.Success = false;
+                    message = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.EmptyField, webSession.SiteLanguage);
                 }
-                else if (err.GetType() == typeof(TNS.Classification.Universe.CapacityException))
+                if(request.Trees.Count()==0 || request.UniversGroupId == 0 || request.Trees.Where(p => p.UniversLevels != null).Count()==0)
                 {
-                    webSession.Source.Close();
-                    result.ErrorMessage = GestionWeb.GetWebWord(2286, webSession.SiteLanguage);
-                    result.Success = false;
+                    message = String.Format("{0} \n {1}",message, GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.EmptyUnivers, webSession.SiteLanguage));
                 }
-                else if (err.GetType() != typeof(System.Threading.ThreadAbortException))
-                {
-                    //TODO SendEmail(err.Message);
-                    result.ErrorMessage = err.Message;
-                    result.Success = false;
-                }
+                result.ErrorMessage = message;
             }
-            #endregion
             #endregion
             return result;
         }
