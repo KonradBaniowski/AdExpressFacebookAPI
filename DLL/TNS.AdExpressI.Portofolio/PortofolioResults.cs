@@ -764,7 +764,7 @@ namespace TNS.AdExpressI.Portofolio
             switch (_webSession.CurrentModule)
             {
                 case TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE:
-                    return (Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd"));
+                    return (Dates.GetPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd"));
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE:
                     return (_webSession.PeriodBeginningDate);
             }
@@ -782,7 +782,7 @@ namespace TNS.AdExpressI.Portofolio
             switch (_webSession.CurrentModule)
             {
                 case TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE:
-                    return (Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd"));
+                    return (Dates.GetPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd"));
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE:
                     return (_webSession.PeriodEndDate);
             }
