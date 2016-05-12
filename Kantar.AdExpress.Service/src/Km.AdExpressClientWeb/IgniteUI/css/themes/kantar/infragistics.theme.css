@@ -187,7 +187,7 @@ body .ui-tooltip{border-width:2px}
 .ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited{color:#fff}
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover{background:#444;color:#fff}
 .ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #4897aa;background-color:#e8e8e8;color:#444}
-.ui-state-hover a,.ui-state-hover a:hover{color:#fff}
+.ui-state-hover a,.ui-state-hover a:hover{color:#ff8c00}
 .ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active{border:1px solid #4897aa;background-color:#9ecbd6;color:#444}
 .ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited{text-decoration:underline}
 .ui-widget-header.ui-state-default{background:#888;color:#fff;font-weight:normal;border:0}

@@ -1,15 +1,21 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain;
 using System;
-using System.Collections.Generic;
+using KM.AdExpressI.MyAdExpress.DAL;
 using System.Text.RegularExpressions;
-using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core;
+using System.Collections.Generic;
+using TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Classification.DAL;
+using System.Reflection;
+using TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Constantes.Classification;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -26,214 +32,173 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 Message= "This feature is still under construction."
             };
             #region Validation
-            //var webSession = (WebSession)WebSession.Load(request.WebSessionId);
-            ////string fileName = askremoteexportwebControl1.TbxFileName.Text;
-            ////string mail = askremoteexportwebControl1.TbxMail.Text;
-            //List<int> sel = new List<int>();
-            //Int64 idStaticNavSession = 0;
-            //string zoomDate = string.Empty;
+            var webSession = (WebSession)WebSession.Load(request.WebSessionId);
 
-            //try
-            //{
+            request.ExportType = (request.ExportType == "5") ? GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPptResult, webSession.SiteLanguage) 
+                                    : GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage);
+            List <int> sel = new List<int>();
+            Int64 idStaticNavSession = 0;
+            string zoomDate = string.Empty;
 
-            //    if (string.IsNullOrEmpty(request.FileName)|| string.IsNullOrEmpty(request.Email)|| request.FileName.Length == 0 || request.Email.Length == 0)
-            //    {
-            //       response.Message = GestionWeb.GetWebWord(LanguageConstantes.AlertEmptyFields, webSession.SiteLanguage);
-            //    }
-            //    else if (webSession.CurrentModule == WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS && !string.IsNullOrEmpty(request.FileName) && request.FileName.Length > FileMaxLength)
-            //    {
-            //        response.Message = String.Format(GestionWeb.GetWebWord(LanguageConstantes.MaxLengthExceeded, webSession.SiteLanguage), FileMaxLength.ToString());
-            //    }
-            //    else if (!IsValidEmail(request.Email))
-            //    {
-            //        response.Message = GestionWeb.GetWebWord(LanguageConstantes.NotValidEmail, webSession.SiteLanguage);
-            //    }
-            //    else
-            //    {
+            try
+            {
 
-            //        #region Gestion des cookies
+                if (string.IsNullOrEmpty(request.FileName) || string.IsNullOrEmpty(request.Email) || request.FileName.Length == 0 || request.Email.Length == 0)
+                {
+                    response.Message = GestionWeb.GetWebWord(WebCst.LanguageConstantes.AlertEmptyFields, webSession.SiteLanguage);
+                }
+                else if (webSession.CurrentModule == WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS && !string.IsNullOrEmpty(request.FileName) && request.FileName.Length > FileMaxLength)
+                {
+                    response.Message = String.Format(GestionWeb.GetWebWord(WebCst.LanguageConstantes.MaxLengthExceeded, webSession.SiteLanguage), FileMaxLength.ToString());
+                }
+                else if (!IsValidEmail(request.Email))
+                {
+                    response.Message = GestionWeb.GetWebWord(WebCst.LanguageConstantes.NotValidEmail, webSession.SiteLanguage);
+                }
+                else
+                {
+                    webSession.ExportedPDFFileName = CheckedAccentText(request.FileName);
+                    string[] mails = new string[1];
+                    mails[0] = request.Email;
+                    webSession.EmailRecipient = mails;
+                    if (request.ExportType == GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage))
+                        request.ExportType = string.Empty;
 
-            //        #region Cookies enregistrement des préférences
+                    switch (webSession.CurrentModule)
+                    {
+                        case WebCst.Module.Name.BILAN_CAMPAGNE:
+                            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.mnevis);
+                            break;                        
+                        case WebCst.Module.Name.ANALYSE_CONCURENTIELLE:
+                        case WebCst.Module.Name.ANALYSE_DYNAMIQUE:
+                        case WebCst.Module.Name.ANALYSE_PLAN_MEDIA:
+                        case WebCst.Module.Name.ANALYSE_PORTEFEUILLE:
+                        case WebCst.Module.Name.ANALYSE_DES_PROGRAMMES:
+                        case WebCst.Module.Name.ALERTE_PORTEFEUILLE:
+                        case WebCst.Module.Name.CELEBRITIES:
 
-            //        //Vérifie si le navigateur accepte les cookies
-            //        //if (Request.Browser.Cookies)
-            //        //{
-            //        //    WebFunctions.Cookies.SaveEmailForRemotingExport(Page, mail, askremoteexportwebControl1.CbxRegisterMail);//cbxRegisterMail
-            //        //}
-            //        #endregion
+                            if (WebCst.Module.Name.ANALYSE_CONCURENTIELLE == webSession.CurrentModule && !string.IsNullOrEmpty(request.ExportType) && Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
+                            {
+                                //TODO
+                                //CheckBoxList groupAdByCheckBoxList = askremoteexportwebControl1.GroupAdByCheckBoxList;
+                                //foreach (ListItem it in groupAdByCheckBoxList.Items)
+                                //{
+                                //    if (it.Selected) sel.Add(int.Parse(it.Value));
+                                //}
+                                if (sel.Count > 0)
+                                    webSession.CreativesExportOptions = sel;
+                                idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.dedoum);
 
-            //        #endregion
+                            }
+                            else
+                            {
+                                #region Classification Filter Init
+                                string id = string.Empty;
+                                string Level = string.Empty;
+                                //if (Page.Request.QueryString.Get("id") != null) id = Page.Request.QueryString.Get("id").ToString();
+                                //if (Page.Request.QueryString.Get("Level") != null) Level = Page.Request.QueryString.Get("Level").ToString();
 
-            //        webSession.ExportedPDFFileName = CheckedAccentText(request.FileName);
-            //        string[] mails = new string[1];
-            //        mails[0] = request.Email;
-            //        webSession.EmailRecipient = mails;
-            //        if (request.ExportType == GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, webSession.SiteLanguage))
-            //            request.ExportType = string.Empty;
+                                if (id.Length > 0 && Level.Length > 0)
+                                {
+                                    SetProduct(int.Parse(id), int.Parse(Level), webSession);
+                                }
+                                #endregion
 
+                                #region Period Detail
+                                DateTime begin;
+                                DateTime end;
+                                if (!string.IsNullOrEmpty(zoomDate))
+                                {
+                                    if (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.weekly)
+                                    {
+                                        begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantesPeriod.Type.dateToDateWeek);
+                                        end = Dates.GetPeriodEndDate(zoomDate, ConstantesPeriod.Type.dateToDateWeek);
+                                    }
+                                    else
+                                    {
+                                        begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantesPeriod.Type.dateToDateMonth);
+                                        end = Dates.GetPeriodEndDate(zoomDate, ConstantesPeriod.Type.dateToDateMonth);
+                                    }
+                                    begin = Dates.Max(begin,
+                                        Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
+                                    end = Dates.Min(end,
+                                        Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
-            //        switch (webSession.CurrentModule)
-            //        {
+                                    webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
+                                }
+                                else
+                                {
+                                    begin = Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                                    end = Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+                                    if (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                                    {
+                                        webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+                                    }
+                                }
+                                webSession.PeriodBeginningDate = begin.ToString("yyyyMMdd");
+                                webSession.PeriodEndDate = end.ToString("yyyyMMdd");
+                                switch (webSession.PeriodType)
+                                {
+                                    case ConstantesPeriod.Type.currentYear:
+                                    case ConstantesPeriod.Type.dateToDateMonth:
+                                    case ConstantesPeriod.Type.dateToDateWeek:
+                                    case ConstantesPeriod.Type.LastLoadedMonth:
+                                    case ConstantesPeriod.Type.LastLoadedWeek:
+                                    case ConstantesPeriod.Type.nextToLastYear:
+                                    case ConstantesPeriod.Type.nLastMonth:
+                                    case ConstantesPeriod.Type.nLastWeek:
+                                    case ConstantesPeriod.Type.nLastYear:
+                                    case ConstantesPeriod.Type.previousWeek:
+                                    case ConstantesPeriod.Type.previousYear:
+                                        webSession.PeriodType = ConstantesPeriod.Type.dateToDate;
+                                        break;
+                                }
+                                webSession.CustomerPeriodSelected = new CustomerPeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate);
+                                #endregion
 
-            //            case WebCst.Module.Name.BILAN_CAMPAGNE:
-            //                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.mnevis);
-            //                break;
-            //            //Plan média
-            //            case WebCst.Module.Name.ANALYSE_CONCURENTIELLE:
-            //            case WebCst.Module.Name.ANALYSE_DYNAMIQUE:
-            //            case WebCst.Module.Name.ANALYSE_PLAN_MEDIA:
-            //            case WebCst.Module.Name.ANALYSE_PORTEFEUILLE:
-            //            case WebCst.Module.Name.ANALYSE_DES_PROGRAMMES:
-            //            case WebCst.Module.Name.ALERTE_PORTEFEUILLE:
-            //            case WebCst.Module.Name.CELEBRITIES:
-                            
-            //                if (WebCst.Module.Name.ANALYSE_CONCURENTIELLE == webSession.CurrentModule && !string.IsNullOrEmpty(request.ExportType) && Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
-            //                {
-            //                    //TODO
-            //                    //CheckBoxList groupAdByCheckBoxList = askremoteexportwebControl1.GroupAdByCheckBoxList;
-            //                    //foreach (ListItem it in groupAdByCheckBoxList.Items)
-            //                    //{
-            //                    //    if (it.Selected) sel.Add(int.Parse(it.Value));
-            //                    //}
-            //                    if (sel.Count > 0)
-            //                        webSession.CreativesExportOptions = sel;
-            //                    idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.dedoum);
+                                if (!string.IsNullOrEmpty(_idUnit))
+                                    webSession.Unit = (WebCst.CustomerSessions.Unit)int.Parse(_idUnit);
 
-            //                }
-            //                else
-            //                {
-            //                    #region Classification Filter Init
-            //                    string id = "";
-            //                    string Level = "";
-            //                    //if (Page.Request.QueryString.Get("id") != null) id = Page.Request.QueryString.Get("id").ToString();
-            //                    //if (Page.Request.QueryString.Get("Level") != null) Level = Page.Request.QueryString.Get("Level").ToString();
+                                idStaticNavSession = (webSession.CurrentModule == WebCst.Module.Name.CELEBRITIES) ? ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.apis) :
+                                    ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
+                            }
+                            break;
 
-            //                    if (id.Length > 0 && Level.Length > 0)
-            //                    {
-            //                        SetProduct(int.Parse(id), int.Parse(Level));
-            //                    }
-            //                    #endregion
+                        case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.pachet);
+                            break;
+                        case WebCst.Module.Name.INDICATEUR:
+                            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.hotep);
+                            break;                     
+                        
+                        //case WebCst.Module.Name.VP:
+                        //    if (!string.IsNullOrEmpty(request.ExportType))
+                        //    {
+                        //        if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode())
+                        //        {
+                        //            if (!string.IsNullOrEmpty(_idDataPromotion)) webSession.IdPromotion = long.Parse(_idDataPromotion);
+                        //            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.selket);
+                        //        }
+                        //        else if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.thoueris.GetHashCode())
+                        //        {
+                        //            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.thoueris);
+                        //        }
+                        //    }
+                        //    break;
+                        
+                        default :
+                            throw new Exception(" Impossssile d'identifier le module.");
 
-            //                    #region Period Detail
-            //                    DateTime begin;
-            //                    DateTime end;
-            //                    if (zoomDate != null && zoomDate != string.Empty)
-            //                    {
-            //                        if (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.weekly)
-            //                        {
-            //                            begin = WebFunctions.Dates.getPeriodBeginningDate(zoomDate, ConstantesPeriod.Type.dateToDateWeek);
-            //                            end = WebFunctions.Dates.getPeriodEndDate(zoomDate, ConstantesPeriod.Type.dateToDateWeek);
-            //                        }
-            //                        else
-            //                        {
-            //                            begin = WebFunctions.Dates.getPeriodBeginningDate(zoomDate, ConstantesPeriod.Type.dateToDateMonth);
-            //                            end = WebFunctions.Dates.getPeriodEndDate(zoomDate, ConstantesPeriod.Type.dateToDateMonth);
-            //                        }
-            //                        begin = WebFunctions.Dates.Max(begin,
-            //                            WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
-            //                        end = WebFunctions.Dates.Min(end,
-            //                            WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
-
-            //                        webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
-            //                    }
-            //                    else
-            //                    {
-            //                        begin = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-            //                        end = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
-            //                        if (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
-            //                        {
-            //                            webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
-            //                        }
-            //                    }
-            //                    webSession.PeriodBeginningDate = begin.ToString("yyyyMMdd");
-            //                    webSession.PeriodEndDate = end.ToString("yyyyMMdd");
-            //                    switch (webSession.PeriodType)
-            //                    {
-            //                        case ConstantesPeriod.Type.currentYear:
-            //                        case ConstantesPeriod.Type.dateToDateMonth:
-            //                        case ConstantesPeriod.Type.dateToDateWeek:
-            //                        case ConstantesPeriod.Type.LastLoadedMonth:
-            //                        case ConstantesPeriod.Type.LastLoadedWeek:
-            //                        case ConstantesPeriod.Type.nextToLastYear:
-            //                        case ConstantesPeriod.Type.nLastMonth:
-            //                        case ConstantesPeriod.Type.nLastWeek:
-            //                        case ConstantesPeriod.Type.nLastYear:
-            //                        case ConstantesPeriod.Type.previousWeek:
-            //                        case ConstantesPeriod.Type.previousYear:
-            //                            webSession.PeriodType = ConstantesPeriod.Type.dateToDate;
-            //                            break;
-            //                    }
-            //                    webSession.CustomerPeriodSelected = new CustomerPeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate);
-            //                    #endregion
-
-            //                    if (!string.IsNullOrEmpty(_idUnit))
-            //                        webSession.Unit = (CustomerSessions.Unit)int.Parse(_idUnit);
-
-            //                    idStaticNavSession = (webSession.CurrentModule == WebCst.Module.Name.CELEBRITIES) ? TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.apis) :
-            //                        TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
-            //                }
-            //                break;
-
-            //            case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
-            //                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.pachet);
-            //                break;
-            //            case WebCst.Module.Name.INDICATEUR:
-            //                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.hotep);
-            //                break;
-            //            case WebCst.Module.Name.JUSTIFICATIFS_PRESSE:
-            //                var pDetail = new ProofDetail(webSession, _idMedia, _idProduct, _dateCover, _dateParution, _pageNumber);
-            //                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(pDetail, TNS.AdExpress.Anubis.Constantes.Result.type.shou, webSession.ExportedPDFFileName);
-            //                break;
-            //            case WebCst.Module.Name.DONNEES_DE_CADRAGE:
-            //                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.aton);
-            //                break;
-            //            case WebCst.Module.Name.VP:
-            //                if (!string.IsNullOrEmpty(request.ExportType))
-            //                {
-            //                    if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode())
-            //                    {
-            //                        if (!string.IsNullOrEmpty(_idDataPromotion)) webSession.IdPromotion = long.Parse(_idDataPromotion);
-            //                        idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.selket);
-            //                    }
-            //                    else if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.thoueris.GetHashCode())
-            //                    {
-            //                        idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.thoueris);
-            //                    }
-            //                }
-            //                break;
-            //            case WebCst.Module.Name.ROLEX:
-            //                if (!string.IsNullOrEmpty(request.ExportType))
-            //                {
-            //                    if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.ptah.GetHashCode())
-            //                    {
-            //                        if (!string.IsNullOrEmpty(_levelsValue)) webSession.SelectedLevelsValue = new List<string>(_levelsValue.Split(',')).ConvertAll(Convert.ToInt64);
-            //                        webSession.DetailPeriodBeginningDate = StartDate;
-            //                        webSession.DetailPeriodEndDate = EndDate;
-            //                        TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.ptah);
-            //                    }
-            //                    else if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.amon.GetHashCode())
-            //                    {
-            //                        TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.amon);
-            //                    }
-            //                }
-            //                break;
-            //                //default :
-            //                //throw new AdExpress. Exceptions.PdfSavePopUpException(" Impossssile d'identifier le module.");
-
-            //        }
-
-
-            //        closeRollOverWebControl_Click(this, null);
-
-            //    }
-            //}
-            //catch (System.Exception exc)
-            //{
-            //    if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
-            //    {
-            //        this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, webSession));
-            //    }
-            //}
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                if (ex.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    throw (ex);
+                }
+            }
             #endregion
             return response;
         }
@@ -253,6 +218,81 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             text = text.TrimStart();
             text = Regex.Replace(text, "[']", "''");
             return text;
+        }
+        private void SetProduct(int id, int level, WebSession webSession)
+        {
+            var currentLevel = (DetailLevelItemInformation.Levels)webSession.GenericProductDetailLevel.GetDetailLevelItemInformation(level);
+            SetSessionProductDetailLevel(webSession, id, currentLevel);
+        }
+        private static void SetSessionProductDetailLevel(WebSession webSession, int id, DetailLevelItemInformation.Levels level)
+        {
+            var tree = new System.Windows.Forms.TreeNode();
+            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[WebCst.Layers.Id.classificationLevelList];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+            var param = new object[2];
+            param[0] = webSession.CustomerDataFilters.DataSource;
+            param[1] = webSession.DataLanguage;
+            var factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            ClassificationLevelListDAL levels = null;
+
+            switch (level)
+            {
+                case DetailLevelItemInformation.Levels.sector:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.sectorAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.sectorAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.sector, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.subSector:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.subSectorAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.subSectorAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.subsector, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.@group:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.groupAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.groupAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.@group, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.segment:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.segmentAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.segmentAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.segment, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.product:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.productAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.productAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.product, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.advertiser:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.advertiserAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.advertiserAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.advertiser, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.brand:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.brandAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.brandAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.brand, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.holdingCompany:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.holdingCompanyAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.holdingCompanyAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.holding_company, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.subBrand:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(Right.type.subBrandAccess, id.ToString());
+                    tree.Tag = new LevelInformation(Right.type.subBrandAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(Level.type.subBrand, tree);
+                    break;
+            }
         }
     }
 }

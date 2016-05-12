@@ -25,6 +25,7 @@ using AutoMapper;
 using KM.Framework.Constantes;
 using TNS.AdExpress.Web.Core.Utilities;
 using System.Text;
+using TNS.AdExpress.Constantes.Classification;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -179,7 +180,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
-            var branch = (dimension == Dimension.product) ? TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString() : TNS.AdExpress.Constantes.Classification.Branch.type.media.GetHashCode().ToString();
+            var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
             var data = UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
             List<UserUnivers> UserUniversList = new List<UserUnivers>();
             if (data != null && data.Rows.Count > 0)
@@ -459,7 +460,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             levels = string.Join(", ", item.UniversLevels.Where(d => d.UniversItems.Any()).Select(x => x.Id));
                         }
                         //Identification de la branche de l'univers					
-                        TNS.AdExpress.Constantes.Classification.Branch.type branchType = GetBrancheType(request.Dimension);
+                        Branch.type branchType = GetBrancheType(request.Dimension);
 
                         //Get universe to save
                         List<TNS.AdExpress.Classification.AdExpressUniverse> adExpressUniverses = new List<TNS.AdExpress.Classification.AdExpressUniverse>();
@@ -622,7 +623,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             List<UserUnivers> userUniversList = new List<UserUnivers>();
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
-            var branch = (dimension == Dimension.product) ? TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString() : TNS.AdExpress.Constantes.Classification.Branch.type.media.GetHashCode().ToString();
+            var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
             var data = UniversListDataAccess.GetData(tuple.Item3, branch, string.Empty);
             if (data != null && data.Tables[0].AsEnumerable().Any())
             {
@@ -948,21 +949,21 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        private TNS.AdExpress.Constantes.Classification.Branch.type GetBrancheType(Dimension dimension)
+        private Branch.type GetBrancheType(Dimension dimension)
         {
 
             switch (dimension)
             {
                 case (Dimension.media):
-                    return TNS.AdExpress.Constantes.Classification.Branch.type.media;
+                    return Branch.type.media;
                 case (Dimension.product):
-                    return TNS.AdExpress.Constantes.Classification.Branch.type.product;
+                    return Branch.type.product;
                 case (Dimension.advertisingAgency):
-                    return TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency;
+                    return Branch.type.advertisingAgency;
                 case (Dimension.advertisementType):
-                    return TNS.AdExpress.Constantes.Classification.Branch.type.advertisementType;
+                    return Branch.type.advertisementType;
                 case (Dimension.profession):
-                    return TNS.AdExpress.Constantes.Classification.Branch.type.profession;
+                    return Branch.type.profession;
                 default:
                     return 0;
 

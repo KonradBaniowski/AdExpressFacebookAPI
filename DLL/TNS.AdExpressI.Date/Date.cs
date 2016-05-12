@@ -386,7 +386,7 @@ namespace TNS.AdExpressI.Date {
             }
 
             if (!_isUpdateDates || (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly
-                && (Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                && (Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
                     < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)))
                 )
             {                
@@ -445,7 +445,7 @@ namespace TNS.AdExpressI.Date {
 
 
             if (!_isUpdateDates || (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly
-                && (Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                && (Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
                     < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)))
                 )
             {

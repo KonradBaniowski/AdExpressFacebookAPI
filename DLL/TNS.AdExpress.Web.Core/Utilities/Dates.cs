@@ -10,23 +10,19 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Text;
 using System.Globalization;
 
 using CstWeb = TNS.AdExpress.Constantes.Web;
-using CstFrequency = TNS.AdExpress.Constantes.Customer.DB.Frequency;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 using TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.Date;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using FrameWorkCsts = TNS.AdExpress.Constantes.FrameWork;
-using TNS.AdExpress.Domain.Layers;
 using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
@@ -116,8 +112,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                 {
                     // get date begin and date end according to period type
-                    dateBeginDT = Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-                    dateEndDT = Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+                    dateBeginDT = Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                    dateEndDT = Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
 
                     // get comparative date begin and date end
                     dateBeginDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateBeginDT.Date, webSession.ComparativePeriodType);
@@ -444,7 +440,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// Use class:
         ///		public TNS.FrameWork.Date.AtomicPeriodWeek
         /// </remarks>
-        public static DateTime getPeriodBeginningDate(string period, CustomerSessions.Period.Type periodType)
+        public static DateTime GetPeriodBeginningDate(string period, CustomerSessions.Period.Type periodType)
         {
             AtomicPeriodWeek tmpWeek;
             switch (periodType)
@@ -492,7 +488,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <remarks>
         /// Uses TNS.FrameWork.Date.AtomicPeriodWeek
         /// </remarks>
-        public static DateTime getPeriodEndDate(string period, CstPeriod.Type periodType)
+        public static DateTime GetPeriodEndDate(string period, CstPeriod.Type periodType)
         {
             switch (periodType)
             {
@@ -532,7 +528,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <remarks>
         /// Uses TNS.FrameWork.Date.AtomicPeriodWeek
         /// </remarks>
-        public static DateTime getPeriodEndDate(string period, CstPeriod.Type periodType, bool comparative) {
+        public static DateTime GetPeriodEndDate(string period, CstPeriod.Type periodType, bool comparative) {
             switch (periodType) {
                 case CstPeriod.Type.dateToDateWeek:
                 case CstPeriod.Type.nLastWeek:
