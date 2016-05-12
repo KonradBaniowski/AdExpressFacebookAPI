@@ -13,6 +13,7 @@
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
+    @Html.Hidden("ExportController", "PresentAbsentExport")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -23,8 +24,10 @@
     <div class="col-md-12">
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
-                <option value="1">Résultat Formaté</option>
-                <option value="2">Résultat brut</option>
+                <option value="1"> @Model.Labels.ExportFormattedResult</option>
+                <option value="3"> @Model.Labels.ExportGrossResult</option>
+                <option value="4">@Model.Labels.ExportPdfResult</option>
+                <option value="5">@Model.Labels.ExportPptResult</option>
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
@@ -60,6 +63,12 @@
     </div>
 </div>
 <div id="gadModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="exportResultModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
         </div>
@@ -409,7 +418,7 @@
             $('#export-type').removeClass("hide");
             $('#export-type').selectpicker();
 
-            $('#btn-export').on('click', function (e) {
+            @*$('#btn-export').on('click', function (e) {
                 var selectedValue = $('#export-type').val();
                 switch (selectedValue) {
                     case "1":
@@ -422,7 +431,7 @@
                         window.open('@Url.Action("Index", _exportController)', "_blank");
                         break;
                 }
-            });
+            });*@
 
             $('#save-custom-detail-levels').on('click', function (e) {
                 var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val();

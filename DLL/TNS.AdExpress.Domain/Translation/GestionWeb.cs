@@ -45,6 +45,11 @@ namespace TNS.AdExpress.Domain.Translation{
 				return("!");
 			}
         }
+
+        public static object GetWebWord(object emptyField, int v)
+        {
+            throw new NotImplementedException();
+        }
         #region Old Code
         /*
         /// <summary>

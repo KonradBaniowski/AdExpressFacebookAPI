@@ -1,0 +1,36 @@
+﻿@model Km.AdExpressClientWeb.Models.Shared.ExportResultModel
+
+<div id="exportResultContent">
+    <div class="modal-header header-kantar-popup">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.Export @Model.ExportType</h4>
+    </div>
+    <div class="modal-body">
+        <div class="modal-body panel-group panel-univers-select">
+            <ul>
+                <li>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6 col-sm-6 popup-text" for="alertTtile">@Model.Labels.FileName</label>
+                        <div class="col-sm-6 col-md-6">
+                            @Html.TextBoxFor(p => p.FileName, new { @class = "form-control", @id = "fileName" })
+                        </div>
+                    </div>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                    <div id="userEmail" class="form-group">
+                        <label class="control-label col-sm-6 col-sm-6 popup-text" for="userEmail">@Model.Labels.Email</label>
+                        <div class="col-sm-6 col-md-6">
+                            @Html.TextBoxFor(p => p.Email, new { @class = "form-control", @id = "email" })
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-save-univers-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">@Model.Labels.Close</button>
+            <button id="btnExport" type="button" class="btn btn-submit" data-dismiss="modal">@Model.Labels.Submit</button>
+        </div>
+    </div>
+    @Html.Hidden("ExportType",@Model.ExportType)
+</div>

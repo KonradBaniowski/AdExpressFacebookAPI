@@ -13,5 +13,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         void SaveCurrentModule(string webSessionId, int moduleId);
 
         void UpdateSiteLanguage(string webSessionId, int siteLanguage);
+        int GetSiteLanguage(string webSessionId);
     }
 }
