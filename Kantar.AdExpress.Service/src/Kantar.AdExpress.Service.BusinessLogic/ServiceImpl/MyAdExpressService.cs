@@ -1,7 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using System;
 using TNS.AdExpress.Web.Core.Sessions;
-using KM.AdExpressI.MyAdExpress;
+using KM.AdExpressI.MyAdExpress.DAL;
 using UniversDAL = TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using TNS.AdExpress.Domain.Translation;
 using Kantar.AdExpress.Service.Core.Domain;

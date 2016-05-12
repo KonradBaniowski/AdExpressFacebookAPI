@@ -7,8 +7,8 @@
     <ProjectGuid>{02B3E71A-F7E6-4DE6-B42D-B421D94ED9F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KM.AdExpressI.MyAdExpress</RootNamespace>
-    <AssemblyName>KM.AdExpressI.MyAdExpress</AssemblyName>
+    <RootNamespace>KM.AdExpressI.MyAdExpress.DAL</RootNamespace>
+    <AssemblyName>KM.AdExpressI.MyAdExpress.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,10 +51,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\MySessionDataAccessException.cs" />
+    <Compile Include="ExportResultsDAL.cs" />
     <Compile Include="MyResultsDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Anubis.Constantes\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716ac8-b9d2-432c-84f7-885a73b77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
