@@ -24,5 +24,6 @@ namespace Km.AdExpressClientWeb.Models.Contact
         public string Country { get; set; }
         public string QuestionTag { get; set; }
         public string Comment { get; set; }
+        public string RedirectUrl { get; set; }
     }
 }

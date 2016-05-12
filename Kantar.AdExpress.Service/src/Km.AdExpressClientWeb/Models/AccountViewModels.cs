@@ -53,6 +53,8 @@ namespace Km.AdExpressClientWeb.Models
         public string Password { get; set; }
         public string ErrorMessage { get; set; }
         public Labels Labels { get; set; }
+        public int SiteLanguage { get; set; }
+        public string RedirectUrl { get; set; }
     }
 
     public class RegisterViewModel

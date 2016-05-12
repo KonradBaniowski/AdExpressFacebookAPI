@@ -166,6 +166,11 @@ namespace TNS.AdExpress.Constantes.Web
         public const long YourModule = 3051;
         public const long NewsDescr = 3052;
         public const long ContactUsLabel = 3055;
+        public const long SomeFigures = 3056;
+        public const long Connection = 3057;
+        public const long SignIn = 3058;
+        public const long UserName = 3059;
+        public const long Password = 3060;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion

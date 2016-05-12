@@ -32,13 +32,13 @@
                         <ul class="dropdown-menu">
                             @if (ViewBag.SiteLanguageName == "FR")
                             {
-                                <li><a href="#" data-language-id="33" class="active">FR</a></li>
-                                <li><a href="#" data-language-id="44">EN</a></li>
+                                <li><a href="#" data-language-id="33" data-url-action="/Account/ChangeLanguage" class="active">FR</a></li>
+                                <li><a href="#" data-language-id="44" data-url-action="/Account/ChangeLanguage">EN</a></li>
                             }
                             else
                             {
-                                <li><a href="#" data-language-id="33">FR</a></li>
-                                <li><a href="#" data-language-id="44" class="active">EN</a></li>
+                                <li><a href="#" data-language-id="33" data-url-action="/Account/ChangeLanguage">FR</a></li>
+                                <li><a href="#" data-language-id="44" data-url-action="/Account/ChangeLanguage" class="active">EN</a></li>
 
                             }
 
@@ -51,7 +51,7 @@
     <div class="container-fluid">
         @RenderBody()
     </div>
-    <input type="hidden" id="current-url" value="/Home/Index" />
+ 
 
 
 

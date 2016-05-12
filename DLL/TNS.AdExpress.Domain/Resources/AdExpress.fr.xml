@@ -2311,5 +2311,10 @@
     <item mnemonic="w3053" type="System.String">Veuillez compléter le(s) paramètre(s) suivant(s):</item>
     <item mnemonic="w3054" type="System.String">Détail des versions du DOOH</item>
     <item mnemonic="w3055" type="System.String">Contactez nous</item>
+    <item mnemonic="w3056" type="System.String">en quelques chiffres</item>
+    <item mnemonic="w3057" type="System.String">Connexion</item>
+    <item mnemonic="w3058" type="System.String">Accéder</item>
+    <item mnemonic="w3059" type="System.String">Utilisateur</item>
+    <item mnemonic="w3060" type="System.String">Mot de passe</item>
   </items>
 </localization>

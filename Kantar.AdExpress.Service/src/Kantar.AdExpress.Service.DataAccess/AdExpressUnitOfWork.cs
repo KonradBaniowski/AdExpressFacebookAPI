@@ -27,10 +27,10 @@ namespace Kantar.AdExpress.Service.DataAccess
         private void InitializeRepositories()
         {
             LoginRepository = new LoginRepository(_context);
-            AddressRepository = new AddressRepository(_context);
+            //AddressRepository = new AddressRepository(_context);
         }
 
-        public IAddressRepository AddressRepository { get; set; }
+        //public IAddressRepository AddressRepository { get; set; }
         public ILoginRepository LoginRepository { get; set; }
 
         public IMyResultsRepository MyResultRepository { get; set; }
