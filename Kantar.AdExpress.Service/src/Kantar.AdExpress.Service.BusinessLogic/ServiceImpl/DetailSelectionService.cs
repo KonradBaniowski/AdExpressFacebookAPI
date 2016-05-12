@@ -1,14 +1,13 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain;
 using Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain;
-using KM.AdExpressI.MyAdExpress;
+using KM.AdExpressI.MyAdExpress.DAL;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Translation;
