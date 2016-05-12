@@ -18,7 +18,7 @@
                     <h3><strong>AdExpress </strong>@(Model.Labels.SomeFigures)</h3>
                     <p>&nbsp;</p>
                 </div>
-                @Html.Action("HomeNumbers", "Public")
+                @Html.Action("HomeNumbers", "Public",new { SiteLanguage = Model.SiteLanguage })
             </div>
         </div>
     </div>

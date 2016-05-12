@@ -2316,5 +2316,6 @@
     <item mnemonic="w3058" type="System.String">Accéder</item>
     <item mnemonic="w3059" type="System.String">Utilisateur</item>
     <item mnemonic="w3060" type="System.String">Mot de passe</item>
+    <item mnemonic="w3061" type="System.String">Numéro SIRET</item>
   </items>
 </localization>
