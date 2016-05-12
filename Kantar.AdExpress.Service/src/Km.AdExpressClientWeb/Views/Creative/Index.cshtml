@@ -81,7 +81,7 @@
                     <h4 class="modal-title" id="myModalLabel">@Model.Labels.VisuelLabel</h4>
                 </div>
                 <div class="modal-body">
-                    <center><img src="" id="imagepreview"></center>
+                    <center><img style="max-width:100%;" src="" id="imagepreview"></center>
                 </div>
             </div>
         </div>
@@ -494,7 +494,7 @@
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
                         tmp = infos[j].split(":");
-                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp.shift() + '</span> : ' + tmp.join(':') + '</div>')
                     }
                 }
             });
