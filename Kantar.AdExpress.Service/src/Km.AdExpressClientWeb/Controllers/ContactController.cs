@@ -1,4 +1,5 @@
-﻿using Km.AdExpressClientWeb.I18n;
+﻿using Km.AdExpressClientWeb.Helpers;
+using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Models.Contact;
 using Km.AdExpressClientWeb.Models.Shared;
 using System;
@@ -14,18 +15,43 @@ namespace Km.AdExpressClientWeb.Controllers
 {
     public class ContactController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string returnUrl="/", int siteLanguage = 33)
         {
+          
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             var model = new ContactViewModel();
             model.QuestionsTagItem = new List<SelectListItem>();
             var labels = LabelsHelper.LoadPageLabels(33);
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag1, Value = labels.QuestionTag1 });
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag2, Value = labels.QuestionTag2 });
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag3, Value = labels.QuestionTag3 });
-            model.Labels = LabelsHelper.LoadPageLabels(33);
+            model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
             model.Labels.CurrentController = "Contact";
-            model.PresentationModel = LoadPresentationBar(33, false);
+            model.PresentationModel = LoadPresentationBar(siteLanguage, false);
             return View(model);
+        }
+
+        //
+        // GET: /Contact/ChangeLanguage
+        [AllowAnonymous]
+        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = 33)
+        {
+         
+            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
+            var model = new ContactViewModel();
+            model.QuestionsTagItem = new List<SelectListItem>();
+            var labels = LabelsHelper.LoadPageLabels(33);
+            model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag1, Value = labels.QuestionTag1 });
+            model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag2, Value = labels.QuestionTag2 });
+            model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag3, Value = labels.QuestionTag3 });
+            model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
+            model.Labels.CurrentController = "Contact";
+            model.RedirectUrl = string.Format("{0}?siteLanguage={1}", returnUrl, siteLanguage);
+            model.PresentationModel = LoadPresentationBar(siteLanguage, false);
+          
+            JsonResult jsonModel = Json(model, JsonRequestBehavior.AllowGet);
+            return jsonModel;
         }
 
         public ActionResult ContactUs(ContactViewModel form)

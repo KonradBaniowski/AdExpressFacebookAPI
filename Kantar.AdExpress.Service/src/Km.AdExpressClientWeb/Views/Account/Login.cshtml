@@ -15,7 +15,7 @@
                     <p>&nbsp;</p>
                 </div>
                 <div class="text-center">
-                    <h3><strong>AdExpress </strong>en quelques chiffres</h3>
+                    <h3><strong>AdExpress </strong>@(Model.Labels.SomeFigures)</h3>
                     <p>&nbsp;</p>
                 </div>
                 @Html.Action("HomeNumbers", "Public")
@@ -25,7 +25,7 @@
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3  col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
         <div class="panel panel-default login">
             <div class="panel-heading">
-                <h3><i class="fa fa-user"></i>&nbsp;Connexion</h3>
+                <h3><i class="fa fa-user"></i>&nbsp;@(Model.Labels.Connection)</h3>
             </div>
             <div class="panel-body">
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -36,13 +36,13 @@
                     <div class="input-group-vertical">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Utilisateur", id = "login" })
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Model.Labels.UserName, id = "login" })
                                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "mot de passe", id = "pwd" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Model.Labels.Password, id = "pwd" })
                                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                     <div class="form-group padding-top-15">
                         <div class="col-sm-12">
                             <button id="btnSubmit" type="submit" class="btn btn-orange btn-sm btn-block">
-                                Accéder
+                                @(Model.Labels.SignIn)
                             </button>
                         </div>
                     </div>
@@ -62,6 +62,7 @@
                                 @Html.ActionLink("Demander votre accès", "ForgotPassword", null, new { @class = "btn btn-blue btn-sm btn-block" })
                             </div>
                         </div>*@
+                    <input type="hidden" id="current-site-language" name="SiteLanguage" value="@Model.SiteLanguage" />
                 }
             </div>
         </div>
@@ -69,13 +70,15 @@
 </div>
 <div class="row fixed-brand">
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-        <img src="../Content/img/logo_kantarmedia.png" class="img-responsive" alt="Ad Express - Kantar Media">
+        <img src="../Content/img/logo_kantarmedia.png" class="img-responsive" alt="AdExpress - Kantar Media">
     </div>
 
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3  col-lg-offset-6 col-md-offset-6 col-sm-offset-6 col-xs-offset-6">
-        <img src="../Content/img/KM_BP3_Storm_Grey.png" class="img-responsive-promise" alt="Ad Express - Kantar Media">
+        <img src="../Content/img/KM_BP3_Storm_Grey.png" class="img-responsive-promise" alt="AdExpress - Kantar Media">
     </div>
 </div>
+@*<input type="hidden" id="current-url" value="/Account/ChangeLanguage" />*@
+<input type="hidden" id="current-url" value="/Account/Login" />
 
 @section Scripts {
     @Scripts.Render("~/bundles/account")

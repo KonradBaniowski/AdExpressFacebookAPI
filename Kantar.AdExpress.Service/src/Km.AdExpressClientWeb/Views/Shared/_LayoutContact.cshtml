@@ -44,12 +44,23 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FR<span class="caret"></span></a>
+                        <a href="#" id="language-choice" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag.SiteLanguageName<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="active">FR</a></li>
-                            <li><a href="#">EN</a></li>
+                            @if (ViewBag.SiteLanguageName == "FR")
+                            {
+                                <li><a href="#" data-language-id="33" data-url-action="/Contact/ChangeLanguage" class="active">FR</a></li>
+                                <li><a href="#" data-language-id="44" data-url-action="/Contact/ChangeLanguage">EN</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="#" data-language-id="33" data-url-action="/Contact/ChangeLanguage">FR</a></li>
+                                <li><a href="#" data-language-id="44" data-url-action="/Contact/ChangeLanguage" class="active">EN</a></li>
+
+                            }
+
                         </ul>
                     </li>
+
 
                     <li>
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))

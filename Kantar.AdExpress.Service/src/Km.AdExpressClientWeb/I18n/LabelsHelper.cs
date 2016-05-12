@@ -68,6 +68,13 @@ namespace Km.AdExpressClientWeb.I18n
 
                 //PAGE D ACCUEIL
                 HomeLabel = GestionWeb.GetWebWord(LanguageConstantes.HomeCode, siteLanguage),
+
+                //LOGIN
+                SomeFigures = GestionWeb.GetWebWord(LanguageConstantes.SomeFigures, siteLanguage),
+                Connection = GestionWeb.GetWebWord(LanguageConstantes.Connection, siteLanguage),
+                SignIn = GestionWeb.GetWebWord(LanguageConstantes.SignIn, siteLanguage),
+                UserName = GestionWeb.GetWebWord(LanguageConstantes.UserName, siteLanguage),
+                Password = GestionWeb.GetWebWord(LanguageConstantes.Password, siteLanguage),
             };
             return result;
         }

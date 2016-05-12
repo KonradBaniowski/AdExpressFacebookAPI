@@ -16,9 +16,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic
             _unitOfWork = unitOfWork;
         }
 
-        public void GetAllAddress()
-        {
-            _unitOfWork.AddressRepository.GetAll();
-        }
+        //public void GetAllAddress()
+        //{
+        //    _unitOfWork.AddressRepository.GetAll();
+        //}
     }
 }

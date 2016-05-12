@@ -42,13 +42,13 @@
                         <ul class="dropdown-menu">
                             @if (ViewBag.SiteLanguageName == "FR")
                             {
-                                <li><a href="#" data-language-id="33" class="active">FR</a></li>
-                                <li><a href="#" data-language-id="44">EN</a></li>
+                                <li><a href="#" data-language-id="33" data-url-action="/Home/ChangeLanguage" class="active">FR</a></li>
+                                <li><a href="#" data-language-id="44" data-url-action="/Home/ChangeLanguage" >EN</a></li>
                             }
                             else
                             {
-                                <li><a href="#" data-language-id="33">FR</a></li>
-                                <li><a href="#" data-language-id="44" class="active">EN</a></li>
+                                <li><a href="#" data-language-id="33" data-url-action="/Home/ChangeLanguage" >FR</a></li>
+                                <li><a href="#" data-language-id="44" data-url-action="/Home/ChangeLanguage" class="active">EN</a></li>
 
                             }
 
