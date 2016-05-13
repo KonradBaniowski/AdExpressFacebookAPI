@@ -71,13 +71,14 @@
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
     @Scripts.Render("~/bundles/results")
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
         $(document).ready(function () {
 
             if (typeof jQuery === "undefined") { throw new Error("jQuery") }
-
+            
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "ClassifId",
@@ -171,10 +172,6 @@
                             primaryKey: "ID_PRODUCT",
                             foreignKey: "PID",
                             width: "1140px",
-                            dataRendered: function (evt, ui) {
-                                ui.owner.element.find("tr td:nth-child(2)").css("text-align", "right");
-                                ui.owner.element.find("tr td:nth-child(3)").css("text-align", "right");
-                            },
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -183,6 +180,11 @@
                                     name: "Paging",
                                     mode: "allLevels",
                                     pageSize: 100
+                                },
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false
                                 },
                                 {
                                     name: "ColumnFixing",
@@ -200,10 +202,6 @@
                             autoGenerateColumns: false,
                             primaryKey: "ID_PRODUCT",
                             foreignKey: "PID",
-                            dataRendered: function (evt, ui) {
-                                ui.owner.element.find("tr td:nth-child(2)").css("text-align", "right");
-                                ui.owner.element.find("tr td:nth-child(3)").css("text-align", "right");
-                            },
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -212,6 +210,11 @@
                                     name: "Paging",
                                     mode: "allLevels",
                                     pageSize: 100
+                                },
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false
                                 }
                             ]
                         })
@@ -238,6 +241,77 @@
 
             }
 
+            function UnitFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number");
+
+                return "";
+            }
+
+            function PageFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "#,##0.###");
+
+                return "";
+            }
+
+            function EvolFormatter(val) {
+                //if (isNaN(val))
+                //    return '';
+
+                if (val == "+Infinity")
+                    return '+<img src="../Content/img/g.gif" />';
+                else if (val == "-Infinity")
+                    return '-<img src="../Content/img/r.gif" />';
+
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
+
+                if (val < 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
+
+                if (val == 0)
+                    return '<img src="../Content/img/o.gif" />';
+
+                return '';
+            }
+
+            function DurationFormatter(val) {
+
+                if (val == 0)
+                    return "";
+
+                var s = val.toString();
+                var nbToFillWithZero = 6 - s.length;
+                for (var i = 0; i < nbToFillWithZero; i++)
+                    s = "0" + s;
+                return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+            }
+
+            function GetColumnsFormatter(columns, unit) {
+
+                if (columns != null) {
+
+                    columns.forEach(function (elem) {
+                        if (elem.key == "PERIOD" || elem.key == "PERIOD_COMP") {
+                            if (unit == "duration")
+                                elem.formatter = DurationFormatter;
+                            else if (unit == "pages")
+                                elem.formatter = PageFormatter;
+                            else
+                                elem.formatter = UnitFormatter;
+                        }
+                        else if (elem.key == "EVOL") {
+                            elem.formatter = EvolFormatter;
+                        }
+                    });
+
+                    return columns;
+                }
+
+                return columns;
+            }
+
             function CallMediaScheduleResult(zoomDateParam) {
 
                 $("#gridMessage").addClass("hide");
@@ -257,7 +331,7 @@
                     success: function (data) {
                         if (data != null && data != "") {
                             dataTreeGrid = data.datagrid;
-                            cols = data.columns;
+                            cols = GetColumnsFormatter(data.columns,  data.unit);
                             colsFixed = data.columnsfixed;
                             needFixedColumns = data.needfixedcolumns;
                             hasMSCreatives = data.hasMSCreatives;
@@ -627,6 +701,13 @@
 
             CallMediaScheduleResult(zoomDate);
             
+            if ($("#comparative-study").prop('checked') == true) {
+                userFilter.ComparativeStudy = true;
+            }
+            else {
+                userFilter.ComparativeStudy = false;
+            }
+
             $("#comparative-study").click(function () {
                 if ($(this).prop('checked') == true) {
                     userFilter.ComparativeStudy = true;

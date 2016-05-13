@@ -2430,6 +2430,10 @@ ul.ui-selectable {
     outline-style: none;
 }
 
+.gadLink:before {
+    content: "> ";
+}
+
 .gadCreativeLink {
     color: inherit;
     cursor: pointer;
@@ -2569,4 +2573,8 @@ ul.ui-selectable {
 .media-schedule-option input[type=radio].with-font:focus ~ label:before,
 .media-schedule-option input[type=radio].with-font:focus ~ label {
     color: #FFF;
+}
+
+.colStyle {
+    text-align: right;
 }

@@ -44,6 +44,7 @@ using System.Text;
 using TNS.AdExpress.DataAccess.Classification.MediaBranch;
 using TNS.AdExpress.DataAccess.Classification;
 using TNS.FrameWork.Collections;
+using TNS.AdExpress.Domain.Units;
 
 #endregion
 
@@ -2048,6 +2049,8 @@ namespace TNS.AdExpressI.LostWon
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
             List<object> groups = null;
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            string format = string.Empty;
 
             //Headers
             if (resultTable.NewHeaders != null)
@@ -2064,7 +2067,32 @@ namespace TNS.AdExpressI.LostWon
                         for (int g = 0; g < nbGroupItems; g++)
                         {
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*" });
+
+                            if(resultTable != null && resultTable.LinesNumber > 0)
+                            {
+                                var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
+
+                                if (cell is CellPercent)
+                                {
+                                    format = "percent";
+                                }
+                                else if(cell is CellEvol) {
+                                    format = "percent";
+                                    colKey += "-evol";
+                                }
+                                else if (cell is CellDuration)
+                                {
+                                    format = "duration";
+                                    colKey += "-unit";
+                                }
+                                else if (cell is CellUnit)
+                                {
+                                    format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                    colKey += "-unit";
+                                }
+                            }
+
+                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                             schemaFields.Add(new { name = colKey });
                         }
                         //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
@@ -2076,7 +2104,7 @@ namespace TNS.AdExpressI.LostWon
                         colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
                         if (j == 0)
                         {
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350" });
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true });
                             columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                         }
                         else
@@ -2117,8 +2145,32 @@ namespace TNS.AdExpressI.LostWon
                         gridData[i, k + 1] = link;
 
                     }
-                   
-                    else gridData[i, k + 1] = cell.RenderString();
+
+                    else
+                    {
+                        if (cell is CellPercent || cell is CellEvol)
+                        {
+                            double value = ((CellUnit)cell).Value;
+
+                            if (double.IsInfinity(value))
+                                gridData[i, k + 1] = (value < 0) ? "-Infinity" : "+Infinity";
+                            else if (double.IsNaN(value))
+                                gridData[i, k + 1] = null;
+                            else
+                                gridData[i, k + 1] = value / 100;
+                        }
+                        else if (cell is CellUnit)
+                        {
+                            if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
+                                gridData[i, k + 1] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                            else
+                                gridData[i, k + 1] = ((CellUnit)cell).Value;
+                        }
+                        else
+                        {
+                            gridData[i, k + 1] = cell.RenderString();
+                        }
+                    }
                 }
             }
             gridResult.NeedFixedColumns = true;
@@ -2127,6 +2179,7 @@ namespace TNS.AdExpressI.LostWon
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
             gridResult.Data = gridData;
+            gridResult.Unit = _session.Unit.ToString();
 
             return gridResult;
         }
