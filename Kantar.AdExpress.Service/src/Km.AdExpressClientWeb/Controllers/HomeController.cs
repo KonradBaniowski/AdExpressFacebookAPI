@@ -272,7 +272,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 NewsLabel = GestionWeb.GetWebWord(LanguageConstantes.NewsLabel, siteLanguage),
                 YourModule = GestionWeb.GetWebWord(LanguageConstantes.YourModule, siteLanguage),
                 NewsDescr = GestionWeb.GetWebWord(LanguageConstantes.NewsDescr, siteLanguage),
-                ContactUsLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactUsLabel, siteLanguage)
+                ContactUsLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactUsLabel, siteLanguage),
+                Delete = GestionWeb.GetWebWord(LanguageConstantes.Delete, siteLanguage)
             };
             return result;
         }

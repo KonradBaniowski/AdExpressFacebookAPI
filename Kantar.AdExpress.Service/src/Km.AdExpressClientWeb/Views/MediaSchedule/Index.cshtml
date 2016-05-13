@@ -30,7 +30,7 @@
                 <h5 class="pull-right"> @Model.Labels.KeyWordDescription</h5>
                 <div class="clearfix"></div>
                 <div class="input-group">
-                    <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
+                    <input id="keyword" type="text" class="form-control recherche" placeholder="@Model.Labels.Search">
                     <div class="input-group-btn dropdown" dropdown="">
                         <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
                         <ul class="dropdown-menu bg-blue">
