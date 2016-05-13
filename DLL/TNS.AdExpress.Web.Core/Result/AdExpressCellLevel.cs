@@ -263,8 +263,8 @@ namespace TNS.AdExpress.Web.Core.Result{
                 )
                 || (_webSession == null && _addressId > 0))
             {
-                html.AppendFormat("<span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\"> ", _webSession.IdSession, _label, _addressId);
-                html.AppendFormat("> {0}</span>", this._label);
+                html.AppendFormat("<span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\">", _webSession.IdSession, _label, _addressId);
+                html.AppendFormat("{0}</span>", this._label);
             }
             else
             {

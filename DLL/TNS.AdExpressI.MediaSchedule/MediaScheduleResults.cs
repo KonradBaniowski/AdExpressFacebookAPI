@@ -1773,14 +1773,17 @@ namespace TNS.AdExpressI.MediaSchedule {
             schemaFields.Add(new { name = "PRODUCT" });
             columnsFixed.Add(new { columnKey = "PRODUCT", isFixed = true, allowFixing = false });
             tableWidth = 250;
-            
+
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
             {
                 if (_allowTotal)
                 {
                     MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
                     periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
-                    columns.Add(new { headerText = periodLabel, key = "PERIOD_COMP", dataType = "string", width = "100" });
+                    columns.Add(new { headerText = periodLabel, key = "PERIOD_COMP", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
                     schemaFields.Add(new { name = "PERIOD_COMP" });
                     columnsFixed.Add(new { columnKey = "PERIOD_COMP", isFixed = true, allowFixing = true });
                     tableWidth += 100;
@@ -1788,7 +1791,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 //PDM
                 if (_allowPdm)
                 {
-                    columns.Add(new { headerText = GestionWeb.GetWebWord(806, _session.SiteLanguage), key = "PDM_COMP", dataType = "string", width = "82" });
+                    columns.Add(new { headerText = GestionWeb.GetWebWord(806, _session.SiteLanguage), key = "PDM_COMP", dataType = "number", format= "percent", columnCssClass= "colStyle", width = "82", allowSorting = true });
                     schemaFields.Add(new { name = "PDM_COMP" });
                     columnsFixed.Add(new { columnKey = "PDM_COMP", isFixed = true, allowFixing = true });
                     tableWidth += 82;
@@ -1802,14 +1805,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                 {
                     periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
-                    columns.Add(new { headerText = periodLabel, key = "PERIOD", dataType = "string", width = "100" });
+                    columns.Add(new { headerText = periodLabel, key = "PERIOD", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
                     schemaFields.Add(new { name = "PERIOD" });
                     columnsFixed.Add(new { columnKey = "PERIOD", isFixed = true, allowFixing = true });
                     tableWidth += 100;
                 }
                 else
                 {
-                    columns.Add(new { headerText = GestionWeb.GetWebWord(805, _session.SiteLanguage), key = "PERIOD", dataType = "string", width = "100" });
+                    columns.Add(new { headerText = GestionWeb.GetWebWord(805, _session.SiteLanguage), key = "PERIOD", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
                     schemaFields.Add(new { name = "PERIOD" });
                     columnsFixed.Add(new { columnKey = "PERIOD", isFixed = true, allowFixing = true });
                     tableWidth += 100;
@@ -1818,7 +1821,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             //PDM
             if (_allowPdm)
             {
-                columns.Add(new { headerText = GestionWeb.GetWebWord(806, _session.SiteLanguage), key = "PDM", dataType = "string", width = "82" });
+                columns.Add(new { headerText = GestionWeb.GetWebWord(806, _session.SiteLanguage), key = "PDM", dataType = "number", format = "percent", columnCssClass = "colStyle", width = "82", allowSorting = true });
                 schemaFields.Add(new { name = "PDM" });
                 columnsFixed.Add(new { columnKey = "PDM", isFixed = true, allowFixing = true });
                 tableWidth += 82;
@@ -1826,7 +1829,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
             {
                 //Evol
-                columns.Add(new { headerText = GestionWeb.GetWebWord(1212, _session.SiteLanguage), key = "EVOL", dataType = "string", width = "82" });
+                columns.Add(new { headerText = GestionWeb.GetWebWord(1212, _session.SiteLanguage), key = "EVOL", dataType = "number", format = "percent", columnCssClass = "colStyle", width = "82", allowSorting = true });
                 schemaFields.Add(new { name = "EVOL" });
                 columnsFixed.Add(new { columnKey = "EVOL", isFixed = true, allowFixing = true });
                 tableWidth += 82;
@@ -2324,6 +2327,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
             gridResult.Data = gridData;
+            gridResult.Unit = _session.Unit.ToString();
 
             _session.Save();
 
@@ -2354,25 +2358,25 @@ namespace TNS.AdExpressI.MediaSchedule {
                     if (_allowTotal)
                     {
                         if (data[line, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
-                            gridData[line - 1, gridColumnId++] = Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp);
+                            gridData[line - 1, gridColumnId++] = Units.ConvertUnitValue(((CellIdsNumber)data[line, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit);
                         else
                             gridData[line - 1, gridColumnId++] = "";
                     }
                     if (_allowPdm)
                     {
-                        gridData[line - 1, gridColumnId++] = string.Format(fp, "{0:percentWOSign}", data[line, PDM_COMPARATIVE_COLUMN_INDEX]);
+                        gridData[line - 1, gridColumnId++] = ((double)data[line, PDM_COMPARATIVE_COLUMN_INDEX]) / 100;
                     }
                 }
                 if (_allowTotal)
                 {
                     if (data[line, TOTAL_COLUMN_INDEX] != null)
-                        gridData[line - 1, gridColumnId++] = Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp);
+                        gridData[line - 1, gridColumnId++] = Units.ConvertUnitValue(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit);
                     else
                         gridData[line - 1, gridColumnId++] = "";
                 }
                 if (_allowPdm)
                 {
-                    gridData[line - 1, gridColumnId++] = string.Format(fp, "{0:pdm}", data[line, PDM_COLUMN_INDEX]);
+                    gridData[line - 1, gridColumnId++] = ((double)data[line, PDM_COLUMN_INDEX]) / 100;
                 }
             }
             else
@@ -2383,44 +2387,39 @@ namespace TNS.AdExpressI.MediaSchedule {
                 {
                     if (_allowTotal)
                     {
-                        string s = string.Empty;
                         if (data[line, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
                         {
                             if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                             {
-                                s = Units.ConvertUnitValueToString(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Trim();
+                                gridData[line - 1, gridColumnId++] = Units.ConvertUnitValue(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
                             }
                             else
                             {
-                                s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX])).Trim();
+                                gridData[line - 1, gridColumnId++] = Convert.ToDouble(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX]);
                             }
                         }
-                        else s = "";
-
-                        gridData[line - 1, gridColumnId++] = s;
+                        else
+                            gridData[line - 1, gridColumnId++] = "";
                     }
                     if (_allowPdm)
                     {
-                        gridData[line - 1, gridColumnId++] = string.Format(fp, "{0:percentWOSign}", data[line, PDM_COMPARATIVE_COLUMN_INDEX]);
+                        gridData[line - 1, gridColumnId++] = ((double)data[line, PDM_COMPARATIVE_COLUMN_INDEX]) / 100;
                     }
                 }
                 if (_allowTotal)
                 {
-                    string s = string.Empty;
                     if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                     {
-                        s = Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp).Trim();
+                        gridData[line - 1, gridColumnId++] = Units.ConvertUnitValue(data[line, TOTAL_COLUMN_INDEX], _session.Unit);
                     }
                     else
                     {
-                        s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, TOTAL_COLUMN_INDEX])).Trim();
+                        gridData[line - 1, gridColumnId++] = Convert.ToDouble(data[line, TOTAL_COLUMN_INDEX]);
                     }
-
-                    gridData[line - 1, gridColumnId++] = s;
                 }
                 if (_allowPdm)
                 {
-                    gridData[line - 1, gridColumnId++] = string.Format(fp, "{0:pdm}", data[line, PDM_COLUMN_INDEX]);
+                    gridData[line - 1, gridColumnId++] = ((double)data[line, PDM_COLUMN_INDEX]) / 100;
                 }
             }
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
@@ -2429,29 +2428,24 @@ namespace TNS.AdExpressI.MediaSchedule {
                 var str = new StringBuilder();
                 //if (data[line, EVOL_COLUMN_INDEX] == null) data[line, EVOL_COLUMN_INDEX] = (double)0.0;
                 double evol = (double)data[line, EVOL_COLUMN_INDEX];
-                if (evol != 0)
+                
+                if (Double.IsInfinity(evol))
                 {
-                    if (Double.IsInfinity(evol))
-                    {
-                        gridData[line - 1, gridColumnId++] = (evol < 0) ? "-" : "+";
-                    }
-                    else if (Double.IsNaN(evol))
-                    {
-                        gridData[line - 1, gridColumnId++] = "";
-                    }
-                    else if (evol == 0)
-                    {
-                        gridData[line - 1, gridColumnId++] = 0;
-                    }
-                    else
-                    {
-                        gridData[line - 1, gridColumnId++] = string.Format(fp, "{0:percentage}", evol);
-                    }
+                    gridData[line - 1, gridColumnId++] = (evol < 0) ? "-Infinity" : "+Infinity";
+                }
+                else if (Double.IsNaN(evol))
+                {
+                    gridData[line - 1, gridColumnId++] = null;
+                }
+                else if (evol == 0)
+                {
+                    gridData[line - 1, gridColumnId++] = 0;
                 }
                 else
                 {
-                    gridData[line - 1, gridColumnId++] = "";
+                    gridData[line - 1, gridColumnId++] = ((double)evol) / 100;
                 }
+                
                 //if (!_isExcelReport)
                 //{
                 //    //Evolution

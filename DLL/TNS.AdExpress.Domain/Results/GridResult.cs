@@ -16,5 +16,6 @@ namespace TNS.AdExpress.Domain.Results
         public bool NeedFixedColumns { get; set; }
         public bool HasData { get; set; }
         public bool HasMSCreatives { get; set; }
+        public string Unit { get; set; }
     }
 }
