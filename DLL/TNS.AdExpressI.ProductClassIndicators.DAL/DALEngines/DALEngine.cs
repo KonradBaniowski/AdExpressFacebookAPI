@@ -172,8 +172,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
                 throw new NoDataException();
 
-            _periodBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            _periodEnd = FctUtilities.Dates.getPeriodEndDate(absolutEndPeriod, _session.PeriodType);
+            _periodBegin = FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            _periodEnd = FctUtilities.Dates.GetPeriodEndDate(absolutEndPeriod, _session.PeriodType);
 
             FctUtilities.Dates.GetYearSelected(_session, ref _strYearId, ref _iYearId, _periodBegin);
             //_iYearN1Id = (_iYearId == 1) ? 2 : 1;
