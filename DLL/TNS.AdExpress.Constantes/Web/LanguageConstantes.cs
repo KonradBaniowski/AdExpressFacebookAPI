@@ -21,6 +21,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MediaScheduleCode = 150;
         public const long MediaCode = 190;
         public const long DroppedSuccessfully = 286;
+        public const long Media = 363;
         public const long QuestionTag3Code = 647;
         public const long CreateFolder = 696;
         public const long DropFolder = 697;
@@ -30,6 +31,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectFolder = 702;
         public const long RenameSelectedFolder = 703;
         public const long ErrorMsgNoFolderCreated = 711;
+        public const long ModuleLabel = 760;
         public const long MonAdExpressCode = 761;
         public const long ContactLabelCode = 763;
         public const long ContactDescriptionCode = 764;
@@ -40,6 +42,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long DroppingFailed = 830;
         public const long NoQueryErrorMsg = 831;
         public const long RequiredPermission = 832;
+        public const long EmptyField = 837;
         public const long StudySelection = 842;
         public const long Unit = 849;
         public const long CantLoadSession = 851;
@@ -50,6 +53,9 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MoveSelectedResult = 911; 
         public const long SelectUniversGroup = 917;
         public const long ExceptionMsg = 922;
+        public const long NoUniversGroup = 925;
+        public const long NoSelectedUnivers = 926;
+        public const long EmptyUnivers = 927;
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
         public const long Capacity = 1000;
@@ -62,14 +68,22 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Insertion = 1400;
         public const long MediaSelected = 1487;
         public const long FileName = 1746;
+        public const long AlertEmptyFields = 1748;
         public const long UniversProduct = 1759;
         public const long IncompleteDataForQuery = 1787;
         public const long LevelDetails = 1886;
         public const long CreativeLabel = 1888;
         public const long Save = 1990;
+        public const long Export = 1992;
         public const long VisuelLabel = 1909;
         public const long JobTitleCode = 1976;
+        public const long ExportFormattedResult = 1996;
+        public const long ExportResultWithValue = 1997;
+        public const long ExportGrossResult = 2014;
+        public const long ExportPdfResult = 2017;
+        public const long NotValidEmail = 2041;
         public const long RefineCode = 2053;
+        public const long NewsLabel = 2080;
         public const long EmptyGrid = 2106;
         public const long PresentAbsentCode = 2167;
         public const long LostWonCode = 2169;
@@ -125,9 +139,14 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertType = 2607;
         public const long SaveAlert2 = 2609;
         public const long TimeSchedule = 2614;
+        public const long MaxAlertLimit = 2615;
         public const long AlertInfoMessage = 2616;
+        public const long AlertCreationSucceeded = 2660;
         public const long Concurrent = 2869;
+        public const long Dates = 2882;
+        public const long MaxLengthExceeded = 2946;
         public const long IndeRadioMessage = 3018;
+        public const long ExportPptResult = 3031;
         public const long LimitKeyword = 3033;
         public const long ItemExceeded = 3034;
         public const long NoSupport = 3035;
@@ -143,6 +162,15 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Directories = 3045;
         public const long NotAvailableYet = 3046;
         public const long HomeCode = 3047;
+        public const long Market = 3048;
+        public const long YourModule = 3051;
+        public const long NewsDescr = 3052;
+        public const long ContactUsLabel = 3055;
+        public const long SomeFigures = 3056;
+        public const long Connection = 3057;
+        public const long SignIn = 3058;
+        public const long UserName = 3059;
+        public const long Password = 3060;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion

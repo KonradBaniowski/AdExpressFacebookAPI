@@ -74,6 +74,7 @@
     <Compile Include="ServiceImpl\CreativeService.cs" />
     <Compile Include="ServiceImpl\DetailLevelService.cs" />
     <Compile Include="ServiceImpl\DetailSelectionService.cs" />
+    <Compile Include="ServiceImpl\ExportService.cs" />
     <Compile Include="ServiceImpl\GadService.cs" />
     <Compile Include="ServiceImpl\InfosNewsService.cs" />
     <Compile Include="ServiceImpl\PortfolioDetailMediaService.cs" />
@@ -94,9 +95,13 @@
     <Compile Include="ServiceImpl\WebSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.csproj">
+    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.DAL.csproj">
       <Project>{02b3e71a-f7e6-4de6-b42d-b421d94ed9f2}</Project>
-      <Name>KM.AdExpressI.MyAdExpress</Name>
+      <Name>KM.AdExpressI.MyAdExpress.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Anubis.Constantes\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716ac8-b9d2-432c-84f7-885a73b77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>

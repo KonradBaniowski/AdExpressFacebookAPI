@@ -11,7 +11,7 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 
-namespace KM.AdExpressI.MyAdExpress
+namespace KM.AdExpressI.MyAdExpress.DAL
 {
     public class MyResultsDAL
     {

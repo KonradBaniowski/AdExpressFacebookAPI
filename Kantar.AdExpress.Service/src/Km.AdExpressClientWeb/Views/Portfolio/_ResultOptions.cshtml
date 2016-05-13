@@ -9,7 +9,7 @@
         <div class="panel-heading head-results" role="tab" id="headingOne">
             <h3 class="panel-title pull-left orange">
                 <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
-                    <i class="fa fa-cog text-lg orange"></i> Options d'analyse
+                    <i class="fa fa-cog text-lg orange"></i> @GestionWeb.GetWebWord(792, Model.SiteLanguage)
                     <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
                 </a>
             </h3>
@@ -234,7 +234,7 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Niveaux détaillées par
+                                    @GestionWeb.GetWebWord(1886, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseHeight" class="panel-collapse collapse in">
@@ -270,12 +270,12 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Niveaux personnalisés
+                                    @GestionWeb.GetWebWord(1896, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseNine" class="panel-collapse collapse in">
                                 <div class="panel-body mi-padder">
-                                    <small class="pader-v-mi orange">Niveaux enregistrés</small><button id="remove-custom-detail-levels" class="btn btn-sans pull-right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></button>
+                                    <small class="pader-v-mi orange">@GestionWeb.GetWebWord(1897, Model.SiteLanguage)</small><button id="remove-custom-detail-levels" class="btn btn-sans pull-right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></button>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.CustomDetail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.CustomDetail.Items)
@@ -284,7 +284,7 @@
                                             }
                                         </select>
                                     </div>
-                                    <small class="pader-v-mi orange">Construction</small><button id="save-custom-detail-levels" class="btn btn-sans pull-right" title="Sauvegarder"><i class="glyphicon glyphicon-floppy-save"></i></button>
+                                    <small class="pader-v-mi orange">@GestionWeb.GetWebWord(1899, Model.SiteLanguage)</small><button id="save-custom-detail-levels" class="btn btn-sans pull-right" title="Sauvegarder"><i class="glyphicon glyphicon-floppy-save"></i></button>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.L1Detail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.L1Detail.Items)

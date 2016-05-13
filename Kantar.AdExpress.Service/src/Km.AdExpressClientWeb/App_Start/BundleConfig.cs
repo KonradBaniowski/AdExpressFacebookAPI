@@ -58,7 +58,7 @@ namespace Km.AdExpressClientWeb
                       "~/Content/spinner.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
-                  "~/Scripts/module-selection/module-selection.js"));
+                  "~/Scripts/module-selection/module-selection.js")); 
             bundles.Add(new ScriptBundle("~/bundles/account").Include(
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/Account/account.js"));
@@ -96,6 +96,9 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/component-selectable/common-actions.js",
                         "~/Scripts/media/media-portfolio.js",
                         "~/Scripts/universe/universe-media.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/portfolio-vehicle-view").Include(
+                       "~/Scripts/Results/portfolio-vehicle-view.js"));
             #endregion
             #region LostWon
             bundles.Add(new ScriptBundle("~/bundles/lostWon-market").Include(
@@ -136,7 +139,12 @@ namespace Km.AdExpressClientWeb
             #endregion
 
             bundles.Add(new ScriptBundle("~/bundles/results").Include(
-                        "~/Scripts/Results/result.js"));
+                        "~/Scripts/Results/result.js",
+                        "~/Scripts/bootstrap-datetimepicker.js",
+                        "~/Scripts/moment-with-locales.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/language-choice").Include(
+                  "~/Scripts/app/language-choice.js"));
         }
     }
 }

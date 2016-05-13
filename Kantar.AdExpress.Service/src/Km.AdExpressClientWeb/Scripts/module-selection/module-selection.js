@@ -8,7 +8,7 @@ $(function () {
     function currentModule(event) {
         event.preventDefault();
         var url = $(this).attr('href');
-        
+
         var params = {
             idModule: $(this).attr('id'),
         };
@@ -20,12 +20,17 @@ $(function () {
             datatype: 'JSON',
             data: JSON.stringify(params),
             error: function (xmlHttpRequest, errorText, thrownError) {
-                
+
             },
             success: function () {
-                    document.location = url;
+                document.location = url;
             }
         });
     }
-  
+
+   
+
+
+    
+
 });

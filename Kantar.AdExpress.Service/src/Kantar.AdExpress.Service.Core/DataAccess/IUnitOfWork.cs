@@ -11,7 +11,7 @@ namespace Kantar.AdExpress.Service.Core.DataAccess
     public interface IUnitOfWork
     {
         void Save();
-        IAddressRepository AddressRepository { get; set; }
+        //IAddressRepository AddressRepository { get; set; }
         ILoginRepository LoginRepository { get; set; }
         IMyResultsRepository MyResultRepository { get; set; }
     }

@@ -3,6 +3,7 @@
 @using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "MarketSelection";
+    var _controller = Model.NavigationBar.First().Controller;
 }
 
 <div class="row">
@@ -32,20 +33,30 @@
                 <div class="input-group">
                     <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
                     <div class="input-group-btn dropdown" dropdown="">
-                        <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">@Model.Branches.FirstOrDefault(p => p.IsSelected).Label <span class="caret"></span></button>
-                        <ul class="dropdown-menu bg-blue">
-                            @foreach (var item in Model.Branches)
+                        <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">
+                            @Model.Branches.FirstOrDefault(p => p.IsSelected).Label
+
+                            @if (Model.Branches.Count > 1)
                             {
-                                if (item.IsSelected)
-                                {
-                                    <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
-                                }
-                                else
-                                {
-                                    <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
-                                }
+                                <span class="caret"></span>
                             }
-                        </ul>
+                        </button>
+                        @if (Model.Branches.Count > 1)
+                        {
+                            <ul class="dropdown-menu bg-blue">
+                                @foreach (var item in Model.Branches)
+                                {
+                                    if (item.IsSelected)
+                                    {
+                                        <li id="default" hidden><a data-id="@item.Id">@item.Label</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li id="@item.Id"><a data-id="@item.Id">@item.Label</a></li>
+                                    }
+                                }
+                            </ul>
+                        }
                         <button type="submit" class="btn btn-default btn-recherche"><i class="fa fa-search blue "></i></button>
                     </div>
                 </div>
@@ -157,7 +168,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
         <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-floppy-o"></i></a>
-            @Html.ActionLink("Valider", "MediaSelection", null, new { id = "btnSubmitMarketSelection", @class = "btn btn-default btn-valider pull-right" })
+            @*@Html.ActionLink("Valider", "MediaSelection", null, new { id = "btnSubmitMarketSelection", @class = "btn btn-default btn-valider pull-right" })*@
 
         </div>
     </div>
@@ -170,7 +181,7 @@
 
     </div>
 </div>
-
+<input type="hidden" id="current-url" value="/@_controller/Index" />
 @section scripts {
     @Scripts.Render("~/bundles/presentabsent-market")
 }

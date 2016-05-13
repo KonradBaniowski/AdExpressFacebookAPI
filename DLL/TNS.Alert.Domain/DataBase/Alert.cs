@@ -99,7 +99,14 @@ namespace TNS.Alert.Domain
         /// </summary>
         public DateTime ValidationDate
         {
-            get { return (DateTime.Parse(this._row["date_validate"].ToString())); }
+            get
+            {
+                if (!String.IsNullOrEmpty((this._row["date_validate"].ToString())))
+                {
+                    return (DateTime.Parse(this._row["date_validate"].ToString()));
+                }
+                return new DateTime();
+            }
         }
         #endregion
 

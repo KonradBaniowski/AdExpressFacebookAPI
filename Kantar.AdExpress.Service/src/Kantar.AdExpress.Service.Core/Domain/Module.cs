@@ -12,5 +12,6 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public string Description { get; set; }
         public string  Icon { get; set; }
         public string NextUrl { get; set; }
+        public int SiteLanguage { get; set; }
     }
 }

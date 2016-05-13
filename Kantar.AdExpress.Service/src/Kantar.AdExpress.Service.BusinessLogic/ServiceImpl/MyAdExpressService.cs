@@ -1,7 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using System;
 using TNS.AdExpress.Web.Core.Sessions;
-using KM.AdExpressI.MyAdExpress;
+using KM.AdExpressI.MyAdExpress.DAL;
 using UniversDAL = TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using TNS.AdExpress.Domain.Translation;
 using Kantar.AdExpress.Service.Core.Domain;
@@ -1221,16 +1221,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 if (validResultPage)
                                 {
                                     webSession.Save();
-                                    if (webSession.LastReachedResultUrl.Length != 0)
-                                    {
+                                    //if (webSession.LastReachedResultUrl.Length != 0 && webSession.CurrentModule == )
+                                    //{
                                         result.Success = true;
                                         result.ModuleId = webSessionSave.CurrentModule;
-                                    }
-                                    else
-                                    {
-                                        //Error :The  requested session can't be loaded.
-                                        result.Message = GestionWeb.GetWebWord(LanguageConstantes.CantLoadSession, webSession.SiteLanguage);
-                                    }
+                                    //}
+                                    //else
+                                    //{
+                                    //    //Error :The  requested session can't be loaded.
+                                    //    result.Message = GestionWeb.GetWebWord(LanguageConstantes.CantLoadSession, webSession.SiteLanguage);
+                                    //}
                                 }
                                 else
                                 {

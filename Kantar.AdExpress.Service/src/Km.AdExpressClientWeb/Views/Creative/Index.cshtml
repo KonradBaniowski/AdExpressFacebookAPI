@@ -81,7 +81,7 @@
                     <h4 class="modal-title" id="myModalLabel">@Model.Labels.VisuelLabel</h4>
                 </div>
                 <div class="modal-body">
-                    <center><img src="" id="imagepreview"></center>
+                    <center><img style="max-width:100%;" src="" id="imagepreview"></center>
                 </div>
             </div>
         </div>
@@ -290,26 +290,34 @@
                 success: function (response) {
                     if (response != null) {
                         var data = JSON.parse(response);
-                        var strHTML = "";
-                        var idV = data[0][0];
-                        if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
-                            idV = userFilter.paramsUrl.idVehicle;
 
-                        $.each(data, function (i, item) {
-                            if (idV == item[i]) {
-                                strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            } else {
-                                strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            }
-                        });
-                        $('#PresentVehicles').html(strHTML);
-                        userFilter.paramsUrl.idVehicle = idV.toString();
-                        userFilter.isVehicleChanged = true;
+                        if (data.length > 0) {
+                            var strHTML = "";
+                            var idV = data[0][0];
+                            if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
+                                idV = userFilter.paramsUrl.idVehicle;
 
-                        CallCreativeResult();
+                            $.each(data, function (i, item) {
+                                if (idV == item[i]) {
+                                    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                } else {
+                                    strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                }
+                            });
+                            $('#PresentVehicles').html(strHTML);
+                            userFilter.paramsUrl.idVehicle = idV.toString();
+                            userFilter.isVehicleChanged = true;
+
+                            CallCreativeResult();
+
+                            $("#HeaderElmt").show();
+                            $("#gridLoader").show();
+
+                        } else {
+                            $("#gridEmpty").show();
+                        }
                         $("#HeaderLoader").hide();
-                        $("#HeaderElmt").show();
-                        $("#gridLoader").show();
+
                     }
                 }
             });
@@ -486,7 +494,7 @@
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
                         tmp = infos[j].split(":");
-                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp.shift() + '</span> : ' + tmp.join(':') + '</div>')
                     }
                 }
             });

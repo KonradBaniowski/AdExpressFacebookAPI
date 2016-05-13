@@ -86,7 +86,6 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         var UniversLvl = [];
         $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
             var idLevel = $(elem).attr('data-level');
-            console.log(this);
             var UniLvl = [];
             $.each($(this).find('ul > li'), function (index, elem) {
                 var itemUniver = $(elem).attr('data-id');
@@ -121,17 +120,8 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         type: 'POST',
         data: params,
         success: function (response) {
-            $('#saveunivers').modal('hide');            
-            $.ajax({
-                url: '/Universe/SaveUserUnivers',
-                type: 'GET',
-                data: params,
-                success: function (response) {
-                    $('#saveunivers').append(response);
-                    $('#saveunivers').modal('show');
-                }
-            });
-            bootbox.alert(response);
+            $('#saveunivers').modal('hide');
+            bootbox.alert(response);                      
         }
     });    
 });
@@ -162,7 +152,6 @@ $(document).on('click', '#LoadUnivers', function (event) {
                     var liHtml = $('<li/>');
                     var aHtml = $('<a/>');
                     //SET LABEL 
-                    console.log(tree);
                     aHtml.text(tree.Label);
                     aHtml.attr('data-target', '#tab-' + id);
                     aHtml.attr('id', 'tree-'+id);
@@ -203,7 +192,6 @@ $(document).on('click', '#LoadUnivers', function (event) {
                   }
                 var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
                 $.each($(tree.UniversLevels), function (index, uniLvl) {
-                    console.log(uniLvl);
                     var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
                     panel.html('');
                     $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');

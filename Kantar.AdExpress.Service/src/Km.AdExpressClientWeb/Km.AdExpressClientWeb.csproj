@@ -181,6 +181,7 @@
     <Compile Include="Controllers\CreativeController.cs" />
     <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\DetailSelectionController.cs" />
+    <Compile Include="Controllers\ExportResultController.cs" />
     <Compile Include="Controllers\GadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Helpers\NavigationHelper.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Models\LostWon\ResultsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
+    <Compile Include="Models\Shared\ExportResultModel.cs" />
     <Compile Include="Models\Shared\InsertionCreativeViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
@@ -1433,6 +1436,7 @@
     <Content Include="Scripts\Account\myAdExpress.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\app\language-choice.js" />
     <Content Include="Scripts\app\layout.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -1501,6 +1505,7 @@
     <Content Include="Scripts\period-selector.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Results\portfolio-vehicle-view.js" />
     <Content Include="Scripts\Results\result.js" />
     <Content Include="Scripts\selectableScroll.js" />
     <Content Include="Scripts\spin.js" />
@@ -1594,11 +1599,13 @@
     <Content Include="Views\Shared\GadInfos.cshtml" />
     <Content Include="Views\Home\MyAdExpressAlerts.cshtml" />
     <Content Include="Views\Alert\CreateAlert.cshtml" />
+    <Content Include="Views\Shared\ExportResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
+    <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\Universe\" />
@@ -1609,9 +1616,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.csproj">
+    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.DAL.csproj">
       <Project>{02b3e71a-f7e6-4de6-b42d-b421d94ed9f2}</Project>
-      <Name>KM.AdExpressI.MyAdExpress</Name>
+      <Name>KM.AdExpressI.MyAdExpress.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>

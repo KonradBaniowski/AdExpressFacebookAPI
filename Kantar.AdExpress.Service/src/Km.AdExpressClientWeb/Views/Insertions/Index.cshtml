@@ -25,7 +25,7 @@
 
     <div class="col-md-12" style="margin-top:10px;">
         <div class="pull-right custom-button">
-            <button class="btn btn-save" id="btn-export">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+            <button class="btn btn-save" id="btn-export" style="display:none">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
         </div>
     </div>
 
@@ -73,7 +73,7 @@
                     <h4 class="modal-title" id="myModalLabel">@Model.Labels.VisuelLabel</h4>
                 </div>
                 <div class="modal-body">
-                    <center><img src="" id="imagepreview"></center>
+                    <center><img style="max-width:100%;" src="" id="imagepreview"></center>
                 </div>
             </div>
         </div>
@@ -294,27 +294,36 @@
                 success: function (response) {
                     if (response != null) {
                         var data = JSON.parse(response);
-                        var strHTML = "";
-                        var idV = data[0][0];
-                        if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
-                            idV = userFilter.paramsUrl.idVehicle;
 
-                        $.each(data, function (i, item) {
-                            if (idV == item[i]) {
-                                strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            } else {
-                                strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            }
-                        });
-                        $('#PresentVehicles').html(strHTML);
-                        userFilter.paramsUrl.idVehicle = idV.toString();
-                        userFilter.isVehicleChanged = true;
+                        if (data.length > 0) {
+                            var strHTML = "";
+                            var idV = data[0][0];
+                            if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
+                                idV = userFilter.paramsUrl.idVehicle;
 
-                        GetDetailLevelItem();
-                        CallInsertionsResult();
+                            $.each(data, function (i, item) {
+                                if (idV == item[i]) {
+                                    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                } else {
+                                    strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                }
+                            });
+                            $('#PresentVehicles').html(strHTML);
+                            userFilter.paramsUrl.idVehicle = idV.toString();
+                            userFilter.isVehicleChanged = true;
+
+                            GetDetailLevelItem();
+                            CallInsertionsResult();
+
+                            $("#HeaderElmt").show();
+                            $("#btn-export").show();
+
+                        } else {
+                            $("#gridEmpty").show();
+                            $("#btn-export").hide();
+                        }
 
                         $("#HeaderLoader").hide();
-                        $("#HeaderElmt").show();
                     }
                 }
             });

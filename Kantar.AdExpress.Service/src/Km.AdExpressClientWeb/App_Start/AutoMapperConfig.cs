@@ -30,7 +30,8 @@ namespace Km.AdExpressClientWeb.App_Start
             Mapper.CreateMap<VM.UniversItem, Domain.UniversItem>();
             Mapper.CreateMap<Domain.UniversItem, VM.UniversItem>();
             Mapper.CreateMap<TNS.Alert.Domain.Alert, Domain.Alert>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AlertId));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AlertId))
+                .ForMember(dest => dest.ValidationDate, opt => opt.NullSubstitute(string.Empty));
             Mapper.CreateMap<TNS.Alert.Domain.AlertOccurence, Domain.Occurence>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AlertOccurrenceId))
                 .ForMember(dest => dest.AlertId, opt => opt.MapFrom(src => src.AlertId))

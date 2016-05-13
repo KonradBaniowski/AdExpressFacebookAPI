@@ -248,6 +248,11 @@
         background-color: transparent;
         border-color: #ff8c00;
     }
+    .hovered{
+        color: #ff8c00;
+        background-color: transparent;
+        border-color: #ff8c00 !important;
+    }
 
 .btn-orange, .btn-orange:hover {
     background-color: #ff8c00;
@@ -565,6 +570,11 @@ input {
     .date > h5 {
         margin: 5px 5px;
     }
+
+    .date-picker {
+    padding: 0px 0px;
+    display:none;
+}
 
 .title {
     margin-left: 10px;

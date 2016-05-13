@@ -9,7 +9,7 @@
         <div class="modal-body panel-group panel-univers-select">
             <ul>
                 <li>
-                    <div id="alertTitle" class="form-group">
+                    <div class="form-group">
                         <label class="control-label col-sm-6 col-sm-6 popup-text" for="alertTtile">@Model.Labels.FileName</label>
                         <div class="col-sm-6 col-md-6">
                             @Html.TextBoxFor(p => p.Title, new { @class = "form-control", @id = "alertTitle" })
@@ -27,19 +27,34 @@
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                    <div id="ddlAlertPeriodicity" class="form-group">
+                    <div class="form-group">
                         <label class="control-label col-sm-6 col-sm-6 popup-text" for="alertPeriodicity">@Model.Labels.Periodicity</label>
                         <div class="col-sm-6 col-md-6">
                             @Html.DropDownListFor(p => p.SelectedPeriodicityId, Model.Periodicity, new { @class = "form-control", @id = "ddlPeriodicity" })
                         </div>
                     </div>
                 </li>
-                <li role="separator" class="divider"></li>
+                <li role="separator" class="divider"></li>               
                 <li>
-                    <div id="alertDatePicker" class="form-group">
-                        <label class="control-label col-sm-6 col-sm-6 popup-text" for="alertPeriodicity">@Model.Labels.Occurrence</label>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div id="monthly" class="date-picker">
+                        <label class="control-label col-sm-6 col-sm-6 popup-text">@Model.Labels.EveryMonth</label>
+                        <div class="col-md-6">
+                            <div class="input-group" id="monthlyCalendar">
+                                <input type="text" class="form-control" id="montlyOccurrenceValue" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                             </div>
+                        </div>
+                    </div>
+                    </li>
+                <li role="separator" class="divider"></li>  
+                <li>
+                    <div id="weekly" class="date-picker">
+                        <label class="control-label col-sm-6 col-sm-6 popup-text" for="alertPeriodicity">@Model.Labels.EveryWeek</label>
+                        <div class="col-sm-6 col-md-6">
+                            @Html.DropDownListFor(p => p.SelectedPeriodicityId, Model.WeekDays, new { @class = "form-control", @id = "weeklyOccurrenceValue" })
+                        </div>
                     </div>
                 </li>
                 <li role="separator" class="divider"></li>
