@@ -2114,7 +2114,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     idLv1 = pid;
                                     gridData[i - 1, gridColumnId++] = idLv1;
                                     SetLabelTotalPDM(data, ref gridData, i, cssClasse, cssClasseNb, j, ref gridColumnId, fp, unit);
-                                    gridData[i - 1, gridColumnId++] = -1;
+
+                                    if (idLv1 == 1)
+                                        gridData[i - 1, gridColumnId++] = -1;
+                                    else
+                                        gridData[i - 1, gridColumnId++] = 1;
+
                                     if (_allowVersion)
                                     {
                                         if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX))

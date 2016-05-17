@@ -272,5 +272,34 @@ namespace TNS.AdExpress.Web.Core.Result{
             }
             return html.ToString();
         }
+
+        /// <summary>
+        /// RawString
+        /// </summary>
+        /// <returns></returns>
+        public string RawString()
+        {
+            return this._label;
+        }
+
+        /// <summary>
+        /// Get Gad Params
+        /// </summary>
+        /// <returns></returns>
+        public string GetGadParams()
+        {
+
+            if (_genericDetailLevel == null) _genericDetailLevel = _webSession.GenericProductDetailLevel;
+
+            if ((_webSession != null && _addressId > 0
+                && _genericDetailLevel.GetDetailLevelItemInformation(this.Level).Equals(DetailLevelItemInformation.Levels.advertiser)
+                )
+                || (_webSession == null && _addressId > 0))
+            {
+                return string.Format("{0}, {1}, {2}", _webSession.IdSession, _label, _addressId);
+            }
+            else
+                return string.Empty;
+        }
     }
 }

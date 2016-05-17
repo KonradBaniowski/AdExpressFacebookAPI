@@ -254,7 +254,7 @@ namespace TNS.AdExpressI.Portofolio
 
                 resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
                 resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
-                object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+                object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber// + 1 for gad column
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
@@ -266,6 +266,8 @@ namespace TNS.AdExpressI.Portofolio
                 schemaFields.Add(new { name = "ID" });
                 columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
                 schemaFields.Add(new { name = "PID" });
+                columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
+                schemaFields.Add(new { name = "GAD" });
                 List<object> groups = null;
                 string colKey = string.Empty;
 
@@ -375,7 +377,7 @@ namespace TNS.AdExpressI.Portofolio
                                      , link);
                                 }
                             }
-                            gridData[i, k + 1] = link;
+                            gridData[i, k + 2] = link;
                         }
                         else if (cell is CellOneLevelInsertionsLink)
                         {
@@ -392,7 +394,7 @@ namespace TNS.AdExpressI.Portofolio
                                 }
 
                             }
-                            gridData[i, k + 1] = link;
+                            gridData[i, k + 2] = link;
                         }
                         else if (cell is CellOneLevelCreativesLink)
                         {
@@ -409,7 +411,7 @@ namespace TNS.AdExpressI.Portofolio
                                 }
 
                             }
-                            gridData[i, k + 1] = link;
+                            gridData[i, k + 2] = link;
                         }
                         else
                         {
@@ -418,22 +420,34 @@ namespace TNS.AdExpressI.Portofolio
                                 double value = ((CellUnit)cell).Value;
 
                                 if (double.IsInfinity(value))
-                                    gridData[i, k + 1] = "Infinity";
+                                    gridData[i, k + 2] = "Infinity";
                                 else if (double.IsNaN(value))
-                                    gridData[i, k + 1] = null;
+                                    gridData[i, k + 2] = null;
                                 else
-                                    gridData[i, k + 1] = value / 100;
+                                    gridData[i, k + 2] = value / 100;
                             }
                             else if (cell is CellUnit)
                             {
                                 if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
-                                    gridData[i, k + 1] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, GetUnit(cell));
+                                    gridData[i, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, GetUnit(cell));
                                 else
-                                    gridData[i, k + 1] = ((CellUnit)cell).Value;
+                                    gridData[i, k + 2] = ((CellUnit)cell).Value;
+                            }
+                            else if (cell is AdExpressCellLevel)
+                            {
+                                string label = ((AdExpressCellLevel)cell).RawString();
+                                string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
+
+                                if (gadParams.Length > 0)
+                                    gridData[i, 2] = gadParams;
+                                else
+                                    gridData[i, 2] = "";
+
+                                gridData[i, k + 2] = label;
                             }
                             else
                             {
-                                gridData[i, k + 1] = cell.RenderString();
+                                gridData[i, k + 2] = cell.RenderString();
                             }
                         }
                     }
@@ -508,6 +522,10 @@ namespace TNS.AdExpressI.Portofolio
                 string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.volume).StringFormat);
                 key += "-unit-euro";
                 return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
+            }
+            else if (cell is AdExpressCellLevel)
+            {
+                return new { headerText = headerText, key = key, dataType = "string", width = width, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + key + "}</span> {{else}} ${" + key + "} {{/if}}" };
             }
             else
                 return new { headerText = headerText, key = key, dataType = "string", width = width };
