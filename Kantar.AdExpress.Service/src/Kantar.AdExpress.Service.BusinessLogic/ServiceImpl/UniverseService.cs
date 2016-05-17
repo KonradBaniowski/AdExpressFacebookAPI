@@ -56,8 +56,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
                 string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
               cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-            classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.
-            GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+            
+            classficationDAL.DBSchema = GetSchema(webSession.CurrentModule);
             DataTable data = classficationDAL.GetItems(universeLevelId, keyWord).Tables[0];
             var result = new List<UniversItem>();
             foreach (var item in data.AsEnumerable())
@@ -927,7 +927,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (currentPage != null)
                 {
                     listUniverseClientDescription += currentPage.LoadableUniversString;
-                    
+
                     levelsRules = new AdExpressLevelsRules(webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), dimension);
                     tempBranchIds = levelsRules.GetAuthorizedBranches();
                     tempLevels = levelsRules.GetAuthorizedLevels();
@@ -945,27 +945,34 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                 }
                 #region Default Branch
-                if (webSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || webSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE)
-                {
-                    foreach (SelectionPageInformation current in currentModuleDescription.SelectionsPages)
-                    {
-
-                        if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess] != null && webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length > 0 && current.ForceBranchId > 0)
-                            defaultBranchId = currentPage.ForceBranchId; //Force Branch advertiser
-                        else defaultBranchId = currentPage.DefaultBranchId; //Branch by default
-                        break;
-
-                    }
-                }
-                else
-                {
-                    defaultBranchId = currentPage.DefaultBranchId;
-                }
+                defaultBranchId = GetDefaultBranch(defaultBranchId, currentModuleDescription, currentPage);
                 #endregion
 
             }
             var result = new Tuple<List<long>, List<int>, WebSession, int, int>(_allowedLevelsId, _allowedBranchesIds, webSession, siteLanguage, defaultBranchId);
             return result;
+        }
+
+        private int GetDefaultBranch(int defaultBranchId, DomainWebNavigation.Module currentModuleDescription, SelectionPageInformation currentPage)
+        {
+            if (webSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || webSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE)
+            {
+                foreach (SelectionPageInformation current in currentModuleDescription.SelectionsPages)
+                {
+
+                    if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess] != null && webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length > 0 && current.ForceBranchId > 0)
+                        defaultBranchId = current.ForceBranchId; //Force Branch advertiser
+                    else defaultBranchId = current.DefaultBranchId; //Branch by default
+                    break;
+
+                }
+            }
+            else
+            {
+                defaultBranchId = currentPage.DefaultBranchId;
+            }
+
+            return defaultBranchId;
         }
 
         private Branch.type GetBrancheType(Dimension dimension)
@@ -1069,6 +1076,29 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 Directories = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Directories, siteLanguage)
             };
             return result;
+        }
+
+        private  string  GetSchema (long currentModule)
+        {
+            string schema = String.Empty;
+            switch (currentModule)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    schema = WebApplicationParameters.DataBaseDescription.
+                    GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+                    break;
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                case WebConstantes.Module.Name.INDICATEUR:
+                    schema = WebApplicationParameters.DataBaseDescription.
+                    GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.recap01).Label;
+                    break;
+                default:
+                    break;
+            }
+            return schema;
         }
         #endregion
     }

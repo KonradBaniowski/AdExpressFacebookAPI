@@ -46,10 +46,10 @@
         RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
 
         //Redirect to Tendencies
-        RedirectToOldWebSite(@Module.Name.INDICATEUR);
+        @*RedirectToOldWebSite(@Module.Name.INDICATEUR);
 
         //Redirect to Tendencies
-        RedirectToOldWebSite(@Module.Name.TABLEAU_DYNAMIQUE);
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DYNAMIQUE);*@
 
         RedirectToOldWebSite(@Module.Name.ANALYSE_DES_DISPOSITIFS);
 
@@ -323,14 +323,14 @@
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.INDICATEUR))
                         {
-                            <a href="#" class="list-group-item text-left" id="@Module.Name.INDICATEUR">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
+                            <a href="@Url.Action("Market", "Analysis")" class="list-group-item text-left module-done" id="@Module.Name.INDICATEUR">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
                         }
                         else {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.INDICATEUR)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                         {
-                            <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DYNAMIQUE">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</a>
+                            <a href="@Url.Action("Market", "Analysis")" class="list-group-item text-left module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title.TrimStart()</a>
                         }
                         else
                         {
