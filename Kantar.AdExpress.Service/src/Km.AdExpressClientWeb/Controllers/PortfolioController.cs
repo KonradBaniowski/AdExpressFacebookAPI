@@ -92,7 +92,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             #endregion
             var marketNode = new NavigationNode { Position = 1 };
-            var navigationHelper = new Helpers.NavigationHelper();
+            var navigationHelper = new Helpers.PageHelper();
             model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage,1);
             return View(model);
         }
@@ -133,9 +133,9 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             _siteLanguage = result.SiteLanguage;
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var mediaNode = new NavigationNode { Position = 2 };
-            var navigationHelper = new Helpers.NavigationHelper();
+            var navigationHelper = new Helpers.PageHelper();
             model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage,2);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
@@ -176,9 +176,9 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
 
             _siteLanguage = result.SiteLanguage;
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
-            var navigationHelper = new Helpers.NavigationHelper();         
+            var navigationHelper = new Helpers.PageHelper();         
             var navBarModel = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage,3);
 
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
@@ -233,9 +233,9 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
             _siteLanguage = CustomerSession.SiteLanguage;
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var resultNode = new NavigationNode { Position = 4 };
-            var navigationHelper = new Helpers.NavigationHelper();
+            var navigationHelper = new Helpers.PageHelper();
             var model = new Models.Portfolio.ResultsViewModel
             {
                 NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage,4),

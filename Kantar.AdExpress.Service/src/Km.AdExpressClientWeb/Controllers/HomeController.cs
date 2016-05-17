@@ -65,7 +65,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var res = _rightService.GetModules(idWS);
             List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
 
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(resList.First().Value.SiteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(resList.First().Value.SiteLanguage);
             documents.Add(new Documents()
                         {
                             Id = 3,
@@ -160,7 +160,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var alertsResponse = _universService.GetUserAlerts(idWebSession);
             model.Alerts = alertsResponse.Alerts;
             #endregion
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(result.SiteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
             model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
             model.Labels = LoadPageLabels(result.SiteLanguage);
             return View(model);
