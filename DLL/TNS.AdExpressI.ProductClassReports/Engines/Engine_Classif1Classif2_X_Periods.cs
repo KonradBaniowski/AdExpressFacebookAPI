@@ -1018,7 +1018,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 				for( int j = 0; j <= (int.Parse(absolutePeriodEnd.Substring(4,2)) - int.Parse(_session.PeriodBeginningDate.Substring(4,2))); j++)
 				{
 					CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
-					str.AppendFormat("<td>{0}</td>", MonthString.GetCharacters(FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType).AddMonths(j).Month, cInfo, 0));
+					str.AppendFormat("<td>{0}</td>", MonthString.GetCharacters(FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType).AddMonths(j).Month, cInfo, 0));
 					//str.AppendFormat("<td>{0}</td>", FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType).AddMonths(j).ToString("MMMM"));
 				}
 			}

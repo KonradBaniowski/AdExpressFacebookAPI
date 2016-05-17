@@ -7,13 +7,16 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstPersonalized = TNS.AdExpress.Constantes.Web.AdvertiserPersonalisation.Type;
-using FctUtilities = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date;
+using System.Reflection;
 //using FctWeb = TNS.AdExpress.Web.
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
@@ -437,7 +440,10 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 				str.Append("<td>" + GestionWeb.GetWebWord(1164, _session.SiteLanguage) + "</td>");
 			else
 				str.Append("<td>" + GestionWeb.GetWebWord(1357, _session.SiteLanguage) + "</td>");
-            str.Append("<td>" + FctUtilities.Dates.getPeriodLabel(_session, CstWeb.CustomerSessions.Period.Type.currentYear) + "</td>"); 
+            CoreLayer coreLayer = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.date];
+            IDate dateBLL = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + coreLayer.AssemblyName, coreLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+
+            str.Append("<td>" + dateBLL.GetPeriodLabel(_session, CstWeb.CustomerSessions.Period.Type.currentYear) + "</td>"); 
 			//PDM
 			if (_session.PDM && tableType==CstFormat.PreformatedTables.media_X_Year)
 				str.Append("<td>" + GestionWeb.GetWebWord(806, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + _session.PeriodBeginningDate.Substring(0,4) + "</td>");
@@ -446,7 +452,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 				str.Append("<td>" + GestionWeb.GetWebWord(1166, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + _session.PeriodBeginningDate.Substring(0,4) + "</td>");
 			//N-1
 			if (_session.ComparativeStudy){
-				str.Append("<td>" + FctUtilities.Dates.getPeriodLabel(_session,CstWeb.CustomerSessions.Period.Type.previousYear) + "</td>"); 
+				str.Append("<td>" + dateBLL.GetPeriodLabel(_session,CstWeb.CustomerSessions.Period.Type.previousYear) + "</td>"); 
 				//PDV N-1
 				if (_session.PDV && tableType==CstFormat.PreformatedTables.product_X_Year)
 					str.Append("<td>" + GestionWeb.GetWebWord(1166, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + (int.Parse(_session.PeriodBeginningDate.Substring(0,4))-1) + "</td>");

@@ -27,6 +27,7 @@ using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Layers;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -392,6 +393,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
 
       
+
 
         #endregion
 
