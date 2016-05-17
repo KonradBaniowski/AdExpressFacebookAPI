@@ -24,7 +24,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using AutoMapper;
 using KM.Framework.Constantes;
 using TNS.AdExpress.Web.Core.Utilities;
-using System.Text;
+using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Constantes.Classification;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
@@ -927,7 +927,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (currentPage != null)
                 {
                     listUniverseClientDescription += currentPage.LoadableUniversString;
-                    defaultBranchId = currentPage.DefaultBranchId;
+                    
                     levelsRules = new AdExpressLevelsRules(webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), dimension);
                     tempBranchIds = levelsRules.GetAuthorizedBranches();
                     tempLevels = levelsRules.GetAuthorizedLevels();
@@ -944,6 +944,25 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         }
                     }
                 }
+                #region Default Branch
+                if (webSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || webSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE)
+                {
+                    foreach (SelectionPageInformation current in currentModuleDescription.SelectionsPages)
+                    {
+
+                        if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess] != null && webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length > 0 && current.ForceBranchId > 0)
+                            defaultBranchId = currentPage.ForceBranchId; //Force Branch advertiser
+                        else defaultBranchId = currentPage.DefaultBranchId; //Branch by default
+                        break;
+
+                    }
+                }
+                else
+                {
+                    defaultBranchId = currentPage.DefaultBranchId;
+                }
+                #endregion
+
             }
             var result = new Tuple<List<long>, List<int>, WebSession, int, int>(_allowedLevelsId, _allowedBranchesIds, webSession, siteLanguage, defaultBranchId);
             return result;

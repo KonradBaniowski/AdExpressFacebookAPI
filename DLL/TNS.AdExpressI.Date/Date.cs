@@ -23,6 +23,14 @@ using TNS.AdExpress.Web.Core.Utilities;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using MediaSelection = TNS.AdExpress.Web.Core.DataAccess.Selections.Medias;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Layers;
+using TNS.FrameWork;
+using TNS.AdExpressI.Date.DAL;
+using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
+using CstWeb = TNS.AdExpress.Constantes.Web;
+using System.Globalization;
+using System.Reflection;
 
 namespace TNS.AdExpressI.Date {
 
@@ -72,7 +80,7 @@ namespace TNS.AdExpressI.Date {
             DateTime tempDate = DateTime.Now;
             bool isLastCompletePeriod = false;
 
-            if (webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE &&
+            if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE &&
                 periodCalendarDisponibilityType == globalCalendar.periodDisponibilityType.lastCompletePeriod) {
 
                 lastDayEnable = FirstDayNotEnable.AddDays(-1);
@@ -114,7 +122,7 @@ namespace TNS.AdExpressI.Date {
 
             compareDate = new DateTime(Convert.ToInt32(webSession.PeriodEndDate.Substring(0, 4)), Convert.ToInt32(webSession.PeriodEndDate.Substring(4, 2)), Convert.ToInt32(webSession.PeriodEndDate.Substring(6, 2)));
 
-            if (webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) {
+            if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE) {
 
                 if (CompareDateEnd(lastDayEnable, compareDate))
                     webSession.CustomerPeriodSelected = new CustomerPeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate, true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
@@ -157,7 +165,7 @@ namespace TNS.AdExpressI.Date {
             globalCalendar.periodDisponibilityType periodDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
             _isUpdateDates = true;
 
-            if (webSessionSave.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) {
+            if (webSessionSave.CurrentModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE) {
 
                 try {
 
@@ -265,7 +273,7 @@ namespace TNS.AdExpressI.Date {
 
             compareDate = new DateTime(Convert.ToInt32(webSession.PeriodEndDate.Substring(0, 4)), Convert.ToInt32(webSession.PeriodEndDate.Substring(4, 2)), Convert.ToInt32(webSession.PeriodEndDate.Substring(6, 2)));
 
-            if (webSessionSave.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) {
+            if (webSessionSave.CurrentModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE) {
 
                 if (CompareDateEnd(lastDayEnable, compareDate))
                     webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate, true, comparativePeriodType, periodDisponibilityType);
@@ -660,5 +668,80 @@ namespace TNS.AdExpressI.Date {
 
         }
         #endregion
+
+        /// <summary>
+        ///  Get Period label in product class analysis depending on selected year
+        /// </summary>
+        /// <param name="_session">User session</param>
+        /// <param name="period">period</param>
+        /// <returns>Label describing period in Product Class Analysis depending on selected year</returns>
+        public  string GetPeriodLabel(WebSession _session, CstCustomerSession.Period.Type period)
+        {
+
+            string beginPeriod = "";
+            string endPeriod = "";
+            string year = "";
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+
+            switch (period)
+            {
+                case CstWeb.CustomerSessions.Period.Type.currentYear:
+                    beginPeriod = _session.PeriodBeginningDate;
+                    endPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
+                    break;
+                case CstWeb.CustomerSessions.Period.Type.previousYear:
+                    year = (int.Parse(_session.PeriodBeginningDate.Substring(0, 4)) - 1).ToString();
+                    beginPeriod = year + _session.PeriodBeginningDate.Substring(4);
+                    endPeriod = year + dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate).Substring(4);
+
+                    break;
+                default:
+                    throw new ArgumentException(string.Format("Unable to treat this type of period ({0}) .", period.ToString()));
+            }
+
+            return Convertion.ToHtmlString(SwitchPeriod(_session, beginPeriod, endPeriod));
+        }
+
+        /// <summary>
+        /// Display of period in product classs analysis
+        /// </summary>
+        /// <param name="_session">User session</param>
+        /// <param name="beginPeriod">Period beginning</param>
+        /// <param name="endPeriod">End of period</param>
+        /// <returns>Selected period</returns>
+        public  string SwitchPeriod(WebSession _session, string beginPeriod, string endPeriod)
+        {
+
+            string periodText;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+
+            switch (_session.PeriodType)
+            {
+
+                case CstCustomerSession.Period.Type.nLastMonth:
+                case CstCustomerSession.Period.Type.dateToDateMonth:
+                case CstCustomerSession.Period.Type.previousMonth:
+                case CstCustomerSession.Period.Type.currentYear:
+                case CstCustomerSession.Period.Type.previousYear:
+                case CstCustomerSession.Period.Type.nextToLastYear:
+
+                    if (beginPeriod != endPeriod)
+                        periodText = MonthString.GetCharacters(int.Parse(beginPeriod.Substring(4, 2)), cultureInfo, 0) + "-" + MonthString.GetCharacters(int.Parse(endPeriod.Substring(4, 2)), cultureInfo, 0) + " " + beginPeriod.Substring(0, 4);
+                    else
+                        periodText = MonthString.GetCharacters(int.Parse(beginPeriod.Substring(4, 2)), cultureInfo, 0) + " " + beginPeriod.Substring(0, 4);
+                    break;
+                default:
+                    throw new System.Exception("switchPeriod(_session _session,string beginPeriod,string endPeriod)-->Unable to determine type of period.");
+
+            }
+
+            return periodText;
+        }
+
     }
 }
