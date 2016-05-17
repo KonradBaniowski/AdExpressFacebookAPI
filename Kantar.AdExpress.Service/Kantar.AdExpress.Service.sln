@@ -133,6 +133,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClass
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassReports.Default", "..\DLL\TNS.AdExpressI.ProductClassReports.Default\TNS.AdExpressI.ProductClassReports.Default.csproj", "{39494D67-E6AF-4A0A-A898-1DA4FC43CE88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassIndicators", "..\DLL\TNS.AdExpressI.ProductClassIndicators\TNS.AdExpressI.ProductClassIndicators.csproj", "{F0E136B5-AA9D-468D-BAE4-3599B11D854F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassIndicators.Default", "..\DLL\TNS.AdExpressI.ProductClassIndicators.Default\TNS.AdExpressI.ProductClassIndicators.Default.csproj", "{8EFDFB61-D41D-42C3-A887-898CAB250258}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -483,6 +487,18 @@ Global
 		{39494D67-E6AF-4A0A-A898-1DA4FC43CE88}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{39494D67-E6AF-4A0A-A898-1DA4FC43CE88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39494D67-E6AF-4A0A-A898-1DA4FC43CE88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -552,5 +568,7 @@ Global
 		{6DD9D368-3B59-49E9-9CEF-327A75A04D34} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{C0D576BE-BB8D-4F27-B361-385162442113} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 		{39494D67-E6AF-4A0A-A898-1DA4FC43CE88} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
+		{8EFDFB61-D41D-42C3-A887-898CAB250258} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 	EndGlobalSection
 EndGlobal
