@@ -76,6 +76,7 @@
         var hasMSCreatives = false;
         var creatives = [];
         var detailLevelSelectionType = '';
+        var gridWidth;
 
         function GenericDetailLevelFilter() {
             this.DefaultDetailValue = $('#defaultDetail').val();
@@ -158,11 +159,19 @@
                     })
                 }
 
+                gridWidth = $("#grid_table_container").width();
+
                 $("#grid").igTreeGrid({
                     rowCollapsed: function (evt, ui) {
-                        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                        $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                     }
                 });
+
+                //$("#grid").igTreeGrid({
+                //    rowCollapsed: function (evt, ui) {
+                //        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                //    }
+                //});
 
                 $(".open-media-schedule").on('click', function (e) {
                     $("#perioddetailTypeContainer").removeClass("show").addClass("hide");
