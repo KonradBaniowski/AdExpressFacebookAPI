@@ -8,13 +8,16 @@ using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetai
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
-using FctUtilities = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.Classification.Universe;
 using TNS.AdExpressI.ProductClassReports.Exceptions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Layers;
+using System.Reflection;
+using TNS.AdExpressI.Date;
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
 {
@@ -277,11 +280,14 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			for(i=0; i<=PRODUCT_DATA_INDEXES.GetUpperBound(0); i++){
 				PRODUCT_DATA_INDEXES[i,2]=-1;
 			}
-			#endregion
+            #endregion
 
-			#region Fill table with data
-			yearN= FctUtilities.Dates.getPeriodLabel(_session,CstPeriod.Type.currentYear);
-			yearN1=FctUtilities.Dates.getPeriodLabel(_session,CstPeriod.Type.previousYear);
+            #region Fill table with data
+            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.date];           
+            IDate dateBLL = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+
+            yearN = dateBLL.GetPeriodLabel(_session,CstPeriod.Type.currentYear);
+			yearN1= dateBLL.GetPeriodLabel(_session,CstPeriod.Type.previousYear);
 			//	2 if study on one year
 			//	3 if study on two years
 			if (!_session.ComparativeStudy)nbYearData=2;
@@ -1014,4 +1020,5 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 
     }
 
+  
 }

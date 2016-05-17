@@ -123,7 +123,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines {
 			if (dtData.Rows.Count <= 0) return null;
 
 			#region Periods
-			DateTime begin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+			DateTime begin = FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
             
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
             object[] param = new object[1];
