@@ -77,7 +77,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             #endregion
             #region Presentation
-            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage);
+            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, LanguageConstantes.AnalysisDetailedReport);
             model.UniversGroups = new UserUniversGroupsModel
             {
                 ShowUserSavedGroups = true,

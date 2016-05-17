@@ -122,13 +122,12 @@ namespace Km.AdExpressClientWeb.Helpers
             return result;
         }
 
-        public PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
+        public PresentationModel LoadPresentationBar(int siteLanguage, long module,bool showCurrentSelection = true)
         {
             PresentationModel result = new PresentationModel
             {
-                ModuleCode = LanguageConstantes.MediaScheduleCode,
+                ModuleCode = module,
                 SiteLanguage = siteLanguage,
-                ModuleDecriptionCode = LanguageConstantes.MediaScheduleDescriptionCode,
                 ShowCurrentSelection = showCurrentSelection
             };
             return result;

@@ -89,6 +89,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long PresentAbsentCode = 2167;
         public const long LostWonCode = 2169;
         public const long PortfolioCode = 2170;
+        public const long AnalysisGraphics = 2173;
+        public const long AnalysisDetailedReport = 2174;
         public const long PresentAbsentDescriptionCode = 2196;
         public const long LostWonDescriptionCode = 2198;
         public const long PortfolioDescriptionCode = 2199;
