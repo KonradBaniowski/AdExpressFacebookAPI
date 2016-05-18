@@ -25,18 +25,20 @@ jQuery.fn.extend({
         titleText = titleText.replace('{NB_ELEM}', '       {NB_ELEM}');
         var listElem = undefined;
         var warningHtml = undefined;
-        if (total > nbElemMax) {
-            //listElem = GetHtmlSelectableFromObject(datas.slice(0, nbElemMax), classNameSelection, idSelection);
-            listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
-            nbElemHtml.text(nbElemMax);
-            if (nbElemMaxText != undefined) {
-                warningHtml = $('<small/>');
-                warningHtml.text(nbElemMaxText.replace('{NB_ELEM_MAX}', nbElemMax).replace('{NB_ELEM}', total));
+        if (datas != undefined) {
+            if (total > nbElemMax) {
+                //listElem = GetHtmlSelectableFromObject(datas.slice(0, nbElemMax), classNameSelection, idSelection);
+                listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
+                nbElemHtml.text(nbElemMax);
+                if (nbElemMaxText != undefined) {
+                    warningHtml = $('<small/>');
+                    warningHtml.text(nbElemMaxText.replace('{NB_ELEM_MAX}', nbElemMax).replace('{NB_ELEM}', total));
+                }
             }
-        }
-        else {
-            nbElemHtml.text(total);
-            listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
+            else {
+                nbElemHtml.text(total);
+                listElem = GetHtmlSelectableFromObject(datas, classNameSelection, idSelection);
+            }
         }
 
         titleText = titleText.replace('{NB_ELEM}', $("<div>").append(nbElemHtml.clone()).html());

@@ -91,6 +91,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var marketNode = new NavigationNode { Position = 1 };         
             model.NavigationBar = helper.LoadNavBar(webSessionId, _controller, _siteLanguage, 1);
             // listBranch=TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString();
+            
             return View(model);
         }
     }

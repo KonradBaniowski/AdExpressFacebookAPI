@@ -145,6 +145,14 @@ namespace Km.AdExpressClientWeb
 
             bundles.Add(new ScriptBundle("~/bundles/language-choice").Include(
                   "~/Scripts/app/language-choice.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/analysis").Include(
+                        "~/Scripts/market/market-analysis.js",
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/market/market-required.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/universe/universe-market.js"));
         }
     }
 }

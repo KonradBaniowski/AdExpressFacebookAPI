@@ -886,6 +886,36 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
             return result;
         }
+
+        public List<UniversItem> GetGategoryItems(string webSessionId, out int nbItems, Dimension dimension = Dimension.product)
+        {
+            List<UniversItem> result = new List<UniversItem>();
+            int levelId = 1;
+            webSession = (WebSession)WebSession.Load(webSessionId);
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+            object[] param = new object[3];
+            param[0] = webSession;
+            param[1] = dimension;
+            
+            IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
+              cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            classficationDAL.DBSchema = GetSchema(webSession.CurrentModule);
+            DataTable data = classficationDAL.GetItems(levelId, "*").Tables[0];
+            
+            foreach (var item in data.AsEnumerable())
+            {
+                var UItem = new UniversItem
+                {
+                    Id = int.Parse(item.ItemArray[0].ToString()),
+                    Label = item.ItemArray[1].ToString()
+                };
+                result.Add(UItem);
+            }
+            nbItems = result.Count;
+            return result.Take(1000).ToList();
+        }
         #region private methods
         private Tuple<List<long>, List<int>, WebSession, int, int> GetAllowedIds(string webSessionId, Dimension dimension, bool selectionPage = true)
         {

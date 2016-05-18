@@ -61,7 +61,7 @@
                     </div>
                     @foreach (var item in Model.Branches)
                     {
-                        <div id="branch@(item.Id)" class="universes" style="display:none">
+                        <div id="branch@(item.Id)" class="universes">
                             @foreach (var level in item.UniversLevels)
                             {
                                 <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"
@@ -176,7 +176,7 @@
 @section scripts {
 
 
-    @Scripts.Render("~/bundles/planmedia-market")
+    @Scripts.Render("~/bundles/analysis")
     @Scripts.Render("~/bundles/detail-selection")
 
 }
