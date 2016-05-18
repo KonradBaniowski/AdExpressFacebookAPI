@@ -2098,8 +2098,8 @@ namespace TNS.AdExpressI.LostWon
                             schemaFields.Add(new { name = colKey });
                         }
                         //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label,  group = groups });
-                      
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey,  group = groups });
+                        columnsFixed.Add(new { columnKey = "gr" + colKey, isFixed = false, allowFixing = false });
                     }
                     else
                     {

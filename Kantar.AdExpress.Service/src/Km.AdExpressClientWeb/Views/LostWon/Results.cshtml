@@ -97,7 +97,8 @@
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "ClassifId",
-                width: "1140px",
+                //width: "1140px",
+                width: "100%",
                 defaultColumnWidth: 200,
                 avgRowHeight: 60,
                 autoGenerateColumns: true
@@ -112,6 +113,7 @@
             var needFixedColumns = false;
             var zoomDate = '';
             var previousSubPeriodLabel;
+            var gridWidth;
 
             function GetItems(idItems) {
                 var items = '';
@@ -190,6 +192,7 @@
                             primaryKey: "ID",
                             foreignKey: "PID",
                             width: "1140px",
+                            autofitLastColumn : false,
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -247,11 +250,25 @@
                         })
                     }
 
+                    gridWidth = $("#grid_table_headers").width();
+                    gridWidth += $("#grid_table_headers_fixed").width();
+
+                    if (gridWidth > 1140)
+                        gridWidth = 1140;
+
+                    $("#grid").igTreeGrid("option", "width", gridWidth + "px");
+
                     $("#grid").igTreeGrid({
                         rowCollapsed: function (evt, ui) {
-                            $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                            $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                         }
                     });
+
+                    //$("#grid").igTreeGrid({
+                    //    rowCollapsed: function (evt, ui) {
+                    //        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                    //    }
+                    //});
 
                 } else {
                     alert(error);

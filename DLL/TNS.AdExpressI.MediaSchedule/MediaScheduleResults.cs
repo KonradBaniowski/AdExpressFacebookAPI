@@ -1785,7 +1785,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                     periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
                     columns.Add(new { headerText = periodLabel, key = "PERIOD_COMP", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
                     schemaFields.Add(new { name = "PERIOD_COMP" });
-                    columnsFixed.Add(new { columnKey = "PERIOD_COMP", isFixed = true, allowFixing = true });
+                    columnsFixed.Add(new { columnKey = "PERIOD_COMP", isFixed = false, allowFixing = false });
                     tableWidth += 100;
                 }
                 //PDM
@@ -1793,7 +1793,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 {
                     columns.Add(new { headerText = GestionWeb.GetWebWord(806, _session.SiteLanguage), key = "PDM_COMP", dataType = "number", format= "percent", columnCssClass= "colStyle", width = "82", allowSorting = true });
                     schemaFields.Add(new { name = "PDM_COMP" });
-                    columnsFixed.Add(new { columnKey = "PDM_COMP", isFixed = true, allowFixing = true });
+                    columnsFixed.Add(new { columnKey = "PDM_COMP", isFixed = false, allowFixing = false });
                     tableWidth += 82;
                 }
             }
@@ -1807,14 +1807,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                     periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
                     columns.Add(new { headerText = periodLabel, key = "PERIOD", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
                     schemaFields.Add(new { name = "PERIOD" });
-                    columnsFixed.Add(new { columnKey = "PERIOD", isFixed = true, allowFixing = true });
+                    columnsFixed.Add(new { columnKey = "PERIOD", isFixed = false, allowFixing = false });
                     tableWidth += 100;
                 }
                 else
                 {
                     columns.Add(new { headerText = GestionWeb.GetWebWord(805, _session.SiteLanguage), key = "PERIOD", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
                     schemaFields.Add(new { name = "PERIOD" });
-                    columnsFixed.Add(new { columnKey = "PERIOD", isFixed = true, allowFixing = true });
+                    columnsFixed.Add(new { columnKey = "PERIOD", isFixed = false, allowFixing = false });
                     tableWidth += 100;
                 }
             }
@@ -1823,7 +1823,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             {
                 columns.Add(new { headerText = GestionWeb.GetWebWord(806, _session.SiteLanguage), key = "PDM", dataType = "number", format = "percent", columnCssClass = "colStyle", width = "82", allowSorting = true });
                 schemaFields.Add(new { name = "PDM" });
-                columnsFixed.Add(new { columnKey = "PDM", isFixed = true, allowFixing = true });
+                columnsFixed.Add(new { columnKey = "PDM", isFixed = false, allowFixing = false });
                 tableWidth += 82;
             }
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
@@ -1831,7 +1831,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 //Evol
                 columns.Add(new { headerText = GestionWeb.GetWebWord(1212, _session.SiteLanguage), key = "EVOL", dataType = "number", format = "percent", columnCssClass = "colStyle", width = "82", allowSorting = true });
                 schemaFields.Add(new { name = "EVOL" });
-                columnsFixed.Add(new { columnKey = "EVOL", isFixed = true, allowFixing = true });
+                columnsFixed.Add(new { columnKey = "EVOL", isFixed = false, allowFixing = false });
                 tableWidth += 82;
             }
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
@@ -1841,7 +1841,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             {
                 columns.Add(new { headerText = GestionWeb.GetWebWord(1994, _session.SiteLanguage), key = "VERSION", dataType = "string", width = "82" });
                 schemaFields.Add(new { name = "VERSION" });
-                columnsFixed.Add(new { columnKey = "VERSION", isFixed = true, allowFixing = true });
+                columnsFixed.Add(new { columnKey = "VERSION", isFixed = false, allowFixing = false });
                 tableWidth += 82;
             }
             // Insertions
@@ -1850,7 +1850,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 string insertionLabel = GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, _session.SiteLanguage);
                 columns.Add(new { headerText = insertionLabel, key = "INSERTION", dataType = "string", width = "82" });
                 schemaFields.Add(new { name = "INSERTION" });
-                columnsFixed.Add(new { columnKey = "INSERTION", isFixed = true, allowFixing = true });
+                columnsFixed.Add(new { columnKey = "INSERTION", isFixed = false, allowFixing = false });
                 tableWidth += 82;
             }
             // TODO : Remove commented code for countries that don't use Comparative study
@@ -1891,7 +1891,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 columns.Add(new { headerText = "", key = prevPeriod, group = periodColumnsL1 });
                             else
                                 columns.Add(new { headerText = prevPeriod, key = prevPeriod, group = periodColumnsL1 });
-                            columnsFixed.Add(new { columnKey = prevPeriod, isFixed = true, allowFixing = false });
+                            columnsFixed.Add(new { columnKey = prevPeriod, isFixed = false, allowFixing = false });
                             nbPeriod = 0;
                             prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
                             periodColumnsL1 = new List<object>();
@@ -1950,9 +1950,11 @@ namespace TNS.AdExpressI.MediaSchedule {
                     }
                     // Compute last date
                     if (nbPeriod < 3)
-                        columns.Add(new { headerText = "", group = periodColumnsL1 });
+                        columns.Add(new { headerText = "", key = prevPeriod, group = periodColumnsL1 });
                     else
                         columns.Add(new { headerText = prevPeriod, key = prevPeriod, group = periodColumnsL1 });
+
+                    columnsFixed.Add(new { columnKey = prevPeriod, key = prevPeriod, isFixed = false, allowFixing = false });
                     break;
                 case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
                     StringBuilder days = new StringBuilder();
@@ -1975,7 +1977,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             }
                             else
                                 columns.Add(new { headerText = "", key = globalHeaderKey.ToString(), group = periodColumnsL1 });
-                            columnsFixed.Add(new { columnKey = globalHeaderKey.ToString(), isFixed = false, allowFixing = false });
+                            columnsFixed.Add(new { columnKey = globalHeaderKey.ToString(), key = globalHeaderKey.ToString(), isFixed = false, allowFixing = false });
                             globalHeaderKey++;
                             nbPeriod = 0;
                             prevPeriod = currentDay.Month;
@@ -2004,14 +2006,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                     if (nbPeriod >= 8)
                     {
                         periodDayLabel = TNS.FrameWork.Convertion.ToHtmlString(TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.ToString("yyyyMM")));
-                        columns.Add(new { headerText = periodDayLabel, group = periodColumnsL1 });
+                        columns.Add(new { headerText = periodDayLabel, key = globalHeaderKey.ToString(), group = periodColumnsL1 });
                     }
                     else
                     {
                         columns.Add(new { headerText = "", key = globalHeaderKey.ToString(), group = periodColumnsL1 });
                     }
 
-                    columnsFixed.Add(new { columnKey = globalHeaderKey.ToString(), isFixed = false, allowFixing = false });
+                    columnsFixed.Add(new { columnKey = globalHeaderKey.ToString(), key = globalHeaderKey.ToString(), isFixed = false, allowFixing = false });
                     globalHeaderKey++;
                         
 
