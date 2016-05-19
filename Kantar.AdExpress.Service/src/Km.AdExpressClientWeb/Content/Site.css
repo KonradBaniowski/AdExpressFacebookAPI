@@ -460,20 +460,28 @@ input {
     top: 0;
     left: 0;
     transition: -webkit-transform 1s;
+    -webkit-transition:-webkit-transform 1s;
+    -moz-transition: 1s;
     -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
     transform-style: preserve-3d;
-    backface-visibility: hidden;
+    -moz-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
     position: absolute;
 }
 
 .flip-container .back{
     height: 100px;
     transition: -webkit-transform 1s;
+    -webkit-transition:-webkit-transform 1s;
+    -moz-transition: 1s;
     -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
     transform-style: preserve-3d;
-    backface-visibility: hidden;
+    -moz-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
     display: table;
     width: 100%;
 }
@@ -488,18 +496,21 @@ input {
 }
 
 .back, .back-second {
-    -webkit-transform: rotateY(-180deg);
-    transform: rotateY(-180deg);
+    -webkit-transform: rotateY(-180deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: rotateY(-180deg);  /* IE 9 */
+    transform: rotateY(-180deg);  /* Firefox 16+, IE 10+, Opera */
 }
 
 .tile:hover .back, .tile-second:hover .back-second {
-    -webkit-transform: rotateY(0);
-    transform: rotateY(0);
+    -webkit-transform: rotateY(0);  
+    -ms-transform: rotateY(0);  
+    transform: rotateY(0);  
 }
 
 .tile:hover .front, .tile-second:hover .front-second {
-    -webkit-transform: rotateY(180deg);
-    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg); 
+    -ms-transform: rotateY(180deg); 
+    transform: rotateY(180deg); 
 }
 
 .font-size12 {
