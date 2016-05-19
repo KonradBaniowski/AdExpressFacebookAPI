@@ -20,7 +20,7 @@ namespace KM.Framework.Constantes
         public string Exclude { get; set; }
         public string LoadUnivers { get; set; }
         public string Save { get; set; }
-        public string Submit { get; set; }
+        public string Submit { get; set; }//3040
         public string CleanSelectionMsg { get; set; }
         public string IncludedElements { get; set; }
         public string ExcludedElements { get; set; }
