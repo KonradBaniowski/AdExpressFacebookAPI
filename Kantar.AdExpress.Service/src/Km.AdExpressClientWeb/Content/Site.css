@@ -49,6 +49,11 @@
     width: 200px;
     vertical-align: super;
 }
+@media (max-width:991px){
+    .tl-wrap {
+        width: 90px;
+    }
+}
 
 .tl-active {
     border-color: #ff8c00;
