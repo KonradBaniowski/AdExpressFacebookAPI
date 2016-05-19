@@ -157,7 +157,7 @@
         var userFilter = new UserFilter();
 
         var renderGrid = function (success, error) {
-            
+
             if (success) {
                 $("#grid").igTreeGrid("destroy");
                 $("#gridLoader").hide();
@@ -590,6 +590,14 @@
         $(window).resize(function () {
             $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
         });
+        $(document).on('shown.bs.collapse', '#lvlperso', function (e) {
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
+        $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
+
+
 
     </script>
 }
