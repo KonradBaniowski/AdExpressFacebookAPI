@@ -136,5 +136,7 @@ namespace KM.Framework.Constantes
         public string Export { get; set; }//1992
         public string Delete { get; set; }//1951
         public string Search { get; set;}//TBD
+        public string FiltreLabel { get; set; }//518
+
     }
 }

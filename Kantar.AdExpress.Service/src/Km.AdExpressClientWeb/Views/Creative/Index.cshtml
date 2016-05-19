@@ -25,13 +25,14 @@
                 <a data-toggle="collapse" class="collapsed" href="#filterEvaliant">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h5 class="panel-title">
-                            Filtre
+                            @Model.Labels.FiltreLabel
                             <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
                         </h5>
                     </div>
                 </a>
                 <div id="filterEvaliant" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
+                        <div id="contentFilter"></div>
                         <button id="validEvaliantFilters" class="pull-right btn btn-action">Valider</button>
                     </div>
                 </div>
@@ -201,7 +202,7 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 100
+                                pageSize: 50
                             },
                             {
                                 name: "ColumnFixing",
@@ -228,7 +229,7 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 100
+                                pageSize: 50
                             }
                         ]
                     })
@@ -274,7 +275,7 @@
                                 }
                             }
 
-                            $("#filterEvaliant .panel-body").prepend(strHtml);
+                            $("#contentFilter").html(strHtml);
                             $("#filterEvaliantPanel").show();
                         }
 
@@ -392,6 +393,8 @@
                             $("#gridLoader").show();
                             userFilter.paramsUrl.zoomDate = $(this).attr("period");
                             userFilter.isVehicleChange = false;
+                            userFilter.EvaliantFilters = null;
+                            $("#contentFilter").html("");
                             CallCreativeResult();
                         });
                         $(".sub-period-btn").on('mouseenter', function (e) {
@@ -617,6 +620,8 @@
             $("#gridLoader").show();
             userFilter.isVehicleChanged = true;
             userFilter.paramsUrl.idVehicle = $(this).attr('id');
+            $("#contentFilter").html("");
+            userFilter.EvaliantFilters = null;
             CallCreativeResult();
 
         });

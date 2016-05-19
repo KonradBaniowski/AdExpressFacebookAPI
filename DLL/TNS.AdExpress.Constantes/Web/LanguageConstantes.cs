@@ -22,6 +22,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MediaCode = 190;
         public const long DroppedSuccessfully = 286;
         public const long Media = 363;
+        public const long FiltreLabel = 518;
         public const long QuestionTag3Code = 647;
         public const long CreateFolder = 696;
         public const long DropFolder = 697;
