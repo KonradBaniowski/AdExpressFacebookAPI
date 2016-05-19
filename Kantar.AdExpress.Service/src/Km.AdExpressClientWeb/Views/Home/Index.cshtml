@@ -72,7 +72,7 @@
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PLAN_MEDIA))
                 {
-                    <a href="@Url.Action("Index", "MediaSchedule" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PLAN_MEDIA">
+                    <a href="@Url.Action("Market", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PLAN_MEDIA">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-chart sli-size blue"></i>
@@ -323,14 +323,14 @@
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.INDICATEUR))
                         {
-                            <a href="@Url.Action("Market", "Analysis")" class="list-group-item text-left module-done" id="@Module.Name.INDICATEUR">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
+                            <a href="@Url.Action("Market", "Selection")" class="list-group-item text-left module-done" id="@Module.Name.INDICATEUR">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
                         }
                         else {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.INDICATEUR)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                         {
-                            <a href="@Url.Action("Market", "Analysis")" class="list-group-item text-left module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title.TrimStart()</a>
+                            <a href="@Url.Action("Market", "Selection")" class="list-group-item text-left module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title.TrimStart()</a>
                         }
                         else
                         {

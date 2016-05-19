@@ -196,6 +196,7 @@
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Controllers\SelectionController.cs" />
     <Compile Include="Helpers\PageHelper.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
@@ -1603,6 +1604,8 @@
     <Content Include="Views\Alert\CreateAlert.cshtml" />
     <Content Include="Views\Shared\ExportResult.cshtml" />
     <Content Include="Views\Analysis\Market.cshtml" />
+    <Content Include="Views\Selection\MediaSelection.cshtml" />
+    <Content Include="Views\Selection\Market.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

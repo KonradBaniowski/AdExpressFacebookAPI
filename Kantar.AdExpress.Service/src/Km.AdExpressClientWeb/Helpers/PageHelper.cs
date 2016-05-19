@@ -13,7 +13,7 @@ namespace Km.AdExpressClientWeb.Helpers
 {
     public class PageHelper
     {
-        public List<NavigationNode> LoadNavBar(string idWebSession, string controller, int siteLanguage = 33, int CurrentPosition = 0)
+        public List<NavigationNode> LoadNavBar(string idWebSession, string controller,int siteLanguage = 33, int CurrentPosition = 0)
         {
 
             var model = new List<NavigationNode>();
@@ -79,7 +79,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 default: return "FR";
             }
         }
-        public Labels LoadPageLabels(int siteLanguage)
+        public Labels LoadPageLabels(int siteLanguage, string controller)
         {
             var result = new Labels
             {
@@ -118,6 +118,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
                 Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
+                //CurrentController = controller
             };
             return result;
         }

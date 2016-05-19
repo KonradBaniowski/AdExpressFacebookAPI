@@ -4,6 +4,7 @@ using Kantar.AdExpress.Service.Core.BusinessService;
 using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.Shared;
+using KM.AdExpress.Framework.MediaSelection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Translation;
 using TNS.Classification.Universe;
 
 namespace Km.AdExpressClientWeb.Controllers
@@ -29,6 +31,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
         private int _siteLanguage = 33;
+        private string controller = "Analysis";
 
         private string icon;
         public AnalysisController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionService optionService, ISubPeriodService subPeriodService)
@@ -61,7 +64,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             #region Load each label's text in the appropriate language
             var helper = new Helpers.PageHelper();
-            model.Labels = helper.LoadPageLabels(result.SiteLanguage);
+            model.Labels = helper.LoadPageLabels(result.SiteLanguage, controller);
             model.Branches = Mapper.Map<List<UniversBranch>>(result.Branches);
             foreach (var item in result.Trees)
             {
@@ -90,9 +93,8 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var marketNode = new NavigationNode { Position = 1 };         
             model.NavigationBar = helper.LoadNavBar(webSessionId, _controller, _siteLanguage, 1);
-            // listBranch=TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString();
-            
             return View(model);
         }
+
     }
 }

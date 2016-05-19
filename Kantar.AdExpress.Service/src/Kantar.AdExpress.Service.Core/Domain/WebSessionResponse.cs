@@ -5,14 +5,17 @@ namespace Kantar.AdExpress.Service.Core.Domain
 {
     public class WebSessionResponse
     {
+        public WebSessionResponse()
+        {
+            ControllerDetails = new ControllerDetails();
+        }
         public bool Success { get; set; }
-
         public string ErrorMessage { get; set; }
-
-        public MediaScheduleStep MediaScheduleStep { get; set; }
+        public StudyStep StudyStep { get; set; }
+        public ControllerDetails ControllerDetails { get; set; }
     }
 
-    public enum MediaScheduleStep
+    public enum StudyStep
     {
         Market,
         Media,

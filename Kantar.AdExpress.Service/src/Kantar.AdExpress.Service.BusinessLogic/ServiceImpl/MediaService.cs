@@ -6,12 +6,13 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
-using TNS.AdExpress.Constantes.Web;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 using System.Data;
 using TNS.AdExpress.Domain.Classification;
 using System.Linq;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain;
+using System.Text;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -22,13 +23,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             
             var _webSession = (WebSession)WebSession.Load(idWebSession);
-            var result = new MediaResponse
-            {
-                Media = new List<Core.Domain.Media>(),
-                SiteLanguage = _webSession.SiteLanguage,
-                MediaCommon = new List<int>()
-            };
-            result.MediaCommon= Array.ConvertAll(Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
+            var result = new MediaResponse(_webSession.SiteLanguage);
+            result.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule);
+            result.MediaCommon= Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var vehiclesInfos = VehiclesInformation.GetAll();
             var myMedia = GetMyMedia(_webSession);
             string ids = vehiclesInfos.Select(p => p.Value.DatabaseId.ToString()).Aggregate((c,n)=>c+","+n);
@@ -60,7 +57,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private List<Core.Domain.Media> GetMyMedia(WebSession _webSession)
         {
-            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[Layers.Id.classification];
+            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.classification];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[1];
             param[0] = _webSession;
@@ -102,6 +99,48 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             
                 //return levels[idMedias];
 
+        }
+
+        private ControllerDetails  GetCurrentControllerDetails(long currentModule)
+        {
+            long currentControllerCode = 0;
+            string currentController = string.Empty;
+            switch (currentModule)
+            {
+                case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                    currentControllerCode = CstWeb.LanguageConstantes.MediaScheduleCode;
+                    currentController = "MediaSchedule";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
+                    currentControllerCode =CstWeb.LanguageConstantes.PortfolioCode;
+                    currentController = "Portfolio";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
+                    currentControllerCode =CstWeb.LanguageConstantes.LostWonCode;
+                    currentController = "LostWon";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                    currentControllerCode =CstWeb.LanguageConstantes.PresentAbsentCode;
+                    currentController = "PresentAbsent";
+                    break;
+                case CstWeb.Module.Name.INDICATEUR:
+                    currentControllerCode =CstWeb.LanguageConstantes.AnalysisGraphics;
+                    currentController = "Analysis";
+                    break;
+                case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                    currentControllerCode =CstWeb.LanguageConstantes.AnalysisDetailedReport;
+                    currentController = "Analysis";
+                    break;
+                default:
+                    break;
+            }
+            var current = new ControllerDetails
+            {
+                ControllerCode = currentControllerCode,
+                Name = currentController,
+                ModuleId = currentModule
+            };
+            return current;
         }
     }
 }
