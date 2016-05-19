@@ -14,7 +14,7 @@
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
         <div id="HeaderLoader">
-            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+            <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
         </div>
 
         <div id="HeaderElmt" style="display:none">
@@ -53,7 +53,7 @@
                           Votre navigateur ne gère pas l'élément
                         </video>
                         <div id="mediaLoader">
-                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                            <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
         var userFilter = new UserFilter();
 
         var renderGrid = function (success, error) {
-            
+
             if (success) {
                 $("#grid").igTreeGrid("destroy");
                 $("#gridLoader").hide();
@@ -590,6 +590,14 @@
         $(window).resize(function () {
             $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
         });
+        $(document).on('shown.bs.collapse', '#lvlperso', function (e) {
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
+        $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
+
+
 
     </script>
 }

@@ -115,6 +115,7 @@
     <Compile Include="Exceptions\TrendsXLException.cs" />
     <Compile Include="Exceptions\VehiclesInformationXLException.cs" />
     <Compile Include="Exceptions\InfoNewsXLException.cs" />
+    <Compile Include="Insertions\Filter.cs" />
     <Compile Include="Layers\ControlLayer.cs" />
     <Compile Include="Layers\CoreLayer.cs" />
     <Compile Include="ModulesDescritpion\Trends.cs" />

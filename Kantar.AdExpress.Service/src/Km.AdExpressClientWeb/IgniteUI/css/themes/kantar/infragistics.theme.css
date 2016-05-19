@@ -1497,3 +1497,9 @@ div.pc31
     background-color: #CCFFCC;
     color: #000000;
 }
+
+/***separateur entre colonnes fixeet non fixe***/
+div#grid_table_fixedBodyContainer{
+    border-right:1px solid rgba(0,0,0,0.6);
+    margin-left:-1px;
+}

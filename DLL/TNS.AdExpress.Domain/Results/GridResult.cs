@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TNS.AdExpress.Domain.Insertions;
 
 namespace TNS.AdExpress.Domain.Results
 {
@@ -17,5 +18,6 @@ namespace TNS.AdExpress.Domain.Results
         public bool HasData { get; set; }
         public bool HasMSCreatives { get; set; }
         public string Unit { get; set; }
+        public Filter Filter { get; set; }
     }
 }

@@ -112,6 +112,7 @@
     <Compile Include="Domain\Period.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoOption.cs" />
+    <Compile Include="Domain\ResultOptions\EvaliantFilter.cs" />
     <Compile Include="Domain\ResultOptions\FormatFilter.cs" />
     <Compile Include="Domain\ResultOptions\FormatOption.cs" />
     <Compile Include="Domain\ResultOptions\GenericColumnDetailLevelFilter.cs" />

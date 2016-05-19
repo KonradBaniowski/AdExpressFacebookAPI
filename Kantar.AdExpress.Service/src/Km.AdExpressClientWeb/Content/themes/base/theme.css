@@ -81,7 +81,7 @@
 .ui-state-focus a:hover,
 .ui-state-focus a:link,
 .ui-state-focus a:visited {
-	color: #212121/*{fcHover}*/;
+	/*color: #212121*/ /*{fcHover}*/;
 	text-decoration: none;
 }
 .ui-state-active,

@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.Domain;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     {
 
 
-        InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged);
+        InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged, List<EvaliantFilter> evaliantFilter);
         List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId, bool slogan = false);
 
         SpotResponse GetCreativePath(string idWebSession, string idVersion, long idVehicle);
