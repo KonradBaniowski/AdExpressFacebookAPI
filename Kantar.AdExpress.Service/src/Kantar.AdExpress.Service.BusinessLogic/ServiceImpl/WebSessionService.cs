@@ -24,6 +24,7 @@ using TNS.Classification.Universe;
 using System.Linq;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Domain;
+using System.Text;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -35,16 +36,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const int MaxItemsPerLevel = 100;
         public WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool mediaSupportRequired)
         {
+            var _webSession = (WebSession)WebSession.Load(webSessionId);
             WebSessionResponse response = new WebSessionResponse
             {
-                MediaScheduleStep = MediaScheduleStep.Media
+                StudyStep = StudyStep.Media,
+                ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule)
             };
             bool success = false;
             try
             {
                 List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
-                bool isAllCommun = mediaIds.All(e => commun.Contains(e));
-                var _webSession = (WebSession)WebSession.Load(webSessionId);
+                bool isAllCommun = mediaIds.All(e => commun.Contains(e));                
                 if (!isAllCommun && mediaIds.Count() > 1)
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
@@ -140,7 +142,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     #endregion
 
-                    #region Save Media support if any
+                        #region Save Media support if any
                     if (trees.Any())
                     {
                         Dictionary<int, AdExpressUniverse> universDictionary = new Dictionary<int, AdExpressUniverse>();
@@ -174,30 +176,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             _webSession.PrincipalMediaUniverses = universes;
                             success = true;
                         }
-                        //AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
-                        //if (univers != null && univers.Count() > 0)
-                        //{
-                        //    bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
-                        //    List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
-                        //    if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
-                        //    {                                
-                        //        universDictionary.Add(universDictionary.Count, univers);
-                        //        _webSession.PrincipalMediaUniverses = universDictionary;
-                        //        success = true;
-                        //    }
-                        //    else
-                        //    {
-                        //        response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
-                        //}
                     }
                     #endregion
 
-                    #region Save WebSession
+                        #region Save WebSession
                     if (success)
                     {
                         _webSession.Save();
@@ -222,9 +204,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             WebSessionResponse response = new WebSessionResponse
             {
-                MediaScheduleStep = MediaScheduleStep.Market
+                StudyStep = StudyStep.Market
             };
             var _webSession = (WebSession)WebSession.Load(webSessionId);
+            response.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule);
             bool isValid = (required) ? (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any()) : true;
 
             if (isValid)
@@ -311,13 +294,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
 
             return response;
-        }
+        }       
 
         public WebSessionResponse GetWebSessionLanguage(string webSessionId)
         {
             WebSessionResponse response = new WebSessionResponse
             {
-                MediaScheduleStep = MediaScheduleStep.Market
+                StudyStep = StudyStep.Market
             };
             var _webSession = (WebSession)WebSession.Load(webSessionId);
 
@@ -728,6 +711,43 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
         #endregion
+        public void UpdateSiteLanguage(string webSessionId, int siteLanguage)
+        {
+            _webSession = (WebSession)WebSession.Load(webSessionId);
+            _webSession.SiteLanguage = siteLanguage;
+            _webSession.Save();
+        }
+        public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
+        {
+            if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
+            {
+                var vehiclesSelected = webSession.GetVehiclesSelected();
+
+                if (vehiclesSelected != null && vehiclesSelected.Count > 0)
+                {
+                    var param = new object[1];
+                    param[0] = _webSession;
+                    var clMediaU = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.mediaDetailLevelUtilities];
+                    if (clMediaU == null)
+                        throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+                    var mediaDetailLevelUtilities = (FctUtilities.MediaDetailLevel)
+                                                    AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                                                        string.Format("{0}Bin\\{1}"
+                                                                      , AppDomain.CurrentDomain.BaseDirectory,
+                                                                      clMediaU.AssemblyName), clMediaU.Class, false,
+                                                        BindingFlags.CreateInstance
+                                                        | BindingFlags.Instance | BindingFlags.Public, null, param, null,
+                                                        null);
+
+                    var activeVehicles =
+                        mediaDetailLevelUtilities.GetAllowedVehicles(webSession.GetVehiclesSelected().Keys.ToList(),
+                                                                     universe);
+                    return (activeVehicles.Count == vehiclesSelected.Count);
+
+                }
+            }
+            return true;
+        }
 
         #region Private Methods
         private AdExpressUnivers GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
@@ -789,37 +809,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 default: return false;
             }
         }
-        public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
-        {
-            if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
-            {
-                var vehiclesSelected = webSession.GetVehiclesSelected();
-
-                if (vehiclesSelected != null && vehiclesSelected.Count > 0)
-                {
-                    var param = new object[1];
-                    param[0] = _webSession;
-                    var clMediaU = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.mediaDetailLevelUtilities];
-                    if (clMediaU == null)
-                        throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
-                    var mediaDetailLevelUtilities = (FctUtilities.MediaDetailLevel)
-                                                    AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
-                                                        string.Format("{0}Bin\\{1}"
-                                                                      , AppDomain.CurrentDomain.BaseDirectory,
-                                                                      clMediaU.AssemblyName), clMediaU.Class, false,
-                                                        BindingFlags.CreateInstance
-                                                        | BindingFlags.Instance | BindingFlags.Public, null, param, null,
-                                                        null);
-
-                    var activeVehicles =
-                        mediaDetailLevelUtilities.GetAllowedVehicles(webSession.GetVehiclesSelected().Keys.ToList(),
-                                                                     universe);
-                    return (activeVehicles.Count == vehiclesSelected.Count);
-
-                }
-            }
-            return true;
-        }
+        
         private Dictionary<int, AdExpressUniverse> GetConcurrentUniverses(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
         {
             Dictionary<int, AdExpressUniverse> adExpressUniverses = new Dictionary<int, AdExpressUniverse>(trees.Count);
@@ -863,13 +853,48 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return adExpressUniverses;
         }
-
-        public void UpdateSiteLanguage(string webSessionId, int siteLanguage)
+        private ControllerDetails GetCurrentControllerDetails(long currentModule)
         {
-            _webSession = (WebSession)WebSession.Load(webSessionId);
-            _webSession.SiteLanguage = siteLanguage;
-            _webSession.Save();
+            long currentControllerCode = 0;
+            string currentController = string.Empty;
+            switch (currentModule)
+            {
+                case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                    currentControllerCode = CstWeb.LanguageConstantes.MediaScheduleCode;
+                    currentController = "MediaSchedule";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
+                    currentControllerCode = CstWeb.LanguageConstantes.PortfolioCode;
+                    currentController = "Portfolio";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
+                    currentControllerCode = CstWeb.LanguageConstantes.LostWonCode;
+                    currentController = "LostWon";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                    currentControllerCode = CstWeb.LanguageConstantes.PresentAbsentCode;
+                    currentController = "PresentAbsent";
+                    break;
+                case CstWeb.Module.Name.INDICATEUR:
+                    currentControllerCode = CstWeb.LanguageConstantes.AnalysisGraphics;
+                    currentController = "Analysis";
+                    break;
+                case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                    currentControllerCode = CstWeb.LanguageConstantes.AnalysisDetailedReport;
+                    currentController = "Analysis";
+                    break;
+                default:
+                    break;
+            }
+            var current = new ControllerDetails
+            {
+                ControllerCode = currentControllerCode,
+                Name = currentController,
+                ModuleId = currentModule
+            };
+            return current;
         }
+
         #endregion
     }
 }

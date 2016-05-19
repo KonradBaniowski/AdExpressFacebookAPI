@@ -18,9 +18,35 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
     public class MediaResponse
     {
+        public MediaResponse(int siteLanguage)
+        {
+            ControllerDetails = new ControllerDetails();
+            Media = new List<Core.Domain.Media>();
+            MediaCommon = new List<int>();
+            SiteLanguage = siteLanguage;
+        }
+        public MediaResponse()
+        {
+            ControllerDetails = new ControllerDetails();
+            Media = new List<Core.Domain.Media>();
+            MediaCommon = new List<int>();
+        }
         public List<Media> Media { get; set; }
         public int SiteLanguage { get; set; }
-
         public List<int> MediaCommon { get; set; }
+        public ControllerDetails ControllerDetails { get; set;}
+    }
+
+    public class ControllerDetails
+    {
+        public ControllerDetails()
+            {
+            ControllerCode = 0;
+            Name = string.Empty;
+            ModuleId = 0;
+        }
+        public long ControllerCode { get; set; }
+        public string Name { get; set; }
+        public long ModuleId { get; set; }
     }
 }

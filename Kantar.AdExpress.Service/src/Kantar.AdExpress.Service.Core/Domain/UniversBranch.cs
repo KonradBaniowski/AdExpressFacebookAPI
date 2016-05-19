@@ -15,10 +15,32 @@ namespace Kantar.AdExpress.Service.Core.Domain
     public class UniversBranchResult
 
     {
+        public UniversBranchResult(int siteLanguage)
+        {
+            ControllerDetails = new ControllerDetails();
+            Trees = new List<Tree>();
+            Branches = new List<UniversBranch>();
+            SiteLanguage = siteLanguage;
+        }
+        public UniversBranchResult()
+        {
+            ControllerDetails = new ControllerDetails();
+            Trees = new List<Tree>();
+            Branches = new List<UniversBranch>();
+        }
+        public UniversBranchResult(int siteLanguage,int defaultBranchId, int count)
+        {
+            ControllerDetails = new ControllerDetails();
+            Trees = new List<Tree>(count);
+            Branches = new List<UniversBranch>();
+            SiteLanguage = siteLanguage;
+            DefaultBranchId = defaultBranchId;
+        }
         public List<UniversBranch> Branches { get; set; }
         public int SiteLanguage { get; set; }
         public int DefaultBranchId { get; set; }
         public List<Tree> Trees { get; set; }
+         public ControllerDetails ControllerDetails { get; set; }
     }
 
     public class UniversLevel

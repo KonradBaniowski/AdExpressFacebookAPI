@@ -124,8 +124,9 @@ $('#Market').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
-    if (nextUrl === "MediaSchedule") {
-        nextUrl = "Index";
+    if (nextUrl === "MediaSchedule"|| nextUrl==="Analysis") {
+        //nextUrl = "Index";
+        nextUrl = "Market";
     }
     NextStep(nextUrl, dis)
 });
@@ -134,8 +135,10 @@ $('#Dates').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
-    if (nextUrl === "MediaSchedule") {
-        nextUrl = "Index";
+    
+    if (nextUrl === "MediaSchedule"|| nextUrl==="Analysis") {
+        //nextUrl = "Index";
+        nextUrl = "Market";
     }
     NextStep(nextUrl, dis)
 });
@@ -158,7 +161,8 @@ $('#Results').on('click', function (e) {
         var nextUrl = $(this).attr('href').split('/').pop();
         if (nextUrl === "MediaSchedule") {
             strHtml += "<li>" + page + "</li>";
-            nextUrl = "Index";
+            //nextUrl = "Index";
+            nextUrl = "Market";
         }
         var dis = this;
         NextStep(nextUrl, dis)
@@ -231,7 +235,7 @@ function NextStep(nextUrl, dis) {
         nextStep: nextUrl
     };
     $.ajax({
-        url: '/MediaSchedule/SaveMediaSelection',
+        url: '/Selection/SaveMediaSelection',
         type: 'POST',
         data: params,
         error: function (data) {

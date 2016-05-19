@@ -106,14 +106,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage = true, int MaxIncludeNbr = 2, int MaxExcludeNbr = 1)
         {
             var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
-
-            var result = new UniversBranchResult
-            {
-                Branches = new List<UniversBranch>(),
-                SiteLanguage = tuple.Item4,
-                DefaultBranchId = tuple.Item5,
-                Trees = new List<Tree>(MaxIncludeNbr + MaxExcludeNbr)
-            };
+            var result = new UniversBranchResult(tuple.Item4, tuple.Item5, MaxIncludeNbr + MaxExcludeNbr);
+            result.ControllerDetails = GetCurrentControllerDetails(tuple.Item3.CurrentModule);          
             var allowedBranchesIds = tuple.Item2;
             var allUnivers = new List<UniversLevel>();
             if (allowedBranchesIds.Any())
@@ -1245,6 +1239,47 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
              #endregion
             return result;
+        }
+        private ControllerDetails GetCurrentControllerDetails(long currentModule)
+        {
+            long currentControllerCode = 0;
+            string currentController = string.Empty;
+            switch (currentModule)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    currentControllerCode = WebConstantes.LanguageConstantes.MediaScheduleCode;
+                    currentController = "MediaSchedule";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                    currentControllerCode = WebConstantes.LanguageConstantes.PortfolioCode;
+                    currentController = "Portfolio";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    currentControllerCode = WebConstantes.LanguageConstantes.LostWonCode;
+                    currentController = "LostWon";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    currentControllerCode = WebConstantes.LanguageConstantes.PresentAbsentCode;
+                    currentController = "PresentAbsent";
+                    break;
+                case WebConstantes.Module.Name.INDICATEUR:
+                    currentControllerCode = WebConstantes.LanguageConstantes.AnalysisGraphics;
+                    currentController = "Analysis";
+                    break;
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    currentControllerCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
+                    currentController = "Analysis";
+                    break;
+                default:
+                    break;
+            }
+            var current = new ControllerDetails
+            {
+                ControllerCode = currentControllerCode,
+                Name = currentController,
+                ModuleId = currentModule
+            };
+            return current;
         }
         #endregion
     }

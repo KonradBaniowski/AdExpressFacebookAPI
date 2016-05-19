@@ -88,9 +88,9 @@ $(function () {
             trees: trees,
             nextStep: nextUrl
         };
-
+        
         $.ajax({
-            url: '/MediaSchedule/SaveMarketSelection',
+            url: '/Selection/SaveMarketSelection',
             type: 'POST',
             data: params,
             error: function (data) {
@@ -105,6 +105,38 @@ $(function () {
                 }
             }
         });
+    }
+    var moduleId = $('#CurrentModule').val();
+    if (moduleId == 194 || moduleId == 195)
+    {
+     $("#branch1 > div").each(function () {
+        var DIS = $(this);
+        var universe = parseFloat($(this).attr('data-universe'))
+        var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
+        if (universe === 1) {
+            $.ajax({
+        url: '/Universe/GetCategoryItems',
+        contentType: 'application/json',
+        type: 'POST',
+        datatype: 'JSON',
+        error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("error");
+    },
+        success: function (response) {
+                    DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+
+                    $('#selectable' + universe).selectableScroll({
+        stop: SelectedItems
+    });
+
+    }
+    });
+    }
+    else {
+            DIS.fillGroupSelectable(univerLabel, undefined, 0, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+    }
+
+    })
     }
 });
 
