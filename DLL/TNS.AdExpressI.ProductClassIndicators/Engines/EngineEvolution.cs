@@ -433,7 +433,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
 
             System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
-            DateTime periodBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            DateTime periodBegin = FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
             
 			#region if year N-2
             if (DateTime.Now.Year > _session.DownLoadDate)

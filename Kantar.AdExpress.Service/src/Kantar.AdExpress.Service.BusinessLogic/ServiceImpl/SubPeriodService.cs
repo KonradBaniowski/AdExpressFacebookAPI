@@ -39,11 +39,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             string realPeriodBegin = CustomerSession.PeriodBeginningDate;
             string realPeriodEnd = CustomerSession.PeriodEndDate;
 
-            DateTime begin = Dates.getPeriodBeginningDate(realPeriodBegin, CustomerSession.PeriodType);
+            DateTime begin = Dates.GetPeriodBeginningDate(realPeriodBegin, CustomerSession.PeriodType);
             DateTime today = DateTime.Now.Date;
 
             realPeriodBegin = begin.ToString("yyyyMMdd");
-            realPeriodEnd = Dates.getPeriodEndDate(realPeriodEnd, CustomerSession.PeriodType).ToString("yyyyMMdd");
+            realPeriodEnd = Dates.GetPeriodEndDate(realPeriodEnd, CustomerSession.PeriodType).ToString("yyyyMMdd");
 
             if (periodDisplay == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
             {
@@ -161,7 +161,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 tmpBegin = Dates.DateToString(
                     Dates.Max(Dates.getZoomBeginningDate(currentPeriod, periodType),
-                    Dates.getPeriodBeginningDate(globalDateBegin, WebCst.CustomerSessions.Period.Type.dateToDate))
+                    Dates.GetPeriodBeginningDate(globalDateBegin, WebCst.CustomerSessions.Period.Type.dateToDate))
                     , CustomerSession.SiteLanguage);
             }
             else
@@ -173,7 +173,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 tmpEnd = Dates.DateToString(
                     Dates.Min(Dates.getZoomEndDate(currentPeriod, periodType),
-                    Dates.getPeriodEndDate(globalDateEnd, WebCst.CustomerSessions.Period.Type.dateToDate))
+                    Dates.GetPeriodEndDate(globalDateEnd, WebCst.CustomerSessions.Period.Type.dateToDate))
                     , CustomerSession.SiteLanguage);
             }
             else

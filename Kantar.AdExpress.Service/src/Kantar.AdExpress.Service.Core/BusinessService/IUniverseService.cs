@@ -24,5 +24,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         AdExpressUniversResponse GetUnivers(string webSessionId, string branch, string listUniverseClientDescription);
         AlertResponse GetUserAlerts(string webSessionId);
         string SaveUserResult(string webSessionId, string folderId, string saveAsResultId, string saveResult);
+        List<UniversItem> GetGategoryItems( string webSessionId, out int nbItems, Dimension dimension = Dimension.product);
     }
 }

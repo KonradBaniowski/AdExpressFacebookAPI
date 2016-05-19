@@ -42,4 +42,8 @@
   <flag id="353" description="Accès aux volumes du Media Display"/>
   <!--<flag id="359" description="Accès Agences Media SEARCH"/>-->
   <flag id="358" description="Accès Mode de vente Display"/>
+  <flag id="363" description="Accéder aux creations DOOH"/>
+  <flag id="364" description="Accès Agences Media DOOH"/>
+  <flag id="365" description="Accès détail DOOH"/>
+  <flag id="368" description="Accès AUX Codes SIRET"/>
 </flags>

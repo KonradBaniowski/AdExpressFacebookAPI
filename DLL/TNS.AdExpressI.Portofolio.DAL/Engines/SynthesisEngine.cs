@@ -572,7 +572,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion);
             bool isAlertModule = _webSession.CustomerPeriodSelected.IsSliding4M;
             if (isAlertModule == false) {
-                DateTime DateBegin = Dates.getPeriodBeginningDate(_beginingDate, _webSession.PeriodType);
+                DateTime DateBegin = Dates.GetPeriodBeginningDate(_beginingDate, _webSession.PeriodType);
                 if (DateBegin > DateTime.Now)
                     isAlertModule = true;
             }

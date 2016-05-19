@@ -193,7 +193,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             PeriodDetail.PeriodDetailType.Items = new List<SelectItem>();
             PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2290, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.monthly.GetHashCode().ToString() });
             PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(848, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.weekly.GetHashCode().ToString() });
-            DateTime begin = WebCore.Utilities.Dates.getPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
+            DateTime begin = WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
             if (begin >= DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
             {
                 PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2289, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.dayly.GetHashCode().ToString() });
@@ -201,7 +201,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (_customerWebSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
             {
-                if (WebCore.Utilities.Dates.getPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                if (WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
                     < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
                 {
                     _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;

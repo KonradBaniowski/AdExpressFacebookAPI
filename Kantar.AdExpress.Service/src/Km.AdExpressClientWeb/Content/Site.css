@@ -2440,6 +2440,10 @@ ul.ui-selectable {
     outline-style: none;
 }
 
+.gadLink:before {
+    content: "> ";
+}
+
 .gadCreativeLink {
     color: inherit;
     cursor: pointer;
@@ -2592,4 +2596,7 @@ ul.ui-selectable {
     font-weight:bold;
     border-bottom:1px solid rgba(255,255,255,0.2);
     margin-top:10px;
+}
+.colStyle {
+    text-align: right;
 }

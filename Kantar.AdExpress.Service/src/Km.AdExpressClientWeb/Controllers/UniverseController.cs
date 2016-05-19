@@ -419,6 +419,13 @@ namespace Km.AdExpressClientWeb.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        
+        public JsonResult GetCategoryItems()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var idWebSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            int totalItems = 0;
+            var model = _universeService.GetGategoryItems(idWebSession, out totalItems);
+            return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

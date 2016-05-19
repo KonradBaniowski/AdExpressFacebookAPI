@@ -220,8 +220,8 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 }
             }
             else {
-                dtFirstDate = Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
-                dtLastDate = Dates.getPeriodEndDate(_periodEnd, _webSession.PeriodType);
+                dtFirstDate = Dates.GetPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
+                dtLastDate = Dates.GetPeriodEndDate(_periodEnd, _webSession.PeriodType);
             }
         }
         #endregion		
@@ -1675,7 +1675,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
             bool isAlertModule = _webSession.CustomerPeriodSelected.IsSliding4M;
             if (isAlertModule == false)
             {
-                DateTime DateBegin = Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
+                DateTime DateBegin = Dates.GetPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
                 if (DateBegin > DateTime.Now)
                     isAlertModule = true;
             }

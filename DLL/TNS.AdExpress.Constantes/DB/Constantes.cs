@@ -1842,7 +1842,24 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Identifier of SEARCH's media agency flag
         /// </summary>
         public const Int64 ID_PURCHASE_MODE_DISPLAY_FLAG = 358;
-        
+        /// <summary>
+        /// Identifiant du flag d'accès aux créations créations DOOH
+        /// </summary>
+        public const Int64 ID_DOOH_CREATION_ACCESS_FLAG = 363;
+
+        /// <summary>
+        /// Identifier of DOOH's media agency flag
+        /// </summary>
+        public const Int64 ID_DOOH_MEDIA_AGENCY_FLAG = 364;
+        /// <summary>
+        /// Identifiant du flag detail des insertion
+        /// </summary>
+        public const Int64 ID_DETAIL_DOOH_ACCESS_FLAG = 365;
+        /// <summary>
+        /// Identifiant du flag accès aux codes SIRET
+        /// </summary>
+        public const Int64 ID_CODE_SIRET_ACCESS_FLAG = 368;
+
     }
 	#endregion
 

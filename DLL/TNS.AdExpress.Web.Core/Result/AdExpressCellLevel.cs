@@ -263,14 +263,43 @@ namespace TNS.AdExpress.Web.Core.Result{
                 )
                 || (_webSession == null && _addressId > 0))
             {
-                html.AppendFormat("<span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\"> ", _webSession.IdSession, _label, _addressId);
-                html.AppendFormat("> {0}</span>", this._label);
+                html.AppendFormat("<span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\">", _webSession.IdSession, _label, _addressId);
+                html.AppendFormat("{0}</span>", this._label);
             }
             else
             {
                 return this._label;
             }
             return html.ToString();
+        }
+
+        /// <summary>
+        /// RawString
+        /// </summary>
+        /// <returns></returns>
+        public string RawString()
+        {
+            return this._label;
+        }
+
+        /// <summary>
+        /// Get Gad Params
+        /// </summary>
+        /// <returns></returns>
+        public string GetGadParams()
+        {
+
+            if (_genericDetailLevel == null) _genericDetailLevel = _webSession.GenericProductDetailLevel;
+
+            if ((_webSession != null && _addressId > 0
+                && _genericDetailLevel.GetDetailLevelItemInformation(this.Level).Equals(DetailLevelItemInformation.Levels.advertiser)
+                )
+                || (_webSession == null && _addressId > 0))
+            {
+                return string.Format("{0}, {1}, {2}", _webSession.IdSession, _label, _addressId);
+            }
+            else
+                return string.Empty;
         }
     }
 }

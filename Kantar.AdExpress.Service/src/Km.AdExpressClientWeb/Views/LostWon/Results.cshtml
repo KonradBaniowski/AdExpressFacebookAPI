@@ -86,6 +86,7 @@
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
     @Scripts.Render("~/bundles/results")
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
@@ -96,7 +97,8 @@
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "ClassifId",
-                width: "1140px",
+                //width: "1140px",
+                width: "100%",
                 defaultColumnWidth: 200,
                 avgRowHeight: 60,
                 autoGenerateColumns: true
@@ -111,6 +113,7 @@
             var needFixedColumns = false;
             var zoomDate = '';
             var previousSubPeriodLabel;
+            var gridWidth;
 
             function GetItems(idItems) {
                 var items = '';
@@ -189,6 +192,7 @@
                             primaryKey: "ID",
                             foreignKey: "PID",
                             width: "1140px",
+                            autofitLastColumn : false,
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -246,16 +250,114 @@
                         })
                     }
 
+                    gridWidth = $("#grid_table_headers").width();
+                    gridWidth += $("#grid_table_headers_fixed").width();
+
+                    if (gridWidth > 1140)
+                        gridWidth = 1140;
+
+                    $("#grid").igTreeGrid("option", "width", gridWidth + "px");
+
                     $("#grid").igTreeGrid({
                         rowCollapsed: function (evt, ui) {
-                            $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                            $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                         }
                     });
+
+                    //$("#grid").igTreeGrid({
+                    //    rowCollapsed: function (evt, ui) {
+                    //        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                    //    }
+                    //});
 
                 } else {
                     alert(error);
                 }
 
+            }
+
+            function UnitFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number");
+
+                return "";
+            }
+
+            function PageFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "#,##0.###");
+
+                return "";
+            }
+
+            function EvolFormatter(val) {
+                //if (isNaN(val))
+                //    return '';
+
+                if (val == "+Infinity")
+                    return '+<img src="../Content/img/g.gif" />';
+                else if (val == "-Infinity")
+                    return '-<img src="../Content/img/r.gif" />';
+
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
+
+                if (val < 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
+
+                if(val == 0)
+                    return '<img src="../Content/img/o.gif" />';
+
+                return '';
+            }
+
+            function DurationFormatter(val) {
+
+                if (val == 0)
+                    return "";
+
+                var s = val.toString();
+                var nbToFillWithZero = 6 - s.length;
+                for (var i = 0; i < nbToFillWithZero; i++)
+                    s = "0" + s;
+                return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+            }
+
+            function GetColumnsFormatter(columns, unit) {
+
+                if (columns != null) {
+
+                    columns.forEach(function (elem) {
+                        if (elem.group != null && elem.group != 'undefined') {
+                            for (var i = 0, len = elem.group.length; i < len; i++) {
+                                if (elem.group[i].key.indexOf("unit") > -1) {
+                                    if (unit == "duration")
+                                        elem.group[i].formatter = DurationFormatter;
+                                    else if (unit == "pages")
+                                        elem.group[i].formatter = PageFormatter;
+                                    else
+                                        elem.group[i].formatter = UnitFormatter;
+                                }
+                                if (elem.group[i].key.indexOf("evol") > -1) {
+                                    elem.group[i].formatter = EvolFormatter;
+                                }
+                            }
+                        } else if (elem.key.indexOf("unit") > -1) {
+                            if (unit == "duration")
+                                elem.formatter = DurationFormatter;
+                            else if (unit == "pages")
+                                elem.formatter = PageFormatter;
+                            else
+                                elem.formatter = UnitFormatter;
+                        } else if (elem.key.indexOf("evol") > -1) {
+                            elem.formatter = EvolFormatter;
+                        }
+                    });
+
+                    return columns;
+                }
+
+                return columns;
             }
 
             function CallLostWonResult() {
@@ -270,7 +372,7 @@
                     success: function (data) {
                         if (data != null && data != "") {
                             dataTreeGrid = data.datagrid;
-                            cols = data.columns;
+                            cols = GetColumnsFormatter(data.columns, data.unit);
                             colsFixed = data.columnsfixed;
                             needFixedColumns = data.needfixedcolumns;
 

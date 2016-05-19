@@ -20,7 +20,7 @@ using CstComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.Co
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using CstUnit = TNS.AdExpress.Constantes.Web.CustomerSessions.Unit;
-using FctUtilities = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 
@@ -34,6 +34,9 @@ using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
+using System.Reflection;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -159,11 +162,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     tab = new object[10, 5];
 
                     #region Labels
-                    tab[0, TOTAL_N_COLUMN_INDEX] = FctUtilities.Dates.getPeriodLabel(_session, CstPeriod.Type.currentYear);
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.date];
+                    IDate dateBLL = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+                    tab[0, TOTAL_N_COLUMN_INDEX] = dateBLL.GetPeriodLabel(_session, CstPeriod.Type.currentYear);
 
                     if (_session.ComparativeStudy)
                     {
-                        tab[0, TOTAL_N1_COLUMN_INDEX] = FctUtilities.Dates.getPeriodLabel(_session, CstPeriod.Type.previousYear);
+                        tab[0, TOTAL_N1_COLUMN_INDEX] = dateBLL.GetPeriodLabel(_session, CstPeriod.Type.previousYear);
                         tab[0, EVOLUTION_COLUMN_INDEX] = GestionWeb.GetWebWord(1207, _session.SiteLanguage);
                         tab[0, ECART_COLUMN_INDEX] = GestionWeb.GetWebWord(1213, _session.SiteLanguage);
 

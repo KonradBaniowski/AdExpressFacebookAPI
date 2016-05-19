@@ -105,11 +105,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         ? TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateWeek : TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateMonth;
                     _fromDate = Convert.ToInt32(
                         Dates.Max(Dates.getZoomBeginningDate(zoomDate, periodType),
-                            Dates.getPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                            Dates.GetPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
                         );
                     _toDate = Convert.ToInt32(
                         Dates.Min(Dates.getZoomEndDate(zoomDate, periodType),
-                            Dates.getPeriodEndDate(periodEnd, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                            Dates.GetPeriodEndDate(periodEnd, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
                         );
                 }
                 else

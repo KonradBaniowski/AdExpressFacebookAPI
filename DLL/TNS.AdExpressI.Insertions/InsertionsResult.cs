@@ -199,8 +199,8 @@ namespace TNS.AdExpressI.Insertions
         {
             var vehicles = new List<VehicleInformation>();
 
-            DateTime dateBegin = Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            DateTime dateEnd = Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
+            DateTime dateBegin = Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            DateTime dateEnd = Dates.GetPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
             int iDateBegin = Convert.ToInt32(dateBegin.ToString("yyyyMMdd"));
             int iDateEnd = Convert.ToInt32(dateEnd.ToString("yyyyMMdd"));
             _getCreatives = sloganNotNull;
@@ -815,7 +815,7 @@ namespace TNS.AdExpressI.Insertions
                         switch (levels[i].Id)
                         {
                             case DetailLevelItemInformation.Levels.date:
-                                data[cLine, 1] = new CellDate(Dates.getPeriodBeginningDate(row[levels[i].DataBaseField].ToString(),
+                                data[cLine, 1] = new CellDate(Dates.GetPeriodBeginningDate(row[levels[i].DataBaseField].ToString(),
                                     CustomerSessions.Period.Type.dateToDate), "{0:shortdatepattern}");
                                 break;
                             case DetailLevelItemInformation.Levels.duration:

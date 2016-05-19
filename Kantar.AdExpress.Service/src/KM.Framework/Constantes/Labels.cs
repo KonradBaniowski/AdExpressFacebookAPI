@@ -134,5 +134,7 @@ namespace KM.Framework.Constantes
         public string ExportPdfResult { get; set; }//2017
         public string ExportPptResult { get; set; }//3031
         public string Export { get; set; }//1992
+        public string Delete { get; set; }//1951
+        public string Search { get; set;}//TBD
     }
 }

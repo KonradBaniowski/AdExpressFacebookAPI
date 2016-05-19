@@ -73,6 +73,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long IncompleteDataForQuery = 1787;
         public const long LevelDetails = 1886;
         public const long CreativeLabel = 1888;
+        public const long Delete = 1951;
         public const long Save = 1990;
         public const long Export = 1992;
         public const long VisuelLabel = 1909;
@@ -88,6 +89,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long PresentAbsentCode = 2167;
         public const long LostWonCode = 2169;
         public const long PortfolioCode = 2170;
+        public const long AnalysisGraphics = 2173;
+        public const long AnalysisDetailedReport = 2174;
         public const long PresentAbsentDescriptionCode = 2196;
         public const long LostWonDescriptionCode = 2198;
         public const long PortfolioDescriptionCode = 2199;
@@ -171,8 +174,9 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SignIn = 3058;
         public const long UserName = 3059;
         public const long Password = 3060;
+        public const long Search = 3062;
         public const long EveryDay = 000000;
-        public const long MoveResultTitle = 00000;
+        public const long MoveResultTitle = 00000;        
         #endregion
     }
 }

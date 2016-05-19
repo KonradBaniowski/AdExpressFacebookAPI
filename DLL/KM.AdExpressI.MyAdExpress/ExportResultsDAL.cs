@@ -21,7 +21,7 @@ namespace KM.AdExpressI.MyAdExpress.DAL
         /// <param name="webSession">Session client à sauvegarder</param>
         /// <param name="resultType">Type de résultat</param>
         /// <returns>Identifiant correspondant à la session sauvegardée</returns>
-        internal static Int64 Save(WebSession webSession, TNS.AdExpress.Anubis.Constantes.Result.type resultType)
+        public static Int64 Save(WebSession webSession, TNS.AdExpress.Anubis.Constantes.Result.type resultType)
         {
             return Save(webSession, resultType, webSession.ExportedPDFFileName);
         }

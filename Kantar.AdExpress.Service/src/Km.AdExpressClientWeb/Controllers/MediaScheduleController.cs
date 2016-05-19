@@ -112,9 +112,9 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             #endregion
             _siteLanguage = result.SiteLanguage;
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var marketNode = new NavigationNode { Position = 1 };
-            var navigationHelper = new Helpers.NavigationHelper();
+            var navigationHelper = new Helpers.PageHelper();
            
             model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage, 1);
         
@@ -154,9 +154,9 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             _siteLanguage = result.SiteLanguage;
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var mediaNode = new NavigationNode { Position = 2 };
-            var navigationHelper = new Helpers.NavigationHelper();
+            var navigationHelper = new Helpers.PageHelper();
             model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage, 2);
             model.ErrorMessage = new  Models.Shared.ErrorMessage
             {
@@ -198,9 +198,9 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
 
             _siteLanguage = result.SiteLanguage;
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
-            var navigationHelper = new Helpers.NavigationHelper();
+            var navigationHelper = new Helpers.PageHelper();
             var navBarModel = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 3);
         
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
@@ -256,9 +256,9 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
             _siteLanguage = CustomerSession.SiteLanguage;
-            ViewBag.SiteLanguageName = NavigationHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var resultNode = new NavigationNode { Position = 4 };
-            var navigationHelper = new Helpers.NavigationHelper();         
+            var navigationHelper = new Helpers.PageHelper();         
             var model = new VM.ResultsViewModel
             {
                 NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
@@ -285,7 +285,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, hasMSCreatives = gridResult.HasMSCreatives };
+            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, hasMSCreatives = gridResult.HasMSCreatives, unit = gridResult.Unit };
             JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
@@ -472,7 +472,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportResultWithValue = GestionWeb.GetWebWord(LanguageConstantes.ExportResultWithValue, siteLanguage),
                 ExportGrossResult = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage),
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
-                ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage)
+                ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
+                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
             };
             return result;
         }

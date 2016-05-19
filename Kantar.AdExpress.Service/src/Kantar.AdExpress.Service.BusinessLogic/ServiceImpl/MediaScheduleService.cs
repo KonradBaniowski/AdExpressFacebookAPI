@@ -240,18 +240,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 if (CustomerSession.DetailPeriod == ConstantePeriod.DisplayLevel.weekly)
                 {
-                    begin = Dates.getPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
-                    end = Dates.getPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    end = Dates.GetPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
                 }
                 else
                 {
-                    begin = Dates.getPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
-                    end = Dates.getPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    end = Dates.GetPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
                 }
                 begin = Dates.Max(begin,
-                    Dates.getPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType));
+                    Dates.GetPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType));
                 end = Dates.Min(end,
-                    Dates.getPeriodEndDate(CustomerSession.PeriodEndDate, CustomerSession.PeriodType));
+                    Dates.GetPeriodEndDate(CustomerSession.PeriodEndDate, CustomerSession.PeriodType));
 
                 CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
                 if (CustomerSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && CustomerSession.CurrentModule
@@ -263,8 +263,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             else
             {
-                begin = Dates.getPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType);
-                end = Dates.getPeriodEndDate(CustomerSession.PeriodEndDate, CustomerSession.PeriodType);
+                begin = Dates.GetPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType);
+                end = Dates.GetPeriodEndDate(CustomerSession.PeriodEndDate, CustomerSession.PeriodType);
                 if (CustomerSession.DetailPeriod == ConstantePeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
                 {
                     CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
