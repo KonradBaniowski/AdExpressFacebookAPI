@@ -8,17 +8,34 @@
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
+
     <div class="col-md-12" style="background-color:black;padding-bottom:15px;">
         <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
             <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @Model.Labels.CreativeLabel</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
         <div id="HeaderLoader">
-            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+            <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
         </div>
 
         <div id="HeaderElmt" style="display:none">
             <div id="subPeriodSelection" style="background-color:grey"></div>
+
+            <div id="filterEvaliantPanel" class="bg-orange" style="display:none;">
+                <a data-toggle="collapse" class="collapsed" href="#filterEvaliant">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h5 class="panel-title">
+                            Filtre
+                            <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+                        </h5>
+                    </div>
+                </a>
+                <div id="filterEvaliant" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <button id="validEvaliantFilters" class="pull-right btn btn-action">Valider</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -48,7 +65,7 @@
                             Votre navigateur ne gère pas l'élément
                         </video>
                         <div id="mediaLoader">
-                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                            <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
                         </div>
                         <OBJECT id="objectSWF" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0">
                             <PARAM name="movie" value="">
@@ -151,6 +168,12 @@
         function UserFilter() {
             this.paramsUrl = new paramsUrl();
             this.isVehicleChanged = true;
+            this.EvaliantFilters;
+        }
+
+        function EvaliantFilter(id, list) {
+            this.IdFilter = id;
+            this.ValuesFilter = list;
         }
 
         var userFilter = new UserFilter();
@@ -223,7 +246,8 @@
                 idUnivers: userFilter.paramsUrl.idUnivers,
                 moduleId: userFilter.paramsUrl.moduleId,
                 idVehicle: userFilter.paramsUrl.idVehicle,
-                isVehicleChanged: userFilter.isVehicleChanged
+                isVehicleChanged: userFilter.isVehicleChanged,
+                listEvaliantFilter: userFilter.EvaliantFilters
             };
 
             $.ajax({
@@ -237,6 +261,24 @@
                 },
                 success: function (data) {
                     if (data != null && data != "") {
+
+                        //Filter
+                        if (data.filtertitle != null && data.filtertitle != "" && userFilter.EvaliantFilters == null) {
+                            strHtml = "";
+                            for (j = 0; j < data.filtertitle.length; j++) {
+                                strHtml += '<div class="col-md-12 titleFilter">' + data.filtertitle[j] + '</div>';
+                                for (i = 0; i < data.filterdatas[j].length; i++) {
+                                    id = data.filterdatas[j][i].id;
+                                    label = data.filterdatas[j][i].label;
+                                    strHtml += '<label class="checkbox-inline no_indent"><input type="checkbox" name="EvaliantFilter" id ="' + id + '" value="' + label + '" ">' + label + '</label>';
+                                }
+                            }
+
+                            $("#filterEvaliant .panel-body").prepend(strHtml);
+                            $("#filterEvaliantPanel").show();
+                        }
+
+
                         dataTreeGrid = data.datagrid;
                         colsFixed = data.columnsfixed;
                         needFixedColumns = data.needfixedcolumns;
@@ -259,6 +301,7 @@
                         });
 
                         ds.dataBind();
+
                     }
                     else {
                         $("#gridLoader").hide();
@@ -268,7 +311,6 @@
                 }
             });
         }
-
 
         function CallGetPresentVehicles() {
 
@@ -583,6 +625,42 @@
         $(document).on("click", "#pop", function () {
             $('#imagepreview').attr('src', $(this).attr('src'));
             $('#imagemodal').modal('show');
+        });
+
+
+        $(document).on('click', '#validEvaliantFilters', function (e) {
+            var arrValues = {};
+            var listEvaliantFilters = [];
+            $("input[name='EvaliantFilter']:checked").each(
+                function () {
+                    var id = this.id;
+                    arrValues[id] = $("input[name='EvaliantFilter'][id='"+id+"']:checked").map(function () { return this.value; }).get()
+                }
+            );
+            for (var key in arrValues) {
+                listEvaliantFilters.push(new EvaliantFilter(key, arrValues[key]));
+            }
+            userFilter.EvaliantFilters = listEvaliantFilters;
+
+            $("#grid").hide();
+            $("#gridLoader").show();
+            CallCreativeResult();
+        });
+
+        //Change Icone Filter quand hide/show collapse
+        $(document).on('show.bs.collapse', '#filterEvaliant', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-right")
+                .removeClass("glyphicon-chevron-right")
+                .addClass("glyphicon-chevron-down");
+        });
+        $(document).on('hide.bs.collapse', '#filterEvaliant', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-down")
+                .removeClass("glyphicon-chevron-down")
+                .addClass("glyphicon-chevron-right");
         });
 
     </script>

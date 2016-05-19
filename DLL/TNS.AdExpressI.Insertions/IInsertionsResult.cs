@@ -18,6 +18,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.FrameWork.WebResultUI;
 using System.Data;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpressI.Insertions
 {
@@ -56,7 +57,8 @@ namespace TNS.AdExpressI.Insertions
             int toDate, string filters, int universId, string zoomDate);
 
         GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate,
-          int toDate, string filters, int universId, string zoomDate);
+          int toDate, string filters, int universId, string zoomDate,
+          List<GenericColumnItemInformation> columnFilters, Dictionary<GenericColumnItemInformation.Columns, List<string>> availableFilterValues, Dictionary<GenericColumnItemInformation.Columns, List<string>> customFilterValues);
 
         ResultTable GetMSCreatives(VehicleInformation vehicle, int fromDate,
             int toDate, string filters, int universId, string zoomDate);

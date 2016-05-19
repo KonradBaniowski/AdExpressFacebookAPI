@@ -2580,3 +2580,16 @@ ul.ui-selectable {
 .media-schedule-option input[type=radio].with-font:focus ~ label {
     color: #FFF;
 }
+
+
+.checkbox-inline.no_indent,
+.checkbox-inline.no_indent+.checkbox-inline.no_indent {
+  margin-left:30px;
+  min-width:200px;
+}
+
+.titleFilter{
+    font-weight:bold;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    margin-top:10px;
+}
