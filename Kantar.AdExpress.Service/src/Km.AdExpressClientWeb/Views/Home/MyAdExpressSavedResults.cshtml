@@ -124,7 +124,8 @@
         </div>
     </div>
 </div>
-
+@if(Model != null && Model.UniversGroups.Any())
+{ 
 <div id="move@(Model.UniversType)" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -274,6 +275,7 @@
         </div>
     </div>
 </div>
+}
 <div id="detail-selection" class="modal fade modal-express">
     <div class="modal-dialog modal-lg">
         <div class="modal-body">

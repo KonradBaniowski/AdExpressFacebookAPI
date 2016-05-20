@@ -18,7 +18,7 @@ $(document).on('click', '#myUnivers', function (event) {
                 bootbox.alert("An error occurred while processing your request.");
             },
             success: function (response) {
-                $('#universList').html('');
+                $('.modal-content').html('');
                 $('#monunivers .modal-content').append(response);
                 $('#monunivers').modal('show');
             }
@@ -135,84 +135,92 @@ $(document).on('click', '#LoadUnivers', function (event) {
         id: universId,
         dimension: dimension
     };
-    $.ajax({
-        url: '/Universe/GetUserUnivers',
-        type: 'POST',
-        data: params,
-        success: function (response) {
-            $('#monunivers').modal('hide');
-            if (response.Message.length > 0) {
-                bootbox.alert(response.Message);
-            }
-            else {
-                var trees = response.Trees;
-                var medias = response.UniversMediaIds;
-                var nav = $('.nav.nav-tabs');
-                $.each(trees, function (index, tree) {
-                    var id = tree.Id;
-                    if (id > 0 && response.ModuleId == 278)//Create the tab
-                    {
-                        var ulSource = $('.nav.nav-tabs');
-                        var liHtml = $('<li/>');
-                        var aHtml = $('<a/>');
-                        //SET LABEL 
-                        aHtml.text(tree.Label);
-                        aHtml.attr('data-target', '#tab-' + id);
-                        aHtml.attr('id', 'tree-' + id);
-                        aHtml.attr('data-tab', id);
-                        aHtml.attr('data-toggle', 'tab');
-                        aHtml.appendTo(liHtml);
-                        liHtml.appendTo(ulSource);
-                        var nbIncludes = $('.panel-heading-choix.nav-tabs-alt').find('li').length;
-                        var ref = $('#tab-0');
-                        var tabHtml = ref.clone();
-                        tabHtml.attr('id', 'tab-' + id);
-                        tabHtml.attr('class', 'tab-pane');
-                        var panelHtml = tabHtml.find('.panel-group.panel-group-results[id=tree-0]');
-                        panelHtml.attr('id', 'tree-' + id);
-                        panelHtml.find('.items-famille').empty();
-                        $.each(panelHtml.find('a[data-parent]'), function (index, value) {
-                            var href = $(value).attr('href');
-                            href = href.slice(0, -1);
-                            href += id;
-                            $(value).attr('href', href);
-                            var data = $(value).attr('data-parent');
-                            data = data.slice(0, -1);
-                            data += id;
-                            $(value).attr('data-parent', '#tree-' + id);
+    if (universId != undefined && universId > 0) {
+        $.ajax({
+            url: '/Universe/GetUserUnivers',
+            type: 'POST',
+            data: params,
+            success: function (response) {
+                $('.modal-content').html('');
+                $('#monunivers').modal('hide');
+                if (response.Message.length > 0) {
+                    bootbox.alert(response.Message);
+                }
+                else {
+                    var trees = response.Trees;
+                    var medias = response.UniversMediaIds;
+                    var nav = $('.nav.nav-tabs');
+                    $.each(trees, function (index, tree) {
+                        var id = tree.Id;
+                        if (id > 0 && response.ModuleId == 278)//Create the tab
+                        {
+                            var ulSource = $('.nav.nav-tabs');
+                            var liHtml = $('<li/>');
+                            var aHtml = $('<a/>');
+                            //SET LABEL 
+                            aHtml.text(tree.Label);
+                            aHtml.attr('data-target', '#tab-' + id);
+                            aHtml.attr('id', 'tree-' + id);
+                            aHtml.attr('data-tab', id);
+                            aHtml.attr('data-toggle', 'tab');
+                            aHtml.appendTo(liHtml);
+                            liHtml.appendTo(ulSource);
+                            var nbIncludes = $('.panel-heading-choix.nav-tabs-alt').find('li').length;
+                            var ref = $('#tab-0');
+                            var tabHtml = ref.clone();
+                            tabHtml.attr('id', 'tab-' + id);
+                            tabHtml.attr('class', 'tab-pane');
+                            var panelHtml = tabHtml.find('.panel-group.panel-group-results[id=tree-0]');
+                            panelHtml.attr('id', 'tree-' + id);
+                            panelHtml.find('.items-famille').empty();
+                            $.each(panelHtml.find('a[data-parent]'), function (index, value) {
+                                var href = $(value).attr('href');
+                                href = href.slice(0, -1);
+                                href += id;
+                                $(value).attr('href', href);
+                                var data = $(value).attr('data-parent');
+                                data = data.slice(0, -1);
+                                data += id;
+                                $(value).attr('data-parent', '#tree-' + id);
+                            });
+                            $.each(panelHtml.find('.panel-collapse'), function (index, value) {
+                                var panelId = $(value).attr('id');
+                                panelId = panelId.slice(0, -1);
+                                panelId += id;
+                                $(value).attr('id', panelId);
+                            });
+                            $.each(panelHtml.find('.panel-body'), function (index, value) {
+                                var dataTree = $(value).attr('data-tree');
+                                $(value).attr('data-tree', id);
+                            });
+                            panelHtml.find('[id^=collapse-14]').collapse('hide');
+                            $('.tab-content').append(tabHtml);
+                        }
+                        var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
+                        $.each($(tree.UniversLevels), function (index, uniLvl) {
+                            var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
+                            panel.html('');
+                            $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
+                            $('#heading-' + uniLvl.Id + '-' + id).find('.panel-title').addClass('orange');
+                            SetUniversItems(uniLvl, panel);
                         });
-                        $.each(panelHtml.find('.panel-collapse'), function (index, value) {
-                            var panelId = $(value).attr('id');
-                            panelId = panelId.slice(0, -1);
-                            panelId += id;
-                            $(value).attr('id', panelId);
-                        });
-                        $.each(panelHtml.find('.panel-body'), function (index, value) {
-                            var dataTree = $(value).attr('data-tree');
-                            $(value).attr('data-tree', id);
-                        });
-                        panelHtml.find('[id^=collapse-14]').collapse('hide');
-                        $('.tab-content').append(tabHtml);
-                    }
-                    var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
-                    $.each($(tree.UniversLevels), function (index, uniLvl) {
-                        var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
-                        panel.html('');
-                        $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
-                        $('#heading-' + uniLvl.Id + '-' + id).find('.panel-title').addClass('orange');
-                        SetUniversItems(uniLvl, panel);
-                    });
 
-                });
-                $.each(medias, function (index, item) {
-                    $('.tuile-medias[data-attr-id="' + item + '"]').toggleClass("tuile-medias tuile-medias-active");
-                });
+                    });
+                    $.each(medias, function (index, item) {
+                        $('.tuile-medias[data-attr-id="' + item + '"]').toggleClass("tuile-medias tuile-medias-active");
+                    });
+                }
+            },
+            error: function (response) {
+                bootbox.alert("Error has been occured!");
             }
-        },
-        error: function (response) {
-            bootbox.alert("Error has been occured!");
-        }
-    });
+        });
+    }
+    else
+    {
+        $('.modal-content').html('');
+        bootbox.alert("Select an univers to load!");
+    }
 });
 
 function SetUniversItems(data, panel) {
