@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Kantar.AdExpress.Service.Core;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models;
@@ -22,11 +23,15 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
         private IUniverseService _universeService;
-        public SelectionController (IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService)
+        private IPeriodService _periodService;
+        private const string CalendarFormatDays = "DD/MM/YYYY";
+        private const string CalendarFormatMonths = "MM/YYYY";
+        public SelectionController (IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService, IPeriodService periodService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
             _universeService = universeService;
+            _periodService = periodService;
         }
 
         public ActionResult Market()
@@ -197,5 +202,52 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             return jsonModel;
         }
+
+        public ActionResult PeriodSelection()
+        {
+            var cla = new ClaimsPrincipal(User.Identity);
+            string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var result = _periodService.GetPeriod(idSession);
+
+            PeriodViewModel periodModel = new PeriodViewModel();
+            periodModel.SiteLanguage = result.SiteLanguage;
+            periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
+            periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
+            switch (result.ControllerDetails.ModuleId)
+            {
+                case Module.Name.ANALYSE_PLAN_MEDIA:
+                case Module.Name.ANALYSE_PORTEFEUILLE:
+                case Module.Name.ANALYSE_DYNAMIQUE:
+                case Module.Name.ANALYSE_CONCURENTIELLE:
+                    periodModel.CalendarFormat = CalendarFormatDays;
+                    break;
+                case Module.Name.INDICATEUR:
+                case Module.Name.TABLEAU_DYNAMIQUE:
+                    periodModel.CalendarFormat = CalendarFormatMonths;
+                    break;
+                default:
+                    periodModel.CalendarFormat = CalendarFormatDays;
+                    break;
+
+            }
+
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
+            NavigationNode periodeNode = new NavigationNode { Position = 3 };
+            var navigationHelper = new Helpers.PageHelper();
+            var navBarModel = navigationHelper.LoadNavBar(idSession, result.ControllerDetails.Name, result.SiteLanguage, 3);
+
+            PeriodSelectionViewModel model = new PeriodSelectionViewModel();
+            model.PeriodViewModel = periodModel;
+            model.NavigationBar = navBarModel;
+            model.ErrorMessage = new Models.Shared.ErrorMessage
+            {
+                EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
+                PeriodErrorMessage = GestionWeb.GetWebWord(1855, result.SiteLanguage)
+            };
+
+            return View(model);
+        }
+
     }
 }

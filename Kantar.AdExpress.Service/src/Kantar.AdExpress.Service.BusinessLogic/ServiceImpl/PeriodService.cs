@@ -10,6 +10,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.Date;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using Kantar.AdExpress.Service.Core.Domain;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -85,7 +86,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     StartYear = startYear,
                     EndYear = endYear,
                     SiteLanguage = _customerSession.SiteLanguage,
-                    Success = true
+                    Success = true,
+                    ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule)
                 };
             }
             catch (Exception ex)
@@ -129,5 +131,47 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
+        private ControllerDetails GetCurrentControllerDetails(long currentModule)
+        {
+            long currentControllerCode = 0;
+            string currentController = string.Empty;
+            switch (currentModule)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    currentControllerCode = WebConstantes.LanguageConstantes.MediaScheduleCode;
+                    currentController = "MediaSchedule";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                    currentControllerCode = WebConstantes.LanguageConstantes.PortfolioCode;
+                    currentController = "Portfolio";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    currentControllerCode = WebConstantes.LanguageConstantes.LostWonCode;
+                    currentController = "LostWon";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    currentControllerCode = WebConstantes.LanguageConstantes.PresentAbsentCode;
+                    currentController = "PresentAbsent";
+                    break;
+                case WebConstantes.Module.Name.INDICATEUR:
+                    currentControllerCode = WebConstantes.LanguageConstantes.AnalysisGraphics;
+                    currentController = "Analysis";
+                    break;
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    currentControllerCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
+                    currentController = "Analysis";
+                    break;
+                default:
+                    break;
+            }
+            var current = new ControllerDetails
+            {
+                ControllerCode = currentControllerCode,
+                Name = currentController,
+                ModuleId = currentModule
+            };
+            return current;
+        }
     }
+ 
 }
