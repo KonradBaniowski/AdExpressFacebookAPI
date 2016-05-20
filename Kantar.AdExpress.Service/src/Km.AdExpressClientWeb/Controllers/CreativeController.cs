@@ -117,7 +117,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
                 CreativeLabel = GestionWeb.GetWebWord(LanguageConstantes.CreativeLabel, siteLanguage),
                 DownloadLabel = GestionWeb.GetWebWord(LanguageConstantes.DownloadLabel, siteLanguage),
-                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage)
+                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage),
+                FiltreLabel = GestionWeb.GetWebWord(LanguageConstantes.FiltreLabel, siteLanguage),
+                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage)
             };
 
             return result;

@@ -189,12 +189,16 @@
 }
 
 .navbar-brand {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-    text-align: center;
-    margin: auto;
+  transform: translateX(-50%);
+  left: 50%;
+  position: absolute;
+}
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  width: auto;
 }
 
 .panel-default.login {

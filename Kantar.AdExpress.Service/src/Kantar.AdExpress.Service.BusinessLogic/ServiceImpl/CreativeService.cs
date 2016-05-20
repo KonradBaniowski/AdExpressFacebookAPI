@@ -182,9 +182,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public void LoadCustomFilters(List<EvaliantFilter> evaliantFilter)
         {
             _customFilterValues = new Dictionary<GenericColumnItemInformation.Columns, List<string>>();
-            for (int i = 0; i < evaliantFilter.Count; i++)
+            foreach(EvaliantFilter filter in evaliantFilter)
             {
-                _customFilterValues.Add((GenericColumnItemInformation.Columns)evaliantFilter[i].IdFilter, evaliantFilter[i].ValuesFilter);
+                if(filter !=null)
+                _customFilterValues.Add((GenericColumnItemInformation.Columns)filter.IdFilter, filter.ValuesFilter);
             }
         }
 
