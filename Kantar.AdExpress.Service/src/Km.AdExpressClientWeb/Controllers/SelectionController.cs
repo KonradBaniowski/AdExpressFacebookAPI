@@ -24,6 +24,10 @@ namespace Km.AdExpressClientWeb.Controllers
         private IWebSessionService _webSessionService;
         private IUniverseService _universeService;
         private IPeriodService _periodService;
+        private const string MARKET = "Market";
+        private const string MEDIA = "MediaSelection";
+        private const string SELECTION = "Selection";
+        private const string ERROR = "Invalid Selection";
         private const string CalendarFormatDays = "DD/MM/YYYY";
         private const string CalendarFormatMonths = "MM/YYYY";
         public SelectionController (IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService, IPeriodService periodService)
@@ -98,7 +102,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 var result = _webSessionService.SaveMarketSelection(webSessionId, data, Dimension.product, Security.full, true);
                 if (result.Success)
                 {
-                    var controller = (nextStep=="Market"|| nextStep=="MediaSelection")? "Selection":result.ControllerDetails.Name;
+                    var controller = (nextStep==MARKET|| nextStep==MEDIA)? SELECTION:result.ControllerDetails.Name;
                     UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                     var redirectUrl = context.Action(nextStep, controller);
                     return Json(new { ErrorMessage = errorMessage, RedirectUrl = redirectUrl });
@@ -108,7 +112,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             else
             {
-                errorMessage = "Invalid Selection";
+                errorMessage = ERROR;
             }
             return Json(new { ErrorMessage = errorMessage });
         }
@@ -191,7 +195,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                 if (response.Success)
                 {
-                    var controller = (nextStep == "Market" || nextStep == "MediaSelection") ? "Selection" : response.ControllerDetails.Name;
+                    var controller = (nextStep == MARKET || nextStep == MEDIA) ? SELECTION : response.ControllerDetails.Name;
                     url = context.Action(nextStep, controller);
                     jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
                 }
