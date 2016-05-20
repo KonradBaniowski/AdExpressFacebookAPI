@@ -162,7 +162,7 @@
                     $('#datetimepicker-end').datetimepicker({
                         inline: true,
                         locale: 'fr',
-                        format: 'DD/MM/YYYY',
+                        format: '@Model.PeriodViewModel.CalendarFormat',
                         useCurrent: false,
                         minDate: minDate,
                         maxDate: maxDate
@@ -387,7 +387,7 @@
                     //FIL D ARRIANE
                     //TODO : A Metrre autre part
                     function CheckNavigation(elmt) {
-                  
+
                         var gotoResult = true;
                         strHtml = "";
                         var items = elmt.parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
@@ -399,7 +399,7 @@
                             }
                         });
                         if (!gotoResult) {
-                            strHtml =  "@GestionWeb.GetWebWord(3053, Model.PeriodViewModel.SiteLanguage)" + "<ul>"+strHtml+"</ul>";
+                            strHtml = "@GestionWeb.GetWebWord(3053, Model.PeriodViewModel.SiteLanguage)" + "<ul>" + strHtml + "</ul>";
                             bootbox.alert(strHtml);
                             return false;
                         }

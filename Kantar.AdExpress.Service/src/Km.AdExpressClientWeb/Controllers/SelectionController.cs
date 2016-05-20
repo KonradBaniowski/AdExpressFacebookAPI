@@ -27,6 +27,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string MARKET = "Market";
         private const string MEDIA = "MediaSelection";
         private const string SELECTION = "Selection";
+        private const string PERIOD = "PeriodSelection";
         private const string ERROR = "Invalid Selection";
         private const string CalendarFormatDays = "DD/MM/YYYY";
         private const string CalendarFormatMonths = "MM/YYYY";
@@ -102,7 +103,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 var result = _webSessionService.SaveMarketSelection(webSessionId, data, Dimension.product, Security.full, true);
                 if (result.Success)
                 {
-                    var controller = (nextStep==MARKET|| nextStep==MEDIA)? SELECTION:result.ControllerDetails.Name;
+                    var controller = (nextStep==MARKET|| nextStep==MEDIA || nextStep == PERIOD)? SELECTION:result.ControllerDetails.Name;
                     UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                     var redirectUrl = context.Action(nextStep, controller);
                     return Json(new { ErrorMessage = errorMessage, RedirectUrl = redirectUrl });
@@ -195,7 +196,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                 if (response.Success)
                 {
-                    var controller = (nextStep == MARKET || nextStep == MEDIA) ? SELECTION : response.ControllerDetails.Name;
+                    var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == PERIOD) ? SELECTION : response.ControllerDetails.Name;
                     url = context.Action(nextStep, controller);
                     jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
                 }
@@ -244,6 +245,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
+            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage,result.ControllerDetails.ControllerCode);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),

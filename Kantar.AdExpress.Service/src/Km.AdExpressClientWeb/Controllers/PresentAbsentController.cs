@@ -33,6 +33,13 @@ namespace Km.AdExpressClientWeb.Controllers
         private IPeriodService _periodService;
         private IOptionService _optionService;
         private const string _controller = "PresentAbsent";
+        private const string MARKET = "Market";
+        private const string MEDIA = "MediaSelection";
+        private const string SELECTION = "Selection";
+        private const string PERIOD = "PeriodSelection";
+        private const string ERROR = "Invalid Selection";
+        private const string CalendarFormatDays = "DD/MM/YYYY";
+        private const string CalendarFormatMonths = "MM/YYYY";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
         private const int MaxIncludeNbr = 1;
@@ -180,18 +187,33 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.SiteLanguage = result.SiteLanguage;
             periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
-            _siteLanguage = result.SiteLanguage;
-            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+            switch (result.ControllerDetails.ModuleId)
+            {
+                case Module.Name.ANALYSE_PLAN_MEDIA:
+                case Module.Name.ANALYSE_PORTEFEUILLE:
+                case Module.Name.ANALYSE_DYNAMIQUE:
+                case Module.Name.ANALYSE_CONCURENTIELLE:
+                    periodModel.CalendarFormat = CalendarFormatDays;
+                    break;
+                case Module.Name.INDICATEUR:
+                case Module.Name.TABLEAU_DYNAMIQUE:
+                    periodModel.CalendarFormat = CalendarFormatMonths;
+                    break;
+                default:
+                    periodModel.CalendarFormat = CalendarFormatDays;
+                    break;
+
+            }
+
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
             var navigationHelper = new Helpers.PageHelper();
-            var navBarModel = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage,3);
-          
+            var navBarModel = navigationHelper.LoadNavBar(idSession, result.ControllerDetails.Name, result.SiteLanguage, 3);
 
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
-            model.Presentation = LoadPresentationBar(result.SiteLanguage);
-
+            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ControllerCode);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
