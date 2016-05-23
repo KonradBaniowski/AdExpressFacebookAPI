@@ -1,4 +1,26 @@
-﻿function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest) {
+﻿function VehicleCarouselAsync(resultType, labelNbInsertion, labelTotalInvest) {
+    var params = {
+        resultType: resultType       
+    };
+    $.ajax({
+        url: '/Portfolio/VehicleCovers',
+        contentType: 'application/json',
+        type: 'POST',
+        datatype: 'JSON',
+        data: JSON.stringify(params),
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert("An error occurred while processing vehicle view request.");
+        },
+        success: function (data) {
+            if (data != null) {
+                var vhCarouselData = data;
+                ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest)
+            }
+        }
+    });
+}
+
+function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest) {
     $("#carou-vehicleView").hide();
 
     var htmlArr = [];
@@ -35,6 +57,14 @@
         htmlArr.push(" data-mId='");
         htmlArr.push(val.Id);
         htmlArr.push("'");
+        //data-nb-page
+        htmlArr.push(" data-nb-page='");
+        htmlArr.push(val.NbPage);
+        htmlArr.push("'");
+        //data-media-label
+        htmlArr.push(" data-media-label='");
+        htmlArr.push(val.Media);
+        htmlArr.push("'");
         //data-nbInser
         htmlArr.push(" data-nbInser='");
         htmlArr.push(val.NbInser);
@@ -70,13 +100,46 @@
     $(".carousel-inner").html(htmlArr.join(""));
     $("#carou-vehicleView").show();
 }
+function OpenOneVehicleModalCarouselAsync( labelNbPages, labelNext, labelPrev) {
+   
+    var mediaId = $(this).attr("data-mId");
+    var dayN = $(this).attr("data-dayN");
+    var nbPage = $(this).attr("data-nb-page");
+    var media = $(this).attr("data-media-label");
+
+    var params = {
+        mediaId: mediaId,
+        dateMediaNum: dayN,
+        nbPage: nbPage,
+        media: media
+    };
+
+    $.ajax({
+        url: '/Portfolio/VehiclePages',
+        contentType: 'application/json',
+        type: 'POST',
+        datatype: 'JSON',
+        data: JSON.stringify(params),
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert("An error occurred while processing one vehicle view request.");
+        },
+        success: function (data) {
+            if (data != null) {
+                var vehicleItemsData = data;
+                OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, labelPrev)
+            }
+        }
+
+    });
+
+}
 
 function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, labelPrev) {
     $("#modal-vehicleView > .modal-dialog > .modal-content").empty();
 
     $("#modal-vehicleView").on('shown.bs.modal', function (event) {
 
-
+        event.preventDefault();
 
         var htmlArr = [];
         var colNb = 0;
