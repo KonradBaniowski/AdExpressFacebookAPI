@@ -1320,8 +1320,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         protected virtual string GetMediaSelection(string dataTablePrefixe)
         {
             string sql = "";
-            if (_session.SecondaryMediaUniverses != null && _session.SecondaryMediaUniverses.Count > 0)
-                sql = _session.SecondaryMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true);
+            if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
+                sql = _session.PrincipalMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true);
             return sql;
         }
         #endregion
