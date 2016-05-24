@@ -215,7 +215,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var result = _periodService.GetPeriod(idSession);
 
-            PeriodViewModel periodModel = new PeriodViewModel();
+            PeriodViewModel periodModel = new PeriodViewModel((int)result.ControllerDetails.ModuleId);
             periodModel.SiteLanguage = result.SiteLanguage;
             periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
@@ -251,7 +251,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
                 PeriodErrorMessage = GestionWeb.GetWebWord(1855, result.SiteLanguage)
             };
-
+            model.CurrentModule = result.ControllerDetails.ModuleId;
             return View(model);
         }
 
