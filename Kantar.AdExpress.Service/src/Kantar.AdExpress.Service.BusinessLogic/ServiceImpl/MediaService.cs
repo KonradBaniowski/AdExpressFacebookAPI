@@ -27,6 +27,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             result.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule);
             result.MediaCommon= Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
             var vehiclesInfos = VehiclesInformation.GetAll();
+            if (_webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR || _webSession.CurrentModule == CstWeb.Module.Name.TABLEAU_DYNAMIQUE)
+            {
+                _webSession.SelectionUniversMedia.Nodes.Clear();
+                _webSession.Save();
+            }
             var myMedia = GetMyMedia(_webSession);
             string ids = vehiclesInfos.Select(p => p.Value.DatabaseId.ToString()).Aggregate((c,n)=>c+","+n);
             var levels = GetVehicleLabel(ids, _webSession, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle) );
@@ -49,7 +54,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             var result = new List<Core.Domain.Media>();
             var _webSession = (WebSession)WebSession.Load(idWebSession);
-            var vehiclesInfos = VehiclesInformation.GetAll();
+            var vehiclesInfos = VehiclesInformation.GetAll();            
             var myMedia = GetMyMedia(_webSession);
             //DetailLevelItemInformation.Levels.vehicle       
             return myMedia;
