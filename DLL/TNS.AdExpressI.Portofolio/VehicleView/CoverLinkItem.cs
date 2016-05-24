@@ -6,9 +6,9 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
 {   /// <summary>
     /// Information about vehicle cover link item
     /// </summary>
-    public  class CoverLinkItem
+    public class CoverLinkItem
     {
-           #region Variables
+        #region Variables
         /// <summary>
         /// Session Id
         /// </summary>
@@ -26,6 +26,12 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// </summary>
         protected string _dateCoverNum = string.Empty;
         #endregion
+
+        public long MediaId
+        {
+            get { return _mediaId; }
+            set { _mediaId = value; }
+        }
 
         #region Constructor
         /// <summary>
@@ -52,9 +58,9 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         public virtual string Render()
         {
 
-            return "\"javascript:portofolioDetailMedia('" + _idSession + "','" + _mediaId + "','" + _dateMediaNum + "','"+_dateCoverNum+"');\"";
+            return "\"javascript:portofolioDetailMedia('" + _idSession + "','" + _mediaId + "','" + _dateMediaNum + "','" + _dateCoverNum + "');\"";
         }
-       
+
         #endregion
     }
 }

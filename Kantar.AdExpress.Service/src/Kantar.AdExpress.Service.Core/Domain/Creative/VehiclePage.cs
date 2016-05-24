@@ -14,7 +14,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.Creative
 
         public string SrcZoom { get; set; }
 
-        public int NbPage { get; set; }
+        public string NbPage { get; set; }
 
         public string Title { get; set; }
 
