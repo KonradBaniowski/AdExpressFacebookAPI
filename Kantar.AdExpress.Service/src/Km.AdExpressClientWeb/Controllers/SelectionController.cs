@@ -24,6 +24,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private IWebSessionService _webSessionService;
         private IUniverseService _universeService;
         private IPeriodService _periodService;
+        private string _controller;
         private const string MARKET = "Market";
         private const string MEDIA = "MediaSelection";
         private const string SELECTION = "Selection";
@@ -214,14 +215,18 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             var result = _periodService.GetPeriod(idSession);
+            
+            PeriodViewModel periodModel = new PeriodViewModel();
 
-            PeriodViewModel periodModel = new PeriodViewModel((int)result.ControllerDetails.ModuleId);
             periodModel.SiteLanguage = result.SiteLanguage;
             periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
             switch (result.ControllerDetails.ModuleId)
             {
                 case Module.Name.ANALYSE_PLAN_MEDIA:
+                    periodModel.CalendarFormat = CalendarFormatDays;
+                    result.ControllerDetails.Name = SELECTION;
+                    break;
                 case Module.Name.ANALYSE_PORTEFEUILLE:
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_CONCURENTIELLE:
@@ -230,11 +235,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 case Module.Name.INDICATEUR:
                 case Module.Name.TABLEAU_DYNAMIQUE:
                     periodModel.CalendarFormat = CalendarFormatMonths;
+                    result.ControllerDetails.Name = SELECTION;
                     break;
                 default:
                     periodModel.CalendarFormat = CalendarFormatDays;
                     break;
-
             }
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
@@ -251,8 +256,48 @@ namespace Km.AdExpressClientWeb.Controllers
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
                 PeriodErrorMessage = GestionWeb.GetWebWord(1855, result.SiteLanguage)
             };
-            model.CurrentModule = result.ControllerDetails.ModuleId;
+
             return View(model);
+        }
+
+        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep)
+        {
+            var cla = new ClaimsPrincipal(User.Identity);
+            string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            string url = string.Empty;
+            var response = _periodService.CalendarValidation(idSession, selectedStartDate, selectedEndDate);
+
+            //TODO : a faire  autrement
+            this._controller = response.ControllerDetails.Name;
+
+            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+            if (response.Success)
+                url = context.Action(nextStep, this._controller);
+
+            JsonResult jsonModel = Json(new { RedirectUrl = url });
+
+            return jsonModel;
+        }
+
+        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep)
+        {
+            var cla = new ClaimsPrincipal(User.Identity);
+            string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            string url = string.Empty;
+            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue);
+
+            //TODO : a faire  autrement
+            this._controller = response.ControllerDetails.Name;
+
+            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+            if (response.Success)
+                url = context.Action(nextStep, _controller);
+
+            JsonResult jsonModel = Json(new { RedirectUrl = url });
+
+            return jsonModel;
         }
 
     }

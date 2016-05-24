@@ -40,6 +40,7 @@ using System.Collections;
 using KM.Framework.Constantes;
 using Km.AdExpressClientWeb.Helpers;
 
+
 namespace Km.AdExpressClientWeb.Controllers
 {
     [Authorize]
@@ -55,7 +56,10 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string _controller = "MediaSchedule";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
+        private const string CalendarFormatDays = "DD/MM/YYYY";
+        private const string CalendarFormatMonths = "MM/YYYY";
         private int _siteLanguage = 33;
+
 
         private string icon;
         public MediaScheduleController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionService optionService, ISubPeriodService subPeriodService)
@@ -196,6 +200,23 @@ namespace Km.AdExpressClientWeb.Controllers
             periodModel.SiteLanguage = result.SiteLanguage;
             periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
+            switch (result.ControllerDetails.ModuleId)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    periodModel.CalendarFormat = CalendarFormatDays;
+                    break;
+                case WebConstantes.Module.Name.INDICATEUR:
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    periodModel.CalendarFormat = CalendarFormatMonths;
+                    break;
+                default:
+                    periodModel.CalendarFormat = CalendarFormatDays;
+                    break;
+
+            }
 
             _siteLanguage = result.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);

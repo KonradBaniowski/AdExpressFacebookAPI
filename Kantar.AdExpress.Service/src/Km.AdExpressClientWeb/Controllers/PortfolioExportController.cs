@@ -237,6 +237,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             int colLevel = 0;
 
+            
+
             #region colonne en mode brut
             if (isExportBrut && nbLevel > 1)
             {
@@ -345,7 +347,8 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             #endregion
 
-
+            // Fige les entêtes de lignes et de colonnes
+            sheet.FreezePanes(rowStart, columnStart, rowStart, columnStart);
 
             for (int idxCol = colLevel, cellCol = columnStart + colLevel; idxCol < data.ColumnsNumber; idxCol++)
             {
@@ -355,7 +358,13 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     ICell cell = data[idxRow, idxCol];
 
-                    if (cell is LineStart || cell is LineStop || cell is CellImageLink)
+                    if (cell is LineStart || cell is LineStop) //|| cell is CellImageLink
+                    {
+                        columnHide = true;
+                        break;
+                    }
+
+                    if (cell is CellImageLink && idxRow == 0)
                     {
                         columnHide = true;
                         break;
@@ -415,9 +424,11 @@ namespace Km.AdExpressClientWeb.Controllers
                     }
                     else if (cell is CellLabel)
                         sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)cell).Label);
+                    else if (cell is CellEmpty)
+                        sheet.Cells[cellRow, cellCol].Value = "";
                     else
                     {
-                        int i = 0;                        
+                        sheet.Cells[cellRow, cellCol].Value = "";
                     }
 
 
