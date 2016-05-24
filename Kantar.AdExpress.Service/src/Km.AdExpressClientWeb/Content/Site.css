@@ -139,6 +139,9 @@
 .navbar-default.navbar-color .navbar-nav > li > a {
     color: #ffffff;
 }
+.navbar-default.navbar-color .navbar-nav > li > a:hover {
+    transform: scale(1.15);
+}
 
 .navbar-default.navbar-color .navbar-brand {
     color: #ffffff;
