@@ -18,10 +18,12 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IWebSessionService _webSessionService;
         private IExportService _exportService;
-        public ExportResultController(IWebSessionService webSessionService, IExportService exportService)
+        private IDetailSelectionService _detailSelectionService;
+        public ExportResultController(IWebSessionService webSessionService, IExportService exportService,IDetailSelectionService detailSelectionService)
         {
             _webSessionService = webSessionService;
             _exportService = exportService;
+            _detailSelectionService = detailSelectionService;
         }
         public ActionResult CreateExport(string exportType)
         {

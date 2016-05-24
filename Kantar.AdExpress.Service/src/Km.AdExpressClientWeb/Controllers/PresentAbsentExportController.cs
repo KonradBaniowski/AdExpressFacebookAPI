@@ -18,14 +18,14 @@ namespace Km.AdExpressClientWeb.Controllers
         private IPresentAbsentService _presentAbsentService;
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
+        private IDetailSelectionService _detailSelectionService;
 
-
-        public PresentAbsentExportController(IPresentAbsentService presentAbsentService,  IMediaService mediaService, IWebSessionService webSessionService)
+        public PresentAbsentExportController(IPresentAbsentService presentAbsentService,  IMediaService mediaService, IWebSessionService webSessionService, IDetailSelectionService detailSelectionService)
         {
             _presentAbsentService = presentAbsentService;
             _mediaService = mediaService;
             _webSessionService = webSessionService;
-
+            _detailSelectionService = detailSelectionService;
         }
 
         // GET: PresentAbsent
