@@ -28,35 +28,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 WebSession _customerSession = (WebSession)WebSession.Load(idWebSession);
                 DateTime lastDayEnable = DateTime.Now;
 
-                DateTime startDate = new DateTime(Convert.ToInt32(selectedStartDate.Substring(6, 4)), Convert.ToInt32(selectedStartDate.Substring(3, 2)), Convert.ToInt32(selectedStartDate.Substring(0, 2)));
-                DateTime endDate = new DateTime(Convert.ToInt32(selectedEndDate.Substring(6, 4)), Convert.ToInt32(selectedEndDate.Substring(3, 2)), Convert.ToInt32(selectedEndDate.Substring(0, 2)));
-
-                _customerSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
-                _customerSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
-                _customerSession.PeriodBeginningDate = startDate.ToString("yyyyMMdd");
-                _customerSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
-                if (_customerSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+                switch (_customerSession.CurrentModule)
                 {
-                    //TODO: Gerer last Complete Period
-                    if (endDate < DateTime.Now || DateTime.Now < startDate)
-                        _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, _customerSession.PeriodEndDate,true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
-                    else
-                        _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
+                    case WebConstantes.Module.Name.INDICATEUR:
+                    case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                        AnalysisValidation(selectedStartDate, selectedEndDate, result, _customerSession);
+                        break;
+                    default:
+                        DefaultValidation(selectedStartDate, selectedEndDate, result, _customerSession);
+                        break;
+
                 }
-                else
-                {
-
-                    if (endDate < DateTime.Now || DateTime.Now < startDate)
-                        _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, _customerSession.PeriodEndDate);
-                    else
-                        _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
-                }
-
-                _customerSession.Save();
-
-                result.Success = true;
-
-
             }
             catch (Exception ex)
             {
@@ -68,13 +50,79 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         }
 
+        private void DefaultValidation(string selectedStartDate, string selectedEndDate, PeriodResponse result, WebSession _customerSession)
+        {
+            DateTime startDate = new DateTime(Convert.ToInt32(selectedStartDate.Substring(6, 4)), Convert.ToInt32(selectedStartDate.Substring(3, 2)), Convert.ToInt32(selectedStartDate.Substring(0, 2)));
+            DateTime endDate = new DateTime(Convert.ToInt32(selectedEndDate.Substring(6, 4)), Convert.ToInt32(selectedEndDate.Substring(3, 2)), Convert.ToInt32(selectedEndDate.Substring(0, 2)));
+
+            result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule);
+
+            _customerSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
+            _customerSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
+            _customerSession.PeriodBeginningDate = startDate.ToString("yyyyMMdd");
+            _customerSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+            if (_customerSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+            {
+                //TODO: Gerer last Complete Period
+                if (endDate < DateTime.Now || DateTime.Now < startDate)
+                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, _customerSession.PeriodEndDate, true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
+                else
+                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
+            }
+            else
+            {
+
+                if (endDate < DateTime.Now || DateTime.Now < startDate)
+                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, _customerSession.PeriodEndDate);
+                else
+                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
+            }
+
+            _customerSession.Save();
+
+            result.Success = true;
+        }
+
+        private void AnalysisValidation(string selectedStartDate, string selectedEndDate, PeriodResponse result, WebSession _customerSession)
+        {
+            DateTime startDate = new DateTime(Convert.ToInt32(selectedStartDate.Substring(6, 4)), Convert.ToInt32(selectedStartDate.Substring(3, 2)), Convert.ToInt32(selectedStartDate.Substring(0, 2)));
+            DateTime endDate = new DateTime(Convert.ToInt32(selectedEndDate.Substring(6, 4)), Convert.ToInt32(selectedEndDate.Substring(3, 2)), Convert.ToInt32(selectedEndDate.Substring(0, 2)));
+
+            result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule);
+
+            _customerSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly;
+            _customerSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
+            _customerSession.PeriodBeginningDate = startDate.ToString("yyyyMM");
+            _customerSession.PeriodEndDate = endDate.ToString("yyyyMM");
+            if (_customerSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+            {
+                //TODO: Gerer last Complete Period
+                if (endDate < DateTime.Now || DateTime.Now < startDate)
+                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, _customerSession.PeriodEndDate, true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
+                else
+                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
+            }
+            else
+            {
+
+                if (endDate < DateTime.Now || DateTime.Now < startDate)
+                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, _customerSession.PeriodEndDate);
+                else
+                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
+            }
+
+            _customerSession.Save();
+
+            result.Success = true;
+        }
+
         public PeriodResponse GetPeriod(string idWebSession)
         {
             var result = new PeriodResponse();
             try
             {
-                 _customerSession = (WebSession)WebSession.Load(idWebSession);
-
+                _customerSession = (WebSession)WebSession.Load(idWebSession);
+                result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule);
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
                 object[] param = new object[1];
                 param[0] = _customerSession;
@@ -105,6 +153,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             try
             {
                 _customerSession = (WebSession)WebSession.Load(idWebSession);
+
+                result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule);
+
                 globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
                 globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
 
