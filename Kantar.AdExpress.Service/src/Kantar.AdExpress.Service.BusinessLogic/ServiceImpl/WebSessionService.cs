@@ -25,6 +25,10 @@ using System.Linq;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Domain;
 using System.Text;
+using TNS.AdExpressI.Date.DAL;
+using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
+using TNS.AdExpress.Domain.Layers;
+using System.Windows.Forms;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -311,7 +315,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public void SaveCurrentModule(string webSessionId, int moduleId)
         {
-            var _webSession = (WebSession)WebSession.Load(webSessionId);
+            _webSession = (WebSession)WebSession.Load(webSessionId);
 
             Int64 tmp = _webSession.CurrentModule = moduleId;
             if (_webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR)
@@ -489,14 +493,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession.IsSelectRetailerDisplay = false;
 
             //Défintion des medias et  périodes par défaut pour les modules d'Analyses Sectorielles
-            //TODO 
-            //if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
-            //    || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
-            //{
+           
+            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
+                || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+            {
 
-            //    SetRecapDefaultMediaSelection();
-            //    SetRecapDefaultPeriodSelection();
-            //}
+                SetRecapDefaultMediaSelection();
+                SetRecapDefaultPeriodSelection();
+            }
             if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
                 _webSession.SetDates(WebApplicationParameters.VpDateConfigurations.DateTypeDefault);
 
@@ -548,144 +552,141 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return webSession.SiteLanguage;
         }
 
-        //#region Méthodes internes
-        ///// <summary>
-        ///// Set default media selection
-        ///// <remarks>Plurimedia will be the default choice</remarks>
-        ///// </summary>
-        //private void SetRecapDefaultMediaSelection()
-        //{
+        #region Méthodes internes
+        /// <summary>
+        /// Set default media selection
+        /// <remarks>Plurimedia will be the default choice</remarks>
+        /// </summary>
+        private void SetRecapDefaultMediaSelection()
+        {
 
-        //    if (!_webSession.isMediaSelected())
-        //    {
+            if (!_webSession.isMediaSelected())
+            {
 
-        //        // Extraction Last Available Recap Month
-        //        var cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
-        //        var param = new object[1];
-        //        param[0] = _webSession;
-        //        var dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
-        //            , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
-        //            , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                // Extraction Last Available Recap Month
+                var cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                var param = new object[1];
+                param[0] = _webSession;
+                var dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
+                    , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
-        //        _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.plurimedia));
+                _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.plurimedia));
 
-        //        var current = new System.Windows.Forms.TreeNode("ChoixMedia");
-        //        System.Windows.Forms.TreeNode vehicle = null;
-        //        int pluriWordCode = 210;
-        //        var vehicleNames = DBConstantes.Vehicles.names.plurimedia;
-        //        bool isMissingMmms = false;
-        //        if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
-        //        {
-        //            string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.mms));
-        //            if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
-        //            {
-        //                pluriWordCode = 3020;
-        //                vehicleNames = DBConstantes.Vehicles.names.PlurimediaWithoutMms;
-        //            }
-        //        }
-
-
-
-        //        //Creating new plurimedia	node	             
-        //        vehicle = new TreeNode(GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage))
-        //        {
-        //            Tag = new LevelInformation(Right.type.vehicleAccess, vehicleNames.GetHashCode(),
-        //            GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage)),
-        //            Checked = true
-        //        };
-        //        current.Nodes.Add(vehicle);
-
-        //        //Tracking
-        //        _webSession.OnSetVehicle(vehicleNames.GetHashCode());
-
-        //        _webSession.SelectionUniversMedia = _webSession.CurrentUniversMedia = current;
-        //        _webSession.PreformatedMediaDetail = CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Set default period selection
-        ///// <remarks>Current or last years will be the default period</remarks>
-        ///// </summary>
-        //private void SetRecapDefaultPeriodSelection()
-        //{
-
-        //    DateTime downloadDate = new DateTime(_webSession.DownLoadDate, 12, 31);
-        //    string absolutEndPeriod = "";
-
-
-        //    try
-        //    {
-
-        //        //Choix par défaut année courante
-        //        _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.currentYear;
-        //        _webSession.PeriodLength = 1;
-        //        // Cas où l'année de chargement est inférieur à l'année en cours
-        //        if (DateTime.Now.Year > _webSession.DownLoadDate)
-        //        {
-        //            _webSession.PeriodBeginningDate = downloadDate.ToString("yyyy01");
-        //            _webSession.PeriodEndDate = downloadDate.ToString("yyyyMM");
-        //        }
-        //        else
-        //        {
-        //            _webSession.PeriodBeginningDate = DateTime.Now.ToString("yyyy01");
-        //            _webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
-        //        }
-
-        //        //Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
-        //        //du dernier mois dispo en BDD
-        //        //traitement de la notion de fréquence
-        //        CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
-        //        object[] param = new object[1];
-        //        param[0] = _webSession;
-        //        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-        //        absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
-
-        //        if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00")))
-        //        {
-        //            throw (new TNS.AdExpress.Domain.Exceptions.NoDataException());
-        //        }
-
-        //        _webSession.PeriodEndDate = absolutEndPeriod;
-        //        _webSession.DetailPeriod = CstPeriodDetail.monthly;
-
-        //        //Activation de l'option etude comparative 
-        //        _webSession.ComparativeStudy = true;
-
-        //    }
-        //    catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
-        //    {
-
-        //        //Sinon choix par défaut année précédente
-        //        _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.previousYear;
-        //        _webSession.PeriodLength = 1;
-
-        //        // Cas où l'année de chargement est inférieur à l'année en cours
-        //        if (DateTime.Now.Year > _webSession.DownLoadDate)
-        //        {
-        //            _webSession.PeriodBeginningDate = downloadDate.AddYears(-1).ToString("yyyy01");
-        //            _webSession.PeriodEndDate = downloadDate.AddYears(-1).ToString("yyyy12");
-        //        }
-        //        else
-        //        {
-        //            _webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
-        //            _webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy12");
-        //        }
-        //        _webSession.DetailPeriod = CstPeriodDetail.monthly;
-        //        _webSession.ComparativeStudy = true;
-        //    }
-        //    catch (System.Exception exc)
-        //    {
-        //        if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
-        //        {
-        //            this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
-        //        }
-        //    }
+                var current = new System.Windows.Forms.TreeNode("ChoixMedia");
+                System.Windows.Forms.TreeNode vehicle = null;
+                int pluriWordCode = 210;
+                var vehicleNames = DBConstantes.Vehicles.names.plurimedia;
+                bool isMissingMmms = false;
+                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+                {
+                    string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.mms));
+                    if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
+                    {
+                        pluriWordCode = 3020;
+                        vehicleNames = DBConstantes.Vehicles.names.PlurimediaWithoutMms;
+                    }
+                }
 
 
 
-        //}
-        //#endregion
+                //Creating new plurimedia	node	             
+                vehicle = new TreeNode(GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage))
+                {
+                    Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, vehicleNames.GetHashCode(),
+                    GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage)),
+                    Checked = true
+                };
+                current.Nodes.Add(vehicle);
+
+                //Tracking
+                _webSession.OnSetVehicle(vehicleNames.GetHashCode());
+
+                _webSession.SelectionUniversMedia = _webSession.CurrentUniversMedia = current;
+                _webSession.PreformatedMediaDetail = CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
+            }
+        }
+
+        /// <summary>
+        /// Set default period selection
+        /// <remarks>Current or last years will be the default period</remarks>
+        /// </summary>
+        private void SetRecapDefaultPeriodSelection()
+        {
+
+            DateTime downloadDate = new DateTime(_webSession.DownLoadDate, 12, 31);
+            string absolutEndPeriod = "";
+
+
+            try
+            {
+
+                //Choix par défaut année courante
+                _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.currentYear;
+                _webSession.PeriodLength = 1;
+                // Cas où l'année de chargement est inférieur à l'année en cours
+                if (DateTime.Now.Year > _webSession.DownLoadDate)
+                {
+                    _webSession.PeriodBeginningDate = downloadDate.ToString("yyyy01");
+                    _webSession.PeriodEndDate = downloadDate.ToString("yyyyMM");
+                }
+                else
+                {
+                    _webSession.PeriodBeginningDate = DateTime.Now.ToString("yyyy01");
+                    _webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
+                }
+
+                //Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
+                //du dernier mois dispo en BDD
+                //traitement de la notion de fréquence
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+
+                if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00")))
+                {
+                    throw (new TNS.AdExpress.Domain.Exceptions.NoDataException());
+                }
+
+                _webSession.PeriodEndDate = absolutEndPeriod;
+                _webSession.DetailPeriod = CstPeriodDetail.monthly;
+
+                //Activation de l'option etude comparative 
+                _webSession.ComparativeStudy = true;
+
+            }
+            catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
+            {
+
+                //Sinon choix par défaut année précédente
+                _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.previousYear;
+                _webSession.PeriodLength = 1;
+
+                // Cas où l'année de chargement est inférieur à l'année en cours
+                if (DateTime.Now.Year > _webSession.DownLoadDate)
+                {
+                    _webSession.PeriodBeginningDate = downloadDate.AddYears(-1).ToString("yyyy01");
+                    _webSession.PeriodEndDate = downloadDate.AddYears(-1).ToString("yyyy12");
+                }
+                else
+                {
+                    _webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
+                    _webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy12");
+                }
+                _webSession.DetailPeriod = CstPeriodDetail.monthly;
+                _webSession.ComparativeStudy = true;
+            }
+            catch (System.Exception ex)
+            {
+                throw (ex);                
+            }
+
+
+
+        }
+        #endregion
 
         #region To be deplaced
         /// <summary>
