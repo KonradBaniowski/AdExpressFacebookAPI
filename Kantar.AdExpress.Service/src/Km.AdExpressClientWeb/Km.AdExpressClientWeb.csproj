@@ -1606,6 +1606,8 @@
     <Content Include="Views\Analysis\Market.cshtml" />
     <Content Include="Views\Selection\MediaSelection.cshtml" />
     <Content Include="Views\Selection\Market.cshtml" />
+    <Content Include="Views\Analysis\Results.cshtml" />
+    <Content Include="Views\Analysis\_ResultOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

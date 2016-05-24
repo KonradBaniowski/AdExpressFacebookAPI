@@ -1,0 +1,174 @@
+﻿@model Km.AdExpressClientWeb.Models.LostWon.ResultsViewModel
+@using TNS.AdExpress.Domain.Translation;
+@{
+    ViewBag.Title = "Results";
+    var _controller = Model.NavigationBar.First().Controller;
+    Layout = "~/Views/Shared/_LayoutResults.cshtml";
+    var lostWonResults = string.Format("/{0}/Results", _controller);
+}
+
+<div class="row">
+    @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("DetailSelection")
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+        <div class="row row-sm">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Action("ResultOptions", _controller)
+    </div>
+</div>
+<div class="h20"></div>
+<div class="row">
+    <div class="col-md-12">
+        <center>
+            <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
+            <div id="grid" class="hide">
+            </div>
+            <div id="gridLoader">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </center>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+<script src="~/IgniteUI/js/infragistics.core.js"></script>
+<script src="~/IgniteUI/js/infragistics.lob.js"></script>
+<script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+<script>
+    $(document).ready(function () {
+
+        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+
+        $("#grid").igTreeGrid({
+            primaryKey: "ClassifId",
+            width: "100%",
+            defaultColumnWidth: 200,
+            avgRowHeight: 60,
+            autoGenerateColumns: true
+        });
+
+        var ds;
+        var cols;
+        var colsFixed;
+        var needFixedColumns = false;
+        var gridWidth;
+
+        function MediaDetailLevel() {
+            this.LevelDetailValue = $('#mediaDetail').val();
+        }
+
+        function ProductDetailLevel() {
+            this.LevelDetailValue = $('#productDetail').val();
+        }
+
+        function ResultTypeFilter() {
+            this.ResultType = $('#resultType').val();
+        }
+
+        function UserFilter() {
+            this.MediaDetailLevel = new MediaDetailLevel();
+            this.ProductDetailLevel = new ProductDetailLevel();
+            this.Evol = false;
+            this.PDM = false;
+            this.PDV = false;
+            this.ResultTypeFilter = new ResultTypeFilter();
+        }
+
+        var userFilter = new UserFilter();
+
+        function CallSetOptions() {
+            $.ajax({
+                url: '@Url.Action("SetResultOptions", "Analysis")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: userFilter,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    /*CallMediaScheduleResult(zoomDate);*/
+                }
+            });
+        }
+
+        $('#mediaDetail').selectpicker();
+
+        $('#mediaDetail').on('change', function (e) {
+            userFilter.MediaDetailLevel.LevelDetailValue = $('#mediaDetail').val();
+        });
+
+        $('#productDetail').selectpicker();
+
+        $('#productDetail').on('change', function (e) {
+            userFilter.ProductDetailLevel.LevelDetailValue = $('#productDetail').val();
+        });
+
+        $('#resultType').selectpicker();
+
+        $('#resultType').on('change', function (e) {
+            userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
+        });
+
+        if ($("#set-evol").prop('checked') == true) {
+            userFilter.Evol = true;
+        }
+        else {
+            userFilter.Evol = false;
+        }
+
+        $("#set-evol").click(function () {
+            if ($(this).prop('checked') == true) {
+                userFilter.Evol = true;
+            }
+            else {
+                userFilter.Evol = false;
+            }
+        });
+
+        if ($("#set-pdm").prop('checked') == true) {
+            userFilter.PDM = true;
+        }
+        else {
+            userFilter.PDM = false;
+        }
+
+        $("#set-pdm").click(function () {
+            if ($(this).prop('checked') == true) {
+                userFilter.PDM = true;
+            }
+            else {
+                userFilter.PDM = false;
+            }
+        });
+
+        if ($("#set-pdv").prop('checked') == true) {
+            userFilter.PDV = true;
+        }
+        else {
+            userFilter.PDV = false;
+        }
+
+        $("#set-pdv").click(function () {
+            if ($(this).prop('checked') == true) {
+                userFilter.PDV = true;
+            }
+            else {
+                userFilter.PDV = false;
+            }
+        });
+
+        $('#validate-options').on('click', function (e) {
+            //$("#grid").addClass("hide");
+            //$("#gridLoader").removeClass("hide");
+            $("#collapseContainerOne").collapse('hide');
+            CallSetOptions();
+        });
+    });
+</script>
+}

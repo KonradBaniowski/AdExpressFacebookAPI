@@ -59,6 +59,7 @@
     <Compile Include="BusinessService\IExportService.cs" />
     <Compile Include="BusinessService\IGadService.cs" />
     <Compile Include="BusinessService\IInfosNewsService.cs" />
+    <Compile Include="BusinessService\IOptionAnalysisService.cs" />
     <Compile Include="BusinessService\IPortfolioDetailMediaService.cs" />
     <Compile Include="BusinessService\IInsertionsService.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Domain\Period.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoOption.cs" />
+    <Compile Include="Domain\ResultOptions\CheckBoxOption.cs" />
     <Compile Include="Domain\ResultOptions\EvaliantFilter.cs" />
     <Compile Include="Domain\ResultOptions\FormatFilter.cs" />
     <Compile Include="Domain\ResultOptions\FormatOption.cs" />
@@ -119,9 +121,12 @@
     <Compile Include="Domain\ResultOptions\GenericColumnDetailLevelOption.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelFilter.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelOption.cs" />
+    <Compile Include="Domain\ResultOptions\GenericLevelFilter.cs" />
+    <Compile Include="Domain\ResultOptions\GenericLevelOption.cs" />
     <Compile Include="Domain\ResultOptions\InsertionFilter.cs" />
     <Compile Include="Domain\ResultOptions\InsertionOption.cs" />
     <Compile Include="Domain\ResultOptions\Options.cs" />
+    <Compile Include="Domain\ResultOptions\OptionsAnalysis.cs" />
     <Compile Include="Domain\ResultOptions\OptionsMediaSchedule.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailFilter.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailOption.cs" />
@@ -133,6 +138,7 @@
     <Compile Include="Domain\ResultOptions\SelectItem.cs" />
     <Compile Include="Domain\ResultOptions\UnitFilter.cs" />
     <Compile Include="Domain\ResultOptions\UnitOption.cs" />
+    <Compile Include="Domain\ResultOptions\UserAnalysisFilter.cs" />
     <Compile Include="Domain\ResultOptions\UserFilter.cs" />
     <Compile Include="Domain\SaveAlertRequest.cs" />
     <Compile Include="Domain\SaveLevelsResponse.cs" />
