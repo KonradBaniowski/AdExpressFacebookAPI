@@ -785,6 +785,8 @@ namespace TNS.AdExpressI.Classification.DAL
                     case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
                     case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
                         if (_filterWithProductSelection) sql.Append(GetProductSelection("wp", true));
+                        if (dimension == Dimension.media)
+                            VehicleFilter(sql,dimension);
                         break;
                 }
             }

@@ -25,7 +25,7 @@ namespace Km.AdExpressClientWeb.Controllers
     public class HomeController : Controller
     {
         private const string _cryptKey = "8!b?#B$3";
-
+        private const string ALLBRANCHES = "1,2";
         private IRightService _rightService;
         private IApplicationUserManager _userManager;
         private IWebSessionService _webSessionService;
@@ -145,7 +145,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.SavedResults = result;
             #endregion
             #region Saved Univers (Market & Media)
-            string branch = "2";
+            string branch = ALLBRANCHES;
             string listUniversClientDescription = string.Empty;
             var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
             foreach (var group in univers.UniversGroups)

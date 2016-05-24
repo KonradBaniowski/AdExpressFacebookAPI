@@ -961,7 +961,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                 }
                 #region Default Branch
-                defaultBranchId = GetDefaultBranch(defaultBranchId, currentModuleDescription, currentPage);
+                defaultBranchId = currentPage.DefaultBranchId;//GetDefaultBranch(defaultBranchId, currentModuleDescription, currentPage);
                 #endregion
 
             }

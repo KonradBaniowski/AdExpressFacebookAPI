@@ -16,8 +16,12 @@ namespace Kantar.AdExpress.Service.Core.Domain.Creative
 
         public string Src { get; set; }
 
-        public int NbInser { get; set; }
+        public string NbInser { get; set; }
 
         public string Invest { get; set; }
+
+        public string NbPage { get; set; }
+
+        public string Media { get; set; }
     }
 }

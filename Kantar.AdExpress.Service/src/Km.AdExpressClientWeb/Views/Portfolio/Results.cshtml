@@ -37,7 +37,7 @@
     </div>
 </div>
 @*<div class="h20">
-</div>*@
+    </div>*@
 <div class="row">
     <div class="col-md-12">
         @Html.Action("ResultOptions", _controller)
@@ -116,6 +116,7 @@
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
     <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
     @Scripts.Render("~/bundles/results")
+    @Scripts.Render("~/bundles/portfolio-vehicle-view")
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
         $(document).ready(function () {
@@ -233,10 +234,7 @@
                                     type: "local",
                                     applySortedColumnCss: false
                                 }
-                                  ,
-                                {
-                                    name: "Resizing"
-                                }
+                                 
                             ]
                         })
                     }
@@ -263,10 +261,7 @@
                                      type: "local",
                                      applySortedColumnCss: false
                                  }
-                                   ,
-                                {
-                                    name: "Resizing"
-                                }
+                                 
                             ]
                         })
                     }
@@ -799,6 +794,29 @@
                 userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
             }
+
+            //Portfolio Covers
+            //var LABEL_NB_INSERTION = "Nombre d'insertion :";
+            //var LABEL_TOTAL_INVEST = "Total investissement : ";
+            //VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
+
+            //var vehicleItemsData = [
+            //  { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe002.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe002.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //    { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor003.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor003.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor004.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor004.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //       { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor005.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor005.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor006.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor006.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //    { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor007.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //];
+
+            //var LABEL_NB_PAGES = "  Nombre de page : ";
+            //var LABEL_NEXT = "Suivant";
+            //var LABEL_PREV = "Précédent";
+
+            //OpenOneVehicleModalCarouselAsync( LABEL_NB_PAGES, LABEL_NEXT, LABEL_PREV);
+
+            //OpenZoomImageModal();
 
         });
 

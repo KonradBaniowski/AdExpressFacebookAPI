@@ -1168,18 +1168,18 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- PLURIMEDIA -->
-  <!--<vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
-    --><!-- Units--><!--
+  <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
+     Units
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        --><!-- Media --><!--
+         Media 
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
-    --><!--Allowed universe levels--><!--
+    Allowed universe levels
     <allowedUniverseLevels>
       <allowedUniverseLevel id="1" name="sector"/>
       <allowedUniverseLevel id="2" name="subsector"/>
@@ -1188,7 +1188,7 @@
       <allowedUniverseLevel id="6" name="advertiser"/>
       <allowedUniverseLevel id="8" name="brand"/>
     </allowedUniverseLevels>
-  </vehicle>-->
+  </vehicle>
   <!-- EMAILING -->
   <!--<vehicle id="emailing" databaseId="13" showInsertions="false" showCreations="false">
     --><!-- Units--><!--
@@ -1619,18 +1619,18 @@
     <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>
   </vehicle>
   <!-- PLURIMEDIA Hors Inernet display-->
-  <vehicle id="PlurimediaWithoutMms" databaseId="51" showInsertions="false" showCreations="false">
-    <!-- Units-->
+  <!--<vehicle id="PlurimediaWithoutMms" databaseId="51" showInsertions="false" showCreations="false">
+    --><!-- Units--><!--
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        <!-- Media -->
+        --><!-- Media --><!--
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
-    <!--Allowed universe levels-->
+    --><!--Allowed universe levels--><!--
     <allowedUniverseLevels>
       <allowedUniverseLevel id="1" name="sector"/>
       <allowedUniverseLevel id="2" name="subsector"/>
@@ -1639,5 +1639,5 @@
       <allowedUniverseLevel id="6" name="advertiser"/>
       <allowedUniverseLevel id="8" name="brand"/>
     </allowedUniverseLevels>
-  </vehicle>
+  </vehicle>-->
 </vehicles>

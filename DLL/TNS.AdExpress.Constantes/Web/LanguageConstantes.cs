@@ -96,6 +96,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LostWonDescriptionCode = 2198;
         public const long PortfolioDescriptionCode = 2199;
         public const long MediaScheduleDescriptionCode = 2200;
+        public const long AnalysisDetailedReportDescription = 2203;
         public const long StudyPeriodCode = 2291;
         public const long ComparativePeriodCode = 2292;
         public const long ComparativePeriodTypeCode = 2293;
