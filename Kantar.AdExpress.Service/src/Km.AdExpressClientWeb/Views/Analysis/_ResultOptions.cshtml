@@ -1,0 +1,153 @@
+﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.OptionsAnalysis
+@using TNS.AdExpress.Domain.Translation;
+@{
+    var optionsNb = 1;
+    var classHide = "";
+}
+
+<div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-primary panel-options">
+        <div class="panel-heading head-results" role="tab" id="headingOne">
+            <h3 class="panel-title pull-left orange">
+                <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
+                    <i class="fa fa-cog text-lg orange"></i> @GestionWeb.GetWebWord(792, Model.SiteLanguage)
+                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                </a>
+            </h3>
+            <div class="clearfix"></div>
+        </div>
+        <div id="collapseContainerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-sans text-left options-control">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    @GestionWeb.GetWebWord(1150, Model.SiteLanguage)
+                                </p>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.MediaDetailLevel.LevelDetail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.MediaDetailLevel.LevelDetail.Items)
+                                            {
+                                                if (item.Value == Model.MediaDetailLevel.LevelDetail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    @GestionWeb.GetWebWord(1124, Model.SiteLanguage)
+                                </p>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.ProductDetailLevel.LevelDetail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.ProductDetailLevel.LevelDetail.Items)
+                                            {
+                                                if (item.Value == Model.ProductDetailLevel.LevelDetail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    @GestionWeb.GetWebWord(1140, Model.SiteLanguage)
+                                </p>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.ResultTypeOption.ResultType.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.ResultTypeOption.ResultType.Items)
+                                            {
+                                                if (item.Value == Model.ResultTypeOption.ResultType.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.Evol.Value)
+                            {
+                                <input id="set-evol" type="checkbox" name="set-evol" class="with-font" checked />
+                            }
+                            else
+                            {
+                                <input id="set-evol" type="checkbox" name="set-evol" class="with-font" />
+                            }
+                            <label for="set-evol">@GestionWeb.GetWebWord(1168, Model.SiteLanguage)</label>
+                        </div>
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.PDM.Value)
+                            {
+                                <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" checked />
+                            }
+                            else
+                            {
+                                <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" />
+                            }
+                            <label for="set-pdm">@GestionWeb.GetWebWord(806, Model.SiteLanguage)</label>
+                        </div>
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.PDV.Value)
+                            {
+                                <input id="set-pdv" type="checkbox" name="set-pdv" class="with-font" checked />
+                            }
+                            else
+                            {
+                                <input id="set-pdv" type="checkbox" name="set-pdv" class="with-font" />
+                            }
+                            <label for="set-pdv">@GestionWeb.GetWebWord(1166, Model.SiteLanguage)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="padder-btn btn-options pull-right">
+                        <button id="validate-options" class="btn btn-valider">@GestionWeb.GetWebWord(3040, Model.SiteLanguage)&nbsp;<i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

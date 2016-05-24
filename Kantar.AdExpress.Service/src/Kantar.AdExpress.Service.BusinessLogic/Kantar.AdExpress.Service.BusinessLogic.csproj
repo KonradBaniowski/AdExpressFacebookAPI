@@ -77,6 +77,7 @@
     <Compile Include="ServiceImpl\ExportService.cs" />
     <Compile Include="ServiceImpl\GadService.cs" />
     <Compile Include="ServiceImpl\InfosNewsService.cs" />
+    <Compile Include="ServiceImpl\OptionAnalysisService.cs" />
     <Compile Include="ServiceImpl\PortfolioDetailMediaService.cs" />
     <Compile Include="ServiceImpl\InsertionsService.cs" />
     <Compile Include="ServiceImpl\LostWonService.cs" />
