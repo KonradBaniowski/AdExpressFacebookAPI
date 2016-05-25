@@ -47,58 +47,7 @@ namespace Km.AdExpressClientWeb.Controllers
             _optionService = optionService;
             _subPeriodService = subPeriodService;
         }
-        // GET: Analysis
-        public ActionResult Market()
-        {
-            #region Init
-            var model = new MarketViewModel
-            {
-                Trees = new List<Tree>(),
-                Branches = new List<UniversBranch>(),
-                UniversGroups = new UserUniversGroupsModel(),
-                Dimension = Dimension.product
-            };
-            var claim = new ClaimsPrincipal(User.Identity);
-            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            #endregion
-            #region Load Branches
-            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
-            #endregion
-
-            #region Load each label's text in the appropriate language
-            var helper = new Helpers.PageHelper();
-            model.Labels = helper.LoadPageLabels(result.SiteLanguage, controller);
-            model.Branches = Mapper.Map<List<UniversBranch>>(result.Branches);
-            foreach (var item in result.Trees)
-            {
-                Tree tree = new Tree
-                {
-                    Id = item.Id,
-                    LabelId = item.LabelId,
-                    AccessType = item.AccessType,
-                    UniversLevels = Mapper.Map<List<UniversLevel>>(item.UniversLevels)
-                };
-                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
-                model.Trees.Add(tree);
-            }
-            #endregion
-            #region Presentation
-            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, LanguageConstantes.AnalysisDetailedReport);
-            model.UniversGroups = new UserUniversGroupsModel
-            {
-                ShowUserSavedGroups = true,
-                UserUniversGroups = new List<UserUniversGroup>(),
-                UserUniversCode = LanguageConstantes.UserUniversCode,
-                SiteLanguage = result.SiteLanguage
-            };
-            #endregion
-            _siteLanguage = result.SiteLanguage;
-            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
-            var marketNode = new NavigationNode { Position = 1 };         
-            model.NavigationBar = helper.LoadNavBar(webSessionId, _controller, _siteLanguage, 1);
-            return View(model);
-        }
-
+       
         public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep)
         {
             var cla = new ClaimsPrincipal(User.Identity);
@@ -124,12 +73,13 @@ namespace Km.AdExpressClientWeb.Controllers
             _siteLanguage = CustomerSession.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var resultNode = new NavigationNode { Position = 4 };
-            var navigationHelper = new Helpers.PageHelper();
+            var pageHelper = new Helpers.PageHelper();
+            var result = _webSessionService.GetWebSession(idSession);
             var model = new Models.LostWon.ResultsViewModel
             {
-                NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
-                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage),
-                Labels = LoadPageLabels(CustomerSession.SiteLanguage)
+                NavigationBar = pageHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
+                Presentation = pageHelper.LoadPresentationBar(CustomerSession.SiteLanguage, result.ControllerDetails.ModuleCode),
+                Labels = pageHelper.LoadPageLabels(CustomerSession.SiteLanguage, result.ControllerDetails.Name)
             };
 
             return View(model);

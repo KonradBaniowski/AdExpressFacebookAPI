@@ -3,6 +3,7 @@ using Kantar.AdExpress.Service.Core;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models;
+using Km.AdExpressClientWeb.Models.MediaSchedule;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.AdExpress.Framework.MediaSelection;
 using System;
@@ -13,6 +14,7 @@ using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
 using Domain = Kantar.AdExpress.Service.Core.Domain;
 
@@ -32,6 +34,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string ERROR = "Invalid Selection";
         private const string CalendarFormatDays = "DD/MM/YYYY";
         private const string CalendarFormatMonths = "MM/YYYY";
+        private const string INDEX = "Index";
         public SelectionController (IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService, IPeriodService periodService)
         {
             _mediaService = mediaService;
@@ -76,7 +79,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             #endregion
             #region Presentation
-            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ControllerCode);
+            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ModuleCode);
             model.UniversGroups = new UserUniversGroupsModel
             {
                 ShowUserSavedGroups = true,
@@ -101,7 +104,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 List<Tree> validTrees = trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var data = Mapper.Map<List<Domain.Tree>>(validTrees);
-                var result = _webSessionService.SaveMarketSelection(webSessionId, data, Dimension.product, Security.full, true);
+                Domain.SaveMarketSelectionRequest request = new Domain.SaveMarketSelectionRequest(webSessionId, data, Dimension.product, Security.full, true, nextStep);
+                var result = _webSessionService.SaveMarketSelection(request);
                 if (result.Success)
                 {
                     var controller = (nextStep==MARKET|| nextStep==MEDIA || nextStep == PERIOD)? SELECTION:result.ControllerDetails.Name;
@@ -144,7 +148,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 SiteLanguage = result.SiteLanguage
             };
             var helper = new Helpers.PageHelper();
-            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ControllerCode);
+            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ModuleCode);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
@@ -193,11 +197,15 @@ namespace Km.AdExpressClientWeb.Controllers
                 trees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false);
+                Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false, nextStep);
+                response = _webSessionService.SaveMediaSelection(request);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+                
                 if (response.Success)
                 {
-                    var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == PERIOD) ? SELECTION : response.ControllerDetails.Name;
+                    //var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == PERIOD) ? SELECTION : response.ControllerDetails.Name;
+                    string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
+                    var controller = response.ControllerDetails.Name;
                     url = context.Action(nextStep, controller);
                     jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
                 }
@@ -250,7 +258,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
-            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage,result.ControllerDetails.ControllerCode);
+            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage,result.ControllerDetails.ModuleCode);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
@@ -266,14 +274,14 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             string url = string.Empty;
-            var response = _periodService.CalendarValidation(idSession, selectedStartDate, selectedEndDate);
+            var response = _periodService.CalendarValidation(idSession, selectedStartDate, selectedEndDate, nextStep);
 
             //TODO : a faire  autrement
             this._controller = response.ControllerDetails.Name;
-
+            string action= (this._controller==SELECTION && nextStep== INDEX)? MARKET:nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
-                url = context.Action(nextStep, this._controller);
+                url = context.Action(action, this._controller);
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 
@@ -300,5 +308,6 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-    }
+        
+        }
 }

@@ -41,11 +41,11 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public ControllerDetails()
             {
-            ControllerCode = 0;
+            ModuleCode = 0;
             Name = string.Empty;
             ModuleId = 0;
         }
-        public long ControllerCode { get; set; }
+        public long ModuleCode { get; set; }
         public string Name { get; set; }
         public long ModuleId { get; set; }
     }
