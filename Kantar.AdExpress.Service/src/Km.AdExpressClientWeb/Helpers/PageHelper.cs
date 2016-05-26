@@ -13,19 +13,55 @@ namespace Km.AdExpressClientWeb.Helpers
 {
     public class PageHelper
     {
+        public const string INDEX = "Index";
+        public const string MARKET = "Market";
+        public const string MEDIA = "Media";
+        public const string DATES = "Dates";
+        public const string RESULTS = "Results";
+        public const string MEDIASELECTION = "MediaSelection";
+        public const string PERIODSELECTION = "PeriodSelection";
+        private const string SELECTION = "Selection";
+        private const string PRESENTABSENT = "PresentAbsent";
+        private const string PORTFOLIO = "Portfolio";
+        private const string LOSTWON = "LostWon";
+        private const string MEDIASCHEDULE = "MediaSchedule";
+        private const string ANALYSIS = "Analysis";
         public List<NavigationNode> LoadNavBar(string idWebSession, string controller,int siteLanguage = 33, int CurrentPosition = 0)
         {
 
             var model = new List<NavigationNode>();
             var webSession = (WebSession)WebSession.Load(idWebSession);
+            string resultController = string.Empty;
+            switch (webSession.CurrentModule)
+            {
+                case Module.Name.ANALYSE_CONCURENTIELLE:
+                    resultController = PRESENTABSENT;
+                    break;
+                case Module.Name.ALERTE_PORTEFEUILLE:
+                    resultController = PORTFOLIO;
+                    break;
+                case Module.Name.ANALYSE_DYNAMIQUE:
+                    resultController = LOSTWON;
+                    break;
+                case Module.Name.ANALYSE_PLAN_MEDIA:
+                    resultController = MEDIASCHEDULE;
+                    controller = SELECTION;
+                    break;
+                case Module.Name.TABLEAU_DYNAMIQUE:
+                case Module.Name.INDICATEUR:
+                    resultController = ANALYSIS;
+                    controller = SELECTION;
+                    break;
+            }
+            //var ctr = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? controller : SELECTION;
             #region   nav Bar.
             var market = new NavigationNode
             {
                 Id = 1,
                 IsActive = webSession.IsCurrentUniversProductSelected(),
-                Description = "Market",
+                Description = MARKET,
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Market, siteLanguage),
-                Action = "Index",
+                Action =  (webSession.CurrentModule== Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? INDEX : MARKET,
                 Controller = controller,
                 IconCssClass = "fa fa-file-text",
                 Position = CurrentPosition
@@ -35,9 +71,9 @@ namespace Km.AdExpressClientWeb.Helpers
             {
                 Id = 2,
                 IsActive = webSession.isMediaSelected(),
-                Description = "Media",
+                Description = MEDIA,
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Media, siteLanguage),
-                Action = "MediaSelection",
+                Action = MEDIASELECTION,
                 Controller = controller,
                 IconCssClass = "fa fa-eye",
                 Position = CurrentPosition
@@ -47,9 +83,9 @@ namespace Km.AdExpressClientWeb.Helpers
             {
                 Id = 3,
                 IsActive = webSession.isDatesSelected(),
-                Description = "Dates",
+                Description = DATES,
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Dates, siteLanguage),
-                Action = "PeriodSelection",
+                Action = PERIODSELECTION,
                 Controller = controller,
                 IconCssClass = "fa fa-calendar",
                 Position = CurrentPosition
@@ -59,10 +95,10 @@ namespace Km.AdExpressClientWeb.Helpers
             {
                 Id = 4,
                 IsActive = false,
-                Description = "Results",
+                Description = RESULTS,
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage),
-                Action = "Results",
-                Controller = controller,
+                Action = RESULTS,
+                Controller = resultController,
                 IconCssClass = "fa fa-check",
                 Position = CurrentPosition
             };

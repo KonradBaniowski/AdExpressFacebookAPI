@@ -108,40 +108,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private ControllerDetails  GetCurrentControllerDetails(long currentModule)
         {
-            long currentControllerCode = 0;
+            long currentModuleCode = 0;
             string currentController = string.Empty;
             switch (currentModule)
             {
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
-                    currentControllerCode = CstWeb.LanguageConstantes.MediaScheduleCode;
-                    currentController = "MediaSchedule";
+                    currentModuleCode = CstWeb.LanguageConstantes.MediaScheduleCode;
+                    currentController = "Selection";
                     break;
                 case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
-                    currentControllerCode =CstWeb.LanguageConstantes.PortfolioCode;
+                    currentModuleCode =CstWeb.LanguageConstantes.PortfolioCode;
                     currentController = "Portfolio";
                     break;
                 case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                    currentControllerCode =CstWeb.LanguageConstantes.LostWonCode;
+                    currentModuleCode =CstWeb.LanguageConstantes.LostWonCode;
                     currentController = "LostWon";
                     break;
                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
-                    currentControllerCode =CstWeb.LanguageConstantes.PresentAbsentCode;
+                    currentModuleCode =CstWeb.LanguageConstantes.PresentAbsentCode;
                     currentController = "PresentAbsent";
                     break;
                 case CstWeb.Module.Name.INDICATEUR:
-                    currentControllerCode =CstWeb.LanguageConstantes.AnalysisGraphics;
-                    currentController = "Analysis";
+                    currentModuleCode =CstWeb.LanguageConstantes.AnalysisGraphics;
+                    currentController = "Selection";
                     break;
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
-                    currentControllerCode =CstWeb.LanguageConstantes.AnalysisDetailedReport;
-                    currentController = "Analysis";
+                    currentModuleCode =CstWeb.LanguageConstantes.AnalysisDetailedReport;
+                    currentController = "Selection";
                     break;
                 default:
                     break;
             }
             var current = new ControllerDetails
             {
-                ControllerCode = currentControllerCode,
+                ModuleCode = currentModuleCode,
                 Name = currentController,
                 ModuleId = currentModule
             };

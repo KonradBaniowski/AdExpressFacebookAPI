@@ -16,6 +16,7 @@
             </div>
 
             <div class="clearfix"></div>
+            
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <h4 class=""><i class="fa fa-eye"></i> @GestionWeb.GetWebWord(776, Model.PeriodViewModel.SiteLanguage)</h4>
@@ -45,11 +46,22 @@
                                     <input id="end-date-value" type="text" class="form-control input-datepicker" />
                                 </div>
                             </div>
-                        </div>
-                        @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <button id="calendarSubmit" type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
-                            </div>*@
+                        </div> 
                     </form>
+
+                    @if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+            {
+                        <div class="pull-left">
+                            <span >
+                                <label class="i-switch" id="switch">
+                                    <input type="checkbox" for="switch" id="preselection">
+                                    <i></i>
+                                </label>
+                                @GestionWeb.GetWebWord(1118, Model.PeriodViewModel.SiteLanguage)
+
+                            </span>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -61,49 +73,49 @@
                             <h4>@GestionWeb.GetWebWord(785, Model.PeriodViewModel.SiteLanguage)</h4>
                             @if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
                             {
-                                <div class="selectdatecontainer">
-                                    <select id="year-sliding" class="selectdatepicker" selectedperiod="0">
-                                        <option>--</option>
-                                        @for (int i = 1; i <= Model.PeriodViewModel.SlidingYearsNb; i++)
+                            <div class="selectdatecontainer">
+                                <select id="year-sliding" class="selectdatepicker" selectedperiod="0">
+                                    <option>--</option>
+                                    @for (int i = 1; i <= Model.PeriodViewModel.SlidingYearsNb; i++)
                                         {
-                                            <option>@i</option>
+                                        <option>@i</option>
                                         }
-                                    </select>
-                                    <label class="col-sm-8">@GestionWeb.GetWebWord(781, Model.PeriodViewModel.SiteLanguage)</label>
-                                </div>
+                                </select>
+                                <label class="col-sm-8">@GestionWeb.GetWebWord(781, Model.PeriodViewModel.SiteLanguage)</label>
+                            </div>
                             }
                             <div class="selectdatecontainer">
                                 <select id="month-sliding" class="selectdatepicker" selectedperiod="1">
                                     <option>--</option>
                                     @for (int i = 1; i <= Model.PeriodViewModel.SlidingMonthsNb; i++)
                                     {
-                                        <option>@i</option>
+                                    <option>@i</option>
                                     }
                                 </select>
                                 <label class="col-sm-8">@GestionWeb.GetWebWord(783, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
                             @if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
                             {
-                                <div class="selectdatecontainer">
-                                    <select id="week-sliding" class="selectdatepicker" selectedperiod="2">
-                                        <option>--</option>
-                                        @for (int i = 1; i <= Model.PeriodViewModel.SlidingWeeksNb; i++)
+                            <div class="selectdatecontainer">
+                                <select id="week-sliding" class="selectdatepicker" selectedperiod="2">
+                                    <option>--</option>
+                                    @for (int i = 1; i <= Model.PeriodViewModel.SlidingWeeksNb; i++)
                                         {
-                                            <option>@i</option>
+                                        <option>@i</option>
                                         }
-                                    </select>
-                                    <label class="col-sm-8">@GestionWeb.GetWebWord(784, Model.PeriodViewModel.SiteLanguage)</label>
-                                </div>
-                                <div class="selectdatecontainer">
-                                    <select id="day-sliding" class="selectdatepicker" selectedperiod="3">
-                                        <option>--</option>
-                                        @for (int i = 1; i <= Model.PeriodViewModel.SlidingDaysNb; i++)
+                                </select>
+                                <label class="col-sm-8">@GestionWeb.GetWebWord(784, Model.PeriodViewModel.SiteLanguage)</label>
+                            </div>
+                            <div class="selectdatecontainer">
+                                <select id="day-sliding" class="selectdatepicker" selectedperiod="3">
+                                    <option>--</option>
+                                    @for (int i = 1; i <= Model.PeriodViewModel.SlidingDaysNb; i++)
                                         {
-                                            <option>@i</option>
+                                        <option>@i</option>
                                         }
-                                    </select>
-                                    <label class="col-sm-8">@GestionWeb.GetWebWord(1974, Model.PeriodViewModel.SiteLanguage)</label>
-                                </div>
+                                </select>
+                                <label class="col-sm-8">@GestionWeb.GetWebWord(1974, Model.PeriodViewModel.SiteLanguage)</label>
+                            </div>
                             }
                             <div class="sep-div "></div>
                             <h4>@GestionWeb.GetWebWord(786, Model.PeriodViewModel.SiteLanguage)</h4>
@@ -118,322 +130,313 @@
                                 </div>
                                 @if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
                                 {
-                                    <div>
-                                        <input id="previous-month" name="single-date" type="radio" class="with-font" value="3" selectedperiod="5" />
-                                        <label for="previous-month">@GestionWeb.GetWebWord(788, Model.PeriodViewModel.SiteLanguage)</label>
-                                    </div>
-                                    <div>
-                                        <input id="next-week" name="single-date" type="radio" class="with-font" value="4" selectedperiod="6" />
-                                        <label for="next-week">@GestionWeb.GetWebWord(789, Model.PeriodViewModel.SiteLanguage)</label>
-                                    </div>
-                                    <div>
-                                        <input id="previous-day" name="single-date" type="radio" class="with-font" value="5" selectedperiod="7" />
-                                        <label for="previous-day">@GestionWeb.GetWebWord(1975, Model.PeriodViewModel.SiteLanguage)</label>
-                                    </div>
+                                <div>
+                                    <input id="previous-month" name="single-date" type="radio" class="with-font" value="3" selectedperiod="5" />
+                                    <label for="previous-month">@GestionWeb.GetWebWord(788, Model.PeriodViewModel.SiteLanguage)</label>
+                                </div>
+                                <div>
+                                    <input id="next-week" name="single-date" type="radio" class="with-font" value="4" selectedperiod="6" />
+                                    <label for="next-week">@GestionWeb.GetWebWord(789, Model.PeriodViewModel.SiteLanguage)</label>
+                                </div>
+                                <div>
+                                    <input id="previous-day" name="single-date" type="radio" class="with-font" value="5" selectedperiod="7" />
+                                    <label for="previous-day">@GestionWeb.GetWebWord(1975, Model.PeriodViewModel.SiteLanguage)</label>
+                                </div>
                                 }
                                 else
                                 {
-                                    <div>
-                                        <input id="penultimate-year" name="single-date" type="radio" class="with-font" value="6" selectedperiod="9" />
-                                        <label for="penultimate-year">@GestionWeb.GetWebWord(1120, Model.PeriodViewModel.SiteLanguage)</label>
-                                    </div>
+                                <div>
+                                    <input id="penultimate-year" name="single-date" type="radio" class="with-font" value="6" selectedperiod="9" />
+                                    <label for="penultimate-year">@GestionWeb.GetWebWord(1120, Model.PeriodViewModel.SiteLanguage)</label>
+                                </div>
                                 }
                             </div>
-                            @if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
-                            {
-                                <div class="sep-div "></div>
-                                <div class=".container">
-                                    <div>
-                                        <input id="comparative-study" name="comparative-study" type="checkbox" />
-                                        <label for="comparative-study">@GestionWeb.GetWebWord(1118, Model.PeriodViewModel.SiteLanguage)</label>
-                                    </div>
-                                </div>
-                            }
                         </div>
-                       
-                        @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bot-30">
-                                <button id="slidingDateSubmit" type="submit" class="btn btn-default btn-valider pull-right">Valider</button>
-                            </div>*@
-                    </form>
-
+                    </form>   
+                                   
                 </div>
             </div>
+             
+                    
         </div>
-        <input type="hidden" id="current-url" value="/@_controller/PeriodSelection" />
-        @section scripts {
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    var selectedValue = -1;
-                    var selectedPeriod = -1;
-                    var minDate = new Date('@Model.PeriodViewModel.StartYear');
-                    var maxDate = new Date('@Model.PeriodViewModel.EndYear');
-                    minDate.setHours(0, 0, 0);
-                    maxDate.setHours(0, 0, 0);
+        
+    </div>
+</div>
+    <input type="hidden" id="current-url" value="/@_controller/PeriodSelection" />
+    @section scripts {
+        <script type="text/javascript">
+                    $(document).ready(function () {
+                        var selectedValue = -1;
+                        var selectedPeriod = -1;
+                        var minDate = new Date('@Model.PeriodViewModel.StartYear');
+                        var maxDate = new Date('@Model.PeriodViewModel.EndYear');
+                        minDate.setHours(0, 0, 0);
+                        maxDate.setHours(0, 0, 0);
 
-                    $('#datetimepicker-begin').datetimepicker({
-                        inline: true,
-                        locale: 'fr',
-                        format: '@Model.PeriodViewModel.CalendarFormat',
-                        useCurrent: false,
-                        minDate: minDate,
-                        maxDate: maxDate
-                    }).on('dp.change', function (e) {
-                        $('#begin-date-value').val($('#datetimepicker-begin').data('date'));
-                    });
-
-                    $(".datepicker-years .picker-switch").removeAttr('title')
-                        .on('click', function (e) {
-                            e.stopPropagation();
+                        $('#datetimepicker-begin').datetimepicker({
+                            inline: true,
+                            locale: 'fr',
+                            format: '@Model.PeriodViewModel.CalendarFormat',
+                            useCurrent: false,
+                            minDate: minDate,
+                            maxDate: maxDate
+                        }).on('dp.change', function (e) {
+                            $('#begin-date-value').val($('#datetimepicker-begin').data('date'));
                         });
 
-                    $('#datetimepicker-end').datetimepicker({
-                        inline: true,
-                        locale: 'fr',
-                        format: '@Model.PeriodViewModel.CalendarFormat',
-                        useCurrent: false,
-                        minDate: minDate,
-                        maxDate: maxDate
-                    }).on('dp.change', function (e) {
-                        $('#end-date-value').val($('#datetimepicker-end').data('date'));
-                    });
+                        $(".datepicker-years .picker-switch").removeAttr('title')
+                            .on('click', function (e) {
+                                e.stopPropagation();
+                            });
 
-                    $(".datepicker-years .picker-switch").removeAttr('title')
-                        .on('click', function (e) {
-                            e.stopPropagation();
+                        $('#datetimepicker-end').datetimepicker({
+                            inline: true,
+                            locale: 'fr',
+                            format: '@Model.PeriodViewModel.CalendarFormat',
+                            useCurrent: false,
+                            minDate: minDate,
+                            maxDate: maxDate
+                        }).on('dp.change', function (e) {
+                            $('#end-date-value').val($('#datetimepicker-end').data('date'));
                         });
 
-                    $('#year-sliding').selectpicker();
-                    $('#month-sliding').selectpicker();
-                    $('#week-sliding').selectpicker();
-                    $('#day-sliding').selectpicker();
+                        $(".datepicker-years .picker-switch").removeAttr('title')
+                            .on('click', function (e) {
+                                e.stopPropagation();
+                            });
 
-                    $('#year-sliding').on('change', function (e) {
-                        selectedValue = $('#year-sliding').val();
-                        selectedPeriod = $('#year-sliding').attr("selectedperiod");
-                        $('#month-sliding').selectpicker('val', '--');
-                        $('#week-sliding').selectpicker('val', '--');
-                        $('#day-sliding').selectpicker('val', '--');
-                        DisableSingleDates();
-                    });
+                        $('#year-sliding').selectpicker();
+                        $('#month-sliding').selectpicker();
+                        $('#week-sliding').selectpicker();
+                        $('#day-sliding').selectpicker();
 
-                    $('#month-sliding').on('change', function (e) {
-                        selectedValue = $('#month-sliding').val();
-                        selectedPeriod = $('#month-sliding').attr("selectedperiod");
-                        $('#year-sliding').selectpicker('val', '--');
-                        $('#week-sliding').selectpicker('val', '--');
-                        $('#day-sliding').selectpicker('val', '--');
-                        DisableSingleDates();
-                    });
+                        $('#year-sliding').on('change', function (e) {
+                            selectedValue = $('#year-sliding').val();
+                            selectedPeriod = $('#year-sliding').attr("selectedperiod");
+                            $('#month-sliding').selectpicker('val', '--');
+                            $('#week-sliding').selectpicker('val', '--');
+                            $('#day-sliding').selectpicker('val', '--');
+                            DisableSingleDates();
+                        });
 
-                    $('#week-sliding').on('change', function (e) {
-                        selectedValue = $('#week-sliding').val();
-                        selectedPeriod = $('#week-sliding').attr("selectedperiod");
-                        $('#year-sliding').selectpicker('val', '--');
-                        $('#month-sliding').selectpicker('val', '--');
-                        $('#day-sliding').selectpicker('val', '--');
-                        DisableSingleDates();
-                    });
+                        $('#month-sliding').on('change', function (e) {
+                            selectedValue = $('#month-sliding').val();
+                            selectedPeriod = $('#month-sliding').attr("selectedperiod");
+                            $('#year-sliding').selectpicker('val', '--');
+                            $('#week-sliding').selectpicker('val', '--');
+                            $('#day-sliding').selectpicker('val', '--');
+                            DisableSingleDates();
+                        });
 
-                    $('#day-sliding').on('change', function (e) {
-                        selectedValue = $('#day-sliding').val();
-                        selectedPeriod = $('#day-sliding').attr("selectedperiod");
-                        $('#year-sliding').selectpicker('val', '--');
-                        $('#month-sliding').selectpicker('val', '--');
-                        $('#week-sliding').selectpicker('val', '--');
-                        DisableSingleDates();
-                    });
+                        $('#week-sliding').on('change', function (e) {
+                            selectedValue = $('#week-sliding').val();
+                            selectedPeriod = $('#week-sliding').attr("selectedperiod");
+                            $('#year-sliding').selectpicker('val', '--');
+                            $('#month-sliding').selectpicker('val', '--');
+                            $('#day-sliding').selectpicker('val', '--');
+                            DisableSingleDates();
+                        });
 
-                    $('#current-year').on('click', function (e) {
-                        selectedPeriod = $('#current-year').attr("selectedperiod");
-                        DisableSlidingDates();
-                    });
+                        $('#day-sliding').on('change', function (e) {
+                            selectedValue = $('#day-sliding').val();
+                            selectedPeriod = $('#day-sliding').attr("selectedperiod");
+                            $('#year-sliding').selectpicker('val', '--');
+                            $('#month-sliding').selectpicker('val', '--');
+                            $('#week-sliding').selectpicker('val', '--');
+                            DisableSingleDates();
+                        });
 
-                    $('#previous-year').on('click', function (e) {
-                        selectedPeriod = $('#previous-year').attr("selectedperiod");
-                        DisableSlidingDates();
-                    });
+                        $('#current-year').on('click', function (e) {
+                            selectedPeriod = $('#current-year').attr("selectedperiod");
+                            DisableSlidingDates();
+                        });
 
-                    $('#previous-month').on('click', function (e) {
-                        selectedPeriod = $('#previous-month').attr("selectedperiod");
-                        DisableSlidingDates();
-                    });
+                        $('#previous-year').on('click', function (e) {
+                            selectedPeriod = $('#previous-year').attr("selectedperiod");
+                            DisableSlidingDates();
+                        });
 
-                    $('#next-week').on('click', function (e) {
-                        selectedPeriod = $('#next-week').attr("selectedperiod");
-                        DisableSlidingDates();
-                    });
+                        $('#previous-month').on('click', function (e) {
+                            selectedPeriod = $('#previous-month').attr("selectedperiod");
+                            DisableSlidingDates();
+                        });
 
-                    $('#previous-day').on('click', function (e) {
-                        selectedPeriod = $('#previous-day').attr("selectedperiod");
-                        DisableSlidingDates();
-                    });
+                        $('#next-week').on('click', function (e) {
+                            selectedPeriod = $('#next-week').attr("selectedperiod");
+                            DisableSlidingDates();
+                        });
 
-                    function DisableSlidingDates() {
-                        selectedValue = -1;
-                        $('#year-sliding').selectpicker('val', '--');
-                        $('#month-sliding').selectpicker('val', '--');
-                        $('#week-sliding').selectpicker('val', '--');
-                        $('#day-sliding').selectpicker('val', '--');
-                    }
+                        $('#previous-day').on('click', function (e) {
+                            selectedPeriod = $('#previous-day').attr("selectedperiod");
+                            DisableSlidingDates();
+                        });
 
-                    function DisableSingleDates() {
-                        $('#current-year').prop('checked', false);
-                        $('#previous-year').prop('checked', false);
-                        $('#previous-month').prop('checked', false);
-                        $('#next-week').prop('checked', false);
-                        $('#previous-day').prop('checked', false);
-                    }
+                        function DisableSlidingDates() {
+                            selectedValue = -1;
+                            $('#year-sliding').selectpicker('val', '--');
+                            $('#month-sliding').selectpicker('val', '--');
+                            $('#week-sliding').selectpicker('val', '--');
+                            $('#day-sliding').selectpicker('val', '--');
+                        }
 
-                    $('#Market').on('click', function (e) {
-                        e.preventDefault();
+                        function DisableSingleDates() {
+                            $('#current-year').prop('checked', false);
+                            $('#previous-year').prop('checked', false);
+                            $('#previous-month').prop('checked', false);
+                            $('#next-week').prop('checked', false);
+                            $('#previous-day').prop('checked', false);
+                        }
 
-                        var verif = SlidingDateValidation("Index", true);
+                        $('#Market').on('click', function (e) {
+                            e.preventDefault();
 
-                        if (!verif)
-                            CalendarValidation("Index");
-                    });
-
-                    $('#Media').on('click', function (e) {
-                        e.preventDefault();
-
-                        var verif = SlidingDateValidation("MediaSelection", true);
-
-                        if (!verif)
-                            CalendarValidation("MediaSelection");
-                    });
-
-                    $('#Results').on('click', function (e) {
-                        e.preventDefault();
-
-                        var verifNavig = CheckNavigation($(this));
-                        if (verifNavig) {
-                            var verif = SlidingDateValidation("Results", true);
+                            var verif = SlidingDateValidation("Index", true);
 
                             if (!verif)
-                                CalendarValidation("Results");
-                        }
-                    });
+                                CalendarValidation("Index");
+                        });
 
-                    //$('#calendarSubmit').off("click");
-                    //$('#calendarSubmit').on("click", function (event) {
-                    //    PreventDefault(event);
+                        $('#Media').on('click', function (e) {
+                            e.preventDefault();
 
-                    //    CalendarValidation("Results");
-                    //});
+                            var verif = SlidingDateValidation("MediaSelection", true);
 
-                    function CalendarValidation(nextStepParam) {
+                            if (!verif)
+                                CalendarValidation("MediaSelection");
+                        });
 
-                        var startDate = $('#begin-date-value').val();
-                        var endDate = $('#end-date-value').val();
+                        $('#Results').on('click', function (e) {
+                            e.preventDefault();
 
-                        if (startDate == '' || endDate == '') {
-                            bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
-                            return false;
-                        }
+                            var verifNavig = CheckNavigation($(this));
+                            if (verifNavig) {
+                                var verif = SlidingDateValidation("Results", true);
 
-                        var startD = new Date(parseInt(startDate.substr(6, 4)), parseInt(startDate.substr(3, 2)) - 1, parseInt(startDate.substr(0, 2)));
-                        var endD = new Date(parseInt(endDate.substr(6, 4)), parseInt(endDate.substr(3, 2)) - 1, parseInt(endDate.substr(0, 2)));
-
-                        if (startD > endD) {
-                            bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.PeriodErrorMessage)));
-                            return false;
-                        }
-
-                        var params = {
-                            selectedStartDate: startDate,
-                            selectedEndDate: endDate,
-                            nextStep: nextStepParam
-                        };
-
-                        $.ajax({
-                            url: '@Url.Action("CalendarValidation", _controller)',
-                            contentType: "application/x-www-form-urlencoded",
-                            type: "POST",
-                            datatype: "json",
-                            data: params,
-                            error: function (xmlHttpRequest, errorText, thrownError) {
-                            },
-                            success: function (data) {
-                                if (data != null) {
-                                    document.location = data.RedirectUrl;
-                                }
+                                if (!verif)
+                                    CalendarValidation("Results");
                             }
                         });
 
-                        return true;
-                    }
+                        //$('#calendarSubmit').off("click");
+                        //$('#calendarSubmit').on("click", function (event) {
+                        //    PreventDefault(event);
 
-                    //$('#slidingDateSubmit').off("click");
-                    //$('#slidingDateSubmit').on("click", function (event) {
-                    //    PreventDefault(event);
+                        //    CalendarValidation("Results");
+                        //});
 
-                    //    SlidingDateValidation("Results", false);
-                    //});
+                        function CalendarValidation(nextStepParam) {
 
-                    function SlidingDateValidation(nextStepParam, isBreadcrumb) {
+                            var startDate = $('#begin-date-value').val();
+                            var endDate = $('#end-date-value').val();
 
-                        if (selectedPeriod == -1) {
-                            if (!isBreadcrumb)
+                            if (startDate == '' || endDate == '') {
                                 bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
-                            return false;
-                        }
+                                return false;
+                            }
 
-                        var params = {
-                            selectedPeriod: selectedPeriod,
-                            selectedValue: selectedValue,
-                            nextStep: nextStepParam
-                        };
+                            var startD = new Date(parseInt(startDate.substr(6, 4)), parseInt(startDate.substr(3, 2)) - 1, parseInt(startDate.substr(0, 2)));
+                            var endD = new Date(parseInt(endDate.substr(6, 4)), parseInt(endDate.substr(3, 2)) - 1, parseInt(endDate.substr(0, 2)));
 
-                        $.ajax({
-                            url: '@Url.Action("SlidingDateValidation", _controller)',
-                            contentType: "application/x-www-form-urlencoded",
-                            type: "POST",
-                            datatype: "json",
-                            data: params,
-                            error: function (xmlHttpRequest, errorText, thrownError) {
-                            },
-                            success: function (data) {
-                                if (data != null) {
-                                    document.location = data.RedirectUrl;
+                            if (startD > endD) {
+                                bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.PeriodErrorMessage)));
+                                return false;
+                            }
+
+                            var params = {
+                                selectedStartDate: startDate,
+                                selectedEndDate: endDate,
+                                nextStep: nextStepParam
+                            };
+
+                            $.ajax({
+                                url: '@Url.Action("CalendarValidation", _controller)',
+                                contentType: "application/x-www-form-urlencoded",
+                                type: "POST",
+                                datatype: "json",
+                                data: params,
+                                error: function (xmlHttpRequest, errorText, thrownError) {
+                                },
+                                success: function (data) {
+                                    if (data != null) {
+                                        document.location = data.RedirectUrl;
+                                    }
                                 }
+                            });
+
+                            return true;
+                        }
+
+                        //$('#slidingDateSubmit').off("click");
+                        //$('#slidingDateSubmit').on("click", function (event) {
+                        //    PreventDefault(event);
+
+                        //    SlidingDateValidation("Results", false);
+                        //});
+
+                        function SlidingDateValidation(nextStepParam, isBreadcrumb) {
+
+                            if (selectedPeriod == -1) {
+                                if (!isBreadcrumb)
+                                    bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
+                                return false;
                             }
-                        });
 
-                        return true;
-                    }
+                            var params = {
+                                selectedPeriod: selectedPeriod,
+                                selectedValue: selectedValue,
+                                nextStep: nextStepParam
+                            };
 
-                    function PreventDefault(event) {
-                        if (event.preventDefault) {
-                            event.preventDefault();
+                            $.ajax({
+                                url: '@Url.Action("SlidingDateValidation", _controller)',
+                                contentType: "application/x-www-form-urlencoded",
+                                type: "POST",
+                                datatype: "json",
+                                data: params,
+                                error: function (xmlHttpRequest, errorText, thrownError) {
+                                },
+                                success: function (data) {
+                                    if (data != null) {
+                                        document.location = data.RedirectUrl;
+                                    }
+                                }
+                            });
+
+                            return true;
                         }
-                        else {
-                            event.returnValue = false;
-                        }
-                    }
 
-                    //FIL D ARRIANE
-                    //TODO : A Metrre autre part
-                    function CheckNavigation(elmt) {
-
-                        var gotoResult = true;
-                        strHtml = "";
-                        var items = elmt.parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
-                        $.each(items, function (index, value) {
-                            var page = $(value).attr('id');
-                            if (page == "Media") {
-                                strHtml += "<li>" + page + "</li>";
-                                gotoResult = false;
+                        function PreventDefault(event) {
+                            if (event.preventDefault) {
+                                event.preventDefault();
                             }
-                        });
-                        if (!gotoResult) {
-                            strHtml = "@GestionWeb.GetWebWord(3053, Model.PeriodViewModel.SiteLanguage)" + "<ul>" + strHtml + "</ul>";
-                            bootbox.alert(strHtml);
-                            return false;
+                            else {
+                                event.returnValue = false;
+                            }
                         }
-                        return true;
-                    }
 
-                });
-            </script>
-            @Scripts.Render("~/bundles/detail-selection")
-        }
+                        //FIL D ARRIANE
+                        //TODO : A Metrre autre part
+                        function CheckNavigation(elmt) {
+
+                            var gotoResult = true;
+                            strHtml = "";
+                            var items = elmt.parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
+                            $.each(items, function (index, value) {
+                                var page = $(value).attr('id');
+                                if (page == "Media") {
+                                    strHtml += "<li>" + page + "</li>";
+                                    gotoResult = false;
+                                }
+                            });
+                            if (!gotoResult) {
+                                strHtml = "@GestionWeb.GetWebWord(3053, Model.PeriodViewModel.SiteLanguage)" + "<ul>" + strHtml + "</ul>";
+                                bootbox.alert(strHtml);
+                                return false;
+                            }
+                            return true;
+                        }
+
+                    });
+        </script>
+        @Scripts.Render("~/bundles/detail-selection")
+    }
