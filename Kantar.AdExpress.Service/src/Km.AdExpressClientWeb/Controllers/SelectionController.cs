@@ -294,14 +294,14 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             string url = string.Empty;
-            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue);
+            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue, nextStep);
 
             //TODO : a faire  autrement
             this._controller = response.ControllerDetails.Name;
-
+            string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
-                url = context.Action(nextStep, _controller);
+                url = context.Action(action, _controller);
 
             JsonResult jsonModel = Json(new { RedirectUrl = url });
 
