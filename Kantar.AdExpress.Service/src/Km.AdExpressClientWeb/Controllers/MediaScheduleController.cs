@@ -279,12 +279,13 @@ namespace Km.AdExpressClientWeb.Controllers
             _siteLanguage = CustomerSession.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var resultNode = new NavigationNode { Position = 4 };
-            var navigationHelper = new Helpers.PageHelper();         
+            var pageHelper = new Helpers.PageHelper();
+            var result = _webSessionService.GetWebSession(idSession);         
             var model = new VM.ResultsViewModel
             {
-                NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
-                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage),
-                Labels =LoadPageLabels(CustomerSession.SiteLanguage)
+                NavigationBar = pageHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
+                Presentation = pageHelper.LoadPresentationBar(CustomerSession.SiteLanguage, result.ControllerDetails.ModuleCode),
+                Labels = pageHelper.LoadPageLabels(CustomerSession.SiteLanguage,_controller)
             };
 
             return View(model);
@@ -403,7 +404,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 trees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees,Dimension.media,Security.full,false);
+                Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false, nextStep);
+                response = _webSessionService.SaveMediaSelection(request);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                 if (response.Success)
                 {

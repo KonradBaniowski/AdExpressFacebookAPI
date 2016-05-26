@@ -17,14 +17,14 @@ namespace Km.AdExpressClientWeb.Controllers
         private ILostWonService _lostWonService;
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
+        private IDetailSelectionService _detailSelectionService;
 
-
-        public LostWonExportController(ILostWonService lostWonService, IMediaService mediaService, IWebSessionService webSessionService)
+        public LostWonExportController(ILostWonService lostWonService, IMediaService mediaService, IWebSessionService webSessionService, IDetailSelectionService detailSelectionService)
         {
             _lostWonService = lostWonService;
             _mediaService = mediaService;
             _webSessionService = webSessionService;
-
+            _detailSelectionService = detailSelectionService;
         }
 
         // GET: LostWonExport

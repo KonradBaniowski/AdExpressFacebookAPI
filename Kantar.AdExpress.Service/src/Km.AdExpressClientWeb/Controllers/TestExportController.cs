@@ -34,6 +34,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
         private IMediaScheduleService _mediaSchedule;
+        private IDetailSelectionService _detailSelectionService;
         private WebSession _session;
 
         #region Constantes
@@ -158,11 +159,12 @@ namespace Km.AdExpressClientWeb.Controllers
         #endregion
 
         private string icon;
-        public TestExportController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule)
+        public TestExportController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IDetailSelectionService detailSelectionService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
             _mediaSchedule = mediaSchedule;
+            _detailSelectionService = detailSelectionService;
         }
 
         protected int GetSloganIdIndex()

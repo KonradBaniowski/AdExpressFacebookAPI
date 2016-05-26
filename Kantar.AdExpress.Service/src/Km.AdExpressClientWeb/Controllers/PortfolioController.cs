@@ -207,7 +207,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
-            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ControllerCode);
+            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ModuleCode);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
@@ -377,7 +377,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 trees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees, Dimension.media, Security.full,true);
+                Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, true, nextStep);
+                response = _webSessionService.SaveMediaSelection(request);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                 if (response.Success)
                 {
@@ -402,7 +403,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 List<Tree> validTrees = trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var data = Mapper.Map<List<Domain.Tree>>(validTrees);
-                var result = _webSessionService.SaveMarketSelection(webSessionId, data, Dimension.product, Security.full);
+                Domain.SaveMarketSelectionRequest request = new Domain.SaveMarketSelectionRequest(webSessionId, data, Dimension.product, Security.full, false, nextStep);
+                var result = _webSessionService.SaveMarketSelection(request);
                 if (result.Success)
                 {
                     UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);

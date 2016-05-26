@@ -23,13 +23,13 @@ namespace Km.AdExpressClientWeb.Controllers
         private IPortfolioService _portofolioService;
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
-
-        public PortfolioExportController(IPortfolioService portofolioService, IMediaService mediaService, IWebSessionService webSessionService)
+        private IDetailSelectionService _detailSelectionService;
+        public PortfolioExportController(IPortfolioService portofolioService, IMediaService mediaService, IWebSessionService webSessionService, IDetailSelectionService detailSelectionService)
         {
             _portofolioService = portofolioService;
             _mediaService = mediaService;
             _webSessionService = webSessionService;
-
+            _detailSelectionService = detailSelectionService;
         }
 
         // GET: PortfolioExport

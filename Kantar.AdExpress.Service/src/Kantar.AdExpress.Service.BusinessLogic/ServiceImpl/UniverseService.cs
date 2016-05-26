@@ -1242,40 +1242,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         private ControllerDetails GetCurrentControllerDetails(long currentModule)
         {
-            long currentControllerCode = 0;
+            long currentModuleCode = 0;
             string currentController = string.Empty;
             switch (currentModule)
             {
                 case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                    currentControllerCode = WebConstantes.LanguageConstantes.MediaScheduleCode;
-                    currentController = "MediaSchedule";
+                    currentModuleCode = WebConstantes.LanguageConstantes.MediaScheduleCode;
+                    currentController = "Selection";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                    currentControllerCode = WebConstantes.LanguageConstantes.PortfolioCode;
+                    currentModuleCode = WebConstantes.LanguageConstantes.PortfolioCode;
                     currentController = "Portfolio";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                    currentControllerCode = WebConstantes.LanguageConstantes.LostWonCode;
+                    currentModuleCode = WebConstantes.LanguageConstantes.LostWonCode;
                     currentController = "LostWon";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                    currentControllerCode = WebConstantes.LanguageConstantes.PresentAbsentCode;
+                    currentModuleCode = WebConstantes.LanguageConstantes.PresentAbsentCode;
                     currentController = "PresentAbsent";
                     break;
                 case WebConstantes.Module.Name.INDICATEUR:
-                    currentControllerCode = WebConstantes.LanguageConstantes.AnalysisGraphics;
-                    currentController = "Analysis";
+                    currentModuleCode = WebConstantes.LanguageConstantes.AnalysisGraphics;
+                    currentController = "Selection";
                     break;
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                    currentControllerCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
-                    currentController = "Analysis";
+                    currentModuleCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
+                    currentController = "Selection";
                     break;
                 default:
                     break;
             }
             var current = new ControllerDetails
             {
-                ControllerCode = currentControllerCode,
+                ModuleCode = currentModuleCode,
                 Name = currentController,
                 ModuleId = currentModule
             };
