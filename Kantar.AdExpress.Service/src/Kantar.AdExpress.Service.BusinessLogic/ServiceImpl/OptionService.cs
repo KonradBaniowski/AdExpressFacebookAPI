@@ -97,8 +97,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 levelsIds.Add((int)DetailLevelItemInformation.Levels.category);
                                 break;
                         }
-                        _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
-                    }
+                        _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
+                    }                  
                     break;
                 case WebConstantes.GenericDetailLevel.ComponentProfile.product:
                     try
@@ -111,7 +111,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         // Niveau de détail par défaut
                         ArrayList levelsIds = new ArrayList();
                         levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
-                        _customerWebSession.GenericProductDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                        _customerWebSession.GenericProductDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
                     }
                     break;
             }
@@ -492,10 +492,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (userFilter.GenericDetailLevelFilter.DefaultDetailValue >= 0)
             {
                 _customerGenericDetailLevel = (GenericDetailLevel)GetDefaultDetailLevels()[userFilter.GenericDetailLevelFilter.DefaultDetailValue];
+                _customerGenericDetailLevel.FromControlItem = WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels;
             }
             if (userFilter.GenericDetailLevelFilter.CustomDetailValue >= 0)
             {
                 _customerGenericDetailLevel = (GenericDetailLevel)_genericDetailLevelsSaved[(Int64)userFilter.GenericDetailLevelFilter.CustomDetailValue];
+                _customerGenericDetailLevel.FromControlItem = WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels;
             }
             if (_nbDetailLevelItemList >= 1 && userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
             {
