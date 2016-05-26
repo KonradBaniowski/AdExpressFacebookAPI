@@ -11,6 +11,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
         public PeriodResponse()
         {
             ControllerDetails = new ControllerDetails();
+            ErrorMessage = string.Empty;
         }
 
         public int StartYear { get; set; }

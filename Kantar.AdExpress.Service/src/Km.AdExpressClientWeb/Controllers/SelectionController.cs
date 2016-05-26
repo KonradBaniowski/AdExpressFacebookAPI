@@ -272,7 +272,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-
+            JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
             var response = _periodService.CalendarValidation(idSession, selectedStartDate, selectedEndDate, nextStep);
 
@@ -281,10 +281,14 @@ namespace Km.AdExpressClientWeb.Controllers
             string action= (this._controller==SELECTION && nextStep== INDEX)? MARKET:nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
+            {
                 url = context.Action(action, this._controller);
-
-            JsonResult jsonModel = Json(new { RedirectUrl = url });
-
+                jsonModel = Json(new { Success= true, RedirectUrl = url });
+            }
+            else
+            {
+                jsonModel = Json(new { Success = false, ErrorMessage = response.ErrorMessage });
+            }
             return jsonModel;
         }
 
@@ -292,19 +296,22 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-
+            JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue);
 
-            //TODO : a faire  autrement
+            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue, nextStep);
             this._controller = response.ControllerDetails.Name;
-
+            string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
-                url = context.Action(nextStep, _controller);
-
-            JsonResult jsonModel = Json(new { RedirectUrl = url });
-
+            {
+                url = context.Action(action, this._controller);
+                jsonModel = Json(new { Success = true, RedirectUrl = url });
+            }
+            else
+            {
+                jsonModel = Json(new { Success = false, ErrorMessage = response.ErrorMessage });
+            }
             return jsonModel;
         }
 

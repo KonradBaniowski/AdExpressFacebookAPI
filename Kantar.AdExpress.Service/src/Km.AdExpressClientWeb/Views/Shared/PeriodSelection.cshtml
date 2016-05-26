@@ -357,8 +357,11 @@
                                 error: function (xmlHttpRequest, errorText, thrownError) {
                                 },
                                 success: function (data) {
-                                    if (data != null) {
+                                    if (data.Success == true) {
                                         document.location = data.RedirectUrl;
+                                    }
+                                    else {
+                                        bootbox.alert(data.ErrorMessage);
                                     }
                                 }
                             });
@@ -396,8 +399,12 @@
                                 error: function (xmlHttpRequest, errorText, thrownError) {
                                 },
                                 success: function (data) {
-                                    if (data != null) {
+                                    if (data.Success == true) {
                                         document.location = data.RedirectUrl;
+                                    }
+                                    else
+                                    {
+                                        bootbox.alert(data.ErrorMessage);
                                     }
                                 }
                             });
