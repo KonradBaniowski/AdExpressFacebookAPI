@@ -127,6 +127,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Receiver = 2483;
         public const long UnityError = 2541;
         public const long PreSelection = 2571;
+        public const long AnalysisPeriodErrorMsg = 2573;
         public const long CreateAlert = 2578;
         public const long Daily = 2579;
         public const long Weekly = 2580;

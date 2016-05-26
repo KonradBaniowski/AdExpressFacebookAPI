@@ -34,30 +34,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class WebSessionService : IWebSessionService
     {
-        private WebSession _webSession = null;
+        
+        #region CONST
+        private const string SELECTION = "Selection";
+        private const string PORTFOLIO = "Portfolio";
+        private const string LOSTWON = "LostWon";
+        private const string PRESENTABSENT = "PresentAbsent";
+        private const string MEDIASCHEDULE = "MediaSchedule";
+        private const string ANALYSIS = "Analysis";
+        private const string RESULTS = "Results";
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         private const int MaxItemsPerLevel = 100;
-        public WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool mediaSupportRequired)
+        #endregion
+        private WebSession _webSession = null;
+        public WebSessionResponse SaveMediaSelection( SaveMediaSelectionRequest request)
         {
-            var _webSession = (WebSession)WebSession.Load(webSessionId);
+            var _webSession = (WebSession)WebSession.Load( request.WebSessionId);
             WebSessionResponse response = new WebSessionResponse
             {
                 StudyStep = StudyStep.Media,
-                ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule)
+                ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep)
             };
             bool success = false;
             try
             {
                 List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
-                bool isAllCommun = mediaIds.All(e => commun.Contains(e));                
-                if (!isAllCommun && mediaIds.Count() > 1)
+                bool isAllCommun = request.MediaIds.All(e => commun.Contains(e));                
+                if (!isAllCommun && request.MediaIds.Count() > 1)
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
                 }
                 else
                 {
-                    if (mediaSupportRequired && !trees.Any())
+                    if (request.MediaSupportRequired && !request.Trees.Any())
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MediaRequiredCode, _webSession.SiteLanguage);
                     }
@@ -70,7 +80,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         System.Windows.Forms.TreeNode tmpNode;
                         bool containsSearch = false;
                         bool containsSocial = false;
-                        foreach (var item in mediaIds)
+                        foreach (var item in request.MediaIds)
                         {
                             tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
                             tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
@@ -101,7 +111,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                             //Reinitialize banners selection if change vehicle
                             Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
-                            if (mediaIds.Count != vehicleInformationList.Count)
+                            if (request.MediaIds.Count != vehicleInformationList.Count)
                             {
                                 foreach (System.Windows.Forms.TreeNode node in levelsSelected)
                                 {
@@ -147,13 +157,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     #endregion
 
                         #region Save Media support if any
-                    if (trees.Any())
+                    if (request.Trees.Any())
                     {
                         Dictionary<int, AdExpressUniverse> universDictionary = new Dictionary<int, AdExpressUniverse>();
                         long idModule = _webSession.CurrentModule;
                         if (idModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA || idModule == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE || idModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE)
                         {
-                            AdExpressUnivers univers = GetUnivers(trees, _webSession, dimension, security);
+                            AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
                             if (univers.AdExpressUniverse != null && univers.AdExpressUniverse.Count() > 0)
                             {
                                 bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
@@ -176,7 +186,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         }
                         else if (idModule == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE)
                         {
-                            Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(trees, _webSession, dimension, security);
+                            Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
                             _webSession.PrincipalMediaUniverses = universes;
                             success = true;
                         }
@@ -204,20 +214,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
-        public WebSessionResponse SaveMarketSelection(string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool required)
+        public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request)
         {
             WebSessionResponse response = new WebSessionResponse
             {
                 StudyStep = StudyStep.Market
             };
-            var _webSession = (WebSession)WebSession.Load(webSessionId);
-            response.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule);
-            bool isValid = (required) ? (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any()) : true;
+            var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
+            response.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep);
+            bool isValid = (request.Required) ? (request.Trees.Any() && request.Trees.Where(p => p.UniversLevels != null).Any() && request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any()) : true;
 
             if (isValid)
             {
                 #region Fix max items per level
-                if (trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
+                if (request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
                 }
@@ -225,7 +235,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region try catch block
                 else
                 {
-                    AdExpressUnivers univers = GetUnivers(trees, _webSession, dimension, security);
+                    AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
                     if (univers.Success)
                     {
                         try
@@ -257,7 +267,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
                                 }
                             }
-                            else if (required)
+                            else if (request.Required)
                             {
                                 response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
                             }
@@ -300,15 +310,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }       
 
-        public WebSessionResponse GetWebSessionLanguage(string webSessionId)
+        public WebSessionDetails GetWebSession(string webSessionId)
         {
-            WebSessionResponse response = new WebSessionResponse
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            WebSessionDetails response = new WebSessionDetails
             {
-                StudyStep = StudyStep.Market
+                WebSession = webSession,
+                ControllerDetails= GetCurrentControllerDetails(webSession.CurrentModule)
             };
-            var _webSession = (WebSession)WebSession.Load(webSessionId);
-
-
             return response;
         }
 
@@ -854,42 +863,42 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return adExpressUniverses;
         }
-        private ControllerDetails GetCurrentControllerDetails(long currentModule)
+        private ControllerDetails GetCurrentControllerDetails(long currentModule, string nextStep = "")
         {
-            long currentControllerCode = 0;
+            long currentModuleCode = 0;
             string currentController = string.Empty;
             switch (currentModule)
             {
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
-                    currentControllerCode = CstWeb.LanguageConstantes.MediaScheduleCode;
-                    currentController = "MediaSchedule";
+                    currentModuleCode = CstWeb.LanguageConstantes.MediaScheduleCode;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIASCHEDULE : SELECTION;
                     break;
                 case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
-                    currentControllerCode = CstWeb.LanguageConstantes.PortfolioCode;
-                    currentController = "Portfolio";
+                    currentModuleCode = CstWeb.LanguageConstantes.PortfolioCode;
+                    currentController = PORTFOLIO;
                     break;
                 case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                    currentControllerCode = CstWeb.LanguageConstantes.LostWonCode;
-                    currentController = "LostWon";
+                    currentModuleCode = CstWeb.LanguageConstantes.LostWonCode;
+                    currentController = LOSTWON;
                     break;
                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
-                    currentControllerCode = CstWeb.LanguageConstantes.PresentAbsentCode;
-                    currentController = "PresentAbsent";
+                    currentModuleCode = CstWeb.LanguageConstantes.PresentAbsentCode;
+                    currentController = PRESENTABSENT;
                     break;
                 case CstWeb.Module.Name.INDICATEUR:
-                    currentControllerCode = CstWeb.LanguageConstantes.AnalysisGraphics;
-                    currentController = "Analysis";
+                    currentModuleCode = CstWeb.LanguageConstantes.AnalysisGraphics;
+                    currentController = SELECTION;
                     break;
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
-                    currentControllerCode = CstWeb.LanguageConstantes.AnalysisDetailedReport;
-                    currentController = "Analysis";
+                    currentModuleCode = CstWeb.LanguageConstantes.AnalysisDetailedReport;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION; ;
                     break;
                 default:
                     break;
             }
             var current = new ControllerDetails
             {
-                ControllerCode = currentControllerCode,
+                ModuleCode = currentModuleCode,
                 Name = currentController,
                 ModuleId = currentModule
             };
