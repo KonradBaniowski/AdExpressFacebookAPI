@@ -346,9 +346,10 @@
                     type: "POST",
                     datatype: "json",
                     error: function (xmlHttpRequest, errorText, thrownError) {
+                        bootbox.alert(@string.Format("'{0}.{1}'",Model.Labels.ResultError,Model.Labels.WarningBackNavigator));
                     },
                     success: function (data) {
-                        if (data != null && data != "") {
+                        if (data != null && data != "" && data.success) {
                             dataTreeGrid = data.datagrid;
                             cols = GetColumnsFormatter(data.columns, data.unit);
                             colsFixed = data.columnsfixed;
@@ -371,6 +372,7 @@
                             $("#gridLoader").addClass("hide");
                             $("#grid").addClass("hide");
                             $("#gridEmpty").show();
+                            bootbox.alert(data.Message);
                         }
                     }
                 });

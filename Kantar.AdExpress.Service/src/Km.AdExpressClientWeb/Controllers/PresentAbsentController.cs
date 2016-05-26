@@ -71,7 +71,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true, MaxIncludeNbr,MaxExcludeNbr);
+            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true, MaxIncludeNbr, MaxExcludeNbr);
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
@@ -103,7 +103,7 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var marketNode = new NavigationNode { Position = 1 };
             var navigationHelper = new Helpers.PageHelper();
-            model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage,1);       
+            model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage, 1);
             return View(model);
         }
 
@@ -148,7 +148,7 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var mediaNode = new NavigationNode { Position = 2 };
             var navigationHelper = new Helpers.PageHelper();
-            model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage,2);
+            model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage, 2);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(1052, result.SiteLanguage),
@@ -166,10 +166,10 @@ namespace Km.AdExpressClientWeb.Controllers
                     Id = item.Id,
                     LabelId = item.LabelId,
                     AccessType = item.AccessType,
-                    Label =item.Label,
+                    Label = item.Label,
                     UniversLevels = Mapper.Map<List<Models.Shared.UniversLevel>>(item.UniversLevels)
                 };
-                tree.Label = (tree.Id==0) ? model.Labels.Referent : model.Labels.Concurrent;
+                tree.Label = (tree.Id == 0) ? model.Labels.Referent : model.Labels.Concurrent;
                 model.Trees.Add(tree);
             }
             #endregion
@@ -264,10 +264,10 @@ namespace Km.AdExpressClientWeb.Controllers
             _siteLanguage = CustomerSession.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var resultNode = new NavigationNode { Position = 4 };
-            var navigationHelper = new Helpers.PageHelper();           
+            var navigationHelper = new Helpers.PageHelper();
             var model = new Models.PresentAbsent.ResultsViewModel
             {
-                NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage,4),
+                NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = LoadPresentationBar(CustomerSession.SiteLanguage),
                 Labels = LoadPageLabels(CustomerSession.SiteLanguage)
             };
@@ -279,16 +279,35 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var gridResult = _presentAbsentService.GetGridResult(idWebSession);
+            var gridResultResponse = _presentAbsentService.GetGridResult(idWebSession);
 
-            if (!gridResult.HasData) return null;            
+            JsonResult jsonModel;
+            if (gridResultResponse.Success)
+            {
 
-             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+                var gridResult = gridResultResponse.GridResult;
 
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, unit = gridResult.Unit };
-            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
-            jsonModel.MaxJsonLength = Int32.MaxValue;
 
+                if (!gridResult.HasData) return null;
+
+                string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+
+                var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema,
+                    columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, unit = gridResult.Unit,
+                    success = gridResultResponse.Success
+                };
+                jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+            }
+            else
+            {
+
+                var obj = new { Message = gridResultResponse.Message, success = false};
+                jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            }
+
+           
             return jsonModel;
         }
         public ActionResult ResultOptions()
@@ -343,9 +362,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 trees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees, Dimension.media, Security.full,true);
+                response = _webSessionService.SaveMediaSelection(selectedMedia, idWebSession, trees, Dimension.media, Security.full, true);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-                if(response.Success)
+                if (response.Success)
                 {
                     url = context.Action(nextStep, _controller);
                     jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
@@ -395,7 +414,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
         #region Private methodes
-       
+
 
         private Labels LoadPageLabels(int siteLanguage)
         {
@@ -428,8 +447,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage),
                 ErrorSupportAlreadyDefine = GestionWeb.GetWebWord(LanguageConstantes.SupportAlreadyDefine, siteLanguage),
                 Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
-                Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent,siteLanguage),
-                SelectMedia= GestionWeb.GetWebWord(LanguageConstantes.SelectMedia, siteLanguage),
+                Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent, siteLanguage),
+                SelectMedia = GestionWeb.GetWebWord(LanguageConstantes.SelectMedia, siteLanguage),
                 PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage),
                 Results = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage),
                 Save = GestionWeb.GetWebWord(LanguageConstantes.Save, siteLanguage),
@@ -439,7 +458,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportGrossResult = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage),
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
-                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
+                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage),
+                WarningBackNavigator = GestionWeb.GetWebWord(LanguageConstantes.WarningBackNavigatorCode, siteLanguage),
+                ResultError = GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage),
             };
             return result;
         }
