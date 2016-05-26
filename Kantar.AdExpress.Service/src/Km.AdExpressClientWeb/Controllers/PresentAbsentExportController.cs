@@ -42,7 +42,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.Clear();
 
-            export.ExportSelection(document);
+            export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
             export.Export(document, data, session);
 
             string documentFileNameRoot;
@@ -72,7 +72,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.Clear();
 
-            export.ExportSelection(document);
+            export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
             export.Export(document, data, session, true);
 
             document.Worksheets.ActiveSheetIndex = 1;
