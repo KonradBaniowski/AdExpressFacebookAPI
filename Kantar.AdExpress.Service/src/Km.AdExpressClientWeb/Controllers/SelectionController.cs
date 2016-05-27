@@ -79,7 +79,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             #endregion
             #region Presentation
-            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ModuleCode);
+            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
             model.UniversGroups = new UserUniversGroupsModel
             {
                 ShowUserSavedGroups = true,
@@ -148,7 +148,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 SiteLanguage = result.SiteLanguage
             };
             var helper = new Helpers.PageHelper();
-            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ModuleCode);
+            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
@@ -258,7 +258,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
-            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage,result.ControllerDetails.ModuleCode);
+            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage,result.ControllerDetails);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),

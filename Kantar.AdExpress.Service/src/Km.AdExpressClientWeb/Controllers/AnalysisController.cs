@@ -78,7 +78,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var model = new Models.LostWon.ResultsViewModel
             {
                 NavigationBar = pageHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
-                Presentation = pageHelper.LoadPresentationBar(CustomerSession.SiteLanguage, result.ControllerDetails.ModuleCode),
+                Presentation = pageHelper.LoadPresentationBar(CustomerSession.SiteLanguage, result.ControllerDetails),
                 Labels = pageHelper.LoadPageLabels(CustomerSession.SiteLanguage, result.ControllerDetails.Name)
             };
 
@@ -141,18 +141,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
                 Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
-            };
-            return result;
-        }
-
-        private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
-        {
-            PresentationModel result = new PresentationModel
-            {
-                ModuleCode = LanguageConstantes.AnalysisDetailedReport,
-                SiteLanguage = siteLanguage,
-                ModuleDecriptionCode = LanguageConstantes.AnalysisDetailedReportDescription,
-                ShowCurrentSelection = showCurrentSelection
             };
             return result;
         }

@@ -1,4 +1,5 @@
-﻿using Km.AdExpressClientWeb.Models;
+﻿using Domain = Kantar.AdExpress.Service.Core.Domain;
+using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
 using System;
@@ -159,13 +160,14 @@ namespace Km.AdExpressClientWeb.Helpers
             return result;
         }
 
-        public PresentationModel LoadPresentationBar(int siteLanguage, long module,bool showCurrentSelection = true)
+        public PresentationModel LoadPresentationBar(int siteLanguage, Domain.ControllerDetails controllerDetails,bool showCurrentSelection = true)
         {
             PresentationModel result = new PresentationModel
             {
-                ModuleCode = module,
+                ModuleCode = controllerDetails.ModuleCode,
                 SiteLanguage = siteLanguage,
-                ShowCurrentSelection = showCurrentSelection
+                ShowCurrentSelection = showCurrentSelection,
+                ModuleIcon = controllerDetails.ModuleIcon
             };
             return result;
         }

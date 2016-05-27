@@ -92,7 +92,8 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             #endregion
             #region Presentation
-            model.Presentation = LoadPresentationBar(result.SiteLanguage);
+            var pageHelper = new Helpers.PageHelper();
+            model.Presentation = pageHelper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
             model.UniversGroups = new UserUniversGroupsModel
             {
                 ShowUserSavedGroups = true,
@@ -135,7 +136,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 UserUniversCode = LanguageConstantes.UserUniversCode,
                 SiteLanguage = result.SiteLanguage
             };
-            model.Presentation = LoadPresentationBar(result.SiteLanguage);
+            var pageHelper = new Helpers.PageHelper();
+            model.Presentation = pageHelper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
@@ -209,7 +211,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
-            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ModuleCode);
+            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
@@ -268,16 +270,16 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
-            _siteLanguage = CustomerSession.SiteLanguage;
+            var result = _webSessionService.GetWebSession(idSession);
+            _siteLanguage = result.WebSession.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             var resultNode = new NavigationNode { Position = 4 };
             var navigationHelper = new Helpers.PageHelper();          
             var model = new Models.LostWon.ResultsViewModel
             {
                 NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage,4),
-                Presentation = LoadPresentationBar(CustomerSession.SiteLanguage),
-                Labels =LoadPageLabels(CustomerSession.SiteLanguage)
+                Presentation = navigationHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
+                Labels =LoadPageLabels(result.WebSession.SiteLanguage)
             };
 
             return View(model);
@@ -445,17 +447,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
                 Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
-            };
-            return result;
-        }
-        private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
-        {
-            PresentationModel result = new PresentationModel
-            {
-                ModuleCode = LanguageConstantes.LostWonCode,
-                SiteLanguage = siteLanguage,
-                ModuleDecriptionCode = LanguageConstantes.LostWonDescriptionCode,
-                ShowCurrentSelection = showCurrentSelection
             };
             return result;
         }
