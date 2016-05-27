@@ -91,6 +91,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             #region Presentation
             var pageHelper = new Helpers.PageHelper();
+            ViewBag.SiteLanguage = result.SiteLanguage;
             model.Presentation = pageHelper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
             model.UniversGroups = new UserUniversGroupsModel
             {

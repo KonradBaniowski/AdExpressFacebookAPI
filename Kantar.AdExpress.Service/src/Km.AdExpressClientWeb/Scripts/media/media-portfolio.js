@@ -152,7 +152,7 @@ $('#Market').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
-    if(nextUrl === "Portfolio")
+    if(nextUrl === "Market")
     {
         nextUrl = "Index";
     }
