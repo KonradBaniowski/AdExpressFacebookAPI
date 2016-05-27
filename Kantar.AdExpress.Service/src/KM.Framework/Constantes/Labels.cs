@@ -138,8 +138,8 @@ namespace KM.Framework.Constantes
         public string Delete { get; set; }//1951
         public string Search { get; set; }//TBD
         public string FiltreLabel { get; set; }//518
-
         public string ResultError { get; set; }//1973
+        public string DashboardsLabel { get; set; }//2102
 
     }
 }

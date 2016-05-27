@@ -88,6 +88,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long RefineCode = 2053;
         public const long NewsLabel = 2080;
         public const long WarningBackNavigatorCode = 2099;
+        public const long DashboardsLabel = 2102;
         public const long EmptyGrid = 2106;
         public const long PresentAbsentCode = 2167;
         public const long LostWonCode = 2169;
