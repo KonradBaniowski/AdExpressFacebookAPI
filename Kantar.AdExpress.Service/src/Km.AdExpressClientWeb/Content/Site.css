@@ -397,6 +397,7 @@ input {
     border-radius: 3px;
     position: relative;
     opacity: 0.8;
+    cursor:pointer;
 }
 
 .tile-pdf {

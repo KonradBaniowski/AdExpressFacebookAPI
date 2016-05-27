@@ -1244,23 +1244,28 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             long currentModuleCode = 0;
             string currentController = string.Empty;
+            string currentModuleIcon = "icon-chart";
             switch (currentModule)
             {
                 case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
                     currentModuleCode = WebConstantes.LanguageConstantes.MediaScheduleCode;
                     currentController = "Selection";
+                    currentModuleIcon = "icon-chart";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                     currentModuleCode = WebConstantes.LanguageConstantes.PortfolioCode;
                     currentController = "Portfolio";
+                    currentModuleIcon = "icon-layers";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                     currentModuleCode = WebConstantes.LanguageConstantes.LostWonCode;
                     currentController = "LostWon";
+                    currentModuleIcon = "icon-calculator";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                     currentModuleCode = WebConstantes.LanguageConstantes.PresentAbsentCode;
                     currentController = "PresentAbsent";
+                    currentModuleIcon = "icon-equalizer";
                     break;
                 case WebConstantes.Module.Name.INDICATEUR:
                     currentModuleCode = WebConstantes.LanguageConstantes.AnalysisGraphics;
@@ -1277,7 +1282,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 ModuleCode = currentModuleCode,
                 Name = currentController,
-                ModuleId = currentModule
+                ModuleId = currentModule,
+                ModuleIcon = currentModuleIcon
             };
             return current;
         }

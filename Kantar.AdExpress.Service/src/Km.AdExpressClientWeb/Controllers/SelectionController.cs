@@ -79,7 +79,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             #endregion
             #region Presentation
-            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ModuleCode);
+            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
             model.UniversGroups = new UserUniversGroupsModel
             {
                 ShowUserSavedGroups = true,
@@ -90,6 +90,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             //_siteLanguage = result.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
+            ViewBag.SiteLanguage = result.SiteLanguage;
             var marketNode = new NavigationNode { Position = 1 };
             model.NavigationBar = helper.LoadNavBar(webSessionId, result.ControllerDetails.Name, result.SiteLanguage, 1);
             return View(model);
@@ -148,13 +149,14 @@ namespace Km.AdExpressClientWeb.Controllers
                 SiteLanguage = result.SiteLanguage
             };
             var helper = new Helpers.PageHelper();
-            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails.ModuleCode);
+            model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
             foreach (var e in model.Medias)
             {
                 e.icon = IconSelector.getIcon(e.MediaEnum);
             }
             model.Medias = model.Medias.OrderBy(p => p.Disabled).ToList();
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
+            ViewBag.SiteLanguage = result.SiteLanguage;
             var mediaNode = new NavigationNode { Position = 2 };
             var navigationHelper = new Helpers.PageHelper();
             model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, result.ControllerDetails.Name, result.SiteLanguage, 2);
@@ -251,6 +253,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
+            ViewBag.SiteLanguage = result.SiteLanguage;
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
             var navigationHelper = new Helpers.PageHelper();
             var navBarModel = navigationHelper.LoadNavBar(idSession, result.ControllerDetails.Name, result.SiteLanguage, 3);
@@ -258,7 +261,7 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSelectionViewModel model = new PeriodSelectionViewModel();
             model.PeriodViewModel = periodModel;
             model.NavigationBar = navBarModel;
-            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage,result.ControllerDetails.ModuleCode);
+            model.Presentation = navigationHelper.LoadPresentationBar(result.SiteLanguage,result.ControllerDetails);
             model.ErrorMessage = new Models.Shared.ErrorMessage
             {
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),

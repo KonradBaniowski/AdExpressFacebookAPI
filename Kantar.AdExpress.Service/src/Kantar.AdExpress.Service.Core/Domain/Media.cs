@@ -44,9 +44,11 @@ namespace Kantar.AdExpress.Service.Core.Domain
             ModuleCode = 0;
             Name = string.Empty;
             ModuleId = 0;
+            ModuleIcon = "icon-chart"; //Par defaut
         }
         public long ModuleCode { get; set; }
         public string Name { get; set; }
         public long ModuleId { get; set; }
+        public string ModuleIcon { get; set; }
     }
 }

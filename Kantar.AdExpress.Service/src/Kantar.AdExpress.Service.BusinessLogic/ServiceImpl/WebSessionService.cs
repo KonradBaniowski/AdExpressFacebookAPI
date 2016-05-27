@@ -867,31 +867,36 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             long currentModuleCode = 0;
             string currentController = string.Empty;
+            string currentModuleIcon = "icon-chart";
             switch (currentModule)
             {
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                     currentModuleCode = CstWeb.LanguageConstantes.MediaScheduleCode;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIASCHEDULE : SELECTION;
+                    currentModuleIcon = "icon-chart";
                     break;
                 case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                     currentModuleCode = CstWeb.LanguageConstantes.PortfolioCode;
-                    currentController = PORTFOLIO;
+                    currentController = "Portfolio";
+                    currentModuleIcon = "icon-layers";
                     break;
                 case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
                     currentModuleCode = CstWeb.LanguageConstantes.LostWonCode;
-                    currentController = LOSTWON;
+                    currentController = "LostWon";
+                    currentModuleIcon = "icon-calculator";
                     break;
                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
                     currentModuleCode = CstWeb.LanguageConstantes.PresentAbsentCode;
-                    currentController = PRESENTABSENT;
+                    currentController = "PresentAbsent";
+                    currentModuleIcon = "icon-equalizer";
                     break;
                 case CstWeb.Module.Name.INDICATEUR:
                     currentModuleCode = CstWeb.LanguageConstantes.AnalysisGraphics;
-                    currentController = SELECTION;
+                    currentController = "Selection";
                     break;
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                     currentModuleCode = CstWeb.LanguageConstantes.AnalysisDetailedReport;
-                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION; ;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
                     break;
                 default:
                     break;
@@ -900,7 +905,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 ModuleCode = currentModuleCode,
                 Name = currentController,
-                ModuleId = currentModule
+                ModuleId = currentModule,
+                ModuleIcon = currentModuleIcon
             };
             return current;
         }
