@@ -92,6 +92,7 @@
     <Compile Include="Domain\Documents.cs" />
     <Compile Include="Domain\ExportRequest.cs" />
     <Compile Include="Domain\Gad.cs" />
+    <Compile Include="Domain\GridResultResponse.cs" />
     <Compile Include="Domain\Identity\ApplicationAuthenticationDescription.cs" />
     <Compile Include="Domain\Identity\ApplicationExternalLoginInfo.cs" />
     <Compile Include="Domain\Identity\ApplicationIdentityResult.cs" />

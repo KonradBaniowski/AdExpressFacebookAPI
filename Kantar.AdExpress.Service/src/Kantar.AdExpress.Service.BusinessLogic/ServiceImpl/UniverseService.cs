@@ -860,7 +860,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         switch (alert.Periodicity)
                         {
                             case Periodicity.Daily:
-                                alert.Frequency = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.EveryDay, result.SiteLanguage);
+                                alert.Frequency = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Daily, result.SiteLanguage);
                                 alert.PeriodicityDescription = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Daily,result.SiteLanguage);
                                 break;
                             case Periodicity.Weekly:
