@@ -119,7 +119,7 @@ namespace Km.AdExpressClientWeb.Helpers
         {
             var result = new Labels
             {
-                KeyWordLabel = GestionWeb.GetWebWord(LanguageConstantes.KeyWordLabelCode, siteLanguage),
+                KeyWordLabel = ConvertToHtmlString(GestionWeb.GetWebWord(LanguageConstantes.KeyWordLabelCode, siteLanguage)),
                 KeyWordDescription = GestionWeb.GetWebWord(LanguageConstantes.KeyWordDescriptionCode, siteLanguage),
                 ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage),
                 BranchLabel = GestionWeb.GetWebWord(LanguageConstantes.BranchLabelCode, siteLanguage),
@@ -153,8 +153,13 @@ namespace Km.AdExpressClientWeb.Helpers
                 ExportGrossResult = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage),
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
-                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
-                //CurrentController = controller
+                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage),
+                AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage),
+                ErrorSupportAlreadyDefine = GestionWeb.GetWebWord(LanguageConstantes.SupportAlreadyDefine, siteLanguage),
+                Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
+                Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent, siteLanguage),
+                WarningBackNavigator = GestionWeb.GetWebWord(LanguageConstantes.WarningBackNavigatorCode, siteLanguage),
+                ResultError = ConvertToHtmlString(GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage))
             };
             return result;
         }
@@ -168,6 +173,67 @@ namespace Km.AdExpressClientWeb.Helpers
                 ShowCurrentSelection = showCurrentSelection
             };
             return result;
+        }
+
+        private string ConvertToHtmlString(string text)
+        {
+            string[,] strArrays = new string[25, 2];
+            strArrays[0, 0] = "Á";
+            strArrays[0, 1] = "&Aacute;";
+            strArrays[1, 0] = "á";
+            strArrays[1, 1] = "&aacute;";
+            strArrays[2, 0] = "Â";
+            strArrays[2, 1] = "&Acirc;";
+            strArrays[3, 0] = "â";
+            strArrays[3, 1] = "&acirc;";
+            strArrays[4, 0] = "À";
+            strArrays[4, 1] = "&Agrave;";
+            strArrays[5, 0] = "à";
+            strArrays[5, 1] = "&agrave;";
+            strArrays[6, 0] = "Ç";
+            strArrays[6, 1] = "&Ccedil;";
+            strArrays[7, 0] = "ç";
+            strArrays[7, 1] = "&ccedil;";
+            strArrays[8, 0] = "É";
+            strArrays[8, 1] = "&Eacute;";
+            strArrays[9, 0] = "é";
+            strArrays[9, 1] = "&eacute;";
+            strArrays[10, 0] = "Ê";
+            strArrays[10, 1] = "&Ecirc;";
+            strArrays[11, 0] = "ê";
+            strArrays[11, 1] = "&ecirc;";
+            strArrays[12, 0] = "È";
+            strArrays[12, 1] = "&Egrave;";
+            strArrays[13, 0] = "è";
+            strArrays[13, 1] = "&egrave;";
+            strArrays[14, 0] = "Î";
+            strArrays[14, 1] = "&Icirc;";
+            strArrays[15, 0] = "î";
+            strArrays[15, 1] = "&icirc;";
+            strArrays[16, 0] = "Ô";
+            strArrays[16, 1] = "&Ocirc;";
+            strArrays[17, 0] = "ô";
+            strArrays[17, 1] = "&ocirc;";
+            strArrays[18, 0] = "Ö";
+            strArrays[18, 1] = "&Ouml;";
+            strArrays[19, 0] = "ö";
+            strArrays[19, 1] = "&ouml;";
+            strArrays[20, 0] = "Û";
+            strArrays[20, 1] = "&Ucirc;";
+            strArrays[21, 0] = "û";
+            strArrays[21, 1] = "&ucirc;";
+            strArrays[22, 0] = "Ü";
+            strArrays[22, 1] = "&Uuml;";
+            strArrays[23, 0] = "ü";
+            strArrays[23, 1] = "&uuml;";
+            strArrays[24, 0] = "€";
+            strArrays[24, 1] = "&euro;";
+            string[,] characters = strArrays;
+            for (int i = 0; i < characters.GetLength(0); i++)
+            {
+                text = text.Replace(characters[i, 0], characters[i, 1]);
+            }
+            return text;
         }
     }
     
