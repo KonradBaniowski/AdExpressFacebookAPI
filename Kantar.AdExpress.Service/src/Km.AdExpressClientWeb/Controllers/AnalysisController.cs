@@ -7,6 +7,7 @@ using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.AdExpress.Framework.MediaSelection;
 using KM.Framework.Constantes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,18 +31,17 @@ namespace Km.AdExpressClientWeb.Controllers
         private IPeriodService _periodService;
         private IOptionAnalysisService _optionService;
         private ISubPeriodService _subPeriodService;
+        private IAnalysisService _analysisService;
         private const string _controller = "Analysis";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
         private int _siteLanguage = 33;
-        private string controller = "Analysis";
 
-        private string icon;
-        public AnalysisController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IUniverseService universService, IPeriodService periodService, IOptionAnalysisService optionService, ISubPeriodService subPeriodService)
+        public AnalysisController(IMediaService mediaService, IWebSessionService webSessionService, IAnalysisService analysisService, IUniverseService universService, IPeriodService periodService, IOptionAnalysisService optionService, ISubPeriodService subPeriodService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
-            _mediaSchedule = mediaSchedule;
+            _analysisService = analysisService;
             _universService = universService;
             _periodService = periodService;
             _optionService = optionService;
@@ -83,6 +83,30 @@ namespace Km.AdExpressClientWeb.Controllers
             };
 
             return View(model);
+        }
+
+        public JsonResult AnalysisResult()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var gridResult = _analysisService.GetGridResult(idWebSession);
+
+            try
+            {
+                if (!gridResult.HasData)
+                    return null;
+
+                string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+                var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+                JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public ActionResult ResultOptions()

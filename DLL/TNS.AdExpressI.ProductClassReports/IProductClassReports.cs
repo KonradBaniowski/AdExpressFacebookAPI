@@ -17,6 +17,7 @@ using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.Data;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.ProductClassReports
 {
@@ -54,6 +55,11 @@ namespace TNS.AdExpressI.ProductClassReports
         /// </summary>
         /// <returns>HTML Code</returns>
         ResultTable GetGenericProductClassReport();
+        /// <summary>
+        /// Get GridResult 
+        /// </summary>
+        /// <returns>Grid Result</returns>
+        GridResult GetGridResult();
         /// <summary>
         /// Compute Product Class Report matching the "result" param (HTML code)
         /// </summary>
