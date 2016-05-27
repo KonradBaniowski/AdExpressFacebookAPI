@@ -9,6 +9,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
 {
     public class GridResultResponse
     {
+        public GridResultResponse()
+            {
+                Message = string.Empty;
+            }
         public bool Success { get; set; }
         public string Message { get; set; }
         public GridResult GridResult { get; set; }

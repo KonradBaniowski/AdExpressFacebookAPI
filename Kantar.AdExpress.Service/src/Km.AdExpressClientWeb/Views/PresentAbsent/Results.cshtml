@@ -346,7 +346,7 @@
                     type: "POST",
                     datatype: "json",
                     error: function (xmlHttpRequest, errorText, thrownError) {
-                        bootbox.alert(@string.Format("'{0}.{1}'",Model.Labels.ResultError,Model.Labels.WarningBackNavigator));
+                        bootbox.alert('@string.Format("{0}.{1}",Model.Labels.ResultError,Model.Labels.WarningBackNavigator)');
                     },
                     success: function (data) {
                         if (data != null && data != "" && data.success) {
