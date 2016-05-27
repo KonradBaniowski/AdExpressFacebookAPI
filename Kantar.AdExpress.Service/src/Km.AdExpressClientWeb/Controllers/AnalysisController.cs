@@ -72,6 +72,7 @@ namespace Km.AdExpressClientWeb.Controllers
             WebSession CustomerSession = (WebSession)WebSession.Load(idSession);
             _siteLanguage = CustomerSession.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguage = _siteLanguage;
             var resultNode = new NavigationNode { Position = 4 };
             var pageHelper = new Helpers.PageHelper();
             var result = _webSessionService.GetWebSession(idSession);

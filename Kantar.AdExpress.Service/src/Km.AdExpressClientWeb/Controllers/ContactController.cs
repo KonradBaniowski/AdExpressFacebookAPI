@@ -19,6 +19,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
           
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
+            ViewBag.SiteLanguage = siteLanguage;
             var model = new ContactViewModel();
             model.QuestionsTagItem = new List<SelectListItem>();
             var labels = LabelsHelper.LoadPageLabels(33);
@@ -39,6 +40,7 @@ namespace Km.AdExpressClientWeb.Controllers
          
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
+            ViewBag.SiteLanguage = siteLanguage;
             var model = new ContactViewModel();
             model.QuestionsTagItem = new List<SelectListItem>();
             var labels = LabelsHelper.LoadPageLabels(33);

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using TNS.AdExpress.Domain.Translation;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -15,7 +16,7 @@
         <div class="container">
             @*ROMAIN*@
             <div class="bb-alert alert alert-info" style="display:none;">
-                <span>The examples populate this alert with dummy content</span>
+                <span></span>
             </div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -31,12 +32,12 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
-                    <li>
+                    <li title="@GestionWeb.GetWebWord(761, ViewBag.SiteLanguage)">
                         <a href="@Url.Action("MyAdExpress", "Home")">
                             <i class="glyphicon glyphicon-user"></i>
                         </a>
                     </li>
-                    <li>
+                    <li title="@GestionWeb.GetWebWord(3055, ViewBag.SiteLanguage)">
                         <a href="#">
                             <i class="glyphicon glyphicon-comment"></i>
                         </a>
@@ -62,7 +63,7 @@
                     </li>
 
 
-                    <li>
+                    <li title="@GestionWeb.GetWebWord(2929, ViewBag.SiteLanguage)">
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
                             @Html.AntiForgeryToken()

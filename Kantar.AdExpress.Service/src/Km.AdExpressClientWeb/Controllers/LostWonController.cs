@@ -104,6 +104,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             _siteLanguage = result.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguage = _siteLanguage;
             var marketNode = new NavigationNode { Position = 1 };
             var navigationHelper = new Helpers.PageHelper();
             model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage,1);
@@ -145,6 +146,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.Medias = model.Medias.OrderBy(ze => ze.Disabled).ToList();
             _siteLanguage = result.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguage = _siteLanguage;
             var mediaNode = new NavigationNode { Position = 2 };
             var navigationHelper = new Helpers.PageHelper();
             model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, _controller, _siteLanguage,2);
@@ -204,6 +206,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
+            ViewBag.SiteLanguage = result.SiteLanguage;
             NavigationNode periodeNode = new NavigationNode { Position = 3 };
             var navigationHelper = new Helpers.PageHelper();
             var navBarModel = navigationHelper.LoadNavBar(idSession, result.ControllerDetails.Name, result.SiteLanguage, 3);
@@ -273,6 +276,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var result = _webSessionService.GetWebSession(idSession);
             _siteLanguage = result.WebSession.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguage = _siteLanguage;
             var resultNode = new NavigationNode { Position = 4 };
             var navigationHelper = new Helpers.PageHelper();          
             var model = new Models.LostWon.ResultsViewModel
