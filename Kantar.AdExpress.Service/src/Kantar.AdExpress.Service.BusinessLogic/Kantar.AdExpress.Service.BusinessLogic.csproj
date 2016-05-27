@@ -71,6 +71,7 @@
     <Compile Include="Identity\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl\AlertService.cs" />
+    <Compile Include="ServiceImpl\AnalysisService.cs" />
     <Compile Include="ServiceImpl\CreativeService.cs" />
     <Compile Include="ServiceImpl\DetailLevelService.cs" />
     <Compile Include="ServiceImpl\DetailSelectionService.cs" />
@@ -151,6 +152,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.PresentAbsent\TNS.AdExpressI.PresentAbsent.csproj">
       <Project>{459f24ec-384d-404f-a6d2-f3b76c288a57}</Project>
       <Name>TNS.AdExpressI.PresentAbsent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.ProductClassReports\TNS.AdExpressI.ProductClassReports.csproj">
+      <Project>{c0d576be-bb8d-4f27-b361-385162442113}</Project>
+      <Name>TNS.AdExpressI.ProductClassReports</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
