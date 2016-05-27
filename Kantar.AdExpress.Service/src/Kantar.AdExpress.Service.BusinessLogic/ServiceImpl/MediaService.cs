@@ -34,7 +34,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 _webSession.SelectionUniversMedia.Nodes.Clear();
                 _webSession.Save();
-                result = GetAnalysisVehicleList(_webSession);
+                //result = GetAnalysisVehicleList(_webSession);
+                result = GetDefaultVehicleList(_webSession);
             }
             else
             {
@@ -154,7 +155,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var vehiclesInfos = VehiclesInformation.GetAll();
             var myMedia = GetMyMedia(webSession);
             string ids = vehiclesInfos.Select(p => p.Value.DatabaseId.ToString()).Aggregate((c, n) => c + "," + n);
-            var levels = GetVehicleLabel(ids, _webSession, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle));
+            var levels = GetVehicleLabel(ids, webSession, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle));
 
             foreach (var item in vehiclesInfos.Values)
             {
