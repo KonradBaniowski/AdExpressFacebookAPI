@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EB452F8B-BB77-4F6B-9169-31781FDBC1C9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TNS.AdExpress.Vehicle.DAL</RootNamespace>
+    <AssemblyName>TNS.AdExpress.Vehicle.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork.DB">
+      <HintPath>..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="VehicleListDataAccess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Constantes\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716ac8-b9d2-432c-84f7-885a73b77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{a4dede88-c99e-495f-98f2-e2762520f4be}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0ad4151f-074c-4c7d-9ffc-6de8d186626a}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Classification.DAL\TNS.AdExpressI.Classification.DAL.csproj">
+      <Project>{b731e9a2-0dbf-43a6-a89e-6dc27d96ffd4}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
+      <Project>{8889ed07-01ce-4f3a-a296-3a2c4b21989c}</Project>
+      <Name>TNS.AdExpressI.Date.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
+      <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
+      <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
