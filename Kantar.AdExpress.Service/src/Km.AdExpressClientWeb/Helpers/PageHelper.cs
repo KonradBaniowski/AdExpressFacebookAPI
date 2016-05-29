@@ -120,7 +120,7 @@ namespace Km.AdExpressClientWeb.Helpers
         {
             var result = new Labels
             {
-                KeyWordLabel = ConvertToHtmlString(GestionWeb.GetWebWord(LanguageConstantes.KeyWordLabelCode, siteLanguage)),
+                KeyWordLabel =GestionWeb.GetWebWord(LanguageConstantes.KeyWordLabelCode, siteLanguage),
                 KeyWordDescription = GestionWeb.GetWebWord(LanguageConstantes.KeyWordDescriptionCode, siteLanguage),
                 ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage),
                 BranchLabel = GestionWeb.GetWebWord(LanguageConstantes.BranchLabelCode, siteLanguage),
