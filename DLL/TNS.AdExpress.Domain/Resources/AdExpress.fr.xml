@@ -425,7 +425,7 @@
     <item mnemonic="w1121" type="System.String">l'année N-1</item>
     <item mnemonic="w1122" type="System.String">Sélection des annonceurs de référence</item>
     <item mnemonic="w1123" type="System.String">Sélection des annonceurs concurrents.</item>
-    <item mnemonic="w1124" type="System.String">Produits d&amp;eacute;taill&amp;eacute;s par :</item>
+    <item mnemonic="w1124" type="System.String">Produits détaillés par :</item>
     <item mnemonic="w1125" type="System.String">PorteFeuille</item>
     <item mnemonic="w1126" type="System.String">Absents</item>
     <item mnemonic="w1127" type="System.String">Communs</item>

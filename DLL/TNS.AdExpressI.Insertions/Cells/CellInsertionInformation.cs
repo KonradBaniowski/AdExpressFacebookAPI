@@ -475,6 +475,16 @@ namespace TNS.AdExpressI.Insertions.Cells
         }
         #endregion
 
+
+        public List<Cell> GetValues
+        {
+            get { return _values; }            
+        }
+
+        public List<GenericColumnItemInformation> GetColumns
+        {
+            get { return _columns; }
+        }
     }
 
 }

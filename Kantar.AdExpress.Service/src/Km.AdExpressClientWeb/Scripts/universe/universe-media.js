@@ -46,7 +46,8 @@ $(".btn-recherche").on('click', function (event) {
                     }
                     $('#selectable' + universe).selectableScroll({
                         filter: 'li',
-                        stop: SelectedItems
+                        stop: SelectedItems,
+                        selected: SelectedItems
                     });
                 }
             });

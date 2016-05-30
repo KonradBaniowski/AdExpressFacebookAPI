@@ -1,5 +1,8 @@
 ﻿using Aspose.Cells;
 using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain;
+using Km.AdExpressClientWeb.I18n;
+using KM.Framework.Constantes;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,6 +16,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpressI.Insertions.Cells;
 using TNS.FrameWork.WebResultUI;
 
 namespace Km.AdExpressClientWeb.Controllers
@@ -46,7 +50,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.Clear();
 
-            export.ExportSelection(document);
+            export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
             export.Export(document, data, session);
 
             document.Worksheets.ActiveSheetIndex = 1;
@@ -78,7 +82,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.Clear();
 
-            export.ExportSelection(document);
+            export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
             export.Export(document, data, session, true);
 
             document.Worksheets.ActiveSheetIndex = 1;
@@ -195,49 +199,56 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
             int coltmp = columnStart;
+            int nbRowTotal = 0;
+            int nbLevel = 0;
 
-            int nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
-
-            GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
-            int nbLevel = detailLevel.GetNbLevels;
-            HeaderBase headerBase = data.NewHeaders.Root;
-
-            if (isExportBrut)
+            if (data.NewHeaders != null)
             {
-                if (nbLevel == 1)
-                    headerBase = data.NewHeaders.Root;
-                else
+                nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
+
+                GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
+                nbLevel = detailLevel.GetNbLevels;
+                HeaderBase headerBase = data.NewHeaders.Root;
+
+                if (isExportBrut)
                 {
-                    headerBase = new Header();
-
-                    for (int l = 1; l <= nbLevel; l++)
+                    if (nbLevel == 1)
+                        headerBase = data.NewHeaders.Root;
+                    else
                     {
-                        Header headerTmp = new Header(GestionWeb.GetWebWord(detailLevel[l].WebTextId, session.SiteLanguage));
+                        headerBase = new Header();
 
-                        headerBase.Add(headerTmp);
-                    }
-
-                    bool first = true;
-                    foreach (var item in data.NewHeaders.Root)
-                    {
-                        if (!first)
+                        for (int l = 1; l <= nbLevel; l++)
                         {
-                            HeaderBase header = item as HeaderBase;
-                            headerBase.Add(header);
+                            Header headerTmp = new Header(GestionWeb.GetWebWord(detailLevel[l].WebTextId, session.SiteLanguage));
+
+                            headerBase.Add(headerTmp);
                         }
 
-                        first = false;
+                        bool first = true;
+                        foreach (var item in data.NewHeaders.Root)
+                        {
+                            if (!first)
+                            {
+                                HeaderBase header = item as HeaderBase;
+                                headerBase.Add(header);
+                            }
+
+                            first = false;
+                        }
                     }
                 }
-            }
 
-            DrawHeaders(headerBase, sheet, rowStart, columnStart);
+                DrawHeaders(headerBase, sheet, rowStart, columnStart);
+            }
 
             rowStart += nbRowTotal;
 
             int colLevel = 0;
+            int rowStartValue = rowStart;
+            int rowEndValue = 0;
+            HashSet<int> lstColEvol = new HashSet<int>();
 
-            
 
             #region colonne en mode brut
             if (isExportBrut && nbLevel > 1)
@@ -267,7 +278,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             case LineType.level1:
 
                                 if (idxCol == 0)
-                                { 
+                                {
                                     sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
                                     tabLevel[0] = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
                                 }
@@ -370,111 +381,135 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                     }
 
-                    if (cell is CellPercent || cell is CellEvol)
-                    {
-                        double value = ((CellUnit)cell).Value;
+                    MEFCell(session, cell, sheet, ref cellRow, cellCol, ((LineStart)data[idxRow, 0]).LineType, lstColEvol);
 
-                        if (double.IsInfinity(value) || double.IsNaN(value))
-                            sheet.Cells[cellRow, cellCol].Value = "";
-                        else
-                            sheet.Cells[cellRow, cellCol].Value = value / 100;
-
-                        SetPercentFormat(sheet.Cells[cellRow, cellCol]);
-                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-                    }
-                    //else if (cell is CellEvol)
+                    #region Old
+                    //if (cell is CellPercent)
                     //{
-                    //    sheet.Cells[cellRow, cellCol].Value = ((CellEvol)cell).Value;
+                    //    double value = ((CellUnit)cell).Value;
+
+                    //    if (double.IsInfinity(value) || double.IsNaN(value))
+                    //        sheet.Cells[cellRow, cellCol].Value = "";
+                    //    else
+                    //        sheet.Cells[cellRow, cellCol].Value = value / 100;
+
                     //    SetPercentFormat(sheet.Cells[cellRow, cellCol]);
                     //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
                     //}
-                    else if (cell is CellDuration)
-                    {
-                        double value = ((CellUnit)cell).GetValue();
+                    //else if (cell is CellEvol)
+                    //{
+                    //    double value = ((CellUnit)cell).Value;
 
-                        double hours = Math.Floor(value / 3600);
-                        double minutes = Math.Floor((value - (hours * 3600)) / 60);
-                        double secondes = value - hours * 3600 - minutes * 60;
+                    //    if (double.IsInfinity(value) || double.IsNaN(value))
+                    //        sheet.Cells[cellRow, cellCol].Value = "";
+                    //    else
+                    //        sheet.Cells[cellRow, cellCol].Value = value / 100;
 
-                        sheet.Cells[cellRow, cellCol].Value = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + secondes.ToString("00");
+                    //    SetPercentFormat(sheet.Cells[cellRow, cellCol]);
+                    //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
 
-                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-                    }
-                    else if (cell is CellDate)
-                    {
+                    //    lstColEvol.Add(cellCol);
+                    //}
+                    //else if (cell is CellDuration)
+                    //{
+                    //    double value = ((CellUnit)cell).GetValue();
 
-                        sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
+                    //    double hours = Math.Floor(value / 3600);
+                    //    double minutes = Math.Floor((value - (hours * 3600)) / 60);
+                    //    double secondes = value - hours * 3600 - minutes * 60;
 
-                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
-                    }
-                    else if (cell is CellUnit)
-                    {
-                        double value = ((CellUnit)cell).GetValue();
-                        if (value != 0.0)
-                        {
-                            sheet.Cells[cellRow, cellCol].Value = value;
+                    //    sheet.Cells[cellRow, cellCol].Value = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + secondes.ToString("00");
 
-                            if (((CellUnit)cell).AsposeFormat == -1)
-                                SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
-                            else
-                                SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
+                    //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                    //}
+                    //else if (cell is CellDate)
+                    //{
 
-                            SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-                        }
-                    }
-                    else if (cell is CellLabel)
-                        sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)cell).Label);
-                    else if (cell is CellEmpty)
-                        sheet.Cells[cellRow, cellCol].Value = "";
-                    else
-                    {
-                        sheet.Cells[cellRow, cellCol].Value = "";
-                    }
+                    //    sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
+
+                    //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
+                    //}
+                    //else if (cell is CellUnit)
+                    //{
+                    //    double value = ((CellUnit)cell).GetValue();
+                    //    if (value != 0.0)
+                    //    {
+                    //        sheet.Cells[cellRow, cellCol].Value = value;
+
+                    //        if (((CellUnit)cell).AsposeFormat == -1)
+                    //            SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                    //        else
+                    //            SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
+
+                    //        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                    //    }
+                    //}
+                    //else if (cell is CellLabel)
+                    //    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)cell).Label);
+                    //else if (cell is CellInsertionInformation)
+                    //{
+                    //    CellInsertionInformation cellI = cell as CellInsertionInformation;
+
+                    //    foreach (Cell item in cellI.GetValues)
+                    //    {
+
+                    //    }
+
+                    //}
+                    //else if (cell is CellEmpty)
+                    //    sheet.Cells[cellRow, cellCol].Value = "";
+                    //else
+                    //{
+                    //    sheet.Cells[cellRow, cellCol].Value = "";
+                    //}
 
 
-                    switch (((LineStart)data[idxRow, 0]).LineType)
-                    {
-                        case LineType.total:
-                            textColor = LTotalText;
-                            backColor = LTotalBackground;
-                            borderColor = BorderTab;
-                            break;
-                        case LineType.level1:
-                            textColor = L1Text;
-                            backColor = L1Background;
-                            borderColor = BorderTab;
-                            break;
-                        case LineType.level2:
-                            textColor = L2Text;
-                            backColor = L2Background;
-                            borderColor = BorderTab;
-                            if (cell is CellLabel)
-                                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
-                            break;
-                        case LineType.level3:
-                            textColor = L3Text;
-                            backColor = L3Background;
-                            borderColor = BorderTab;
-                            if (cell is CellLabel)
-                                SetIndentLevel(sheet.Cells[cellRow, cellCol], 2);
-                            break;
-                        case LineType.level4:
-                            textColor = L4Text;
-                            backColor = L4Background;
-                            borderColor = BorderTab;
-                            if (cell is CellLabel)
-                                SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
-                            break;
-                        default:
-                            textColor = Color.Black;
-                            backColor = Color.White;
-                            borderColor = Color.Black;
-                            break;
-                    }
+                    //switch (((LineStart)data[idxRow, 0]).LineType)
+                    //{
+                    //    case LineType.total:
+                    //        textColor = LTotalText;
+                    //        backColor = LTotalBackground;
+                    //        borderColor = BorderTab;
+                    //        break;
+                    //    case LineType.level1:
+                    //        textColor = L1Text;
+                    //        backColor = L1Background;
+                    //        borderColor = BorderTab;
+                    //        break;
+                    //    case LineType.level2:
+                    //        textColor = L2Text;
+                    //        backColor = L2Background;
+                    //        borderColor = BorderTab;
+                    //        if (cell is CellLabel)
+                    //            SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
+                    //        break;
+                    //    case LineType.level3:
+                    //        textColor = L3Text;
+                    //        backColor = L3Background;
+                    //        borderColor = BorderTab;
+                    //        if (cell is CellLabel)
+                    //            SetIndentLevel(sheet.Cells[cellRow, cellCol], 2);
+                    //        break;
+                    //    case LineType.level4:
+                    //        textColor = L4Text;
+                    //        backColor = L4Background;
+                    //        borderColor = BorderTab;
+                    //        if (cell is CellLabel)
+                    //            SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
+                    //        break;
+                    //    default:
+                    //        textColor = Color.Black;
+                    //        backColor = Color.White;
+                    //        borderColor = Color.Black;
+                    //        break;
+                    //}
 
-                    TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
-                    BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
+                    //TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
+                    //BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
+                    #endregion
 
+                    if (rowEndValue < cellRow)
+                        rowEndValue = cellRow;
                 }
 
                 if (columnHide == false)
@@ -485,6 +520,36 @@ namespace Km.AdExpressClientWeb.Controllers
 
             sheet.AutoFitColumns();
 
+            #endregion
+
+            #region Ajoute les icones des cellules
+            if (lstColEvol.Count() > 0)
+            {
+                int idxCondis = sheet.ConditionalFormattings.Add();
+                FormatConditionCollection fcs = sheet.ConditionalFormattings[idxCondis];
+
+                foreach (int col in lstColEvol)
+                {
+                    CellArea cellArea = new CellArea();
+                    cellArea.StartRow = rowStartValue;
+                    cellArea.EndRow = rowEndValue;
+                    cellArea.StartColumn = col;
+                    cellArea.EndColumn = col;
+
+                    fcs.AddArea(cellArea);
+                }
+
+                // Adds condition.
+                int conditionIndex = fcs.AddCondition(FormatConditionType.IconSet, OperatorType.None, "0", "0");
+                fcs[conditionIndex].IconSet.Type = IconSetType.Arrows3;
+
+                //fcs[conditionIndex].IconSet.Cfvos[0].Type = FormatConditionValueType.Number;
+                //fcs[conditionIndex].IconSet.Cfvos[0].Value = 0;                    
+                fcs[conditionIndex].IconSet.Cfvos[1].Type = FormatConditionValueType.Number;
+                fcs[conditionIndex].IconSet.Cfvos[1].Value = 0;
+                fcs[conditionIndex].IconSet.Cfvos[2].Type = FormatConditionValueType.Number;
+                fcs[conditionIndex].IconSet.Cfvos[2].Value = 0;
+            }
             #endregion
 
             //string documentFileNameRoot;
@@ -499,7 +564,178 @@ namespace Km.AdExpressClientWeb.Controllers
             //Response.End();
         }
 
-        public void ExportSelection(Workbook document)
+        private void MEFCell(WebSession session, ICell cell, Aspose.Cells.Worksheet sheet, ref int cellRow, int cellCol, LineType lineType, HashSet<int> lstColEvol)
+        {
+            Color textColor;
+            Color backColor;
+            Color borderColor;
+
+            if (cell is CellPercent)
+            {
+                double value = ((CellUnit)cell).Value;
+
+                if (double.IsInfinity(value) || double.IsNaN(value))
+                    sheet.Cells[cellRow, cellCol].Value = "";
+                else
+                    sheet.Cells[cellRow, cellCol].Value = value / 100;
+
+                SetPercentFormat(sheet.Cells[cellRow, cellCol]);
+                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+            }
+            else if (cell is CellEvol)
+            {
+                double value = ((CellUnit)cell).Value;
+
+                if (double.IsInfinity(value) || double.IsNaN(value))
+                    sheet.Cells[cellRow, cellCol].Value = "";
+                else
+                    sheet.Cells[cellRow, cellCol].Value = value / 100;
+
+                SetPercentFormat(sheet.Cells[cellRow, cellCol]);
+                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+
+                lstColEvol.Add(cellCol);
+            }
+            else if (cell is CellDuration)
+            {
+                double value = ((CellUnit)cell).GetValue();
+
+                double hours = Math.Floor(value / 3600);
+                double minutes = Math.Floor((value - (hours * 3600)) / 60);
+                double secondes = value - hours * 3600 - minutes * 60;
+
+                sheet.Cells[cellRow, cellCol].Value = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + secondes.ToString("00");
+
+                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+            }
+            else if (cell is CellDate)
+            {
+
+                sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
+
+                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
+            }
+            else if (cell is CellUnit)
+            {
+                double value = ((CellUnit)cell).GetValue();
+                if (value != 0.0)
+                {
+                    sheet.Cells[cellRow, cellCol].Value = value;
+
+                    if (((CellUnit)cell).AsposeFormat == -1)
+                        SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                    else
+                        SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
+
+                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                }
+            }
+            else if (cell is CellLabel)
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)cell).Label);
+            else if (cell is CellInsertionInformation)
+            {
+                CellInsertionInformation cellI = cell as CellInsertionInformation;
+
+                int i = 0;
+
+                foreach (GenericColumnItemInformation g in cellI.GetColumns)
+                {
+                    if (g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster)
+                    {
+                        string name = WebUtility.HtmlDecode(GestionWeb.GetWebWord(g.WebTextId, session.SiteLanguage));
+
+                        ICell cellTmp = cellI.GetValues[i];
+
+                        if (cellTmp != null)
+                        {
+                            //MEFCell(session, cellTmp, sheet, cellRow, cellCol, lineType, lstColEvol);
+
+                            if (!(cellTmp is CellUnit))
+                            {
+                                //values = value.Split(',');
+                                //foreach (string s in values)
+                                //{
+                                //    if (hasData)
+                                //    {
+                                //        str.Append("<br/>");
+                                //    }
+                                //    hasData = true;
+                                //    str.AppendFormat("{0}", s);
+                                //}
+
+                                sheet.Cells[cellRow, cellCol].Value = name + " : " + cellTmp.ToString();
+                            }
+                            else
+                            {
+                                sheet.Cells[cellRow, cellCol].Value = name + " : " + ((CellUnit)cellTmp).Value.ToString();
+                            }
+
+                            cellRow++;
+                        }
+                    }
+
+                    i++;
+                }
+
+                //foreach (TNS.FrameWork.WebResultUI.Cell item in cellI.GetValues)
+                //{
+                //    MEFCell(item, sheet, cellRow, cellCol, lineType, lstColEvol);
+                //}
+
+            }
+            else if (cell is CellEmpty)
+                sheet.Cells[cellRow, cellCol].Value = "";
+            else
+            {
+                sheet.Cells[cellRow, cellCol].Value = "";
+            }
+
+
+            switch (lineType)
+            {
+                case LineType.total:
+                    textColor = LTotalText;
+                    backColor = LTotalBackground;
+                    borderColor = BorderTab;
+                    break;
+                case LineType.level1:
+                    textColor = L1Text;
+                    backColor = L1Background;
+                    borderColor = BorderTab;
+                    break;
+                case LineType.level2:
+                    textColor = L2Text;
+                    backColor = L2Background;
+                    borderColor = BorderTab;
+                    if (cell is CellLabel)
+                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
+                    break;
+                case LineType.level3:
+                    textColor = L3Text;
+                    backColor = L3Background;
+                    borderColor = BorderTab;
+                    if (cell is CellLabel)
+                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 2);
+                    break;
+                case LineType.level4:
+                    textColor = L4Text;
+                    backColor = L4Background;
+                    borderColor = BorderTab;
+                    if (cell is CellLabel)
+                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
+                    break;
+                default:
+                    textColor = Color.Black;
+                    backColor = Color.White;
+                    borderColor = Color.Black;
+                    break;
+            }
+
+            TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
+            BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
+        }
+
+        public void ExportSelection(Workbook document, WebSession session, DetailSelectionResponse detailSelectionResponse)
         {
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
@@ -508,8 +744,197 @@ namespace Km.AdExpressClientWeb.Controllers
 
             Worksheet sheet = document.Worksheets.Add("Selection");
 
+            Labels labels = LabelsHelper.LoadPageLabels(session.SiteLanguage);
 
-            //TODO
+            int cellRow = 2;
+            int cellCol = 2;
+
+
+            if (detailSelectionResponse.ShowStudyType)
+            {
+
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.StudySelectionLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.ModuleLabel);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+            if (detailSelectionResponse.ShowDate)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.PeriodSelectionLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.Dates);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+            if (detailSelectionResponse.ShowStudyPeriod)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.StudyPeriodLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.StudyPeriod);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+            if (detailSelectionResponse.ShowComparativePeriod)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.ComparativePeriodLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.ComparativePeriod);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+            if (detailSelectionResponse.ShowComparativePeriodType)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.ComparativePeriodTypeLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.ComparativePeriodType);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+            if (detailSelectionResponse.ShowPeriodDisponibilityType)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.PeriodDisponibilityTypeLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.PeriodDisponibilityType);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+            if (detailSelectionResponse.ShowUnivers)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.MediaLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.MediasSelectedLabel);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+
+                //if (detailSelectionResponse.ShowUniversDetails)
+                //{
+                //    <div class="form-group">
+                //        <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UniversSupportLabel)</strong></label>
+                //    </div>
+                //    var size = (12 / Model.DetailSelectionWSModel.UniversMedia.Count);
+                //    <div class="form-group">
+                //        @for(int i = 0; i<Model.DetailSelectionWSModel.UniversMedia.Count; i++)
+                //        {
+                //            <div class="col-sm-@(size) control-label text-left">
+                //                <ul class="treeview">
+                //                    <li>
+                //                        <a href = "#" > @Model.DetailSelectionWSModel.UniversMedia[i].Label </ a >
+                //                        < ul >
+                //                            @for(int j = 0; j<Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels.Count; j++)
+                //                            {
+
+                //                                <li>
+                //                                    <a href = "#" > @Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].Label </ a >
+                //                                    < ul >
+                //                                        @for(int z = 0; z<Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].UniversItems.Count; z++)
+                //                                        {
+                //                                            <li>
+                //                                                <a href = "#" > @Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].UniversItems[z].Label </ a >
+                //                                            </ li >
+                //                                        }
+                //                                    </ul>
+                //                                </li>
+                //                            }
+                //                        </ul>
+                //                    </li>
+                //                </ul>
+                //            </div>
+                //        }
+
+                //    </div>
+                //}
+            }
+            if (detailSelectionResponse.ShowGenericlevelDetail)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.LevelDetailsLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.NiveauDetailLabel);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+            if (detailSelectionResponse.ShowGenericLevelDetailColumn)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.GenericLevelDetailColumnLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.GenericLevelDetailColumn);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+            if (detailSelectionResponse.ShowUnity)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.UnitLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.UniteLabel);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+
+            if (detailSelectionResponse.ShowMarket)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.UniversProductLabel);
+
+                //var size = (12 / Model.DetailSelectionWSModel.UniversMarket.Count);
+
+                for (int i = 0; i < detailSelectionResponse.UniversMarket.Count; i++)
+                {
+                    sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.UniversMarket[i].Label);
+                    TextStyle(sheet.Cells[cellRow, cellCol], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+                    TextStyle(sheet.Cells[cellRow, cellCol + 1], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+
+                    cellRow++;
+
+                    for (int j = 0; j < detailSelectionResponse.UniversMarket[i].UniversLevels.Count; j++)
+                    {
+                        sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.UniversMarket[i].UniversLevels[j].Label);
+                        SetIndentLevel(sheet.Cells[cellRow, cellCol + 1], 1);
+                        TextStyle(sheet.Cells[cellRow, cellCol], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+                        TextStyle(sheet.Cells[cellRow, cellCol + 1], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+
+                        cellRow++;
+
+                        for (int z = 0; z < detailSelectionResponse.UniversMarket[i].UniversLevels[j].UniversItems.Count; z++)
+                        {
+                            sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.UniversMarket[i].UniversLevels[j].UniversItems[z].Label);
+                            SetIndentLevel(sheet.Cells[cellRow, cellCol + 1], 2);
+                            TextStyle(sheet.Cells[cellRow, cellCol], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+                            TextStyle(sheet.Cells[cellRow, cellCol + 1], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+
+                            cellRow++;
+                        }
+                    }
+                }
+
+                //sheet.Cells[cellRow, cellCol + 1].Value = tmp;
+
+                //TextStyle(sheet.Cells[cellRow, cellCol], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+                //TextStyle(sheet.Cells[cellRow, cellCol + 1], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+
+                cellRow++;
+            }
+
+            sheet.AutoFitColumns();
+            sheet.AutoFitRows();
 
         }
 

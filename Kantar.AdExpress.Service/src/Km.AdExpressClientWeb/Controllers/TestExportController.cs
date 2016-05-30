@@ -236,6 +236,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.Clear();
 
+            ExportAspose export = new ExportAspose();
+            export.ExportSelection(document, _session, _detailSelectionService.GetDetailSelection(idWebSession));
+
             Worksheet sheet = document.Worksheets.Add("WorkSheet1");
 
             #region Aspose
@@ -1136,6 +1139,9 @@ namespace Km.AdExpressClientWeb.Controllers
             Workbook document = new Workbook(FileFormatType.Excel2003XML);
 
             document.Worksheets.Clear();
+
+            ExportAspose export = new ExportAspose();
+            export.ExportSelection(document, _session, _detailSelectionService.GetDetailSelection(idWebSession));
 
             Worksheet sheet = document.Worksheets.Add("WorkSheet1");
 

@@ -177,6 +177,10 @@
       <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
       <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\TNS.AdExpress.Vehicle.DAL\TNS.AdExpress.Vehicle.DAL.csproj">
+      <Project>{eb452f8b-bb77-4f6b-9169-31781fdbc1c9}</Project>
+      <Name>TNS.AdExpress.Vehicle.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Contracts\Kantar.AdExpress.Service.Contracts.csproj">
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>
       <Name>Kantar.AdExpress.Service.Contracts</Name>
