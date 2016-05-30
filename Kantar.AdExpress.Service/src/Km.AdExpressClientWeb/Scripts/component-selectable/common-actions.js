@@ -131,7 +131,7 @@ function SelectSelectableElement(selectableContainer, elementsToSelect) {
     //selectableContainer.selectable('refresh');
     // trigger the mouse stop event (this will select all .ui-selecting elements, and deselect all .ui-unselecting elements)
     //selectableContainer.data("selectable")._mouseStop(null);
-    selectableContainer.data("ui-selectable")._mouseStop(null);
+    //$(selectableContainer).data("ui-selectable")._mouseStop(null);
 };
 
 //clean l element selectionnée
@@ -159,7 +159,12 @@ $(document).on('click', 'button.tout-suppr', function () {
 
 $(document).on('click', '.add-all', function () {
     var selectable = $(this).closest('.panel-default').find('ul');
-    var idselectable = "#" + selectable.attr('id');
+    var id = selectable.attr('id');
+    var idselectable = "#" + id;
+    var others = $("[id^='selectable'][id!='" + id + "']");
+    $.each(others, function (index, value) {
+        $(value).find('li').removeClass("ui-selected");
+    });
     SelectSelectableElement($(idselectable), $(idselectable + " li"));
 });
 

@@ -163,6 +163,7 @@
                 this.FormatFilter = new FormatFilter();
                 this.PurchaseModeFilter = new PurchaseModeFilter();
                 this.ComparativeStudy = false;
+                this.InitializeMedia = false;
                 this.ComparativePeriodType = 1;
             }
 
@@ -897,7 +898,17 @@
             $("#grid").addClass("hide");
             $("#gridLoader").removeClass("hide");
             $("#collapseContainerOne").collapse('hide');
+
+            if ($("#initializeMedia").prop('checked') == true) {
+                $("#initializeMediaContainer").hide();
+            }
+
             CallSetOptions();
+
+            if ($("#initializeMedia").prop('checked') == true) {
+                $('#initializeMedia').attr('checked', false);
+                userFilter.InitializeMedia = false;
+            }
         });
 
         $('#date-to-date').on('click', function (e) {
@@ -915,7 +926,6 @@
         $('#unit').on('change', function (e) {
             userFilter.UnitFilter.Unit = $('#unit').val();
         });
-
 
         $('#insertion').selectpicker();
 
@@ -939,6 +949,17 @@
 
         $('#purchaseMode').on('change', function (e) {
             userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
+        });
+
+        $('#initializeMedia').selectpicker();
+
+        $("#initializeMedia").click(function () {
+            if ($(this).prop('checked') == true) {
+                userFilter.InitializeMedia = true;
+            }
+            else {
+                userFilter.InitializeMedia = false;
+            }
         });
 
         $('#defaultDetail').selectpicker();

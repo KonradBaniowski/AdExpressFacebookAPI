@@ -13,5 +13,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool Value { get; set; }
 
         public bool Visible { get; set; }
+
+        public bool Enabled { get; set; }
     }
 }

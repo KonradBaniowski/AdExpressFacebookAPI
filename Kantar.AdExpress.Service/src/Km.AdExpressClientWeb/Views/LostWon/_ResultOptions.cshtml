@@ -358,13 +358,13 @@
                         }
                     }
                     <div class="col-md-4">
-                        <div class="checkbox padder orange">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox" name="a">
-                                <i></i>
-                                @GestionWeb.GetWebWord(1131, Model.SiteLanguage)
-                            </label>
-                        </div>
+                        @if (Model.InitializeProduct.Enabled)
+                        {
+                            <div id="initializeProductContainer" class="checkbox padder media-schedule-option">
+                                <input id="@Model.InitializeProduct.Id" type="checkbox" name="@Model.InitializeProduct.Id" class="with-font" />
+                                <label for="@Model.InitializeProduct.Id">@GestionWeb.GetWebWord(1131, Model.SiteLanguage)</label>
+                            </div>
+                        }
                     </div>
                 </div>
 
