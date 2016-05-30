@@ -66,6 +66,7 @@ namespace Km.AdExpressClientWeb.Controllers
             List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(resList.First().Value.SiteLanguage);
+            ViewBag.SiteLanguage = resList.First().Value.SiteLanguage;
             documents.Add(new Documents()
                         {
                             Id = 3,
@@ -161,6 +162,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.Alerts = alertsResponse.Alerts;
             #endregion
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
+            ViewBag.SiteLanguage = result.SiteLanguage;
             model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
             model.Labels = LoadPageLabels(result.SiteLanguage);
             return View(model);
@@ -273,7 +275,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 YourModule = GestionWeb.GetWebWord(LanguageConstantes.YourModule, siteLanguage),
                 NewsDescr = GestionWeb.GetWebWord(LanguageConstantes.NewsDescr, siteLanguage),
                 ContactUsLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactUsLabel, siteLanguage),
-                Delete = GestionWeb.GetWebWord(LanguageConstantes.Delete, siteLanguage)
+                Delete = GestionWeb.GetWebWord(LanguageConstantes.Delete, siteLanguage),
+                DashboardsLabel = GestionWeb.GetWebWord(LanguageConstantes.DashboardsLabel, siteLanguage)
             };
             return result;
         }

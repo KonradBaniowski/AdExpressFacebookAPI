@@ -78,6 +78,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Save = 1990;
         public const long Export = 1992;
         public const long VisuelLabel = 1909;
+        public const long ResultErrorCode = 1973;
         public const long JobTitleCode = 1976;
         public const long ExportFormattedResult = 1996;
         public const long ExportResultWithValue = 1997;
@@ -86,6 +87,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NotValidEmail = 2041;
         public const long RefineCode = 2053;
         public const long NewsLabel = 2080;
+        public const long WarningBackNavigatorCode = 2099;
+        public const long DashboardsLabel = 2102;
         public const long EmptyGrid = 2106;
         public const long PresentAbsentCode = 2167;
         public const long LostWonCode = 2169;

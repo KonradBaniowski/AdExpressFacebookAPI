@@ -23,6 +23,7 @@ $('#keyword').on('keyup', function (event) {
 });
 var idMedias = [];
 //MAJ des boxes adjacentes
+
 function SelectedItems(event, ui) {
     var itemIds = [];
     $(this).closest('.panel').find($(".ui-selected")).each(function (index, elem) {
@@ -92,6 +93,24 @@ function SelectedItems(event, ui) {
                     //    stop: SelectedItems
                     //});
 
+        $.ajax({
+            url: '/Universe/GetClassification',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                alert("error");
+            },
+            success: function (response) {
+                $("#containerSelectable" + universe).html('');
+                $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
+                $('#selectable' + univerIndex).selectableScroll({
+                    filter: 'li',
+                    stop: SelectedItems
+                });
+            }
+        });
                 }
             });
         }
@@ -108,11 +127,12 @@ function SelectSelectableElement(selectableContainer, elementsToSelect) {
     $(".ui-selected", selectableContainer).not(elementsToSelect).removeClass("ui-selected").addClass("ui-unselecting");
 
     // add ui-selecting class to the elements to select
-    $(elementsToSelect).not(".ui-selected").addClass("ui-selecting");
-
+    $(elementsToSelect).not(".ui-selected").addClass("ui-selected");
+    //selectableContainer.selectable('refresh');
     // trigger the mouse stop event (this will select all .ui-selecting elements, and deselect all .ui-unselecting elements)
-    selectableContainer.data("selectable")._mouseStop(null);
-}
+    //selectableContainer.data("selectable")._mouseStop(null);
+    selectableContainer.data("ui-selectable")._mouseStop(null);
+};
 
 //clean l element selectionnée
 $(document).on('click', '.tab-content li > .pull-right', function () {
@@ -135,4 +155,16 @@ $(document).on('click', 'button.tout-suppr', function () {
     test.find('li').remove();
     test.find('.panel-title.famille.orange').removeClass('orange');
     $("#" + idTree + " [id^='collapse'].in").collapse('hide');
+});
+
+$(document).on('click', '.add-all', function () {
+    var selectable = $(this).closest('.panel-default').find('ul');
+    var idselectable = "#" + selectable.attr('id');
+    SelectSelectableElement($(idselectable), $(idselectable + " li"));
+});
+
+$(document).on('click', '.rem-all', function () {
+    var selectable = $(this).closest('.panel-default').find('ul');
+    var idselectable = "#" + selectable.attr('id');
+    SelectSelectableElement($(idselectable), $(idselectable + " no:li"));
 });

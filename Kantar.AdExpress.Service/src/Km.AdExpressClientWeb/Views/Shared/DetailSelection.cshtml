@@ -1,5 +1,6 @@
-﻿<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-    <h3 class="tools text-right pull-right">
+﻿@using TNS.AdExpress.Domain.Translation;
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+    <h3 class="tools text-right pull-right" title="@GestionWeb.GetWebWord(1989, ViewBag.SiteLanguage)">
         <a id ="load-detail-selection" href="#detail-selection" data-toggle="modal"><i class="icon-eyeglass blue"></i> </a>
     </h3>
     <div id="detail-selection" class="modal fade modal-express">
@@ -7,7 +8,7 @@
             <div class="modal-content">
                 <div class="modal-header panel-heading header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="font-normal m-t-none m-b-md text-primary-lt">Rappel de la sélection</h4>
+                    <h4 class="font-normal m-t-none m-b-md text-primary-lt">@GestionWeb.GetWebWord(1989, ViewBag.SiteLanguage)</h4>
                 </div>
                 <div class="modal-body">
                 </div>

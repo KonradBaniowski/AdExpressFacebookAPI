@@ -683,6 +683,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     webSession.GenericMediaDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 
                                 }
+                                else if (webSession.GenericMediaDetailLevel.FromControlItem == GenericDetailLevel.SelectedFrom.unknown)
+                                {
+                                    webSession.GenericMediaDetailLevel.FromControlItem = GenericDetailLevel.SelectedFrom.defaultLevels;
+                                }
                             }
                             catch (System.Exception)
                             {
@@ -700,6 +704,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 {
                                     ArrayList levels = PopulateGenericProductDetailLevel(webSessionSave);
                                     webSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.customLevels);
+                                }
+                                else if (webSession.GenericProductDetailLevel.FromControlItem == GenericDetailLevel.SelectedFrom.unknown)
+                                {
+                                    webSession.GenericProductDetailLevel.FromControlItem = GenericDetailLevel.SelectedFrom.customLevels;
                                 }
                             }
                             catch (System.NotImplementedException)

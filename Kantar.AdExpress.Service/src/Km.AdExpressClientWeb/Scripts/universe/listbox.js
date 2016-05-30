@@ -45,8 +45,19 @@ jQuery.fn.extend({
 
         var headerTitle = $('<h6/>');
 
-      
-        divTitleHtml.append(headerTitle.addClass('famille blue uppercase').append(titleText));
+        //BUTTON 
+        var buttonAdd = $('<button/>', { class: 'btn-clean add-all'});
+        var iconAdd = $('<i/>', { class: 'fa fa-plus-square blue' });
+        buttonAdd.append(iconAdd);
+        var buttonRem = $('<button/>', { class: 'btn-clean rem-all' });
+        var iconRem = $('<i/>', { class: 'fa fa-minus-square blue' });
+        buttonRem.append(iconRem);
+        var headerButtonRight = $('<div/>')
+        headerButtonRight.addClass('pull-right');
+        headerButtonRight.append(buttonRem).append('&nbsp;').append(buttonAdd);
+
+
+        divTitleHtml.append(headerTitle.addClass('famille blue uppercase').append(titleText)).append(headerButtonRight);
 
         if (warningHtml != undefined)
             divTitleHtml.append(warningHtml);
