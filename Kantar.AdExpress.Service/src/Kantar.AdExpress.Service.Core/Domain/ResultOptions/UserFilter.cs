@@ -27,6 +27,10 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 
         public ResultTypeFilter ResultTypeFilter { get; set; }
 
+        public bool InitializeMedia { get; set; }
+
+        public bool InitializeProduct { get; set; }
+
         public bool ComparativeStudy { get; set; }
 
         public int ComparativePeriodType { get; set; }

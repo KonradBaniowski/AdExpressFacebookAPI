@@ -27,6 +27,10 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 
         public ResultTypeOption ResultTypeOption { get; set; }
 
+        public CheckBoxOption InitializeMedia { get; set; }
+
+        public CheckBoxOption InitializeProduct { get; set; }
+
         public int SiteLanguage { get; set; }
 
         public bool ComparativeStudy { get; set; }

@@ -173,6 +173,7 @@
                 this.FormatFilter = new FormatFilter();
                 this.PurchaseModeFilter = new PurchaseModeFilter();
                 this.ResultTypeFilter = new ResultTypeFilter();
+                this.InitializeProduct = false;
             }
 
             var userFilter = new UserFilter();
@@ -604,7 +605,17 @@
                 $("#grid").addClass("hide");
                 $("#gridLoader").removeClass("hide");
                 $("#collapseContainerOne").collapse('hide');
+
+                if ($("#initializeProduct").prop('checked') == true) {
+                    $("#initializeProductContainer").hide();
+                }
+
                 CallSetOptions();
+
+                if ($("#initializeProduct").prop('checked') == true) {
+                    $('#initializeProduct').attr('checked', false);
+                    userFilter.InitializeProduct = false;
+                }
             });
 
             $('#unit').selectpicker();
@@ -641,6 +652,17 @@
 
             $('#purchaseMode').on('change', function (e) {
                 userFilter.PurchaseModeFilter.PurchaseModes = GetItems($('#purchaseMode').val());
+            });
+
+            $('#initializeProduct').selectpicker();
+
+            $("#initializeProduct").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.InitializeProduct = true;
+                }
+                else {
+                    userFilter.InitializeProduct = false;
+                }
             });
 
             $('#columnDetail').selectpicker();
