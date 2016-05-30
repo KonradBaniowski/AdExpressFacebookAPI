@@ -698,25 +698,19 @@ namespace TNS.AdExpressI.PresentAbsent
 
                 #region Sélection de Médias
                 //Liste des supports de référence
-                if (_session.CompetitorUniversMedia[positionUnivers] != null)
+                if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count>0)
                 {
-                    mediaList = _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess);
-                    if (mediaList != null && mediaList.Length > 0)
+                    List<long> mediaIds = _session.PrincipalMediaUniverses[positionUnivers].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
+                    if (mediaIds != null && mediaIds.Count>0)
                     {
-                        referenceUniversMedia = new List<string>(mediaList.Split(','));
+                        referenceUniversMedia = mediaIds.ConvertAll(Convert.ToString);
                         positionUnivers++;
-                    }
-                    mediaList = "";
+                    }                  
                 }
                 //Liste des supports concurrents
                 if (referenceUniversMedia != null && referenceUniversMedia.Count > 0)
                 {
-                    while (_session.CompetitorUniversMedia[positionUnivers] != null)
-                    {
-                        mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess) + ",";
-                        positionUnivers++;
-                    }
-                    if (mediaList.Length > 0) competitorUniversMedia = new List<string>(mediaList.Substring(0, mediaList.Length - 1).Split(','));
+                    competitorUniversMedia = GetCompetitormedias(positionUnivers);                   
                 }
                 else return null;
 
@@ -1183,8 +1177,9 @@ namespace TNS.AdExpressI.PresentAbsent
 
             for (int p = 0; p < _session.PrincipalMediaUniverses.Count; p++)
             {
+                idsByUnivers.Add(p, new List<Int64>());
                 var includedItems = _session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
-                idsByUnivers.Add(p, includedItems);
+            
                 //Init Media ids X univers
                 foreach (Int64 l in includedItems)
                 {
@@ -1296,7 +1291,7 @@ namespace TNS.AdExpressI.PresentAbsent
             Header headerTmp = null;
             Header headerTotal = null;
             elementsHeader = new Dictionary<string, HeaderBase>();
-            if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1 || (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 1))
+            if ( (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 1) || idElements.Count > 1 )
             {
                 headerTotal = new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage), TOTAL_HEADER_ID);
                 elementsHeader.Add(TOTAL_HEADER_ID.ToString(), headerTotal);
@@ -2234,5 +2229,17 @@ namespace TNS.AdExpressI.PresentAbsent
         #endregion
 
         #endregion
+
+        private List<string> GetCompetitormedias(int position)
+        {
+            string mediaList = string.Empty;
+            List<long> ids = new List<long>();
+            for (int p = position; p < _session.PrincipalMediaUniverses.Count; p++)
+            {
+                ids.AddRange(_session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes));
+            }
+         
+            return ids.ConvertAll(Convert.ToString);
+        }
     }
 }
