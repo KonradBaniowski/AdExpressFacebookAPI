@@ -8,6 +8,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/module-selection")
+ 
 
     <script>
         function OpenOldWebSite(url) {
@@ -45,10 +46,10 @@
         RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
 
         //Redirect to Tendencies
-        RedirectToOldWebSite(@Module.Name.INDICATEUR);
+        @*RedirectToOldWebSite(@Module.Name.INDICATEUR);
 
         //Redirect to Tendencies
-        RedirectToOldWebSite(@Module.Name.TABLEAU_DYNAMIQUE);
+        RedirectToOldWebSite(@Module.Name.TABLEAU_DYNAMIQUE);*@
 
         RedirectToOldWebSite(@Module.Name.ANALYSE_DES_DISPOSITIFS);
 
@@ -59,25 +60,26 @@
         RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_RADIO);
         RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_TELEVISION);
 
+        
     </script>
 }
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <h4 class="text-center">Modules</h4>
-        <p class="text-center">Vos modules d'analyse</p>
+        <h4 class="text-center">@(Model.Labels.ModuleLabel)</h4>
+        @*<p class="text-center">@(Model.Labels.YourModule)</p>*@
         @*Four Mostly Importants*@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PLAN_MEDIA))
                 {
-                    <a href="@Url.Action("Index", "MediaSchedule" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PLAN_MEDIA">
+                    <a href="@Url.Action("Market", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PLAN_MEDIA">
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-chart sli-size blue"></i>
                                 <h3>@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -91,7 +93,7 @@
                                 <h3>@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -109,7 +111,7 @@
                                 <h3>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -123,7 +125,7 @@
                                 <h3>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -141,7 +143,7 @@
                                 <h3>@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -155,7 +157,7 @@
                                 <h3>@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -173,7 +175,7 @@
                                 <h3>@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -187,7 +189,7 @@
                                 <h3>@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -321,14 +323,14 @@
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.INDICATEUR))
                         {
-                            <a href="#" class="list-group-item text-left" id="@Module.Name.INDICATEUR">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
+                            <a href="@Url.Action("Market", "Selection")" class="list-group-item text-left module-done" id="@Module.Name.INDICATEUR">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
                         }
                         else {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.INDICATEUR)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                         {
-                            <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DYNAMIQUE">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</a>
+                            <a href="@Url.Action("Market", "Selection")" class="list-group-item text-left module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title.TrimStart()</a>
                         }
                         else
                         {
@@ -358,7 +360,7 @@
                     <div class="flip-container">
                         <div class="front">
                             <i class="icon-speedometer  sli-size-small green"></i>
-                            <h5>Tableaux de bord<span class="caret green"></span></h5>
+                            <h5>@(Model.Labels.DashboardsLabel)<span class="caret green"></span></h5>
                         </div>
                     </div>
                 </div>
@@ -401,8 +403,8 @@
     </div>
     @*RIGHT SIDE*@
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <h4 class="text-center">Actualités</h4>
-        <p class="text-center">Actualités KM et publications</p>
+        <h4 class="text-center">@(Model.Labels.NewsLabel)</h4>
+        @*<p class="text-center">@(Model.Labels.NewsDescr)</p>*@
         @*IMG ACCUEIL*@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-lr-10 padding-b-15">
             <img src="../Content/img/bann_adexpress_top100.jpg" class="img-responsive" alt="Ad Express - Kantar Media">
@@ -418,16 +420,16 @@
                     <div class="media">
                         <div class="media-body">
                             <div class="date pull-left">
-                                <h4 class="text-center"><strong>12</strong></h4>
-                                <h4 class="text-center"><small>AVR</small></h4>
+                                <h4 class="text-center"><strong>09</strong></h4>
+                                <h4 class="text-center"><small>JUIN</small></h4>
                             </div>
                             <div class="title pull-left information-title-width">
-                                <h4 class="information-title">Kantar Media partenaire du Grand prix du Brand Content 2016 le 12 avril prochain</h4>
+                                <h4 class="information-title">Kantar Media partenaire et membre du jury des trophées de la video online 2016 le 9 juin prochain</h4>
                                 <em>Par Equipe Ad Intelligence de Kantar Media</em>
                             </div>
                             <div class="clearfix"></div>
                             <div class="content">
-                                <p>Kantar Media sera une nouvelle fois partenaire du Grand Prix du Brand Content 2016 qui vise à récompenser les meilleures stratégies de contenu de marques, l’occasion de valoriser le talent  des acteurs dans ce domaine.</p><br>
+                                <p>Les Trophées de la vidéo online récompensent les meilleures utilisations, solutions, innovations, créations, technologies, réalisations, campagnes vidéo… combinant de façon optimale Vidéo et Internet. Kantar Media y sera, tout comme l’année précédente, partenaire premium et membre du jury.</p><br />
                             </div>
                         </div>
                         <div class="media-body">
@@ -447,16 +449,16 @@
                         </div>
                         <div class="media-body">
                             <div class="date pull-left">
-                                <h4 class="text-center"><strong>09</strong></h4>
-                                <h4 class="text-center"><small>JUIN</small></h4>
+                                <h4 class="text-center"><strong>12</strong></h4>
+                                <h4 class="text-center"><small>AVR</small></h4>
                             </div>
                             <div class="title pull-left information-title-width">
-                                <h4 class="information-title">Kantar Media partenaire et membre du jury des trophées de la video online 2016 le 9 juin prochain</h4>
+                                <h4 class="information-title">Kantar Media partenaire du Grand prix du Brand Content 2016 le 12 avril prochain</h4>
                                 <em>Par Equipe Ad Intelligence de Kantar Media</em>
                             </div>
                             <div class="clearfix"></div>
                             <div class="content">
-                                <p>Les Trophées de la vidéo online récompensent les meilleures utilisations, solutions, innovations, créations, technologies, réalisations, campagnes vidéo… combinant de façon optimale Vidéo et Internet. Kantar Media y sera, tout comme l’année précédente, partenaire premium et membre du jury.</p><br />
+                                <p>Kantar Media sera une nouvelle fois partenaire du Grand Prix du Brand Content 2016 qui vise à récompenser les meilleures stratégies de contenu de marques, l’occasion de valoriser le talent  des acteurs dans ce domaine.</p><br>
                             </div>
                         </div>
                     </div>
@@ -509,7 +511,8 @@
                         <div class="front">
                             <a href="@Url.Action("Index", "Contact")">
                                 <i class="icon-bubbles sli-size-small"></i>                           
-                                <h5>Contactez nous</h5>
+                               
+                                <h5>@(Model.Labels.ContactUsLabel)</h5>
                             </a>
                         </div>
                     </div>
@@ -518,4 +521,6 @@
         </div>
     </div>
 </div>
+
+<input type="hidden" id="current-url" value="/Home/Index" />
 

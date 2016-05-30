@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TNS.AdExpressI.Portofolio.VehicleView
 {  /// <summary>
-    /// Information about vehicle cover item
-    /// </summary>
-   public class CoverItem
+   /// Information about vehicle cover item
+   /// </summary>
+    public class CoverItem
     {
         #region Variables
         /// <summary>
@@ -31,19 +31,20 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// <summary>
         /// Get src
         /// </summary>
-        public string Src {
+        public string Src
+        {
             get { return _src; }
         }
 
-    /// <summary>
-    /// Cover link item
-    /// </summary>
-    public CoverLinkItem CoverLinkItem
-    {
-        get { return _coverLinkItem; }
-    }
+        /// <summary>
+        /// Cover link item
+        /// </summary>
+        public CoverLinkItem CoverLinkItem
+        {
+            get { return _coverLinkItem; }
+        }
 
-    #endregion
+        #endregion
 
         #region Constructor
         /// <summary>
@@ -69,11 +70,11 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// <returns>Html code</returns>
         public string Render()
         {
-            if(CoverLinkItem != null)
+            if (CoverLinkItem != null)
                 return string.Format("<img id=\"{0}\" alt=\"{1}\" src='' width=\"180\" height=\"218\" style=\"cursor : pointer;\" onclick={2}>", _id, _alt, CoverLinkItem.Render());
             return string.Format("<img id=\"{0}\" alt=\"{1}\" src='' width=\"180\" height=\"218\">", _id, _alt);
         }
 
-    #endregion
+        #endregion
     }
 }

@@ -6,10 +6,14 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IWebSessionService
     {
-        WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool mediaSupportRequired);
+        WebSessionResponse SaveMediaSelection(SaveMediaSelectionRequest request);
 
-        WebSessionResponse SaveMarketSelection(string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool required=false);
+        WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request);
 
         void SaveCurrentModule(string webSessionId, int moduleId);
+
+        void UpdateSiteLanguage(string webSessionId, int siteLanguage);
+        int GetSiteLanguage(string webSessionId);
+        WebSessionDetails GetWebSession(string webSessionId);
     }
 }

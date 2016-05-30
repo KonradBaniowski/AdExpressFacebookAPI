@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kantar.AdExpress.Service.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     public interface IAlertService
     {
         string GetRedirectUrl(WebSession session, string idSession, AlertOccurence occ);
+        SaveAlertResponse SaveAlert(SaveAlertRequest request);
     }
 }

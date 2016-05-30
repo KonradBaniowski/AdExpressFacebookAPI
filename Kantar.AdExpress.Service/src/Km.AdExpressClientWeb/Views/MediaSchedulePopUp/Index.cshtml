@@ -23,8 +23,8 @@
         </div>
     </div>
 </div>
-<div class="h20">
-</div>
+@*<div class="h20">
+</div>*@
 <div class="row">
     <div class="col-md-12">
         <div id="resultOptions">
@@ -76,6 +76,7 @@
         var hasMSCreatives = false;
         var creatives = [];
         var detailLevelSelectionType = '';
+        var gridWidth;
 
         function GenericDetailLevelFilter() {
             this.DefaultDetailValue = $('#defaultDetail').val();
@@ -127,7 +128,7 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 25
+                                pageSize: 100
                             },
                             {
                                 name: "ColumnFixing",
@@ -152,17 +153,25 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 25
+                                pageSize: 100
                             }
                         ]
                     })
                 }
 
+                gridWidth = $("#grid_table_container").width();
+
                 $("#grid").igTreeGrid({
                     rowCollapsed: function (evt, ui) {
-                        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                        $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                     }
                 });
+
+                //$("#grid").igTreeGrid({
+                //    rowCollapsed: function (evt, ui) {
+                //        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                //    }
+                //});
 
                 $(".open-media-schedule").on('click', function (e) {
                     $("#perioddetailTypeContainer").removeClass("show").addClass("hide");

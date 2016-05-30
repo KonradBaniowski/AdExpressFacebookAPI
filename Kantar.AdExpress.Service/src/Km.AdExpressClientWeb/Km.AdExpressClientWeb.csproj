@@ -177,10 +177,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlertController.cs" />
+    <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CreativeController.cs" />
     <Compile Include="Controllers\CustomerAreaController.cs" />
     <Compile Include="Controllers\DetailSelectionController.cs" />
+    <Compile Include="Controllers\ExportResultController.cs" />
     <Compile Include="Controllers\GadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsertionsController.cs" />
@@ -194,7 +196,10 @@
     <Compile Include="Controllers\PresentAbsentController.cs" />
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Controllers\SelectionController.cs" />
+    <Compile Include="Helpers\PageHelper.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
+    <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
     <Compile Include="Models\DetailSelection\DetailSelectionViewModel.cs" />
     <Compile Include="Models\HomeNumbersViewModel.cs" />
@@ -213,6 +218,7 @@
     <Compile Include="Models\LostWon\ResultsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
+    <Compile Include="Models\Shared\ExportResultModel.cs" />
     <Compile Include="Models\Shared\InsertionCreativeViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
@@ -547,17 +553,21 @@
     <Content Include="Content\img\evaliantFormat\MP4.png" />
     <Content Include="Content\img\evaliantFormat\FLV.png" />
     <Content Include="Content\img\evaliantFormat\SWF.png" />
+    <Content Include="Content\img\g.gif" />
     <Content Include="Content\img\Gad.jpg" />
     <Content Include="Content\img\kantarmedia-bg-0.jpg" />
     <Content Include="Content\img\kantarmedia-bg-1.jpg" />
     <Content Include="Content\img\kantarmedia-bg-3.jpg" />
     <Content Include="Content\img\kantarmedia-bg-4.jpg" />
     <Content Include="Content\img\kantarmedia-bg-contact.jpg" />
+    <Content Include="Content\img\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\no_visu.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
     <Content Include="Content\img\logo_adexpress.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
+    <Content Include="Content\img\o.gif" />
+    <Content Include="Content\img\r.gif" />
     <Content Include="Content\options-control.css" />
     <Content Include="Content\spinner.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -649,7 +659,6 @@
     <Content Include="IgniteUI\css\structure\images\igHtmlEditor\text_list_numbers.png" />
     <Content Include="IgniteUI\css\structure\images\igHtmlEditor\text_strikethrough.png" />
     <Content Include="IgniteUI\css\structure\images\igHtmlEditor\text_underline.png" />
-    <Content Include="IgniteUI\css\structure\images\igLoadingSmall.gif" />
     <Content Include="IgniteUI\css\structure\images\igPivot\dataselector-sprite.png" />
     <Content Include="IgniteUI\css\structure\images\igPivot\kpi-icons.png" />
     <Content Include="IgniteUI\css\structure\images\igPivot\pivot-header-icons.png" />
@@ -662,6 +671,7 @@
     <Content Include="IgniteUI\css\structure\images\igRating\ig-rating-touchx2.png" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igBigPauseButton.png" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igBigPlayButton.png" />
+    <Content Include="IgniteUI\css\structure\images\igLoadingSmall.gif" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igLoadingSmall.gif" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igPlayButton24.png" />
     <Content Include="IgniteUI\css\structure\images\igVideoPlayer\igPlayButton32.png" />
@@ -1428,6 +1438,7 @@
     <Content Include="Scripts\Account\myAdExpress.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\app\language-choice.js" />
     <Content Include="Scripts\app\layout.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -1481,6 +1492,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\market\market-analysis.js" />
     <Content Include="Scripts\market\market-unrequired.js" />
     <Content Include="Scripts\media\add-tree.js" />
     <Content Include="Scripts\media\media-lost-won.js" />
@@ -1496,6 +1508,8 @@
     <Content Include="Scripts\period-selector.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Results\portfolio-vehicle-view.js" />
+    <Content Include="Scripts\Results\result.js" />
     <Content Include="Scripts\selectableScroll.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
@@ -1587,12 +1601,19 @@
     <Content Include="Views\Shared\DetailSelection.cshtml" />
     <Content Include="Views\Shared\GadInfos.cshtml" />
     <Content Include="Views\Home\MyAdExpressAlerts.cshtml" />
+    <Content Include="Views\Alert\CreateAlert.cshtml" />
+    <Content Include="Views\Shared\ExportResult.cshtml" />
+    <Content Include="Views\Analysis\Market.cshtml" />
+    <Content Include="Views\Selection\MediaSelection.cshtml" />
+    <Content Include="Views\Selection\Market.cshtml" />
+    <Content Include="Views\Analysis\Results.cshtml" />
+    <Content Include="Views\Analysis\_ResultOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
-    <Folder Include="Views\Alert\" />
+    <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\Universe\" />
@@ -1603,9 +1624,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.csproj">
+    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.DAL.csproj">
       <Project>{02b3e71a-f7e6-4de6-b42d-b421d94ed9f2}</Project>
-      <Name>KM.AdExpressI.MyAdExpress</Name>
+      <Name>KM.AdExpressI.MyAdExpress.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>

@@ -187,7 +187,7 @@ body .ui-tooltip{border-width:2px}
 .ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited{color:#fff}
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover{background:#444;color:#fff}
 .ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #4897aa;background-color:#e8e8e8;color:#444}
-.ui-state-hover a,.ui-state-hover a:hover{color:#fff}
+.ui-state-hover a,.ui-state-hover a:hover{color:#ff8c00}
 .ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active{border:1px solid #4897aa;background-color:#9ecbd6;color:#444}
 .ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited{text-decoration:underline}
 .ui-widget-header.ui-state-default{background:#888;color:#fff;font-weight:normal;border:0}
@@ -860,7 +860,7 @@ tr[aria-level] td {
     border-bottom: 1px solid rgba(0,0,0,0.3);
     border-top: 0;
     padding: 1px 10px;
-    font-weight: bolder;
+    /*font-weight: bolder;*/
     font-size:12px;/*dede*/
     height:20px;
     white-space: nowrap;
@@ -905,7 +905,7 @@ tr[aria-level="3"] td{
     background:white;
     border:1px solid rgba(0,0,0,0.3);
     padding-left:3px;
-    font-weight:bolder;
+    /*font-weight:bolder;*/
 }
 
 .ui-iggrid td.ui-state-hover .glyphicon:hover, .ui-iggrid td.ui-state-hover .glyphicon:focus {
@@ -1496,4 +1496,10 @@ div.pc31
 {
     background-color: #CCFFCC;
     color: #000000;
+}
+
+/***separateur entre colonnes fixeet non fixe***/
+div#grid_table_fixedBodyContainer{
+    border-right:1px solid rgba(0,0,0,0.6);
+    margin-left:-1px;
 }

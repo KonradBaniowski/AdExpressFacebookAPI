@@ -61,9 +61,25 @@
 
     $('#Results').on('click', function (e) {
         e.preventDefault();
-        var dis = this;
-        var nextUrl = $(this).attr('href').split('/').pop();
-        NextStep(nextUrl, dis)
+        var gotoResult = true;
+        var strHtml = "";
+        var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
+        $.each(items, function (index, value) {
+            var page = $(value).attr('id');
+            if (page == "Dates" || page == "Media") {
+                strHtml += "<li>" + page + "</li>";
+                gotoResult = false;
+            }
+        });
+        if (gotoResult) {
+            var dis = this;
+            var nextUrl = $(this).attr('href').split('/').pop();
+            NextStep(nextUrl, dis)
+        }
+        else {
+            strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>" + strHtml + "</ul>";
+            bootbox.alert(strHtml);
+        }
     });
 
     function NextStep(nextUrl, dis) {

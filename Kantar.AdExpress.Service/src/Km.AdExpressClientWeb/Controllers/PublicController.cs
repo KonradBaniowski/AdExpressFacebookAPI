@@ -12,7 +12,7 @@ namespace Km.AdExpressClientWeb.Controllers
 {
     public class PublicController : Controller
     {
-        public ActionResult HomeNumbers()
+        public ActionResult HomeNumbers(int siteLanguage=33)
         {
             var model = new HomeNumbersViewModel();
             model.Numbers = new Dictionary<string, string>();
@@ -21,7 +21,7 @@ namespace Km.AdExpressClientWeb.Controllers
             //var labels = LabelsHelper.LoadPageLabels(33);
             foreach (XElement el in doc.Root.Elements())
             {
-                var textValue = GestionWeb.GetWebWord(long.Parse(el.Attribute("webTextId").Value), 33);
+                var textValue = GestionWeb.GetWebWord(long.Parse(el.Attribute("webTextId").Value), siteLanguage);
                 model.Numbers.Add(textValue, el.Attribute("value").Value);
             }
             return PartialView("HomeNumbers", model);

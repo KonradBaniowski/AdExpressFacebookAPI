@@ -8,6 +8,12 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
 {
     public class PeriodResponse
     {
+        public PeriodResponse()
+        {
+            ControllerDetails = new ControllerDetails();
+            ErrorMessage = string.Empty;
+        }
+
         public int StartYear { get; set; }
         public int EndYear { get; set; }
 
@@ -16,6 +22,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
         public bool Success { get; set; }
 
         public string ErrorMessage { get; set; }
+        public ControllerDetails ControllerDetails { get; set; }
 
     }
 }

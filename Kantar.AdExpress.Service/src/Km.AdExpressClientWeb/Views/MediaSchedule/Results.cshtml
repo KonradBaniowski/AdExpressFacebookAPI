@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
+    var _controller = "MediaSchedule";
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -12,6 +13,7 @@
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
+    @Html.Hidden("ExportController", "TestExport")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -22,24 +24,27 @@
     <div class="col-md-12">
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
-                <option value="1">Résultat Formaté</option>
-                <option value="2">Résultat avec valeurs</option>
-                <option value="3">Résultat brut</option>
+                <option value="1">@Model.Labels.ExportFormattedResult</option>
+                <option value="2">@Model.Labels.ExportResultWithValue</option>
+                <option value="3">@Model.Labels.ExportGrossResult</option>
+                <option value="4">@Model.Labels.ExportPdfResult</option>
+                <option value="5">@Model.Labels.ExportPptResult</option>
             </select>&nbsp;
-            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>&nbsp;
-            <button class="btn btn-valider" id="btn-save-result">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
+            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
         </div>
     </div>
 </div>
-<div class="h20">
-</div>
+@*<div class="h20">
+</div>*@
 <div class="row">
     <div class="col-md-12">
-        @Html.Action("ResultOptions", "MediaSchedule")
+        @Html.Action("ResultOptions", _controller)
     </div>
 </div>
-<div id="subPeriodSelection" class="h20">
-</div>
+<div id="subPeriodSelection" class="h20" style="min-height: 70px; display:none;"></div>
+<div style="margin-bottom:10px;"></div>
 <div id="msCreativesResult" class="hide">
 </div>
 <div class="row">
@@ -60,17 +65,31 @@
         </div>
     </div>
 </div>
+<div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="exportResultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<input type="hidden" id="current-url" value="/@_controller/Results" />
 @section Scripts {
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
-
+    <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+    @Scripts.Render("~/bundles/results")
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
         $(document).ready(function () {
 
             if (typeof jQuery === "undefined") { throw new Error("jQuery") }
-
+            
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "ClassifId",
@@ -143,6 +162,8 @@
                 this.AutoPromoFilter = new AutoPromoFilter();
                 this.FormatFilter = new FormatFilter();
                 this.PurchaseModeFilter = new PurchaseModeFilter();
+                this.ComparativeStudy = false;
+                this.ComparativePeriodType = 1;
             }
 
             var userFilter = new UserFilter();
@@ -162,10 +183,6 @@
                             primaryKey: "ID_PRODUCT",
                             foreignKey: "PID",
                             width: "1140px",
-                            dataRendered: function (evt, ui) {
-                                ui.owner.element.find("tr td:nth-child(2)").css("text-align", "right");
-                                ui.owner.element.find("tr td:nth-child(3)").css("text-align", "right");
-                            },
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -173,7 +190,12 @@
                                 {
                                     name: "Paging",
                                     mode: "allLevels",
-                                    pageSize: 25
+                                    pageSize: 100
+                                },
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false
                                 },
                                 {
                                     name: "ColumnFixing",
@@ -191,10 +213,6 @@
                             autoGenerateColumns: false,
                             primaryKey: "ID_PRODUCT",
                             foreignKey: "PID",
-                            dataRendered: function (evt, ui) {
-                                ui.owner.element.find("tr td:nth-child(2)").css("text-align", "right");
-                                ui.owner.element.find("tr td:nth-child(3)").css("text-align", "right");
-                            },
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -202,7 +220,12 @@
                                 {
                                     name: "Paging",
                                     mode: "allLevels",
-                                    pageSize: 25
+                                    pageSize: 100
+                                },
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false
                                 }
                             ]
                         })
@@ -229,6 +252,77 @@
 
             }
 
+            function UnitFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number");
+
+                return "";
+            }
+
+            function PageFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "#,##0.###");
+
+                return "";
+            }
+
+            function EvolFormatter(val) {
+                //if (isNaN(val))
+                //    return '';
+
+                if (val == "+Infinity")
+                    return '+<img src="../Content/img/g.gif" />';
+                else if (val == "-Infinity")
+                    return '-<img src="../Content/img/r.gif" />';
+
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
+
+                if (val < 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
+
+                if (val == 0)
+                    return '<img src="../Content/img/o.gif" />';
+
+                return '';
+            }
+
+            function DurationFormatter(val) {
+
+                if (val == 0)
+                    return "";
+
+                var s = val.toString();
+                var nbToFillWithZero = 6 - s.length;
+                for (var i = 0; i < nbToFillWithZero; i++)
+                    s = "0" + s;
+                return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+            }
+
+            function GetColumnsFormatter(columns, unit) {
+
+                if (columns != null) {
+
+                    columns.forEach(function (elem) {
+                        if (elem.key == "PERIOD" || elem.key == "PERIOD_COMP") {
+                            if (unit == "duration")
+                                elem.formatter = DurationFormatter;
+                            else if (unit == "pages")
+                                elem.formatter = PageFormatter;
+                            else
+                                elem.formatter = UnitFormatter;
+                        }
+                        else if (elem.key == "EVOL") {
+                            elem.formatter = EvolFormatter;
+                        }
+                    });
+
+                    return columns;
+                }
+
+                return columns;
+            }
+
             function CallMediaScheduleResult(zoomDateParam) {
 
                 $("#gridMessage").addClass("hide");
@@ -248,7 +342,7 @@
                     success: function (data) {
                         if (data != null && data != "") {
                             dataTreeGrid = data.datagrid;
-                            cols = data.columns;
+                            cols = GetColumnsFormatter(data.columns,  data.unit);
                             colsFixed = data.columnsfixed;
                             needFixedColumns = data.needfixedcolumns;
                             hasMSCreatives = data.hasMSCreatives;
@@ -393,7 +487,7 @@
                 });
             }
 
-            CallMediaScheduleResult(zoomDate);
+            @*CallMediaScheduleResult(zoomDate);
 
             function GetSubPeriodSelection(zoomDateParam) {
                 var params = {
@@ -437,7 +531,7 @@
                         }
                     }
                 });
-            }
+            }*@
 
             function AutoPlayCreativeModal() {
 
@@ -616,6 +710,72 @@
                 $("#resultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
             });
 
+            CallMediaScheduleResult(zoomDate);
+            
+            if ($("#comparative-study").prop('checked') == true) {
+                userFilter.ComparativeStudy = true;
+            }
+            else {
+                userFilter.ComparativeStudy = false;
+            }
+
+            $("#comparative-study").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.ComparativeStudy = true;
+                    $("#comparative-period-type").removeClass("hide");
+                }
+                else {
+                    userFilter.ComparativeStudy = false;
+                    $("#comparative-period-type").addClass("hide");
+                }
+            });
+
+            function GetSubPeriodSelection(zoomDateParam) {
+                var params = {
+                    zoomDate: zoomDateParam
+                };
+                $.ajax({
+                    url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        $("#subPeriodSelection").show();
+                        if (data != null) {
+                            $('#subPeriodSelection').html(data);
+                            $('#leave-zoom').on('click', function (e) {
+                                $("#perioddetailTypeContainer").removeClass("hide").addClass("show");
+                                $("#leave-zoom").addClass("hide");
+                                $("#sub-period-container").addClass("hide");
+                                $("#grid").addClass("hide");
+                                $("#gridLoader").removeClass("hide");
+                                $("#subPeriodSelection").hide();
+                                zoomDate = '';
+                                CallMediaScheduleResult(zoomDate);
+                            });
+                            $(".sub-period-btn").on('click', function (e) {
+                                $(".btn-default-sub-period").prop('disabled', false);
+                                $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+                                $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+                                $(this).prop('disabled', true);
+                                $("#grid").addClass("hide");
+                                $("#gridLoader").removeClass("hide");
+                                CallMediaScheduleResult($(this).attr("period"));
+                            });
+                            $(".sub-period-btn").on('mouseenter', function (e) {
+                                previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+                                $("#subPeriodLabel").text($(this).attr("periodlabel"));
+                            });
+                            $(".sub-period-btn").on('mouseleave', function (e) {
+                                $("#subPeriodLabel").text(previousSubPeriodLabel);
+                            });
+                        }
+                    }
+                });
+            }
+
             function SaveResultEvents() {
                 $("#folders").on('change', function (event) {
                     var idFolder = $("#folders").val();
@@ -680,25 +840,6 @@
             $('#export-type').removeClass("hide");
             $('#export-type').selectpicker();
 
-
-            $('#btn-export').on('click', function (e) {
-                var selectedValue = $('#export-type').val();
-                switch (selectedValue) {
-                    case "1":
-                        window.open('@Url.Action("Index", "TestExport")', "_blank");
-                        break;
-                    case "2":
-                        window.open('@Url.Action("ResultValue", "TestExport")', "_blank");
-                        break;
-                    case "3":
-                        window.open('@Url.Action("ResultBrut", "TestExport")', "_blank");
-                        break;
-                    default:
-                        window.open('@Url.Action("Index", "TestExport")', "_blank");
-                        break;
-                }
-            });
-
             $('#save-custom-detail-levels').on('click', function (e) {
                 var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val() + ',' + $('#l4Detail').val();
                 var type = 1;
@@ -757,6 +898,16 @@
             $("#gridLoader").removeClass("hide");
             $("#collapseContainerOne").collapse('hide');
             CallSetOptions();
+        });
+
+        $('#date-to-date').on('click', function (e) {
+            $('#comparative-week-date').prop('checked', false);
+            userFilter.ComparativePeriodType = 1;
+        });
+
+        $('#comparative-week-date').on('click', function (e) {
+            $('#date-to-date').prop('checked', false);
+            userFilter.ComparativePeriodType = 0;
         });
 
         $('#unit').selectpicker();
@@ -896,128 +1047,9 @@
         }
 
     });
+        
 
-    //});
-
-    /***************************************** Old script ********************************************/
-
-    //var cols = [];
-    //var data = [];
-    ////Mock Data
-    //data[1] = [
-    //    //Level 1
-    //    { "ClassifId": 0, "PID": -1, "Level": "PRESSE", "Period": "2653400", "Pdm": "-", "j": "1", "F": "2", "M": "0" },
-    //    { "ClassifId": 1, "PID": -1, "Level": "TELEVISION", "Period": "455", "Pdm": "-", "j": "1", "F": "1", "M": "1" },
-
-    //    //Level 2
-    //    { "ClassifId": 4, "PID": 0, "Level": "MAGAZINES", "Period": "4444", "Pdm": "0", "j": "0", "F": "1", "M": "0" },
-    //    { "ClassifId": 5, "PID": 1, "Level": "TV NATIONALE", "Period": "524545", "Pdm": "0", "j": "1", "F": "1", "M": "1" },
-
-    //    //Level 3
-    //    { "ClassifId": 8, "PID": 4, "Level": " AUTO JOURNAL", "Period": "45442", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-    //    { "ClassifId": 9, "PID": 4, "Level": "EXPRESS", "Period": "455765", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-
-    //   { "ClassifId": 10, "PID": 5, "Level": "TF1", "Period": "585454", "Pdm": "4", "j": "1", "F": "2", "M": "1" },
-    //   { "ClassifId": 11, "PID": 5, "Level": "FRANCE 2", "Period": "4572", "Pdm": "4", "j": "1", "F": "2", "M": "0" },
-
-    //    //Level 4
-    //    { "ClassifId": 12, "PID": 8, "Level": "444444", "Period": "43434", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
-    //    { "ClassifId": 13, "PID": 8, "Level": "555555", "Period": "424", "Pdm": "2", "j": "1", "F": "1", "M": "0" },
-    //    { "ClassifId": 14, "PID": 9, "Level": "666666", "Period": "45454", "Pdm": "2", "j": "1", "F": "2", "M": "0" },
-
-    //    { "ClassifId": 15, "PID": 10, "Level": "777777", "Period": "4554", "Pdm": "3", "j": "1", "F": "2", "M": "0" },
-    //    { "ClassifId": 16, "PID": 11, "Level": "888888", "Period": "5454", "Pdm": "3", "j": "1", "F": "2", "M": "0" }
-
-    //];
-
-
-    //data[0] =
-    //[
-    //        { headerText: "Id", key: "ClassifId", width: "200px", dataType: "number", allowHiding: false, hidden: true, template: "" },
-    //        { headerText: "SUPPORTS", key: "Level", width: "220px", dataType: "string", template: "" },
-    //        { headerText: "01/01/2016 - 31/01/2016", key: "Period", width: "220px", dataType: "number", template: "" },
-    //        { headerText: "PDM", key: "Pdm", width: "130px", dataType: "number", template: "" },
-    //        { headerText: "Version", key: "Version", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
-    //        { headerText: "Insertion", key: "Insertion", width: "130px", dataType: "string", template: "<center><a href='#'><span class='glyphicon glyphicon-search'></span></a></center>" },
-
-    //        {
-    //            headerText: "Janvier 2016",
-    //            group: [
-    //                 {
-    //                     headerText: "01",
-    //                     group: [
-    //                         { headerText: "L", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }} class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "M", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "J", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "V", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "S", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" },
-    //                        { headerText: "D", key: "j", width: "20px", dataType: "string", template: "<span {{if ${j} != '0' }}  class='orangeTg' {{else}}  class='blackTg'{{/if}} ></span>" }
-    //                     ]
-    //                 }
-    //                 //,
-    //                 // {
-    //                 //     headerText: "02",
-    //                 //     group: [
-    //                 //         { headerText: "M", key: "F", width: "130px", dataType: "string", template: "<span {{if ${F} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
-    //                 //     ]
-    //                 // },
-    //                 //  {
-    //                 //      headerText: "03",
-    //                 //      group: [
-    //                 //          { headerText: "Me", key: "M", width: "130px", dataType: "string", template: "<span {{if ${M} != '0' }} class='orange' {{else}} class='black'{{/if}} ></span>" }
-    //                 //      ]
-    //                 //  }
-    //            ],
-    //            dataRendered: function (evt, ui) {
-    //                ui.owner.element.find("tr td:nth-child(4)").css("text-align", "center");
-    //                ui.owner.element.find("tr td:nth-child(5)").css("text-align", "center");
-    //            }
-    //        }
-
-    //];
-
-    //for (var key1 in data[0]) {
-
-    //    if (data[0][key1].group != null) {
-    //        cols.push({
-    //            headerText: data[0][key1].headerText,
-    //            group: data[0][key1].group
-
-    //        })
-    //    } else {
-    //        cols.push({
-    //            headerText: data[0][key1].headerText,
-    //            key: data[0][key1].key,
-    //            width: data[0][key1].width,
-    //            dataType: data[0][key1].dataType,
-    //            allowHiding: data[0][key1].allowHiding,
-    //            hidden: data[0][key1].hidden,
-    //            template: data[0][key1].template,
-
-    //        })
-    //    }
-
-    //}
-
-    //$("#grid").igTreeGrid("destroy");
-    //$("#grid").igTreeGrid({
-    //    dataSource: data[1],
-    //    primaryKey: "ClassifId",
-    //    foreignKey: "PID",
-    //    autoGenerateColumns: false,
-    //    columns: cols,
-    //    features: [
-    //       {
-    //           name: "MultiColumnHeaders"
-    //       },
-    //       {
-    //           name: "Paging",
-    //           mode: "allLevels",
-    //           pageSize: 10
-    //       }
-    //    ]
-    //})
+  
 </script>
 @Scripts.Render("~/bundles/detail-selection")
 }

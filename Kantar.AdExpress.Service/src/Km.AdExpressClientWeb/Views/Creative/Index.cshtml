@@ -8,17 +8,35 @@
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
+
     <div class="col-md-12" style="background-color:black;padding-bottom:15px;">
         <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
             <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @Model.Labels.CreativeLabel</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
         <div id="HeaderLoader">
-            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+            <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
         </div>
 
         <div id="HeaderElmt" style="display:none">
             <div id="subPeriodSelection" style="background-color:grey"></div>
+
+            <div id="filterEvaliantPanel" class="bg-orange" style="display:none;">
+                <a data-toggle="collapse" class="collapsed" href="#filterEvaliant">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h5 class="panel-title">
+                            @Model.Labels.FiltreLabel
+                            <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+                        </h5>
+                    </div>
+                </a>
+                <div id="filterEvaliant" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <div id="contentFilter"></div>
+                        <button id="validEvaliantFilters" class="pull-right btn btn-action">@Model.Labels.Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -48,7 +66,7 @@
                             Votre navigateur ne gère pas l'élément
                         </video>
                         <div id="mediaLoader">
-                            <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                            <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
                         </div>
                         <OBJECT id="objectSWF" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0">
                             <PARAM name="movie" value="">
@@ -81,7 +99,7 @@
                     <h4 class="modal-title" id="myModalLabel">@Model.Labels.VisuelLabel</h4>
                 </div>
                 <div class="modal-body">
-                    <center><img src="" id="imagepreview"></center>
+                    <center><img style="max-width:100%;" src="" id="imagepreview"></center>
                 </div>
             </div>
         </div>
@@ -151,6 +169,12 @@
         function UserFilter() {
             this.paramsUrl = new paramsUrl();
             this.isVehicleChanged = true;
+            this.EvaliantFilters;
+        }
+
+        function EvaliantFilter(id, list) {
+            this.IdFilter = id;
+            this.ValuesFilter = list;
         }
 
         var userFilter = new UserFilter();
@@ -169,7 +193,7 @@
                         autoGenerateColumns: false,
                         primaryKey: "ID",
                         foreignKey: "PID",
-                        width: "95%",
+                        width: "100%",
                         fixedHeaders : false,
                         features: [
                             {
@@ -178,7 +202,7 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 15
+                                pageSize: 25
                             },
                             {
                                 name: "ColumnFixing",
@@ -196,7 +220,7 @@
                         autoGenerateColumns: true,
                         primaryKey: "ID",
                         foreignKey: "PID",
-                        width: "95%",
+                        width: "100%",
                         fixedHeaders: false,
                         features: [
                             {
@@ -205,7 +229,7 @@
                             {
                                 name: "Paging",
                                 mode: "allLevels",
-                                pageSize: 15
+                                pageSize: 25
                             }
                         ]
                     })
@@ -223,7 +247,8 @@
                 idUnivers: userFilter.paramsUrl.idUnivers,
                 moduleId: userFilter.paramsUrl.moduleId,
                 idVehicle: userFilter.paramsUrl.idVehicle,
-                isVehicleChanged: userFilter.isVehicleChanged
+                isVehicleChanged: userFilter.isVehicleChanged,
+                listEvaliantFilter: userFilter.EvaliantFilters
             };
 
             $.ajax({
@@ -237,6 +262,24 @@
                 },
                 success: function (data) {
                     if (data != null && data != "") {
+
+                        //Filter
+                        if (data.filtertitle != null && data.filtertitle != "" && userFilter.EvaliantFilters == null) {
+                            strHtml = "";
+                            for (j = 0; j < data.filtertitle.length; j++) {
+                                strHtml += '<div class="col-md-12 titleFilter">' + data.filtertitle[j] + '</div>';
+                                for (i = 0; i < data.filterdatas[j].length; i++) {
+                                    id = data.filterdatas[j][i].id;
+                                    label = data.filterdatas[j][i].label;
+                                    strHtml += '<label class="checkbox-inline no_indent"><input type="checkbox" name="EvaliantFilter" id ="' + id + '" value="' + label + '" ">' + label + '</label>';
+                                }
+                            }
+
+                            $("#contentFilter").html(strHtml);
+                            $("#filterEvaliantPanel").show();
+                        }
+
+
                         dataTreeGrid = data.datagrid;
                         colsFixed = data.columnsfixed;
                         needFixedColumns = data.needfixedcolumns;
@@ -259,6 +302,7 @@
                         });
 
                         ds.dataBind();
+
                     }
                     else {
                         $("#gridLoader").hide();
@@ -268,7 +312,6 @@
                 }
             });
         }
-
 
         function CallGetPresentVehicles() {
 
@@ -290,26 +333,34 @@
                 success: function (response) {
                     if (response != null) {
                         var data = JSON.parse(response);
-                        var strHTML = "";
-                        var idV = data[0][0];
-                        if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
-                            idV = userFilter.paramsUrl.idVehicle;
 
-                        $.each(data, function (i, item) {
-                            if (idV == item[i]) {
-                                strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            } else {
-                                strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
-                            }
-                        });
-                        $('#PresentVehicles').html(strHTML);
-                        userFilter.paramsUrl.idVehicle = idV.toString();
-                        userFilter.isVehicleChanged = true;
+                        if (data.length > 0) {
+                            var strHTML = "";
+                            var idV = data[0][0];
+                            if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
+                                idV = userFilter.paramsUrl.idVehicle;
 
-                        CallCreativeResult();
+                            $.each(data, function (i, item) {
+                                if (idV == item[i]) {
+                                    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                } else {
+                                    strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                }
+                            });
+                            $('#PresentVehicles').html(strHTML);
+                            userFilter.paramsUrl.idVehicle = idV.toString();
+                            userFilter.isVehicleChanged = true;
+
+                            CallCreativeResult();
+
+                            $("#HeaderElmt").show();
+                            $("#gridLoader").show();
+
+                        } else {
+                            $("#gridEmpty").show();
+                        }
                         $("#HeaderLoader").hide();
-                        $("#HeaderElmt").show();
-                        $("#gridLoader").show();
+
                     }
                 }
             });
@@ -342,6 +393,8 @@
                             $("#gridLoader").show();
                             userFilter.paramsUrl.zoomDate = $(this).attr("period");
                             userFilter.isVehicleChange = false;
+                            userFilter.EvaliantFilters = null;
+                            $("#contentFilter").html("");
                             CallCreativeResult();
                         });
                         $(".sub-period-btn").on('mouseenter', function (e) {
@@ -486,7 +539,7 @@
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
                         tmp = infos[j].split(":");
-                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp.shift() + '</span> : ' + tmp.join(':') + '</div>')
                     }
                 }
             });
@@ -567,6 +620,8 @@
             $("#gridLoader").show();
             userFilter.isVehicleChanged = true;
             userFilter.paramsUrl.idVehicle = $(this).attr('id');
+            $("#contentFilter").html("");
+            userFilter.EvaliantFilters = null;
             CallCreativeResult();
 
         });
@@ -575,6 +630,42 @@
         $(document).on("click", "#pop", function () {
             $('#imagepreview').attr('src', $(this).attr('src'));
             $('#imagemodal').modal('show');
+        });
+
+
+        $(document).on('click', '#validEvaliantFilters', function (e) {
+            var arrValues = {};
+            var listEvaliantFilters = [];
+            $("input[name='EvaliantFilter']:checked").each(
+                function () {
+                    var id = this.id;
+                    arrValues[id] = $("input[name='EvaliantFilter'][id='"+id+"']:checked").map(function () { return this.value; }).get()
+                }
+            );
+            for (var key in arrValues) {
+                listEvaliantFilters.push(new EvaliantFilter(key, arrValues[key]));
+            }
+            userFilter.EvaliantFilters = listEvaliantFilters;
+
+            $("#grid").hide();
+            $("#gridLoader").show();
+            CallCreativeResult();
+        });
+
+        //Change Icone Filter quand hide/show collapse
+        $(document).on('show.bs.collapse', '#filterEvaliant', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-right")
+                .removeClass("glyphicon-chevron-right")
+                .addClass("glyphicon-chevron-down");
+        });
+        $(document).on('hide.bs.collapse', '#filterEvaliant', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-down")
+                .removeClass("glyphicon-chevron-down")
+                .addClass("glyphicon-chevron-right");
         });
 
     </script>

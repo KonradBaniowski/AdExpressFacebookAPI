@@ -764,6 +764,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         public override string RenderString()
         {
             StringBuilder str = new StringBuilder();
+            string mediaSchedulePath = "/MediaSchedulePopUp";
 
             if (_newGroup)
                 str.Append("-");
@@ -851,54 +852,53 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
             }
 
-            //TODO : !important
-            //#region Links
-            ////Liens plans médias
-            //StringBuilder t = new StringBuilder();
-            //if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG))
-            //{
-            //    t.AppendFormat("<td width=\"1%\"><span>{0}<span></td><td>: ", GestionWeb.GetWebWord(2156, _session.SiteLanguage));
+            #region Links
+            //Liens plans médias
+            StringBuilder t = new StringBuilder();
+            if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG))
+            {
+                t.AppendFormat("{0}: ", GestionWeb.GetWebWord(2156, _session.SiteLanguage));
 
-            //    t.AppendFormat("<a href=\"#\" onclick=\"javascript:window.open('{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}', '', 'toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1');\" class=\"roll06\">{7}</a>",
-            //        MEDIA_SCHEDULE_PATH,
-            //        _session.IdSession,
-            //        CstFmk.Results.AdNetTrackMediaSchedule.Type.advertiser.GetHashCode(),
-            //        _idAdvertiser,
-            //        _zoomDate,
-            //        _universId,
-            //        _module.Id,
-            //        GestionWeb.GetWebWord(857, _session.SiteLanguage),
-            //        _vehicle.DatabaseId
-            //    );
-            //    if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
-            //    {
-            //        t.AppendFormat(" | <a href=\"#\" onclick=\"javascript:window.open('{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}', '', 'toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1');\" class=\"roll06\">{7}</a>",
-            //            MEDIA_SCHEDULE_PATH,
-            //            _session.IdSession,
-            //            CstFmk.Results.AdNetTrackMediaSchedule.Type.product.GetHashCode(),
-            //            _idProduct,
-            //            _zoomDate,
-            //            _universId,
-            //            _module.Id,
-            //            GestionWeb.GetWebWord(858, _session.SiteLanguage),
-            //            _vehicle.DatabaseId
-            //        );
-            //    }
-            //    t.AppendFormat(" | <a href=\"#\" onclick=\"javascript:window.open('{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}', '', 'toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1');\" class=\"roll06\">{7}</a>",
-            //        MEDIA_SCHEDULE_PATH,
-            //        _session.IdSession,
-            //        CstFmk.Results.AdNetTrackMediaSchedule.Type.visual.GetHashCode(),
-            //        _idVersion,
-            //        _zoomDate,
-            //        _universId,
-            //        _module.Id,
-            //        GestionWeb.GetWebWord(1909, _session.SiteLanguage),
-            //            _vehicle.DatabaseId
-            //    );
-            //    t.Append("</td>");
-            //}
-            //cols.Add(t.ToString());
-            //#endregion
+                t.AppendFormat("<a href='javascript:window.open(\"{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\")'>{7}</a>",
+                    mediaSchedulePath,
+                    _session.IdSession,
+                    CstFmk.Results.AdNetTrackMediaSchedule.Type.advertiser.GetHashCode(),
+                    _idAdvertiser,
+                    _zoomDate,
+                    _universId,
+                    _module.Id,
+                    GestionWeb.GetWebWord(857, _session.SiteLanguage),
+                    _vehicle.DatabaseId
+                );
+                if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                {
+                    t.AppendFormat(" | <a href='javascript:window.open(\"{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\")'>{7}</a>",
+                    mediaSchedulePath,
+                        _session.IdSession,
+                        CstFmk.Results.AdNetTrackMediaSchedule.Type.product.GetHashCode(),
+                        _idProduct,
+                        _zoomDate,
+                        _universId,
+                        _module.Id,
+                        GestionWeb.GetWebWord(858, _session.SiteLanguage),
+                        _vehicle.DatabaseId
+                    );
+                }
+                t.AppendFormat(" | <a href='javascript:window.open(\"{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\")'>{7}</a>",
+                    mediaSchedulePath,
+                    _session.IdSession,
+                    CstFmk.Results.AdNetTrackMediaSchedule.Type.visual.GetHashCode(),
+                    _idVersion,
+                    _zoomDate,
+                    _universId,
+                    _module.Id,
+                    GestionWeb.GetWebWord(1909, _session.SiteLanguage),
+                        _vehicle.DatabaseId
+                );
+                t.Append(";");
+            }
+            cols.Add(t.ToString());
+            #endregion
 
 
             #region Info

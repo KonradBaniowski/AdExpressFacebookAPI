@@ -24,34 +24,50 @@ using TNS.Classification.Universe;
 using System.Linq;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Domain;
+using System.Text;
+using TNS.AdExpressI.Date.DAL;
+using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
+using TNS.AdExpress.Domain.Layers;
+using System.Windows.Forms;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class WebSessionService : IWebSessionService
     {
-        private WebSession _webSession = null;
+        
+        #region CONST
+        private const string SELECTION = "Selection";
+        private const string PORTFOLIO = "Portfolio";
+        private const string LOSTWON = "LostWon";
+        private const string PRESENTABSENT = "PresentAbsent";
+        private const string MEDIASCHEDULE = "MediaSchedule";
+        private const string ANALYSIS = "Analysis";
+        private const string RESULTS = "Results";
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         private const int MaxItemsPerLevel = 100;
-        public WebSessionResponse SaveMediaSelection(List<long> mediaIds, string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool mediaSupportRequired)
+        #endregion
+        private WebSession _webSession = null;
+        public WebSessionResponse SaveMediaSelection( SaveMediaSelectionRequest request)
         {
+            var _webSession = (WebSession)WebSession.Load( request.WebSessionId);
             WebSessionResponse response = new WebSessionResponse
             {
-                MediaScheduleStep = MediaScheduleStep.Media
+                StudyStep = StudyStep.Media,
+                ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep)
             };
             bool success = false;
             try
             {
                 List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
-                bool isAllCommun = mediaIds.All(e => commun.Contains(e));
-                var _webSession = (WebSession)WebSession.Load(webSessionId);
-                if (!isAllCommun && mediaIds.Count()>1)
+                bool isAllCommun = request.MediaIds.All(e => commun.Contains(e));                
+                if (!isAllCommun && request.MediaIds.Count() > 1)
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
                 }
                 else
                 {
-                    if (mediaSupportRequired && !trees.Any())
+                    if (request.MediaSupportRequired && !request.Trees.Any())
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MediaRequiredCode, _webSession.SiteLanguage);
                     }
@@ -64,7 +80,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         System.Windows.Forms.TreeNode tmpNode;
                         bool containsSearch = false;
                         bool containsSocial = false;
-                        foreach (var item in mediaIds)
+                        foreach (var item in request.MediaIds)
                         {
                             tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
                             tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
@@ -90,11 +106,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
                         }
-                        else {
+                        else
+                        {
 
                             //Reinitialize banners selection if change vehicle
                             Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
-                            if (mediaIds.Count != vehicleInformationList.Count)
+                            if (request.MediaIds.Count != vehicleInformationList.Count)
                             {
                                 foreach (System.Windows.Forms.TreeNode node in levelsSelected)
                                 {
@@ -139,14 +156,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     #endregion
 
-                    #region Save Media support if any
-                    if (trees.Any())
+                        #region Save Media support if any
+                    if (request.Trees.Any())
                     {
                         Dictionary<int, AdExpressUniverse> universDictionary = new Dictionary<int, AdExpressUniverse>();
                         long idModule = _webSession.CurrentModule;
                         if (idModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA || idModule == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE || idModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE)
                         {
-                            AdExpressUnivers univers = GetUnivers(trees, _webSession, dimension, security);
+                            AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
                             if (univers.AdExpressUniverse != null && univers.AdExpressUniverse.Count() > 0)
                             {
                                 bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
@@ -169,34 +186,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         }
                         else if (idModule == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE)
                         {
-                            Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(trees, _webSession, dimension, security);
+                            Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
                             _webSession.PrincipalMediaUniverses = universes;
                             success = true;
                         }
-                        //AdExpressUniverse univers = GetUnivers(trees, _webSession, dimension, security);
-                        //if (univers != null && univers.Count() > 0)
-                        //{
-                        //    bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
-                        //    List<NomenclatureElementsGroup> nGroups = univers.GetIncludes();
-                        //    if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
-                        //    {                                
-                        //        universDictionary.Add(universDictionary.Count, univers);
-                        //        _webSession.PrincipalMediaUniverses = universDictionary;
-                        //        success = true;
-                        //    }
-                        //    else
-                        //    {
-                        //        response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
-                        //}
                     }
                     #endregion
 
-                    #region Save WebSession
+                        #region Save WebSession
                     if (success)
                     {
                         _webSession.Save();
@@ -217,19 +214,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
-        public WebSessionResponse SaveMarketSelection(string webSessionId, List<Tree> trees, Dimension dimension, Security security, bool required)
+        public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request)
         {
             WebSessionResponse response = new WebSessionResponse
             {
-                MediaScheduleStep = MediaScheduleStep.Market
+                StudyStep = StudyStep.Market
             };
-            var _webSession = (WebSession)WebSession.Load(webSessionId);
-            bool isValid = (required) ? (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any()) : true;
+            var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
+            response.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep);
+            bool isValid = (request.Required) ? (request.Trees.Any() && request.Trees.Where(p => p.UniversLevels != null).Any() && request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any()) : true;
 
             if (isValid)
             {
                 #region Fix max items per level
-                if (trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
+                if (request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
                 }
@@ -237,7 +235,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region try catch block
                 else
                 {
-                    AdExpressUnivers univers = GetUnivers(trees, _webSession, dimension, security);
+                    AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
                     if (univers.Success)
                     {
                         try
@@ -269,7 +267,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
                                 }
                             }
-                            else if (required)
+                            else if (request.Required)
                             {
                                 response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
                             }
@@ -310,24 +308,23 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
 
             return response;
-        }
+        }       
 
-        public WebSessionResponse GetWebSessionLanguage(string webSessionId)
+        public WebSessionDetails GetWebSession(string webSessionId)
         {
-            WebSessionResponse response = new WebSessionResponse
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            WebSessionDetails response = new WebSessionDetails
             {
-                MediaScheduleStep = MediaScheduleStep.Market
+                WebSession = webSession,
+                ControllerDetails= GetCurrentControllerDetails(webSession.CurrentModule)
             };
-            var _webSession = (WebSession)WebSession.Load(webSessionId);
-           
-
             return response;
         }
 
 
         public void SaveCurrentModule(string webSessionId, int moduleId)
         {
-            var _webSession = (WebSession)WebSession.Load(webSessionId);
+            _webSession = (WebSession)WebSession.Load(webSessionId);
 
             Int64 tmp = _webSession.CurrentModule = moduleId;
             if (_webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR)
@@ -505,14 +502,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession.IsSelectRetailerDisplay = false;
 
             //Défintion des medias et  périodes par défaut pour les modules d'Analyses Sectorielles
-            //TODO 
-            //if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
-            //    || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
-            //{
+           
+            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
+                || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+            {
 
-            //    SetRecapDefaultMediaSelection();
-            //    SetRecapDefaultPeriodSelection();
-            //}
+                SetRecapDefaultMediaSelection();
+                SetRecapDefaultPeriodSelection();
+            }
             if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
                 _webSession.SetDates(WebApplicationParameters.VpDateConfigurations.DateTypeDefault);
 
@@ -558,144 +555,147 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession.Save();
         }
 
-        //#region Méthodes internes
-        ///// <summary>
-        ///// Set default media selection
-        ///// <remarks>Plurimedia will be the default choice</remarks>
-        ///// </summary>
-        //private void SetRecapDefaultMediaSelection()
-        //{
+        public int GetSiteLanguage(string webSessionId)
+        {
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            return webSession.SiteLanguage;
+        }
 
-        //    if (!_webSession.isMediaSelected())
-        //    {
+        #region Méthodes internes
+        /// <summary>
+        /// Set default media selection
+        /// <remarks>Plurimedia will be the default choice</remarks>
+        /// </summary>
+        private void SetRecapDefaultMediaSelection()
+        {
 
-        //        // Extraction Last Available Recap Month
-        //        var cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
-        //        var param = new object[1];
-        //        param[0] = _webSession;
-        //        var dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
-        //            , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
-        //            , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            if (!_webSession.isMediaSelected())
+            {
 
-        //        _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.plurimedia));
+                // Extraction Last Available Recap Month
+                var cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                var param = new object[1];
+                param[0] = _webSession;
+                var dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
+                    , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
-        //        var current = new System.Windows.Forms.TreeNode("ChoixMedia");
-        //        System.Windows.Forms.TreeNode vehicle = null;
-        //        int pluriWordCode = 210;
-        //        var vehicleNames = DBConstantes.Vehicles.names.plurimedia;
-        //        bool isMissingMmms = false;
-        //        if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
-        //        {
-        //            string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.mms));
-        //            if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
-        //            {
-        //                pluriWordCode = 3020;
-        //                vehicleNames = DBConstantes.Vehicles.names.PlurimediaWithoutMms;
-        //            }
-        //        }
+                _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.plurimedia));
 
-
-
-        //        //Creating new plurimedia	node	             
-        //        vehicle = new TreeNode(GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage))
-        //        {
-        //            Tag = new LevelInformation(Right.type.vehicleAccess, vehicleNames.GetHashCode(),
-        //            GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage)),
-        //            Checked = true
-        //        };
-        //        current.Nodes.Add(vehicle);
-
-        //        //Tracking
-        //        _webSession.OnSetVehicle(vehicleNames.GetHashCode());
-
-        //        _webSession.SelectionUniversMedia = _webSession.CurrentUniversMedia = current;
-        //        _webSession.PreformatedMediaDetail = CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Set default period selection
-        ///// <remarks>Current or last years will be the default period</remarks>
-        ///// </summary>
-        //private void SetRecapDefaultPeriodSelection()
-        //{
-
-        //    DateTime downloadDate = new DateTime(_webSession.DownLoadDate, 12, 31);
-        //    string absolutEndPeriod = "";
-
-
-        //    try
-        //    {
-
-        //        //Choix par défaut année courante
-        //        _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.currentYear;
-        //        _webSession.PeriodLength = 1;
-        //        // Cas où l'année de chargement est inférieur à l'année en cours
-        //        if (DateTime.Now.Year > _webSession.DownLoadDate)
-        //        {
-        //            _webSession.PeriodBeginningDate = downloadDate.ToString("yyyy01");
-        //            _webSession.PeriodEndDate = downloadDate.ToString("yyyyMM");
-        //        }
-        //        else
-        //        {
-        //            _webSession.PeriodBeginningDate = DateTime.Now.ToString("yyyy01");
-        //            _webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
-        //        }
-
-        //        //Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
-        //        //du dernier mois dispo en BDD
-        //        //traitement de la notion de fréquence
-        //        CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
-        //        object[] param = new object[1];
-        //        param[0] = _webSession;
-        //        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-        //        absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
-
-        //        if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00")))
-        //        {
-        //            throw (new TNS.AdExpress.Domain.Exceptions.NoDataException());
-        //        }
-
-        //        _webSession.PeriodEndDate = absolutEndPeriod;
-        //        _webSession.DetailPeriod = CstPeriodDetail.monthly;
-
-        //        //Activation de l'option etude comparative 
-        //        _webSession.ComparativeStudy = true;
-
-        //    }
-        //    catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
-        //    {
-
-        //        //Sinon choix par défaut année précédente
-        //        _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.previousYear;
-        //        _webSession.PeriodLength = 1;
-
-        //        // Cas où l'année de chargement est inférieur à l'année en cours
-        //        if (DateTime.Now.Year > _webSession.DownLoadDate)
-        //        {
-        //            _webSession.PeriodBeginningDate = downloadDate.AddYears(-1).ToString("yyyy01");
-        //            _webSession.PeriodEndDate = downloadDate.AddYears(-1).ToString("yyyy12");
-        //        }
-        //        else
-        //        {
-        //            _webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
-        //            _webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy12");
-        //        }
-        //        _webSession.DetailPeriod = CstPeriodDetail.monthly;
-        //        _webSession.ComparativeStudy = true;
-        //    }
-        //    catch (System.Exception exc)
-        //    {
-        //        if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
-        //        {
-        //            this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
-        //        }
-        //    }
+                var current = new System.Windows.Forms.TreeNode("ChoixMedia");
+                System.Windows.Forms.TreeNode vehicle = null;
+                int pluriWordCode = 210;
+                var vehicleNames = DBConstantes.Vehicles.names.plurimedia;
+                bool isMissingMmms = false;
+                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+                {
+                    string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.mms));
+                    if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
+                    {
+                        pluriWordCode = 3020;
+                        vehicleNames = DBConstantes.Vehicles.names.PlurimediaWithoutMms;
+                    }
+                }
 
 
 
-        //}
-        //#endregion
+                //Creating new plurimedia	node	             
+                vehicle = new TreeNode(GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage))
+                {
+                    Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, vehicleNames.GetHashCode(),
+                    GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage)),
+                    Checked = true
+                };
+                current.Nodes.Add(vehicle);
+
+                //Tracking
+                _webSession.OnSetVehicle(vehicleNames.GetHashCode());
+
+                _webSession.SelectionUniversMedia = _webSession.CurrentUniversMedia = current;
+                _webSession.PreformatedMediaDetail = CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
+            }
+        }
+
+        /// <summary>
+        /// Set default period selection
+        /// <remarks>Current or last years will be the default period</remarks>
+        /// </summary>
+        private void SetRecapDefaultPeriodSelection()
+        {
+
+            DateTime downloadDate = new DateTime(_webSession.DownLoadDate, 12, 31);
+            string absolutEndPeriod = "";
+
+
+            try
+            {
+
+                //Choix par défaut année courante
+                _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.currentYear;
+                _webSession.PeriodLength = 1;
+                // Cas où l'année de chargement est inférieur à l'année en cours
+                if (DateTime.Now.Year > _webSession.DownLoadDate)
+                {
+                    _webSession.PeriodBeginningDate = downloadDate.ToString("yyyy01");
+                    _webSession.PeriodEndDate = downloadDate.ToString("yyyyMM");
+                }
+                else
+                {
+                    _webSession.PeriodBeginningDate = DateTime.Now.ToString("yyyy01");
+                    _webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
+                }
+
+                //Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
+                //du dernier mois dispo en BDD
+                //traitement de la notion de fréquence
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+
+                if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00")))
+                {
+                    throw (new TNS.AdExpress.Domain.Exceptions.NoDataException());
+                }
+
+                _webSession.PeriodEndDate = absolutEndPeriod;
+                _webSession.DetailPeriod = CstPeriodDetail.monthly;
+
+                //Activation de l'option etude comparative 
+                _webSession.ComparativeStudy = true;
+
+            }
+            catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
+            {
+
+                //Sinon choix par défaut année précédente
+                _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.previousYear;
+                _webSession.PeriodLength = 1;
+
+                // Cas où l'année de chargement est inférieur à l'année en cours
+                if (DateTime.Now.Year > _webSession.DownLoadDate)
+                {
+                    _webSession.PeriodBeginningDate = downloadDate.AddYears(-1).ToString("yyyy01");
+                    _webSession.PeriodEndDate = downloadDate.AddYears(-1).ToString("yyyy12");
+                }
+                else
+                {
+                    _webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
+                    _webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy12");
+                }
+                _webSession.DetailPeriod = CstPeriodDetail.monthly;
+                _webSession.ComparativeStudy = true;
+            }
+            catch (System.Exception ex)
+            {
+                throw (ex);                
+            }
+
+
+
+        }
+        #endregion
 
         #region To be deplaced
         /// <summary>
@@ -721,6 +721,43 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
         #endregion
+        public void UpdateSiteLanguage(string webSessionId, int siteLanguage)
+        {
+            _webSession = (WebSession)WebSession.Load(webSessionId);
+            _webSession.SiteLanguage = siteLanguage;
+            _webSession.Save();
+        }
+        public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
+        {
+            if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
+            {
+                var vehiclesSelected = webSession.GetVehiclesSelected();
+
+                if (vehiclesSelected != null && vehiclesSelected.Count > 0)
+                {
+                    var param = new object[1];
+                    param[0] = _webSession;
+                    var clMediaU = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.mediaDetailLevelUtilities];
+                    if (clMediaU == null)
+                        throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+                    var mediaDetailLevelUtilities = (FctUtilities.MediaDetailLevel)
+                                                    AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                                                        string.Format("{0}Bin\\{1}"
+                                                                      , AppDomain.CurrentDomain.BaseDirectory,
+                                                                      clMediaU.AssemblyName), clMediaU.Class, false,
+                                                        BindingFlags.CreateInstance
+                                                        | BindingFlags.Instance | BindingFlags.Public, null, param, null,
+                                                        null);
+
+                    var activeVehicles =
+                        mediaDetailLevelUtilities.GetAllowedVehicles(webSession.GetVehiclesSelected().Keys.ToList(),
+                                                                     universe);
+                    return (activeVehicles.Count == vehiclesSelected.Count);
+
+                }
+            }
+            return true;
+        }
 
         #region Private Methods
         private AdExpressUnivers GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
@@ -782,37 +819,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 default: return false;
             }
         }
-        public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
-        {
-            if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
-            {
-                var vehiclesSelected = webSession.GetVehiclesSelected();
-
-                if (vehiclesSelected != null && vehiclesSelected.Count > 0)
-                {
-                    var param = new object[1];
-                    param[0] = _webSession;
-                    var clMediaU = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.mediaDetailLevelUtilities];
-                    if (clMediaU == null)
-                        throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
-                    var mediaDetailLevelUtilities = (FctUtilities.MediaDetailLevel)
-                                                    AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
-                                                        string.Format("{0}Bin\\{1}"
-                                                                      , AppDomain.CurrentDomain.BaseDirectory,
-                                                                      clMediaU.AssemblyName), clMediaU.Class, false,
-                                                        BindingFlags.CreateInstance
-                                                        | BindingFlags.Instance | BindingFlags.Public, null, param, null,
-                                                        null);
-
-                    var activeVehicles =
-                        mediaDetailLevelUtilities.GetAllowedVehicles(webSession.GetVehiclesSelected().Keys.ToList(),
-                                                                     universe);
-                    return (activeVehicles.Count == vehiclesSelected.Count);
-
-                }
-            }
-            return true;
-        }
+        
         private Dictionary<int, AdExpressUniverse> GetConcurrentUniverses(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
         {
             Dictionary<int, AdExpressUniverse> adExpressUniverses = new Dictionary<int, AdExpressUniverse>(trees.Count);
@@ -856,6 +863,54 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return adExpressUniverses;
         }
+        private ControllerDetails GetCurrentControllerDetails(long currentModule, string nextStep = "")
+        {
+            long currentModuleCode = 0;
+            string currentController = string.Empty;
+            string currentModuleIcon = "icon-chart";
+            switch (currentModule)
+            {
+                case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                    currentModuleCode = CstWeb.LanguageConstantes.MediaScheduleCode;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIASCHEDULE : SELECTION;
+                    currentModuleIcon = "icon-chart";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
+                    currentModuleCode = CstWeb.LanguageConstantes.PortfolioCode;
+                    currentController = "Portfolio";
+                    currentModuleIcon = "icon-layers";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
+                    currentModuleCode = CstWeb.LanguageConstantes.LostWonCode;
+                    currentController = "LostWon";
+                    currentModuleIcon = "icon-calculator";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                    currentModuleCode = CstWeb.LanguageConstantes.PresentAbsentCode;
+                    currentController = "PresentAbsent";
+                    currentModuleIcon = "icon-equalizer";
+                    break;
+                case CstWeb.Module.Name.INDICATEUR:
+                    currentModuleCode = CstWeb.LanguageConstantes.AnalysisGraphics;
+                    currentController = "Selection";
+                    break;
+                case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                    currentModuleCode = CstWeb.LanguageConstantes.AnalysisDetailedReport;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
+                    break;
+                default:
+                    break;
+            }
+            var current = new ControllerDetails
+            {
+                ModuleCode = currentModuleCode,
+                Name = currentController,
+                ModuleId = currentModule,
+                ModuleIcon = currentModuleIcon
+            };
+            return current;
+        }
+
         #endregion
     }
 }

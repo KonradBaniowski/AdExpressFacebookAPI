@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Security.Claims;
 using TNS.AdExpress.Domain.Translation;
 using Km.AdExpressClientWeb.I18n;
+using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -27,16 +28,38 @@ namespace Km.AdExpressClientWeb.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl, int siteLanguage = 33)
+        public ActionResult Login(string returnUrl, int siteLanguage = 33 )
+        {
+
+            ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
+            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
+            LoginViewModel model = new LoginViewModel
+            {
+                ErrorMessage = GestionWeb.GetWebWord(880, Convert.ToInt32(siteLanguage)),
+                Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(siteLanguage)),
+                SiteLanguage =  Convert.ToInt32(siteLanguage)
+            };
+            return View(model);
+        }
+        //
+        // GET: /Account/ChangeLanguage
+        [AllowAnonymous]
+        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = 33)
         {
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             LoginViewModel model = new LoginViewModel
             {
-                ErrorMessage = GestionWeb.GetWebWord(880, siteLanguage),
-                Labels = LabelsHelper.LoadPageLabels(siteLanguage)
-            };
-            return View(model);
+                ErrorMessage = GestionWeb.GetWebWord(880, Convert.ToInt32(siteLanguage)),
+                Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(siteLanguage)),
+                SiteLanguage = Convert.ToInt32(siteLanguage),
+                RedirectUrl = string.Format("{0}?siteLanguage={1}", returnUrl, siteLanguage)
+
+            };         
+            JsonResult jsonModel = Json(model, JsonRequestBehavior.AllowGet);
+            return jsonModel;
         }
 
         //
@@ -48,6 +71,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             //TO DO
            ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(model.SiteLanguage);
             //model.ReturnUrl = returnUrl;
             if (!ModelState.IsValid || String.IsNullOrEmpty(model.Email) || String.IsNullOrEmpty(model.Password))
             {
@@ -69,7 +93,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 case SignInStatus.Success:
 
-                    return RedirectToAction("webSession");
+                    return RedirectToAction("webSession", new { SiteLanguage = model.SiteLanguage });
                     //_webSession = new WebSession(right);
                     //return RedirectToAction("Index", "Home");
              
@@ -85,7 +109,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
         [Authorize]
-        public ActionResult WebSession()
+        public ActionResult WebSession(int siteLanguage = 33)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             var idLogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
@@ -95,7 +119,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             WebSession _webSession = null;
             int _siteLanguage = WebApplicationParameters.DefaultLanguage;
-            var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
+            if (_siteLanguage != siteLanguage) _siteLanguage = siteLanguage;
+             var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
             if (right != null && right.CanAccessToAdExpress())
             {
                 right.SetModuleRights();
@@ -106,20 +131,21 @@ namespace Km.AdExpressClientWeb.Controllers
                 //newRight.HasModuleAssignmentAlertsAdExpress();
                 if (_webSession == null) _webSession = new WebSession(right);
                 _webSession.IdSession = idWS;
-                //_webSession.SiteLanguage = _siteLanguage;
+                _webSession.SiteLanguage = _siteLanguage;
                 // Année courante pour les recaps                    
                 TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
                 _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
                 // On met à jour IDataSource à partir de la session elle même.
-                _webSession.Source = right.Source;
+                _webSession.Source = right.Source;                
                 //Sauvegarder la session
                 _webSession.Save();
                 // Tracking (NewConnection)
                 // On obtient l'adresse IP:
                 _webSession.OnNewConnection(this.Request.UserHostAddress);
             }
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             return RedirectToAction("Index", "Home");
         }
 

@@ -1,7 +1,8 @@
 ﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.Options
-
+@using TNS.AdExpress.Domain.Translation;
 @{
     var optionsNb = 1;
+    var classHide = "";
 }
 
 <div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
@@ -9,7 +10,7 @@
         <div class="panel-heading head-results" role="tab" id="headingOne">
             <h3 class="panel-title pull-left orange">
                 <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
-                    <i class="fa fa-cog text-lg orange"></i> Options d'analyse
+                    <i class="fa fa-cog text-lg orange"></i> @GestionWeb.GetWebWord(792, Model.SiteLanguage)
                     <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
                 </a>
             </h3>
@@ -22,7 +23,7 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Unité
+                                    @GestionWeb.GetWebWord(304, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse in">
@@ -52,7 +53,7 @@
                             <div class="panel-primary panel-options-results">
                                 <div class="panel-heading head-options-results">
                                     <p class="panel-title options ">
-                                        Insertion
+                                        @GestionWeb.GetWebWord(1400, Model.SiteLanguage)
                                     </p>
                                 </div>
                                 <div id="collapseTwo" class="panel-collapse collapse in">
@@ -119,7 +120,7 @@
                         <div id="perioddetailTypeContainer" class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Période détaillée par
+                                    @GestionWeb.GetWebWord(2288, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseFour" class="panel-collapse collapse in">
@@ -231,7 +232,7 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Niveaux détaillées par
+                                    @GestionWeb.GetWebWord(1886, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseHeight" class="panel-collapse collapse in">
@@ -267,12 +268,12 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Niveaux personnalisés
+                                    @GestionWeb.GetWebWord(1896, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseNine" class="panel-collapse collapse in">
                                 <div class="panel-body mi-padder">
-                                    <small class="pader-v-mi orange">Niveaux enregistrés</small><button id="remove-custom-detail-levels" class="btn btn-sans pull-right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></button>
+                                    <small class="pader-v-mi orange">@GestionWeb.GetWebWord(1897, Model.SiteLanguage)</small><button id="remove-custom-detail-levels" class="btn btn-sans pull-right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></button>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.CustomDetail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.CustomDetail.Items)
@@ -281,7 +282,7 @@
                                             }
                                         </select>
                                     </div>
-                                    <small class="pader-v-mi orange">Construction</small><button id="save-custom-detail-levels" class="btn btn-sans pull-right" title="Sauvegarder"><i class="glyphicon glyphicon-floppy-save"></i></button>
+                                    <small class="pader-v-mi orange">@GestionWeb.GetWebWord(1899, Model.SiteLanguage)</small><button id="save-custom-detail-levels" class="btn btn-sans pull-right" title="Sauvegarder"><i class="glyphicon glyphicon-floppy-save"></i></button>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.L1Detail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.L1Detail.Items)
@@ -327,26 +328,52 @@
                         }
                     }
                     <div class="col-md-4">
-                        <div class="checkbox padder">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox" name="a">
-                                <i></i>
-                                Étude comparative
-                            </label>
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.ComparativeStudy)
+                            {
+                                <input id="comparative-study" type="checkbox" name="comparative-study" class="with-font" checked/>
+                            }
+                            else
+                            {
+                                classHide = "hide";
+                                <input id="comparative-study" type="checkbox" name="comparative-study" class="with-font" />
+                            }
+                            <label for="comparative-study">Étude comparative</label>
                         </div>
-                        <div class="checkbox padder orange">
-                            <label class="i-checks i-checks-sm">
-                                <input type="checkbox" name="a">
-                                <i></i>
-                                Annuler la séléction supports
-                            </label>
+                        <div id="comparative-period-type" class="@classHide">
+                            <div class="padder-radio media-schedule-option">
+                                @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
+                                {
+                                    <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" checked />
+                                }
+                                else
+                                {
+                                    <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" />
+                                }
+                                <label for="date-to-date">Date à date</label>
+                            </div>
+                            <div class="padder-radio media-schedule-option">
+                                @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate)
+                                {
+                                    <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" checked />
+                                }
+                                else
+                                {
+                                    <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" />
+                                }
+                                <label for="comparative-week-date">Date semaine comparative</label>
+                            </div>
+                        </div>
+                        <div class="checkbox padder media-schedule-option">
+                            <input id="reset-media-selection" type="checkbox" name="reset-media-selection" class="with-font" />
+                            <label for="reset-media-selection">@GestionWeb.GetWebWord(2069, Model.SiteLanguage)</label>
                         </div>
                     </div>
                     </div>
 
                 <div class="row">
                     <div class="padder-btn btn-options pull-right">
-                        <button id="validate-options" class="btn btn-valider">Appliquer&nbsp;<i class="fa fa-check"></i></button>
+                        <button id="validate-options" class="btn btn-valider">@GestionWeb.GetWebWord(3040, Model.SiteLanguage)&nbsp;<i class="fa fa-check"></i></button>
                     </div>
                 </div>
             </div>

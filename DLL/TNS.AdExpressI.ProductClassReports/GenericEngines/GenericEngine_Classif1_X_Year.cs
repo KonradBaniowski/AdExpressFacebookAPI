@@ -7,7 +7,7 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstPersonalized = TNS.AdExpress.Constantes.Web.AdvertiserPersonalisation.Type;
-using FctUtilities = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -16,6 +16,9 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpressI.Date;
+using TNS.AdExpress.Domain.Layers;
+using System.Reflection;
 //using FctWeb = TNS.AdExpress.Web.
 
 namespace TNS.AdExpressI.ProductClassReports.GenericEngines
@@ -110,7 +113,10 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             {
                 headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1357, _session.SiteLanguage), ID_LEVEL));
             }
-            headers.Root.Add(new Header(true, FctUtilities.Dates.getPeriodLabel(_session, CstWeb.CustomerSessions.Period.Type.currentYear), ID_N));
+            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.date];
+            IDate dateBLL = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+
+            headers.Root.Add(new Header(true, dateBLL.GetPeriodLabel(_session, CstWeb.CustomerSessions.Period.Type.currentYear), ID_N));
             //PDM
             if (_session.PDM && _tableType == CstFormat.PreformatedTables.media_X_Year.GetHashCode())
             {
@@ -123,7 +129,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             }
             if (_session.ComparativeStudy)
             {
-                headers.Root.Add(new Header(true, FctUtilities.Dates.getPeriodLabel(_session, CstWeb.CustomerSessions.Period.Type.previousYear), ID_N1));
+                headers.Root.Add(new Header(true, dateBLL.GetPeriodLabel(_session, CstWeb.CustomerSessions.Period.Type.previousYear), ID_N1));
                 //PDM
                 if (_session.PDM && _tableType == CstFormat.PreformatedTables.media_X_Year.GetHashCode())
                 {

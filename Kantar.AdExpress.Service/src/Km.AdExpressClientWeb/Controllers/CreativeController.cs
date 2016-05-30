@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
 using Newtonsoft.Json;
@@ -51,7 +52,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
         [HttpPost]
-        public JsonResult CreativeResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged)
+        public JsonResult CreativeResult(string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged, List<EvaliantFilter> listEvaliantFilter)
         {
 
             string jsonData = "";
@@ -59,7 +60,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _creativeService.GetCreativeGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged);
+            var reponse = _creativeService.GetCreativeGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged, listEvaliantFilter);
 
             try
             {
@@ -69,7 +70,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (reponse.Message == null)
                 {
                     jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
-                    JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+                    JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns, filtertitle = reponse.GridResult.Filter.Title, filterdatas = reponse.GridResult.Filter.Datas }, JsonRequestBehavior.AllowGet);
                     jsonModel.MaxJsonLength = Int32.MaxValue;
 
                     return jsonModel;
@@ -116,7 +117,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
                 CreativeLabel = GestionWeb.GetWebWord(LanguageConstantes.CreativeLabel, siteLanguage),
                 DownloadLabel = GestionWeb.GetWebWord(LanguageConstantes.DownloadLabel, siteLanguage),
-                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage)
+                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage),
+                FiltreLabel = GestionWeb.GetWebWord(LanguageConstantes.FiltreLabel, siteLanguage),
+                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage)
             };
 
             return result;

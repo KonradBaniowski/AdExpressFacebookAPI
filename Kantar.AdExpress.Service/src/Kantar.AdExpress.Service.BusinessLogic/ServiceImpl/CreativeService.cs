@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Kantar.AdExpress.Service.Core.Domain;
-using TNS.AdExpress.Domain.Results;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -13,18 +10,15 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Translation;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
-using CstFlags = TNS.AdExpress.Constantes.DB.Flags;
 using TNS.AdExpress.Domain.Level;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Web;
 using System.Collections;
-using WebCst = TNS.AdExpress.Constantes.Web;
-using TNS.AdExpressI.Insertions.Cells;
-using TNS.FrameWork.WebResultUI;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
-   public class CreativeService : ICreativeService
+    public class CreativeService : ICreativeService
     {
         private WebSession _customerWebSession = null;
         private int _fromDate;
@@ -51,7 +45,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 		/// Liste des colonnes personnalisées
 		/// </summary>
 		private List<GenericColumnItemInformation> _columnItemList = null;
-        GenericColumnItemInformation _genericColumnItemInformation = null;
         /// <summary>
         /// Indique si l'utilisateur à le droit de lire les créations
         /// </summary>
@@ -77,7 +70,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// </summary>
         protected string _optionHtml = string.Empty;
 
-        public InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged)
+        public InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged, List<EvaliantFilter> evaliantFilter)
         {
             InsertionCreativeResponse creativeResponse = new InsertionCreativeResponse();
             ArrayList levels = new ArrayList();
@@ -112,11 +105,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         ? TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateWeek : TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateMonth;
                     _fromDate = Convert.ToInt32(
                         Dates.Max(Dates.getZoomBeginningDate(zoomDate, periodType),
-                            Dates.getPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                            Dates.GetPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
                         );
                     _toDate = Convert.ToInt32(
                         Dates.Min(Dates.getZoomEndDate(zoomDate, periodType),
-                            Dates.getPeriodEndDate(periodEnd, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                            Dates.GetPeriodEndDate(periodEnd, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
                         );
                 }
                 else
@@ -131,6 +124,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 List<GenericColumnItemInformation> tmp = WebApplicationParameters.CreativesDetail.GetDetailColumns(creativeResponse.IdVehicle, _customerWebSession.CurrentModule);
                 _columnItemList = new List<GenericColumnItemInformation>();
+
+                if (isVehicleChanged)
+                {
+                    if(evaliantFilter != null)
+                        LoadCustomFilters(evaliantFilter);
+                }
+
                 foreach (GenericColumnItemInformation column in tmp)
                 {
                     if (WebApplicationParameters.GenericColumnsInformation.IsVisible(_columnSetId, column.Id))
@@ -163,18 +163,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     saveLevels = null;
                 }
                 _customerWebSession.DetailLevel = new GenericDetailLevel(new ArrayList());
-                //data = result.GetCreatives(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
-                creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
+                creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate, columnFilters, _availableFilterValues, _customFilterValues);
                 if (saveLevels != null)
                 {
                     _customerWebSession.DetailLevel = saveLevels;
                 }
-                if (creativeResponse.GridResult != null && creativeResponse.GridResult.HasData)
-                {
-                    //VOIR YOUGIL POUR LES FILTRES
-                   //BuildCustomFilter(ref data, columnFilters);
-                }
-                                          
 
             }
             catch (Exception ex)
@@ -185,6 +178,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return creativeResponse;
 
         }
+
+        public void LoadCustomFilters(List<EvaliantFilter> evaliantFilter)
+        {
+            _customFilterValues = new Dictionary<GenericColumnItemInformation.Columns, List<string>>();
+            foreach(EvaliantFilter filter in evaliantFilter)
+            {
+                if(filter !=null)
+                _customFilterValues.Add((GenericColumnItemInformation.Columns)filter.IdFilter, filter.ValuesFilter);
+            }
+        }
+
 
         public SpotResponse GetCreativePath(string idWebSession, string idVersion, long idVehicle)
         {
@@ -342,135 +346,5 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             return result;
         }
-
-        #region Build Custom Filters
-        protected virtual void BuildCustomFilter(ref ResultTable data, List<GenericColumnItemInformation> columnFilters)
-        {
-
-            if (columnFilters == null || columnFilters.Count <= 0)
-            {
-                return;
-            }
-
-            #region Filter data and build available filters
-            string value = string.Empty;
-            string[] values = null;
-            var sep = new char[1] { ',' };
-            bool match = true;
-
-            //Set available filters
-            for (int i = 0; i < data.LinesNumber; i++)
-            {
-                foreach (GenericColumnItemInformation g in columnFilters)
-                {
-
-                    value = ((CellCreativesInformation)data[i, 1]).GetValue(g);
-                    values = value.Split(sep, StringSplitOptions.RemoveEmptyEntries);
-                    for (int j = 0; j < values.Length; j++)
-                    {
-                        if (!_availableFilterValues[g.Id].Contains(values[j]))
-                        {
-                            _availableFilterValues[g.Id].Add(values[j]);
-                        }
-                    }
-
-
-                }
-            }
-            foreach (GenericColumnItemInformation g in columnFilters)
-            {
-                if (_customFilterValues.ContainsKey(g.Id) && _customFilterValues[g.Id].Count > 0)
-                {
-                    foreach (string s in _customFilterValues[g.Id])
-                    {
-                        if (!_availableFilterValues[g.Id].Contains(s))
-                        {
-                            _availableFilterValues[g.Id].Add(s);
-                        }
-
-                    }
-                }
-            }
-
-            //Check custom filters
-            int doNotMatch = 0;
-            for (int i = 0; i < data.LinesNumber; i++)
-            {
-                match = true;
-                foreach (GenericColumnItemInformation g in columnFilters)
-                {
-
-                    value = ((CellCreativesInformation)data[i, 1]).GetValue(g);
-                    values = value.Split(sep, StringSplitOptions.RemoveEmptyEntries);
-                    for (int j = 0; j < values.Length; j++)
-                    {
-                        if (_availableFilterValues[g.Id].Contains(values[j]) && _customFilterValues.ContainsKey(g.Id) && _customFilterValues[g.Id].Count > 0 && !_customFilterValues[g.Id].Contains(values[j]))
-                        {
-                            match = false;
-                        }
-                    }
-
-
-                }
-                if (!match)
-                {
-                    data.SetLineStart(new LineHide(data.GetLineStart(i).LineType), i);
-                    doNotMatch++;
-                }
-
-            }
-            if (doNotMatch == data.LinesNumber)
-            {
-                data = new ResultTable(1, 1);
-                data.AddNewLine(LineType.total);
-                var c = new CellLabel(GestionWeb.GetWebWord(2543, _customerWebSession.SiteLanguage));
-                c.CssClass = "error";
-                //this.CssLTotal = "error";//COMMENTE PAR DD
-                data[0, 1] = c;
-            }
-            #endregion
-
-            #region Build Filters Html Code
-            string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
-            var str = new StringBuilder();
-            string ID = "tt";
-            str.AppendFormat("<tr id=\"filters_{0}\" style=\"display:none;\" ><td colSpan=\"2\"><table>", ID);
-            bool checke = false;
-            foreach (GenericColumnItemInformation c in columnFilters)
-            {
-                if (_availableFilterValues.ContainsKey(c.Id) && _availableFilterValues[c.Id].Count > 0)
-                {
-                    str.AppendFormat("<tr><th colSpan=\"4\">{0}</th></tr>", GestionWeb.GetWebWord(c.WebTextId, _customerWebSession.SiteLanguage));
-                    _availableFilterValues[c.Id].Sort();
-                    for (int i = 0; i < _availableFilterValues[c.Id].Count; i++)
-                    {
-                        if ((i % 4) == 0)
-                        {
-                            if (i > 0)
-                            {
-                                str.Append("</tr>");
-                            }
-                            str.Append("<tr>");
-                        }
-                        checke = checke || (_customFilterValues.ContainsKey(c.Id) && _customFilterValues[c.Id].Contains(_availableFilterValues[c.Id][i]));
-                        str.AppendFormat("<td><input {4} id=\"{2}_{0}_{3}\" type=\"checkbox\" onclick=\"if(this.checked){{AddFilter({0},'{1}');}}else {{RemoveFilter({0},'{1}');}};\" ><label for=\"{2}_{0}_{3}\">{1}</label></td>"
-                            , c.Id.GetHashCode(), _availableFilterValues[c.Id][i], ID, i
-                            , (_customFilterValues.ContainsKey(c.Id) && _customFilterValues[c.Id].Contains(_availableFilterValues[c.Id][i])) ? "checked" : string.Empty);
-
-                    }
-                }
-            }
-            str.AppendFormat("<tr><td colSpan=\"4\">&nbsp;</td></tr><tr><td colSpan=\"4\" align=\"right\"><a href=\"#\" onclick=\"ApplyFilters();\" onmouseover=\"filterButton_{0}.src='/App_Themes/{1}/Images/Common/Button/appliquer_down.gif';\" onmouseout=\"filterButton_{0}.src = '/App_Themes/{1}/Images/Common/Button/appliquer_up.gif';\"><img src=\"/App_Themes/{1}/Images/Common/Button/appliquer_up.gif\" border=0 name=filterButton_{0}></a>", ID, themeName);
-            str.AppendFormat("&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"{{InitFilters();ApplyFilters();}}\" onmouseover=\"filterInitButton_{0}.src='/App_Themes/{1}/Images/Common/Button/initialize_all_down.gif';\" onmouseout=\"filterInitButton_{0}.src = '/App_Themes/{1}/Images/Common/Button/initialize_all_up.gif';\"><img src=\"/App_Themes/{1}/Images/Common/Button/initialize_all_up.gif\" border=0 name=filterInitButton_{0}></a></td></tr>", ID, themeName);
-            str.Append("</table></td></tr></table><br>");
-
-            str.Insert(0, string.Format("<table class=\"creativeFilterBox\" border=\"0\" cellSpacing=\"0\" cellPadding=\"0\"><tr style=\"cursor:hand;\" onclick=\"if(filters_{1}.style.display == 'none'){{filters_{1}.style.display = '';}}else {{filters_{1}.style.display = 'none';}};\"><td class=\"{2}\">{0}</td><td align=\"right\" class=\"arrowBackGround\"></td></tr>", GestionWeb.GetWebWord(518, _customerWebSession.SiteLanguage), ID, checke ? "pinkTextColor" : string.Empty));
-
-
-            _optionHtml = str.ToString();
-            #endregion
-        }
-        #endregion
-
     }
 }

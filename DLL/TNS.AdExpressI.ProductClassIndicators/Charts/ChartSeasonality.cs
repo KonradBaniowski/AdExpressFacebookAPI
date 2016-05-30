@@ -162,7 +162,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #endregion
 
             #region Series Data
-            DateTime periodBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            DateTime periodBegin = FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
             double mediumMonth = 0;
             
 

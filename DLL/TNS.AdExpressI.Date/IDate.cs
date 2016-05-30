@@ -14,6 +14,7 @@ using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.Classification.DB;
+using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
 
 namespace TNS.AdExpressI.Date
 {
@@ -101,5 +102,7 @@ namespace TNS.AdExpressI.Date
         /// </summary>
         /// <param name="webSession">The customer session</param>
         void SetCurrentYear(ref WebSession webSession);
+
+        string GetPeriodLabel(WebSession _session, CstCustomerSession.Period.Type period);
     }
 }

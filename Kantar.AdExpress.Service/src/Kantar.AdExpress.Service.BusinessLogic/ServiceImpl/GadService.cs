@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.GAD.DAL;
@@ -40,7 +41,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             foreach (DataRow myRow in data.Tables[0].Rows)
             {
-                siret = myRow["siret_number"].ToString();
+              
                 company = myRow["company"].ToString();
                 street = myRow["street"].ToString();
                 street2 = myRow["street2"].ToString();
@@ -53,6 +54,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     docMarketingId = myRow["id_gad"].ToString();
                     docMarketingKey = myRow["docKey"].ToString();
+                }
+                if (customerWebSession.CustomerLogin.CustormerFlagAccess(Flags.ID_CODE_SIRET_ACCESS_FLAG) && myRow["siret_number"] != DBNull.Value)
+                {
+                    siret = myRow["siret_number"].ToString();
                 }
             }
 

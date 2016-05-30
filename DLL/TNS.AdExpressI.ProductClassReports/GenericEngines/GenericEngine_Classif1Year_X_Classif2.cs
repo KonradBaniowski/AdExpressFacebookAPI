@@ -6,7 +6,7 @@ using System.Data;
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
-using FctUtilities = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.ProductClassReports.Exceptions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
@@ -15,6 +15,9 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Date.DAL;
 using System.Reflection;
+using TNS.AdExpressI.Date;
+using CstWeb = TNS.AdExpress.Constantes.Web;
+
 
 namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 {
@@ -101,7 +104,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             if (dtData.Rows.Count <= 0) return null;
 
             #region Periods
-            DateTime begin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            DateTime begin = FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
 
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
             object[] param = new object[1];
@@ -156,8 +159,11 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 LEVEL_OFFSET++;
             }
             List<Int64> keyPdmYearN1 = new List<Int64>(); keyPdmYearN1.Add(ID_PDM_N1);
-            string labelN = FctUtilities.Dates.getPeriodLabel(_session, CstPeriod.Type.currentYear);
-            string labelN1 = FctUtilities.Dates.getPeriodLabel(_session, CstPeriod.Type.previousYear);
+            CoreLayer coreLayer = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.date];
+            IDate dateBLL = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + coreLayer.AssemblyName, coreLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+
+            string labelN = dateBLL.GetPeriodLabel(_session, CstPeriod.Type.currentYear);
+            string labelN1 = dateBLL.GetPeriodLabel(_session, CstPeriod.Type.previousYear);
             string labelEvol = GestionWeb.GetWebWord(1168, _session.SiteLanguage);
             string labelPDMN = string.Format("{0}{1}{2}", GestionWeb.GetWebWord(806, _session.SiteLanguage), GestionWeb.GetWebWord(1187, _session.SiteLanguage), labelN);
             string labelPDMN1 = string.Format("{0}{1}{2}", GestionWeb.GetWebWord(806, _session.SiteLanguage), GestionWeb.GetWebWord(1187, _session.SiteLanguage), labelN1);

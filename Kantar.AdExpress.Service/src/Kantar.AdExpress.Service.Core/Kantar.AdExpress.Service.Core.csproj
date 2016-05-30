@@ -51,13 +51,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessService\IAlertService.cs" />
+    <Compile Include="BusinessService\IAnalysisService.cs" />
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
     <Compile Include="BusinessService\IApplicationUserManager.cs" />
     <Compile Include="BusinessService\ICreativeService.cs" />
     <Compile Include="BusinessService\IDetailLevelService.cs" />
     <Compile Include="BusinessService\IDetailSelectionService.cs" />
+    <Compile Include="BusinessService\IExportService.cs" />
     <Compile Include="BusinessService\IGadService.cs" />
     <Compile Include="BusinessService\IInfosNewsService.cs" />
+    <Compile Include="BusinessService\IOptionAnalysisService.cs" />
     <Compile Include="BusinessService\IPortfolioDetailMediaService.cs" />
     <Compile Include="BusinessService\IInsertionsService.cs" />
     <Compile Include="BusinessService\ILoginService.cs" />
@@ -81,11 +84,15 @@
     <Compile Include="Domain\Address.cs" />
     <Compile Include="Domain\AdExpressResponse.cs" />
     <Compile Include="Domain\Alert.cs" />
+    <Compile Include="Domain\Creative\VehicleCover.cs" />
+    <Compile Include="Domain\Creative\VehiclePage.cs" />
     <Compile Include="Domain\DetailLevel.cs" />
     <Compile Include="Domain\DetailLevelItems.cs" />
     <Compile Include="Domain\DetailSelectionDomain\DetailSelectionResponse.cs" />
     <Compile Include="Domain\Documents.cs" />
+    <Compile Include="Domain\ExportRequest.cs" />
     <Compile Include="Domain\Gad.cs" />
+    <Compile Include="Domain\GridResultResponse.cs" />
     <Compile Include="Domain\Identity\ApplicationAuthenticationDescription.cs" />
     <Compile Include="Domain\Identity\ApplicationExternalLoginInfo.cs" />
     <Compile Include="Domain\Identity\ApplicationIdentityResult.cs" />
@@ -108,15 +115,20 @@
     <Compile Include="Domain\Period.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoOption.cs" />
+    <Compile Include="Domain\ResultOptions\CheckBoxOption.cs" />
+    <Compile Include="Domain\ResultOptions\EvaliantFilter.cs" />
     <Compile Include="Domain\ResultOptions\FormatFilter.cs" />
     <Compile Include="Domain\ResultOptions\FormatOption.cs" />
     <Compile Include="Domain\ResultOptions\GenericColumnDetailLevelFilter.cs" />
     <Compile Include="Domain\ResultOptions\GenericColumnDetailLevelOption.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelFilter.cs" />
     <Compile Include="Domain\ResultOptions\GenericDetailLevelOption.cs" />
+    <Compile Include="Domain\ResultOptions\GenericLevelFilter.cs" />
+    <Compile Include="Domain\ResultOptions\GenericLevelOption.cs" />
     <Compile Include="Domain\ResultOptions\InsertionFilter.cs" />
     <Compile Include="Domain\ResultOptions\InsertionOption.cs" />
     <Compile Include="Domain\ResultOptions\Options.cs" />
+    <Compile Include="Domain\ResultOptions\OptionsAnalysis.cs" />
     <Compile Include="Domain\ResultOptions\OptionsMediaSchedule.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailFilter.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailOption.cs" />
@@ -128,7 +140,9 @@
     <Compile Include="Domain\ResultOptions\SelectItem.cs" />
     <Compile Include="Domain\ResultOptions\UnitFilter.cs" />
     <Compile Include="Domain\ResultOptions\UnitOption.cs" />
+    <Compile Include="Domain\ResultOptions\UserAnalysisFilter.cs" />
     <Compile Include="Domain\ResultOptions\UserFilter.cs" />
+    <Compile Include="Domain\SaveAlertRequest.cs" />
     <Compile Include="Domain\SaveLevelsResponse.cs" />
     <Compile Include="Domain\SpotResponse.cs" />
     <Compile Include="Domain\SubPeriod.cs" />
@@ -162,6 +176,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
       <Project>{741A9674-6545-469F-8528-F96BA2DB3A74}</Project>
       <Name>TNS.Alert.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303c6b21-ca16-4d7b-8edb-e8869b2b3ec9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Contracts\Kantar.AdExpress.Service.Contracts.csproj">
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>

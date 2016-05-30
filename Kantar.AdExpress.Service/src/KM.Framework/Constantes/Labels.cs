@@ -20,7 +20,7 @@ namespace KM.Framework.Constantes
         public string Exclude { get; set; }
         public string LoadUnivers { get; set; }
         public string Save { get; set; }
-        public string Submit { get; set; }
+        public string Submit { get; set; }//3040
         public string CleanSelectionMsg { get; set; }
         public string IncludedElements { get; set; }
         public string ExcludedElements { get; set; }
@@ -36,7 +36,7 @@ namespace KM.Framework.Constantes
         public string ErrorOnlyOneItemAllowed { get; set; }//3036
         public string ErrorOverLimit { get; set; }//w2264==> only 200items
         public string SaveUnivers { get; set; }//769
-        public string AddConcurrent { get; set;}//3037
+        public string AddConcurrent { get; set; }//3037
         public string ErrorSupportAlreadyDefine { get; set; } // 3038
         public string Concurrent { get; set; } //w2869
         public string Referent { get; set; } //3039
@@ -56,6 +56,7 @@ namespace KM.Framework.Constantes
         public string QuestionTag3 { get; set; } //w647
         public string UnityError { get; set; }
         public string Periodicity { get; set; }//1293
+        public string WarningBackNavigator { get; set; }//2099
         public string Daily { get; set; }//w2579
         public string Weekly { get; set; }//2580
         public string SaveAlert { get; set; }//2581
@@ -107,8 +108,38 @@ namespace KM.Framework.Constantes
         public string ComparativePeriodTypeLabel { get; set; } //w2293
         public string PeriodDisponibilityTypeLabel { get; set; } //w2296
         public string GenericLevelDetailColumnLabel { get; set; } //w2300
-        public string SelectMedia { get;set; }//1017
+        public string SelectMedia { get; set; }//1017
         public string PreSelection { get; set; }//2571
         public string HomeLabel { get; set; } // 3047
+        public string CreateAlert { get; set; }
+        public string SaveAlert2 { get; set; }//2609
+        public string FileName { get; set; }//1746
+        public string Email { get; set; }//1136
+        public string SelectDayInWeek { get; set; }//2582
+        public string SelectDayInMonth { get; set; }//2583
+        public string AlertInfoMessage { get; set; }//2616
+        public string Close { get; set; }
+        public string ModuleLabel { get; set; }//760
+        public string NewsLabel { get; set; }//2080
+        public string YourModule { get; set; }//3051
+        public string NewsDescr { get; set; } //3052
+        public string ContactUsLabel { get; set; } //3055
+        public string SomeFigures { get; set; }//3056
+        public string Connection { get; set; }//3057
+        public string SignIn { get; set; }//3058
+        public string UserName { get; set; }//3059
+        public string Password { get; set; }//3060
+        public string ExportFormattedResult { get; set; }//1996
+        public string ExportResultWithValue { get; set; }//1997
+        public string ExportGrossResult { get; set; }//2014
+        public string ExportPdfResult { get; set; }//2017
+        public string ExportPptResult { get; set; }//3031
+        public string Export { get; set; }//1992
+        public string Delete { get; set; }//1951
+        public string Search { get; set; }//TBD
+        public string FiltreLabel { get; set; }//518
+        public string ResultError { get; set; }//1973
+        public string DashboardsLabel { get; set; }//2102
+
     }
 }

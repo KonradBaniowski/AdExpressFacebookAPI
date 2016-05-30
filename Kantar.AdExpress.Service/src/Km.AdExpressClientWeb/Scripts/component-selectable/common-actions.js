@@ -61,15 +61,37 @@ function SelectedItems(event, ui) {
     $.each(universesToUpdate, function (index, elem) {
 
         var universe = $(elem).attr('data-universe');
+        var selectedClassification= DIS.itemIds.join(",")
         var params = {
             levelId: universe,
-            selectedClassification: DIS.itemIds.join(","),
+            selectedClassification: selectedClassification,
             selectedLevelId: universeIdCalling,
             dimension: dimension,
             idMedias: idMedias
         };
         var univerIndex = parseFloat($(elem).attr('data-universe'));
         var univerLabel = $(elem).attr('data-label') + "\{NB_ELEM\}";
+        if (selectedClassification != "") {
+            $.ajax({
+                url: '/Universe/GetClassification',
+                contentType: 'application/json',
+                type: 'POST',
+                datatype: 'JSON',
+                data: JSON.stringify(params),
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("error");
+                },
+                success: function (response) {
+                    $("#containerSelectable" + universe).html('');
+                    $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
+                    $('#selectable' + univerIndex).selectableScroll({
+                        filter: 'li',
+                        stop: SelectedItems
+                    });
+                    //    .selectable(
+                    //{
+                    //    stop: SelectedItems
+                    //});
 
         $.ajax({
             url: '/Universe/GetClassification',
@@ -89,6 +111,14 @@ function SelectedItems(event, ui) {
                 });
             }
         });
+                }
+            });
+        }
+        else
+        {
+            bootbox.alert("Would you please select an item.");
+            return false;
+        }
     });
 };
 

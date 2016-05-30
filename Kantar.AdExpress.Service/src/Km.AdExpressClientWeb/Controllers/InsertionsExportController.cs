@@ -13,10 +13,12 @@ namespace Km.AdExpressClientWeb.Controllers
     public class InsertionsExportController : Controller
     {
         private IInsertionsService _insertionsService;
+        private IDetailSelectionService _detailSelectionService;
 
-        public InsertionsExportController(IInsertionsService insertionsService)
+        public InsertionsExportController(IInsertionsService insertionsService, IDetailSelectionService detailSelectionService)
         {
             _insertionsService = insertionsService;
+            _detailSelectionService = detailSelectionService;
         }
 
         // GET: InsertionsExport 

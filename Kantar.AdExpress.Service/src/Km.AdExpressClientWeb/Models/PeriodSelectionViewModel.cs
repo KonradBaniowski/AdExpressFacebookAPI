@@ -16,5 +16,6 @@ namespace Km.AdExpressClientWeb.Models
         public PresentationModel Presentation { get; set; }
 
         public ErrorMessage ErrorMessage { get; set; }
+        public long CurrentModule { get; set; }
     }
 }

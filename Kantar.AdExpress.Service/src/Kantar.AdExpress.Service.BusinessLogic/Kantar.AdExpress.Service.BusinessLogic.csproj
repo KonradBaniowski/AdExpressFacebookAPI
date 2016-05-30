@@ -71,11 +71,14 @@
     <Compile Include="Identity\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl\AlertService.cs" />
+    <Compile Include="ServiceImpl\AnalysisService.cs" />
     <Compile Include="ServiceImpl\CreativeService.cs" />
     <Compile Include="ServiceImpl\DetailLevelService.cs" />
     <Compile Include="ServiceImpl\DetailSelectionService.cs" />
+    <Compile Include="ServiceImpl\ExportService.cs" />
     <Compile Include="ServiceImpl\GadService.cs" />
     <Compile Include="ServiceImpl\InfosNewsService.cs" />
+    <Compile Include="ServiceImpl\OptionAnalysisService.cs" />
     <Compile Include="ServiceImpl\PortfolioDetailMediaService.cs" />
     <Compile Include="ServiceImpl\InsertionsService.cs" />
     <Compile Include="ServiceImpl\LostWonService.cs" />
@@ -94,9 +97,13 @@
     <Compile Include="ServiceImpl\WebSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.csproj">
+    <ProjectReference Include="..\..\..\DLL\KM.AdExpressI.MyAdExpress\KM.AdExpressI.MyAdExpress.DAL.csproj">
       <Project>{02b3e71a-f7e6-4de6-b42d-b421d94ed9f2}</Project>
-      <Name>KM.AdExpressI.MyAdExpress</Name>
+      <Name>KM.AdExpressI.MyAdExpress.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Anubis.Constantes\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716ac8-b9d2-432c-84f7-885a73b77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
@@ -146,6 +153,10 @@
       <Project>{459f24ec-384d-404f-a6d2-f3b76c288a57}</Project>
       <Name>TNS.AdExpressI.PresentAbsent</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.ProductClassReports\TNS.AdExpressI.ProductClassReports.csproj">
+      <Project>{c0d576be-bb8d-4f27-b361-385162442113}</Project>
+      <Name>TNS.AdExpressI.ProductClassReports</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
       <Name>TNS.AdExpress</Name>
@@ -165,6 +176,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
       <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
       <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TNS.AdExpress.Vehicle.DAL\TNS.AdExpress.Vehicle.DAL.csproj">
+      <Project>{eb452f8b-bb77-4f6b-9169-31781fdbc1c9}</Project>
+      <Name>TNS.AdExpress.Vehicle.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Contracts\Kantar.AdExpress.Service.Contracts.csproj">
       <Project>{a024f3e9-de00-4f3c-b1fe-b15a131d26c3}</Project>

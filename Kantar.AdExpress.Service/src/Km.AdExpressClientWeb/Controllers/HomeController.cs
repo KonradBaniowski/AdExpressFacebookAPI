@@ -17,6 +17,7 @@ using TNS.AdExpressI.Date.DAL;
 using Kantar.AdExpress.Service.Core.Domain;
 using KM.Framework.Constantes;
 using TNS.AdExpress.Web.Core.Utilities;
+using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -24,7 +25,7 @@ namespace Km.AdExpressClientWeb.Controllers
     public class HomeController : Controller
     {
         private const string _cryptKey = "8!b?#B$3";
-
+        private const string ALLBRANCHES = "1,2";
         private IRightService _rightService;
         private IApplicationUserManager _userManager;
         private IWebSessionService _webSessionService;
@@ -41,6 +42,17 @@ namespace Km.AdExpressClientWeb.Controllers
             _infosNewsService = infosNewsService;
         }
 
+        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = 33)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            _webSessionService.UpdateSiteLanguage(idWebSession, siteLanguage);           
+            
+            JsonResult jsonModel = Json(new { RedirectUrl = returnUrl });
+           
+            return jsonModel;
+        }
+
         public ActionResult Index()
         {
             var cla = new ClaimsPrincipal(User.Identity);
@@ -52,6 +64,9 @@ namespace Km.AdExpressClientWeb.Controllers
             var resList = _rightService.GetModulesList(idWS);
             var res = _rightService.GetModules(idWS);
             List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
+
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(resList.First().Value.SiteLanguage);
+            ViewBag.SiteLanguage = resList.First().Value.SiteLanguage;
             documents.Add(new Documents()
                         {
                             Id = 3,
@@ -85,8 +100,13 @@ namespace Km.AdExpressClientWeb.Controllers
                 Modules = resList,
                 Documents = documents,
                 EncryptedLogin =encryptedLogin,
-                EncryptedPassword = encryptedPassword
+                EncryptedPassword = encryptedPassword,
+                SiteLanguage = 33, // Default
             };
+
+            Home.SiteLanguage = resList.First().Value.SiteLanguage;
+            Home.Labels = LoadPageLabels(Home.SiteLanguage);
+
             return View(Home);
         }
 
@@ -126,7 +146,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.SavedResults = result;
             #endregion
             #region Saved Univers (Market & Media)
-            string branch = "2";
+            string branch = ALLBRANCHES;
             string listUniversClientDescription = string.Empty;
             var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
             foreach (var group in univers.UniversGroups)
@@ -141,6 +161,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var alertsResponse = _universService.GetUserAlerts(idWebSession);
             model.Alerts = alertsResponse.Alerts;
             #endregion
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
+            ViewBag.SiteLanguage = result.SiteLanguage;
             model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
             model.Labels = LoadPageLabels(result.SiteLanguage);
             return View(model);
@@ -167,7 +189,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
 
-        public ActionResult ReloadUnivers()
+        public ActionResult ReloadAlerts()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -178,7 +200,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-        public ActionResult ReloadAlerts()
+        public ActionResult ReloadUnivers()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -186,7 +208,8 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 UniversType = Domain.UniversType.Univers,
                 UniversGroups = new List<Domain.UserUniversGroup>()
-            }; string branch = "2";
+            };
+            string branch = "2";
             string listUniversClientDescription = string.Empty;
             var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
             foreach (var group in univers.UniversGroups)
@@ -246,7 +269,14 @@ namespace Km.AdExpressClientWeb.Controllers
                 CreateDirectory = GestionWeb.GetWebWord(LanguageConstantes.CreateFolder, siteLanguage),
                 RenameDirectory = GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
                 DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage),
-                Directories = GestionWeb.GetWebWord(LanguageConstantes.Directories, siteLanguage)
+                Directories = GestionWeb.GetWebWord(LanguageConstantes.Directories, siteLanguage),
+                ModuleLabel = GestionWeb.GetWebWord(LanguageConstantes.ModuleLabel, siteLanguage),
+                NewsLabel = GestionWeb.GetWebWord(LanguageConstantes.NewsLabel, siteLanguage),
+                YourModule = GestionWeb.GetWebWord(LanguageConstantes.YourModule, siteLanguage),
+                NewsDescr = GestionWeb.GetWebWord(LanguageConstantes.NewsDescr, siteLanguage),
+                ContactUsLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactUsLabel, siteLanguage),
+                Delete = GestionWeb.GetWebWord(LanguageConstantes.Delete, siteLanguage),
+                DashboardsLabel = GestionWeb.GetWebWord(LanguageConstantes.DashboardsLabel, siteLanguage)
             };
             return result;
         }

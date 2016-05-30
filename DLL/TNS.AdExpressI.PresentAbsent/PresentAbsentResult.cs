@@ -38,6 +38,7 @@ using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.Collections;
 using TNS.AdExpress.Domain.Web;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Units;
 
 #endregion
 
@@ -2030,7 +2031,7 @@ namespace TNS.AdExpressI.PresentAbsent
 
             resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+            object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
@@ -2040,7 +2041,11 @@ namespace TNS.AdExpressI.PresentAbsent
             schemaFields.Add(new { name = "ID" });
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
+            columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
+            schemaFields.Add(new { name = "GAD" });
             List<object> groups = null;
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            string format = string.Empty;
 
             //Headers
             if (resultTable.NewHeaders != null)
@@ -2057,19 +2062,61 @@ namespace TNS.AdExpressI.PresentAbsent
                         for (int g = 0; g < nbGroupItems; g++)
                         {
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "200" });
+
+                            if (resultTable != null && resultTable.LinesNumber > 0)
+                            {
+                                var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
+
+                                if (cell is CellPercent)
+                                {
+                                    format = "percent";
+                                }
+                                else if (cell is CellEvol)
+                                {
+                                    format = "percent";
+                                    colKey += "-evol";
+                                }
+                                else if (cell is CellDuration)
+                                {
+                                    format = "duration";
+                                    colKey += "-unit";
+                                }
+                                else if (cell is CellUnit)
+                                {
+                                    format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                    colKey += "-unit";
+                                }
+                            }
+
+                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                             schemaFields.Add(new { name = colKey });
                         }
                         //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, group = groups });
-                       // schemaFields.Add(new { name = colKey });
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey, group = groups });
+                        columnsFixed.Add(new { columnKey = "gr" + colKey, isFixed = false, allowFixing = false });
+                        // schemaFields.Add(new { name = colKey });
                     }
                     else
                     {
                         colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "200" });
+                        if (j == 0)
+                        {
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                        }
+                        else
+                        {
+                            if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(805, _session.SiteLanguage))
+                            {
+                                format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                colKey += "-unit";
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            }
+                            else
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                            columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
+                        }
                         schemaFields.Add(new { name = colKey });
-                        if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                     }
 
                 }
@@ -2098,9 +2145,9 @@ namespace TNS.AdExpressI.PresentAbsent
                            , mediaSchedulePath
                            , link);
                             }
-                        }                       
-                         gridData[i, k + 1] = link;
-                       
+                        }
+                        gridData[i, k + 2] = link;
+
                     }
                     else if (cell is CellOneLevelInsertionsLink)
                     {
@@ -2116,8 +2163,8 @@ namespace TNS.AdExpressI.PresentAbsent
                          , link);
                             }
 
-                        }                       
-                        gridData[i, k + 1] = link;
+                        }
+                        gridData[i, k + 2] = link;
                     }
                     else if (cell is CellOneLevelCreativesLink)
                     {
@@ -2134,9 +2181,44 @@ namespace TNS.AdExpressI.PresentAbsent
                             }
 
                         }
-                        gridData[i, k + 1] = link;
+                        gridData[i, k + 2] = link;
                     }
-                    else gridData[i, k + 1] = cell.RenderString();
+                    else {
+                        if (cell is CellPercent || cell is CellEvol)
+                        {
+                            double value = ((CellUnit)cell).Value;
+
+                            if (double.IsInfinity(value))
+                                gridData[i, k + 2] = "Infinity";
+                            else if (double.IsNaN(value))
+                                gridData[i, k + 2] = null;
+                            else
+                                gridData[i, k + 2] = value / 100;
+                        }
+                        else if (cell is CellUnit)
+                        {
+                            if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
+                                gridData[i, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                            else
+                                gridData[i, k + 2] = ((CellUnit)cell).Value;
+                        }
+                        else if (cell is AdExpressCellLevel)
+                        {
+                            string label = ((AdExpressCellLevel)cell).RawString();
+                            string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
+
+                            if (gadParams.Length > 0)
+                                gridData[i, 2] = gadParams;
+                            else
+                                gridData[i, 2] = "";
+
+                            gridData[i, k + 2] = label;
+                        }
+                        else
+                        {
+                            gridData[i, k + 2] = cell.RenderString();
+                        }
+                    }
                 }
             }
             gridResult.NeedFixedColumns = true;
@@ -2145,6 +2227,7 @@ namespace TNS.AdExpressI.PresentAbsent
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
             gridResult.Data = gridData;
+            gridResult.Unit = _session.Unit.ToString();
 
             return gridResult;
         }

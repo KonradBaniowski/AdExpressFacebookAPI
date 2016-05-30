@@ -189,7 +189,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     if (_previousValues[i] == null || _previousValues[i].Length == 0 || Convert.ToInt64(_previousValues[i]) > Convert.ToInt64(cValue))
                     {
-                        ((CellDate)cCell).Date = Dates.getPeriodBeginningDate(cValue, CstWeb.CustomerSessions.Period.Type.dateToDate);
+                        ((CellDate)cCell).Date = Dates.GetPeriodBeginningDate(cValue, CstWeb.CustomerSessions.Period.Type.dateToDate);
                     }
                 }
                 else if (g.Id == GenericColumnItemInformation.Columns.addressId)

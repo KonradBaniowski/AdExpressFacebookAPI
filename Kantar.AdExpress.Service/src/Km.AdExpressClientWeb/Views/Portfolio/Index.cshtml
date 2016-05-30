@@ -3,6 +3,7 @@
 @using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "MarketSelection";
+    var _controller = Model.NavigationBar.First().Controller;
 }
 
 <div class="row">
@@ -30,7 +31,7 @@
                 <h5 class="pull-right"> @Model.Labels.KeyWordDescription</h5>
                 <div class="clearfix"></div>
                 <div class="input-group">
-                    <input id="keyword" type="text" class="form-control recherche" placeholder="Recherche">
+                    <input id="keyword" type="text" class="form-control recherche" placeholder="@Model.Labels.Search">
                     <div class="input-group-btn dropdown" dropdown="">
                         <button id="branch" type="button" class="btn btn-default select-recherche" data-branch="@Model.Branches.FirstOrDefault(p => p.IsSelected).Id" data-toggle="dropdown">
                             @Model.Branches.FirstOrDefault(p => p.IsSelected).Label
@@ -168,7 +169,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
         <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-floppy-o"></i></a>
-            @Html.ActionLink("Valider", "MediaSelection", null, new { id = "btnSubmitMarketSelection", @class = "btn btn-default btn-valider pull-right" })
+            @*@Html.ActionLink("Valider", "MediaSelection", null, new { id = "btnSubmitMarketSelection", @class = "btn btn-default btn-valider pull-right" })*@
 
         </div>
     </div>
@@ -181,7 +182,7 @@
 
     </div>
 </div>
-
+<input type="hidden" id="current-url" value="/@_controller/Index" />
 @section scripts {
     @Scripts.Render("~/bundles/portfolio-market")
     @Scripts.Render("~/bundles/detail-selection")

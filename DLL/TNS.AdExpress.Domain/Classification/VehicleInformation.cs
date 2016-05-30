@@ -198,6 +198,11 @@ namespace TNS.AdExpress.Domain.Classification {
             this(id, databaseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId) {
 			_allowedRecapMediaLevelItemsList = allowedRecapMediaLevelItemsList;
 		}
+
+        public VehicleInformation()
+        {
+
+        }
         #endregion
 
         #region Accessors

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using TNS.AdExpress.Domain.Translation;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -15,7 +16,7 @@
         <div class="container">
             @*ROMAIN*@
             <div class="bb-alert alert alert-info" style="display:none;">
-                <span>The examples populate this alert with dummy content</span>
+                <span></span>
             </div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -25,16 +26,18 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <a class="navbar-brand" style="font-weight:bold;" href="/">AdExpress</a>
+            <a class="navbar-brand" href="/">
+                <img src="../Content/img/Kantar_Media_BMPro_SW_RGB.png" alt="Ad Express - Kantar Media">
+            </a>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
-                    <li>
+                    <li title="@GestionWeb.GetWebWord(760, ViewBag.SiteLanguage)"><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
+                    <li title="@GestionWeb.GetWebWord(761, ViewBag.SiteLanguage)">
                         <a href="@Url.Action("MyAdExpress", "Home")">
                             <i class="glyphicon glyphicon-user"></i>
                         </a>
                     </li>
-                    <li>
+                    <li title="@GestionWeb.GetWebWord(3055, ViewBag.SiteLanguage)">
                         <a href="#">
                             <i class="glyphicon glyphicon-comment"></i>
                         </a>
@@ -42,14 +45,25 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FR<span class="caret"></span></a>
+                        <a href="#" id="language-choice" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag.SiteLanguageName<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="active">FR</a></li>
-                            <li><a href="#">EN</a></li>
+                            @if (ViewBag.SiteLanguageName == "FR")
+                            {
+                                <li><a href="#" data-language-id="33" data-url-action="/Contact/ChangeLanguage" class="active">FR</a></li>
+                                <li><a href="#" data-language-id="44" data-url-action="/Contact/ChangeLanguage">EN</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="#" data-language-id="33" data-url-action="/Contact/ChangeLanguage">FR</a></li>
+                                <li><a href="#" data-language-id="44" data-url-action="/Contact/ChangeLanguage" class="active">EN</a></li>
+
+                            }
+
                         </ul>
                     </li>
 
-                    <li>
+
+                    <li title="@GestionWeb.GetWebWord(2929, ViewBag.SiteLanguage)">
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
                             @Html.AntiForgeryToken()
@@ -69,17 +83,17 @@
                 <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
             </div>
         </div>
-        <div class="modal-footer" hidden>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-        </div>
-
     </div>
+
+    <input type="hidden" id="current-url" value="/Home/Index" />
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/ajax")
+    @Scripts.Render("~/bundles/language-choice")
 
 
     @RenderSection("scripts", required: false)
 
+   
 </body>
 </html>

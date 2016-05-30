@@ -34,6 +34,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
         private IMediaScheduleService _mediaSchedule;
+        private IDetailSelectionService _detailSelectionService;
         private WebSession _session;
 
         #region Constantes
@@ -158,11 +159,12 @@ namespace Km.AdExpressClientWeb.Controllers
         #endregion
 
         private string icon;
-        public TestExportController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule)
+        public TestExportController(IMediaService mediaService, IWebSessionService webSessionService, IMediaScheduleService mediaSchedule, IDetailSelectionService detailSelectionService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
             _mediaSchedule = mediaSchedule;
+            _detailSelectionService = detailSelectionService;
         }
 
         protected int GetSloganIdIndex()
@@ -3350,6 +3352,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 bool _allowPdm = true;
                 //bool _showValues = false;
 
+                //_allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.evaliantMobile && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet)) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
+
                 #region Init Variables
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
                 IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
@@ -3362,10 +3366,14 @@ namespace Km.AdExpressClientWeb.Controllers
                 bool premier = true;
                 string prevYearString = string.Empty;
                 int cellRow = 5;
+                int cellRowStart = 5;
                 int startIndex = cellRow;
                 int colSupport = 1;
                 int colTotal = 2;
                 int colPdm = 2;
+                int colTotalComp = 2;
+                int colPdmComp = 2;
+                int colEvo = 2;
                 int colTotalYears = 2;
                 int colVersion = 2;
                 int colInsertion = 2;
@@ -3456,17 +3464,101 @@ namespace Km.AdExpressClientWeb.Controllers
                 #endregion
 
                 #region Total Column
+
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+                {
+                    if (_allowTotal)
+                    {
+                        colPdmComp++;
+                        colTotal++;
+                        colPdm++;
+                        colEvo++;
+                        colVersion++;
+                        colInsertion++;
+                        colTotalYears++;
+                        colFirstMediaPlan++;
+                        nbColTabFirst++;
+
+                        sheet.Cells.Merge(cellRow - 1, colTotalComp, rowSpanNb, labColSpan);
+                        range = sheet.Cells.CreateRange(cellRow - 1, colTotalComp, rowSpanNb, labColSpan);
+
+                        //MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
+
+                        DateTime begin = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(_period.Begin.Date, _period.ComparativePeriodType);
+                        DateTime end = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(_period.End.Date, _period.ComparativePeriodType);
+
+                        sheet.Cells[cellRow - 1, colTotalComp].Value =
+                            TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
+                            + " - " + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(end, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
+
+                        TextStyle(sheet.Cells[cellRow - 1, colTotalComp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+
+                        ////int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
+                        //int nbtot;
+                        //if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
+                        //    nbtot = Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
+                        //else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
+                        //{
+                        //    nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Length;
+                        //}
+                        //else
+                        //    nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX])).Length;
+
+                        //int nbSpace = (nbtot - 1) / 3;
+                        //int nbCharTotal = nbtot + nbSpace - 5;
+                        //if (nbCharTotal < 5) nbCharTotal = 0;
+                        //for (int h = 0; h < nbCharTotal; h++)
+                        //{
+                        //    t.Append("&nbsp;");
+                        //}
+                        //t.Append("</td>");
+                    }
+                    //PDM
+                    if (_allowPdm)
+                    {
+                        colTotal++;
+                        colPdm++;
+                        colEvo++;
+                        colVersion++;
+                        colInsertion++;
+                        colFirstMediaPlan++;
+                        colTotalYears++;
+                        nbColTabFirst++;
+
+                        sheet.Cells.Merge(cellRow - 1, colPdmComp, rowSpanNb, labColSpan);
+                        range = sheet.Cells.CreateRange(cellRow - 1, colPdmComp, rowSpanNb, labColSpan);
+
+                        sheet.Cells[cellRow - 1, colPdmComp].Value = GestionWeb.GetWebWord(806, _session.SiteLanguage);
+
+                        TextStyle(sheet.Cells[cellRow - 1, colPdmComp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                    }
+                }
+
+
                 if (_allowTotal)
                 {
-                    colTotal = 2;
+                    //colTotal = 2;
                     colPdm++;
+                    colEvo++;
                     colVersion++;
                     colInsertion++;
                     colTotalYears++;
                     colFirstMediaPlan++;
+                    nbColTabFirst++;
+
                     sheet.Cells.Merge(cellRow - 1, colTotal, rowSpanNb, labColSpan);
                     range = sheet.Cells.CreateRange(cellRow - 1, colTotal, rowSpanNb, labColSpan);
-                    sheet.Cells[cellRow - 1, colTotal].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(805, _session.SiteLanguage));
+
+                    //sheet.Cells[cellRow - 1, colTotal].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(805, _session.SiteLanguage));
+
+                    if (WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                        sheet.Cells[cellRow - 1, colTotal].Value = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - " + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
+                    else
+                        sheet.Cells[cellRow - 1, colTotal].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(805, _session.SiteLanguage));
+
+
 
                     TextStyle(sheet.Cells[cellRow - 1, colTotal], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
@@ -3474,7 +3566,6 @@ namespace Km.AdExpressClientWeb.Controllers
                     int nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                     int nbSpace = (nbtot - 1) / 3;
                     int nbCharTotal = nbtot + nbSpace - 5;
-                    nbColTabFirst++;
                 }
                 else
                 {
@@ -3490,10 +3581,12 @@ namespace Km.AdExpressClientWeb.Controllers
                 #region PDM Column
                 if (_allowPdm)
                 {
+                    colEvo++;
                     colVersion++;
                     colInsertion++;
                     colFirstMediaPlan++;
                     colTotalYears++;
+                    nbColTabFirst++;
 
                     sheet.Cells.Merge(cellRow - 1, colPdm, rowSpanNb, labColSpan);
                     range = sheet.Cells.CreateRange(cellRow - 1, colPdm, rowSpanNb, labColSpan);
@@ -3502,12 +3595,28 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     TextStyle(sheet.Cells[cellRow - 1, colPdm], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                     BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
-
-                    nbColTabFirst++;
                 }
                 else
                 {
                     colPdm = 0;
+                }
+
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+                {
+                    colVersion++;
+                    colInsertion++;
+                    colFirstMediaPlan++;
+                    colTotalYears++;
+                    nbColTabFirst++;
+
+                    sheet.Cells.Merge(cellRow - 1, colEvo, rowSpanNb, labColSpan);
+                    range = sheet.Cells.CreateRange(cellRow - 1, colEvo, rowSpanNb, labColSpan);
+
+                    MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
+                    sheet.Cells[cellRow - 1, colEvo].Value = GestionWeb.GetWebWord(1212, _session.SiteLanguage);
+
+                    TextStyle(sheet.Cells[cellRow - 1, colEvo], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
                 }
                 #endregion
 
@@ -3733,10 +3842,57 @@ namespace Km.AdExpressClientWeb.Controllers
                                         }
                                         #endregion
 
+                                        #region Comparative
+                                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+                                        {
+                                            if (_allowTotal)
+                                            {
+                                                if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
+                                                    sheet.Cells[cellRow, colTotalComp].Value = ((double)data[i, TOTAL_COMPARATIVE_COLUMN_INDEX]);
+
+                                                SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
+                                                SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
+
+                                                if (i == TOTAL_LINE_INDEX)
+                                                {
+                                                    TextStyle(sheet.Cells[cellRow, colTotalComp], LTotalText, LTotalBackground);
+                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                }
+                                                else
+                                                {
+                                                    TextStyle(sheet.Cells[cellRow, colTotalComp], L1Text, L1Background);
+                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                }
+                                            }
+                                            //PDM
+                                            if (_allowPdm)
+                                            {
+                                                if (data[i, PDM_COMPARATIVE_COLUMN_INDEX] != null)
+                                                    sheet.Cells[cellRow, colPdmComp].Value = ((double)data[i, PDM_COMPARATIVE_COLUMN_INDEX]) / 100;
+
+                                                SetPercentFormat(sheet.Cells[cellRow, colPdmComp]);
+                                                SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
+
+                                                if (i == TOTAL_LINE_INDEX)
+                                                {
+                                                    TextStyle(sheet.Cells[cellRow, colPdmComp], LTotalText, LTotalBackground);
+                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                }
+                                                else
+                                                {
+                                                    TextStyle(sheet.Cells[cellRow, colPdmComp], L1Text, L1Background);
+                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                }
+                                            }
+                                        }
+                                        #endregion
+
                                         #region Total
                                         if (_allowTotal)
                                         {
-                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            if (data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -3756,7 +3912,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region PDM
                                         if (_allowPdm)
                                         {
-                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+                                            if (data[i, PDM_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+
                                             SetPercentFormat(sheet.Cells[cellRow, colPdm]);
                                             SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
@@ -3772,13 +3930,35 @@ namespace Km.AdExpressClientWeb.Controllers
                                             }
                                         }
 
+                                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+                                        {
+                                            if (data[i, EVOL_COLUMN_INDEX] != null)
+                                                if (!double.IsInfinity((double)data[i, EVOL_COLUMN_INDEX]))
+                                                    sheet.Cells[cellRow, colEvo].Value = ((double)data[i, EVOL_COLUMN_INDEX]) / 100;
+
+                                            SetPercentFormat(sheet.Cells[cellRow, colEvo]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colEvo], 1, true);
+
+                                            if (i == TOTAL_LINE_INDEX)
+                                            {
+                                                TextStyle(sheet.Cells[cellRow, colEvo], LTotalText, LTotalBackground);
+                                                BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                            }
+                                            else
+                                            {
+                                                TextStyle(sheet.Cells[cellRow, colEvo], L1Text, L1Background);
+                                                BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                            }
+                                        }
 
                                         #endregion
 
                                         #region Totals years
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 1) + k]);
+                                            if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
 
@@ -3812,10 +3992,41 @@ namespace Km.AdExpressClientWeb.Controllers
                                         SetIndentLevel(sheet.Cells[cellRow, colSupport], 1);
                                         #endregion
 
+                                        #region Comparative
+                                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+                                        {
+                                            if (_allowTotal)
+                                            {
+                                                if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
+                                                    sheet.Cells[cellRow, colTotalComp].Value = ((double)data[i, TOTAL_COMPARATIVE_COLUMN_INDEX]);
+
+                                                SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
+                                                SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
+
+                                                TextStyle(sheet.Cells[cellRow, colTotalComp], L2Text, L2Background);
+                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                            }
+                                            //PDM
+                                            if (_allowPdm)
+                                            {
+                                                if (data[i, PDM_COMPARATIVE_COLUMN_INDEX] != null)
+                                                    sheet.Cells[cellRow, colPdmComp].Value = ((double)data[i, PDM_COMPARATIVE_COLUMN_INDEX]) / 100;
+
+                                                SetPercentFormat(sheet.Cells[cellRow, colPdmComp]);
+                                                SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
+
+                                                TextStyle(sheet.Cells[cellRow, colPdmComp], L2Text, L2Background);
+                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                            }
+                                        }
+                                        #endregion
+
                                         #region Total
                                         if (_allowTotal)
                                         {
-                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            if (data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -3827,7 +4038,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region PDM
                                         if (_allowPdm)
                                         {
-                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+                                            if (data[i, PDM_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+
                                             SetPercentFormat(sheet.Cells[cellRow, colPdm]);
                                             SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
@@ -3836,10 +4049,27 @@ namespace Km.AdExpressClientWeb.Controllers
                                         }
                                         #endregion
 
+                                        #region EVO
+                                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+                                        {
+                                            if (data[i, EVOL_COLUMN_INDEX] != null)
+                                                if (!double.IsInfinity((double)data[i, EVOL_COLUMN_INDEX]))
+                                                    sheet.Cells[cellRow, colEvo].Value = ((double)data[i, EVOL_COLUMN_INDEX]) / 100;
+
+                                            SetPercentFormat(sheet.Cells[cellRow, colEvo]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colEvo], 1, true);
+
+                                            TextStyle(sheet.Cells[cellRow, colEvo], L2Text, L2Background);
+                                            BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                        }
+                                        #endregion
+
                                         #region Totals years
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                            if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
 
@@ -3865,10 +4095,41 @@ namespace Km.AdExpressClientWeb.Controllers
                                         BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
                                         SetIndentLevel(sheet.Cells[cellRow, colSupport], 2);
 
+                                        #region Comparative
+                                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+                                        {
+                                            if (_allowTotal)
+                                            {
+                                                if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
+                                                    sheet.Cells[cellRow, colTotalComp].Value = ((double)data[i, TOTAL_COMPARATIVE_COLUMN_INDEX]);
+
+                                                SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
+                                                SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
+
+                                                TextStyle(sheet.Cells[cellRow, colTotalComp], L3Text, L3Background);
+                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                            }
+                                            //PDM
+                                            if (_allowPdm)
+                                            {
+                                                if (data[i, PDM_COMPARATIVE_COLUMN_INDEX] != null)
+                                                    sheet.Cells[cellRow, colPdmComp].Value = ((double)data[i, PDM_COMPARATIVE_COLUMN_INDEX]) / 100;
+
+                                                SetPercentFormat(sheet.Cells[cellRow, colPdmComp]);
+                                                SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
+
+                                                TextStyle(sheet.Cells[cellRow, colPdmComp], L3Text, L3Background);
+                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                            }
+                                        }
+                                        #endregion
+
                                         #region Total
                                         if (_allowTotal)
                                         {
-                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            if (data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -3880,7 +4141,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region PDM
                                         if (_allowPdm)
                                         {
-                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+                                            if (data[i, PDM_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+
                                             SetPercentFormat(sheet.Cells[cellRow, colPdm]);
                                             SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
@@ -3889,10 +4152,27 @@ namespace Km.AdExpressClientWeb.Controllers
                                         }
                                         #endregion
 
+                                        #region EVO
+                                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+                                        {
+                                            if (data[i, EVOL_COLUMN_INDEX] != null)
+                                                if (!double.IsInfinity((double)data[i, EVOL_COLUMN_INDEX]))
+                                                    sheet.Cells[cellRow, colEvo].Value = ((double)data[i, EVOL_COLUMN_INDEX]) / 100;
+
+                                            SetPercentFormat(sheet.Cells[cellRow, colEvo]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colEvo], 1, true);
+
+                                            TextStyle(sheet.Cells[cellRow, colEvo], L3Text, L3Background);
+                                            BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                        }
+                                        #endregion
+
                                         #region Totals years
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                            if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
 
@@ -3924,10 +4204,41 @@ namespace Km.AdExpressClientWeb.Controllers
                                     BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
                                     SetIndentLevel(sheet.Cells[cellRow, colSupport], 3);
 
+                                    #region Comparative
+                                    if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+                                    {
+                                        if (_allowTotal)
+                                        {
+                                            if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotalComp].Value = ((double)data[i, TOTAL_COMPARATIVE_COLUMN_INDEX]);
+
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
+
+                                            TextStyle(sheet.Cells[cellRow, colTotalComp], L4Text, L4Background);
+                                            BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                        }
+                                        //PDM
+                                        if (_allowPdm)
+                                        {
+                                            if (data[i, PDM_COMPARATIVE_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colPdmComp].Value = ((double)data[i, PDM_COMPARATIVE_COLUMN_INDEX]) / 100;
+
+                                            SetPercentFormat(sheet.Cells[cellRow, colPdmComp]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
+
+                                            TextStyle(sheet.Cells[cellRow, colPdmComp], L4Text, L4Background);
+                                            BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                        }
+                                    }
+                                    #endregion
+
                                     #region Total
                                     if (_allowTotal)
                                     {
-                                        sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                        if (data[i, TOTAL_COLUMN_INDEX] != null)
+                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -3939,7 +4250,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                     #region PDM
                                     if (_allowPdm)
                                     {
-                                        sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+                                        if (data[i, PDM_COLUMN_INDEX] != null)
+                                            sheet.Cells[cellRow, colPdm].Value = ((double)data[i, PDM_COLUMN_INDEX]) / 100;
+
                                         SetPercentFormat(sheet.Cells[cellRow, colPdm]);
                                         SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
@@ -3948,10 +4261,27 @@ namespace Km.AdExpressClientWeb.Controllers
                                     }
                                     #endregion
 
+                                    #region EVO
+                                    if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+                                    {
+                                        if (data[i, EVOL_COLUMN_INDEX] != null)
+                                            if (!double.IsInfinity((double)data[i, EVOL_COLUMN_INDEX]))
+                                                sheet.Cells[cellRow, colEvo].Value = ((double)data[i, EVOL_COLUMN_INDEX]) / 100;
+
+                                        SetPercentFormat(sheet.Cells[cellRow, colEvo]);
+                                        SetIndentLevel(sheet.Cells[cellRow, colEvo], 1, true);
+
+                                        TextStyle(sheet.Cells[cellRow, colEvo], L4Text, L4Background);
+                                        BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                    }
+                                    #endregion
+
                                     #region Totals years
                                     for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                     {
-                                        sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                        if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
+                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
 
@@ -4076,6 +4406,33 @@ namespace Km.AdExpressClientWeb.Controllers
                 #endregion
 
                 //#region Mise en forme de la page
+
+                #region Ajoute les icones des cellules
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+                {
+                    int idxCondis = sheet.ConditionalFormattings.Add();
+                    FormatConditionCollection fcs = sheet.ConditionalFormattings[idxCondis];
+
+                    CellArea cellArea = new CellArea();
+                    cellArea.StartRow = cellRowStart;
+                    cellArea.EndRow = cellRow;
+                    cellArea.StartColumn = colEvo;
+                    cellArea.EndColumn = colEvo;
+
+                    fcs.AddArea(cellArea);
+
+                    // Adds condition.
+                    int conditionIndex = fcs.AddCondition(FormatConditionType.IconSet, OperatorType.None, "0", "0");
+                    fcs[conditionIndex].IconSet.Type = IconSetType.Arrows3;
+
+                    //fcs[conditionIndex].IconSet.Cfvos[0].Type = FormatConditionValueType.Number;
+                    //fcs[conditionIndex].IconSet.Cfvos[0].Value = 0;                    
+                    fcs[conditionIndex].IconSet.Cfvos[1].Type = FormatConditionValueType.Number;
+                    fcs[conditionIndex].IconSet.Cfvos[1].Value = 0;
+                    fcs[conditionIndex].IconSet.Cfvos[2].Type = FormatConditionValueType.Number;
+                    fcs[conditionIndex].IconSet.Cfvos[2].Value = 0;
+                }
+                #endregion
 
                 #region Ajustement de la taile des cellules en fonction du contenu 
 
@@ -4351,7 +4708,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             cell.SetStyle(style);
         }
-        
+
         private void SetSelectionCallback()
         {
             //Choix de l'étude           
@@ -4363,25 +4720,25 @@ namespace Km.AdExpressClientWeb.Controllers
 
             //période comparative
             var comparativePeriodLabel = GestionWeb.GetWebWord(2292, _session.SiteLanguage);
-           
-           if (_session.ComparativeStudy)
+
+            if (_session.ComparativeStudy)
             {
 
                 var comparativePeriod = GestionWeb.GetWebWord(1118, _session.SiteLanguage);
             }
 
-            
+
             //Module
             var moduleLabel = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_session.CurrentModule), _session.SiteLanguage);
 
             // Détail Média
             if (_session.SelectionUniversMedia.FirstNode != null && _session.SelectionUniversMedia.FirstNode.Nodes.Count > 0)
             {
-               
+
                 System.Text.StringBuilder detailMedia = new System.Text.StringBuilder(1000);
 
-             
-               var detailmediaLabel = GestionWeb.GetWebWord(1194, _session.SiteLanguage);
+
+                var detailmediaLabel = GestionWeb.GetWebWord(1194, _session.SiteLanguage);
 
                 //Voir function =>
                 // var mediaDetailText =
@@ -4397,15 +4754,16 @@ namespace Km.AdExpressClientWeb.Controllers
                     string productText = "";
 
                     if (_session.PrincipalProductUniverses.Count > 1)
-                    {                       
+                    {
                         code = 2302;
                     }
-                    else {
-                       
+                    else
+                    {
+
                         code = 1759;
                     }
 
-                   
+
                     for (int k = 0; k < _session.PrincipalProductUniverses.Count; k++)
                     {
                         if (_session.PrincipalProductUniverses.Count > 1)
@@ -4416,7 +4774,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                 {
                                     nameProduct = GestionWeb.GetWebWord(2301, _session.SiteLanguage);
                                 }
-                                else {
+                                else
+                                {
                                     nameProduct = GestionWeb.GetWebWord(2302, _session.SiteLanguage);
                                 }
 
@@ -4442,23 +4801,24 @@ namespace Km.AdExpressClientWeb.Controllers
                                 //t.Append("<TR height=\"10\"><TD></TD></TR>");
                             }
                         }
-                        else {
+                        else
+                        {
                             if (_session.PrincipalProductUniverses.ContainsKey(k))
                             {
                                 //Voir Function : ShowUniverse ===>
-                               // productText += selectItemsInClassificationWebControl.ShowUniverse(_session.PrincipalProductUniverses[k], _session.DataLanguage, DBFunctions.GetDataSource(_session));
+                                // productText += selectItemsInClassificationWebControl.ShowUniverse(_session.PrincipalProductUniverses[k], _session.DataLanguage, DBFunctions.GetDataSource(_session));
                             }
                         }
                     }
-                  
+
                 }
                 #endregion
 
                 #region Univers support principal sélectionné
                 if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
                 {
-                  
-                    
+
+
                     var mediaSelectiondWebText = GestionWeb.GetWebWord(2540, _session.SiteLanguage);
 
 

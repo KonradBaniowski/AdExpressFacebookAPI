@@ -14,6 +14,7 @@
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
+    @Html.Hidden("ExportController", "PortfolioExport")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -24,16 +25,19 @@
     <div class="col-md-12">
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
-                <option value="1">Résultat Formaté</option>
-                <option value="2">Résultat brut</option>
+                <option value="1"> @Model.Labels.ExportFormattedResult</option>
+                <option value="3"> @Model.Labels.ExportGrossResult</option>
+                <option value="4">@Model.Labels.ExportPdfResult</option>
+                <option value="5">@Model.Labels.ExportPptResult</option>
             </select>&nbsp;
-            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>&nbsp;
-            <button class="btn btn-valider" id="btn-save-result">Sauvegarder&nbsp;<i class="fa fa-arrow-down"></i></button>
+            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
         </div>
     </div>
 </div>
-<div class="h20">
-</div>
+@*<div class="h20">
+    </div>*@
 <div class="row">
     <div class="col-md-12">
         @Html.Action("ResultOptions", _controller)
@@ -98,12 +102,21 @@
         </div>
     </div>
 </div>
+<div id="exportResultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<input type="hidden" id="current-url" value="/@_controller/Results" />
 @section Scripts {
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.dv.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
-
+    <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+    @Scripts.Render("~/bundles/results")
+    @Scripts.Render("~/bundles/portfolio-vehicle-view")
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
         $(document).ready(function () {
@@ -208,7 +221,7 @@
                                 {
                                     name: "Paging",
                                     mode: "allLevels",
-                                    pageSize: 25
+                                    pageSize: 100
                                 },
                                 {
                                     name: "ColumnFixing",
@@ -221,10 +234,7 @@
                                     type: "local",
                                     applySortedColumnCss: false
                                 }
-                                  ,
-                                {
-                                    name: "Resizing"
-                                }
+                                 
                             ]
                         })
                     }
@@ -244,17 +254,14 @@
                                 {
                                     name: "Paging",
                                     mode: "allLevels",
-                                    pageSize: 25
+                                    pageSize: 100
                                 },
                                  {
                                      name: "Sorting",
                                      type: "local",
                                      applySortedColumnCss: false
                                  }
-                                   ,
-                                {
-                                    name: "Resizing"
-                                }
+                                 
                             ]
                         })
                     }
@@ -271,6 +278,88 @@
 
             }
 
+            function UnitFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number");
+
+                return "";
+            }
+
+            function PageFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "#,##0.###");
+
+                return "";
+            }
+
+            function EvolFormatter(val) {
+                //if (isNaN(val))
+                //    return '';
+
+                if (val == "Infinity")
+                    return '+<img src="../Content/img/g.gif" />';
+
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
+
+                if (val < 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
+
+                if (val == 0)
+                    return '<img src="../Content/img/o.gif" />';
+
+                return '';
+            }
+
+            function DurationFormatter(val) {
+
+                if (val == 0)
+                    return "";
+
+                var s = val.toString();
+                var nbToFillWithZero = 6 - s.length;
+                for (var i = 0; i < nbToFillWithZero; i++)
+                    s = "0" + s;
+                return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+            }
+
+            function GetColumnsFormatter(columns) {
+
+                if (columns != null) {
+
+                    columns.forEach(function (elem) {
+                        if (elem.group != null && elem.group != 'undefined') {
+                            for (var i = 0, len = elem.group.length; i < len; i++) {
+                                if (elem.group[i].key.indexOf("unit") > -1) {
+                                    if (elem.group[i].key.indexOf("duration") > -1)
+                                        elem.group[i].formatter = DurationFormatter;
+                                    else if (elem.group[i].key.indexOf("pages") > -1)
+                                        elem.group[i].formatter = PageFormatter;
+                                    else
+                                        elem.group[i].formatter = UnitFormatter;
+                                }
+                                if (elem.group[i].key.indexOf("evol") > -1) {
+                                    elem.group[i].formatter = EvolFormatter;
+                                }
+                            }
+                        } else if (elem.key.indexOf("unit") > -1) {
+                            if (elem.key.indexOf("duration") > -1)
+                                elem.formatter = DurationFormatter;
+                            else if (elem.key.indexOf("pages") > -1)
+                                elem.formatter = PageFormatter;
+                            else
+                                elem.formatter = UnitFormatter;
+                        } else if (elem.key.indexOf("evol") > -1) {
+                            elem.formatter = EvolFormatter;
+                        }
+                    });
+
+                    return columns;
+                }
+
+                return columns;
+            }
+
             function CallPortfolioResult() {
                 $("#gridEmpty").hide();
                 $.ajax({
@@ -283,7 +372,7 @@
                     success: function (data) {
                         if (data != null && data != "") {
                             dataTreeGrid = data.datagrid;
-                            cols = data.columns;
+                            cols = GetColumnsFormatter(data.columns);
                             colsFixed = data.columnsfixed;
                             needFixedColumns = data.needfixedcolumns;
 
@@ -299,6 +388,13 @@
                             });
 
                             ds.dataBind();
+
+                            if (userFilter.ResultTypeFilter.ResultType == "4") {
+                                $("#ChartPanel").show();
+                                $("#accord1").collapse('hide');
+                                $("#accord2").collapse('hide');
+                                CallPortfolioGraphResult();
+                            }
                         }
                         else {
                             $("#gridLoader").addClass("hide");
@@ -371,11 +467,11 @@
 
             function CallSetOptions() {
                 $("#ChartPanel").hide();
+                $("#accord1").collapse('show');
                 if (userFilter.ResultTypeFilter.ResultType == "4") {
                     $("#ChartPanel").show();
                     $("#accord1").collapse('hide');
                     $("#accord2").collapse('hide');
-                    CallPortfolioGraphResult();
                 }
                 $.ajax({
                     url: '@Url.Action("SetResultOptions", _controller)',
@@ -516,7 +612,7 @@
             $('#export-type').removeClass("hide");
             $('#export-type').selectpicker();
 
-            $('#btn-export').on('click', function (e) {
+            @*$('#btn-export').on('click', function (e) {
                 var selectedValue = $('#export-type').val();
                 switch (selectedValue) {
                     case "1":
@@ -529,7 +625,7 @@
                         window.open('@Url.Action("Index", _exportController)', "_blank");
                         break;
                 }
-            });
+            });*@
 
             $('#save-custom-detail-levels').on('click', function (e) {
                 var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val();
@@ -698,6 +794,29 @@
                 userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
             }
+
+            //Portfolio Covers
+            //var LABEL_NB_INSERTION = "Nombre d'insertion :";
+            //var LABEL_TOTAL_INVEST = "Total investissement : ";
+            //VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
+
+            //var vehicleItemsData = [
+            //  { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe002.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe002.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //    { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor003.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor003.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor004.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor004.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //       { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor005.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor005.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor006.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor006.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //    { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor007.jpg", "NbPage": 44, "Title": "EQUIPE" },
+            //];
+
+            //var LABEL_NB_PAGES = "  Nombre de page : ";
+            //var LABEL_NEXT = "Suivant";
+            //var LABEL_PREV = "Précédent";
+
+            //OpenOneVehicleModalCarouselAsync( LABEL_NB_PAGES, LABEL_NEXT, LABEL_PREV);
+
+            //OpenZoomImageModal();
 
         });
 

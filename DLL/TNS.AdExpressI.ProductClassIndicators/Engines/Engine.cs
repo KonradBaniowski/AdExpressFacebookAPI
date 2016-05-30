@@ -173,8 +173,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
                 throw new NoDataException();
-            _periodBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            _periodEnd = FctUtilities.Dates.getPeriodEndDate(absolutEndPeriod, _session.PeriodType);
+            _periodBegin = FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            _periodEnd = FctUtilities.Dates.GetPeriodEndDate(absolutEndPeriod, _session.PeriodType);
             FctUtilities.Dates.GetYearSelected(_session, ref _strYearID, ref _iYearID, _periodBegin);
 			_iYearN1ID = (_iYearID == 1) ? 2 : 1;
 			if (_iYearN1ID > 0)

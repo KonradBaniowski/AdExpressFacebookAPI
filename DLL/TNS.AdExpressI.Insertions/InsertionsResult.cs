@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TNS.AdExpress.Domain;
-using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CsCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
@@ -28,6 +27,7 @@ using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Results;
 using System.Text;
+using TNS.AdExpress.Domain.Insertions;
 
 namespace TNS.AdExpressI.Insertions
 {
@@ -199,8 +199,8 @@ namespace TNS.AdExpressI.Insertions
         {
             var vehicles = new List<VehicleInformation>();
 
-            DateTime dateBegin = Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            DateTime dateEnd = Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
+            DateTime dateBegin = Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            DateTime dateEnd = Dates.GetPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
             int iDateBegin = Convert.ToInt32(dateBegin.ToString("yyyyMMdd"));
             int iDateEnd = Convert.ToInt32(dateEnd.ToString("yyyyMMdd"));
             _getCreatives = sloganNotNull;
@@ -815,7 +815,7 @@ namespace TNS.AdExpressI.Insertions
                         switch (levels[i].Id)
                         {
                             case DetailLevelItemInformation.Levels.date:
-                                data[cLine, 1] = new CellDate(Dates.getPeriodBeginningDate(row[levels[i].DataBaseField].ToString(),
+                                data[cLine, 1] = new CellDate(Dates.GetPeriodBeginningDate(row[levels[i].DataBaseField].ToString(),
                                     CustomerSessions.Period.Type.dateToDate), "{0:shortdatepattern}");
                                 break;
                             case DetailLevelItemInformation.Levels.duration:
@@ -1862,12 +1862,22 @@ namespace TNS.AdExpressI.Insertions
             _data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
-            int i, j, k;
+            int i, j, k,l,  nbLine;
             //int creativeIndexInResultTable = -1;
-            object[,] gridData = new object[_data.LinesNumber, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
+            nbLine = 0;
+            l = 0;
+
+            for (int startline = 0; startline < _data.LinesNumber; startline++)
+            {
+                if (!(_data[startline, 0] is LineHide))//Filtre (LineHide)
+                {
+                    nbLine++;
+                }
+            }
+            object[,] gridData = new object[nbLine, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
 
 
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
@@ -1896,12 +1906,16 @@ namespace TNS.AdExpressI.Insertions
             {
                 for (i = 0; i < _data.LinesNumber; i++) //_data.LinesNumber
                 {
-                    gridData[i, 0] = i; // Pour column ID
-                    gridData[i, 1] = _data.GetSortedParentIndex(i); // Pour column PID
-
-                    for (k = 1; k < _data.ColumnsNumber - 1; k++)
+                    if (!(_data[i, 0] is LineHide))//Filtre (LineHide)
                     {
-                        gridData[i, k + 1] = _data[i, k].RenderString();
+                        gridData[l, 0] = i; // Pour column ID
+                        gridData[l, 1] = _data.GetSortedParentIndex(i); // Pour column PID
+
+                        for (k = 1; k < _data.ColumnsNumber - 1; k++)
+                        {
+                            gridData[l, k + 1] = _data[i, k].RenderString();
+                        }
+                        l++;
                     }
                 }
             }
@@ -1941,7 +1955,7 @@ namespace TNS.AdExpressI.Insertions
             return gridResult;
         }
 
-        public GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        public GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate, List<GenericColumnItemInformation> columnFilters, Dictionary<GenericColumnItemInformation.Columns, List<string>> availableFilterValues, Dictionary<GenericColumnItemInformation.Columns, List<string>> customFilterValues)
         {
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
@@ -1949,6 +1963,7 @@ namespace TNS.AdExpressI.Insertions
 
             if (_data != null)
             {
+                gridResult.Filter = BuildCustomFilter(ref _data, columnFilters, availableFilterValues, customFilterValues);
                 ComputeGridData(gridResult, _data);
             }
             else
@@ -1958,13 +1973,128 @@ namespace TNS.AdExpressI.Insertions
             }
 
             return gridResult;
-
         }
+
+        #region Build Custom Filters
+        public Filter BuildCustomFilter(ref ResultTable _data, List<GenericColumnItemInformation> columnFilters, Dictionary<GenericColumnItemInformation.Columns, List<string>> availableFilterValues, Dictionary<GenericColumnItemInformation.Columns, List<string>> customFilterValues)
+        {
+            Filter filter = new Filter();
+            filter.Datas = new List<List<object>>();
+            filter.Title = new List<string>();
+
+            if (columnFilters == null || columnFilters.Count <= 0)
+            {
+                return filter;
+            }
+
+            #region Filter data and build available filters
+            string value = string.Empty;
+            string[] values = null;
+            var sep = new char[1] { ',' };
+            bool match = true;
+
+            //Set available filters
+            for (int i = 0; i < _data.LinesNumber; i++)
+            {
+                foreach (GenericColumnItemInformation g in columnFilters)
+                {
+
+                    value = ((CellCreativesInformation)_data[i, 1]).GetValue(g);
+                    values = value.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+                    for (int j = 0; j < values.Length; j++)
+                    {
+                        if (!availableFilterValues[g.Id].Contains(values[j]))
+                        {
+                            availableFilterValues[g.Id].Add(values[j]);
+                        }
+                    }
+
+
+                }
+            }
+            foreach (GenericColumnItemInformation g in columnFilters)
+            {
+                if (customFilterValues.ContainsKey(g.Id) && customFilterValues[g.Id].Count > 0)
+                {
+                    foreach (string s in customFilterValues[g.Id])
+                    {
+                        if (!availableFilterValues[g.Id].Contains(s))
+                        {
+                            availableFilterValues[g.Id].Add(s);
+                        }
+
+                    }
+                }
+            }
+
+            //Check custom filters
+            int doNotMatch = 0;
+            for (int i = 0; i < _data.LinesNumber; i++)
+            {
+                match = true;
+                foreach (GenericColumnItemInformation g in columnFilters)
+                {
+
+                    value = ((CellCreativesInformation)_data[i, 1]).GetValue(g);
+                    values = value.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+                    for (int j = 0; j < values.Length; j++)
+                    {
+                        if (availableFilterValues[g.Id].Contains(values[j]) && customFilterValues.ContainsKey(g.Id) && customFilterValues[g.Id].Count > 0 && !customFilterValues[g.Id].Contains(values[j]))
+                        {
+                            match = false;
+                        }
+                    }
+
+
+                }
+                if (!match)
+                {
+                    _data.SetLineStart(new LineHide(_data.GetLineStart(i).LineType), i);
+                    doNotMatch++;
+                }
+
+            }
+            if (doNotMatch == _data.LinesNumber)
+            {
+                _data = new ResultTable(1, 1);
+                _data.AddNewLine(LineType.total);
+                var c = new CellLabel(GestionWeb.GetWebWord(2543, _session.SiteLanguage));
+                _data[0, 1] = c;
+            }
+            #endregion
+
+            #region Build Filters
+            var str = new StringBuilder();
+            foreach (GenericColumnItemInformation c in columnFilters)
+            {
+                if (availableFilterValues.ContainsKey(c.Id) && availableFilterValues[c.Id].Count > 0)
+                {
+                    availableFilterValues[c.Id].Sort();
+                    filter.Title.Add(GestionWeb.GetWebWord(c.WebTextId, _session.SiteLanguage));
+                    List<object> tmpList = new List<object>();
+
+                    for (int i = 0; i < availableFilterValues[c.Id].Count; i++)
+                    {
+                        tmpList.Add(
+                            new {
+                                id = c.Id.GetHashCode().ToString(),
+                                label = availableFilterValues[c.Id][i],
+                                isChecked = (customFilterValues.ContainsKey(c.Id) && customFilterValues[c.Id].Contains(availableFilterValues[c.Id][i]))
+                            }
+                        );
+                    }
+
+                    filter.Datas.Add(tmpList);
+                }
+            }
+            #endregion
+
+            return filter;
+        }
+        #endregion
 
         public GridResult GetMSCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
-          
-
             throw new NotImplementedException();
         }
         #endregion

@@ -11,8 +11,8 @@ namespace Kantar.AdExpress.Service.Core
     {
         PeriodResponse GetPeriod(string idWebSession);
 
-        PeriodResponse CalendarValidation(string idWebSession,string selectedStartDate, string selectedEndDate);
+        PeriodResponse CalendarValidation(string idWebSession,string selectedStartDate, string selectedEndDate,string nextStep= "");
 
-        PeriodResponse SlidingDateValidation(string idWebSession, int selectedPeriod, int selectedValue);
+        PeriodResponse SlidingDateValidation(string idWebSession, int selectedPeriod, int selectedValue, string nextStep = "");
     }
 }

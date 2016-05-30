@@ -40,7 +40,7 @@ namespace Kantar.AdExpress.Service.DataAccess
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Address> Adress { get; set; }
+        //public DbSet<Address> Adress { get; set; }
         public DbSet<Login> Login { get; set; }
         public DbSet<ModuleAssignment> ModuleAssignment { get; set; }
     }

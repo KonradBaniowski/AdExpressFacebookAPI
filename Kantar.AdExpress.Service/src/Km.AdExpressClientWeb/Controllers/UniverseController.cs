@@ -163,9 +163,7 @@ namespace Km.AdExpressClientWeb.Controllers
         [HttpPost]
         public string SaveUserUnivers(List<Tree> trees, string groupId, string universId, string name, Dimension dimension, List<long> media = null)
         {
-            string error = "";
-            if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any() && !String.IsNullOrEmpty(groupId) && (!String.IsNullOrEmpty(universId) || !String.IsNullOrEmpty(name)))
-            {
+            string error = string.Empty;
                 var claim = new ClaimsPrincipal(User.Identity);
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 List<Tree> validTrees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
@@ -174,8 +172,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     Dimension = dimension,
                     Name = name,
-                    UniversGroupId = long.Parse(groupId),
-                    UserUniversId = long.Parse(universId),
+                    UniversGroupId = !string.IsNullOrEmpty(groupId) ? long.Parse(groupId):0,
+                    UserUniversId = !string.IsNullOrEmpty(universId)?long.Parse(universId):0,
                     WebSessionId = webSessionId,
                     Trees = Mapper.Map<List<Domain.Tree>>(validTrees),
                     IdUniverseClientDescription = 16,
@@ -183,11 +181,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 };
                 var result = _universeService.SaveUserUnivers(request);
                 error = result.ErrorMessage;
-            }
-            else
-            {
-                error = "Invalid Selection";
-            }
             return error;
         }
 
@@ -426,6 +419,13 @@ namespace Km.AdExpressClientWeb.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        
+        public JsonResult GetCategoryItems()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var idWebSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            int totalItems = 0;
+            var model = _universeService.GetGategoryItems(idWebSession, out totalItems);
+            return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

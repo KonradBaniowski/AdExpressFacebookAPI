@@ -24,10 +24,26 @@ $(function () {
     });
 
     $('#Results').on('click', function (e) {
-        e.preventDefault();
-        var dis = this;
-        var nextUrl = $(this).attr('href').split('/').pop();
-        NextStep(nextUrl, dis)
+         e.preventDefault();
+         var gotoResult = true;
+         strHtml = "";
+        var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
+        $.each(items, function (index, value) {
+            var page = $(value).attr('id');
+            if (page == "Dates" || page == "Media") {
+                strHtml += "<li>" + page + "</li>";
+                gotoResult = false;
+            }
+        });
+        if (gotoResult) {
+            var dis = this;
+            var nextUrl = $(this).attr('href').split('/').pop();
+            NextStep(nextUrl, dis)
+        }
+        else {
+            strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>" + strHtml + "</ul>";
+            bootbox.alert(strHtml);
+        }
     });
 
     function NextStep(nextUrl, dis)
@@ -38,7 +54,6 @@ $(function () {
             return;
         }
         var things = [];
-        var spinner = new Spinner().spin(dis);
         $('#btnSubmitMarketSelection').off('click');
         var trees = [];
         $.each($('.nav.nav-tabs > li a'), function (index, elem) {
@@ -73,17 +88,15 @@ $(function () {
             trees: trees,
             nextStep: nextUrl
         };
-
+        
         $.ajax({
-            url: '/MediaSchedule/SaveMarketSelection',
+            url: '/Selection/SaveMarketSelection',
             type: 'POST',
             data: params,
             error: function (data) {
-                spinner.stop();
                 bootbox.alert(data.ErrorMessage);
             },
             success: function (data) {
-                spinner.stop();
                 if (data.ErrorMessage != null && data.ErrorMessage != "") {
                     bootbox.alert(data.ErrorMessage);
                 }
@@ -92,6 +105,38 @@ $(function () {
                 }
             }
         });
+    }
+    var moduleId = $('#CurrentModule').val();
+    if (moduleId == 194 || moduleId == 195)
+    {
+     $("#branch1 > div").each(function () {
+        var DIS = $(this);
+        var universe = parseFloat($(this).attr('data-universe'))
+        var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
+        if (universe === 1) {
+            $.ajax({
+        url: '/Universe/GetCategoryItems',
+        contentType: 'application/json',
+        type: 'POST',
+        datatype: 'JSON',
+        error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("error");
+    },
+        success: function (response) {
+                    DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+
+                    $('#selectable' + universe).selectableScroll({
+        stop: SelectedItems
+    });
+
+    }
+    });
+    }
+    else {
+            DIS.fillGroupSelectable(univerLabel, undefined, 0, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+    }
+
+    })
     }
 });
 
