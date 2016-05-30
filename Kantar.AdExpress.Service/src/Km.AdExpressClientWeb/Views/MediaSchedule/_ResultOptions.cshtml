@@ -364,10 +364,13 @@
                                 <label for="comparative-week-date">Date semaine comparative</label>
                             </div>
                         </div>
-                        <div class="checkbox padder media-schedule-option">
-                            <input id="reset-media-selection" type="checkbox" name="reset-media-selection" class="with-font" />
-                            <label for="reset-media-selection">@GestionWeb.GetWebWord(2069, Model.SiteLanguage)</label>
-                        </div>
+                        @if (Model.InitializeMedia.Enabled)
+                        {
+                            <div id="initializeMediaContainer" class="checkbox padder media-schedule-option">
+                                <input id="@Model.InitializeMedia.Id" type="checkbox" name="@Model.InitializeMedia.Id" class="with-font" />
+                                <label for="@Model.InitializeMedia.Id">@GestionWeb.GetWebWord(2069, Model.SiteLanguage)</label>
+                            </div>
+                        }
                     </div>
                     </div>
 

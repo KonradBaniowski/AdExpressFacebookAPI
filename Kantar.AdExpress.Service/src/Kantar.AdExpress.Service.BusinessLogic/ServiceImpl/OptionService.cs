@@ -436,6 +436,47 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             options.PurchaseModeOption = purchaseModeOption;
             #endregion
 
+            #region initializeMedia
+            if(_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
+                CheckBoxOption initializeMedia = new CheckBoxOption();
+                initializeMedia.Id = "initializeMedia";
+
+                if (_customerWebSession.PrincipalMediaUniverses.Count > 0)
+                {
+                    initializeMedia.Enabled = true;
+                }
+                else
+                {
+                    initializeMedia.Enabled = false;
+                }
+
+                options.InitializeMedia = initializeMedia;
+            }
+            #endregion
+
+            #region initializeProduct
+            if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
+            {
+                CheckBoxOption initializeProduct = new CheckBoxOption();
+                initializeProduct.Id = "initializeProduct";
+
+                if (_customerWebSession.PrincipalProductUniverses.Count > 0
+                    || _customerWebSession.SecondaryProductUniverses.Count > 0)
+                {
+                    initializeProduct.Enabled = true;
+                }
+                else
+                {
+                    initializeProduct.Enabled = false;
+                }
+
+                options.InitializeProduct = initializeProduct;
+            }
+            #endregion
+
             switch (_customerWebSession.CurrentModule)
             {              
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
@@ -590,6 +631,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region PurchaseModeFilter
             if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId) && string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes))
                 _customerWebSession.SelectedPurchaseModeList = userFilter.PurchaseModeFilter.PurchaseModes;
+            #endregion
+
+            #region initializeMedia
+            if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA && userFilter.InitializeMedia)
+                _customerWebSession.PrincipalMediaUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            #endregion
+
+            #region initializeProduct
+            if ((_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE) && userFilter.InitializeProduct)
+            {
+                _customerWebSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                _customerWebSession.SecondaryProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+
+            }
             #endregion
 
             _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
