@@ -23,6 +23,7 @@ $('#keyword').on('keyup', function (event) {
 });
 var idMedias = [];
 //MAJ des boxes adjacentes
+
 function SelectedItems(event, ui) {
     var itemIds = [];
     $(this).closest('.panel').find($(".ui-selected")).each(function (index, elem) {
@@ -86,11 +87,6 @@ function SelectedItems(event, ui) {
                     filter: 'li',
                     stop: SelectedItems
                 });
-                //    .selectable(
-                //{
-                //    stop: SelectedItems
-                //});
-
             }
         });
     });
@@ -101,11 +97,12 @@ function SelectSelectableElement(selectableContainer, elementsToSelect) {
     $(".ui-selected", selectableContainer).not(elementsToSelect).removeClass("ui-selected").addClass("ui-unselecting");
 
     // add ui-selecting class to the elements to select
-    $(elementsToSelect).not(".ui-selected").addClass("ui-selecting");
-
+    $(elementsToSelect).not(".ui-selected").addClass("ui-selected");
+    //selectableContainer.selectable('refresh');
     // trigger the mouse stop event (this will select all .ui-selecting elements, and deselect all .ui-unselecting elements)
-    selectableContainer.data("selectable")._mouseStop(null);
-}
+    //selectableContainer.data("selectable")._mouseStop(null);
+    selectableContainer.data("ui-selectable")._mouseStop(null);
+};
 
 //clean l element selectionnée
 $(document).on('click', '.tab-content li > .pull-right', function () {
@@ -128,4 +125,16 @@ $(document).on('click', 'button.tout-suppr', function () {
     test.find('li').remove();
     test.find('.panel-title.famille.orange').removeClass('orange');
     $("#" + idTree + " [id^='collapse'].in").collapse('hide');
+});
+
+$(document).on('click', '.add-all', function () {
+    var selectable = $(this).closest('.panel-default').find('ul');
+    var idselectable = "#" + selectable.attr('id');
+    SelectSelectableElement($(idselectable), $(idselectable + " li"));
+});
+
+$(document).on('click', '.rem-all', function () {
+    var selectable = $(this).closest('.panel-default').find('ul');
+    var idselectable = "#" + selectable.attr('id');
+    SelectSelectableElement($(idselectable), $(idselectable + " no:li"));
 });

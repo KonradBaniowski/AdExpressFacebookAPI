@@ -662,6 +662,11 @@ input {
     background-color: rgba(255,255,255,0.2);
 }
 
+.btn-clean {
+    background: none;
+    border: none;
+}
+
 .btn-default.btn-recherche {
     background: none;
     border: none;
