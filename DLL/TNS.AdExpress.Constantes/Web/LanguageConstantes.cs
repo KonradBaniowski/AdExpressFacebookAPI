@@ -49,6 +49,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CantLoadSession = 851;
         public const long DownloadLabel = 874;
         public const long UserUniversCode = 875;
+        public const long SelectPeriodErrorMsg = 886;
         public const long UserSavedUniversCode = 893;
         public const long MonAdExpressDescription = 904;
         public const long MoveSelectedResult = 911; 
@@ -72,6 +73,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertEmptyFields = 1748;
         public const long UniversProduct = 1759;
         public const long IncompleteDataForQuery = 1787;
+        public const long EndDateAfterBeginDate = 1855;
         public const long LevelDetails = 1886;
         public const long CreativeLabel = 1888;
         public const long Delete = 1951;
@@ -151,6 +153,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MaxAlertLimit = 2615;
         public const long AlertInfoMessage = 2616;
         public const long AlertCreationSucceeded = 2660;
+        public const long ComparativeStudyUnvailableForCurrentYear = 2807;
         public const long Concurrent = 2869;
         public const long Dates = 2882;
         public const long MaxLengthExceeded = 2946;

@@ -25,4 +25,36 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
         public ControllerDetails ControllerDetails { get; set; }
 
     }
+
+    public class PeriodSaveRequest
+    {
+        #region Constructors
+        public PeriodSaveRequest()
+        {
+
+        }
+        public PeriodSaveRequest(string idWebSesion, string startDate, string endDate, string nextStep)
+        {
+            IdWebSession = idWebSesion;
+            StartDate = startDate;
+            EndDate = endDate;
+            NextStep = nextStep??string.Empty;
+        }
+        public PeriodSaveRequest(string idWebSesion, int selectedPeriod, int selectedValue, string nextStep, int studyId)
+        {
+            IdWebSession = idWebSesion;
+            SelectedPeriod = selectedPeriod;
+            SelectedValue = selectedValue;
+            NextStep = nextStep ?? string.Empty;
+            StudyId = studyId;
+        }
+        #endregion
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+        public string NextStep { get; set; }
+        public int StudyId { get; set; }
+        public string IdWebSession { get; set; }
+        public int SelectedValue { get; set; }
+        public int SelectedPeriod { get; set; }
+    }
 }

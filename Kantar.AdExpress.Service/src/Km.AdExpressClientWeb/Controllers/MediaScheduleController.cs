@@ -39,7 +39,7 @@ using CoreDomain = Kantar.AdExpress.Service.Core.Domain;
 using System.Collections;
 using KM.Framework.Constantes;
 using Km.AdExpressClientWeb.Helpers;
-
+using Kantar.AdExpress.Service.Core.Domain.BusinessService;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -250,8 +250,8 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             string url = string.Empty;
-            var response = _periodService.CalendarValidation(idSession, selectedStartDate, selectedEndDate);
-
+            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep);
+            PeriodResponse response = _periodService.CalendarValidation(request);
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
                 url = context.Action(nextStep, _controller);
@@ -265,9 +265,10 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-
             string url = string.Empty;
-            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue);
+            int studyId = 5;//TO BE VERIFIED
+            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
+            var response = _periodService.SlidingDateValidation(request);
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
                 url = context.Action(nextStep, _controller);
