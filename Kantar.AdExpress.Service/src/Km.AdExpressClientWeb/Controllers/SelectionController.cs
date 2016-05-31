@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Kantar.AdExpress.Service.Core;
 using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain.BusinessService;
 using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.MediaSchedule;
@@ -277,8 +278,8 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            var response = _periodService.CalendarValidation(idSession, selectedStartDate, selectedEndDate, nextStep);
-
+            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep);
+            PeriodResponse response = _periodService.CalendarValidation(request);
             //TODO : a faire  autrement
             this._controller = response.ControllerDetails.Name;
             string action= (this._controller==SELECTION && nextStep== INDEX)? MARKET:nextStep;
@@ -301,8 +302,9 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-
-            var response = _periodService.SlidingDateValidation(idSession, selectedPeriod, selectedValue, nextStep);
+            int studyId = 5;//TO BE VERIFIED
+            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
+            var response = _periodService.SlidingDateValidation(request);
             this._controller = response.ControllerDetails.Name;
             string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);

@@ -13,6 +13,8 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using Kantar.AdExpress.Service.Core.Domain;
 using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
+using TNS.AdExpress.Domain.Web.Navigation;
+using System.Collections.Generic;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -26,27 +28,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string ANALYSIS = "Analysis";
         private const string RESULTS = "Results";
+        public const string MEDIATYPESELECTIONERROR = "Selection of media type is not correct";
         #endregion
         WebSession _customerSession = null;
         public WebConstantes.globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = WebConstantes.globalCalendar.periodDisponibilityType.currentDay;
         public WebConstantes.globalCalendar.comparativePeriodType comparativePeriodCalendarType = WebConstantes.globalCalendar.comparativePeriodType.dateToDate;
 
-        public PeriodResponse CalendarValidation(string idWebSession, string selectedStartDate, string selectedEndDate, string nextStep)
+
+
+        public PeriodResponse CalendarValidation(PeriodSaveRequest request)
         {
             var result = new PeriodResponse();
             try
             {
-                WebSession _customerSession = (WebSession)WebSession.Load(idWebSession);
+                WebSession _customerSession = (WebSession)WebSession.Load(request.IdWebSession);
                 DateTime lastDayEnable = DateTime.Now;
-
+                result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule, request.NextStep);
                 switch (_customerSession.CurrentModule)
                 {
                     case WebConstantes.Module.Name.INDICATEUR:
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                        AnalysisValidation(selectedStartDate, selectedEndDate, result, _customerSession, nextStep,true);
+                        AnalysisCalendarValidation(request,result, _customerSession);
                         break;
                     default:
-                        DefaultValidation(selectedStartDate, selectedEndDate, result, _customerSession, nextStep);
+                        DefaultCalendarValidation(request, result, _customerSession);
                         break;
 
                 }
@@ -61,59 +66,52 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         }
 
-        private void DefaultValidation(string selectedStartDate, string selectedEndDate, PeriodResponse result, WebSession _customerSession, string nextStep)
+        private void DefaultCalendarValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
         {
-            DateTime startDate = new DateTime(Convert.ToInt32(selectedStartDate.Substring(6, 4)), Convert.ToInt32(selectedStartDate.Substring(3, 2)), Convert.ToInt32(selectedStartDate.Substring(0, 2)));
-            DateTime endDate = new DateTime(Convert.ToInt32(selectedEndDate.Substring(6, 4)), Convert.ToInt32(selectedEndDate.Substring(3, 2)), Convert.ToInt32(selectedEndDate.Substring(0, 2)));
-
-            result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule, nextStep);
-
-            _customerSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
-            _customerSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
-            _customerSession.PeriodBeginningDate = startDate.ToString("yyyyMMdd");
-            _customerSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
-            if (_customerSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+            DateTime startDate = new DateTime(Convert.ToInt32(request.StartDate.Substring(6, 4)), Convert.ToInt32(request.StartDate.Substring(3, 2)), Convert.ToInt32(request.StartDate.Substring(0, 2)));
+            DateTime endDate = new DateTime(Convert.ToInt32(request.EndDate.Substring(6, 4)), Convert.ToInt32(request.EndDate.Substring(3, 2)), Convert.ToInt32(request.EndDate.Substring(0, 2)));
+            webSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
+            webSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
+            webSession.PeriodBeginningDate = startDate.ToString("yyyyMMdd");
+            webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+            if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
             {
                 //TODO: Gerer last Complete Period
                 if (endDate < DateTime.Now || DateTime.Now < startDate)
-                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, _customerSession.PeriodEndDate, true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
+                    webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate, true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
                 else
-                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
+                    webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(webSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
             }
             else
             {
 
                 if (endDate < DateTime.Now || DateTime.Now < startDate)
-                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, _customerSession.PeriodEndDate);
+                    webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate);
                 else
-                    _customerSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_customerSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
+                    webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(webSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
             }
 
-            _customerSession.Save();
+            webSession.Save();
 
             result.Success = true;
         }
         public PeriodResponse GetPeriod(string idWebSession)
         {
             var result = new PeriodResponse();
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
             try
             {
-                _customerSession = (WebSession)WebSession.Load(idWebSession);
-                //result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule);
-                CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
-                object[] param = new object[1];
-                param[0] = _customerSession;
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-                int startYear = dateDAL.GetCalendarStartDate();
-                int endYear = DateTime.Now.Year;                
-                result = new PeriodResponse
+                switch (_customerSession.CurrentModule)
                 {
-                    StartYear = startYear,
-                    EndYear = endYear,
-                    SiteLanguage = _customerSession.SiteLanguage,
-                    Success = true,
-                    ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule)
-                };
+                    case WebConstantes.Module.Name.INDICATEUR:
+                    case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                        //GetAnalysisPeriod(_customerSession, result);
+                        GetDefaultPeriod(_customerSession, result);
+                        break;
+                    default:
+                        GetDefaultPeriod(_customerSession, result);
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -124,28 +122,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public PeriodResponse SlidingDateValidation(string idWebSession, int selectedPeriod, int selectedValue, string nextStep="")
+        public PeriodResponse SlidingDateValidation(PeriodSaveRequest request)
         {
             var result = new PeriodResponse();
+            _customerSession = (WebSession)WebSession.Load(request.IdWebSession);
+
+            result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule, request.NextStep);
             try
             {
-                _customerSession = (WebSession)WebSession.Load(idWebSession);
-
-                result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule, nextStep);
-
                 globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
                 globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
 
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
                 IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
-                if (selectedValue == 0)
+                if (request.SelectedValue == 0)
                 {
                     result.Success = false;
                     result.ErrorMessage = GestionWeb.GetWebWord(885, _customerSession.SiteLanguage);
                     return result;
                 }
-                date.SetDate(ref _customerSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedPeriod, selectedValue);
+                date.SetDate(ref _customerSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, request.SelectedPeriod, request.SelectedValue);
 
                 _customerSession.Save();
                 result.Success = true;
@@ -206,7 +203,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             return current;
         }
-        private void AnalysisValidation(string selectedStartDate, string selectedEndDate, PeriodResponse result, WebSession _webSession, string nextStep, bool isComparativeStudy)
+        private void AnalysisSlidingValidation(string selectedStartDate, string selectedEndDate, PeriodResponse result, WebSession _webSession, string nextStep, bool isComparativeStudy)
         {
             #region TODO
             //if (Request.Form.GetValues("selectedItemIndex") != null) selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
@@ -400,6 +397,157 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return (false);
             }
         }
+        private void GetDefaultPeriod(WebSession webSesion, PeriodResponse result)
+        {
+            result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule);
+            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _customerSession;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            int startYear = dateDAL.GetCalendarStartDate();
+            int endYear = DateTime.Now.Year;
+            result.StartYear = startYear;
+            result.EndYear = endYear;
+            result.SiteLanguage = _customerSession.SiteLanguage;
+            result.Success = true;
+        }
+        private void GetAnalysisPeriod(WebSession webSession, PeriodResponse result)
+        {
+            int downloadDate = _customerSession.DownLoadDate;
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = webSession;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            bool isRestricted = ModulesList.GetModule(webSession.CurrentModule).DisplayIncompleteDateInCalendar;
+            List<Int64> selectedVehicleList = new List<Int64>();
+            if (isRestricted)
+            {
+                string vehicleSelection = webSession.GetSelection(webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                if (vehicleSelection == null)
+                    result.ErrorMessage = MEDIATYPESELECTIONERROR;
+                selectedVehicleList = new List<Int64>((new List<string>(vehicleSelection.Split(','))).ConvertAll<Int64>(ConvertStringToInt64));
+            }
+            //TODO
+        }
+        private Int64 ConvertStringToInt64(string p)
+        {
+            return Int64.Parse(p);
+
+        }
+        private void AnalysisCalendarValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
+        {
+            if (!string.IsNullOrEmpty(request.StartDate) && !string.IsNullOrEmpty(request.EndDate))
+            {
+                try
+                {
+                   Validate(request, result, webSession);
+                   webSession.ComparativeStudy = IsComparativeStudy(request.StudyId)? true :false;
+                   webSession.Save();
+                }
+                catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
+                {
+                    webSession.ComparativeStudy = false;
+                    result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery,webSession.SiteLanguage);
+                }
+                catch (Exception ex )
+                {
+                    webSession.ComparativeStudy = false;
+                    result.ErrorMessage = ex.Message;
+                }
+            }
+            else
+            {
+                result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.SelectPeriodErrorMsg, webSession.SiteLanguage);
+            }
+        }
+        private PeriodResponse Validate (PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
+        {
+            int startYear = Convert.ToInt32(request.StartDate.Substring(3, 4));
+            int endYear = Convert.ToInt32(request.EndDate.Substring(3, 4));
+            result.SiteLanguage = webSession.SiteLanguage;
+            if (startYear == endYear)
+            {
+                int starMonth = Convert.ToInt32(request.StartDate.Substring(0, 2));
+                int endMonth = Convert.ToInt32(request.EndDate.Substring(0, 2));
+                DateTime startDate = new DateTime(startYear, starMonth, 1);
+                DateTime endDate = new DateTime(endYear, endMonth, DateTime.DaysInMonth(endYear, endMonth));
+                if (startDate > endDate)
+                {
+                    result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.EndDateAfterBeginDate, webSession.SiteLanguage);
+                    return result;
+                }
+
+                if (DateTime.Now.Year > webSession.DownLoadDate)
+                {
+                    if (IsComparativeStudy(request.StudyId) && ((startYear == DateTime.Now.Year - WebApplicationParameters.DataNumberOfYear || endYear == DateTime.Now.Year - WebApplicationParameters.DataNumberOfYear)))
+                    {
+                        result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.ComparativeStudyUnvailableForCurrentYear, webSession.SiteLanguage);
+                        return result;
+                    }
+                    
+                }
+                else
+                {
+                    if (IsComparativeStudy(request.StudyId) && ((startYear == DateTime.Now.Year - (WebApplicationParameters.DataNumberOfYear - 1) || endYear == DateTime.Now.Year - (WebApplicationParameters.DataNumberOfYear - 1))))
+                    {
+                        result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.ComparativeStudyUnvailableForCurrentYear, webSession.SiteLanguage);
+                        return result;
+                    }
+                }
+                //webSession.PeriodType = monthCalendarBeginWebControl.SelectedDateType; //TODO
+                try
+                {
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
+                }
+                catch (Exception ex)
+                {
+                    webSession.ComparativeStudy = false;
+                    result.ErrorMessage = ex.Message;
+                }
+                webSession.PeriodBeginningDate = string.Format("{0}{1}", startYear, starMonth.ToString("00"));//request.StartDate;//monthCalendarBeginWebControl.SelectedDate.ToString();
+                webSession.PeriodEndDate = string.Format("{0}{1}", endYear, endMonth.ToString("00"));//request.EndDate;//monthCalendarEndWebControl.SelectedDate.ToString();
+
+                // On sauvegarde les données
+                //Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
+                //du dernier mois dispo en BDD
+                //traitement de la notion de fréquence	
+                if (endYear == DateTime.Now.Year && startYear == DateTime.Now.Year)
+                {
+
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                    object[] param = new object[1];
+                    param[0] = webSession;
+                    IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
+                    string absolutEndPeriod = dateDAL.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+                    if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
+                    {
+                        result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
+                        return result;
+                    }
+                    else
+                    {
+                        result.StartYear = startYear;
+                        result.EndYear = endYear;
+                        result.Success = true;                        
+                        if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodEndDate))
+                        {
+                            webSession.PeriodEndDate = absolutEndPeriod;
+                        }
+                    }
+                }
+                else
+                {
+                    result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.AnalysisPeriodErrorMsg, webSession.SiteLanguage);
+                    return result;
+                }                
+            }
+            else
+            {
+                result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.AnalysisPeriodErrorMsg, webSession.SiteLanguage);
+                return result;
+            }
+            return result;
+        }
     }
- 
 }
