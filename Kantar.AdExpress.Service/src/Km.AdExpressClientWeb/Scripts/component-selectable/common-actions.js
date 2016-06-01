@@ -61,7 +61,7 @@ function SelectedItems(event, ui) {
     $.each(universesToUpdate, function (index, elem) {
 
         var universe = $(elem).attr('data-universe');
-        var selectedClassification= DIS.itemIds.join(",")
+        var selectedClassification = DIS.itemIds.join(",")
         var params = {
             levelId: universe,
             selectedClassification: selectedClassification,
@@ -84,38 +84,17 @@ function SelectedItems(event, ui) {
                 success: function (response) {
                     $("#containerSelectable" + universe).html('');
                     $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
-                    $('#selectable' + univerIndex).selectableScroll({
+                    $('#selectable' + univerIndex).selectableScroll(
+                    {
                         filter: 'li',
                         stop: SelectedItems
                     });
-                    //    .selectable(
-                    //{
-                    //    stop: SelectedItems
-                    //});
 
-        $.ajax({
-            url: '/Universe/GetClassification',
-            contentType: 'application/json',
-            type: 'POST',
-            datatype: 'JSON',
-            data: JSON.stringify(params),
-            error: function (xmlHttpRequest, errorText, thrownError) {
-                alert("error");
-            },
-            success: function (response) {
-                $("#containerSelectable" + universe).html('');
-                $("#groupSelectable" + universe).updateGroup(univerLabel, response.data, response.total, 'panel-heading', univerIndex, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" + universe), $("#groupSelectable" + universe + " > .panel-heading"));
-                $('#selectable' + univerIndex).selectableScroll({
-                    filter: 'li',
-                    stop: SelectedItems
-                });
-            }
-        });
+               
                 }
             });
         }
-        else
-        {
+        else {
             bootbox.alert("Would you please select an item.");
             return false;
         }
@@ -127,11 +106,11 @@ function SelectSelectableElement(selectableContainer, elementsToSelect) {
     $(".ui-selected", selectableContainer).not(elementsToSelect).removeClass("ui-selected").addClass("ui-unselecting");
 
     // add ui-selecting class to the elements to select
-    $(elementsToSelect).not(".ui-selected").addClass("ui-selected");
-    //selectableContainer.selectable('refresh');
-    // trigger the mouse stop event (this will select all .ui-selecting elements, and deselect all .ui-unselecting elements)
-    //selectableContainer.data("selectable")._mouseStop(null);
-    //$(selectableContainer).data("ui-selectable")._mouseStop(null);
+    $(elementsToSelect).not(".ui-selected").addClass("ui-selecting");
+
+
+    selectableContainer.data("ui-selectableScroll")._mouseStop(null);
+
 };
 
 //clean l element selectionnée
