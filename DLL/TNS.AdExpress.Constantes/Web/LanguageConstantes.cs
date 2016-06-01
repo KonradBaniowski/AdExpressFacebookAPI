@@ -20,6 +20,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
         public const long MediaCode = 190;
+        public const long Plurimedia = 210;
         public const long DroppedSuccessfully = 286;
         public const long Media = 363;
         public const long FiltreLabel = 518;
@@ -49,6 +50,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CantLoadSession = 851;
         public const long DownloadLabel = 874;
         public const long UserUniversCode = 875;
+        public const long PeriodRequired = 885;
         public const long SelectPeriodErrorMsg = 886;
         public const long UserSavedUniversCode = 893;
         public const long MonAdExpressDescription = 904;

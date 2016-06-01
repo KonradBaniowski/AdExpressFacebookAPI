@@ -318,7 +318,7 @@ namespace TNS.AdExpressI.Classification.DAL
         /// id_media : ID of  vehicle
         /// media : vehicle label
         /// </summary>
-        public virtual DataSet GetRecapDetailMedia()
+        public virtual DataSet GetRecapDetailMedia(bool getAllDetails=true)
         {
             WebSession webSession = _session;
             DataSet ds = new DataSet();
@@ -332,7 +332,78 @@ namespace TNS.AdExpressI.Classification.DAL
             WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
             sql = "Select distinct " + vehicleTable.Prefix + ".id_vehicle," + vehicleTable.Prefix + ".vehicle ";
-            if (isRecap) sql += ", " + categoryTable.Prefix + ".id_category as id_region," + categoryTable.Prefix + ".category as region, " + mediaTable.Prefix + ".id_media ," + mediaTable.Prefix + ".media";
+            if (isRecap && getAllDetails) sql += ", " + categoryTable.Prefix + ".id_category as id_region," + categoryTable.Prefix + ".category as region, " + mediaTable.Prefix + ".id_media ," + mediaTable.Prefix + ".media";
+            sql += " from " + vehicleTable.SqlWithPrefix + ",";
+            sql += categoryTable.SqlWithPrefix + ",";
+            if (!isRecap) sql += basicMediaTable.SqlWithPrefix + ",";
+            sql += mediaTable.SqlWithPrefix + " ";
+            sql += " where";
+            // Langue
+            sql += " " + vehicleTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+            sql += " and " + categoryTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+            if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+            sql += " and " + mediaTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+            // Activation
+            sql += " and " + vehicleTable.Prefix + ".activation<" + activationCode;
+            sql += " and " + categoryTable.Prefix + ".activation<" + activationCode;
+            if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".activation<" + activationCode;
+            sql += " and " + mediaTable.Prefix + ".activation<" + activationCode;
+
+            // Jointure
+            if (isRecap)
+            {
+                sql += " and " + vehicleTable.Prefix + ".id_vehicle=" + categoryTable.Prefix + ".id_vehicle";
+                sql += " and " + categoryTable.Prefix + ".id_category=" + mediaTable.Prefix + ".id_category";
+            }
+            else
+            {
+                sql += " and " + vehicleTable.Prefix + ".id_vehicle=" + categoryTable.Prefix + ".id_vehicle";
+                sql += " and " + categoryTable.Prefix + ".id_category=" + basicMediaTable.Prefix + ".id_category";
+                sql += " and " + basicMediaTable.Prefix + ".id_basic_media=" + mediaTable.Prefix + ".id_basic_media";
+            }
+
+            //Media universe
+            if (module != null)
+                sql += module.GetAllowedMediaUniverseSql(vehicleTable.Prefix, categoryTable.Prefix, mediaTable.Prefix, true);
+
+            //Media Rights
+            sql += TNS.AdExpress.Web.Core.Utilities.SQLGenerator.getAccessVehicleList(webSession, vehicleTable.Prefix, true);
+
+
+            sql += " order by " + vehicleTable.Prefix + ".vehicle," + vehicleTable.Prefix + ".id_vehicle";
+            if (isRecap && getAllDetails) sql += ", " + categoryTable.Prefix + ".category," + categoryTable.Prefix + ".id_category, " + mediaTable.Prefix + ".media ," + mediaTable.Prefix + ".id_media";
+
+            #region Execution of the query
+            try
+            {
+                //Execution of the query
+                return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort).Fill(sql.ToString());
+
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exceptions.DetailMediaDALException("Impossible to load data for the media detail", err));
+            }
+            #endregion
+
+            // throw new NotImplementedException(" This query should be only implemented in Russia");
+        }
+
+        public virtual DataSet GetRecapVehicles()
+        {
+            WebSession webSession = _session;
+            DataSet ds = new DataSet();
+            string sql = "";
+            bool isRecap = true;
+            Table vehicleTable = null, categoryTable = null, basicMediaTable = null, mediaTable = null;
+            vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
+            categoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCategory);
+            mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMedia);
+            int activationCode = (isRecap) ? DBConstantes.ActivationValues.DEAD : DBConstantes.ActivationValues.UNACTIVATED;
+            WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+
+            sql = "Select distinct " + vehicleTable.Prefix + ".id_vehicle," + vehicleTable.Prefix + ".vehicle ";
+            //if (isRecap) sql += ", " + categoryTable.Prefix + ".id_category as id_region," + categoryTable.Prefix + ".category as region, " + mediaTable.Prefix + ".id_media ," + mediaTable.Prefix + ".media";
             sql += " from " + vehicleTable.SqlWithPrefix + ",";
             sql += categoryTable.SqlWithPrefix + ",";
             if (!isRecap) sql += basicMediaTable.SqlWithPrefix + ",";

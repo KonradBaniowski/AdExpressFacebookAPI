@@ -33,6 +33,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private IUniverseService _universService;
         private IPeriodService _periodService;
         private IOptionService _optionService;
+        #region CONSTANTS
         private const string _controller = "PresentAbsent";
         private const string MARKET = "Market";
         private const string MEDIA = "MediaSelection";
@@ -47,7 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const int MaxIncludeNbr = 1;
         private const int MaxExcludeNbr = 0;
         private int _siteLanguage = 33;
-
+        #endregion
         public PresentAbsentController(IPresentAbsentService presentAbsentService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {
             _presentAbsentService = presentAbsentService;
@@ -127,7 +128,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region model data
             var model = new MediaSelectionViewModel()
             {
-                Multiple = false,
+                Multiple = result.MultipleSelection,
                 Medias = result.Media,
                 IdMediasCommon = result.MediaCommon,
                 Branches = new List<Models.Shared.UniversBranch>(),

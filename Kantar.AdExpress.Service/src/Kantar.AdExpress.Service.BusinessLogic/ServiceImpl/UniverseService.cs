@@ -109,6 +109,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var result = new UniversBranchResult(tuple.Item4, tuple.Item5, MaxIncludeNbr + MaxExcludeNbr);
             result.ControllerDetails = GetCurrentControllerDetails(tuple.Item3.CurrentModule);          
             var allowedBranchesIds = tuple.Item2;
+            if (dimension == Dimension.product)
+                ClearProduct(tuple.Item3);
             var allUnivers = new List<UniversLevel>();
             if (allowedBranchesIds.Any())
             {
@@ -164,7 +166,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
-
         public UniversGroupsResponse GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage = true)
         {
             var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
@@ -1286,6 +1287,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 ModuleIcon = currentModuleIcon
             };
             return current;
+        }
+        private void ClearProduct(WebSession webSession)
+        {
+            webSession.PrincipalProductUniverses.Clear();
+            webSession.Save();
         }
         #endregion
     }

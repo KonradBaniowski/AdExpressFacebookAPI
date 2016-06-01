@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TNS.AdExpress.Constantes.Classification.DB;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 
 namespace Kantar.AdExpress.Service.Core.Domain
 {
@@ -18,12 +15,13 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
     public class MediaResponse
     {
-        public MediaResponse(int siteLanguage)
+        public MediaResponse(int siteLanguage, long currentModule )
         {
             ControllerDetails = new ControllerDetails();
             Media = new List<Core.Domain.Media>();
             MediaCommon = new List<int>();
             SiteLanguage = siteLanguage;
+            MultipleSelection = (currentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA) ? true : false;
         }
         public MediaResponse()
         {
@@ -35,6 +33,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public int SiteLanguage { get; set; }
         public List<int> MediaCommon { get; set; }
         public ControllerDetails ControllerDetails { get; set;}
+        public bool MultipleSelection { get; set; }
     }
 
     public class ControllerDetails

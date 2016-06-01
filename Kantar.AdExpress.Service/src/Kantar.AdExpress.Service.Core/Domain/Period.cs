@@ -33,12 +33,20 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
         {
 
         }
-        public PeriodSaveRequest(string idWebSesion, string startDate, string endDate, string nextStep)
+        public PeriodSaveRequest(string idWebSesion, string startDate, string endDate, string nextStep, int studyId)
         {
             IdWebSession = idWebSesion;
             StartDate = startDate;
             EndDate = endDate;
             NextStep = nextStep??string.Empty;
+            StudyId = studyId;
+        }
+        public PeriodSaveRequest(string idWebSesion, string startDate, string endDate, string nextStep)
+        {
+            IdWebSession = idWebSesion;
+            StartDate = startDate;
+            EndDate = endDate;
+            NextStep = nextStep ?? string.Empty;
         }
         public PeriodSaveRequest(string idWebSesion, int selectedPeriod, int selectedValue, string nextStep, int studyId)
         {

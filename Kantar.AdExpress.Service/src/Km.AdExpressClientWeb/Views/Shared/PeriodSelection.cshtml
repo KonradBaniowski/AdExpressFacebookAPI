@@ -54,7 +54,7 @@
                         <div class="pull-left">
                             <span >
                                 <label class="i-switch" id="switch">
-                                    <input type="checkbox" for="switch" id="preselection">
+                                    <input type="checkbox" for="switch" id="isComparativeStudy">
                                     <i></i>
                                 </label>
                                 @GestionWeb.GetWebWord(1118, Model.PeriodViewModel.SiteLanguage)
@@ -328,7 +328,7 @@
 
                             var startDate = $('#begin-date-value').val();
                             var endDate = $('#end-date-value').val();
-
+                            var isComparativeStudy = $('#isComparativeStudy').is(":checked");
                             if (startDate == '' || endDate == '') {
                                 bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
                                 return false;
@@ -345,7 +345,8 @@
                             var params = {
                                 selectedStartDate: startDate,
                                 selectedEndDate: endDate,
-                                nextStep: nextStepParam
+                                nextStep: nextStepParam,
+                                isComparativeStudy: isComparativeStudy
                             };
 
                             $.ajax({
@@ -383,11 +384,12 @@
                                     bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
                                 return false;
                             }
-
+                            var isComparativeStudy = $('#isComparativeStudy').is(":checked");
                             var params = {
                                 selectedPeriod: selectedPeriod,
                                 selectedValue: selectedValue,
-                                nextStep: nextStepParam
+                                nextStep: nextStepParam,
+                                isComparativeStudy: isComparativeStudy
                             };
 
                             $.ajax({

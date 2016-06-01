@@ -36,6 +36,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CalendarFormatDays = "DD/MM/YYYY";
         private const string CalendarFormatMonths = "MM/YYYY";
         private const string INDEX = "Index";
+        private const int CALENDARSTUDYID = 8;
+        private const int SLIDINGSTUDYID = 5;
         public SelectionController (IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService, IPeriodService periodService)
         {
             _mediaService = mediaService;
@@ -134,7 +136,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region model data
             var model = new MediaSelectionViewModel()
             {
-                Multiple = true,
+                Multiple = result.MultipleSelection,
                 Medias = result.Media,
                 IdMediasCommon = result.MediaCommon,
                 Branches = new List<Models.Shared.UniversBranch>(),
@@ -272,13 +274,14 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep)
+        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep, bool isComparativeStudy = false)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep);
+            int studyId = (isComparativeStudy) ? CALENDARSTUDYID:0;
+            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep, studyId);
             PeriodResponse response = _periodService.CalendarValidation(request);
             //TODO : a faire  autrement
             this._controller = response.ControllerDetails.Name;
@@ -296,13 +299,13 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep)
+        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep, bool isComparativeStudy=false)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            int studyId = 5;//TO BE VERIFIED
+            int studyId =(isComparativeStudy)?SLIDINGSTUDYID :0;//TO BE VERIFIED
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
             var response = _periodService.SlidingDateValidation(request);
             this._controller = response.ControllerDetails.Name;
