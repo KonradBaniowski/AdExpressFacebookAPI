@@ -108,10 +108,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 switch (_customerSession.CurrentModule)
                 {
-                    case WebConstantes.Module.Name.INDICATEUR:
-                    case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                        GetAnalysisPeriod(_customerSession, result);
-                        break;
+                    //case WebConstantes.Module.Name.INDICATEUR:
+                    //case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    //    GetAnalysisPeriod(_customerSession, result);
+                    //    break;
                     default:
                         GetDefaultPeriod(_customerSession, result);
                         break;
