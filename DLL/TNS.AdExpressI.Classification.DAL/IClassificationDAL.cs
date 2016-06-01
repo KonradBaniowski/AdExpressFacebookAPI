@@ -397,7 +397,7 @@ namespace TNS.AdExpressI.Classification.DAL
         /// media : vehicle label
         /// </summary>
         /// <returns>Dataset with fields [id_vehicle,vehicle,id_region,region,id_media,media]</returns>
-        DataSet GetRecapDetailMedia();
+        DataSet GetRecapDetailMedia(bool getAllDetails);
 
         /// <summary>
         ///This method is used in Graphic key reports module  to get a list of Sectors

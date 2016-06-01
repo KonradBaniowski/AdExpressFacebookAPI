@@ -34,8 +34,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 _webSession.SelectionUniversMedia.Nodes.Clear();
                 _webSession.Save();
-                //result = GetAnalysisVehicleList(_webSession);
-                result = GetDefaultVehicleList(_webSession, result);
+                result = GetAnalysisVehicleList(_webSession,result);
             }
             else
             {
@@ -169,52 +168,49 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return mediaResponse;
         }
 
-        private MediaResponse GetAnalysisVehicleList(WebSession webSession, MediaResponse mediaResponse)
+        private MediaResponse GetAnalysisVehicleList(WebSession webSession, MediaResponse response)
         {
-            var _currentVehicleList = new List<long>();
+            #region A
+            //Data loading
+            List<Core.Domain.Media> vehiclesList = new List<Core.Domain.Media>();
+            DataTable dtVehicle = new DataTable();
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+            object[] param = new object[1];
+            param[0] = webSession;
+            IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            DataSet ds = classficationDAL.GetRecapDetailMedia(false);
+
+            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                dtVehicle = ds.Tables[0];
             VehicleInformation vehicleInfo = new VehicleInformation();
-            VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
-            var dtVehicle = vl.List;
-            //List<long> Items = new List<long>();
-            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
-            {
-                vehicleInfo = VehiclesInformation.Get(VhCstes.PlurimediaWithoutMms);
-                if (vehicleInfo != null)
-                {
-                    //Remark : It's always possible to select plurimedia vehicle
-                    //TODO
-                    //Items.Add(new ListItem(GestionWeb.GetWebWord(3020, webSession.SiteLanguage), "vh_" + vehicleInfo.DatabaseId.ToString()));
-                    _currentVehicleList.Add(vehicleInfo.DatabaseId);
-                }
-            }
             vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+            Core.Domain.Media pluremedia = new Core.Domain.Media();
             if (vehicleInfo != null)
             {
-                //Remark : It's always possible to select plurimedia vehicle
-                //TODO
-                //this.Items.Add(new ListItem(GestionWeb.GetWebWord(210, webSession.SiteLanguage), "vh_" + vehicleInfo.DatabaseId.ToString()));
-                _currentVehicleList.Add(vehicleInfo.DatabaseId);
+                pluremedia.Id = (long)VhCstes.plurimedia;
+                pluremedia.MediaEnum = VehiclesInformation.DatabaseIdToEnum((long)VhCstes.plurimedia);
+                pluremedia.Label = GestionWeb.GetWebWord(210, webSession.SiteLanguage);
+                vehiclesList.Add(pluremedia);
             }
-            //TODO
-            //foreach (DataRow currentRow in dtVehicle.Rows)
-            //{
-            //    if ((IdVehicle = Int64.Parse(currentRow["id_vehicle"].ToString())) != oldIdVehicle)
-            //    {
-            //        oldIdVehicle = IdVehicle;
-            //        this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["vehicle"].ToString(), "vh_" + IdVehicle));
-            //    }
-            //    if (((IdCategory = (Int64)currentRow["id_category"]) != oldCategory) && showCategory(Int64.Parse(currentRow["id_vehicle"].ToString())))
-            //    {
-            //        oldCategory = IdCategory;
-            //        this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["category"].ToString(), "ct_" + (Int64)currentRow["id_category"]));
-            //    }
-            //    if (showMedia(Int64.Parse(currentRow["id_vehicle"].ToString())))
-            //    {
-            //        this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["media"].ToString(), "md_" + (Int64)currentRow["id_media"]));
-            //    }
-            //    if (!_currentVehicleList.Contains(Int64.Parse(currentRow["id_vehicle"].ToString()))) _currentVehicleList.Add(Int64.Parse(currentRow["id_vehicle"].ToString()));
-            //}
-            return  mediaResponse;
-        }
+            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                dtVehicle = ds.Tables[0];
+            
+            foreach (var item in dtVehicle.AsEnumerable())
+            {
+                int id = int.Parse(item.ItemArray[0].ToString());
+                if (VehiclesInformation.Contains(id))
+                {
+                    Core.Domain.Media medium = new Core.Domain.Media();
+                    medium.Id = id;
+                    medium.Label = item.ItemArray[1].ToString();
+                    medium.MediaEnum = VehiclesInformation.DatabaseIdToEnum(id);
+                    vehiclesList.Add(medium);
+                }
+            }
+            #endregion
+            response.Media = vehiclesList;
+            return response;
+    }
     }
 }
