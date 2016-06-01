@@ -20,6 +20,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CommentCode = 74;
         public const long MediaScheduleCode = 150;
         public const long MediaCode = 190;
+        public const long Plurimedia = 210;
         public const long DroppedSuccessfully = 286;
         public const long Media = 363;
         public const long FiltreLabel = 518;

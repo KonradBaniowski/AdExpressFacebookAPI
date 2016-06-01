@@ -136,7 +136,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region model data
             var model = new MediaSelectionViewModel()
             {
-                Multiple = true,
+                Multiple = result.MultipleSelection,
                 Medias = result.Media,
                 IdMediasCommon = result.MediaCommon,
                 Branches = new List<Models.Shared.UniversBranch>(),

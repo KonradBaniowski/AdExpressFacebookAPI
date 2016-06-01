@@ -103,14 +103,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             var result = new PeriodResponse();
             _customerSession = (WebSession)WebSession.Load(idWebSession);
+            //ClearPeriod(_customerSession);
             try
             {
                 switch (_customerSession.CurrentModule)
                 {
                     case WebConstantes.Module.Name.INDICATEUR:
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                        //GetAnalysisPeriod(_customerSession, result);
-                        GetDefaultPeriod(_customerSession, result);
+                        GetAnalysisPeriod(_customerSession, result);
                         break;
                     default:
                         GetDefaultPeriod(_customerSession, result);
@@ -145,6 +145,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
+        private void ClearPeriod(WebSession _customerSession)
+        {
+            throw new NotImplementedException();
+        }
 
         private ControllerDetails GetCurrentControllerDetails(long currentModule, string nextStep = "")
         {
