@@ -12,7 +12,7 @@
             bootbox.alert("An error occurred while processing vehicle view request.");
         },
         success: function (data) {
-            if (data != null) {
+            if (data != null && data !="") {
                 var vhCarouselData = data;
                 ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest)
             }
