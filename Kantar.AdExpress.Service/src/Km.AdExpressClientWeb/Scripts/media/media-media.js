@@ -208,6 +208,7 @@ function getSelectedMediaSupport() {
 }
 function validate() {
     var message = "";
+
     idMedias = [];
     if ($('.tuile-medias-active').length > 0) {
         $.each($('.tuile-medias-active'), function (index, value) {
@@ -217,6 +218,17 @@ function validate() {
     }
     if (idMedias.length == 0)
         message = $('#Labels_ErrorMediaSelected').val();
+    else
+    {
+        var nbElemExclus = $("[id^='tree'][data-access-type='0'] li[data-id]").length;
+        if (nbElemExclus > 0) {
+            var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
+            if (nbElemInclus < 1) {
+                message = $('#Labels_ErrorMininumInclude').val();
+            }
+        }
+     
+    }
     return message;
 }
 
