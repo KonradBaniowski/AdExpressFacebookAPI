@@ -49,6 +49,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CantLoadSession = 851;
         public const long DownloadLabel = 874;
         public const long UserUniversCode = 875;
+        public const long PeriodRequired = 885;
         public const long SelectPeriodErrorMsg = 886;
         public const long UserSavedUniversCode = 893;
         public const long MonAdExpressDescription = 904;

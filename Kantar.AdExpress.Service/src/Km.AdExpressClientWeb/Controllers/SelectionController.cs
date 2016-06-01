@@ -272,13 +272,14 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep)
+        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep, bool isComparativeStudy = false)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep);
+            int studyId = (isComparativeStudy) ? 8 : 0;
+            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep, studyId);
             PeriodResponse response = _periodService.CalendarValidation(request);
             //TODO : a faire  autrement
             this._controller = response.ControllerDetails.Name;
@@ -296,13 +297,13 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep)
+        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep, bool isComparativeStudy=false)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            int studyId = 5;//TO BE VERIFIED
+            int studyId =(isComparativeStudy)? 5:0;//TO BE VERIFIED
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
             var response = _periodService.SlidingDateValidation(request);
             this._controller = response.ControllerDetails.Name;
