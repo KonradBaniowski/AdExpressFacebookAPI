@@ -109,7 +109,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var result = new UniversBranchResult(tuple.Item4, tuple.Item5, MaxIncludeNbr + MaxExcludeNbr);
             result.ControllerDetails = GetCurrentControllerDetails(tuple.Item3.CurrentModule);          
             var allowedBranchesIds = tuple.Item2;
-            ClearProduct(tuple.Item3);
+            if (dimension == Dimension.product)
+                ClearProduct(tuple.Item3);
             var allUnivers = new List<UniversLevel>();
             if (allowedBranchesIds.Any())
             {
