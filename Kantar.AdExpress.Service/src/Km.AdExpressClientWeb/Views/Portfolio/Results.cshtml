@@ -46,7 +46,6 @@
 <div class="h20">
 </div>
 
-
 <div class="panel-group panel-group-results" id="resaccord" style="margin-bottom:20px;">
     <div class="panel panel-primary panel-results">
         <div class="panel-heading head-results">
@@ -88,8 +87,66 @@
             </div>
         </div>
     </div>
+    <div id="carou-vehicleView" class="panel panel-primary panel-results" style="display:none; overflow:visible;">
+        <div class="panel-heading head-results">
+            <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#resaccord" href="#accord3">
+                    <i class="fa fa-file-text text-lg text-primary-lt "></i> Chemin de fer du support
+                </a>
+            </h3>
+        </div>
+        <div id="accord3" class="collapse in">
+            <!--/panel-heading text-left-->
+            <div class="panel-body">
+                <div class="panel-group">
+                    <div id="vhCarousel" class="carousel" data-interval="false">
+                        <!--slide-->
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+
+                        </div>
+                        <!--/carousel-inner-->
+                        <a class="left carousel-control" href="#vhCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#vhCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <!--/vhCarousel-->
+            </div>
+            <!--/panel-body-->
+        </div>
+    </div>
+
 </div>
 
+<!--modal vehicle  view  -->
+<div class="modal fade" id="modal-vehicleView">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<!--/modal-vehicleView-->
+<!--modal-vehicleView-Img-->
+<div class="modal fade" id="modal-vehicleView-Img" style="display: none;" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header panel-heading header-popup-vehicleView">
+                <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"><i class="fa fa-file-text blue"></i></h4>
+            </div>
+            <div class="modal-body">
+                <img class="img-full" src="">
+            </div>
+        </div>
+    </div>
+</div>
+<!--/modal-vehicleView-Img-->
 <div id="resultModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -396,6 +453,10 @@
                                 $("#accord2").collapse('hide');
                                 CallPortfolioGraphResult();
                             }
+                            if (userFilter.ResultTypeFilter.ResultType == "3"
+                                || userFilter.ResultTypeFilter.ResultType == "0") {
+                                VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
+                            }
                         }
                         else {
                             $("#gridLoader").addClass("hide");
@@ -468,11 +529,16 @@
 
             function CallSetOptions() {
                 $("#ChartPanel").hide();
+                $("#carou-vehicleView").hide();
                 $("#accord1").collapse('show');
                 if (userFilter.ResultTypeFilter.ResultType == "4") {
                     $("#ChartPanel").show();
                     $("#accord1").collapse('hide');
                     $("#accord2").collapse('hide');
+                }
+                if (userFilter.ResultTypeFilter.ResultType == "3"
+                    || userFilter.ResultTypeFilter.ResultType == "0") {
+                    VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
                 }
                 $.ajax({
                     url: '@Url.Action("SetResultOptions", _controller)',
@@ -818,27 +884,16 @@
             }
 
             //Portfolio Covers
-            //var LABEL_NB_INSERTION = "Nombre d'insertion :";
-            //var LABEL_TOTAL_INVEST = "Total investissement : ";
-            //VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
+            var LABEL_NB_INSERTION = "Nombre d'insertion :";
+            var LABEL_TOTAL_INVEST = "Total investissement : ";
 
-            //var vehicleItemsData = [
-            //  { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe001.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe001.jpg", "NbPage": 44, "Title": "EQUIPE" },
-            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/coe002.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/coe002.jpg", "NbPage": 44, "Title": "EQUIPE" },
-            //    { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor003.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor003.jpg", "NbPage": 44, "Title": "EQUIPE" },
-            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor004.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor004.jpg", "NbPage": 44, "Title": "EQUIPE" },
-            //       { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor005.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor005.jpg", "NbPage": 44, "Title": "EQUIPE" },
-            //   { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor006.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor006.jpg", "NbPage": 44, "Title": "EQUIPE" },
-            //    { "ParutionDate": "Vendredi 26/02/2016", "Src": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/imagette/cor007.jpg", "SrcZoom": "http://adexpress.kantarmedia.fr/ImagesPresse/24904/20160226/cor007.jpg", "NbPage": 44, "Title": "EQUIPE" },
-            //];
+            var LABEL_NB_PAGES = "  Nombre de page : ";
+            var LABEL_NEXT = "Suivant";
+            var LABEL_PREV = "Précédent";
 
-            //var LABEL_NB_PAGES = "  Nombre de page : ";
-            //var LABEL_NEXT = "Suivant";
-            //var LABEL_PREV = "Précédent";
+            OpenOneVehicleModalCarouselAsync( LABEL_NB_PAGES, LABEL_NEXT, LABEL_PREV);
 
-            //OpenOneVehicleModalCarouselAsync( LABEL_NB_PAGES, LABEL_NEXT, LABEL_PREV);
-
-            //OpenZoomImageModal();
+            OpenZoomImageModal();
 
         });
 

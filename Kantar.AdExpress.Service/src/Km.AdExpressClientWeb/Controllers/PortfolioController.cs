@@ -449,39 +449,52 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public JsonResult VehicleCovers(int resultType)
         {
-           
             var claim = new ClaimsPrincipal(User.Identity);
-           
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             var coversResult = _portofolioService.GetVehicleCovers(idWebSession, resultType);
-            if (coversResult != null && coversResult.Any())
+
+            try
             {
+                if (coversResult == null || !coversResult.Any())
+                    return null;
+
                 JsonResult jsonModel = new JsonResult();
                 jsonModel = Json(coversResult, JsonRequestBehavior.AllowGet);
                 jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
 
-            return null;
         }
 
         public JsonResult VehiclePages(string mediaId,string dateMediaNum,string nbPage,string media)
         {
-            
             var claim = new ClaimsPrincipal(User.Identity);
-
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             var pagesResult = _portofolioService.GetVehiclePages(idWebSession,mediaId, dateMediaNum,nbPage, media);
-            if(pagesResult !=null && pagesResult.Any())
+
+            try
             {
+                if (pagesResult == null || !pagesResult.Any())
+                    return null;
+
                 JsonResult jsonModel = new JsonResult();
                 jsonModel = Json(pagesResult, JsonRequestBehavior.AllowGet);
                 jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
 
-
-            return null;
         }
 
         #region Private methodes       

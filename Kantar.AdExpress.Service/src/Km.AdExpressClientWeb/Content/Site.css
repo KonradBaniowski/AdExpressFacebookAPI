@@ -2312,13 +2312,12 @@ ul.ui-selectable {
             }
 
     #carou-vehicleView .panel-heading.resume {
-        /*background: rgba(0,0,0,0.7);
-        border-bottom: 0px;*/
         border-radius: 2px 2px 0 0;
         border-bottom: 0px solid #edf1f2;
         background-color: rgba(0,0,0,0.7);
-        padding: 25px !important;
         color: white;
+        overflow:hidden;
+        height:1%;
     }
 
 }
@@ -2342,10 +2341,10 @@ ul.ui-selectable {
 }
 
 
-#carou-vehicleView .panel-body {
+/*#carou-vehicleView .panel-body {
     background-color: rgba(255,255,255,0.2);
     border-bottom: 1px solid rgba(0,0,0,0.2);
-}
+}*/
 
 #carou-vehicleView .carousel-control.left {
     margin-left: -115px;
@@ -2356,11 +2355,11 @@ ul.ui-selectable {
 }
 
 #carou-vehicleView-OneVehicle .carousel-control.left {
-    margin-left: -65px;
+    margin-left: -86px;
 }
 
 #carou-vehicleView-OneVehicle .carousel-control.right {
-    margin-right: -75px;
+    margin-right: -90px;
 }
 
 .padder-v-mi {
@@ -2388,9 +2387,7 @@ ul.ui-selectable {
 
 
 #modal-vehicleView .modal-content {
-    width: 850px;
     margin: 0 auto;
-    overflow-y: scroll;
 }
 
 #modal-vehicleView > .modal-dialog > .modal-content > .header-popup-vehicleView {
