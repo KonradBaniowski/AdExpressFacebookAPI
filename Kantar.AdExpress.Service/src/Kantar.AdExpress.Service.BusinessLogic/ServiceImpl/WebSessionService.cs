@@ -851,7 +851,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     if (treeNomenclatureEG != null && treeNomenclatureEG.Count() > 0)
                     {
-                        adExpressUniverse.AddGroup(index, treeNomenclatureEG);
+                        adExpressUniverse.AddGroup(0, treeNomenclatureEG);
                         adExpressUniverses.Add(index, adExpressUniverse);
                         index++;
                     }
