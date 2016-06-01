@@ -857,9 +857,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                adExpressUniverses= new Dictionary<int, AdExpressUniverse>(trees.Count);
             }
             return adExpressUniverses;
         }
