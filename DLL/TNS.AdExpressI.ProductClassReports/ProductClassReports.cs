@@ -275,14 +275,15 @@ namespace TNS.AdExpressI.ProductClassReports
         #endregion
 
         #region Get Grid Result
-        public GridResult GetGridResult()
+        public GridResult GetGridResult(ResultTable.SortOrder sortOrder, int columnIndex)
         {
             ResultTable resultTable = GetGenericProductClassReport();
             GridResult gridResult = new GridResult();
 
             if (resultTable != null)
             {
-                resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                //resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                resultTable.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
                 resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
                 object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber]; //+2 car ID et PID en plus  -  //_data.LinesNumber
                 List<object> columns = new List<object>();
