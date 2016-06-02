@@ -12,7 +12,7 @@
             bootbox.alert("An error occurred while processing vehicle view request.");
         },
         success: function (data) {
-            if (data != null) {
+            if (data != null && data !="") {
                 var vhCarouselData = data;
                 ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest)
             }
@@ -71,7 +71,11 @@ function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest)
         htmlArr.push("'");
         htmlArr.push(" ><img src='");
         htmlArr.push(val.Src);
-        htmlArr.push("' class='img-full' alt='Equipe'>");
+        htmlArr.push("' class='img-full'");
+        //data-media-label (alt)
+        htmlArr.push(" alt='");
+        htmlArr.push(val.Media);
+        htmlArr.push("'>");
         htmlArr.push("</div></div>");
         htmlArr.push(" <div class='text-center padder-v-mi'><p>");
         htmlArr.push(labelNbInsertion);
@@ -102,42 +106,49 @@ function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest)
 }
 function OpenOneVehicleModalCarouselAsync( labelNbPages, labelNext, labelPrev) {
    
-    var mediaId = $(this).attr("data-mId");
-    var dayN = $(this).attr("data-dayN");
-    var nbPage = $(this).attr("data-nb-page");
-    var media = $(this).attr("data-media-label");
+    $("#modal-vehicleView").on('shown.bs.modal', function (event) {
 
-    var params = {
-        mediaId: mediaId,
-        dateMediaNum: dayN,
-        nbPage: nbPage,
-        media: media
-    };
+        var button = $(event.relatedTarget);
+        var mediaId = button.attr("data-mId");
+        var dayN = button.attr("data-dayN");
+        var nbPage = button.attr("data-nb-page");
+        var media = button.attr("data-media-label");
 
-    $.ajax({
-        url: '/Portfolio/VehiclePages',
-        contentType: 'application/json',
-        type: 'POST',
-        datatype: 'JSON',
-        data: JSON.stringify(params),
-        error: function (xmlHttpRequest, errorText, thrownError) {
-            bootbox.alert("An error occurred while processing one vehicle view request.");
-        },
-        success: function (data) {
-            if (data != null) {
-                var vehicleItemsData = data;
-                OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, labelPrev)
+        var params = {
+            mediaId: mediaId,
+            dateMediaNum: dayN,
+            nbPage: nbPage,
+            media: media
+        };
+
+        $.ajax({
+            url: '/Portfolio/VehiclePages',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing one vehicle view request.");
+            },
+            success: function (data) {
+                if (data != null) {
+                    var vehicleItemsData = data;
+                    OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, labelPrev)
+                }
             }
-        }
 
+        });
+
+    });
+
+    $("#modal-vehicleView").on('hide.bs.modal', function () {
+        $("#modal-vehicleView > .modal-dialog > .modal-content").empty();
     });
 
 }
 
 function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, labelPrev) {
     $("#modal-vehicleView > .modal-dialog > .modal-content").empty();
-
-    $("#modal-vehicleView").on('shown.bs.modal', function (event) {
 
         event.preventDefault();
 
@@ -164,7 +175,7 @@ function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, 
                 htmlArr.push(" <div class='modal-body'>");
 
                 //<!--carou-vehicleView-OneVehicle-->
-                htmlArr.push("  <div id='carou-vehicleView-OneVehicle' class='carousel'>");
+                htmlArr.push("  <div id='carou-vehicleView-OneVehicle' class='carousel' data-interval='false'>");
 
                 //<!--carousel-inner-->
                 htmlArr.push("<div class='carousel-inner'>");
@@ -182,19 +193,21 @@ function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, 
             }
 
             //  <!--col-md-4-->
-            htmlArr.push("<div class='col-md-4 no-padder' href='#modal-vehicleView-Img' data-toggle='modal' ");
+            htmlArr.push("<div class='col-md-6 no-padder' href='#modal-vehicleView-Img' data-toggle='modal' ");
             htmlArr.push(" data-src-zoom='");
             htmlArr.push(val.SrcZoom);
             htmlArr.push("' data-parution-date='");
             htmlArr.push(val.ParutionDate);
             htmlArr.push("' data-title='");
             htmlArr.push(val.Title);
-            htmlArr.push("'> <img class='img-full' alt='image 01' src='");
+            htmlArr.push("'> <img class='img-full' alt='");
+            htmlArr.push(val.Title);
+            htmlArr.push("' src='");
             htmlArr.push(val.Src);
             htmlArr.push("'> </div>");
             //  <!/--col-md-4-->
 
-            if (colNb == 3) {
+            if (colNb == 2) {
                 colNb = 0;
                 htmlArr.push("</div></div>");
                 // <!--/item et row-->
@@ -211,15 +224,15 @@ function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, 
             htmlArr.push("  </div>"); //<!--/carousel-inner-->
 
             //<!--left carousel-control-->
-            htmlArr.push(" <a class='left carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='prev'>");
-            htmlArr.push("   <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span> <span class='sr-only'>");
+            htmlArr.push(" <a class='left carousel-control' href='#carou-vehicleView-OneVehicle' role='button' data-slide='prev'>");
+            htmlArr.push("   <span style='font-size:2em;' class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span> <span class='sr-only'>");
             htmlArr.push(labelPrev);
             htmlArr.push("</span>  </a>");
             //<!--/left carousel-control-->
 
             //<!--right carousel-control-->
-            htmlArr.push(" <a class='right carousel-control black' href='#carou-vehicleView-OneVehicle' role='button' data-slide='next'>");
-            htmlArr.push("   <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span> <span class='sr-only'>");
+            htmlArr.push(" <a class='right carousel-control' href='#carou-vehicleView-OneVehicle' role='button' data-slide='next'>");
+            htmlArr.push("   <span style='font-size:2em;' class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span> <span class='sr-only'>");
             htmlArr.push(labelNext);
             htmlArr.push("</span></a>");
             //<!--/right carousel-control-->
@@ -229,19 +242,13 @@ function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, 
         }
 
         $("#modal-vehicleView > .modal-dialog > .modal-content").html(htmlArr.join(""));
-
-    });
-
-    $("#modal-vehicleView").on('hide.bs.modal', function () {
-        $("#modal-vehicleView > .modal-dialog > .modal-content").empty();
-    });
-
 }
 
 function OpenZoomImageModal() {
     $("#modal-vehicleView-Img > .modal-dialog > .modal-content > .modal-body > .img-full").attr('src', '');
 
     $("#modal-vehicleView-Img").on('shown.bs.modal', function (event) {
+        $("#carou-vehicleView-OneVehicle .carousel-control").hide();
         var button = $(event.relatedTarget);// Button that triggered the modal
         var srcZoom = button.data('src-zoom').toString(); // Extract info from data-* attributes
         var pDate = button.data('parution-date').toString(); // Extract info from data-* attributes
@@ -252,6 +259,12 @@ function OpenZoomImageModal() {
 
     $("#modal-vehicleView-Img").on('hide.bs.modal', function () {
         $("#modal-vehicleView-Img > .modal-dialog > .modal-content > .modal-body > .img-full").attr('src', '');
+        $("#carou-vehicleView-OneVehicle .carousel-control").show();
     });
 
 }
+
+
+var LABEL_NB_PAGES = "  Nombre de page : ";
+var LABEL_NEXT = "Suivant";
+var LABEL_PREV = "Précédent";

@@ -97,7 +97,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public List<VehicleCover> GetVehicleCovers(string idWebSession, int resultType)
         {
-            List<VehicleCover> vehicleCovers = null;
+            List<VehicleCover> vehicleCovers = new List<VehicleCover>();
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             _vehicleInformation = GetVehicleInformation();
 
@@ -142,6 +142,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             media = coverLinkItemSynthesis.Media;
                         }
 
+
+                        //TODO : enlever le chemin en dur
                         var vehicleCover = new VehicleCover
                         {
                             DayN = p.ParutionDate.ToString("yyyyMMdd"),
@@ -149,7 +151,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             Id = mediaId,
                             Invest = p.TotalInvestment,
                             NbInser = p.InsertionNumber,
-                            Src = src,
+                            Src = "http://adexpress.kantarmedia.fr/" + src,
                             Media = media,
                             NbPage = nbPage
                         };
@@ -169,7 +171,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             _subFolder = subFolder;
-            List<VehiclePage> vehiclePages = null;
+            List<VehiclePage> vehiclePages = new List<VehiclePage>();
 
             string pathWeb = string.Format("{0}/{1}/{2}/{3}",
                 WebConstantes.CreationServerPathes.IMAGES, mediaId, dateMediaNum,
@@ -195,12 +197,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 foreach (string name in files)
                 {
+                    //TODO : enlever le chemin en dur
                     var vehiclePage = new VehiclePage
                     {
                         NbPage = nbPage,
                         ParutionDate = day,
-                        Src = string.Format("{0}/{1}",pathWeb, Path.GetFileName(name)),
-                        SrcZoom = string.Format("{0}/{1}", pathWebZoom, Path.GetFileName(name)),
+                        Src = string.Format("http://adexpress.kantarmedia.fr/{0}/{1}", pathWeb, Path.GetFileName(name)),
+                        SrcZoom = string.Format("http://adexpress.kantarmedia.fr/{0}/{1}", pathWebZoom, Path.GetFileName(name)),
                         Title = media
 
                     };

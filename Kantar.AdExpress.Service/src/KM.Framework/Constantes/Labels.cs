@@ -141,7 +141,6 @@ namespace KM.Framework.Constantes
         public string ResultError { get; set; }//1973
         public string DashboardsLabel { get; set; }//2102
         public string DeleteRequestMessageConfirmLabel { get; set; } //2572
-
-
+        public string AnalysisLabel { get; set; } //3063
     }
 }

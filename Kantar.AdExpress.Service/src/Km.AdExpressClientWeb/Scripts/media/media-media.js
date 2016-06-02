@@ -3,6 +3,7 @@
 var idMedias = [];
 $(document).ready(function () {
     var searchId = '18';
+    var plurimedia ='50';
     //var socialId=TBD
     if ($('#Multiple').val() == "True") {
 
@@ -32,7 +33,9 @@ $(document).ready(function () {
     else {
         idList = "";
         $('.tuile-medias[data-attr-id]').on('click', selectUnique)
+        
     }
+    
 
     function highlight() {
         var grp = $(this).attr('data-grp');
@@ -51,6 +54,13 @@ $(document).ready(function () {
             $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
         }
         idList = id;
+        if (idList== plurimedia) {
+            $('.panel.panel-primary.panel-results.optional-area').toggle();
+        }
+        else
+        {
+            $('.panel.panel-primary.panel-results.optional-area').show();
+        }
     }
 
     function selectMultiple(e) {

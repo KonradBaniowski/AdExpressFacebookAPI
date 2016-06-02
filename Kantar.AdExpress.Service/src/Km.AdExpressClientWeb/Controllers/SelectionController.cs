@@ -35,6 +35,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string ERROR = "Invalid Selection";
         private const string CalendarFormatDays = "DD/MM/YYYY";
         private const string CalendarFormatMonths = "MM/YYYY";
+        private const string CALENDARLANGUAGEEN = "En";
+        private const string CALENDARLANGUAGEFR = "fr";
         private const string INDEX = "Index";
         private const int CALENDARSTUDYID = 8;
         private const int SLIDINGSTUDYID = 5;
@@ -252,6 +254,18 @@ namespace Km.AdExpressClientWeb.Controllers
                     break;
                 default:
                     periodModel.CalendarFormat = CalendarFormatDays;
+                    break;
+            }
+            switch (result.SiteLanguage)
+            {
+                case TNS.AdExpress.Constantes.DB.Language.FRENCH:
+                    periodModel.LanguageName = CALENDARLANGUAGEFR;
+                    break;
+                case TNS.AdExpress.Constantes.DB.Language.ENGLISH:
+                    periodModel.LanguageName = CALENDARLANGUAGEEN;
+                    break;
+                default:
+                    periodModel.LanguageName = CALENDARLANGUAGEEN;
                     break;
             }
 

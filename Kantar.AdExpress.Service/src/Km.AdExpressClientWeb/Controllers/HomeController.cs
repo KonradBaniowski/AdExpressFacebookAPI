@@ -238,6 +238,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             return result;
         }
+
         //private Labels LoadPageLabels(int siteLanguage)
         //{
         //    var result = new Labels

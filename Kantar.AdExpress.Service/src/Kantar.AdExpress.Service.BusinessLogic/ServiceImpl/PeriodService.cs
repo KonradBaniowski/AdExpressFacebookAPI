@@ -108,10 +108,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 switch (_customerSession.CurrentModule)
                 {
-                    case WebConstantes.Module.Name.INDICATEUR:
-                    case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                        GetAnalysisPeriod(_customerSession, result);
-                        break;
+                    //case WebConstantes.Module.Name.INDICATEUR:
+                    //case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    //    GetAnalysisPeriod(_customerSession, result);
+                    //    break;
                     default:
                         GetDefaultPeriod(_customerSession, result);
                         break;
@@ -395,7 +395,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             string endDateFormat = string.Empty;
             switch (request.SelectedPeriod)
             {
-                case 1:
+                case 1: // N last months
                     webSession.PeriodLength = request.SelectedValue;
                     months = 1 - webSession.PeriodLength;
                     startDateFormat = YYYYMM;
@@ -404,7 +404,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     webSession.DetailPeriod = CstPeriodDetail.dayly;
                     ManageAbsoluEndDate(webSession, result);
                     break;
-                case 2:
+                case 8:// Current year
                     startDateFormat = YYYY01;
                     endDateFormat = YYYYMM;
                     webSession.PeriodType = CstPeriodType.currentYear;
@@ -412,7 +412,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     webSession.DetailPeriod = CstPeriodDetail.monthly;
                     ManageAbsoluEndDate(webSession, result);
                     break;
-                case 3:
+                case 4:// Previous year
                     startDateFormat = YYYY01;
                     endDateFormat = YYYY12;
                     webSession.PeriodType = CstPeriodType.previousYear;
@@ -420,7 +420,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     webSession.DetailPeriod = CstPeriodDetail.monthly;
                     years = 1;
                     break;
-                case 4:
+                case 9: // Penultimate year
                     if (IsComparativeStudy(request.StudyId) && WebApplicationParameters.DataNumberOfYear <= 3)
                     {
                         result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.PeriodRequired, webSession.SiteLanguage);
