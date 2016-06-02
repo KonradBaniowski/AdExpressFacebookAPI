@@ -10,6 +10,8 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IAnalysisService
     {
+        ResultTable GetResultTable(string idWebSession);
         GridResult GetGridResult(string idWebSession, ResultTable.SortOrder sortOrder, int columnIndex);
+
     }
 }
