@@ -47,7 +47,7 @@
 </div>
 
 <div class="panel-group panel-group-results" id="resaccord" style="margin-bottom:20px;">
-    <div class="panel panel-primary panel-results">
+    <div id="GridPanel" class="panel panel-primary panel-results">
         <div class="panel-heading head-results">
             <h3 class="panel-title pull-left">
                 <a data-toggle="collapse" data-parent="#resaccord" href="#accord1">
@@ -453,15 +453,16 @@
                                 $("#accord2").collapse('hide');
                                 CallPortfolioGraphResult();
                             }
-                            if (userFilter.ResultTypeFilter.ResultType == "3"
-                                || userFilter.ResultTypeFilter.ResultType == "0") {
-                                VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
-                            }
                         }
                         else {
                             $("#gridLoader").addClass("hide");
                             $("#grid").addClass("hide");
                             $("#gridEmpty").show();
+                        }
+
+                        if (userFilter.ResultTypeFilter.ResultType == "0" || userFilter.ResultTypeFilter.ResultType == "3") {
+                            $("#carou-vehicleView").hide();
+                            VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
                         }
                     }
                 });
@@ -535,10 +536,6 @@
                     $("#ChartPanel").show();
                     $("#accord1").collapse('hide');
                     $("#accord2").collapse('hide');
-                }
-                if (userFilter.ResultTypeFilter.ResultType == "3"
-                    || userFilter.ResultTypeFilter.ResultType == "0") {
-                    VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
                 }
                 $.ajax({
                     url: '@Url.Action("SetResultOptions", _controller)',

@@ -546,6 +546,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\HomePageValues\HomeNumbers.xml" />
     <Content Include="Content\icon-kantar.css" />
+    <Content Include="Content\img\Bann-new-AdExpress.jpg" />
     <Content Include="Content\img\bann_adexpress.jpg" />
     <Content Include="Content\img\bann_adexpress_top100.jpg" />
     <Content Include="Content\img\evaliantFormat\AVI.png" />
@@ -1474,6 +1475,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\pdf\Page_aide.pdf" />
     <Content Include="Content\pdf\Configuration.pdf" />
+    <Content Include="Content\pdf\AdExpress_Version-Optimisée.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
