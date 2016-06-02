@@ -91,7 +91,7 @@
         <div class="panel-heading head-results">
             <h3 class="panel-title">
                 <a data-toggle="collapse" data-parent="#resaccord" href="#accord3">
-                    <i class="fa fa-file-text text-lg text-primary-lt "></i> Chemin de fer du support
+                    <i class="fa fa-newspaper-o"></i> @GestionWeb.GetWebWord(1397, Model.Presentation.SiteLanguage)
                 </a>
             </h3>
         </div>
@@ -881,10 +881,10 @@
             }
 
             //Portfolio Covers
-            var LABEL_NB_INSERTION = "Nombre d'insertion :";
-            var LABEL_TOTAL_INVEST = "Total investissement : ";
+            var LABEL_NB_INSERTION = "@Model.Labels.NbInsertionsLabel : ";
+            var LABEL_TOTAL_INVEST = "@Model.Labels.TotalInvestLabel : ";
 
-            var LABEL_NB_PAGES = "  Nombre de page : ";
+            var LABEL_NB_PAGES = "  @Model.Labels.NbPage : ";
             var LABEL_NEXT = "Suivant";
             var LABEL_PREV = "Précédent";
 

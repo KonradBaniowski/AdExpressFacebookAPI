@@ -19,7 +19,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession _customerSession = null;
 
-        public GridResult GetGridResult(string idWebSession)
+        public GridResult GetGridResult(string idWebSession, ResultTable.SortOrder sortOrder, int columnIndex)
         {
             var module = ModulesList.GetModule(WebConstantes.Module.Name.TABLEAU_DYNAMIQUE);
             if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Product Class indicator"));
@@ -35,7 +35,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //_customerSession.Save();
 
             var productClassLayer = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-            var gridResult = productClassLayer.GetGridResult();
+            var gridResult = productClassLayer.GetGridResult(sortOrder, columnIndex);
             return gridResult;
         }
 

@@ -100,7 +100,8 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var result = new Labels
             {
-                EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage)
+                EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
+                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage)
             };
 
             return result;

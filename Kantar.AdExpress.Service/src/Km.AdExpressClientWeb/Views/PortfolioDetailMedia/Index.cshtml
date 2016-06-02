@@ -42,6 +42,21 @@
         </div>
     </div>
 
+    <!-- Modal zoom visuel -->
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="Visuel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header header-kantar-popup">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                    <h4 class="modal-title" id="myModalLabel">@Model.Labels.VisuelLabel</h4>
+                </div>
+                <div class="modal-body">
+                    <center><img style="max-width:100%;" src="" id="imagepreview"></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -55,6 +70,14 @@
         <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${869}"><i class='fa'></i></a>
         {{else}}
         ${869}
+        {{/if}}
+    </script>
+
+    <script id="colVisuModalTmpl" type="text/template">
+        {{if ${1909}.startsWith('[') && ${1909}.endsWith(']') }}
+        <a><i id="pop" src="${1909}" class='fa fa-newspaper-o'></i></a>
+        {{else}}
+        ${1909}
         {{/if}}
     </script>
 
@@ -192,6 +215,8 @@
                                 cols[i].template = $("#colSpotTmpl").html();
                             else if(cols[i].key == "1478") //Plan Media du produit = 1478
                                 cols[i].template = $("#colPlanMediaPopUpTmpl").html();
+                            else if(cols[i].key == "1909") //Visuel 1909
+                                cols[i].template = $("#colVisuModalTmpl").html();
                             else if (cols[i].key == "Visu")
                                 cols[i].template = $("#colVisuTmpl").html();
                         }
@@ -324,6 +349,13 @@
                 datas = datas.replace(/\[|\]/g, '');
                 datas = datas.split(",");
                 $(this).attr("href", 'javascript: window.open("/MediaSchedulePopUp?idSession=' + datas[0] + '&id=' + datas[1] + '&Level=' + datas[2] + '", "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700"); void (0);');
+            });
+
+            //Zoom visuel
+            //TODO: enlever chemin en dur
+            $(document).on("click", "#pop", function () {
+                $('#imagepreview').attr('src', "http://adexpress.kantarmedia.fr/" + $(this).attr('src').replace(/\[|\]/g, '').split(',')[0]);
+                $('#imagemodal').modal('show');
             });
 
             

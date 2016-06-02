@@ -28,7 +28,7 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// </summary>
         public CellPressCreativeLink(string creatives, WebSession webSession) {
             if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
-            _link = "javascript:openPressCreation('{0}');";
+            _link = "{0}";
             _creatives = creatives;
             _webSession = webSession;
             _imagePath = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Images/Common/Picto_press.gif";

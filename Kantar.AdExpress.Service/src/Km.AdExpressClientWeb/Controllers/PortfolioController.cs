@@ -551,7 +551,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportGrossResult = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage),
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
-                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
+                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage),
+                NbInsertionsLabel = GestionWeb.GetWebWord(LanguageConstantes.NbInsertionsLabel, siteLanguage),//144
+                TotalInvestLabel = GestionWeb.GetWebWord(LanguageConstantes.TotalInvestLabel, siteLanguage),//1399
+                NbPage = GestionWeb.GetWebWord(LanguageConstantes.NbPage, siteLanguage),//1385
             };
             return result;
         }

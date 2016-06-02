@@ -59,7 +59,7 @@ namespace TNS.AdExpressI.ProductClassReports
         /// Get GridResult 
         /// </summary>
         /// <returns>Grid Result</returns>
-        GridResult GetGridResult();
+        GridResult GetGridResult(ResultTable.SortOrder sortOrder, int columnIndex);
         /// <summary>
         /// Compute Product Class Report matching the "result" param (HTML code)
         /// </summary>
