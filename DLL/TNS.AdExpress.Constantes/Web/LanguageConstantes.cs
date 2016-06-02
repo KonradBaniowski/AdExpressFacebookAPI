@@ -132,6 +132,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Receiver = 2483;
         public const long UnityError = 2541;
         public const long PreSelection = 2571;
+        public const long DeleteRequestMessageConfirm = 2572;
         public const long AnalysisPeriodErrorMsg = 2573;
         public const long CreateAlert = 2578;
         public const long Daily = 2579;
@@ -186,6 +187,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long UserName = 3059;
         public const long Password = 3060;
         public const long Search = 3062;
+        public const long AnalysisLabel = 3063;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;        
         #endregion

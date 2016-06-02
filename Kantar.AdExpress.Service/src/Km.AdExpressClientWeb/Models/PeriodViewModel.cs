@@ -62,6 +62,7 @@ namespace Km.AdExpressClientWeb.Models
 
         public string EndYear { get; set; }
         public string CalendarFormat { get; set; }
+        public string LanguageName { get; set; }
 
 
     }

@@ -43,6 +43,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string ERROR = "Invalid Selection";
         private const string CalendarFormatDays = "DD/MM/YYYY";
         private const string CalendarFormatMonths = "MM/YYYY";
+        private const string CALENDARLANGUAGEEN = "En";
+        private const string CALENDARLANGUAGEFR = "fr";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
         private const int MaxIncludeNbr = 1;
@@ -210,6 +212,18 @@ namespace Km.AdExpressClientWeb.Controllers
                     periodModel.CalendarFormat = CalendarFormatDays;
                     break;
 
+            }
+            switch (result.SiteLanguage)
+            {
+                case TNS.AdExpress.Constantes.DB.Language.FRENCH:
+                    periodModel.LanguageName = CALENDARLANGUAGEFR;
+                    break;
+                case TNS.AdExpress.Constantes.DB.Language.ENGLISH:
+                    periodModel.LanguageName = CALENDARLANGUAGEEN;
+                    break;
+                default:
+                    periodModel.LanguageName = CALENDARLANGUAGEEN;
+                    break;
             }
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
