@@ -675,7 +675,7 @@
     <item mnemonic="w1394" type="System.String">Nombre de nouveaux produits dans la pige</item>
     <item mnemonic="w1395" type="System.String">Nombre de nouveaux produits dans le support</item>
     <item mnemonic="w1396" type="System.String">Nombre d'annonceurs</item>
-    <item mnemonic="w1397" type="System.String">CHEMIN DE FER DU SUPPORT</item>
+    <item mnemonic="w1397" type="System.String">Chemin de fer du support</item>
     <item mnemonic="w1398" type="System.String">Nombre d'insertions</item>
     <item mnemonic="w1399" type="System.String">Total investissement</item>
     <item mnemonic="w1400" type="System.String">Insertion</item>
