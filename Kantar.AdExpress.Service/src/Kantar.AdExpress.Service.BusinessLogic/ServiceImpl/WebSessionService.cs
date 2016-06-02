@@ -159,36 +159,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         #region Save Media support if any
                     if (request.Trees.Any())
                     {
-                        Dictionary<int, AdExpressUniverse> universDictionary = new Dictionary<int, AdExpressUniverse>();
-                        long idModule = _webSession.CurrentModule;
-                        if (idModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA || idModule == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE || idModule == CstWeb.Module.Name.ANALYSE_DYNAMIQUE)
+                       switch (_webSession.CurrentModule)
                         {
-                            AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
-                            if (univers.AdExpressUniverse != null && univers.AdExpressUniverse.Count() > 0)
-                            {
-                                bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
-                                List<NomenclatureElementsGroup> nGroups = univers.AdExpressUniverse.GetIncludes();
-                                if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
-                                {
-                                    universDictionary.Add(universDictionary.Count, univers.AdExpressUniverse);
-                                    _webSession.PrincipalMediaUniverses = universDictionary;
-                                    success = true;
-                                }
-                                else
-                                {
-                                    response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
-                                }
-                            }
-                            else
-                            {
-                                response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
-                            }
-                        }
-                        else if (idModule == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE)
-                        {
-                            Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
-                            _webSession.PrincipalMediaUniverses = universes;
-                            success = true;
+                            case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                            case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
+                            case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
+                            case CstWeb.Module.Name.INDICATEUR:
+                            case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                                success = SetDefaultUnivers(request, _webSession, response);                                
+                                break;
+                            case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                                Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
+                                _webSession.PrincipalMediaUniverses = universes;
+                                success = true;
+                                break;
+                            default:
+                                break;
                         }
                     }
                     #endregion
@@ -207,12 +193,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
                 {
-                    //this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));                    
+                    response.ErrorMessage = exc.Message;                 
                 }
             }
 
             return response;
-        }
+        }       
 
         public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request)
         {
@@ -910,7 +896,32 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             return current;
         }
-
+        private bool SetDefaultUnivers(SaveMediaSelectionRequest request, WebSession _webSession, WebSessionResponse response)
+        {
+            bool success = false;
+            Dictionary<int, AdExpressUniverse> universDictionary = new Dictionary<int, AdExpressUniverse>();
+            AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
+            if (univers.AdExpressUniverse != null && univers.AdExpressUniverse.Count() > 0)
+            {
+                bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
+                List<NomenclatureElementsGroup> nGroups = univers.AdExpressUniverse.GetIncludes();
+                if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
+                {
+                    universDictionary.Add(universDictionary.Count, univers.AdExpressUniverse);
+                    _webSession.PrincipalMediaUniverses = universDictionary;
+                    success = true;
+                }
+                else
+                {
+                    response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                }
+            }
+            else
+            {
+                response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
+            }
+            return success;
+        }
         #endregion
     }
 }

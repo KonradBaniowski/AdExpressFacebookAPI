@@ -1178,6 +1178,14 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             }
             #endregion
 
+            #region Affiner Media
+
+            // Affiner Media
+            if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
+                sql.Append("  " + _session.PrincipalMediaUniverses[0].GetSqlConditions(_dataTable.Prefix, true));
+
+            #endregion
+
             #region Sélection produits
 
             // Sélection de Produits
