@@ -11,6 +11,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.ProductClassReports;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
+using TNS.FrameWork.WebResultUI;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -36,6 +37,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var productClassLayer = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             var gridResult = productClassLayer.GetGridResult();
             return gridResult;
+        }
+
+        public ResultTable GetResultTable(string idWebSession)
+        {
+            ResultTable data = null;
+            var module = ModulesList.GetModule(WebConstantes.Module.Name.TABLEAU_DYNAMIQUE);
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+
+            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+            var parameters = new object[1];
+            parameters[0] = _customerSession;
+            var result = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            data = result.GetGenericProductClassReport();
+            return data;
         }
     }
 }

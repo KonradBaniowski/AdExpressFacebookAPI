@@ -111,7 +111,23 @@ namespace Km.AdExpressClientWeb.I18n
                 ContactUsLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactUsLabel, siteLanguage),
                 Delete = GestionWeb.GetWebWord(LanguageConstantes.Delete, siteLanguage),
                 DashboardsLabel = GestionWeb.GetWebWord(LanguageConstantes.DashboardsLabel, siteLanguage),
-                AnalysisLabel = GestionWeb.GetWebWord(LanguageConstantes.AnalysisLabel, siteLanguage)
+                AnalysisLabel = GestionWeb.GetWebWord(LanguageConstantes.AnalysisLabel, siteLanguage),
+                UnityError = GestionWeb.GetWebWord(LanguageConstantes.UnityError, siteLanguage),
+                SelectMedia = GestionWeb.GetWebWord(LanguageConstantes.SelectMedia, siteLanguage),
+                PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage),
+                CreateAlert = GestionWeb.GetWebWord(LanguageConstantes.CreateAlert, siteLanguage),
+                ExportFormattedResult = GestionWeb.GetWebWord(LanguageConstantes.ExportFormattedResult, siteLanguage),
+                ExportResultWithValue = GestionWeb.GetWebWord(LanguageConstantes.ExportResultWithValue, siteLanguage),
+                ExportGrossResult = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage),
+                ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
+                ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
+                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage),
+                AddConcurrent = GestionWeb.GetWebWord(LanguageConstantes.AddConcurrentCode, siteLanguage),
+                ErrorSupportAlreadyDefine = GestionWeb.GetWebWord(LanguageConstantes.SupportAlreadyDefine, siteLanguage),
+                Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
+                Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent, siteLanguage),
+                WarningBackNavigator = GestionWeb.GetWebWord(LanguageConstantes.WarningBackNavigatorCode, siteLanguage),
+                ResultError = GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage)
             };
             return result;
         }
