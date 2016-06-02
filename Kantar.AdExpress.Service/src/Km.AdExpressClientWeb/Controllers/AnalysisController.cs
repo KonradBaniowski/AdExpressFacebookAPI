@@ -18,6 +18,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
+using TNS.FrameWork.WebResultUI;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -86,11 +87,11 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult AnalysisResult()
+        public JsonResult AnalysisResult(ResultTable.SortOrder sortOrder, int columnIndex)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var gridResult = _analysisService.GetGridResult(idWebSession);
+            var gridResult = _analysisService.GetGridResult(idWebSession, sortOrder, columnIndex);
 
             try
             {
