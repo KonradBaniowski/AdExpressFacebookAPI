@@ -158,7 +158,7 @@ function OpenOneVehicleModalCarouselAsync( labelNbPages, labelNext, labelPrev) {
 function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, labelPrev) {
     $("#modal-vehicleView > .modal-dialog > .modal-content").empty();
 
-        event.preventDefault();
+        //event.preventDefault();
 
         var htmlArr = [];
         var colNb = 0;
