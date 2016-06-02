@@ -1188,6 +1188,7 @@ namespace TNS.AdExpressI.Portofolio
                 {
                     //Key pour "Spot" = 869
                     //key pour "Plan Media du produit" = 1478
+                    //Key pour "Visuel" = 1909
 
                     columns.Add(new { headerText = _data.NewHeaders.Root[j].Label, key = _data.NewHeaders.Root[j].Key, dataType = "string", width = "*" });
                     schemaFields.Add(new { name = _data.NewHeaders.Root[j].Key });

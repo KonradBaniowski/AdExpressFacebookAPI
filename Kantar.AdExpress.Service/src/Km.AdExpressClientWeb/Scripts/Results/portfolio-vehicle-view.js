@@ -14,13 +14,13 @@
         success: function (data) {
             if (data != null && data !="") {
                 var vhCarouselData = data;
-                ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest)
+                ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest, resultType)
             }
         }
     });
 }
 
-function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest) {
+function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest, resultType) {
     $("#carou-vehicleView").hide();
 
     var htmlArr = [];
@@ -46,9 +46,16 @@ function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest)
         htmlArr.push(val.ParutionDate);
         htmlArr.push("</div></div>");
 
+        var href = "#modal-vehicleView";
+        var onclick = "";
+        if (resultType == "3") { //Pour detailSupport
+            href="";
+            onclick = "javascript:window.open(\"/PortfolioDetailMedia?idMedia=" + val.Id + "&dayOfWeek=" + val.DayN + "&ecran=\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);"
+        }
+            
 
         //<!--text-center text-white-->
-        htmlArr.push(" <div class='row no-gutter'><div class='col-xs-12' href='#modal-vehicleView' data-toggle='modal' ");
+        htmlArr.push(" <div class='row no-gutter' style='cursor:pointer;'><div class='col-xs-12' onclick='" + onclick + "' href='" + href + "' data-toggle='modal' ");
         //data-dayN
         htmlArr.push(" data-dayN='");
         htmlArr.push(val.DayN);
@@ -104,6 +111,7 @@ function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest)
     $(".carousel-inner").html(htmlArr.join(""));
     $("#carou-vehicleView").show();
 }
+
 function OpenOneVehicleModalCarouselAsync( labelNbPages, labelNext, labelPrev) {
    
     $("#modal-vehicleView").on('shown.bs.modal', function (event) {
@@ -131,7 +139,7 @@ function OpenOneVehicleModalCarouselAsync( labelNbPages, labelNext, labelPrev) {
                 bootbox.alert("An error occurred while processing one vehicle view request.");
             },
             success: function (data) {
-                if (data != null) {
+                if (data != null && data != "") {
                     var vehicleItemsData = data;
                     OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, labelPrev)
                 }

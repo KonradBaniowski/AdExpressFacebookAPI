@@ -141,6 +141,9 @@ namespace KM.Framework.Constantes
         public string ResultError { get; set; }//1973
         public string DashboardsLabel { get; set; }//2102
         public string AnalysisLabel { get; set; } //3063
+        public string NbInsertionsLabel { get; set; } //144
+        public string TotalInvestLabel { get; set; } //1399
+        public string NbPage { get; set; } //1385
 
     }
 }

@@ -18,6 +18,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CountryCode = 70;
         public const long PhoneNumberCode = 71;
         public const long CommentCode = 74;
+        public const long NbInsertionsLabel = 144;
         public const long MediaScheduleCode = 150;
         public const long MediaCode = 190;
         public const long Plurimedia = 210;
@@ -69,6 +70,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Periodicity = 1293;
         public const long Monthly = 1294;
         public const long Quartly = 1295;
+        public const long NbPage = 1385;
+        public const long TotalInvestLabel = 1399;
         public const long Insertion = 1400;
         public const long MediaSelected = 1487;
         public const long FileName = 1746;
