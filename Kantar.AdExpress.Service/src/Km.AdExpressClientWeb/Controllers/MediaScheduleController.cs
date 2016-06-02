@@ -58,6 +58,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private const int MediaPageId = 6;
         private const string CalendarFormatDays = "DD/MM/YYYY";
         private const string CalendarFormatMonths = "MM/YYYY";
+        private const string CALENDARLANGUAGEEN = "En";
+        private const string CALENDARLANGUAGEFR = "fr";
         private int _siteLanguage = 33;
 
 
@@ -220,6 +222,18 @@ namespace Km.AdExpressClientWeb.Controllers
                     periodModel.CalendarFormat = CalendarFormatDays;
                     break;
 
+            }
+            switch (result.SiteLanguage)
+            {
+                case TNS.AdExpress.Constantes.DB.Language.FRENCH:
+                    periodModel.LanguageName = CALENDARLANGUAGEFR;
+                    break;
+                case TNS.AdExpress.Constantes.DB.Language.ENGLISH:
+                    periodModel.LanguageName = CALENDARLANGUAGEEN;
+                    break;
+                default:
+                    periodModel.LanguageName = CALENDARLANGUAGEEN;
+                    break;
             }
 
             _siteLanguage = result.SiteLanguage;

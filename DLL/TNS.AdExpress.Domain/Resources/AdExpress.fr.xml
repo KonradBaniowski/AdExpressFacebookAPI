@@ -2318,5 +2318,6 @@
     <item mnemonic="w3060" type="System.String">Mot de passe</item>
     <item mnemonic="w3061" type="System.String">Numéro SIRET</item>
     <item mnemonic="w3062" type="System.String">Recherche</item>
+    <item mnemonic="w3063" type="System.String">Analyses</item>
   </items>
 </localization>

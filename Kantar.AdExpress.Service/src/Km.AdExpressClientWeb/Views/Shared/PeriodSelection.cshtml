@@ -36,13 +36,13 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputName2">Depuis le</label>
+                                    <label>@GestionWeb.GetWebWord(124, Model.PeriodViewModel.SiteLanguage)</label>
                                     <input id="begin-date-value" type="text" class="form-control input-datepicker" />
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail2">Jusqu'au</label>
+                                    <label>@GestionWeb.GetWebWord(125, Model.PeriodViewModel.SiteLanguage)</label>
                                     <input id="end-date-value" type="text" class="form-control input-datepicker" />
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                     </form>
 
                     @if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
-            {
+                    {
                         <div class="pull-left">
                             <span >
                                 <label class="i-switch" id="switch">
@@ -175,7 +175,7 @@
 
                         $('#datetimepicker-begin').datetimepicker({
                             inline: true,
-                            locale: 'fr',
+                            locale: '@Model.PeriodViewModel.LanguageName',
                             format: '@Model.PeriodViewModel.CalendarFormat',
                             useCurrent: false,
                             minDate: minDate,
@@ -191,7 +191,7 @@
 
                         $('#datetimepicker-end').datetimepicker({
                             inline: true,
-                            locale: 'fr',
+                            locale: '@Model.PeriodViewModel.LanguageName',
                             format: '@Model.PeriodViewModel.CalendarFormat',
                             useCurrent: false,
                             minDate: minDate,
