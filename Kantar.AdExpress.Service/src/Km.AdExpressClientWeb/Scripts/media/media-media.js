@@ -57,6 +57,10 @@ $(document).ready(function () {
         if (idList== plurimedia) {
             $('.panel.panel-primary.panel-results.optional-area').toggle();
         }
+        else
+        {
+            $('.panel.panel-primary.panel-results.optional-area').show();
+        }
     }
 
     function selectMultiple(e) {
