@@ -271,6 +271,11 @@
                             DisableSlidingDates();
                         });
 
+                        $('#penultimate-year').on('click', function (e) {
+                            selectedPeriod = $('#penultimate-year').attr("selectedperiod");
+                            DisableSlidingDates();
+                        });
+
                         function DisableSlidingDates() {
                             selectedValue = -1;
                             $('#year-sliding').selectpicker('val', '--');
