@@ -140,6 +140,7 @@ namespace KM.Framework.Constantes
         public string FiltreLabel { get; set; }//518
         public string ResultError { get; set; }//1973
         public string DashboardsLabel { get; set; }//2102
+        public string DeleteRequestMessageConfirmLabel { get; set; } //2572
         public string AnalysisLabel { get; set; } //3063
         public string NbInsertionsLabel { get; set; } //144
         public string TotalInvestLabel { get; set; } //1399

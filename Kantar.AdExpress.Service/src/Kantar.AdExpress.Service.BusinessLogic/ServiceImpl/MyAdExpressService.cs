@@ -92,16 +92,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             try
             {
+                var webSession = (WebSession)WebSession.Load(webSessionId);
                 if (!string.IsNullOrEmpty(id))
                 {
-                    var webSession = (WebSession)WebSession.Load(webSessionId);
                     result.Success = MyResultsDAL.DeleteSession(Int64.Parse(id), webSession);
-                    result.Message = "Success";
-
+                    
+                    //286 Votre requête a bien été supprimée
+                    result.Message = GestionWeb.GetWebWord(286, webSession.SiteLanguage);
                 }
                 else
                 {
-                    result.Message = "Would you please select a session to delete.";
+                    //831 Aucune requête n'a été sélectionnée
+                    result.Message = GestionWeb.GetWebWord(831, webSession.SiteLanguage);
                 }
             }
             catch (Exception ex)
