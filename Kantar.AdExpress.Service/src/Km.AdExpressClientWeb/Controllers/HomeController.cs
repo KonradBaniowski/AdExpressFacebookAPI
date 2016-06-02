@@ -18,6 +18,7 @@ using Kantar.AdExpress.Service.Core.Domain;
 using KM.Framework.Constantes;
 using TNS.AdExpress.Web.Core.Utilities;
 using Km.AdExpressClientWeb.Helpers;
+using Km.AdExpressClientWeb.I18n;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -105,7 +106,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
 
             Home.SiteLanguage = resList.First().Value.SiteLanguage;
-            Home.Labels = LoadPageLabels(Home.SiteLanguage);
+            Home.Labels = LabelsHelper.LoadPageLabels(Home.SiteLanguage);
 
             return View(Home);
         }
@@ -164,7 +165,7 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
             ViewBag.SiteLanguage = result.SiteLanguage;
             model.PresentationModel = LoadPresentationBar(result.SiteLanguage, false);
-            model.Labels = LoadPageLabels(result.SiteLanguage);
+            model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
             return View(model);
         }
 
@@ -237,49 +238,49 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             return result;
         }
-        private Labels LoadPageLabels(int siteLanguage)
-        {
-            var result = new Labels
-            {
-                Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),                
-                MyResults = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),               
-                SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
-                UserUniversCode = GestionWeb.GetWebWord(LanguageConstantes.UserSavedUniversCode, siteLanguage),
-                MyResultsDescription = GestionWeb.GetWebWord(LanguageConstantes.MyResultsDescription, siteLanguage),
-                AlertsCode= GestionWeb.GetWebWord(LanguageConstantes.AlertsCode, siteLanguage),
-                NoSavedUnivers = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage),
-                Periodicity = GestionWeb.GetWebWord(LanguageConstantes.Periodicity, siteLanguage),
-                Daily = GestionWeb.GetWebWord(LanguageConstantes.Daily, siteLanguage),
-                Weekly =GestionWeb.GetWebWord(LanguageConstantes.Weekly, siteLanguage),
-                Monthly = GestionWeb.GetWebWord(LanguageConstantes.Monthly, siteLanguage),
-                Quartly = GestionWeb.GetWebWord(LanguageConstantes.Quartly, siteLanguage),
-                SaveAlert = GestionWeb.GetWebWord(LanguageConstantes.SaveAlert, siteLanguage),
-                NoAlerts = GestionWeb.GetWebWord(LanguageConstantes.NoAlerts, siteLanguage),
-                SendDate= GestionWeb.GetWebWord(LanguageConstantes.SendDate, siteLanguage),
-                Occurrence = GestionWeb.GetWebWord(LanguageConstantes.Occurrence, siteLanguage),
-                Occurrences = GestionWeb.GetWebWord(LanguageConstantes.Occurrences, siteLanguage),
-                AlertsDetails = GestionWeb.GetWebWord(LanguageConstantes.AlertDetails, siteLanguage),
-                Deadline = GestionWeb.GetWebWord(LanguageConstantes.Deadline, siteLanguage),
-                EveryWeek= GestionWeb.GetWebWord(LanguageConstantes.EveryWeek, siteLanguage),
-                EveryMonth = GestionWeb.GetWebWord(LanguageConstantes.EveryMonth, siteLanguage),
-                ExpirationDate = GestionWeb.GetWebWord(LanguageConstantes.ExpirationDate, siteLanguage),
-                AlertType = GestionWeb.GetWebWord(LanguageConstantes.AlertType, siteLanguage),
-                Receiver= GestionWeb.GetWebWord(LanguageConstantes.Receiver, siteLanguage),
-                TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage),
-                CreateDirectory = GestionWeb.GetWebWord(LanguageConstantes.CreateFolder, siteLanguage),
-                RenameDirectory = GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
-                DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage),
-                Directories = GestionWeb.GetWebWord(LanguageConstantes.Directories, siteLanguage),
-                ModuleLabel = GestionWeb.GetWebWord(LanguageConstantes.ModuleLabel, siteLanguage),
-                NewsLabel = GestionWeb.GetWebWord(LanguageConstantes.NewsLabel, siteLanguage),
-                YourModule = GestionWeb.GetWebWord(LanguageConstantes.YourModule, siteLanguage),
-                NewsDescr = GestionWeb.GetWebWord(LanguageConstantes.NewsDescr, siteLanguage),
-                ContactUsLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactUsLabel, siteLanguage),
-                Delete = GestionWeb.GetWebWord(LanguageConstantes.Delete, siteLanguage),
-                DashboardsLabel = GestionWeb.GetWebWord(LanguageConstantes.DashboardsLabel, siteLanguage)
-            };
-            return result;
-        }
+        //private Labels LoadPageLabels(int siteLanguage)
+        //{
+        //    var result = new Labels
+        //    {
+        //        Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),                
+        //        MyResults = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),               
+        //        SaveUnivers = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
+        //        UserUniversCode = GestionWeb.GetWebWord(LanguageConstantes.UserSavedUniversCode, siteLanguage),
+        //        MyResultsDescription = GestionWeb.GetWebWord(LanguageConstantes.MyResultsDescription, siteLanguage),
+        //        AlertsCode= GestionWeb.GetWebWord(LanguageConstantes.AlertsCode, siteLanguage),
+        //        NoSavedUnivers = GestionWeb.GetWebWord(LanguageConstantes.NoSavedUniversCode, siteLanguage),
+        //        Periodicity = GestionWeb.GetWebWord(LanguageConstantes.Periodicity, siteLanguage),
+        //        Daily = GestionWeb.GetWebWord(LanguageConstantes.Daily, siteLanguage),
+        //        Weekly =GestionWeb.GetWebWord(LanguageConstantes.Weekly, siteLanguage),
+        //        Monthly = GestionWeb.GetWebWord(LanguageConstantes.Monthly, siteLanguage),
+        //        Quartly = GestionWeb.GetWebWord(LanguageConstantes.Quartly, siteLanguage),
+        //        SaveAlert = GestionWeb.GetWebWord(LanguageConstantes.SaveAlert, siteLanguage),
+        //        NoAlerts = GestionWeb.GetWebWord(LanguageConstantes.NoAlerts, siteLanguage),
+        //        SendDate= GestionWeb.GetWebWord(LanguageConstantes.SendDate, siteLanguage),
+        //        Occurrence = GestionWeb.GetWebWord(LanguageConstantes.Occurrence, siteLanguage),
+        //        Occurrences = GestionWeb.GetWebWord(LanguageConstantes.Occurrences, siteLanguage),
+        //        AlertsDetails = GestionWeb.GetWebWord(LanguageConstantes.AlertDetails, siteLanguage),
+        //        Deadline = GestionWeb.GetWebWord(LanguageConstantes.Deadline, siteLanguage),
+        //        EveryWeek= GestionWeb.GetWebWord(LanguageConstantes.EveryWeek, siteLanguage),
+        //        EveryMonth = GestionWeb.GetWebWord(LanguageConstantes.EveryMonth, siteLanguage),
+        //        ExpirationDate = GestionWeb.GetWebWord(LanguageConstantes.ExpirationDate, siteLanguage),
+        //        AlertType = GestionWeb.GetWebWord(LanguageConstantes.AlertType, siteLanguage),
+        //        Receiver= GestionWeb.GetWebWord(LanguageConstantes.Receiver, siteLanguage),
+        //        TimeSchedule= GestionWeb.GetWebWord(LanguageConstantes.TimeSchedule, siteLanguage),
+        //        CreateDirectory = GestionWeb.GetWebWord(LanguageConstantes.CreateFolder, siteLanguage),
+        //        RenameDirectory = GestionWeb.GetWebWord(LanguageConstantes.RenameSelectedFolder, siteLanguage),
+        //        DropDirectory = GestionWeb.GetWebWord(LanguageConstantes.DropFolder, siteLanguage),
+        //        Directories = GestionWeb.GetWebWord(LanguageConstantes.Directories, siteLanguage),
+        //        ModuleLabel = GestionWeb.GetWebWord(LanguageConstantes.ModuleLabel, siteLanguage),
+        //        NewsLabel = GestionWeb.GetWebWord(LanguageConstantes.NewsLabel, siteLanguage),
+        //        YourModule = GestionWeb.GetWebWord(LanguageConstantes.YourModule, siteLanguage),
+        //        NewsDescr = GestionWeb.GetWebWord(LanguageConstantes.NewsDescr, siteLanguage),
+        //        ContactUsLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactUsLabel, siteLanguage),
+        //        Delete = GestionWeb.GetWebWord(LanguageConstantes.Delete, siteLanguage),
+        //        DashboardsLabel = GestionWeb.GetWebWord(LanguageConstantes.DashboardsLabel, siteLanguage)
+        //    };
+        //    return result;
+        //}
 
         public static string EncryptQueryString(string strQueryString)
         {
