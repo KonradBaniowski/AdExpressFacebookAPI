@@ -154,8 +154,8 @@
 }
 
 .container-kantar-home {
-    /*background: url('../Content/img/kantarmedia-bg-1.jpg') no-repeat;*/
-    background: url('../Content/img/kantarmedia-bg-0.jpg') no-repeat;
+    background: url('../Content/img/kantarmedia-bg-1.jpg') no-repeat;
+    /*background: url('../Content/img/kantarmedia-bg-0.jpg') no-repeat;*/
     color: #ffffff;
     background-size: cover;
 }
