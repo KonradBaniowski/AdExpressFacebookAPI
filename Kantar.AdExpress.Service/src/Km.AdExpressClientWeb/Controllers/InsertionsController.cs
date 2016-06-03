@@ -20,12 +20,14 @@ namespace Km.AdExpressClientWeb.Controllers
         private IInsertionsService _insertionsService;
         private IDetailLevelService _detailLevelService;
         private IUniverseService _universService;
+        private IWebSessionService _webSessionService;
 
-        public InsertionsController(IInsertionsService insertionsService, IDetailLevelService detailLevelservice, IUniverseService universService)
+        public InsertionsController(IInsertionsService insertionsService, IDetailLevelService detailLevelservice, IUniverseService universService, IWebSessionService webSessionService)
         {
             _insertionsService = insertionsService;
             _detailLevelService = detailLevelservice; ;
             _universService = universService;
+            _webSessionService = webSessionService;
         }
 
         // GET: Insertions
@@ -46,9 +48,10 @@ namespace Km.AdExpressClientWeb.Controllers
             model.paramsUrl.Add(moduleId);
             model.paramsUrl.Add(idVehicle);
 
-            var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
-            model.SiteLanguage = result.SiteLanguage;
-            model.Labels = LoadPageLabels(result.SiteLanguage);
+            //var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
+            var result = _webSessionService.GetSiteLanguage(idWebSession);
+            model.SiteLanguage = result;
+            model.Labels = LoadPageLabels(result);
 
             return View(model);
         }
