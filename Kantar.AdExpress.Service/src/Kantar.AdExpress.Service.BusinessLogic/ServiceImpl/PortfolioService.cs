@@ -151,7 +151,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             Id = mediaId,
                             Invest = p.TotalInvestment,
                             NbInser = p.InsertionNumber,
-                            Src = "http://adexpress.kantarmedia.fr/" + src,
+                            Src =  src,
                             Media = media,
                             NbPage = nbPage
                         };
@@ -202,8 +202,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         NbPage = nbPage,
                         ParutionDate = day,
-                        Src = string.Format("http://adexpress.kantarmedia.fr/{0}/{1}", pathWeb, Path.GetFileName(name)),
-                        SrcZoom = string.Format("http://adexpress.kantarmedia.fr/{0}/{1}", pathWebZoom, Path.GetFileName(name)),
+                        Src = string.Format("{0}/{1}", pathWeb, Path.GetFileName(name)),
+                        SrcZoom = string.Format("{0}/{1}", pathWebZoom, Path.GetFileName(name)),
                         Title = media
 
                     };
