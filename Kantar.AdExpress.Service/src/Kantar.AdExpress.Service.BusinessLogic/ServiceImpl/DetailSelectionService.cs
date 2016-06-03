@@ -156,8 +156,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region Période sélectionnée :
-            domain.DateBegin = !string.IsNullOrEmpty(_webSession.PeriodBeginningDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodBeginningDate) : null;
-            domain.DateEnd = !string.IsNullOrEmpty(_webSession.PeriodEndDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodEndDate) : null;
+            switch (_webSession.CurrentModule)
+            {
+                case WebConstantes.Module.Name.INDICATEUR:
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    domain.DateBegin = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, true);
+                    domain.DateEnd = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, false);
+                    break;
+                default:
+                    domain.DateBegin = !string.IsNullOrEmpty(_webSession.PeriodBeginningDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodBeginningDate) : null;
+                    domain.DateEnd = !string.IsNullOrEmpty(_webSession.PeriodEndDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodEndDate) : null;
+                    break;
+
+            }
+           
             if (Dates.isPeriodSet(domain.DateBegin, domain.DateEnd))
             {
                 domain.Dates = Dates.GetPeriodDetail(_webSession);

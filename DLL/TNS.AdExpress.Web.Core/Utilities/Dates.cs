@@ -1357,6 +1357,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
         #endregion
 
+        public static DateTime? GetAnalysisDate(string date, bool isStartDate)
+        {
+            if (date.Length != 6) throw (new ArgumentException("La date en entrée n'est pas valide"));
+            int year = int.Parse(date.Substring(0, 4));
+            int month= int.Parse(date.Substring(4, 2));
+            int day = (isStartDate) ? 1 : DateTime.DaysInMonth(year, month);
+            DateTime result = new DateTime(year, month, day);
+            return result;
+        }
 
     }
 }
