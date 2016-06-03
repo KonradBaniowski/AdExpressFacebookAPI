@@ -21,6 +21,13 @@
     opacity: 0.2;
 }
 
+.disabled-effect > .flip-container > .front, .disabled-effect > .flip-container > .back {
+    opacity: 0.4;
+}
+.disabled-effect > .flip-container-second > .front-second, .disabled-effect > .flip-container-second > .back-second {
+    opacity: 0.4;
+}
+
 .timeline {
     padding: 0;
     margin: 0;
@@ -149,42 +156,48 @@
 
 .container-kantar {
     background: url('../Content/img/kantarmedia-bg-0.jpg') no-repeat;/*Login page background*/
-    background-size: cover;
+    /*background-size: cover;*/
     color: #ffffff;
+    background-attachment: fixed;
 }
 
 .container-kantar-home {
     background: url('../Content/img/kantarmedia-bg-1.jpg') no-repeat;
     /*background: url('../Content/img/kantarmedia-bg-0.jpg') no-repeat;*/
     color: #ffffff;
-    background-size: cover;
+    /*background-size: cover;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-other {
     /*background: url('../Content/img/kantarmedia-bg-2.jpg') no-repeat;*/
     background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;
     color: #ffffff;
-    background-size: cover;
+    /*background-size: cover;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-results {
     /*background: url('../Content/img/kantarmedia-bg-3.jpg') no-repeat;*/
     background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;
     color: #ffffff;
-    background-size: cover;
+    /*background-size: cover;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-myadexpress {
     background: url('../Content/img/kantarmedia-bg-4.jpg') no-repeat;
     color: #ffffff;
-    background-size: cover;
+    /*background-size: cover;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-contact {
     /*background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;*/
     background: url('../Content/img/kantarmedia-bg-4.jpg') no-repeat;
     color: #ffffff;
-    background-size: cover;
+    /*background-size: cover;*/
+    background-attachment: fixed;
 }
 
 .header-kantar-popup {
