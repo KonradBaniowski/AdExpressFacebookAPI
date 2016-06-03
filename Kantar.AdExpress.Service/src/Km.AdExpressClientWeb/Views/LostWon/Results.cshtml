@@ -37,7 +37,7 @@
     </div>
 </div>
 @*<div class="h20">
-</div>*@
+    </div>*@
 <div class="row">
     <div class="col-md-12">
         @Html.Action("ResultOptions", _controller)
@@ -193,7 +193,7 @@
                             primaryKey: "ID",
                             foreignKey: "PID",
                             width: "1140px",
-                            autofitLastColumn : false,
+                            autofitLastColumn: false,
                             features: [
                                 {
                                     name: "MultiColumnHeaders"
@@ -239,7 +239,7 @@
                                     name: "Sorting",
                                     type: "local",
                                     applySortedColumnCss: false
-                                }                              
+                                }
                             ]
                         })
                     }
@@ -299,7 +299,7 @@
                 if (val < 0)
                     return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
 
-                if(val == 0)
+                if (val == 0)
                     return '<img src="../Content/img/o.gif" />';
 
                 return '';

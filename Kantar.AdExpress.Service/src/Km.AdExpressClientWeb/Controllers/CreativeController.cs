@@ -18,11 +18,12 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private ICreativeService _creativeService;
         private IUniverseService _universService;
-
-        public CreativeController(ICreativeService creativeService, IUniverseService universService)
+        private IWebSessionService _webSessionService;
+        public CreativeController(ICreativeService creativeService, IUniverseService universService, IWebSessionService webSessionService)
         {
             _creativeService = creativeService;
             _universService = universService;
+            _webSessionService = webSessionService;
         }
 
         // GET: Creative
@@ -42,10 +43,9 @@ namespace Km.AdExpressClientWeb.Controllers
             model.paramsUrl.Add(idUnivers);
             model.paramsUrl.Add(moduleId);
             model.paramsUrl.Add(idVehicle);
-
-            var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
-            model.SiteLanguage = result.SiteLanguage;
-            model.Labels = LoadPageLabels(result.SiteLanguage);
+            var result = _webSessionService.GetSiteLanguage(idWebSession);
+            model.SiteLanguage = result;
+            model.Labels = LoadPageLabels(result);
 
             return View(model);
         }

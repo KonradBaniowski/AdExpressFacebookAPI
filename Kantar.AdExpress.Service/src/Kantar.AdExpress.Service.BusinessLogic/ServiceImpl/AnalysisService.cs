@@ -38,5 +38,21 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var gridResult = productClassLayer.GetGridResult(sortOrder, columnIndex);
             return gridResult;
         }
+
+        public ResultTable GetResultTable(string idWebSession)
+        {
+            ResultTable data = null;
+            var module = ModulesList.GetModule(WebConstantes.Module.Name.TABLEAU_DYNAMIQUE);
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+
+            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+            var parameters = new object[1];
+            parameters[0] = _customerSession;
+            var result = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            data = result.GetGenericProductClassReport();
+            return data;
+        }
     }
 }

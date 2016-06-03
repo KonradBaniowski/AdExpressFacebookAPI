@@ -3,6 +3,7 @@ using Kantar.AdExpress.Service.Core;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Helpers;
+using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.AdExpress.Framework.MediaSelection;
@@ -81,7 +82,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 NavigationBar = pageHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = pageHelper.LoadPresentationBar(CustomerSession.SiteLanguage, result.ControllerDetails),
-                Labels = pageHelper.LoadPageLabels(CustomerSession.SiteLanguage, result.ControllerDetails.Name)
+                Labels = LabelsHelper.LoadPageLabels(CustomerSession.SiteLanguage)
             };
 
             return View(model);

@@ -2493,6 +2493,11 @@ ul.ui-selectable {
         color: #ff8c00;
     }
 
+.modal-header .close{
+    color:white;
+    opacity: .7
+}
+
 .modal-express .modal-body {
     color: black;
     padding: 15px;
