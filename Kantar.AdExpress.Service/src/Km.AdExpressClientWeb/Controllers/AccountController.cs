@@ -28,7 +28,7 @@ namespace Km.AdExpressClientWeb.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl, int siteLanguage = 33 )
+        public ActionResult Login(string returnUrl, int siteLanguage = 33)
         {
 
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
@@ -38,7 +38,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 ErrorMessage = GestionWeb.GetWebWord(880, Convert.ToInt32(siteLanguage)),
                 Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(siteLanguage)),
-                SiteLanguage =  Convert.ToInt32(siteLanguage)
+                SiteLanguage = Convert.ToInt32(siteLanguage)
             };
             return View(model);
         }
@@ -57,7 +57,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 SiteLanguage = Convert.ToInt32(siteLanguage),
                 RedirectUrl = string.Format("{0}?siteLanguage={1}", returnUrl, siteLanguage)
 
-            };         
+            };
             JsonResult jsonModel = Json(model, JsonRequestBehavior.AllowGet);
             return jsonModel;
         }
@@ -70,8 +70,9 @@ namespace Km.AdExpressClientWeb.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             //TO DO
-           ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
+            ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(model.SiteLanguage);
+
             //model.ReturnUrl = returnUrl;
             if (!ModelState.IsValid || String.IsNullOrEmpty(model.Email) || String.IsNullOrEmpty(model.Password))
             {
@@ -87,22 +88,19 @@ namespace Km.AdExpressClientWeb.Controllers
             //_userManager.AddClaimAsync(User.Identity)
             //var cla = new ClaimsPrincipal(User.Identity);
             //var idlogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
-            
+
             //TempData["fromAccount"] = true;
             switch (result)
             {
                 case SignInStatus.Success:
-
                     return RedirectToAction("webSession", new { SiteLanguage = model.SiteLanguage });
-                    //_webSession = new WebSession(right);
-                    //return RedirectToAction("Index", "Home");
-             
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresTwoFactorAuthentication:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", GestionWeb.GetWebWord(880, Convert.ToInt32(model.SiteLanguage)));
+                    model.Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(model.SiteLanguage));
                     return View(model);
             }
         }
@@ -120,7 +118,7 @@ namespace Km.AdExpressClientWeb.Controllers
             WebSession _webSession = null;
             int _siteLanguage = WebApplicationParameters.DefaultLanguage;
             if (_siteLanguage != siteLanguage) _siteLanguage = siteLanguage;
-             var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
+            var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
             if (right != null && right.CanAccessToAdExpress())
             {
                 right.SetModuleRights();
@@ -138,7 +136,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
                 _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
                 // On met à jour IDataSource à partir de la session elle même.
-                _webSession.Source = right.Source;                
+                _webSession.Source = right.Source;
                 //Sauvegarder la session
                 _webSession.Save();
                 // Tracking (NewConnection)
