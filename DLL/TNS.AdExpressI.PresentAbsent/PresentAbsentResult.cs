@@ -2059,52 +2059,52 @@ namespace TNS.AdExpressI.PresentAbsent
                         for (int g = 0; g < nbGroupItems; g++)
                         {
                             #region Sub group synthesis
-                            ////Manage sub groups items (stynthesis result)
-                            //if (resultTable.NewHeaders.Root[j][g].Count > 0)
-                            //{
-                            //    subGroups = new List<object>();
+                            //Manage sub groups items (stynthesis result)
+                            if (resultTable.NewHeaders.Root[j][g].Count > 0)
+                            {
+                                subGroups = new List<object>();
 
-                            //    int nbSubGroupitems = resultTable.NewHeaders.Root[j][g].Count;
+                                int nbSubGroupitems = resultTable.NewHeaders.Root[j][g].Count;
 
-                            //    for (int sg = 0; sg < nbSubGroupitems; sg++)
-                            //    {
-                            //        colKey = string.Format("sg{0}", resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable);
-                            //        //cell format sub group
-                            //        if (resultTable != null && resultTable.LinesNumber > 0)
-                            //        {
-                            //            var cell = resultTable[0, resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable];
+                                for (int sg = 0; sg < nbSubGroupitems; sg++)
+                                {
+                                    colKey = string.Format("sg{0}", resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable);
+                                    //cell format sub group
+                                    if (resultTable != null && resultTable.LinesNumber > 0)
+                                    {
+                                        var cell = resultTable[0, resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable];
 
-                            //            if (cell is CellPercent)
-                            //            {
-                            //                format = "percent";
-                            //            }
-                            //            else if (cell is CellEvol)
-                            //            {
-                            //                format = "percent";
-                            //                colKey += "-evol";
-                            //            }
-                            //            else if (cell is CellDuration)
-                            //            {
-                            //                format = "duration";
-                            //                colKey += "-unit";
-                            //            }
-                            //            else if (cell is CellUnit)
-                            //            {
-                            //                format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
-                            //                colKey += "-unit";
-                            //            }
-                            //        }
+                                        if (cell is CellPercent)
+                                        {
+                                            format = "percent";
+                                        }
+                                        else if (cell is CellEvol)
+                                        {
+                                            format = "percent";
+                                            colKey += "-evol";
+                                        }
+                                        else if (cell is CellDuration)
+                                        {
+                                            format = "duration";
+                                            colKey += "-unit";
+                                        }
+                                        else if (cell is CellUnit)
+                                        {
+                                            format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                            colKey += "-unit";
+                                        }
+                                    }
 
-                            //        subGroups.Add(new { headerText = resultTable.NewHeaders.Root[j][g][sg].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
-                            //        schemaFields.Add(new { name = colKey });
+                                    subGroups.Add(new { headerText = resultTable.NewHeaders.Root[j][g][sg].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                                    schemaFields.Add(new { name = colKey });
 
-                            //    }
+                                }
 
-                            //    colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                            //    columns.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, group = subGroups });
-                            //    columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
+                                colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, group = subGroups });
+                                columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
 
-                            //}
+                            }
                             #endregion
 
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
