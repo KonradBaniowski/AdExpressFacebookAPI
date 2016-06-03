@@ -698,19 +698,19 @@ namespace TNS.AdExpressI.PresentAbsent
 
                 #region Sélection de Médias
                 //Liste des supports de référence
-                if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count>0)
+                if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
                 {
                     List<long> mediaIds = _session.PrincipalMediaUniverses[positionUnivers].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
-                    if (mediaIds != null && mediaIds.Count>0)
+                    if (mediaIds != null && mediaIds.Count > 0)
                     {
                         referenceUniversMedia = mediaIds.ConvertAll(Convert.ToString);
                         positionUnivers++;
-                    }                  
+                    }
                 }
                 //Liste des supports concurrents
                 if (referenceUniversMedia != null && referenceUniversMedia.Count > 0)
                 {
-                    competitorUniversMedia = GetCompetitormedias(positionUnivers);                   
+                    competitorUniversMedia = GetCompetitormedias(positionUnivers);
                 }
                 else return null;
 
@@ -1179,7 +1179,7 @@ namespace TNS.AdExpressI.PresentAbsent
             {
                 idsByUnivers.Add(p, new List<Int64>());
                 var includedItems = _session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes);
-            
+
                 //Init Media ids X univers
                 foreach (Int64 l in includedItems)
                 {
@@ -1291,7 +1291,7 @@ namespace TNS.AdExpressI.PresentAbsent
             Header headerTmp = null;
             Header headerTotal = null;
             elementsHeader = new Dictionary<string, HeaderBase>();
-            if ( (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 1) || idElements.Count > 1 )
+            if ((_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 1) || idElements.Count > 1)
             {
                 headerTotal = new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage), TOTAL_HEADER_ID);
                 elementsHeader.Add(TOTAL_HEADER_ID.ToString(), headerTotal);
@@ -1536,7 +1536,8 @@ namespace TNS.AdExpressI.PresentAbsent
                 {
                     parents[cLevel.Level + 1] = cLevel;
                 }
-                else {
+                else
+                {
                     setLine(grossTable, tab, i, cLine, elementsHeader, elementsSubTotal);
                 }
 
@@ -2041,6 +2042,7 @@ namespace TNS.AdExpressI.PresentAbsent
             List<object> groups = null;
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             string format = string.Empty;
+            List<object> subGroups = null;
 
             //Headers
             if (resultTable.NewHeaders != null)
@@ -2056,8 +2058,57 @@ namespace TNS.AdExpressI.PresentAbsent
                         int nbGroupItems = resultTable.NewHeaders.Root[j].Count;
                         for (int g = 0; g < nbGroupItems; g++)
                         {
-                            colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+                            #region Sub group synthesis
+                            ////Manage sub groups items (stynthesis result)
+                            //if (resultTable.NewHeaders.Root[j][g].Count > 0)
+                            //{
+                            //    subGroups = new List<object>();
 
+                            //    int nbSubGroupitems = resultTable.NewHeaders.Root[j][g].Count;
+
+                            //    for (int sg = 0; sg < nbSubGroupitems; sg++)
+                            //    {
+                            //        colKey = string.Format("sg{0}", resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable);
+                            //        //cell format sub group
+                            //        if (resultTable != null && resultTable.LinesNumber > 0)
+                            //        {
+                            //            var cell = resultTable[0, resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable];
+
+                            //            if (cell is CellPercent)
+                            //            {
+                            //                format = "percent";
+                            //            }
+                            //            else if (cell is CellEvol)
+                            //            {
+                            //                format = "percent";
+                            //                colKey += "-evol";
+                            //            }
+                            //            else if (cell is CellDuration)
+                            //            {
+                            //                format = "duration";
+                            //                colKey += "-unit";
+                            //            }
+                            //            else if (cell is CellUnit)
+                            //            {
+                            //                format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                            //                colKey += "-unit";
+                            //            }
+                            //        }
+
+                            //        subGroups.Add(new { headerText = resultTable.NewHeaders.Root[j][g][sg].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            //        schemaFields.Add(new { name = colKey });
+
+                            //    }
+
+                            //    colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+                            //    columns.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, group = subGroups });
+                            //    columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
+
+                            //}
+                            #endregion
+
+                            colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+                            //cell format
                             if (resultTable != null && resultTable.LinesNumber > 0)
                             {
                                 var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
@@ -2086,10 +2137,9 @@ namespace TNS.AdExpressI.PresentAbsent
                             groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                             schemaFields.Add(new { name = colKey });
                         }
-                        //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+
                         columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey, group = groups });
                         columnsFixed.Add(new { columnKey = "gr" + colKey, isFixed = false, allowFixing = false });
-                        // schemaFields.Add(new { name = colKey });
                     }
                     else
                     {
@@ -2178,7 +2228,8 @@ namespace TNS.AdExpressI.PresentAbsent
                         }
                         gridData[i, k + 2] = link;
                     }
-                    else {
+                    else
+                    {
                         if (cell is CellPercent || cell is CellEvol)
                         {
                             double value = ((CellUnit)cell).Value;
@@ -2238,7 +2289,7 @@ namespace TNS.AdExpressI.PresentAbsent
             {
                 ids.AddRange(_session.PrincipalMediaUniverses[p].GetLevelValue(TNSClassificationLevels.MEDIA, AccessType.includes));
             }
-         
+
             return ids.ConvertAll(Convert.ToString);
         }
     }

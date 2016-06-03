@@ -492,11 +492,11 @@
                                 {
                                     if (item.Label == "Documents")
                                     {
-                                        <a href="@Url.Action("Pdf","PDF", new { fileName = @e.Url })" class="list-group-item text-left">@e.Label</a>
+                                        <a href="@Url.Action("Pdf","PDF", new { fileName = @e.Url })" class="list-group-item text-left" target="_blank">@e.Label</a>
                                     }
                                     else
                                     {
-                                        <a href="@e.Url" class="list-group-item text-left">@e.Label</a>
+                                        <a href="@e.Url" class="list-group-item text-left" target="_blank">@e.Label</a>
                                     }
                                 }
                             }

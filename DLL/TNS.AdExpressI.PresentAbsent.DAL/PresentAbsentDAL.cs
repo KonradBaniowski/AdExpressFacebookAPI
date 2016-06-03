@@ -1170,9 +1170,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
         protected virtual string GetUniversFilter(CstDB.TableType.Type type, string dateField, CustomerPeriod customerPeriod)
         {
             StringBuilder sql = new StringBuilder();
-
-            //Tests products universe
-            Dictionary<TNS.Classification.Universe.AccessType, List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>>> test = _session.CustomerDataFilters.PrincipalProductUniverses;
+          
 
             // Query filter by period
             switch (type)
