@@ -127,7 +127,13 @@ namespace Km.AdExpressClientWeb.I18n
                 Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
                 Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent, siteLanguage),
                 WarningBackNavigator = GestionWeb.GetWebWord(LanguageConstantes.WarningBackNavigatorCode, siteLanguage),
-                ResultError = GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage)
+                ResultError = GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage),
+                RememberEmailLabel = GestionWeb.GetWebWord(LanguageConstantes.RememberEmailCode,  siteLanguage),
+                Export = GestionWeb.GetWebWord(LanguageConstantes.Export, siteLanguage),
+                FileName = GestionWeb.GetWebWord(LanguageConstantes.FileName, siteLanguage),
+                Email = GestionWeb.GetWebWord(LanguageConstantes.MailCode, siteLanguage),
+                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
+                Close = GestionWeb.GetWebWord(LanguageConstantes.Close, siteLanguage)
             };
             return result;
         }
