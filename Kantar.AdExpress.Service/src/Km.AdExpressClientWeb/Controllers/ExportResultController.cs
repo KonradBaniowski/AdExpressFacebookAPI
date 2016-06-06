@@ -11,6 +11,7 @@ using TNS.AdExpress.Constantes.Web;
 using System.Text.RegularExpressions;
 using TNS.AdExpress.Domain.Translation;
 using Kantar.AdExpress.Service.Core.Domain;
+using Km.AdExpressClientWeb.I18n;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -32,7 +33,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var siteLanguage = _webSessionService.GetSiteLanguage(idWebSession);
             var model = new ExportResultModel
             {
-                Labels= LoadPageLabels(siteLanguage),
+                RememberEmail = false,
+                Labels= LabelsHelper.LoadPageLabels(siteLanguage),
                 ExportType = (exportType=="4")? GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage)
                                                 : GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage)
             };
@@ -52,21 +54,6 @@ namespace Km.AdExpressClientWeb.Controllers
             };            
             var response = _exportService.Export(request);
             return Json(response, JsonRequestBehavior.AllowGet);
-        }
-
-        private Labels LoadPageLabels(int siteLanguage)
-        {
-            Regex regex = new System.Text.RegularExpressions.Regex(@"(<br />|<br/>|</ br>|</br>)");
-            
-            var result = new Labels
-            {
-                Export =GestionWeb.GetWebWord(LanguageConstantes.Export,siteLanguage),
-                FileName = GestionWeb.GetWebWord(LanguageConstantes.FileName, siteLanguage),
-                Email = GestionWeb.GetWebWord(LanguageConstantes.MailCode, siteLanguage),
-                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
-                Close = GestionWeb.GetWebWord(LanguageConstantes.Close, siteLanguage)
-            };
-            return result;
         }
     }
 }

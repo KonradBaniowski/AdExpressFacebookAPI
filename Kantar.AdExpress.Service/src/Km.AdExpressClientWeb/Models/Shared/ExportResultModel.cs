@@ -14,6 +14,7 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public string FileName { get; set; }
         [Required]
         public string Email { get; set; }
+        public bool RememberEmail { get; set; }
         public string ExportType { get; set; }
         public Labels Labels { get; set; }
     }

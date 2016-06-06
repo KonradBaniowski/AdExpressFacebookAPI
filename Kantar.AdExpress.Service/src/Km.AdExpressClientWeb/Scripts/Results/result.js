@@ -17,10 +17,10 @@
             $('#alertModal .modal-content').append(response);
             $('#alertModal').modal('show');
         }
-    });   
+    });
 });
 
-$(document).on('click', '#weekly', function () { 
+$(document).on('click', '#weekly', function () {
     $('#weeklyCalendar').datetimepicker({
         format: 'dd'
     });
@@ -39,8 +39,7 @@ $(document).on('change', '#ddlPeriodicity', function (event) {
         $('#monthly').hide();
         $('#weekly').hide();
     }
-    if(id=="20")
-    {
+    if (id == "20") {
         $('#monthly').hide();
         $('#weekly').show();
     }
@@ -64,7 +63,7 @@ $(document).on('click', '#btnSaveAlert', function (event) {
         title: $('#alertTitle').val(),
         email: $('#email').val(),
         type: type,
-        date:date
+        date: date
     };
     $.ajax({
         url: '/Alert/SaveAlert',
@@ -82,11 +81,11 @@ $(document).on('click', '#btnSaveAlert', function (event) {
     });
 });
 
-$(document).on('click','#btn-export', function (event) {
+$(document).on('click', '#btn-export', function (event) {
     event.preventDefault();
     var selectedValue = $('#export-type').val();
     var params = {
-        exportType:selectedValue
+        exportType: selectedValue
     };
     var controller = $('#ExportController').val();
     switch (selectedValue) {
@@ -100,7 +99,7 @@ $(document).on('click','#btn-export', function (event) {
             window.open('/' + controller + '/ResultBrut', "_blank");
             break;
         case "4":
-        case "5":            
+        case "5":
             $.ajax({
                 url: '/ExportResult/CreateExport',
                 contentType: 'application/json',
@@ -114,8 +113,17 @@ $(document).on('click','#btn-export', function (event) {
                     $('#exportResultModal .modal-content').html('');
                     $('#exportResultModal .modal-content').append(response);
                     $('#exportResultModal').modal('show');
+                    var cookies = document.cookie.split(";");
+                    for (var i = 0; i < cookies.length; i++) {
+                        var eachCookie = cookies[i].split("=");
+                        var cookieName = eachCookie[0];
+                        if ( cookieName.indexOf("mail") > -1) {
+                            var cookieValue = eachCookie[1];
+                            $('#email').val(cookieValue);
+                        }
+                    }
                 }
-            });            
+            });
             break;
         default:
             window.open('@Url.Action("Index", "TestExport")', "_blank");
@@ -123,10 +131,19 @@ $(document).on('click','#btn-export', function (event) {
     }
 });
 
-$(document).on('click','#btnExport', function (event) {
+
+
+$(document).on('click', '#btnExport', function (event) {
     event.preventDefault();
     var fileName = $('#fileName').val();
     var email = $('#email').val();
+    var remember = $('#rememberEmail').is(':checked');
+    if (remember) {
+        var date = new Date();
+        date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));   // add 1 day
+        document.cookie = "mail=" + email + "; expires=" + date.toGMTString();
+        console.log(document.cookie);
+    }
     var type = $('#ExportType').val();
     var params = {
         fileName: fileName,
@@ -147,4 +164,4 @@ $(document).on('click','#btnExport', function (event) {
             bootbox.alert(response.Message);
         }
     });
-    });
+});

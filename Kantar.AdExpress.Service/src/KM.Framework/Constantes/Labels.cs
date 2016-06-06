@@ -145,6 +145,7 @@ namespace KM.Framework.Constantes
         public string NbInsertionsLabel { get; set; } //144
         public string TotalInvestLabel { get; set; } //1399
         public string NbPage { get; set; } //1385
+        public string RememberEmailLabel { get; set; } //2117
 
     }
 }
