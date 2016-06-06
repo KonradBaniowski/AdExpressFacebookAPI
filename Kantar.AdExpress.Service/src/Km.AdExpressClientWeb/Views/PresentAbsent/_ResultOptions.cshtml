@@ -47,36 +47,39 @@
                         </div>
                     </div>
 
-                  
-                        <div class="col-md-4">
-                            <div class="panel-primary panel-options-results">
-                                <div class="panel-heading head-options-results">
-                                    <p class="panel-title options ">
-                                        @GestionWeb.GetWebWord(304, Model.SiteLanguage)
-                                    </p>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                    <div class="panel-body mi-padder">
-                                        <div class="selectoptioncontainer">
-                                            <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker">
-                                                @foreach (var item in Model.UnitOption.Unit.Items)
+
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    @GestionWeb.GetWebWord(304, Model.SiteLanguage)
+                                </p>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.UnitOption.Unit.Items)
                                                 {
                                                     if (item.Value == Model.UnitOption.Unit.SelectedId)
                                                     {
-                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                <option value="@item.Value" selected>@item.Text</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@item.Value">@item.Text</option>
+                                                <option value="@item.Value">@item.Text</option>
                                                     }
                                                 }
-                                            </select>
-                                        </div>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
+                    </div>
+
+                  
+             
+
                     @if (@Model.GenericColumnDetailLevelOption.L1Detail.Visible)
                     {
                         <div class="col-md-4">
@@ -364,6 +367,20 @@
                                 <label for="@Model.InitializeProduct.Id">@GestionWeb.GetWebWord(1131, Model.SiteLanguage)</label>
                             </div>
                         }
+                    </div>
+                   
+                    <div class="col-md-4">
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.PDM.Value)
+                            {
+                                <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" checked />
+                            }
+                            else
+                            {
+                                <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" />
+                            }
+                            <label for="set-pdm">@GestionWeb.GetWebWord(806, Model.SiteLanguage)</label>
+                        </div>
                     </div>
                 </div>
 

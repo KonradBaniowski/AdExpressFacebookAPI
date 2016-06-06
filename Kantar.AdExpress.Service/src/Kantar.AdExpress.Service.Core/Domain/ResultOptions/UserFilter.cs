@@ -34,5 +34,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool ComparativeStudy { get; set; }
 
         public int ComparativePeriodType { get; set; }
+
+        public bool PDM { get; set; }
     }
 }

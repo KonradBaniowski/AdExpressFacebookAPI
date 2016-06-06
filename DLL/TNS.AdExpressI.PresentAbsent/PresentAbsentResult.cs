@@ -2127,7 +2127,7 @@ namespace TNS.AdExpressI.PresentAbsent
                                 {
                                     var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
 
-                                    if (cell is CellPercent)
+                                    if (cell is CellPercent || cell is CellPDM)
                                     {
                                         format = "percent";
                                     }
@@ -2143,7 +2143,7 @@ namespace TNS.AdExpressI.PresentAbsent
                                     }
                                     else if (cell is CellUnit)
                                     {
-                                        format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                    format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
                                         colKey += "-unit";
                                     }
                                 }
@@ -2252,7 +2252,7 @@ namespace TNS.AdExpressI.PresentAbsent
                     }
                     else
                     {
-                        if (cell is CellPercent || cell is CellEvol)
+                        if (cell is CellPercent || cell is CellEvol || cell is CellPDM)
                         {
                             double value = ((CellUnit)cell).Value;
 

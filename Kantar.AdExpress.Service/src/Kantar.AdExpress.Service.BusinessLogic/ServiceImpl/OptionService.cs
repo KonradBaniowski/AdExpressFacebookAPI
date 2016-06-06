@@ -490,6 +490,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             #endregion
 
+            #region PDM
+            if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+              || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
+            {
+                CheckBoxOption pdm = new CheckBoxOption();
+                pdm.Id = "pdmEvol";
+                if (_customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.WON || _customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.LOST)
+                    pdm.Value = true;
+                else    pdm.Value = _customerWebSession.PDM;
+                options.PDM = pdm;
+            }
+            #endregion
+
             switch (_customerWebSession.CurrentModule)
             {
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
@@ -529,7 +542,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
                 || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+            {
                 SetGenericColumnLevelDetailOptions(userFilter);
+                _customerWebSession.Percentage = userFilter.PDM;
+            }
+               
 
             #region GenericDetailLevelFilter
             ArrayList levels = new ArrayList();

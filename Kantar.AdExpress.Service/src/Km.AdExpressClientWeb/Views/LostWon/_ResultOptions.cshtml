@@ -366,6 +366,19 @@
                             </div>
                         }
                     </div>
+                    <div class="col-md-4">
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.PDM.Value)
+                            {
+                                <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" checked />
+                            }
+                            else
+                            {
+                                <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" />
+                            }
+                            <label for="set-pdm">@GestionWeb.GetWebWord(806, Model.SiteLanguage)</label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">

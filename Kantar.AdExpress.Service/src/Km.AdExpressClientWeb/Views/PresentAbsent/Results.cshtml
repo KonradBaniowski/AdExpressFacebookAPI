@@ -26,8 +26,6 @@
             <select id="export-type" class="selectdatepicker hide">
                 <option value="1"> @Model.Labels.ExportFormattedResult</option>
                 <option value="3"> @Model.Labels.ExportGrossResult</option>
-                <option value="4">@Model.Labels.ExportPdfResult</option>
-                <option value="5">@Model.Labels.ExportPptResult</option>
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
@@ -36,7 +34,7 @@
     </div>
 </div>
 @*<div class="h20">
-</div>*@
+    </div>*@
 <div class="row">
     <div class="col-md-12">
         @Html.Action("ResultOptions", _controller)
@@ -166,6 +164,7 @@
                 this.PurchaseModeFilter = new PurchaseModeFilter();
                 this.ResultTypeFilter = new ResultTypeFilter();
                 this.InitializeProduct = false;
+                this.PDM = false;
             }
 
             var userFilter = new UserFilter();
@@ -320,6 +319,9 @@
                                 if (elem.group[i].key.indexOf("evol") > -1) {
                                     elem.group[i].formatter = EvolFormatter;
                                 }
+                                if (elem.group[i].key.indexOf("pdm") > -1) {
+                                    elem.group[i].formatter = PercentFormatter;
+                                }
                             }
                         } else if (elem.key.indexOf("unit") > -1) {
                             if (unit == "duration")
@@ -330,6 +332,9 @@
                                 elem.formatter = UnitFormatter;
                         } else if (elem.key.indexOf("evol") > -1) {
                             elem.formatter = EvolFormatter;
+                        }
+                        else if (elem.key.indexOf("pdm") > -1) {
+                            elem.formatter = PercentFormatter;
                         }
                     });
 
@@ -520,20 +525,21 @@
             $('#export-type').removeClass("hide");
             $('#export-type').selectpicker();
 
-            @*$('#btn-export').on('click', function (e) {
-                var selectedValue = $('#export-type').val();
-                switch (selectedValue) {
-                    case "1":
-                        window.open('@Url.Action("Index", _exportController)', "_blank");
-                        break;
-                    case "2":
-                        window.open('@Url.Action("ResultBrut", _exportController)', "_blank");
-                        break;
-                    default:
-                        window.open('@Url.Action("Index", _exportController)', "_blank");
-                        break;
+            if ($("#set-pdm").prop('checked') == true) {
+                userFilter.PDM = true;
+            }
+            else {
+                userFilter.PDM = false;
+            }
+
+            $("#set-pdm").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.PDM = true;
                 }
-            });*@
+                else {
+                    userFilter.PDM = false;
+                }
+            });
 
             $('#save-custom-detail-levels').on('click', function (e) {
                 var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val();
