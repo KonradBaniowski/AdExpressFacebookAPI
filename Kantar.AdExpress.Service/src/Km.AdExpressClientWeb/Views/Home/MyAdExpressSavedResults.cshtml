@@ -20,6 +20,9 @@
                 <h3 class="panel-title pull-left">
                     <span>@Model.Labels.NoSavedUnivers</span>
                 </h3>
+                <h3 class="panel-title pull-right">
+                    <a id="btnCreate@(Model.UniversType)Directory" data-toggle="modal" title="@Model.Labels.CreateDirectory" class="m-r-xs adExpress-tools"><i class="fa icon-plus text-md"></i></a>                   
+                </h3>
             }
             <div class="clearfix"></div>
         </div>
@@ -180,24 +183,6 @@
     </div>
 </div>
 
-<div id="create@(Model.UniversType)Directory" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header header-kantar-popup">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.CreateDirectory</h4>
-            </div>
-            <div class="modal-body">
-                <p> @Model.Labels.RenameSelectedFolder</p>
-                <input type="text" class="form-control" id="newDirectory@(Model.UniversType)Name" placeholder="Entrez un nom">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-valider" id="btnValidCreate@(Model.UniversType)Directory" data-dismiss="modal">@Model.Labels.Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div id="rename@(Model.UniversType)Directory" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -279,6 +264,23 @@
 <div id="detail-selection" class="modal fade modal-express">
     <div class="modal-dialog modal-lg">
         <div class="modal-body">
+        </div>
+    </div>
+</div>
+<div id="create@(Model.UniversType)Directory" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt">@Model.Labels.CreateDirectory</h4>
+            </div>
+            <div class="modal-body">
+                <p> @Model.Labels.RenameSelectedFolder</p>
+                <input type="text" class="form-control" id="newDirectory@(Model.UniversType)Name" placeholder="Entrez un nom">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-valider" id="btnValidCreate@(Model.UniversType)Directory" data-dismiss="modal">@Model.Labels.Submit</button>
+            </div>
         </div>
     </div>
 </div>
