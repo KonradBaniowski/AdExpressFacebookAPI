@@ -8,7 +8,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/module-selection")
- 
+
 
     <script>
         function OpenOldWebSite(url) {
@@ -60,7 +60,7 @@
         RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_RADIO);
         RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_TELEVISION);
 
-        
+
     </script>
 }
 <div class="row">
@@ -196,21 +196,29 @@
                 }
             </div>
         </div>
-        @*Three Mostly Importants*@
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+        @*Two Mostly Importants*@
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile-second">
-                @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
+                @*@if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
+                    {
+                    <a href="@Url.Action("Market", "Selection")" class="list-group-item text-left module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title.TrimStart()</a>
+                    }
+                    else
+                    {
+                    <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</div>
+                    }*@
+                @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                 {
 
                     @* <a href="@Url.Action("Index","Chrono")" class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">*@
-                    <a class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">
+                    <a href="@Url.Action("Market", "Selection")" class="tile-body text-center" id="@Module.Name.TABLEAU_DYNAMIQUE">
                         <div class="flip-container-second">
                             <div class="front-second">
                                 <i class="icon-book-open sli-size-small green"></i>
-                                <h5>@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</h5>
+                                <h5>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h5>
                             </div>
                             <div class="back-second">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Description</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -221,10 +229,10 @@
                         <div class="flip-container">
                             <div class="front">
                                 <i class="icon-book-open sli-size-small green"></i>
-                                <h5>@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</h5>
+                                <h5>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h5>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Description</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -232,11 +240,43 @@
                 }
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+            <div class="tile-second">
+                @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
+                {
+                    <a class="tile-body text-center" id="@Module.Name.ANALYSE_MANDATAIRES">
+                        <div class="flip-container-second">
+                            <div class="front-second">
+                                <i class="icon-picture sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Description</p>
+                            </div>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container-second">
+                            <div class="front-second">
+                                <i class="icon-picture sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        @*Two pdf stuff*@
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10 dropdown">
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.NEW_CREATIVES))
                 {
-                    @*<a href="@Url.Action("Index", "NouvelleCrea")" class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">*@
                     <a class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">
                         <div class="flip-container-second">
                             <div class="front-second">
@@ -265,42 +305,7 @@
                 }
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
-            <div class="tile-second">
-                @if (Model.ModuleRight.ContainsKey(Module.Name.TENDACES))
-                {
-                    @*<a href="@Url.Action("Index", "Tendances")" class="tile-body text-center" id="@Module.Name.TENDACES">*@
-                    <a class="tile-body text-center" id="@Module.Name.TENDACES">
-                        <div class="flip-container-second">
-                            <div class="front-second">
-                                <i class="icon-eye sli-size-small green"></i>
-                                <h5>@Model.Modules[(Module.Name.TENDACES)].Title</h5>
-                            </div>
-                            <div class="back-second">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TENDACES)].Description</p>
-                            </div>
-                        </div>
-                    </a>
-                }
-                else
-                {
-                    <div class="tile-body text-center disabled-effect">
-                        <div class="flip-container-second">
-                            <div class="front-second">
-                                <i class="icon-eye sli-size-small green"></i>
-                                <h5>@Model.Modules[(Module.Name.TENDACES)].Title</h5>
-                            </div>
-                            <div class="back-second">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TENDACES)].Description</p>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-        @*Two pdf stuff*@
-        
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10 dropdown">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10 dropdown">
             <div class="tile-third" data-toggle="dropdown">
                 <div class="tile-body text-center">
                     <div class="flip-container">
@@ -314,28 +319,13 @@
             <div class="tile-deploy dropdown-menu">
                 <div class="tile-body text-center">
                     <div class="list-group">
-                        @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
-                        {
-                            <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_MANDATAIRES">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</a>
-                        }
-                        else {
-                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</div>
-                        }
-                        @if (Model.ModuleRight.ContainsKey(Module.Name.INDICATEUR))
+                        @*@if (Model.ModuleRight.ContainsKey(Module.Name.INDICATEUR))
                         {
                             <a href="@Url.Action("Market", "Selection")" class="list-group-item text-left module-done" id="@Module.Name.INDICATEUR">@Model.Modules[(Module.Name.INDICATEUR)].Title</a>
                         }
                         else {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.INDICATEUR)].Title</div>
-                        }
-                        @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
-                        {
-                            <a href="@Url.Action("Market", "Selection")" class="list-group-item text-left module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title.TrimStart()</a>
-                        }
-                        else
-                        {
-                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</div>
-                        }
+                        }*@
                         @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_DISPOSITIFS))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_DISPOSITIFS">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</a>
@@ -350,11 +340,19 @@
                         else {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</div>
                         }
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
+                        {
+                            <a href="#" class="list-group-item text-left" id="@Module.Name.BILAN_CAMPAGNE">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</a>
+                        }
+                        else
+                        {
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10 dropdown">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10 dropdown">
             <div class="tile-third" data-toggle="dropdown">
                 <div class="tile-body text-center">
                     <div class="flip-container">
@@ -368,6 +366,14 @@
             <div class="tile-deploy dropdown-menu">
                 <div class="tile-body text-center">
                     <div class="list-group">
+                        @if (Model.ModuleRight.ContainsKey(Module.Name.TENDACES))
+                        {
+                            <a href="#" class="list-group-item text-left" id="@Module.Name.TENDACES">@Model.Modules[(Module.Name.TENDACES)].Title</a>
+                        }
+                        else
+                        {
+                            <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TENDACES)].Title</div>
+                        }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PAN_EURO))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_PAN_EURO">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</a>
@@ -512,8 +518,8 @@
                     <div class="flip-container">
                         <div class="front">
                             <a href="@Url.Action("Index", "Contact")">
-                                @*<i class="icon-bubbles sli-size-small"></i>*@                           
-                                <i class="fa fa-comment fa-lg"></i> 
+                                @*<i class="icon-bubbles sli-size-small"></i>*@
+                                <i class="fa fa-comment fa-lg"></i>
                                 <h5>@(Model.Labels.ContactUsLabel)</h5>
                             </a>
                         </div>
