@@ -49,7 +49,6 @@ namespace Km.AdExpressClientWeb.Models
     public class LoginViewModel
     {
         public string Email { get; set; }
-        [Display(Name = "Password")]
         public string Password { get; set; }
         public string ErrorMessage { get; set; }
         public Labels Labels { get; set; }

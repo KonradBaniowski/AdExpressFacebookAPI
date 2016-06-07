@@ -1617,9 +1617,13 @@ ul.ui-selectable {
 }
 
 .img-responsive-promise {
-    max-width: 50%;
-    margin-top: -10%;
+    /*max-width: 50%;
+    margin-top: -10%;*/
+    max-width: 75%;
+    margin-top: -20%;
+    margin-left: 100%;
 }
+
 
 .logoNavBar{
     max-width:240px;

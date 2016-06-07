@@ -63,10 +63,13 @@ namespace TNS.AdExpress.Constantes.Web
         public const long EmptyUnivers = 927;
         public const long NoSavedUniversCode = 930;
         public const long KeyWordLabelCode = 972;
+        public const long Configuration = 990;
+        public const long Help = 992;
         public const long Capacity = 1000;
         public const long SelectMedia=1017;
         public const long MediaRequiredCode = 1052;
         public const long MailCode = 1136;
+        public const long UpdatesCalendar = 1253;
         public const long Periodicity = 1293;
         public const long Monthly = 1294;
         public const long Quartly = 1295;

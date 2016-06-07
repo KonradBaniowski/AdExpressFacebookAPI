@@ -65,30 +65,30 @@ namespace Km.AdExpressClientWeb.Controllers
             var resList = _rightService.GetModulesList(idWS);
             var res = _rightService.GetModules(idWS);
             List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
-
-            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(resList.First().Value.SiteLanguage);
-            ViewBag.SiteLanguage = resList.First().Value.SiteLanguage;
+            int siteLanguage = resList.First().Value.SiteLanguage;
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(siteLanguage);
+            ViewBag.SiteLanguage = siteLanguage;
             documents.Add(new Documents()
                         {
                             Id = 3,
                             Label = "Documents",
                             InfosNews = new List<InfosNews>()
                             {
+                                //new InfosNews()
+                                //{
+                                //    Label = GestionWeb.GetWebWord(LanguageConstantes.Help, siteLanguage),
+                                //    Url = "Page_aide.pdf"
+                                //},
                                 new InfosNews()
                                 {
-                                    Label = "Aide",
-                                    Url = "Page_aide.pdf"
-                                },
-                                new InfosNews()
-                                {
-                                    Label = "Dates de mises à jour",
-                                    Url = "Planning mise à jour Adexpress.pdf"
-                                },
-                                 new InfosNews()
-                                {
-                                    Label = "Configuration",
-                                    Url = "Configuration.pdf"
+                                    Label = GestionWeb.GetWebWord(LanguageConstantes.UpdatesCalendar, siteLanguage),
+                                    Url = "AdExpressMediaUpdatesCalendar.pdf"
                                 }
+                                // new InfosNews()
+                                //{
+                                //    Label = GestionWeb.GetWebWord(LanguageConstantes.Configuration, siteLanguage),
+                                //    Url = "Configuration.pdf"
+                                //}
                             }
                         });
 

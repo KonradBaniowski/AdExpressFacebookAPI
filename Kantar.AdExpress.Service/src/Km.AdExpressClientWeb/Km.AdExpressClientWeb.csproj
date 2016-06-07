@@ -1478,6 +1478,7 @@
     <Content Include="Content\pdf\Page_aide.pdf" />
     <Content Include="Content\pdf\Configuration.pdf" />
     <Content Include="Content\pdf\AdExpress_Version-Optimisée.pdf" />
+    <Content Include="Content\pdf\AdExpressMediaUpdatesCalendar.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

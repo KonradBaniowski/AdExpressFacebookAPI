@@ -76,6 +76,8 @@ namespace Km.AdExpressClientWeb.Controllers
             //model.ReturnUrl = returnUrl;
             if (!ModelState.IsValid || String.IsNullOrEmpty(model.Email) || String.IsNullOrEmpty(model.Password))
             {
+                ModelState.AddModelError("", GestionWeb.GetWebWord(880, Convert.ToInt32(model.SiteLanguage)));
+                model.Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(model.SiteLanguage));
                 return View(model);
             }
 
