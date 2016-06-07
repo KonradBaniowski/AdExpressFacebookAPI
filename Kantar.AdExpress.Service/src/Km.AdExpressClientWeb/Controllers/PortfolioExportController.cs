@@ -206,12 +206,13 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
 
-                GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
-                nbLevel = detailLevel.GetNbLevels;
-                HeaderBase headerBase = data.NewHeaders.Root;
+               HeaderBase headerBase = data.NewHeaders.Root;
 
                 if (isExportBrut)
                 {
+                    GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
+                    nbLevel = detailLevel.GetNbLevels;                   
+
                     if (nbLevel == 1)
                         headerBase = data.NewHeaders.Root;
                     else
