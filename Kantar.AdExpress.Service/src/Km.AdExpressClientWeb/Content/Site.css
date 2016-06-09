@@ -2672,3 +2672,8 @@ ul.ui-selectable {
     color: white;
     opacity: 0.4;
 }
+
+
+.tuile-medias.disabled-effect {
+    opacity:0.4;
+}
