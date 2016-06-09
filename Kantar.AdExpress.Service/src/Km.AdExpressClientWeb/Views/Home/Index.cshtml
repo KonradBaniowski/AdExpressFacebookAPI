@@ -515,15 +515,15 @@
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 padding-lr-10">
             <div class="tile-third bg-green">
                 <div class="tile-body text-center">
-                    <div class="flip-container">
-                        <div class="front">
-                            <a href="@Url.Action("Index", "Contact")">
+                    <a href="@Url.Action("Index", "Contact")">
+                        <div class="flip-container">
+                            <div class="front">
                                 @*<i class="icon-bubbles sli-size-small"></i>*@
-                                <i class="fa fa-comment fa-lg"></i>
+                                <i style="font-size: 1.4em;" class="glyphicon glyphicon-comment"></i>
                                 <h5>@(Model.Labels.ContactUsLabel)</h5>
-                            </a>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
