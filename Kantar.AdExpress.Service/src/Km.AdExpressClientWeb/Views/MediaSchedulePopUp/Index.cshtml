@@ -425,7 +425,7 @@
                         },
                         success: function (response) {
                             if (response != null) {
-                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
+                                var url = response.PathReadingFile;
                                 var urlDowload = response.PathDownloadingFile;
                                 if (url) {
                                     $("#creativeStream").attr('src', url);
