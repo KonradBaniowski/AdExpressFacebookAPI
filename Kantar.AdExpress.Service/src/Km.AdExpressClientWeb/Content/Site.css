@@ -149,6 +149,11 @@
 .navbar-default.navbar-color .navbar-nav > li > a {
     color: #ffffff;
 }
+@media (min-width: 768px) {
+    .navbar-default.navbar-color .navbar-nav > li > a:hover {
+        transform: scale(0);
+    }
+}
 
     .navbar-default.navbar-color .navbar-nav > li > a:hover {
         transform: scale(1.15);
@@ -162,7 +167,7 @@
     background: url('../Content/img/kantarmedia-bg-0.jpg') no-repeat; /*Login page background*/
     background-size: cover;
     color: #ffffff;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-home {
@@ -170,7 +175,7 @@
     /*background: url('../Content/img/kantarmedia-bg-0.jpg') no-repeat;*/
     color: #ffffff;
     background-size: cover;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-other {
@@ -178,7 +183,7 @@
     background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;
     color: #ffffff;
     background-size: cover;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-results {
@@ -186,14 +191,14 @@
     background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;
     color: #ffffff;
     background-size: cover;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-myadexpress {
     background: url('../Content/img/kantarmedia-bg-4.jpg') no-repeat;
     color: #ffffff;
     background-size: cover;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
 }
 
 .container-kantar-contact {
@@ -201,7 +206,7 @@
     background: url('../Content/img/kantarmedia-bg-4.jpg') no-repeat;
     color: #ffffff;
     background-size: cover;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
 }
 
 .header-kantar-popup {
@@ -220,6 +225,12 @@
 
 .navbar-brand {
     padding: 0px;
+}
+
+@media (min-width: 768px) {
+    .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+        margin-left: 0px;
+    }
 }
 
     .navbar-brand > img {
@@ -615,7 +626,7 @@ input {
     }
 
     .date > h4 > small {
-        background-color: rgba(255,255,255,0.2);
+        background-color: rgba(255,255,255,0.2);.nav > li
     }
 
     .date > h5 {

@@ -438,8 +438,8 @@
                         },
                         success: function (response) {
                             if (response != null) {
-                                var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
-                                var urlDownload = "http://adexpress.kantarmedia.fr/" +  response.PathDownloadingFile;
+                                var url = response.PathReadingFile;
+                                var urlDownload = response.PathDownloadingFile;
                                 if (url) {
                                     $("#creativeStream").attr('src', url);
                                     $("#mediaLoader").addClass("hide");
@@ -476,11 +476,11 @@
                 if (visus.length > 1) {
                     for (i = 0; i < visus.length; i++) {
                         if (i != 0) active = "";
-                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop"  class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop"  class="imgCreaInser" src="' + visus[i] + '" /></center></div>')
                     }
                 } else {
                     $(this).attr("id", "visu");
-                    $(this).html('<center><img id="pop" class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
+                    $(this).html('<center><img id="pop" class="imgCreaInser" src="' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
                 }
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){

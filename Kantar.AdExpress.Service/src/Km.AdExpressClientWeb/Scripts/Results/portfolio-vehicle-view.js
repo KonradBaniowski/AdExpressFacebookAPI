@@ -169,7 +169,7 @@ function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, 
                 htmlArr.push("<div class='modal-header panel-heading header-popup-vehicleView'>");
                 htmlArr.push(" <button class='close' aria-hidden'true' type='button' data-dismiss='modal'><span aria-hidden='true'>&times;</span></button>");
                 htmlArr.push(" <h4 class='modal-title font-normal m-t-none m-b-md text-primary-lt' id='myModalLabel'>");
-                htmlArr.push("<i class='fa fa-file-text blue'></i>  ");
+                htmlArr.push("<i class='fa fa-newspaper-o blue'></i>  ");
                 htmlArr.push(val.Title);
                 htmlArr.push(" - ");
                 htmlArr.push(val.ParutionDate);
@@ -262,7 +262,7 @@ function OpenZoomImageModal() {
         var pDate = button.data('parution-date').toString(); // Extract info from data-* attributes
         var title = button.data('title').toString(); // Extract info from data-* attributes
         $("#modal-vehicleView-Img > .modal-dialog > .modal-content > .modal-body > .img-full").attr('src', srcZoom);
-        $("#modal-vehicleView-Img h4 ").html("<i class='fa fa-file-text blue'></i>" + title + " - " + pDate);
+        $("#modal-vehicleView-Img h4 ").html("<i class='fa fa-newspaper-o blue'></i>" + title + " - " + pDate);
     });
 
     $("#modal-vehicleView-Img").on('hide.bs.modal', function () {

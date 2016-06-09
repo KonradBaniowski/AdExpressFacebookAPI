@@ -442,8 +442,8 @@
                         },
                         success: function (response) {
                             if (response != null) {
-                                url = "http://adexpress.kantarmedia.fr" + response.PathReadingFile;
-                                urlDownload = "http://adexpress.kantarmedia.fr" + response.PathDownloadingFile;
+                                url = response.PathReadingFile;
+                                urlDownload = response.PathDownloadingFile;
                             }
                             if (url) {
                                 $("#creativeStream").attr('src', url);
@@ -470,17 +470,17 @@
                             ajaxGetLinkPath();
                             break;
                         case "SWF":
-                            $("#objectSWF param").first().attr("value", "http://adexpress.kantarmedia.fr" + datas[0]);
-                            $("#objectSWF embed").attr("src", "http://adexpress.kantarmedia.fr" +  datas[0]);
+                            $("#objectSWF param").first().attr("value", datas[0]);
+                            $("#objectSWF embed").attr("src", datas[0]);
                             $("#objectSWF").show();
                             break;
                         case "FLV":
-                            $("#objectFLV param").first().attr("value", "file=" + "http://adexpress.kantarmedia.fr" + datas[0]);
-                            $("#objectFLV embed").attr("flashvars", "file=" + "http://adexpress.kantarmedia.fr" + datas[0]);
+                            $("#objectFLV param").first().attr("value", "file=" + datas[0]);
+                            $("#objectFLV embed").attr("flashvars", "file=" + datas[0]);
                             $("#objectFLV").show();
                             break;
                         default:
-                            url = "http://adexpress.kantarmedia.fr" + datas[0];
+                            url = datas[0];
                             $("#creativeStream").attr('src', url);
                             $("#creativeStream").show();
                     }
@@ -518,7 +518,7 @@
                 if (visus.length > 1) {
                     for (i = 0; i < visus.length; i++) {
                         if (i != 0) active = "";
-                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[i] + '" /></center></div>')
+                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop" class="imgCreaInser" src="' + visus[i] + '" /></center></div>')
                     }
                 }
                 else {
@@ -529,7 +529,7 @@
                         if (visus[0] == "")
                             $(this).html('<span class="fa big iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '"></span>');
                         else
-                            $(this).html('<center><img id="pop" class="imgCreaInser" src="http://adexpress.kantarmedia.fr/' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>');
+                            $(this).html('<center><img id="pop" class="imgCreaInser" src="' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>');
                     }
                     //Lien mp4,mp3,flv,... du visuel (onclick)
                     if (paramsLink[0] != "")
@@ -560,8 +560,8 @@
             }
             else {
                 var params = {
-                    advertiser: datas[1],
-                    idAddress: datas[2]
+                    idAddress: datas[2],
+                    advertiser: datas[1]
                 };
                 CallGadInfos(params);
             }
