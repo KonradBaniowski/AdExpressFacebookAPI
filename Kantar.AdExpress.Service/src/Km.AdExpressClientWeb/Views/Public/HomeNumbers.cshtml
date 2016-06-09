@@ -4,7 +4,7 @@
     @{int i = 0;}
     @foreach (var item in Model.Numbers)
     {
-        <div class="col-lg-4 @(Model.Numbers.Count == (i+1) ? "": "b-r-w")">
+        <div class="col-lg-4 col-md-4 col-sm-4 @(Model.Numbers.Count == (i+1) ? "": "b-r-w")">
             <h1 class="animationFun text-center" id="#fun@(i)"data-value="@item.Value"></h1>
             <h2 class="text-center">@item.Key</h2>
         </div>

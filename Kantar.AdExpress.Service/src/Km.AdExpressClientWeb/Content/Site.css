@@ -169,6 +169,17 @@
     color: #ffffff;
     background-attachment: fixed;
 }
+.container-kantar .login-content-body {
+    float: none;
+    width: 1140px;
+    padding-bottom: 50px;
+    margin: 0 auto;
+}
+@media (max-width: 1139px){
+    .container-kantar .login-content-body {
+        width: 100%;
+    }
+}
 
 .container-kantar-home {
     background: url('../Content/img/HOME_007.jpg') no-repeat;
@@ -238,8 +249,50 @@
         width: auto;
     }
 
+
+.login-page {
+    padding-top: 70px;
+}
+@media (max-width: 980px) {
+    .login-page {
+        padding-top: 0;
+    }
+    .login-page h1{
+        font-size:28px;
+    }
+    .login-page h2,.login-page h3{
+        font-size:20px;
+    }
+}
+.login-footer {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+}
+.fixe {
+    position: fixed;
+}
+.login-footer .img-logo{
+    margin:100px 0 0 -15px;
+}
+@media (max-width: 980px) {
+    .fixe {
+        position: relative !important;
+    }
+    .login-footer img{
+        max-width:250px;
+        max-height:70px;
+        margin:0px !important;
+    }
+    .login-footer .img-logo{
+        margin-left:-30px !important; 
+    }
+}
+
 .panel-default.login {
-    margin-top: 60px;
+    margin-top: 30px;
     color: #ffffff;
     background-color: transparent;
 }
