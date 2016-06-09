@@ -131,8 +131,6 @@ $(document).on('click', '#btn-export', function (event) {
     }
 });
 
-
-
 $(document).on('click', '#btnExport', function (event) {
     event.preventDefault();
     var fileName = $('#fileName').val();
