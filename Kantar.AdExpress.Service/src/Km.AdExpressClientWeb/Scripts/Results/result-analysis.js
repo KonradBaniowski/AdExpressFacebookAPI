@@ -331,6 +331,12 @@
                         fixingDirection: "left",
                         columnSettings: colsFixed
                     }
+                    //,{
+                    //    name: "Sorting",
+                    //    type: "remote",
+                    //    columnSorted: sortFunc,
+                    //    applySortedColumnCss: false
+                    //}
                     ]
             })
 
@@ -347,13 +353,7 @@
                     $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                 }
             });
-            $("#grid").igGrid("headersTable").find('thead > tr:eq(0) > th:eq(0) > span.ui-iggrid-headertext').html("Sort");
-            //$("#grid").igTreeGrid({
-            //    rowCollapsed: function (evt, ui) {
-            //        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
-            //    }
-            //});
-
+        
         } else {
             bootbox.alert(error);
         }
