@@ -7,8 +7,7 @@
         defaultColumnWidth: 200,
         avgRowHeight: 60,
         autoGenerateColumns: true
-    });
-
+    });  
     var ds;
     var cols;
     var colsFixed;
@@ -174,74 +173,9 @@
 
         return "";
     }
-    $("#btn-save-result").click(function () {
-                $("#exportResultModal").modal("show");
-            });
+    
 
-    $("#exportResultModal").on('shown.bs.modal', function (event) {
-                var params = {
-                    id: 0
-                };
-                CallUserResult(params);
-            });
-
-    $("#exportResultModal").on('hide.bs.modal', function () {
-        $("#exportResultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
-            });
-    function CallUserResult(params) {
-                $.ajax({
-                    url: '/Universe/UserResult',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "GET",
-                    datatype: "json",
-                    data: params,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        $('#exportResultModal').html(data);
-                        SaveResultEvents();
-                        CallSaveResult();
-                    }
-                });
-            }
-    function SaveResultEvents() {
-                $("#folders").on('change', function (event) {
-                    var idFolder = $("#folders").val();
-                    var idResult = $('#results').val();
-                    var params = {
-                        id: idFolder
-                    };
-                    CallUserResult(params);
-                });
-            }
-    function CallSaveResult() {
-                $('#btnSaveResult').on('click', function (e) {
-                    var idFolder = $("#folders").val();
-                    var idResult = $('#results').val();
-                    var resultName = $('#resultName').val();
-                    var params = {
-                        folderId: idFolder,
-                        saveAsResultId: idResult,
-                        saveResult: resultName
-                    };
-                    $.ajax({
-                        url: '/Universe/SaveUserResult',
-                        contentType: "application/x-www-form-urlencoded",
-                        type: "POST",
-                        datatype: "json",
-                        data: params,
-                        error: function (xmlHttpRequest, errorText, thrownError) {
-                        },
-                        success: function (data) {
-                            if (data != null && data != "") {
-                                bootbox.alert(data.Message);
-                            }
-                        }
-                    });
-                });
-            }
-
-
+    //Infragistic
     function PercentFormatter(val) {
         if (val > 0)
             return $.ig.formatter(val, "number", "percent");
@@ -397,13 +331,7 @@
                         fixingDirection: "left",
                         columnSettings: colsFixed
                     }
-                    //,{
-                    //    name: "Sorting",
-                    //    //type: "local",
-                    //    customSortFunction: myCustomFunc,
-                    //    //applySortedColumnCss: false
-                    //}
-                ]
+                    ]
             })
 
             gridWidth = $("#grid_table_headers").width();
@@ -419,7 +347,7 @@
                     $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                 }
             });
-
+            $("#grid").igGrid("headersTable").find('thead > tr:eq(0) > th:eq(0) > span.ui-iggrid-headertext').html("Sort");
             //$("#grid").igTreeGrid({
             //    rowCollapsed: function (evt, ui) {
             //        $("#grid_table_container").attr("style", "position: relative; height: 530px;");
@@ -427,9 +355,8 @@
             //});
 
         } else {
-            alert(error);
+            bootbox.alert(error);
         }
-
     }
     var sortFunc = function (field) {
         var index = field[0].id.split("-")[0].split("_g")[1];
@@ -443,4 +370,73 @@
         CallAnalysisResult();
 
     }
+
+    //Export
+    $("#btn-save-result").click(function () {
+        $("#exportResultModal").modal("show");
+    });
+
+    $("#exportResultModal").on('shown.bs.modal', function (event) {
+        var params = {
+            id: 0
+        };
+        CallUserResult(params);
+    });
+
+    $("#exportResultModal").on('hide.bs.modal', function () {
+        $("#exportResultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
+    });
+    function CallUserResult(params) {
+        $.ajax({
+            url: '/Universe/UserResult',
+            contentType: "application/x-www-form-urlencoded",
+            type: "GET",
+            datatype: "json",
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                $('#exportResultModal').html(data);
+                SaveResultEvents();
+                CallSaveResult();
+            }
+        });
+    }
+    function SaveResultEvents() {
+        $("#folders").on('change', function (event) {
+            var idFolder = $("#folders").val();
+            var idResult = $('#results').val();
+            var params = {
+                id: idFolder
+            };
+            CallUserResult(params);
+        });
+    }
+    function CallSaveResult() {
+        $('#btnSaveResult').on('click', function (e) {
+            var idFolder = $("#folders").val();
+            var idResult = $('#results').val();
+            var resultName = $('#resultName').val();
+            var params = {
+                folderId: idFolder,
+                saveAsResultId: idResult,
+                saveResult: resultName
+            };
+            $.ajax({
+                url: '/Universe/SaveUserResult',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null && data != "") {
+                        bootbox.alert(data.Message);
+                    }
+                }
+            });
+        });
+    }
+    
 });
