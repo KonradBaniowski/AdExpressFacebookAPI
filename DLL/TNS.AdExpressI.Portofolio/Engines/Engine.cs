@@ -172,16 +172,42 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			t.Append("</table>");
 			t.Append("<br><br>");
 		}
-		#endregion
+        #endregion
 
-		#endregion
+        #region Get All Period Insertions
+        public GridResult GetAllPeriodInsertionsGridResult(string linkText)
+        {
+            GridResult gridResult = new GridResult();
+            gridResult.HasData = false;
 
-		#region Internal methods
-		/// <summary>
-		/// Get result table
-		/// </summary>
-		/// <returns></returns>
-		protected abstract ResultTable ComputeResultTable();
+            object[,] gridData = new object[1, 1];
+
+            try
+            {
+                //gridData[0, 0] = "<a onclick=\"javascript:window.open('/PortfolioDetailMedia?idMedia=" + _idMedia + "&dayOfWeek=&ecran=', '_blank', 'toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700'); void(0);\">"+linkText+"</a>";
+                gridData[0, 0] = "<a onclick='GetAllPeriodInsertionsDetailSupp("+ _idMedia + ")'><i class='fa fa-folder-open-o'></i> " + linkText +"</a>";
+            }
+            catch (Exception err)
+            {
+                throw (new Exception(err.Message));
+            }
+
+            gridResult.HasData = true;
+            gridResult.isOneColumnLine = true;
+            gridResult.Data = gridData;
+
+            return gridResult;
+        }
+        #endregion
+
+        #endregion
+
+        #region Internal methods
+        /// <summary>
+        /// Get result table
+        /// </summary>
+        /// <returns></returns>
+        protected abstract ResultTable ComputeResultTable();
 
 		/// <summary>
 		/// Build Html result

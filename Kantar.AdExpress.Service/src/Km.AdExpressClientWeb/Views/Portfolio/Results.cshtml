@@ -44,6 +44,7 @@
 <div class="h20">
 </div>
 
+<div id="allPeriodInsertions" class="text-center margin-bot-30"></div>
 <div class="panel-group panel-group-results" id="resaccord" style="margin-bottom:20px;">
     <div id="GridPanel" class="panel panel-primary panel-results">
         <div class="panel-heading head-results">
@@ -174,7 +175,15 @@
     @Scripts.Render("~/bundles/portfolio-vehicle-view")
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
+
+        function GetAllPeriodInsertionsDetailSupp(idMedia) {
+            javascript: window.open("/PortfolioDetailMedia?idMedia=" + idMedia + "&dayOfWeek=&ecran=", "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700");
+            void (0);
+        }
+
         $(document).ready(function () {
+
+
 
             if (typeof jQuery === "undefined") { throw new Error("jQuery") }
 
@@ -427,23 +436,33 @@
                     },
                     success: function (data) {
                         if (data != null && data != "") {
-                            dataTreeGrid = data.datagrid;
-                            cols = GetColumnsFormatter(data.columns);
-                            colsFixed = data.columnsfixed;
-                            needFixedColumns = data.needfixedcolumns;
+                            if (data.isonecolumnline) {
+                                //TODO : à faire autrement
+                                $("#GridPanel").hide();
+                                $("#allPeriodInsertions").html(data.datagrid.substring(3, data.datagrid.length - 3));
+                                $("#allPeriodInsertions").show();
+                            }
+                            else {
+                                $("#allPeriodInsertions").hide();
+                                $("#GridPanel").show();
+                                dataTreeGrid = data.datagrid;
+                                cols = GetColumnsFormatter(data.columns);
+                                colsFixed = data.columnsfixed;
+                                needFixedColumns = data.needfixedcolumns;
 
-                            var schema = new $.ig.DataSchema("array", {
-                                fields: data.schema
-                            });
+                                var schema = new $.ig.DataSchema("array", {
+                                    fields: data.schema
+                                });
 
-                            ds = new $.ig.DataSource({
-                                type: "json",
-                                schema: schema,
-                                dataSource: dataTreeGrid,
-                                callback: renderGrid
-                            });
+                                ds = new $.ig.DataSource({
+                                    type: "json",
+                                    schema: schema,
+                                    dataSource: dataTreeGrid,
+                                    callback: renderGrid
+                                });
 
-                            ds.dataBind();
+                                ds.dataBind();
+                            }
 
                             if (userFilter.ResultTypeFilter.ResultType == "4") {
                                 $("#ChartPanel").show();
