@@ -35,6 +35,10 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         Miysis = 7,
         /// <summary>
+        /// Miysis Plugin
+        /// </summary>
+        MiysisPptx = 45,
+        /// <summary>
         /// Mnevis Plugin
         /// </summary>
         Mnevis = 8,
