@@ -19,5 +19,6 @@ namespace TNS.AdExpress.Domain.Results
         public bool HasMSCreatives { get; set; }
         public string Unit { get; set; }
         public Filter Filter { get; set; }
-    }
+        public bool isOneColumnLine { get; set; }
+}
 }
