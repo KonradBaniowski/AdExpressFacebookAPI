@@ -28,7 +28,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
-using FctWeb = TNS.AdExpress.Web.Functions;
+using WebCore = TNS.AdExpress.Web.Core;
 using TNS.AdExpressI.MediaSchedule.DAL;
 using TNS.AdExpressI.MediaSchedule.DAL.Exceptions;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
@@ -106,7 +106,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
 
             sql.AppendFormat("select {0},date_num, max(period_count) as period_count,{1} from (",
                 detailLevel.GetSqlFieldsWithoutTablePrefix()
-                , FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
+                , WebCore.Utilities.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
 
             //SubPeriod Management
             List<MediaScheduleSubPeriod> subPeriodsSet = _period.SubPeriods;
@@ -199,9 +199,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
                 // Get the classification table
                 mediaTableName = string.Format("{0}, {1}, ", detailLevel.GetSqlTables(_schAdexpr03.Label), tblTargetMediaAssignment.SqlWithPrefix);
                 // Get unit field
-                dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
-                unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.press), periodBreakDown);
-                unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
+                dateFieldName = WebCore.Utilities.SQLGenerator.GetDateFieldName(periodBreakDown);
+                unitFieldName = WebCore.Utilities.SQLGenerator.GetUnitFieldName(_session, VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.press), periodBreakDown);
+                unitAlias = WebCore.Utilities.SQLGenerator.GetUnitAlias(_session);
                 // Periodicity
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.press), periodDisplay);
                 // Get classification fields
@@ -289,13 +289,13 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
 
             //Access rgith
             if (_module == null) throw (new MediaScheduleDALException("_module parameter  cannot be NULL"));
-            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+            sql.Append(WebCore.Utilities.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
 
             //Advertiser classification rights
             sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
             //Media Rights
-            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(WebCore.Utilities.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
 
 			//Universe media
 			sql.Append(GetMediaUniverse(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));

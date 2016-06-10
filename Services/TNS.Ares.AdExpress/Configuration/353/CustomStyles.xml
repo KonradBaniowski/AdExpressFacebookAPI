@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<customStyles>
+  <mySessionsWidth width="500"/>
+  <treeViewWidth width="230"/>
+  <creationPopUpWidth width="830"/>
+  <synthesisWidth width="600"/>
+  <fileItemWidth width="650"/>
+  <headerWidth width="648"/>
+  <creativePopUpWidth width="394"/>
+  <chartEvolutionWidth width="850"/>
+  <chartEvolutionHeight width="500"/>
+  <chartMediaStrategyWidth width="850"/>
+  <chartMediaStrategyHeight width="850"/>
+  <chartSeasonalityWidth width="850"/>
+  <chartSeasonalityHeight width="500"/>
+  <chartSeasonalityBigWidth width="1150"/>
+  <chartSeasonalityBigHeight width="700"/>
+</customStyles>

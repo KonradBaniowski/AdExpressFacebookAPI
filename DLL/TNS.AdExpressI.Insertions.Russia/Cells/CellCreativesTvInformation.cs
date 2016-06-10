@@ -20,7 +20,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using System.Reflection;
-using WebFunctions = TNS.AdExpress.Web.Functions;
+using WebCore = TNS.AdExpress.Web.Core;
 #endregion
 
 namespace TNS.AdExpressI.Insertions.Russia.Cells
@@ -127,7 +127,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp)
                 {
-                    str.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><div class=\"videoFileBackGround\"></div></a>", ((!string.IsNullOrEmpty(s)) ? WebFunctions.QueryStringEncryption.EncryptQueryString(s) : s), this._session.IdSession, _vehicle.DatabaseId);
+                    str.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><div class=\"videoFileBackGround\"></div></a>", ((!string.IsNullOrEmpty(s)) ? WebCore.Utilities.QueryStringEncryption.EncryptQueryString(s) : s), this._session.IdSession, _vehicle.DatabaseId);
                     hasVisual = true;
                 }
             }
@@ -186,7 +186,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
 
             if (_visuals.Count > 0)
             {
-                str.Append("<a href=\"javascript:openDownload('" + ((!string.IsNullOrEmpty(_visuals[0])) ? WebFunctions.QueryStringEncryption.EncryptQueryString(_visuals[0]) : _visuals[0]) + "','" + this._session.IdSession + "','" + _vehicle.DatabaseId + "');\">");
+                str.Append("<a href=\"javascript:openDownload('" + ((!string.IsNullOrEmpty(_visuals[0])) ? WebCore.Utilities.QueryStringEncryption.EncryptQueryString(_visuals[0]) : _visuals[0]) + "','" + this._session.IdSession + "','" + _vehicle.DatabaseId + "');\">");
                 str.Append("<img border=0 src=\"/App_Themes/" + themeName + "/Images/common/Picto_pellicule.gif\">");
                 str.Append("</a>");
             }

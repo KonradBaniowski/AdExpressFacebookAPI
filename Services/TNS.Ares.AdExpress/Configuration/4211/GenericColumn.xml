@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<genericColumn>
+  <columnItems>
+    <column id="1" name="Media" webTextId="363" dbId="id_vehicle" dbLabel="vehicle" dbTable="vehicle" dbTablePrefixe="vh" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="2" name="Categorie" webTextId="1382" dbId="id_category" dbLabel="category" dbTable="category" dbTablePrefixe="ct" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="3" name="Support" webTextId="971" dbId="id_media" dbLabel="media" dbTable="media" dbTablePrefixe="md" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="4" name="Centre d'interet" webTextId="1887" dbId="id_interest_center" dbLabel="interest_center" dbTable="interest_center" dbTablePrefixe="ic" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="5" name="Régie" webTextId="1383" dbId="id_media_seller" dbLabel="media_seller" dbTable="media_seller" dbTablePrefixe="ms" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="6" name="Version" webTextId="1888"  dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="id_slogan" dbLabelAlias="slogan" convertNullDbLabel="true"/>
+    <column id="7" name="Annonceur" webTextId="857" dbId="id_advertiser" dbLabel="advertiser" dbTable="advertiser" dbTablePrefixe="ad" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="8" name="Groupe" webTextId="1110" dbId="id_group_" dbLabel="group_" dbTable="group_" dbTablePrefixe="gr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="9" name="Produit" webTextId="858" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="10" name="Spot" webTextId="869"  dbLabel="associated_file"/>
+    <column id="11" name="Format" webTextId="1420" dbId="id_format" dbLabel="format" dbTable="format" dbTablePrefixe="fo"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="12" name="Surface page" webTextId="469"  dbLabel="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
+    <column id="13" name="Couleur" webTextId="1438" dbId="id_color" dbLabel="color" dbTable="color" dbTablePrefixe="cl"   dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="14" name="Prix" webTextId="1936" dbLabel="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="15" name="Descriptif" webTextId="1769" dbId="id_location" dbLabel="location" dbTable="location" dbTablePrefixe="lo" dbRelatedTablePrefixe="dl" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel">
+      <constraints>
+        <dbConstraints>
+          <dbOrderConstraints>
+            <dbOrderConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbOrderConstraints>
+          <dbGroupbyConstraints>
+            <dbGroupbyConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbGroupbyConstraints>
+          <dbFieldConstraints>
+            <dbFieldConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbFieldConstraints>
+          <dbJoinConstraints>
+            <dbJoinConstraint id="1" name="Jointure publicité" dbField="id_advertisement" dbTablePrefixe="dl" dbRelatedField="id_advertisement" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="2" name="Jointure support publicité" dbField="id_media" dbTablePrefixe="dl" dbRelatedField="id_media" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="Jointure date emplacement" dbField="date_media_num" dbTablePrefixe="dl" dbRelatedField="date_media_num" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="validation donnée" dbField="activation" dbTablePrefixe="dl" dbRelatedField="50" sqlOperation="leftOuterJoin"/>
+          </dbJoinConstraints>
+          <dbTableConstraints>
+            <dbTableConstraint id="1" name="Publicité presse" dbTable="data_location" dbTablePrefixe="dl" dbSchema="adexprsk01"/>
+          </dbTableConstraints>
+        </dbConstraints>
+      </constraints>
+    </column>
+    <column id="16" name="Top de diffusion radio" webTextId="860" dbLabel="id_top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
+    <column id="17" name="Top de diffusion télévision" webTextId="860" dbLabel="top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
+    <column id="18" name="Durée" webTextId="861"  dbLabel="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
+    <column id="19" name="Position radio" webTextId="862"  dbLabel="rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="20" name="Position télévision" webTextId="862"  dbLabel="id_rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="21" name="Durée écran" webTextId="597"  dbLabel="duration_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
+    <column id="22" name="Nombre Spots écran télévision" webTextId="1937"  dbLabel="number_message_commercial_brea" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="23" name="Nombre Spots écran radio" webTextId="1937"  dbLabel="number_spot_com_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="24" name="Position hap" webTextId="599"  dbLabel="rank_wap" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="25" name="Durée écran hap" webTextId="600"  dbLabel="duration_com_break_wap" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
+    <column id="26" name="Nombre spots hap" webTextId="1938"  dbLabel="number_spot_com_break_wap" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="27" name="Code écran" webTextId="495"  dbLabel="id_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="28" name="Nombre de panneaux" webTextId="1939"  dbLabel="number_board" CellType="TNS.FrameWork.WebResultUI.CellInsertion" format="max0"/>
+    <column id="29" name="Format du panneau" webTextId="1420"  dbLabel="type_board" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="30" name="Type de réseau" webTextId="1609"  dbLabel="type_sale" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="31" name="Réseau afficheur" webTextId="1611"  dbLabel="poster_network" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="32" name="Agglomeration" webTextId="1660"  dbId="id_agglomeration" dbLabel="agglomeration" dbTable="agglomeration" dbTablePrefixe="agglo" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="33" name="Date" webTextId="895"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="34" name="Page" webTextId="894"  dbLabel="media_paging"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="35" name="Visuel" webTextId="1909"  dbLabel="visual">
+      <constraints>
+        <dbConstraints>
+          <dbFieldConstraints>
+            <dbFieldConstraint id="1" name="Visibilité du visuel" dbField="disponibility_visual" dbTablePrefixe="appliMd"/>
+            <dbFieldConstraint id="2" name="Validité du visuel" dbField="activation" dbTablePrefixe="appliMd"/>
+          </dbFieldConstraints>
+          <dbGroupbyConstraints>
+            <dbGroupbyConstraint id="1" name="Visibilité du visuel" dbField="disponibility_visual" dbTablePrefixe="appliMd"/>
+            <dbGroupbyConstraint id="2" name="Validité du visuel" dbField="activation" dbTablePrefixe="appliMd"/>
+          </dbGroupbyConstraints>
+          <dbJoinConstraints>
+            <dbJoinConstraint id="1" name="Jointure support" dbField="id_media" dbTablePrefixe="appliMd" dbRelatedField="id_media" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="2" name="Jointure date" dbField="date_debut" dbTablePrefixe="appliMd" dbRelatedField="date_media_num" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="Jointure identifiant projet" dbField="id_project" dbTablePrefixe="appliMd" dbRelatedField="1"  sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="4" name="validité du champ" dbField="activation"  dbTablePrefixe="appliMd" dbRelatedField="50"  sqlOperation="leftOuterJoin"/>
+          </dbJoinConstraints>
+          <dbTableConstraints>
+            <dbTableConstraint  id="1" name="Application media" dbTable="application_media" dbTablePrefixe="appliMd" dbSchema="adexprsk01"/>
+          </dbTableConstraints>
+        </dbConstraints>
+      </constraints>
+    </column>
+    <column id="36" name="Position presse" webTextId="862"  dbLabel="rank_media" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="37" name="Genre d'émissions" webTextId="2050" dbId="id_program_type" dbLabel="program_type" dbTable="program_type" dbTablePrefixe="pt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="38" name="Emissions" webTextId="2051" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="39" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="40" name="Jour Semaine" webTextId="2068"  dbLabel="date_media_num" dbLabelAlias="day_of_week" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="dddd"/>
+    <column id="41" name="Affiche" webTextId="1610"  dbLabel="associated_file"/>
+    <column id="42" name="Date du Support" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <!--<column id="43" name="Agence Media" webTextId="731" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>-->
+    <column id="44" name="Famille" webTextId="1103" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="45" name="Surface en mmc" webTextId="595"  dbLabel="area_mmc" CellType="TNS.FrameWork.WebResultUI.CellMMC" format="max0"/>
+    <column id="46" name="Rang famille" webTextId="1426"  dbLabel="rank_sector" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="47" name="Rang groupe" webTextId="1427"  dbLabel="rank_group_" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="48" name="Rang support" webTextId="1428"  dbLabel="rank_media" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="49" name="Date de diffusion" webTextId="1380"  dbLabel="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="50" name="Code écran" webTextId="495"  dbLabel="commercial_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="51" name="Prix du 30 sec" webTextId="1446" dbLabel="expenditure_30s_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="52" name="Type page" webTextId="2246"  dbLabel="id_type_page" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="53" name="Plan Media" webTextId="1478"/>
+    <column id="54" name="Id pub presse" webTextId="860" dbLabel="id_advertisement" dbTablePrefixe="wp" />
+    <column id="55" name="Id cobranding" webTextId="860" dbLabel="id_cobranding_advertiser" dbTablePrefixe="wp"/>
+    <column id="56" name="Id Outdoor" webTextId="860" dbLabel="id_data_outdoor"/>
+    <column id="57" name="Date de couverture" webTextId="2267"  dbLabel="date_media_num" dbLabelAlias="date_cover_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+
+    <column id="58" name="Id VMC" webTextId="860" dbTablePrefixe="wp" dbLabel="id_data_marketing_direct_panel"/>
+    <column id="59" name="Enveloppe rapidité" webTextId="2223" dbId="id_mailing_rapidity" dbLabel="mailing_rapidity" dbTable="mailing_rapidity" dbTablePrefixe="mr"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="60" name="Type de doc" webTextId="2221" dbId="id_mail_type" dbLabel="mail_type" dbTable="mail_type" dbTablePrefixe="mt" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="61" name="Volume" webTextId="2216" isSum="true" dbTablePrefixe="wp" dbLabel="volume" dbLabelAlias="volume" CellType="TNS.FrameWork.WebResultUI.CellVolume" format="max0"/>
+    <column id="62" name="Poids" webTextId="2220" dbLabel="weight" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="63" name="Nombre d'item" webTextId="2224" dbLabel="object_count" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="64" name="Format enveloppe" webTextId="1420" dbLabel="mail_format" dbLabelAlias="envelope_format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="65" name="Contenu" webTextId="2239" dbId="id_mail_content" dbLabel="mail_content" dbTable="mail_content" dbTablePrefixe="mc" dbRelatedTablePrefixe="dmc" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel">
+      <constraints>
+        <dbConstraints>
+          <dbJoinConstraints>
+            <dbJoinConstraint id="1" name="Jointure date" dbField="date_media_num" dbTablePrefixe="dmc" dbRelatedField="date_media_num" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="2" name="Jointure support" dbField="id_media" dbTablePrefixe="dmc" dbRelatedField="id_media" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="Jointure cobranding" dbField="id_cobranding_advertiser" dbTablePrefixe="dmc" dbRelatedField="id_cobranding_advertiser" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="Jointure id data marketing" dbField="id_data_marketing_direct_panel" dbTablePrefixe="dmc" dbRelatedField="id_data_marketing_direct_panel" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="validation donnée" dbField="activation" dbTablePrefixe="dmc" dbRelatedField="50" sqlOperation="leftOuterJoin"/>
+          </dbJoinConstraints>
+          <dbTableConstraints>
+            <dbTableConstraint id="1" name="data mail content" dbTable="data_mail_content" dbTablePrefixe="dmc" dbSchema="adexprsk01"/>
+          </dbTableConstraints>
+        </dbConstraints>
+      </constraints>
+    </column>
+    <column id="66" name="Type enveloppe" webTextId="2222" dbId="id_mail_format" dbLabel="mail_format" dbTable="mail_format" dbTablePrefixe="mfr"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="67" name="Prix" webTextId="1936" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+
+    <column id="68" name="Somme Surface page" webTextId="2251" isSum="true"  dbLabel="area_page" dbLabelAlias="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
+    <column id="69" name="Somme Durée" webTextId="861" isSum="true"  dbLabel="duration" dbLabelAlias="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
+    <column id="70" name="Nombre de supports" webTextId="2252" isCountDistinct="true"  dbLabel="id_media" dbTablePrefixe="wp" dbLabelAlias="nb_supports" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="71" name="Nombre de supports press" webTextId="2252" dbLabel="id_media" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellIdsNumber" format="max0"/>
+    <column id="72" name="Insertions" webTextId="1398" isSum="true"  dbLabel="insertion" dbLabelAlias="insertion" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="73" name="Date kiosque (press)" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" dbLabelAlias="dateKiosque" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="74" name="Insertions" webTextId="2253" isSum="true"  dbLabel="insertion" dbLabelAlias="insertion" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="75" name="Max Spot" webTextId="869" isMax="true"  dbLabel="associated_file" dbLabelAlias="associated_file"/>
+    <column id="76" name="Somme Nombre de panneaux" webTextId="1939" isSum="true"  dbLabel="number_board" dbLabelAlias="number_board" CellType="TNS.FrameWork.WebResultUI.CellInsertion" format="max0"/>
+    <column id="77" name="Produit AdNetTrack" webTextId="2154" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="78" name="Format banner" webTextId="1420" dbId="id_format_banners" dbLabel="format_banners" dbLabelAlias="format_banners" dbTable="format_banners" dbTablePrefixe="fban"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel" useLanguage="false"/>
+    <column id="79" name="Dimension banner" webTextId="2542" dbId="id_dimension_banners" dbLabel="dimension_banners" dbLabelAlias="dimension_banners" dbTable="dimension_banners" dbTablePrefixe="dban"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel" useLanguage="false"/>
+    <column id="80" name="Banner url" webTextId="1420" isMax="true" dbLabel="url" dbLabelAlias="url" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="81" name="Banner hashcode" webTextId="1888" dbLabel="hashcode" dbLabelAlias="hashcode" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="82" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="84" name="Dimension banner Internet" webTextId="2542" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="85" name="Euros" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
+    <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
+    <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="89" name="Id Category" webTextId="860" dbLabel="id_category" dbTablePrefixe="wp" dbLabelAlias="idCategory"/>
+    <column id="90" name="Row number" webTextId="2560"  dbLabel="rownum" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="91" name="Dimension banner mobile" webTextId="2542" dbId="id_dimension_banners_mobile" dbLabel="dimension_banners_mobile" dbLabelAlias="dimension_banners_mobile" dbTable="dimension_banners_mobile" dbTablePrefixe="dbanm"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel" useLanguage="false"/>
+    <column id="92" name="Produit evaliant mobile" webTextId="468" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="93" name="Descriptif Magazine" webTextId="1769" dbId="id_location" dbLabel="location" dbTable="location" dbTablePrefixe="lo" dbRelatedTablePrefixe="dl" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel">
+      <constraints>
+        <dbConstraints>
+          <dbOrderConstraints>
+            <dbOrderConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbOrderConstraints>
+          <dbGroupbyConstraints>
+            <dbGroupbyConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbGroupbyConstraints>
+          <dbFieldConstraints>
+            <dbFieldConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbFieldConstraints>
+          <dbJoinConstraints>
+            <dbJoinConstraint id="1" name="Jointure publicité" dbField="id_advertisement" dbTablePrefixe="dl" dbRelatedField="id_advertisement" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="2" name="Jointure support publicité" dbField="id_media" dbTablePrefixe="dl" dbRelatedField="id_media" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="Jointure date emplacement" dbField="date_media_num" dbTablePrefixe="dl" dbRelatedField="date_media_num" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="validation donnée" dbField="activation" dbTablePrefixe="dl" dbRelatedField="50" sqlOperation="leftOuterJoin"/>
+          </dbJoinConstraints>
+          <dbTableConstraints>
+            <dbTableConstraint id="1" name="Publicité presse" dbTable="data_location_magazine" dbTablePrefixe="dl" dbSchema="adexprsk01"/>
+          </dbTableConstraints>
+        </dbConstraints>
+      </constraints>
+    </column>
+    <column id="94" name="Descriptif newsPaper" webTextId="1769" dbId="id_location" dbLabel="location" dbTable="location" dbTablePrefixe="lo" dbRelatedTablePrefixe="dl" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel">
+      <constraints>
+        <dbConstraints>
+          <dbOrderConstraints>
+            <dbOrderConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbOrderConstraints>
+          <dbGroupbyConstraints>
+            <dbGroupbyConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbGroupbyConstraints>
+          <dbFieldConstraints>
+            <dbFieldConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
+          </dbFieldConstraints>
+          <dbJoinConstraints>
+            <dbJoinConstraint id="1" name="Jointure publicité" dbField="id_advertisement" dbTablePrefixe="dl" dbRelatedField="id_advertisement" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="2" name="Jointure support publicité" dbField="id_media" dbTablePrefixe="dl" dbRelatedField="id_media" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="Jointure date emplacement" dbField="date_media_num" dbTablePrefixe="dl" dbRelatedField="date_media_num" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="3" name="validation donnée" dbField="activation" dbTablePrefixe="dl" dbRelatedField="50" sqlOperation="leftOuterJoin"/>
+          </dbJoinConstraints>
+          <dbTableConstraints>
+            <dbTableConstraint id="1" name="Publicité presse" dbTable="data_location_newspaper" dbTablePrefixe="dl" dbSchema="adexprsk01"/>
+          </dbTableConstraints>
+        </dbConstraints>
+      </constraints>
+    </column>
+    <column id="95" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+  </columnItems>
+
+  <detailColumns>
+    <!--Magazine-->
+    <detailColumn id="1" name="Page\Visuel\Annonceur\Groupe\Produit\Version\Centre d'interet\Régie\Format\Surface\Couleur\Prix\Descriptif">
+      <columnItem id="54" name="Id pub presse" visible="false"  notInExcelExport="true" isKey="true"/>
+      <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <!-- <columnItem id="34" name="Page"/>-->
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <!--<columnItem id="6" name="Version" idDetailLevelMatching="6"/>-->
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
+      <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
+      <!--<columnItem id="12" name="Surface"/>-->
+      <columnItem id="13" name="Couleur"/>
+      <columnItem id="36" name="Position"/>
+      <columnItem id="14" name="Prix"/>
+      <!--<columnItem id="93" name="Descriptif"/>-->
+      <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
+    </detailColumn>
+    <!--Radio-->
+    <detailColumn id="2" name="Spot\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="6" name="Version" idDetailLevelMatching="6"/>
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="16" name="Top de diffusion" isKey="true"/>
+      <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
+      <!--<columnItem id="19" name="Position"/>
+      <columnItem id="21" name="Durée écran"/>
+      <columnItem id="23" name="Nombre Spots écran"/>
+      <columnItem id="24" name="Position hap"/>
+      <columnItem id="25" name="Durée écran hap"/>
+      <columnItem id="26" name="Nombre spots hap"/>-->
+      <columnItem id="14" name="Prix"/>
+      <columnItem id="55" name="Id Cobranding" visible="false" isKey="true"/>
+    </detailColumn>
+    <!--TV-->
+    <detailColumn id="3" name="Spot\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Code écran\Durée\Position\Durée écran\Nombre Spots écran\Prix">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <!--<columnItem id="10" name="Spot" notInExcelExport="true"/>-->
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="6" name="Version" idDetailLevelMatching="6"/>
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="17" name="Top de diffusion"/>
+      <!-- <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
+      <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
+      <columnItem id="20" name="Position" isKey="true"/>
+      <!-- <columnItem id="21" name="Durée écran"/>-->
+      <!-- <columnItem id="22" name="Nombre Spots écran"/>-->
+      <columnItem id="14" name="Prix"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+    </detailColumn>
+    <!--Outdoor-->
+    <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>
+      <columnItem id="41" name="Affiche" notInExcelExport="true"/>
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie"/>
+      <columnItem id="28" name="Nombre de panneaux"/>
+      <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>
+      <columnItem id="30" name="Type de réseau"/>
+      <columnItem id="31" name="Réseau afficheur"/>
+      <columnItem id="32" name="Agglomeration"/>
+      <columnItem id="14" name="Prix"/>
+    </detailColumn>
+    <!--TV Parrainage-->
+    <detailColumn id="5" name="Spot\Jour semaine\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Code écran\Durée\Position\Forme de parrainage\Genre d'émission\Emission\Prix">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <columnItem id="40" name="Jour semaine"/>
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="6" name="Version" idDetailLevelMatching="6"/>
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="17" name="Top de diffusion"/>
+      <!--<columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
+      <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
+      <columnItem id="20" name="Position" isKey="true"/>
+      <columnItem id="39" name="Forme de parrainage" idDetailLevelMatching="25"/>
+      <columnItem id="37" name="Genre d'émission" idDetailLevelMatching="23"/>
+      <columnItem id="38" name="Emission" idDetailLevelMatching="24"/>
+      <columnItem id="14" name="Prix"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+    </detailColumn>
+    <!--Magazine-->
+    <detailColumn id="6" name="Visuel\Date du Support\Annonceurs\Agence média\Produit\Famille\Groupe\Page\Surface en page\Surface en mmc\Prix\Descriptifs\Format\Couleur\Rang famille\Rang groupe\Rang support">
+      <columnItem id="35" name="Visuel" notInExcelExport="true"/>
+      <columnItem id="42" name="Date du Support"/>
+      <columnItem id="7" name="Annonceur"/>
+      <!-- <columnItem id="43" name="Agence Media"/>-->
+      <columnItem id="53" name="Plan Media"/>
+      <columnItem id="3" name="Support"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="44" name="Famille"/>
+      <columnItem id="8" name="Groupe"/>
+      <!--<columnItem id="34" name="Page"/>-->
+      <!-- <columnItem id="12" name="Surface page"/>-->
+      <columnItem id="45" name="Surface en mmc"/>
+      <columnItem id="14" name="Prix"/>
+      <!--<columnItem id="93" name="Descriptif"/>-->
+      <columnItem id="11" name="Format"/>
+      <columnItem id="13" name="Couleur"/>
+      <columnItem id="52" name="Type page" visible="false"/>
+      <columnItem id="46" name="Rang famille"/>
+      <columnItem id="47" name="Rang groupe"/>
+      <columnItem id="48" name="Rang support"/>
+    </detailColumn>
+    <!--Radio-->
+    <detailColumn id="7" name="Créations\Date de diffusion\Annonceurs\Agence média\Produit\Famille\Groupe\Top de diffusion\Durée\Code écran\Position\Durée écran\Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix">
+      <columnItem id="10" name="Spot"/>
+      <columnItem id="49" name="Date de diffusion"/>
+      <columnItem id="7" name="Annonceur"/>
+      <!--<columnItem id="43" name="Agence Media"/>-->
+      <columnItem id="53" name="Plan Media"/>
+      <columnItem id="3" name="Support"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="44" name="Famille"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="16" name="Top de diffusion radio"/>
+      <columnItem id="18" name="Durée"/>
+      <columnItem id="50" name="Code écran"/>
+      <!--<columnItem id="19" name="Position radio"/>
+      <columnItem id="21" name="Durée écran"/>
+      <columnItem id="23" name="Nombre Spots écran radio"/>
+      <columnItem id="24" name="Position hap"/>
+      <columnItem id="25" name="Durée écran hap"/>
+      <columnItem id="26" name="Nombre spots hap"/>-->
+      <columnItem id="14" name="Prix"/>
+    </detailColumn>
+    <!--TV-->
+    <detailColumn id="8" name="Vidéo\Date de diffusion\Annonceurs\Agence média\Produit\Famille\Groupe\Top de diffusion\Durée\Code écran\Position\Durée écran\Spots écran\Prix\Prix du 30 sec">
+      <!--<columnItem id="10" name="Spot"/>-->
+      <columnItem id="49" name="Date de diffusion"/>
+      <columnItem id="7" name="Annonceur"/>
+      <!--<columnItem id="43" name="Agence Media"/>-->
+      <columnItem id="53" name="Plan Media"/>
+      <columnItem id="3" name="Support"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="44" name="Famille"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="17" name="Top de diffusion télévision"/>
+      <columnItem id="18" name="Durée"/>
+      <!-- <columnItem id="27" name="Code écran"/>-->
+      <columnItem id="20" name="Position télévision"/>
+      <!-- <columnItem id="21" name="Durée écran hap"/>-->
+      <!--<columnItem id="22" name="Nombre Spots écran télévision"/>-->
+      <columnItem id="14" name="Prix"/>
+      <columnItem id="51" name="Prix du 30 sec"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+    </detailColumn>
+    <!--Magazine-->
+    <detailColumn id="9" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
+      <columnItem id="54" name="Id pub presse" visible="false"  notInExcelExport="true" isKey="true"/>
+      <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <!-- <columnItem id="34" name="Page"/>-->
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
+      <!-- <columnItem id="12" name="Surface"/>-->
+      <columnItem id="13" name="Couleur"/>
+      <columnItem id="14" name="Prix"/>
+      <!--<columnItem id="93" name="Descriptif"/>-->
+      <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
+    </detailColumn>
+    <!--VMC-->
+    <detailColumn id="10" name="Visuel\Annonceur\Produit\Groupe\Version\Poids\Prix\Volumes\Format\Format enveloppe\Item\Format contenant\Type de doc\Contenu">
+      <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="41" name="Visuel" notInExcelExport="true"/>
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="6" name="Version" idDetailLevelMatching="6" isKey="true"/>
+      <columnItem id="67" name="Prix"/>
+      <columnItem id="62" name="Poid"/>
+      <columnItem id="61" name="Volume"/>
+      <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
+      <columnItem id="64" name="Format enveloppe"/>
+      <columnItem id="63" name="Item"/>
+      <columnItem id="66" name="Format enveloppe"/>
+      <columnItem id="60" name="Type de doc"/>
+      <columnItem id="59" name="rapidity"/>
+      <columnItem id="65" name="Contenu"/>
+    </detailColumn>
+
+    <!--Détail versions-->
+    <!--Magazine and NewsPaper-->
+    <detailColumn id="11" name="Visuel\Annonceur\Groupe\Produit\Version\Budget\Insertions\Volume page\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <!--<columnItem id="6" name="Version" isKey="true"/>-->
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="72" name="insertion"/>
+      <columnItem id="68" name="Surface"/>
+      <columnItem id="71" name="Nb supports"/>
+      <columnItem id="86" name="Date de parution"/>
+      <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
+      <!--<columnItem id="73" name="Date kiosque" visible="false"/>-->
+      <columnItem id="87" name="Gad" visible="false"/>
+      <!--<columnItem id="35" name="Visuel"/>-->
+    </detailColumn>
+    <!--Radio-->
+    <detailColumn id="12" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="74" name="Nb spots"/>
+      <columnItem id="69" name="Durée"/>
+      <columnItem id="70" name="nb Support"/>
+      <columnItem id="87" name="Gad" visible="false"/>
+      <columnItem id="75" name="Spot"/>
+    </detailColumn>
+    <!--TV-->
+    <detailColumn id="13" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="74" name="Nb spots"/>
+      <columnItem id="69" name="Durée"/>
+      <columnItem id="70" name="nb Support"/>
+      <columnItem id="87" name="Gad" visible="false"/>
+      <!--<columnItem id="75" name="Spot"/>-->
+    </detailColumn>
+    <!--Outdoor-->
+    <detailColumn id="14" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="76" name="Nb panneaux"/>
+      <columnItem id="70" name=" Nb Supports"/>
+      <columnItem id="87" name="Gad" visible="false"/>
+      <columnItem id="41" name="Affiche"/>
+    </detailColumn>
+    <!--TV Parrainage-->
+    <detailColumn id="15" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="74" name="Nb spots"/>
+      <columnItem id="69" name="Durée"/>
+      <columnItem id="70" name="nb Support"/>
+      <columnItem id="87" name="Gad" visible="false"/>
+      <columnItem id="75" name="Spot"/>
+    </detailColumn>
+    <!-- VMC-->
+    <detailColumn id="16" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Budget\Volume\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="slogan" isKey="true"/>
+      <columnItem id="3" name="Support"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="61" name="Volume"/>
+      <columnItem id="62" name="Poid"/>
+      <columnItem id="63" name="Item"/>
+      <columnItem id="11" name="Format"/>
+      <columnItem id="64" name="Format enveloppe"/>
+      <columnItem id="66" name="Format enveloppe"/>
+      <columnItem id="60" name="Type de doc"/>
+      <columnItem id="59" name="rapidity"/>
+      <columnItem id="65" name="Contenu"/>
+      <columnItem id="87" name="Gad" visible="false"/>
+      <columnItem id="41" name="Visuel"/>
+    </detailColumn>
+    <!--Evaliant-->
+    <detailColumn id="17" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="77" name="Produit AdNetTrack"/>
+      <columnItem id="78" name="Format banner" filter="true"/>
+      <columnItem id="79" name="Dimension banner" filter="true"/>
+      <columnItem id="88" name="First parution"/>
+      <columnItem id="80" name="url" visible="false"/>
+      <!--<columnItem id="87" name="Gad" visible="false"/>-->
+      <columnItem id="81" name="hashcode" visible="false"  isKey="true"/>
+      <columnItem id="75" name="Banner"/>
+    </detailColumn>
+    <!--Evaliant Mobile-->
+    <detailColumn id="26" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="92" name="Produit evaliant mobile"/>
+      <columnItem id="78" name="Format banner" filter="true"/>
+      <columnItem id="91" name="Dimension banner mobile" filter="true"/>
+      <columnItem id="88" name="First parution"/>
+      <columnItem id="80" name="url" visible="false"/>
+      <columnItem id="87" name="Gad" visible="false"/>
+      <columnItem id="81" name="hashcode" visible="false"  isKey="true"/>
+      <columnItem id="75" name="Banner"/>
+    </detailColumn>
+    <!--/Détail versions-->
+
+    <!--MS Détail versions-->
+    <!-- Magazine and NewsPaper -->
+    <detailColumn id="18" name="Version\Visuel\Annonceur\Groupe\Produi\Date de parutiont\Insertions\Nb supports\Budget\Date de couverture\Date kiosque">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <!--<columnItem id="6" name="Version" isKey="true" visible="false"/>-->
+      <columnItem id="86" name="Date de parution"/>
+      <columnItem id="72" name="insertion"/>
+      <columnItem id="71" name="Nb supports"/>
+      <columnItem id="85" name="Budget"/>
+      <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
+      <!-- <columnItem id="73" name="Date kiosque" visible="false"/>-->
+      <!--<columnItem id="35" name="Visuel"/>-->
+    </detailColumn>
+    <!--Radio-->
+    <!--TV-->
+    <detailColumn id="19" name="Version\Spot\Annonceur\Groupe\Produit\Date de parution\Nb spots\nb Support\Budget">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="Version" isKey="true" visible="false"/>
+      <columnItem id="86" name="Date de parution"/>
+      <columnItem id="74" name="Nb spots"/>
+      <columnItem id="70" name="nb Support"/>
+      <columnItem id="85" name="Budget"/>
+      <!--<columnItem id="75" name="Spot"/>-->
+    </detailColumn>
+    <!--Outdoor-->
+    <detailColumn id="20" name="Annonceur\Groupe\Produit\Version\budget\Nb panneaux\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="76" name="Nb panneaux"/>
+      <columnItem id="70" name=" Nb Supports"/>
+      <columnItem id="41" name="Affiche"/>
+    </detailColumn>
+    <!-- VMC-->
+    <detailColumn id="21" name="slogan\Visuel\Annonceur\Groupe\Produit\Poid\Budget\Volume\Format\Format enveloppe\Type enveloppe\Type de doc\Contenu">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="6" name="slogan" isKey="true" visible="false"/>
+      <columnItem id="3" name="Support" visible="false"/>
+      <columnItem id="62" name="Poid"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="61" name="Volume"/>
+      <columnItem id="11" name="Format"/>
+      <columnItem id="63" name="Item"/>
+      <columnItem id="64" name="Format enveloppe"/>
+      <columnItem id="66" name="Type enveloppe"/>
+      <columnItem id="60" name="Type de doc"/>
+      <columnItem id="59" name="rapidity"/>
+      <columnItem id="65" name="Contenu"/>
+      <columnItem id="41" name="Visuel"/>
+    </detailColumn>
+    <!--/MS Détail versions-->
+
+    <!--insertions TV portefeuille-->
+    <detailColumn id="22" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Code écran\Durée\Position\Durée écran\Nombre Spots écran\Prix">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <!--<columnItem id="10" name="Spot" notInExcelExport="true"/>-->
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="17" name="Top de diffusion"/>
+      <!--<columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
+      <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
+      <columnItem id="20" name="Position" isKey="true"/>
+      <!-- <columnItem id="21" name="Durée écran"/>-->
+      <!--<columnItem id="22" name="Nombre Spots écran"/>-->
+      <columnItem id="14" name="Prix"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+    </detailColumn>
+    <!--Radio-->
+    <detailColumn id="23" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif">
+      <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="16" name="Top de diffusion" isKey="true"/>
+      <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
+      <!--<columnItem id="19" name="Position"/>
+      <columnItem id="21" name="Durée écran"/>
+      <columnItem id="23" name="Nombre Spots écran"/>
+      <columnItem id="24" name="Position hap"/>
+      <columnItem id="25" name="Durée écran hap"/>
+      <columnItem id="26" name="Nombre spots hap"/>-->
+      <columnItem id="14" name="Prix"/>
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="55" name="Id Cobranding" visible="false" isKey="true"/>
+    </detailColumn>
+    <!--Outdoor-->
+    <detailColumn id="24" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>
+      <columnItem id="41" name="Affiche" notInExcelExport="true"/>
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="28" name="Nombre de panneaux"/>
+      <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>
+      <columnItem id="30" name="Type de réseau"/>
+      <columnItem id="31" name="Réseau afficheur"/>
+      <columnItem id="32" name="Agglomeration"/>
+      <columnItem id="14" name="Prix"/>
+    </detailColumn>
+    <!--Créations Internet-->
+    <detailColumn id="25" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="81" name="hashcode" visible="false"  isKey="true"/>
+      <columnItem id="75" name="Banner"/>
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="77" name="Produit AdNetTrack"/>
+      <columnItem id="83" name="Format banner"/>
+      <columnItem id="84" name="Dimension banner" visible="false"/>
+      <columnItem id="80" name="url" visible="false"/>
+    </detailColumn>
+    <!--Newspaper-->
+    <detailColumn id="27" name="Page\Visuel\Annonceur\Groupe\Produit\Version\Centre d'interet\Régie\Format\Surface\Couleur\Prix\Descriptif">
+      <columnItem id="54" name="Id pub presse" visible="false"  notInExcelExport="true" isKey="true"/>
+      <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <!-- <columnItem id="34" name="Page"/>-->
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="6" name="Version" idDetailLevelMatching="6"/>
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
+      <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
+      <!-- <columnItem id="12" name="Surface"/>-->
+      <columnItem id="13" name="Couleur"/>
+      <columnItem id="36" name="Position"/>
+      <columnItem id="14" name="Prix"/>
+      <!--<columnItem id="94" name="Descriptif"/>-->
+      <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
+    </detailColumn>
+    <!--Newspaper-->
+    <detailColumn id="28" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
+      <columnItem id="54" name="Id pub presse" visible="false"  notInExcelExport="true" isKey="true"/>
+      <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <!-- <columnItem id="34" name="Page"/>-->
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
+      <!-- <columnItem id="12" name="Surface"/>-->
+      <columnItem id="13" name="Couleur"/>
+      <columnItem id="14" name="Prix"/>
+      <!-- <columnItem id="94" name="Descriptif"/>-->
+      <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
+    </detailColumn>
+    <!--NewsPaper-->
+    <detailColumn id="29" name="Visuel\Date du Support\Annonceurs\Agence média\Produit\Famille\Groupe\Page\Surface en page\Surface en mmc\Prix\Descriptifs\Format\Couleur\Rang famille\Rang groupe\Rang support">
+      <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <columnItem id="42" name="Date du Support"/>
+      <columnItem id="7" name="Annonceur"/>
+      <!-- <columnItem id="43" name="Agence Media"/>-->
+      <columnItem id="53" name="Plan Media"/>
+      <columnItem id="3" name="Support"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="44" name="Famille"/>
+      <columnItem id="8" name="Groupe"/>
+      <!-- <columnItem id="34" name="Page"/>-->
+      <!-- <columnItem id="12" name="Surface page"/>-->
+      <columnItem id="45" name="Surface en mmc"/>
+      <columnItem id="14" name="Prix"/>
+      <!-- <columnItem id="94" name="Descriptif"/>-->
+      <columnItem id="11" name="Format"/>
+      <columnItem id="13" name="Couleur"/>
+      <columnItem id="52" name="Type page" visible="false"/>
+      <columnItem id="46" name="Rang famille"/>
+      <columnItem id="47" name="Rang groupe"/>
+      <columnItem id="48" name="Rang support"/>
+    </detailColumn>
+  </detailColumns>
+</genericColumn>

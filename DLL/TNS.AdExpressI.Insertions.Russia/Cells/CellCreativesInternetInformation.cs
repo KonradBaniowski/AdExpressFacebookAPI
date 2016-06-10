@@ -20,6 +20,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.FrameWork.Date;
 using System.IO;
+using WebCore = TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpressI.Insertions.Russia.Cells
 {
@@ -247,7 +248,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
                 {
                     // Flash banner
 
-                     encryptedParams = (!string.IsNullOrEmpty(_visuals[0])) ? TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(_visuals[0]) : "";
+                     encryptedParams = (!string.IsNullOrEmpty(_visuals[0])) ? WebCore.Utilities.QueryStringEncryption.EncryptQueryString(_visuals[0]) : "";
                      creativePath = TNS.AdExpress.Constantes.Web.Links.CREATIVE_VIEW_PAGE + "?path=" + encryptedParams + "&id_vehicle=" + _vehicle.DatabaseId.ToString() + "&is_blur=false&crypt=1&idSession=" + _session.IdSession;
 
                     output.Append("\n <OBJECT classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\"");
@@ -267,7 +268,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
                 else
                 {
                     // Other type of image
-                     encryptedParams = (!string.IsNullOrEmpty(_visuals[0])) ? TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(_visuals[0]) : "";
+                     encryptedParams = (!string.IsNullOrEmpty(_visuals[0])) ? WebCore.Utilities.QueryStringEncryption.EncryptQueryString(_visuals[0]) : "";
                      creativePath = TNS.AdExpress.Constantes.Web.Links.CREATIVE_VIEW_PAGE + "?path=" + encryptedParams + "&id_vehicle=" + _vehicle.DatabaseId.ToString() + "&is_blur=false&crypt=1&idSession=" + _session.IdSession;
 
                     output.Append("\n <br/><br/>");
