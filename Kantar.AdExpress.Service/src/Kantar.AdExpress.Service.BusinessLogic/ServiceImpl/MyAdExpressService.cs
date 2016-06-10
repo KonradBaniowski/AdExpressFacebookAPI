@@ -610,6 +610,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case ModuleName.ANALYSE_PORTEFEUILLE:
                         case ModuleName.ANALYSE_DYNAMIQUE:
                         case ModuleName.ANALYSE_CONCURENTIELLE:
+                        case ModuleName.TABLEAU_DYNAMIQUE:
                             #region Retrieving data
                             DataTable dtModulesList = right.GetCustomerModuleListHierarchy();
 
