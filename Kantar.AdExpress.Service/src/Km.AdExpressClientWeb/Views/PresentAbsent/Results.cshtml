@@ -134,7 +134,7 @@
             }
 
             function ResultTypeFilter() {
-                this.ResultType = $('#resultType').val();
+                this.ResultType = $('#resultType').val();               
             }
 
             function InsertionFilter() {
@@ -299,6 +299,13 @@
                 for (var i = 0; i < nbToFillWithZero; i++)
                     s = "0" + s;
                 return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+            }
+
+            function PercentFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "percent");
+
+                return "";
             }
 
             function GetColumnsFormatter(columns, unit) {
@@ -621,6 +628,10 @@
 
             $('#resultType').on('change', function (e) {
                 userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
+                if (userFilter.ResultTypeFilter.ResultType == 4 || userFilter.ResultTypeFilter.ResultType == 5) {
+                    $("#set-pdm").prop('checked', true);
+                    userFilter.PDM = true;
+                }
             });
 
             $('#insertion').selectpicker();

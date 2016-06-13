@@ -498,7 +498,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 pdm.Id = "pdmEvol";
                 if (_customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.WON || _customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.LOST)
                     pdm.Value = true;
-                else    pdm.Value = _customerWebSession.PDM;
+                else    pdm.Value = _customerWebSession.Percentage;
                 options.PDM = pdm;
             }
             #endregion
