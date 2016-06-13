@@ -22,8 +22,6 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.UI;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.FrameWork;
@@ -31,8 +29,6 @@ using TNS.FrameWork.Net.Mail;
 
 using PDFCreatorPilotLib;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
-using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -43,6 +39,9 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.CampaignTypes;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
+using TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Web.Helper.MediaPlanVersions;
+using TNS.AdExpress.Web.Helper;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
@@ -365,8 +364,8 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         {
 
             //Formatting date to be used in the query
-            var dateBegin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd");
-            var dateEnd = WebFunctions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd");
+            var dateBegin = Web.Core.Utilities.Dates.GetPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd");
+            var dateEnd = Web.Core.Utilities.Dates.GetPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd");
 
             var html = new StringBuilder();
 
@@ -500,7 +499,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
                 html.Append("<TR align=\"left\">");
                 html.Append("<TD>");
-                html.Append(ConvertionToHtmlString(TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource, 600, true, nbLineByPage, ref currentLine)));
+                html.Append(ConvertionToHtmlString(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource, 600, true, nbLineByPage, ref currentLine)));
                 html.Append("</TD>");
                 html.Append("</TR>");
 
@@ -721,8 +720,8 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 #region result
                 var idVehicle = Int64.Parse(vehicles[0]);
 
-                var begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-                var end = Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
+                var begin = Web.Core.Utilities.Dates.GetPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                var end = Web.Core.Utilities.Dates.GetPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
 
                 MediaSchedulePeriod period;
                 if (_webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && _webSession.CurrentModule == Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
@@ -1456,8 +1455,8 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
             if (currentModuleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
                 // get date begin and date end according to period type
-                dateBeginDT = Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-                dateEndDT = Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+                dateBeginDT = Web.Core.Utilities.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                dateEndDT = Web.Core.Utilities.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
 
                 // get comparative date begin and date end
                 dateBeginDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateBeginDT.Date, webSession.ComparativePeriodType);
@@ -1469,12 +1468,12 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 html.Append("<tr height=\"20\">");
 		        html.Append("<td class=\"txtViolet11\" vAlign=\"top\">&nbsp;");
                 if (dateFormatText) {
-                    dateBegin = WebFunctions.Dates.getPeriodTxt(webSession, dateBeginDT.ToString("yyyyMMdd"));
-                    dateEnd = WebFunctions.Dates.getPeriodTxt(webSession, dateEndDT.ToString("yyyyMMdd"));
+                    dateBegin = Web.Core.Utilities.Dates.getPeriodTxt(webSession, dateBeginDT.ToString("yyyyMMdd"));
+                    dateEnd = Web.Core.Utilities.Dates.getPeriodTxt(webSession, dateEndDT.ToString("yyyyMMdd"));
                 }
                 else {
-                    dateBegin = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(dateBeginDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
-                    dateEnd = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(dateEndDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
+                    dateBegin = Web.Core.Utilities.Dates.DateToString(Web.Core.Utilities.Dates.GetPeriodBeginningDate(dateBeginDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
+                    dateEnd = Web.Core.Utilities.Dates.DateToString(Web.Core.Utilities.Dates.GetPeriodBeginningDate(dateEndDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
                 }
                 if (!dateBegin.Equals(dateEnd)) {
                     html.Append(Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage)) + " ");

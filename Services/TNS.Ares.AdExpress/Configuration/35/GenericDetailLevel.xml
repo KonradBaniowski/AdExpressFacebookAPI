@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<genericDetailLevel>
+  <detaillevelItems>
+    <level id="1" name="Media" webTextId="363" dbId="id_vehicle" dbLabel="vehicle" dbTable="vehicle" dbTablePrefixe="vh"/>
+    <level id="2" name="Categorie" webTextId="1382" dbId="id_category" dbLabel="category" dbTable="category" dbTablePrefixe="ct"/>
+    <level id="3" name="Support" webTextId="971" dbId="id_media" dbLabel="media" dbTable="media" dbTablePrefixe="md"/>
+    <level id="4" name="Centre d'interet" webTextId="1887" dbId="id_interest_center" dbLabel="interest_center" dbTable="interest_center" dbTablePrefixe="ic"/>
+    <level id="5" name="Régie" webTextId="1383" dbId="id_media_seller" dbLabel="media_seller" dbTable="media_seller" dbTablePrefixe="ms"/>
+    <level id="6" name="Version" webTextId="1888" dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="id_slogan" dbLabelAlias="slogan" convertNullDbLabel="true"/>
+    <level id="7" name="Groupe de société" webTextId="1589" dbId="id_holding_company" dbLabel="holding_company" dbTable="holding_company" dbTablePrefixe="hc"/>
+    <level id="8" name="Annonceur" webTextId="857" dbId="id_advertiser" dbLabel="advertiser" dbTable="advertiser" dbTablePrefixe="ad"/>
+    <level id="9" name="Marque" webTextId="1889" dbId="id_brand" dbLabel="brand" dbTable="brand" dbTablePrefixe="br"/>
+    <level id="10" name="Produit" webTextId="858" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr"/>
+    <level id="11" name="Famille" webTextId="1103" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc"/>
+    <level id="12" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc"/>
+    <level id="13" name="Groupe" webTextId="1110" dbId="id_group_" dbLabel="group_" dbTable="group_" dbTablePrefixe="gr"/>
+    <level id="14" name="Variété" webTextId="592" dbId="id_segment" dbLabel="segment" dbTable="segment" dbTablePrefixe="sg"/>
+    <level id="15" name="Groupe d'agence" webTextId="1890" dbId="id_group_advertising_agency" dbLabel="group_advertising_agency" dbTable="group_advertising_agency" dbTablePrefixe="gadv" toTrack="true"/>
+    <level id="16" name="Agence" webTextId="1891" dbId="id_advertising_agency" dbLabel="advertising_agency" dbTable="advertising_agency" dbTablePrefixe="adva" toTrack="true"/>
+    <level id="17" name="Titre" webTextId="1976" dbId="id_title" dbLabel="title" dbTable="title" dbTablePrefixe="tt"/>
+    <level id="18" name="Date" webTextId="895"  dbId="date_media_num" dbIdAlias="date_num" dbLabel="date_media_num" dbLabelAlias="date_media_num" dbTablePrefixe="wp"/>
+    <level id="19" name="Durée" webTextId="1933"  dbId="duration" dbIdAlias="id_duration" dbLabel="duration" dbLabelAlias="duration"/>
+    <level id="20" name="Format" webTextId="1420"  dbId="id_format" dbLabel="format"   dbTable="format" dbTablePrefixe="fo" dbExternalJoin="true"/>
+    <level id="21" name="Code écran" webTextId="1934"  dbId="id_commercial_break" dbIdAlias="commercial_break" dbLabel="id_commercial_break" dbLabelAlias="id_commercial_break"/>
+    <level id="22" name="Format affiche" webTextId="1420"  dbId="type_board" dbIdAlias="id_type_board" dbLabel="type_board" dbLabelAlias="type_board"/>
+    <level id="23" name="Genre d'émissions" webTextId="2122" dbId="id_program_type" dbLabel="program_type" dbTable="program_type" dbTablePrefixe="pt"/>
+    <level id="24" name="Emissions" webTextId="2051" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg"/>
+    <level id="25" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>
+    <level id="26" name="Pays" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="co"/>
+    <level id="27" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm"/>
+  </detaillevelItems>
+
+  <detailLevels>
+    <detailLevel id="1" name="media\catégorie">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="2" name="Category"/>
+    </detailLevel>
+    <detailLevel id="2" name="media\catégorie\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="2" name="Category"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="3" name="media\catégorie\support\version">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="2" name="Category"/>
+      <levelItem id="3" name="Support"/>
+      <levelItem id="6" name="Version"/>
+    </detailLevel>
+    <detailLevel id="4" name="media\centre d'interet\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="4" name="Centre d'interet"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="5" name="media\centre d'interet\support\version">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="4" name="Centre d'interet"/>
+      <levelItem id="3" name="Support"/>
+      <levelItem id="6" name="Version"/>
+    </detailLevel>
+    <detailLevel id="6" name="media\regie\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="5" name="Régie"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="7" name="media\regie\support\version">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="5" name="Régie"/>
+      <levelItem id="3" name="Support"/>
+      <levelItem id="6" name="Version"/>
+    </detailLevel>
+    <detailLevel id="8" name="media\version\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="6" name="Version"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="9" name="catégorie\support\date">
+      <levelItem id="2" name="Category"/>
+      <levelItem id="3" name="Support"/>
+      <levelItem id="18" name="Date"/>
+    </detailLevel>
+    <detailLevel id="10" name="annonceur">
+      <levelItem id="8" name="Annonceur"/>
+    </detailLevel>
+    <detailLevel id="11" name="famille">
+      <levelItem id="11" name="Famille"/>
+    </detailLevel>
+    <detailLevel id="12" name="support">
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="13" name="genre d'émissions\émissions">
+      <levelItem id="23" name="Genre d'émissions"/>
+      <levelItem id="24" name="Emissions"/>
+    </detailLevel>
+    <detailLevel id="14" name="formes de Parrainage">
+      <levelItem id="25" name="Formes de Parrainage"/>
+    </detailLevel>
+    <detailLevel id="15" name="famille\classe\groupe">
+      <levelItem id="11" name="Famille"/>
+      <levelItem id="12" name="Classe"/>
+      <levelItem id="13" name="Groupe"/>
+    </detailLevel>
+    <detailLevel id="16" name="famille\annonceur">
+      <levelItem id="11" name="Famille"/>
+      <levelItem id="8" name="Annonceur"/>
+    </detailLevel>
+    <detailLevel id="17" name="famille\annonceur\produit">
+      <levelItem id="11" name="Famille"/>
+      <levelItem id="8" name="Annonceur"/>
+      <levelItem id="10" name="Produit"/>
+    </detailLevel>
+    <detailLevel id="18" name="annonceur\produit">
+      <levelItem id="8" name="Annonceur"/>
+      <levelItem id="10" name="Produit"/>
+    </detailLevel>
+    <detailLevel id="19" name="groupe">
+      <levelItem id="13" name="Groupe"/>
+    </detailLevel>
+    <detailLevel id="20" name="groupe\annonceur">
+      <levelItem id="13" name="Groupe"/>
+      <levelItem id="8" name="Annonceur"/>
+    </detailLevel>
+    <detailLevel id="21" name="produit">
+      <levelItem id="10" name="Produit"/>
+    </detailLevel>
+    <detailLevel id="22" name="centre d'interet\support">
+      <levelItem id="4" name="Centre d'interet"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="23" name="regie\support">
+      <levelItem id="5" name="Régie"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="24" name="titre\support">
+      <levelItem id="17" name="Titre"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="25" name="catégorie\support">
+      <levelItem id="2" name="Catégorie"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="26" name="basic media\support">
+      <levelItem id="27" name="Basic Media"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="27" name="pays\support">
+      <levelItem id="26" name="Pays"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="36" name="media\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+  </detailLevels>
+</genericDetailLevel>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<lists>
+  <!--<list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="encart" listIds="108"/>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="flyingEncart" listIds="85"/>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="Excart" listIds="999"/>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="subScriberEncart" listIds="1983"/>
+  -->
+  <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="thematicTv"                         listIds ="35"/>
+  <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="digitalTv"                          listIds ="78"/>
+  <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="applicationMobile"                  listIds ="231"/>
+  <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="productClassAnalysisSponsorShipTv"  listIds ="68,44"/>
+  <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="excludeDigitalSponsorship"          listIds ="44"/>
+  <list group="media"         keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaInSelectAll"                   listIds ="1,2,3,4,5,7,8,9,11,19,20"/>
+  <list group="media"         keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="forceVmcRightsInRecap"              listIds ="10"/>
+  <list group="media"         keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaExcludedForCopyright"          listIds ="15940,9178,9480,1596,7011,24328,1320,4171,4172,15869,1576,1509,5156,7906,8143,9992,1648,1465,6340,1994,9364,9710,1374,5832,9658,6780,9103,6337,9109,7472,6918,9497,5225,7230,9709,7532,1825,1838,5678,9260,8628,18189,7606,5193,7973,2702,1300,7006,8902,8901,5911,13057,1387,8452,7938,1592,1768,1390,1395,9570,5258,9173"/>
+  <list group="agency"        keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="advertisingAgency"                  listIds ="9999,999"/>
+  <list group="agency"        keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="groupAdvertisingAgency"             listIds ="9999,999,2990"/>
+</lists>

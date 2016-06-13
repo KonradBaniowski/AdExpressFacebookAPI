@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.30729</ProductVersion>
@@ -32,7 +32,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -72,8 +72,9 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -98,8 +99,16 @@
     <DebugType>none</DebugType>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Slides">
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Aspose.Slides.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.HtmlSnap2">
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Interop.HtmlSnap2.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Interop.PDFCreatorPilotLib.dll</HintPath>
@@ -163,15 +172,18 @@
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.WEB\TNS.AdExpress.Web.csproj">
-      <Name>TNS.AdExpress.Web</Name>
-      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.WEB.CORE\TNS.AdExpress.Web.Core.csproj">
       <Name>TNS.AdExpress.Web.Core</Name>
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Web.Helper\TNS.AdExpress.Web.Helper.csproj">
+      <Project>{84548a10-b4aa-4ca2-917f-2ca7ba27d6a0}</Project>
+      <Name>TNS.AdExpress.Web.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Classification.DAL\TNS.AdExpressI.Classification.DAL.csproj">
+      <Project>{B731E9A2-0DBF-43A6-A89E-6DC27D96FFD4}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
       <Project>{E1A418FC-6512-46D5-99CF-374682F0C792}</Project>
@@ -197,8 +209,12 @@
       <Project>{B1F6C717-7C8D-4869-9579-A20F14E9DD4C}</Project>
       <Name>TNS.Ares.Pdf</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.StaticNavSession.DAL.Default\TNS.Ares.StaticNavSession.DAL.Default.csproj">
+      <Project>{5d4c60a4-d7d0-4725-9ba8-57ef44677bc4}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL.Default</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
-      <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
+      <Project>{4762d913-fc82-42bd-840f-5bcb43e5979d}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares\TNS.Ares.csproj">
@@ -217,6 +233,7 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BusinessFacade\MiysisPptxSystem.cs" />
     <Compile Include="BusinessFacade\MiysisPdfSystem.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -229,9 +246,11 @@
     <Compile Include="Exceptions\MiysisConfigDataAccessException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\MiysisPptxException.cs" />
     <Compile Include="Exceptions\MiysisPdfException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TreatementSystemPptx.cs" />
     <Compile Include="TreatementSystem.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -289,8 +308,12 @@
     <Content Include="App_Themes\SkAE-Uk\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\33\Plugins\MiysisPptx.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\33\Plugins\Miysis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\35\Plugins\Miysis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

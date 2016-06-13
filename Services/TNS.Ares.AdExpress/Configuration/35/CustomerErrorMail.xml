@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<smtp>
+    <server adress="fitnses-spam.tnsad.com" port="25"/>
+    <message from="tnsadexpress@tns-global.fi">
+		<to>guillaume.facon@tnsmi.fr</to>
+		<to>benjamin.masson@tnsmi.fr</to>		
+		<to>youssef.rkaina@tnsmi.fr</to>
+		<to>dede.mussuma@tnsmi.fr</to>
+    <to>alexandre.rousseau@tnsmi.fr</to>
+    </message>
+</smtp>
