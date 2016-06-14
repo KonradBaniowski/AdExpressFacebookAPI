@@ -496,9 +496,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 CheckBoxOption pdm = new CheckBoxOption();
                 pdm.Id = "pdmEvol";
-                if (_customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.WON 
-                    || _customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.LOST
-                    || _customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.FORCES
+                if (_customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.FORCES
                     || _customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.POTENTIELS
                     )
                     pdm.Value = true;
