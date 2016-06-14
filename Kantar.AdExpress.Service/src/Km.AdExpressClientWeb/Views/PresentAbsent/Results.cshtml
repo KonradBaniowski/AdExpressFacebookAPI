@@ -628,9 +628,12 @@
 
             $('#resultType').on('change', function (e) {
                 userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
-                if (userFilter.ResultTypeFilter.ResultType == 4 || userFilter.ResultTypeFilter.ResultType == 5) {
+                if (userFilter.ResultTypeFilter.ResultType == 4 || userFilter.ResultTypeFilter.ResultType == 5) {// 4: tab Forces  5: tab Potentiels
                     $("#set-pdm").prop('checked', true);
                     userFilter.PDM = true;
+                } else if (userFilter.ResultTypeFilter.ResultType == 6) {//6 tab synthesis
+                    $("#set-pdm").prop('checked', false);
+                    userFilter.PDM = false;
                 }
             });
 

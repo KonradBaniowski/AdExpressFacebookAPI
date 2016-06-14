@@ -291,15 +291,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)))
                 {
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mms:
+                    case Vehicles.names.adnettrack:
+                    case Vehicles.names.evaliantMobile:
+                    case Vehicles.names.mms:
                         autopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
                         break;
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+                    case Vehicles.names.press:
+                    case Vehicles.names.newspaper:
+                    case Vehicles.names.magazine:
+                    case Vehicles.names.internationalPress:
                         insertOption = true;
                         break;
                 }
@@ -496,7 +496,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 CheckBoxOption pdm = new CheckBoxOption();
                 pdm.Id = "pdmEvol";
-                if (_customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.WON || _customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.LOST)
+                if (_customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.WON 
+                    || _customerWebSession.CurrentTab == FrameWorkResults.DynamicAnalysis.LOST
+                    || _customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.FORCES
+                    || _customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.POTENTIELS
+                    )
                     pdm.Value = true;
                 else    pdm.Value = _customerWebSession.Percentage;
                 options.PDM = pdm;
@@ -1008,6 +1012,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return CanShowPortofolioResult(webSession, current);
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                     return CanShowSynthesisResult(webSession, current);
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    return CanShowPresentAbsentResult(webSession, current);
                 case WebConstantes.Module.Name.INDICATEUR:
                     return CanShowProductClassAnalysisResult(webSession, current);
                 case WebConstantes.Module.Name.BILAN_CAMPAGNE:
@@ -1086,6 +1092,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
         }
 
+        protected bool CanShowPresentAbsentResult(WebSession webSession, WebNavigation.ResultPageInformation current)
+        {
+            return (webSession.PrincipalMediaUniverses.Count > 1 || current.Id == FrameWorkResults.CompetitorMarketShare.PORTEFEUILLE);
+        }
         /// <summary>
         /// Can Show Synthesis Result
         /// </summary>
@@ -1134,6 +1144,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     else {
                         customerWebSession.CurrentTab = FrameWorkResults.DynamicAnalysis.PORTEFEUILLE;
+                        resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
+                    }
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
+                    {
+                        resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
+                        options.ResultTypeOption = resultTypeOption;
+                    }
+                    else
+                    {
+                        customerWebSession.CurrentTab = FrameWorkResults.CompetitorMarketShare.PORTEFEUILLE;
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
                     }
                     break;
