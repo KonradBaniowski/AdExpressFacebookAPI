@@ -20,7 +20,13 @@ namespace Km.AdExpressClientWeb.Controllers
         private IUniverseService _universeService;
         private IMyAdExpressService _myAdExpressService;
         private IDetailSelectionService _detailSelectionService;
-
+        #region CONST
+        private const string PORTFOLIO = "Portfolio";
+        private const string LOSTWON = "LostWon";
+        private const string PRESENTABSENT = "PresentAbsent";
+        private const string MEDIASCHEDULE = "MediaSchedule";
+        private const string ANALYSIS = "Analysis";
+        #endregion
         public UniverseController(IUniverseService universeService, IMyAdExpressService myAdExpressService, IDetailSelectionService detailSelectionService)
         {
             _universeService = universeService;
@@ -399,16 +405,19 @@ namespace Km.AdExpressClientWeb.Controllers
                 switch (response.ModuleId)
                 {
                     case Module.Name.ANALYSE_PLAN_MEDIA:
-                        controller = "MediaSchedule";
+                        controller = MEDIASCHEDULE;
                         break;
                     case Module.Name.ANALYSE_PORTEFEUILLE:
-                        controller = "Portfolio";
+                        controller = PORTFOLIO;
                         break;
                     case Module.Name.ANALYSE_CONCURENTIELLE:
-                        controller = "PresentAbsent";
+                        controller = PRESENTABSENT;
                         break;
                     case Module.Name.ANALYSE_DYNAMIQUE:
-                        controller = "LostWon";
+                        controller = LOSTWON;
+                        break;
+                    case Module.Name.TABLEAU_DYNAMIQUE:
+                        controller = ANALYSIS;
                         break;
                 };
                 response.Message = "Redirecting to the result page.";

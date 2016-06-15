@@ -16,6 +16,7 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Insertions.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
+using WebCore = TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpressI.Insertions.Russia.CreativeResult{
     /// <summary>
@@ -53,7 +54,7 @@ namespace TNS.AdExpressI.Insertions.Russia.CreativeResult{
             //Vérification de l'existence des fichiers et construction des chemins d'accès suivant la volonté de 
             //lire ou de télécharger le fichier
 
-            _fileDecrypted = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_file);
+            _fileDecrypted = WebCore.Utilities.QueryStringEncryption.DecryptQueryString(_file);
 
             var parameters = new object[5];
             parameters[0] = VehiclesInformation.Get(_vehicle).DatabaseId;

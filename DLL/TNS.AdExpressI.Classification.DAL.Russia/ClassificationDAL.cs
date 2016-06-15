@@ -339,7 +339,7 @@ namespace TNS.AdExpressI.Classification.DAL.Russia
         /// media : vehicle label
         /// </summary>
         /// <returns>Dataset with fields [id_vehicle,vehicle,id_region,region,id_media,media]</returns>
-        public override DataSet GetRecapDetailMedia()
+        public override DataSet GetRecapDetailMedia(bool getAllDetails = true)
         {
             try
             {

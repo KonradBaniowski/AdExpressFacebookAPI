@@ -497,6 +497,7 @@ namespace TNS.Ares.Pdf
                 #region Html file loading
 
                 HTML2PDF2Class htmlTmp = null;
+                //HTML2PDFX htmlTmp = null;
 
                 try
                 {
@@ -507,14 +508,18 @@ namespace TNS.Ares.Pdf
                     #endregion
 
                     htmlTmp = new HTML2PDF2Class();
+                    //htmlTmp = new HTML2PDFX();
+                    //htmlTmp.BeginDoc();
                     htmlTmp.MarginLeft = Convert.ToInt32(this.LeftMargin);
                     htmlTmp.MarginTop = Convert.ToInt32(this.WorkZoneTop);
                     htmlTmp.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
                     htmlTmp.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
+                    //htmlTmp.minimumWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
                     htmlTmp.StartHTMLEngine(html2PdfLogin, html2PdfPassword);
                     htmlTmp.ConnectToPDFLibrary(this);
                     htmlTmp.LoadHTMLFile(workFile);
                     htmlTmp.ConvertAll();
+                    //htmlTmp.EndDoc();
 
                 }
                 catch (Exception e)
@@ -525,8 +530,8 @@ namespace TNS.Ares.Pdf
                 {
                     if (htmlTmp != null)
                     {
-                        htmlTmp.DisconnectFromPDFLibrary();
-                        htmlTmp.UnloadAll();
+                        //htmlTmp.DisconnectFromPDFLibrary();
+                        //htmlTmp.UnloadAll();
                         htmlTmp = null;
                     }
                 }

@@ -33,7 +33,7 @@ namespace Km.AdExpressClientWeb.Models
         public PeriodViewModel(int currentModuleId)
         {
             if (currentModuleId == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || currentModuleId == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
-                MONTHS_NUMBER = 5;
+                MONTHS_NUMBER = 6;
         }
 
         public int SlidingYearsNb

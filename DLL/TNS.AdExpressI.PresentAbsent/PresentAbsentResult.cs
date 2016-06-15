@@ -1432,7 +1432,7 @@ namespace TNS.AdExpressI.PresentAbsent
             //Parution Number
             Dictionary<Int64, double> resNbParution = null;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
-            if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (_vehicleInformation.Id == CstDBClassif.Vehicles.names.press || _vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress
+            if (!_session.Percentage && columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (_vehicleInformation.Id == CstDBClassif.Vehicles.names.press || _vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress
                 || _vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
                 || _vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine))
             {
@@ -2042,13 +2042,13 @@ namespace TNS.AdExpressI.PresentAbsent
             schemaFields.Add(new { name = "ID" });
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
-            if(_session.CurrentTab != DynamicAnalysis.SYNTHESIS)
+            if (_session.CurrentTab != DynamicAnalysis.SYNTHESIS)
             {
                 columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
                 schemaFields.Add(new { name = "GAD" });
 
             }
-        
+
             List<object> groups = null;
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             string format = string.Empty;
@@ -2085,9 +2085,10 @@ namespace TNS.AdExpressI.PresentAbsent
                                     {
                                         var cell = resultTable[0, resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable];
 
-                                        if (cell is CellPercent)
+                                        if (cell is CellPercent || cell is CellPDM)
                                         {
                                             format = "percent";
+                                            colKey += "-pdm";
                                         }
                                         else if (cell is CellEvol)
                                         {
@@ -2117,7 +2118,8 @@ namespace TNS.AdExpressI.PresentAbsent
 
 
                                 #endregion
-                            }else
+                            }
+                            else
                             {
                                 //No sub groups items
                                 #region /No sub groups items
@@ -2130,6 +2132,7 @@ namespace TNS.AdExpressI.PresentAbsent
                                     if (cell is CellPercent || cell is CellPDM)
                                     {
                                         format = "percent";
+                                        colKey += "-pdm";
                                     }
                                     else if (cell is CellEvol)
                                     {
@@ -2143,7 +2146,7 @@ namespace TNS.AdExpressI.PresentAbsent
                                     }
                                     else if (cell is CellUnit)
                                     {
-                                    format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                        format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
                                         colKey += "-unit";
                                     }
                                 }
@@ -2154,7 +2157,7 @@ namespace TNS.AdExpressI.PresentAbsent
 
                             }
 
-                         
+
                         }
 
                         columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey, group = groups });
@@ -2168,15 +2171,25 @@ namespace TNS.AdExpressI.PresentAbsent
                             if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
                             {
                                 columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true });
-                            }else columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            }
+                            else columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
                             columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                         }
                         else
                         {
                             if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(805, _session.SiteLanguage))
                             {
-                                format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
-                                colKey += "-unit";
+                                if (_session.Percentage)
+                                {
+                                    format = "percent";
+                                    colKey += "-pdm";
+                                }                                  
+                                else
+                                {
+                                    format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                    colKey += "-unit";
+                                }
+                                   
                                 columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                             }
                             else

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pluginConfiguration defaultConnectionId="session">
+  <dataAccessLayers>
+    <dataAccessLayer enum="Session" name="SessionDAL" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL" />
+  </dataAccessLayers>
+  <plugins description="List of plugins" defaultFamilyId="161" defaultLongevity="30" defaultFilePath="\\172.17.236.214\adexdatas\IR\AdExCustomerFiles" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
+    <plugin enumId="Miysis" name="Miysis" resultType="7" longevity="10" deleteExpired="true" extension=".pdf"  />
+  </plugins>
+</pluginConfiguration>
