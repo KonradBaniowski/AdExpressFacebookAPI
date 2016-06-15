@@ -235,6 +235,5 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
             }
         }
         #endregion
-
     }
 }

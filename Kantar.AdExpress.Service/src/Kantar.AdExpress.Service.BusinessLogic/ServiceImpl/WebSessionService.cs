@@ -59,14 +59,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             bool success = false;
             try
             {
-                List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
-                bool isAllCommun = request.MediaIds.All(e => commun.Contains(e));                
-                if (!isAllCommun && request.MediaIds.Count() > 1)
-                {
-                    response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
-                }
-                else
-                {
+                //var currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule).AllowedUnitEnumList;
+                //GetVehiclesUnits(request.MediaIds, _webSession.CurrentModule.);
+                //List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
+                //bool isAllCommun = request.MediaIds.All(e => commun.Contains(e));
+                //if (!isAllCommun && request.MediaIds.Count() > 1)
+                //{
+                //    response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
+                //}
+                //else
+                //{
                     if (request.MediaSupportRequired && !request.Trees.Any())
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MediaRequiredCode, _webSession.SiteLanguage);
@@ -187,7 +189,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         response.Success = success;
                     }
                     #endregion
-                }
+                //}
             }
             catch (System.Exception exc)
             {
@@ -922,6 +924,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return success;
         }
+
+        
         #endregion
     }
 }
