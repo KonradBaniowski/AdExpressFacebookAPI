@@ -81,6 +81,7 @@
                             <param name="allowscriptaccess" value="always" />
                             <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always"  allowfullscreen="false"  flashvars=""  />
                         </object>
+                        <iframe id="objectHTML5" src="" scrolling="no"></iframe>
                     </div>
                 </div>
                 <div class="modal-footer hide">
@@ -479,6 +480,11 @@
                             $("#objectFLV embed").attr("flashvars", "file=" + datas[0]);
                             $("#objectFLV").show();
                             break;
+                        case "HTML5":
+                            url = datas[0];
+                            $("#objectHTML5").attr('src', url);
+                            $("#objectHTML5").show();
+                            break;
                         default:
                             url = datas[0];
                             $("#creativeStream").attr('src', url);
@@ -497,6 +503,7 @@
                 $("#creativeStream").hide();
                 $("#objectSWF").hide();
                 $("#objectFLV").hide();
+                $("#objectHTML5").hide();
                 $("#mediaLoader").show();
                 $("#creativeModal .modal-footer").addClass("hide");
             });
