@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <themes>
+    <theme id="1" description="Russia AdExpress Theme using English" name="KMRuAE-Uk" siteLanguage="44"/>
+    <theme id="2" description="Russia AdExpress Theme using Russian" name="KMRuAE-Ru" siteLanguage="7"/>
+    <theme id="3" description="Russia AdExpress Theme using Russian" name="KMRuAE-Uk" siteLanguage="77"/>
+  </themes>
+</configuration>

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CsCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
@@ -24,7 +23,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.FrameWork.Date;
 using TNS.AdExpressI.Insertions.Russia.Cells;
-
+using WebCore = TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpressI.Insertions.Russia
 {
@@ -124,7 +123,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                 idVersion = Convert.ToInt64(currentRow["slogan"].ToString());
                                 for (int j = 0; j < fileList.Length; j++)
                                 {
-                                    string encryptedParams2 = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(GetCreativePathVisual(GetImagesPath(vehicleName), fileList[j], idVersion, false, GetLowDirPath(vehicleName)));
+                                    string encryptedParams2 = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(GetCreativePathVisual(GetImagesPath(vehicleName), fileList[j], idVersion, false, GetLowDirPath(vehicleName)));
 
                                     vignettes += "<img src='" + TNS.AdExpress.Constantes.Web.Links.CREATIVE_VIEW_PAGE + "?path=" + encryptedParams2 + "&id_vehicle=" + idVehicle.ToString() + "&idSession=" + _session.IdSession + "&is_blur=false&crypt=1' border=\"0\" width=\"50\" height=\"64\" >";
                                     if (first) imagesList = GetCreativePathVisual(GetImagesPath(vehicleName), fileList[j], idVersion, true, "");
@@ -134,7 +133,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                 encryptedParams = "";
                                 if (vignettes.Length > 0)
                                 {
-                                    if (!string.IsNullOrEmpty(imagesList)) encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(imagesList);
+                                    if (!string.IsNullOrEmpty(imagesList)) encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(imagesList);
                                     vignettes = "<a href=\"javascript:OpenWindow('" + TNS.AdExpress.Constantes.Web.Links.CREATIVE_VIEW_PAGE + "?path=" + encryptedParams + "&id_vehicle=" + idVehicle.ToString() + "&idSession=" + _session.IdSession + "&is_blur=false&crypt=1');\">" + vignettes + "</a>";
                                     vignettes += "\n<br>";
                                 }
@@ -151,7 +150,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                             vignettes = "";
                             if (currentRow["associated_file"] != System.DBNull.Value)
                             {
-                                encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(currentRow["associated_file"].ToString());
+                                encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(currentRow["associated_file"].ToString());
                                 CellRadioCreativeLink cellRadioCreativeLink = new CellRadioCreativeLink(encryptedParams, _session, idVehicle);
                                 vignettes = "<a href=\"" + cellRadioCreativeLink.GetLink() + "\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_Radio.gif\"></a>";
                             }
@@ -165,7 +164,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                             vignettes = "";
                             if (currentRow["associated_file"] != System.DBNull.Value)
                             {
-                                encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(currentRow["associated_file"].ToString());
+                                encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(currentRow["associated_file"].ToString());
                                 CellTvCreativeLink cellTvCreativeLink = new CellTvCreativeLink(encryptedParams, _session, idVehicle);
                                 vignettes = "<a href=\"" + cellTvCreativeLink.GetLink() + "\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_pellicule.gif\"></a>";
                             }
@@ -175,7 +174,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                             if (currentRow["associated_file"] != System.DBNull.Value && currentRow["slogan"] != System.DBNull.Value && !string.IsNullOrEmpty(currentRow["slogan"].ToString()))
                             {
                                 string internetPath = GetCreativePath(currentRow["associated_file"].ToString(), Convert.ToInt64(currentRow["slogan"].ToString()));
-                                encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(internetPath);
+                                encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(internetPath);
                                 string creatives = "path=" + encryptedParams + "&id_vehicle=" + idVehicle.ToString() + "&idSession=" + _session.IdSession + "&is_blur=false&crypt=1";
 
                                 CellInternetCreativeLink cellInternetCreativeLink = new CellInternetCreativeLink(creatives, _session);
@@ -484,8 +483,8 @@ namespace TNS.AdExpressI.Insertions.Russia
         {
             List<VehicleInformation> vehicles = new List<VehicleInformation>();
 
-            DateTime dateBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            DateTime dateEnd = FctUtilities.Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
+            DateTime dateBegin = WebCore.Utilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            DateTime dateEnd = WebCore.Utilities.Dates.GetPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
             int iDateBegin = Convert.ToInt32(dateBegin.ToString("yyyyMMdd"));
             int iDateEnd = Convert.ToInt32(dateEnd.ToString("yyyyMMdd"));
             _getCreatives = sloganNotNull;
@@ -620,7 +619,7 @@ namespace TNS.AdExpressI.Insertions.Russia
 
                                     if (row[columnsName[i]] != System.DBNull.Value)
                                     {
-                                        string encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
+                                        string encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
                                         tab[cLine, j] = new CellTvCreativeLink(encryptedParams, _session, vehicle.DatabaseId);
                                     }
                                     else
@@ -631,7 +630,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                 case CstDBClassif.Vehicles.names.radio:
                                     if (row[columnsName[i]] != System.DBNull.Value)
                                     {
-                                        string encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
+                                        string encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
                                         tab[cLine, j] = new CellRadioCreativeLink(encryptedParams, _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
                                     }
                                     else
@@ -642,7 +641,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                 case CstDBClassif.Vehicles.names.radioGeneral:
                                     if (row[columnsName[i]] != System.DBNull.Value)
                                     {
-                                        string encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
+                                        string encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
                                         tab[cLine, j] = new CellRadioCreativeLink(encryptedParams, _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioGeneral));
                                     }
                                     else
@@ -653,7 +652,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                 case CstDBClassif.Vehicles.names.radioSponsorship:
                                      if (row[columnsName[i]] != System.DBNull.Value)
                                     {
-                                        string encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
+                                        string encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
                                         tab[cLine, j] = new CellRadioCreativeLink(encryptedParams, _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioSponsorship));
                                     }
                                      else
@@ -664,7 +663,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                 case CstDBClassif.Vehicles.names.radioMusic:
                                       if (row[columnsName[i]] != System.DBNull.Value)
                                     {
-                                        string encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
+                                        string encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(row[columnsName[i]].ToString());
                                         tab[cLine, j] = new CellRadioCreativeLink(encryptedParams, _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioMusic));
                                     }
                                       else
@@ -679,7 +678,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                     {
 
                                         string internetPath = GetCreativePath(row[columnsName[i]].ToString(), Convert.ToInt64(row["id_slogan"].ToString()));
-                                        string encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(internetPath);
+                                        string encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(internetPath);
                                         string creatives = "path=" + encryptedParams + "&id_vehicle=" + vehicle.DatabaseId.ToString() + "&idSession=" + _session.IdSession + "&is_blur=false&crypt=1";
 
                                         tab[cLine, j] = new CellInternetCreativeLink(creatives, _session);
@@ -705,7 +704,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                             creatives += GetCreativePathVisual(GetImagesPath(vehicle.Id), file, advertisementId, true, "") + ",";
                                         }
                                         creatives = creatives.Substring(0, creatives.Length - 1);
-                                        string encryptedParams = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(creatives);
+                                        string encryptedParams = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(creatives);
                                         creatives = TNS.AdExpress.Constantes.Web.Links.CREATIVE_VIEW_PAGE + "?path=" + encryptedParams + "&id_vehicle=" + vehicle.DatabaseId.ToString() + "&idSession=" + _session.IdSession + "&is_blur=false&crypt=1";
                                         if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor)
                                             tab[cLine, j] = new CellRussiaCreativeLink(creatives, _session, "Picto_outdoor.gif");

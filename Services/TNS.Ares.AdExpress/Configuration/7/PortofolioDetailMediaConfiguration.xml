@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <vehicleGroups>
+    <vehicle id="1" name="presse">
+      <detailColumn id="6"/>
+    </vehicle>
+    <vehicle id="200" name="radioGeneral">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="201" name="radioSponsorship">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="202" name="radioMusic">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="100" name="tvGeneral">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="101" name="tvSponsorship">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="102" name="tvAnnounces">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="103" name="tvNonTerrestrials">
+      <detailColumn id="7"/>
+    </vehicle>
+  </vehicleGroups>
+</configuration>

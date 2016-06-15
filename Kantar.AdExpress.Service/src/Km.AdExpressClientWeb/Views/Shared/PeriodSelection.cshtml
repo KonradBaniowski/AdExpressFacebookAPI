@@ -249,11 +249,13 @@
                         $('#current-year').on('click', function (e) {
                             selectedPeriod = $('#current-year').attr("selectedperiod");
                             DisableSlidingDates();
+                            EnableComparativeStudy();
                         });
 
                         $('#previous-year').on('click', function (e) {
                             selectedPeriod = $('#previous-year').attr("selectedperiod");
                             DisableSlidingDates();
+                            EnableComparativeStudy();
                         });
 
                         $('#previous-month').on('click', function (e) {
@@ -274,14 +276,12 @@
                         $('#penultimate-year').on('click', function (e) {
                             selectedPeriod = $('#penultimate-year').attr("selectedperiod");
                             DisableSlidingDates();
+                            DisableComparativeStudy();
                         });
 
                         function DisableSlidingDates() {
                             selectedValue = -1;
-                            $('#year-sliding').selectpicker('val', '--');
                             $('#month-sliding').selectpicker('val', '--');
-                            $('#week-sliding').selectpicker('val', '--');
-                            $('#day-sliding').selectpicker('val', '--');
                         }
 
                         function DisableSingleDates() {
@@ -292,6 +292,15 @@
                             $('#previous-day').prop('checked', false);
                         }
 
+                        function DisableComparativeStudy()
+                        {
+                            $('#isComparativeStudy').attr('checked', false);
+                            $('#isComparativeStudy').attr('disabled', true);
+                        }
+                         function EnableComparativeStudy()
+                        {
+                             $('#isComparativeStudy').removeAttr('disabled');
+                        }
                         $('#Market').on('click', function (e) {
                             e.preventDefault();
 

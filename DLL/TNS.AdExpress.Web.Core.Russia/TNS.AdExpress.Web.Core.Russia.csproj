@@ -62,17 +62,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.Classification.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.Classification.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.21630, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.26715, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

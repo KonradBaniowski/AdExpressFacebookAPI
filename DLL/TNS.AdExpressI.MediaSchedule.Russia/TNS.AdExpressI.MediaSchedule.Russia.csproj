@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TNS.AdExpressI.MediaSchedule.Russia</RootNamespace>
     <AssemblyName>TNS.AdExpressI.MediaSchedule.Russia</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -47,6 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,31 +57,32 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Cells, Version=5.1.3.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Aspose.Cells.dll</HintPath>
+      <HintPath>..\..\Libs\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
-    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.Date.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.Date.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.21630, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.26715, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebTheme, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebTheme, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebTheme.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.WebTheme.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,10 +101,6 @@
     <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
-      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
-      <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule.DAL\TNS.AdExpressI.MediaSchedule.DAL.csproj">
       <Project>{39325692-D25F-400C-8E46-080BCB3B3524}</Project>

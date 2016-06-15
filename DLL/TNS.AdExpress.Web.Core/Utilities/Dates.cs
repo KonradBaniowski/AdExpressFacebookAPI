@@ -201,16 +201,16 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     case CustomerSessions.Period.Type.nLastYear:
                         return webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(781, webSession.SiteLanguage);
                     case CustomerSessions.Period.Type.previousMonth:
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(788, webSession.SiteLanguage));
+                        return GestionWeb.GetWebWord(788, webSession.SiteLanguage);
                     // Année courante		
                     case CustomerSessions.Period.Type.currentYear:
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1228, webSession.SiteLanguage));
+                        return GestionWeb.GetWebWord(1228, webSession.SiteLanguage);
                     // Année N-1
                     case CustomerSessions.Period.Type.previousYear:
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(787, webSession.SiteLanguage));
+                        return GestionWeb.GetWebWord(787, webSession.SiteLanguage);
                     // Année N-2
                     case CustomerSessions.Period.Type.nextToLastYear:
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1229, webSession.SiteLanguage));
+                        return GestionWeb.GetWebWord(1229, webSession.SiteLanguage);
 
                     case CustomerSessions.Period.Type.dateToDateMonth:
                         string monthBegin;
@@ -247,7 +247,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         //return Convertion.ToHtmlString(webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(784, webSession.SiteLanguage));
                         return webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(784, webSession.SiteLanguage);
                     case CustomerSessions.Period.Type.previousWeek:
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(789, webSession.SiteLanguage));
+                        return GestionWeb.GetWebWord(789, webSession.SiteLanguage);
                     case CustomerSessions.Period.Type.dateToDate:
                     case CustomerSessions.Period.Type.cumlDate:
                     case CustomerSessions.Period.Type.personalize:
@@ -256,23 +256,23 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY2(webSession.PeriodBeginningDate.ToString(), webSession.SiteLanguage);
                         dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY2(webSession.PeriodEndDate.ToString(), webSession.SiteLanguage);
                         if (!dateBegin.Equals(dateEnd))
-                            return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd);
+                            return GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd;
                         else return " " + dateBegin;
                     case CustomerSessions.Period.Type.previousDay:
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1975, webSession.SiteLanguage));
+                        return GestionWeb.GetWebWord(1975, webSession.SiteLanguage);
                     case CustomerSessions.Period.Type.nLastDays:
-                        return Convertion.ToHtmlString(webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(1974, webSession.SiteLanguage));
+                        return webSession.PeriodLength.ToString() + " " + GestionWeb.GetWebWord(1974, webSession.SiteLanguage);
                     case CustomerSessions.Period.Type.LastLoadedMonth:
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1619, webSession.SiteLanguage));
+                        return GestionWeb.GetWebWord(1619, webSession.SiteLanguage);
                     case CustomerSessions.Period.Type.LastLoadedWeek:
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(1618, webSession.SiteLanguage));
+                        return GestionWeb.GetWebWord(1618, webSession.SiteLanguage);
                     case CustomerSessions.Period.Type.cumulWithNextMonth:
                     case CustomerSessions.Period.Type.allHistoric:
                     case CustomerSessions.Period.Type.currentMonth:
                         foreach (DateConfiguration cVpDateConfiguration in WebApplicationParameters.VpDateConfigurations.VpDateConfigurationList)
                         {
                             if (cVpDateConfiguration.DateType == webSession.PeriodType)
-                                return Convertion.ToHtmlString(GestionWeb.GetWebWord(cVpDateConfiguration.TextId, webSession.SiteLanguage));
+                                return GestionWeb.GetWebWord(cVpDateConfiguration.TextId, webSession.SiteLanguage);
                         }
                         return "";
                     default:

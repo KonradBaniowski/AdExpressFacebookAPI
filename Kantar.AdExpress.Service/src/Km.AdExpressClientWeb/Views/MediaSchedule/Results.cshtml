@@ -563,7 +563,7 @@
                             },
                             success: function (response) {
                                 if (response != null) {
-                                    var url = "http://adexpress.kantarmedia.fr/" + response.PathReadingFile;
+                                    var url = response.PathReadingFile;
                                     var urlDowload = response.PathDownloadingFile;
                                     if (url) {
                                         $("#creativeStream").attr('src', url);
@@ -596,7 +596,7 @@
                         alert("Les fichiers média ne sont pas disponibles.");
                     }
                     else {
-                        var url = "http://adexpress.kantarmedia.fr/" + datas[0];
+                        var url = datas[0];
                         if (url) {
                             $("#creativeStream").attr('src', url);
                             $('#creativeModal h4').text("Spot");
@@ -623,7 +623,7 @@
                         alert("Les fichiers média ne sont pas disponibles.");
                     }
                     else {
-                        var url = "http://adexpress.kantarmedia.fr/" + datas[0];
+                        var url = datas[0];
                         var width;
                         var height;
                         if (datas[1].length > 0) {
@@ -654,7 +654,7 @@
                         alert("Les fichiers média ne sont pas disponibles.");
                     }
                     else {
-                        var url = "http://adexpress.kantarmedia.fr/" + datas[0];
+                        var url = datas[0];
                         var versionId = datas[1];
                         var format = datas[3];
                         var width;

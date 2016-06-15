@@ -9,7 +9,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Classification;
-
+using WebCore = TNS.AdExpress.Web.Core;
 #endregion
 
 namespace TNS.AdExpressI.Insertions.Russia.Cells
@@ -120,14 +120,14 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
             str.Append("<tr><th valign=\"top\">");
 
             string pathes = String.Join(",", _visuals.ToArray()).Replace("/scan_low", string.Empty);
-            string encryptedParams = (!string.IsNullOrEmpty(pathes)) ? TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(pathes) : "";
+            string encryptedParams = (!string.IsNullOrEmpty(pathes)) ? WebCore.Utilities.QueryStringEncryption.EncryptQueryString(pathes) : "";
 
             foreach (string s in _visuals)
             {
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp)
                 {
-                    string encryptedParams2 = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(st);
+                    string encryptedParams2 = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(st);
                     str.AppendFormat("<a href=\"javascript:OpenWindow('" + TNS.AdExpress.Constantes.Web.Links.CREATIVE_VIEW_PAGE + "?path={0}&id_vehicle=" + _vehicle.DatabaseId.ToString() + "&idSession=" + _session.IdSession + "&is_blur=false&crypt=1');\"><img src=\"" + TNS.AdExpress.Constantes.Web.Links.CREATIVE_VIEW_PAGE + "?path={1}&id_vehicle=" + _vehicle.DatabaseId.ToString() + "&idSession=" + _session.IdSession + "&is_blur=false&crypt=1\"/></a>", encryptedParams, encryptedParams2);
                     hasVisual = true;
                 }
@@ -191,7 +191,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
             str.Append("<table align=\"left\" border=0 cellpadding=0  cellspacing=0><tr >");
 
             string pathes = String.Join(",", _visuals.ToArray()).Replace("/scan_low", string.Empty);
-            string encryptedParams = (!string.IsNullOrEmpty(pathes)) ? TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(pathes) : "";
+            string encryptedParams = (!string.IsNullOrEmpty(pathes)) ? WebCore.Utilities.QueryStringEncryption.EncryptQueryString(pathes) : "";
 
             foreach (string s in _visuals)
             {
@@ -199,7 +199,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
                 foreach (string st in tmp)
                 {
                     str.Append("<td class=\"sloganVioletBackGround\" >");
-                    string encryptedParams2 = TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(st);
+                    string encryptedParams2 = WebCore.Utilities.QueryStringEncryption.EncryptQueryString(st);
 
                     str.Append("<a href=\"javascript:OpenWindow('" + TNS.AdExpress.Constantes.Web.Links.CREATIVE_VIEW_PAGE + "?path=" + encryptedParams + "&id_vehicle=" + _vehicle.DatabaseId.ToString() + "&is_blur=false&crypt=1&idSession=" + _session.IdSession + "');\">");
                     str.Append("<img border=0 "

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pluginConfiguration defaultConnectionId="alert">
+  <dataAccessLayers>
+    <dataAccessLayer enum="Alert" name="AlertDAL" assemblyName="TNS.Ares.Alerts.DAL.Default.dll" class="TNS.Ares.Alerts.DAL.Default.AlertsDAL" />
+    <dataAccessLayer enum="Session" name="SessionDAL" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL" />
+  </dataAccessLayers>
+  <plugins description="List of plugins" defaultFamilyId="123" defaultLongevity="30" defaultFilePath="\\testarossa2\adexdatas\AdExCustomerFiles" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
+    <plugin enumId="Appm" name="Appm" resultType="1" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Sobek" name="Sobek" resultType="4" longevity="10" deleteExpired="true" extension=".txt"  />
+    <plugin enumId="Satet" name="Satet" resultType="5" longevity="10" deleteExpired="true" extension=".xls"  />
+    <plugin enumId="Hotep" name="Hotep" resultType="6" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Miysis" name="Miysis" resultType="7" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Mnevis" name="Mnevis" resultType="8" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Amset" name="Amset" resultType="10" longevity="10" deleteExpired="true" extension=".xls" />
+    <plugin enumId="Aton" name="Aton" resultType="11" longevity="10" deleteExpired="true" extension=".pdf" />
+    <plugin enumId="Bastet" name="Bastet" resultType="2" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Shou" name="Shou" resultType="9" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Tefnout" name="Tefnout" resultType="21" longevity="10" deleteExpired="true" extension=".xls"  />
+    <plugin enumId="Selket" name="Selket" resultType="22" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Thoueris" name="Thoueris" resultType="23" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Dedoum" name="Dedoum" resultType="24" longevity="2" deleteExpired="true" extension=".zip"  />
+    <plugin enumId="Pachet" name="Pachet" resultType="25" longevity="10" deleteExpired="true" extension=".txt"/>
+    <plugin enumId="Amon" name="Amon" resultType="27" resultLongevity="5" deleteExpired="true" extension=".pdf"/>
+    <plugin enumId="Ptah" name="Ptah" resultType="28" resultLongevity="5" deleteExpired="true" extension=".pdf"/>
+    
+    <plugin enumId="Alertes" name="Alertes" resultType="20" longevity="120" deleteExpired="true" useExec="true" deleteRowSuccess="true">
+      <exec dayOfWeekFrom="Saturday"  dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
+      <exec dayOfWeekFrom="Sunday"    dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
+    </plugin>
+    <plugin enumId="Tefnout" name="Tefnout" resultType="21" longevity="10" deleteExpired="true" extension=".xls"  />
+  </plugins>
+</pluginConfiguration>

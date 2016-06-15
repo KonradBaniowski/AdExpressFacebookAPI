@@ -64,21 +64,21 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.Date.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.Date.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.21630, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.26715, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -108,10 +108,6 @@
     <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
-      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
-      <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj">
       <Project>{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}</Project>

@@ -2778,8 +2778,12 @@ namespace TNS.AdExpressI.MediaSchedule {
             StringBuilder headers = new StringBuilder();
             string periodClass;
             string link = string.Empty;
-            System.Uri uri = new Uri(_session.LastWebPage);
-            link = uri.AbsolutePath;
+
+            if (!_isPDFReport)
+            {
+                System.Uri uri = new Uri(_session.LastWebPage);
+                link = uri.AbsolutePath;
+            }
 
             switch (_period.PeriodDetailLEvel)
             {

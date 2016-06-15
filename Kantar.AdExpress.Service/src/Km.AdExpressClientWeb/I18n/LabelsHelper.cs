@@ -79,7 +79,7 @@ namespace Km.AdExpressClientWeb.I18n
                 DeleteRequestMessageConfirmLabel = GestionWeb.GetWebWord(LanguageConstantes.DeleteRequestMessageConfirm, siteLanguage),
 
                 MyResults = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
-                UserUniversCode = GestionWeb.GetWebWord(LanguageConstantes.UserSavedUniversCode, siteLanguage),
+                UserUniversCode = GestionWeb.GetWebWord(LanguageConstantes.UserUniversCode, siteLanguage),
                 MyResultsDescription = GestionWeb.GetWebWord(LanguageConstantes.MyResultsDescription, siteLanguage),
                 AlertsCode = GestionWeb.GetWebWord(LanguageConstantes.AlertsCode, siteLanguage),
                 Periodicity = GestionWeb.GetWebWord(LanguageConstantes.Periodicity, siteLanguage),

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Items>
-  <Item webTextId="1164" value="733551" id="product"/>
-  <Item webTextId="2933" value="16634" id="media"/>
-  <Item webTextId="1146" value="322213" id="advertiser"/>
+  <Item id="product" value="210361" webTextId="1164" />
+  <Item id="media" value="3915" webTextId="2933" />
+  <Item id="advertiser" value="118641" webTextId="1146" />
 </Items>
