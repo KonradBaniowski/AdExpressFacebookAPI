@@ -6,7 +6,7 @@
   <!-- Slovaquie -->
   <!--<smtp host="195.168.127.142" from="tnsadexpress@tns-global.sk" errorEmailList="youssef.rkaina@tnsmi.fr;alexandre.rousseau@tnsmi.fr;benjamin.masson@tnsmi.fr;guillaume.facon@tnsmi.fr" mailPort="25"/>-->
   <!--<smtp host="frmitpu-msprod" from="tnsadexpress@kantarmedia.com" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>-->
-  <smtp host="frmitpu-msprod" from="tnsadexpress@kantarmedia.com" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>
+  <smtp host="frmitpu-msprod" from="tnsadexpress@kantarmedia.com" errorEmailList="youssef.rkaina@kantarmedia.com" mailPort="25"/>
   <server server_id="1" host="frmitch-vmls03" port="30000" />
   <server server_id="2" host="frmitch-ditd058" port="30000" />
   <server server_id="3" host="kmchmvls004" port="30000" />
