@@ -74,12 +74,12 @@
                             <PARAM name="quality" value="high">
                             <EMBED src="" play="true" swliveconnect="true" quality="high" />
                         </OBJECT>
-                        <object id="objectFLV" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version =5,0,0,0" >
+                        <object id="objectFLV" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version =5,0,0,0">
                             <param name="flashvars" value="" />
                             <param name="movie" value="/Player/playerflv.swf" />
                             <param name="allowfullscreen" value="true" />
                             <param name="allowscriptaccess" value="always" />
-                            <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always"  allowfullscreen="false"  flashvars=""  />
+                            <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always" allowfullscreen="false" flashvars="" />
                         </object>
                         <iframe id="objectHTML5" src="" scrolling="no"></iframe>
                     </div>
@@ -415,6 +415,7 @@
             $("#creativeStream").hide();
             $("#objectSWF").hide();
             $("#objectFLV").hide();
+            $("#objectHTML5").hide();
             $("#mediaLoader").show();
             
             $("#creativeModal").on('shown.bs.modal', function (event) {
@@ -484,6 +485,7 @@
                             url = datas[0];
                             $("#objectHTML5").attr('src', url);
                             $("#objectHTML5").show();
+                            Html5Loaded("objectHTML5");
                             break;
                         default:
                             url = datas[0];
@@ -506,6 +508,7 @@
                 $("#objectHTML5").hide();
                 $("#mediaLoader").show();
                 $("#creativeModal .modal-footer").addClass("hide");
+                Html5UnLoaded("objectHTML5");
             });
         }
 
@@ -658,6 +661,26 @@
             $("#gridLoader").show();
             CallCreativeResult();
         });
+
+        //Resize la modal avec la taille de l'iframe
+        function Html5Loaded(idElmt) {
+            var iFrameID = document.getElementById(idElmt);
+            if (iFrameID) {
+                $("#creativeModal > .modal-dialog").css("width", "auto");
+                $("#creativeModal > .modal-dialog").css("height", "auto");
+                $("#creativeModal > .modal-dialog").css("margin", "5px");
+
+                //$("#creativeModal > .modal-dialog").css("width", iFrameID.contentWindow.document.body.scrollWidth + "px");
+                //$("#creativeModal > .modal-dialog").css("height", iFrameID.contentWindow.document.body.scrollHeight + "px");
+            }
+        }
+        function Html5UnLoaded(idElmt) {
+            var iFrameID = document.getElementById(idElmt);
+            if (iFrameID) {
+                $("#creativeModal > .modal-dialog").css("width", "600px");
+                $("#creativeModal > .modal-dialog").css("margin", "30px auto");
+            }
+        }
 
         //Change Icone Filter quand hide/show collapse
         $(document).on('show.bs.collapse', '#filterEvaliant', function (e) {
