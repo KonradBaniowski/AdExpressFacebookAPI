@@ -716,6 +716,10 @@ namespace TNS.AdExpressI.Insertions.Cells
                     }
                     _format = "";
                 }
+                else if (_format.ToUpper() == HTML5_ID)
+                {
+                    outputLink.AppendFormat("{0}", _visuals[0].Replace("\\", "/"));
+                }
                 else
                 {
                     // Other type of media

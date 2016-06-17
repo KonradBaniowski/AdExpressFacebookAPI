@@ -143,9 +143,9 @@ namespace Km.AdExpressClientWeb.Controllers
         public ExportAspose()
         { }
 
-        public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false)
+        public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1)
         {
-            data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            data.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
 
 
@@ -206,12 +206,13 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
 
-                GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
-                nbLevel = detailLevel.GetNbLevels;
-                HeaderBase headerBase = data.NewHeaders.Root;
+               HeaderBase headerBase = data.NewHeaders.Root;
 
                 if (isExportBrut)
                 {
+                    GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
+                    nbLevel = detailLevel.GetNbLevels;                   
+
                     if (nbLevel == 1)
                         headerBase = data.NewHeaders.Root;
                     else

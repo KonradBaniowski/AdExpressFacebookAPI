@@ -66,6 +66,8 @@
             error: function (xmlHttpRequest, errorText, thrownError) {
             },
             success: function (data) {
+                sortOrder = "NONE";
+                columnIndex = 1;
                 CallAnalysisResult();
             }
         });
@@ -76,15 +78,16 @@
     $('#export-type').selectpicker();
     $('#btn-export').on('click', function (e) {
         var selectedValue = $('#export-type').val();
+        var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
         switch (selectedValue) {
             case "1":
-                window.open('/ProductClassAnalysisExport/Index', "_blank");
+                window.open('/ProductClassAnalysisExport/Index' + params, "_blank");
                 break;
             case "2":
                 window.open('/ProductClassAnalysisExport/ResultBrut', "_blank");
                 break;
             default:
-                window.open('/ProductClassAnalysisExport/Index', "_blank");
+                window.open('/ProductClassAnalysisExport/Index' + params, "_blank");
                 break;
         }
     });
@@ -161,62 +164,13 @@
         $("#collapseContainerOne").collapse('hide');
         CallSetOptions();
     });
-    var sortOrder = "NONE";
-    var columnIndex = 1;
-    $(document).on('click', '.ui-iggrid-header.ui-widget-header', function (event) {
+
+    //$(document).on('click', '.ui-iggrid-header.ui-widget-header', function (event) {
+    $(document).on('click', '*[id*=grid_table_g]', function (event) {
         var element = $(this);
         sortFunc(element);
     });
-    function UnitFormatter(val) {
-        if (val > 0)
-            return $.ig.formatter(val, "number");
-
-        return "";
-    }
-    
-
-    //Infragistic
-    function PercentFormatter(val) {
-        if (val > 0)
-            return $.ig.formatter(val, "number", "percent");
-
-        return "";
-    }
-    function PageFormatter(val) {
-        if (val > 0)
-            return $.ig.formatter(val, "number", "#,##0.###");
-
-        return "";
-    }
-    function EvolFormatter(val) {
-
-        if (val == "+Infinity")
-            return '+<img src="../Content/img/g.gif" />';
-        else if (val == "-Infinity")
-            return '-<img src="../Content/img/r.gif" />';
-
-        if (val > 0)
-            return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
-
-        if (val < 0)
-            return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
-
-        if (val == 0)
-            return '<img src="../Content/img/o.gif" />';
-
-        return '';
-    }
-    function DurationFormatter(val) {
-
-        if (val == 0)
-            return "";
-
-        var s = val.toString();
-        var nbToFillWithZero = 6 - s.length;
-        for (var i = 0; i < nbToFillWithZero; i++)
-            s = "0" + s;
-        return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
-    }
+   
     function CallAnalysisResult() {
         $("#gridEmpty").hide();
         var params = {
@@ -235,7 +189,7 @@
             success: function (data) {
                 if (data != null && data != "") {
                     dataTreeGrid = data.datagrid;
-                    cols = GetColumnsFormatter(data.columns, data.unit);
+                    cols = data.columns;
                     colsFixed = data.columnsfixed;
                     needFixedColumns = data.needfixedcolumns;
 
@@ -260,48 +214,7 @@
             }
         });
     }
-    function GetColumnsFormatter(columns, unit) {
-
-        if (columns != null) {
-
-            columns.forEach(function (elem) {
-                if (elem.group != null && elem.group != 'undefined') {
-                    for (var i = 0, len = elem.group.length; i < len; i++) {
-                        if (elem.group[i].key.indexOf("unit") > -1) {
-                            if (unit == "duration")
-                                elem.group[i].formatter = DurationFormatter;
-                            else if (unit == "pages")
-                                elem.group[i].formatter = PageFormatter;
-                            else
-                                elem.group[i].formatter = UnitFormatter;
-                        }
-                        if (elem.group[i].key.indexOf("evol") > -1) {
-                            elem.group[i].formatter = EvolFormatter;
-                        }
-                        if (elem.group[i].key.indexOf("pdm") > -1) {
-                            elem.group[i].formatter = PercentFormatter;
-                        }
-                    }
-                } else if (elem.key.indexOf("unit") > -1) {
-                    if (unit == "duration")
-                        elem.formatter = DurationFormatter;
-                    else if (unit == "pages")
-                        elem.formatter = PageFormatter;
-                    else
-                        elem.formatter = UnitFormatter;
-                } else if (elem.key.indexOf("evol") > -1) {
-                    elem.formatter = EvolFormatter;
-                }
-                else if (elem.key.indexOf("pdm") > -1) {
-                    elem.formatter = PercentFormatter;
-                }
-            });
-
-            return columns;
-        }
-
-        return columns;
-    }
+    
     var renderGrid = function (success, error) {
         if (success) {
 
@@ -331,12 +244,6 @@
                         fixingDirection: "left",
                         columnSettings: colsFixed
                     }
-                    //,{
-                    //    name: "Sorting",
-                    //    type: "remote",
-                    //    columnSorted: sortFunc,
-                    //    applySortedColumnCss: false
-                    //}
                     ]
             })
 
@@ -353,11 +260,43 @@
                     $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                 }
             });
+
+            //$('.ui-iggrid-header.ui-widget-header').each(function (index) {
+            $('*[id*=grid_table_g]').each(function (index) {
+                var element = $(this);
+                element.attr("title", "Cliquez pour trier la colonne");
+                element.css("cursor", "pointer");
+                var child = element.find('.ui-iggrid-headertext');
+                child.css("cursor", "pointer");
+                if (index == (columnIndex - 1)) {
+                    if (sortOrder != "NONE") {
+                        var elementWidth = element.width();
+                        var childWidth = child.width();
+
+                        if (elementWidth == childWidth || (elementWidth - childWidth) < 16) {
+                            var str = child.html();
+                            str = str.replace(/&nbsp;/g, " ");
+                            if (str.length > 6)
+                                str = str.substring(0, str.length - 6) + "...";
+                            else
+                                str = str.substring(0, str.length - 3) + ".";
+
+                            child.html(str);
+                        }
+                        if (sortOrder == "ASC")
+                            element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-asc ui-icon ui-icon-arrowthick-1-n"></span></div>');
+                        else
+                            element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-desc ui-icon ui-icon-arrowthick-1-s"></span></div>');
+                    }
+                }
+
+            });
         
         } else {
             bootbox.alert(error);
         }
     }
+
     var sortFunc = function (field) {
         var index = field[0].id.split("-")[0].split("_g")[1];
         if (sortOrder == "NONE")
@@ -367,8 +306,10 @@
         else if (sortOrder == "DESC")
             sortOrder = "ASC";
         columnIndex = parseInt(index);
-        CallAnalysisResult();
 
+        $("#grid").addClass("hide");
+        $("#gridLoader").removeClass("hide");
+        CallAnalysisResult();
     }
 
     //Export
@@ -386,6 +327,7 @@
     $("#exportResultModal").on('hide.bs.modal', function () {
         $("#exportResultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
     });
+
     function CallUserResult(params) {
         $.ajax({
             url: '/Universe/UserResult',
@@ -402,6 +344,7 @@
             }
         });
     }
+
     function SaveResultEvents() {
         $("#folders").on('change', function (event) {
             var idFolder = $("#folders").val();
@@ -412,6 +355,7 @@
             CallUserResult(params);
         });
     }
+
     function CallSaveResult() {
         $('#btnSaveResult').on('click', function (e) {
             var idFolder = $("#folders").val();

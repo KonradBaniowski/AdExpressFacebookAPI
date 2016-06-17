@@ -1,13 +1,5 @@
 ﻿
 $(function () {
-    //VALIDER 
-    $('#btnSubmitMarketSelection').on('click', function (e) {
-        e.preventDefault();
-        var dis = this;
-        var nextUrl = $(this).attr('href').split('/').pop();
-        NextStep(nextUrl, dis)
-    });
-
     //FIL D ARRIANE
     $('#Media').on('click', function (e) {
         e.preventDefault();

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
   <CustomerMail server="frmitpu-msprod" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://tnsadexpress.com" subject="AdExpress"/>
-  <PdfPath path="\\kmchmfs001\Adex\Multimedia\AdexDatas\FR\AdExCustomerFiles"/>
+  <PdfPath path="F:\AdExCustomerFiles"/>
   <!--<PdfPath path="\\frmitch-ws003\adexdatas\FR\AdExCustomerFiles"/>-->
   <!--If path empty then path = current directory of executable-->
   <ThemePath path="App_Themes"/>

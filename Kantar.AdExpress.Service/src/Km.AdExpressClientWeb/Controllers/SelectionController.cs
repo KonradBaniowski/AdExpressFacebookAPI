@@ -249,6 +249,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     break;
                 case Module.Name.INDICATEUR:
                 case Module.Name.TABLEAU_DYNAMIQUE:
+                case Module.Name.FACEBOOK:
                     periodModel.CalendarFormat = CalendarFormatMonths;
                     result.ControllerDetails.Name = SELECTION;
                     break;

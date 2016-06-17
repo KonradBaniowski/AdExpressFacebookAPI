@@ -57,16 +57,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep)
             };
             bool success = false;
+            #region Try Catch block
             try
             {
-                List<long> commun = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt64).ToList();
-                bool isAllCommun = request.MediaIds.All(e => commun.Contains(e));                
-                if (!isAllCommun && request.MediaIds.Count() > 1)
-                {
-                    response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.UnityError, _webSession.SiteLanguage);
-                }
-                else
-                {
                     if (request.MediaSupportRequired && !request.Trees.Any())
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MediaRequiredCode, _webSession.SiteLanguage);
@@ -187,7 +180,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         response.Success = success;
                     }
                     #endregion
-                }
+                
             }
             catch (System.Exception exc)
             {
@@ -196,7 +189,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     response.ErrorMessage = exc.Message;                 
                 }
             }
-
+            #endregion
             return response;
         }       
 
@@ -922,6 +915,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return success;
         }
+
+        
         #endregion
     }
 }
