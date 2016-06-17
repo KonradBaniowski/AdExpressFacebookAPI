@@ -430,7 +430,7 @@ input {
 }
 
 .information-fixed {
-    height: 265px;
+    height: 275px;
     overflow-y: scroll;
 }
 
@@ -490,7 +490,7 @@ input {
 
 .tile-pdf {
     background-color: rgba(255,255,255,0.2);
-    height: 100px;
+    height: 110px;
     color: #fff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
