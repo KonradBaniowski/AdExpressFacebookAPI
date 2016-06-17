@@ -196,8 +196,8 @@
                 }
             </div>
         </div>
-        @*Two Mostly Importants*@
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        @*Three Mostly Importants*@
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
                 @*@if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                     {
@@ -240,7 +240,7 @@
                 }
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
                 {
@@ -266,6 +266,38 @@
                             </div>
                             <div class="back-second">
                                 <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+            <div class="tile-second">
+                @if (Model.ModuleRight.ContainsKey(Module.Name.FACEBOOK))
+                {
+                    <a class="tile-body text-center" id="@Module.Name.FACEBOOK">
+                        <div class="flip-container-second">
+                            <div class="front-second">
+                                <i class="icon-social-facebook sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.FACEBOOK)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.FACEBOOK)].Description</p>
+                            </div>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container-second">
+                            <div class="front-second">
+                                <i class="icon-social-facebook sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.FACEBOOK)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.FACEBOOK)].Description</p>
                             </div>
                         </div>
                     </div>

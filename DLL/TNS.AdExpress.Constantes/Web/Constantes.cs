@@ -1850,10 +1850,14 @@ namespace TNS.AdExpress.Constantes.Web
             /// </summary>
             public const int ROLEX = 9119;
             /// <summary>
+            /// Facebook
+            /// </summary>
+            public const int FACEBOOK = 17109;
+            /// <summary>
             /// Identifiant Celebrities
             /// </summary>
             public const int CELEBRITIES = 20000;
-		}
+        }
 		#endregion
 
 	}

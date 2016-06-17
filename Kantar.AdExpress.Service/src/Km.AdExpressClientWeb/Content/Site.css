@@ -454,7 +454,7 @@ input {
 
 .tile-second {
     background-color: rgba(0,0,0,0.5);
-    height: 100px;
+    height: 110px;
     color: #fff;
     margin-bottom: 15px;
     -webkit-border-radius: 5px;
@@ -472,7 +472,7 @@ input {
 
 .tile-third {
     background-color: rgba(0,0,0,0.5);
-    height: 100px;
+    height: 110px;
     color: #fff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -2177,13 +2177,22 @@ ul.ui-selectable {
     overflow: hidden;
 }
 
-    .media.video-audio-container iframe, .video-audio-container object, .video-audio-container embed {
+    .video-audio-container object, .video-audio-container embed {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
     }
+
+        .media.video-audio-container iframe{
+        top: 0;
+        /*left: 0;*/
+        width: 100%;
+        height: 100%;
+        border:none;
+    }
+
 
 .imgCreaInser {
     max-height: 200px;
