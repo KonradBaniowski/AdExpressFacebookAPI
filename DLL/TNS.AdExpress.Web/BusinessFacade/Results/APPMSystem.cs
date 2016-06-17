@@ -13,7 +13,7 @@ using System;
 using System.Web.UI;
 
 using TNS.FrameWork.DB.Common;
-using CustomerCst=TNS.AdExpress.Constantes.Customer;
+using CustomerCst = TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -21,6 +21,7 @@ using TNS.AdExpress.Web.Exceptions;
 
 using APPMUIs = TNS.AdExpress.Web.UI.Results.APPM;
 using WebFnc = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.BusinessFacade.Results{
 	/// <summary>
@@ -45,8 +46,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 			
 				#region Paramétrage des dates
 				//Formatting date to be used in the tabs which use APPM Press table
-				int dateBegin = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-				int dateEnd = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+				int dateBegin = int.Parse(Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+				int dateEnd = int.Parse(Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 				#endregion
 
 				#region targets
@@ -141,8 +142,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
         {
 			
 			#region Paramétrage des dates
-			int dateBegin = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-			int dateEnd = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+			int dateBegin = int.Parse(Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+			int dateEnd = int.Parse(Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 			#endregion
 
 			#region targets
@@ -230,8 +231,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
         {
 			
 			#region Paramétrage des dates
-			int dateBegin = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-			int dateEnd = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+			int dateBegin = int.Parse(Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+			int dateEnd = int.Parse(Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 			#endregion
 
 			#region targets
@@ -290,8 +291,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 			try{
 			
 				#region Paramétrage des dates
-				int dateBegin = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-				int dateEnd = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+				int dateBegin = int.Parse(WebFnc.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+				int dateEnd = int.Parse(WebFnc.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 				#endregion
 
 				#region targets

@@ -1073,8 +1073,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 
             #region Mise en forme des dates
 
-            int dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-            int dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+            int dateBegin = int.Parse(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+            int dateEnd = int.Parse(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 
             #endregion
 
@@ -1241,8 +1241,8 @@ namespace TNS.AdExpress.Web.UI.Results{
             HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(845,webSession.SiteLanguage) + " " + data[0,CstWeb.RadioInsertionsColumnIndex.VEHICLE_INDEX].ToString()+"</td></tr>"); 
-//			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
-//				+ GestionWeb.GetWebWord(897, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodEndDate(periodEnd, webSession.PeriodType),webSession.SiteLanguage)+ "</td></tr>");
+//			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.GetPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
+//				+ GestionWeb.GetWebWord(897, webSession.SiteLanguage) + Dates.dateToString(Dates.GetPeriodEndDate(periodEnd, webSession.PeriodType),webSession.SiteLanguage)+ "</td></tr>");
 			#endregion
 
 			#region Pas de données à afficher
@@ -1347,8 +1347,8 @@ namespace TNS.AdExpress.Web.UI.Results{
             HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(845,webSession.SiteLanguage) + " " + data[0,CstWeb.TVInsertionsColumnIndex.VEHICLE_INDEX].ToString()+"</td></tr>"); 
-//			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
-//				+ GestionWeb.GetWebWord(897, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodEndDate(periodEnd, webSession.PeriodType),webSession.SiteLanguage)+ "</td></tr>");
+//			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.GetPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
+//				+ GestionWeb.GetWebWord(897, webSession.SiteLanguage) + Dates.dateToString(Dates.GetPeriodEndDate(periodEnd, webSession.PeriodType),webSession.SiteLanguage)+ "</td></tr>");
 			#endregion
 
 			#region Pas de donnée à afficher
@@ -1450,8 +1450,8 @@ namespace TNS.AdExpress.Web.UI.Results{
             HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(845,webSession.SiteLanguage) + " " + data[0,CstWeb.OutDoorInsertionsColumnIndex.VEHICLE_INDEX].ToString()+"</td></tr>"); 
-//			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
-//				+ GestionWeb.GetWebWord(897, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodEndDate(periodEnd, webSession.PeriodType),webSession.SiteLanguage)+ "</td></tr>");
+//			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.GetPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
+//				+ GestionWeb.GetWebWord(897, webSession.SiteLanguage) + Dates.dateToString(Dates.GetPeriodEndDate(periodEnd, webSession.PeriodType),webSession.SiteLanguage)+ "</td></tr>");
 			#endregion
 
 			#region Pas de donnée à afficher
@@ -1546,8 +1546,8 @@ namespace TNS.AdExpress.Web.UI.Results{
             HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
 
             //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(845,webSession.SiteLanguage) + " " + data[0,CstWeb.InStoreInsertionsColumnIndex.VEHICLE_INDEX].ToString()+"</td></tr>"); 
-            //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
-            //				+ GestionWeb.GetWebWord(897, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodEndDate(periodEnd, webSession.PeriodType),webSession.SiteLanguage)+ "</td></tr>");
+            //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.GetPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
+            //				+ GestionWeb.GetWebWord(897, webSession.SiteLanguage) + Dates.dateToString(Dates.GetPeriodEndDate(periodEnd, webSession.PeriodType),webSession.SiteLanguage)+ "</td></tr>");
             #endregion
 
             #region Pas de donnée à afficher

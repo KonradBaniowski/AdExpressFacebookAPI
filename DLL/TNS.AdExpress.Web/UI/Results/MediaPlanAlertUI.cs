@@ -1543,8 +1543,8 @@
 ////			t.Append("<td>"+GestionWeb.GetWebWord(464,webSession.SiteLanguage)+"</td>");
 ////			t.Append("</tr>");
 ////			t.Append("<tr>");
-////			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+": "+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(periodBeginning,webSession.PeriodType),webSession.SiteLanguage)+" - "
-////				+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(periodEnd,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
+////			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+": "+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodBeginningDate(periodBeginning,webSession.PeriodType),webSession.SiteLanguage)+" - "
+////				+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodEndDate(periodEnd,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
 ////			t.Append("</tr>");
 ////			t.Append("<tr>");
 ////			t.Append("<td>"+GestionWeb.GetWebWord(1313,webSession.SiteLanguage)+" "+GestionWeb.GetWebWord((int)TNS.AdExpress.Constantes.Web.CustomerSessions.XLSUnitsTraductionCodes[webSession.Unit],webSession.SiteLanguage)+"</td>");

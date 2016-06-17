@@ -447,8 +447,8 @@ namespace TNS.AdExpress.Web.UI
                 {
                     if (periodBeginning.Length == 0 || periodEnd.Length == 0)
                     {
-                        startDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType), webSession.SiteLanguage);
-                        endDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType), webSession.SiteLanguage);
+                        startDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType), webSession.SiteLanguage);
+                        endDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType), webSession.SiteLanguage);
 
                         html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font> " + startDate);
                         if (!startDate.Equals(endDate))
@@ -458,8 +458,8 @@ namespace TNS.AdExpress.Web.UI
                     else
                     {
 
-                        startDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType), webSession.SiteLanguage);
-                        endDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(periodEnd, webSession.PeriodType), webSession.SiteLanguage);
+                        startDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.GetPeriodBeginningDate(periodBeginning, webSession.PeriodType), webSession.SiteLanguage);
+                        endDate = WebFunctions.Dates.DateToString(WebFunctions.Dates.GetPeriodEndDate(periodEnd, webSession.PeriodType), webSession.SiteLanguage);
 
                         html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font> " + startDate);
                         if (!startDate.Equals(endDate))
@@ -499,9 +499,9 @@ namespace TNS.AdExpress.Web.UI
                         begin = tmp.FirstDay.Date;
                         end = tmp.LastDay.Date;
                         begin = TNS.AdExpress.Web.Functions.Dates.Max(begin,
-                                    TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
+                                    TNS.AdExpress.Web.Functions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
                         end = TNS.AdExpress.Web.Functions.Dates.Min(end,
-                            TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
+                            TNS.AdExpress.Web.Functions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
                         html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " </font> " + begin.Date.ToString("dd/MM/yyyy"));
                         if (!begin.Equals(end))
@@ -518,9 +518,9 @@ namespace TNS.AdExpress.Web.UI
                         begin = new DateTime(lastDayOfMonth.Year, lastDayOfMonth.Month, 1);
                         end = lastDayOfMonth;
                         begin = TNS.AdExpress.Web.Functions.Dates.Max(begin,
-                                    TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
+                                    TNS.AdExpress.Web.Functions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
                         end = TNS.AdExpress.Web.Functions.Dates.Min(end,
-                            TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
+                            TNS.AdExpress.Web.Functions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
                         html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " </font> " + begin.Date.ToString("dd/MM/yyyy"));
                         if (!begin.Equals(end))
@@ -558,8 +558,8 @@ namespace TNS.AdExpress.Web.UI
             if (currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
             {
                 // get date begin and date end according to period type
-                dateBeginDT = Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-                dateEndDT = Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+                dateBeginDT = Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                dateEndDT = Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
 
                 // get comparative date begin and date end
                 dateBeginDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateBeginDT.Date, webSession.ComparativePeriodType);
@@ -574,8 +574,8 @@ namespace TNS.AdExpress.Web.UI
                 }
                 else
                 {
-                    dateBegin = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(dateBeginDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
-                    dateEnd = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(dateEndDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
+                    dateBegin = WebFunctions.Dates.DateToString(WebFunctions.Dates.GetPeriodBeginningDate(dateBeginDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
+                    dateEnd = WebFunctions.Dates.DateToString(WebFunctions.Dates.GetPeriodBeginningDate(dateEndDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
                 }
                 html.Append(dateBegin);
                 if (!dateBegin.Equals(dateEnd))

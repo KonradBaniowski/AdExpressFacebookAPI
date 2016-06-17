@@ -72,8 +72,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					
 					#region date formatting
 					//Getting the date in the format yyyyMMdd
-					int dateBeginning = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-					int dateEnding = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+					int dateBeginning = int.Parse(WebFnc.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+					int dateEnding = int.Parse(WebFnc.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 					//Formatting the date in the format e.g 12/12/2005
 					if(dateBeginning.ToString().Length>0)
 						startDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						
@@ -268,8 +268,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					
 					#region date formatting
 					//Getting the date in the format yyyyMMdd
-					int dateBeginning = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-					int dateEnding = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+					int dateBeginning = int.Parse(WebFnc.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+					int dateEnding = int.Parse(WebFnc.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 					//Formatting the date in the format e.g 12/12/2005
 					if(dateBeginning.ToString().Length>0)
 						startDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						
@@ -525,8 +525,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					
 					#region date formatting
 					//Getting the date in the format yyyyMMdd
-					int dateBeginning = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-					int dateEnding = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+					int dateBeginning = int.Parse(WebFnc.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+					int dateEnding = int.Parse(WebFnc.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 					//Formatting the date in the format e.g 12/12/2005
 					if(dateBeginning.ToString().Length>0)
 						startDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						

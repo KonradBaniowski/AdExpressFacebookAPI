@@ -164,8 +164,8 @@
 //                throw new NoDataException();
 			
 			
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 //            nbMonths =  (int)PeriodEndDate.Month - (int)PeriodBeginningDate.Month +1 ;
 //            currentmonth=(int)PeriodBeginningDate.Month;
 //            int month=PeriodBeginningDate.Month;

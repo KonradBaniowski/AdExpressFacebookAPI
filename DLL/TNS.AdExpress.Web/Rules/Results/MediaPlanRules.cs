@@ -38,8 +38,8 @@
 //            string periodEnd;
 
 //            if(webSession.DetailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.dayly && webSession.PeriodBeginningDate.Length<8){
-//                periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-//                periodEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+//                periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+//                periodEnd = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
 //            }
 //            else{
 //                periodBeginning=webSession.PeriodBeginningDate;
@@ -59,8 +59,8 @@
 //        public static object[,] GetFormattedTableWithMediaDetailLevelForZoom(WebSession webSession,string zoomDate){
 
 //            #region Formattage des dates sur 8 chiffres
-//            string periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
-//            string periodEnd = WebFunctions.Dates.getPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+//            string periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+//            string periodEnd = WebFunctions.Dates.GetPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
 //            #endregion
 
 //            return(GetFormattedTableWithMediaDetailLevel(webSession,periodBeginning,periodEnd,true));

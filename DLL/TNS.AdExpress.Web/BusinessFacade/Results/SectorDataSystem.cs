@@ -38,8 +38,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 			
 				#region Paramétrage des dates
 				//Formatting date to be used in the tabs which use APPM Press table
-				int dateBegin = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-				int dateEnd = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+				int dateBegin = int.Parse(WebFnc.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+				int dateEnd = int.Parse(WebFnc.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 				#endregion
 
 				#region targets
@@ -95,8 +95,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
         {
 			
 			#region Paramétrage des dates
-			int dateBegin = int.Parse(WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-			int dateEnd = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+			int dateBegin = int.Parse(WebFnc.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+			int dateEnd = int.Parse(WebFnc.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 			#endregion
 
 			#region targets

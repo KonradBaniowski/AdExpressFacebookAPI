@@ -47,7 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -135,6 +135,10 @@
       <Project>{741A9674-6545-469F-8528-F96BA2DB3A74}</Project>
       <Name>TNS.Alert.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.MailAlert\TNS.Ares.AdExpress.MailAlert.csproj">
+      <Project>{5085bb37-3a63-4046-a69a-6bfc8075b187}</Project>
+      <Name>TNS.Ares.AdExpress.MailAlert</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -179,17 +183,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>echo ----------------------------------------------
-echo -                      Pre buid
-echo ----------------------------------------------
-echo  -- Suppression du lecteur I --
-subst i: /D
-echo  -- Obtention du répertoire où seront les librairies --
-set toto="$(TargetDir)"
-echo  -- Suppression du \ de fin; et ajout du " de fin --
-set toto=%25toto:~0,-2%25"
-echo  -- Définition d'un lecteur pointant sur le répertoire où seront les librairies --
-subst i: %25toto%25
-</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

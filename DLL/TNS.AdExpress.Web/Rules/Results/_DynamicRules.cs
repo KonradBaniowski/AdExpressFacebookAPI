@@ -534,8 +534,8 @@
 //            #region Old code
 //            //string beginningPeriodN1DA = WebFunctions.Dates.GetPreviousYearDate(beginningPeriodDA,webSession.DetailPeriod);
 //            //string endPeriodN1DA = WebFunctions.Dates.GetPreviousYearDate(endPeriodDA,webSession.DetailPeriod);
-//            //DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            //DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
+//            //DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            //DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
 //            #endregion
 
 //            string PeriodDateN=PeriodBeginningDate.ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.ToString("dd/MM/yyyy");
@@ -1268,8 +1268,8 @@
 //            WebCore.CustomerPeriod customerPeriod = webSession.CustomerPeriodSelected;
 
 //            #region Old code
-//            //DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            //DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
+//            //DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            //DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
 //            //string PeriodDateN=PeriodBeginningDate.ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.ToString("dd/MM/yyyy");
 //            //string PeriodDateN1=PeriodBeginningDate.Date.AddYears(-1).ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.AddYears(-1).ToString("dd/MM/yyyy");
 //            #endregion

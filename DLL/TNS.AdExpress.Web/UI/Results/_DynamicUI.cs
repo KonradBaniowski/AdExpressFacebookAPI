@@ -95,8 +95,8 @@
 //            #endregion
 			
 //            #region Calcul des périodes
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
 //            PeriodDateN=PeriodBeginningDate.ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.ToString("dd/MM/yyyy");
 			
 //            PeriodDateN1=PeriodBeginningDate.Date.AddYears(-1).ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.AddYears(-1).ToString("dd/MM/yyyy");
@@ -411,8 +411,8 @@
 //            string PeriodDateN="";
 //            // Période d'étude comparative
 //            string PeriodDateN1="";
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
 //            PeriodDateN=WebFunctions.Dates.dateToString(PeriodBeginningDate,webSession.SiteLanguage)+"-"+WebFunctions.Dates.dateToString(PeriodEndDate,webSession.SiteLanguage);			
 //            PeriodDateN1=WebFunctions.Dates.dateToString(PeriodBeginningDate.Date.AddYears(-1),webSession.SiteLanguage)+"-"+WebFunctions.Dates.dateToString(PeriodEndDate.Date.AddYears(-1),webSession.SiteLanguage);
 			
@@ -641,8 +641,8 @@
 //            #endregion
 
 //            #region Calcul des périodes
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
 //            PeriodDateN=PeriodBeginningDate.ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.ToString("dd/MM/yyyy");
 			
 //            PeriodDateN1=PeriodBeginningDate.Date.AddYears(-1).ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.AddYears(-1).ToString("dd/MM/yyyy");
@@ -691,8 +691,8 @@
 ////			t.Append("<td>"+GestionWeb.GetWebWord(464,webSession.SiteLanguage)+"</td>");
 ////			t.Append("</tr>");
 ////			t.Append("<tr>");
-////			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+" : "+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage)+" - "
-////				+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
+////			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+" : "+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage)+" - "
+////				+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
 ////			t.Append("</tr>");
 ////			// Type de resultat
 ////			t.Append("<tr>");
@@ -908,8 +908,8 @@
 //            #endregion
 
 //            #region Calcul des périodes
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType);
 //            PeriodDateN=PeriodBeginningDate.ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.ToString("dd/MM/yyyy");
 			
 //            PeriodDateN1=PeriodBeginningDate.Date.AddYears(-1).ToString("dd/MM/yyyy")+"-"+PeriodEndDate.Date.AddYears(-1).ToString("dd/MM/yyyy");

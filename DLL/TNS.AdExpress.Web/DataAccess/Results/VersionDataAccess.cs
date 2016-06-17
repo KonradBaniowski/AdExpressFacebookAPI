@@ -66,9 +66,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             DateTime today = DateTime.Now.Date;
             DateTime begin;
             if(period != null)
-                begin = WebFunctions.Dates.getPeriodBeginningDate(period.Begin.ToString("yyyyMMdd"), webSession.PeriodType);
+                begin = WebFunctions.Dates.GetPeriodBeginningDate(period.Begin.ToString("yyyyMMdd"), webSession.PeriodType);
             else
-                begin = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                begin = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
 
 
             string tableSuffix = string.Empty;
@@ -117,9 +117,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             DateTime today = DateTime.Now.Date;
             DateTime begin;
             if (period != null)
-                begin = WebFunctions.Dates.getPeriodBeginningDate(period.Begin.ToString("yyyyMMdd"), webSession.PeriodType);
+                begin = WebFunctions.Dates.GetPeriodBeginningDate(period.Begin.ToString("yyyyMMdd"), webSession.PeriodType);
             else
-                begin = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                begin = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
 
 
             string tableSuffix = string.Empty;
@@ -149,7 +149,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		public static DataSet GetPressVersionsDetails(ICollection versions, WebSession webSession,DBCst.Vehicles.names vehicle)
 		{
             DateTime today = DateTime.Now.Date;
-            DateTime begin = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+            DateTime begin = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
 
             string tableSuffix = string.Empty;
             if (begin >= today.AddDays(1 - today.Day).AddMonths(-3))
@@ -597,8 +597,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Dates Parameters
 			//Formatting date to be used in the query
-			string dateBegin = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-			string dateEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+			string dateBegin = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+			string dateEnd = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
 			#endregion
 
             query = "SELECT id_slogan as id, min(date_media_num) as datenum, count(distinct ID_MEDIA) as nbsupports"
@@ -696,8 +696,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Dates Parameters
 			//Formatting date to be used in the query
-			string dateBegin = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-			string dateEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+			string dateBegin = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+			string dateEnd = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
 			#endregion
 
 			//additional target
@@ -807,8 +807,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
             #region Dates Parameters
             //Formatting date to be used in the query
-            string dateBegin = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-            string dateEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+            string dateBegin = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+            string dateEnd = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
             #endregion
 
             //additional target
@@ -911,8 +911,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
             #region Dates Parameters
             //Formatting date to be used in the query
-            string dateBegin = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-            string dateEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+            string dateBegin = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+            string dateEnd = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
             #endregion
 
             query = "SELECT id_slogan as id, count(distinct id_media) as nbsupports"

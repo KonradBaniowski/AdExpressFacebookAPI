@@ -1321,21 +1321,21 @@ namespace TNS.AdExpress.Web.Rules.Results{
                 }
 
                 dateBegin = Convert.ToInt32(
-                    WebFunctions.Dates.Max(WebFunctions.Dates.getPeriodBeginningDate(zoomDate, periodType),
-                        WebFunctions.Dates.getPeriodBeginningDate(periodBegin, webSession.PeriodType)).ToString("yyyyMMdd")
+                    WebFunctions.Dates.Max(WebFunctions.Dates.GetPeriodBeginningDate(zoomDate, periodType),
+                        WebFunctions.Dates.GetPeriodBeginningDate(periodBegin, webSession.PeriodType)).ToString("yyyyMMdd")
                     );
 
                 dateEnd = Convert.ToInt32(
-                    WebFunctions.Dates.Min(WebFunctions.Dates.getPeriodEndDate(zoomDate, periodType),
-                        WebFunctions.Dates.getPeriodEndDate(periodEnd, webSession.PeriodType)).ToString("yyyyMMdd")
+                    WebFunctions.Dates.Min(WebFunctions.Dates.GetPeriodEndDate(zoomDate, periodType),
+                        WebFunctions.Dates.GetPeriodEndDate(periodEnd, webSession.PeriodType)).ToString("yyyyMMdd")
                     );
 
             }
             else
             {
 
-                dateBegin = Convert.ToInt32(WebFunctions.Dates.getPeriodBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
-                dateEnd = Convert.ToInt32(WebFunctions.Dates.getPeriodEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
+                dateBegin = Convert.ToInt32(WebFunctions.Dates.GetPeriodBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
+                dateEnd = Convert.ToInt32(WebFunctions.Dates.GetPeriodEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
 
             }
             #endregion

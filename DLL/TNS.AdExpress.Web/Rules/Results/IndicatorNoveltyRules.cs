@@ -84,7 +84,7 @@
 //            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 //            #endregion
 
 //            #region chargement des données

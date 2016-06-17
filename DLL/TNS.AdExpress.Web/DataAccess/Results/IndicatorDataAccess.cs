@@ -1235,8 +1235,8 @@
 //            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);			
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);			
 //            GetYearSelected(webSession,ref YearSelected,ref year,PeriodBeginningDate);	
 //            #endregion
 
@@ -1575,8 +1575,8 @@
 //                string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 //                if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                    throw new NoDataException();				
-//                DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//                DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);				
+//                DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//                DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);				
 //                //Mois concernés
 //                StudyMonths=DataAccess.Functions.SumMonthlyExpenditureEuroToString(webSession,webSession.ComparativeStudy);
 //                #endregion
@@ -1801,8 +1801,8 @@
 //                if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                    throw new NoDataException();
 				
-//                DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//                DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//                DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//                DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 //                #endregion
 
 //                //Liste des mois étudiés
@@ -2130,8 +2130,8 @@
 //                if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                    throw new NoDataException();
 				
-//                DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//                DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//                DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//                DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 //                #endregion
 
 //                //Liste des mois étudiés
@@ -2547,10 +2547,10 @@
 //            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();				
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);				
-////			DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-////			DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);				
+////			DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+////			DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
 //            #endregion
 
 //            #region Construction de la requête
@@ -2840,8 +2840,8 @@
 //            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();			
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod,webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod,webSession.PeriodType);
 //            #endregion
 
 //            #region dates (mensuels) des investissements 
@@ -2903,8 +2903,8 @@
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
 			
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 //            #endregion
 
 //            #region dates (mensuels) des investissements 
@@ -3014,8 +3014,8 @@
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
 			
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 //            #endregion
 
 //            #region dates (mensuels) des investissements 
@@ -3101,8 +3101,8 @@
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
 			
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 //            #endregion
 
 //            #region dates (mensuels) des investissements 
@@ -3189,8 +3189,8 @@
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
 			
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 //            #endregion
 
 //            #region investissement mois courant			
@@ -3240,8 +3240,8 @@
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
 			
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);			
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);			
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 			
 //            #endregion
 
@@ -3333,8 +3333,8 @@
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
 
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
 
 
 //            #region dates (mensuels) des investissements 			
