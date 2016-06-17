@@ -48,10 +48,14 @@
 }
 
 .tl-header.disabled {
-    pointer-events:none;
     cursor:not-allowed;
     opacity:0.4;
 }
+
+.tl-header.disabled > * {
+    pointer-events:none;
+}
+
 
 .tl-wrap {
     display: table;
