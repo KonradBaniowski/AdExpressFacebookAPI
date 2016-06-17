@@ -26,6 +26,7 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string PORTFOLIO = "Portfolio";
         private const string LOSTWON = "LostWon";
         private const string MEDIASCHEDULE = "MediaSchedule";
+        private const string FACEBOOK = "Facebook";
         private const string ANALYSIS = "Analysis";
         public List<NavigationNode> LoadNavBar(string idWebSession, string controller,int siteLanguage = 33, int CurrentPosition = 0)
         {
@@ -53,6 +54,10 @@ namespace Km.AdExpressClientWeb.Helpers
                     resultController = ANALYSIS;
                     controller = SELECTION;
                     break;
+                case Module.Name.FACEBOOK:
+                    resultController = FACEBOOK;
+                    controller = SELECTION;
+                    break;
             }
             //var ctr = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? controller : SELECTION;
             #region   nav Bar.
@@ -62,7 +67,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 IsActive = webSession.IsCurrentUniversProductSelected(),
                 Description = MARKET,
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Market, siteLanguage),
-                Action =  (webSession.CurrentModule== Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? INDEX : MARKET,
+                Action = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? INDEX : MARKET,
                 Controller = controller,
                 IconCssClass = "fa fa-file-text",
                 Position = CurrentPosition
@@ -77,8 +82,9 @@ namespace Km.AdExpressClientWeb.Helpers
                 Action = MEDIASELECTION,
                 Controller = controller,
                 IconCssClass = "fa fa-eye",
-                Position = CurrentPosition
-            };
+                Position = CurrentPosition,
+                IsDisabled = isSelectionDisabled(webSession.CurrentModule)
+    };
             model.Add(media);
             var dates = new NavigationNode
             {
@@ -90,7 +96,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 Controller = controller,
                 IconCssClass = "fa fa-calendar",
                 Position = CurrentPosition
-            };
+};
             model.Add(dates);
             var result = new NavigationNode
             {
@@ -236,6 +242,30 @@ namespace Km.AdExpressClientWeb.Helpers
                 text = text.Replace(characters[i, 0], characters[i, 1]);
             }
             return text;
+        }
+
+        bool isSelectionDisabled(long module)
+        {
+            bool isDisabled = false;
+            switch (module)
+            {
+                case Module.Name.ANALYSE_CONCURENTIELLE:
+                case Module.Name.ALERTE_PORTEFEUILLE:
+                case Module.Name.ANALYSE_DYNAMIQUE:
+                case Module.Name.ANALYSE_PLAN_MEDIA:
+                case Module.Name.TABLEAU_DYNAMIQUE:
+                case Module.Name.INDICATEUR:
+                    isDisabled = false;
+                    break;
+                case Module.Name.FACEBOOK:
+                    isDisabled = true;
+                    break;
+                default:
+                    isDisabled = false;
+                    break;
+            }
+
+            return isDisabled;
         }
     }
     

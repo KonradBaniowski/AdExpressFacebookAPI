@@ -1490,15 +1490,15 @@
         </results>
       </module>
       <!-- *****************************************                Facebook                  *****************************************-->
-      <module name="Analyse Plan Média" privilegecode="17109" traductioncode="3064" moduleCategoryId="2" urlNextPage="/Facebook" descriptionWebTextId="3065" descriptionImageName="">
+      <module name="Facebook" privilegecode="17109" traductioncode="3064" moduleCategoryId="2" urlNextPage="" descriptionWebTextId="3065" descriptionImageName="">
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">
-        </ModuleAllowedMediaUniverse>
-        <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="8,5,6,3,10,19,7,18,20,2,11,1,9,15,21"/>         
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">
         </ModuleAllowedMediaUniverse>-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="21"/>         
+        </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="1" name="media\catégorie" />
@@ -1535,17 +1535,17 @@
         <selections>
           <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
             <allowedUniverseLevels>
-              <allowedUniverseLevel id="1" name="sector"/>
+              <!--<allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
-              <allowedUniverseLevel id="7" name="holding_company"/>
+              <allowedUniverseLevel id="7" name="holding_company"/>-->
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
-              <allowedUniverseLevel id="5" name="product"/>
+              <!--<allowedUniverseLevel id="5" name="product"/>-->
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="2">
-              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment\advertiser"/>
               <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
               <allowedUniverseBranch id="3" name="brand\product"/>
             </allowedUniverseBranches>

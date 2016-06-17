@@ -34,24 +34,39 @@
                         }
                     }
 
-                    if (navigation.IsActive)
+
+
+                    if (!navigation.IsDisabled)
                     {
-                        <li class="tl-header">
-                            <a id=@(navigation.Description) class="btn btn-warning btn-circle @(currentPosition)" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
-                                <i class="@(navigation.IconCssClass)"></i>
-                            </a>
-                            <p class="lead">@navigation.Title</p>
-                        </li>
+                        if (navigation.IsActive)
+                        {
+                            <li class="tl-header">
+                                <a id=@(navigation.Description) class="btn btn-warning btn-circle @(currentPosition)" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                                    <i class="@(navigation.IconCssClass)"></i>
+                                </a>
+                                <p class="lead">@navigation.Title</p>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="tl-header">
+                                <a id=@(navigation.Description) class="btn btn-warning btn-circle btn-empty @(currentPosition)" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                                    <i class="@(navigation.IconCssClass)"></i>
+                                </a>
+                                <p class="lead">@navigation.Title</p>
+                            </li>
+                        }
                     }
                     else
                     {
-                        <li class="tl-header">
-                            <a id=@(navigation.Description) class="btn btn-warning btn-circle btn-empty @(currentPosition)" href="@Url.Action(navigation.Action, navigation.Controller, navigation.Id)">
+                        <li class="tl-header disabled">
+                            <a id=@(navigation.Description) class="btn btn-warning btn-circle">
                                 <i class="@(navigation.IconCssClass)"></i>
                             </a>
                             <p class="lead">@navigation.Title</p>
                         </li>
                     }
+
                 }
             </ul>
         </center>
