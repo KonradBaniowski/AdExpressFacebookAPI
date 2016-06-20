@@ -163,6 +163,11 @@
         <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Anubis.Constantes.Result.type.apis" -->
         <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Anubis.Constantes.Result.type.amon" -->
         <!-- Badly formed XML comment ignored for member "F:TNS.AdExpress.Anubis.Constantes.Result.type.ptah" -->
+        <member name="F:TNS.AdExpress.Anubis.Constantes.Result.type.miysisPptx">
+            <summary>
+            Type Alerte Plan Média PPTX (plug-in Miysis)
+            </summary>
+        </member>
         <member name="T:TNS.AdExpress.Anubis.Constantes.Result.status">
             <summary>
             Statut de la génération du résultat

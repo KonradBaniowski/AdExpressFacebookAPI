@@ -5,10 +5,10 @@
     <lsClientConfiguration name="AdExpress" directoryName="AdExpress\33" familyId="122" familyName="AdExpress FR Requester Treatment service" monitorPort="30227" productName="AdExpress Request treatment service">
       <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
       <moduleDescription description="Task AdExpress Ares Requester in error" moduleId="2"/>
-      <moduleDescription description="AdExpress Alert generation" moduleId="3"/>
-      <moduleDescription description="Task AdExpress Alert Generation in error" moduleId="4"/>
+      <!--<moduleDescription description="AdExpress Alert generation" moduleId="3"/>-->
+      <!--<moduleDescription description="Task AdExpress Alert Generation in error" moduleId="4"/>-->
       <moduleDescription description="AdExpress Ares Garbage For StaticNavSession" moduleId="10"/>
-      <moduleDescription description="AdExpress Ares Garbage For Alertes" moduleId="11"/>
+      <!--<moduleDescription description="AdExpress Ares Garbage For Alertes" moduleId="11"/>>-->
     </lsClientConfiguration>
   </aresConfigurations>
   <!-- Config IR (353)-->

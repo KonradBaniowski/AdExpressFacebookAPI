@@ -16,6 +16,7 @@ using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Constantes.Classification;
+using AnubisCst = TNS.AdExpress.Anubis.Constantes;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -34,8 +35,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Validation
             var webSession = (WebSession)WebSession.Load(request.WebSessionId);
 
+            AnubisCst.Result.type resultType = (request.ExportType == "4") ? AnubisCst.Result.type.miysis : AnubisCst.Result.type.miysisPptx;
+
             request.ExportType = (request.ExportType == "5") ? GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPptResult, webSession.SiteLanguage) 
                                     : GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage);
+
             List <int> sel = new List<int>();
             Int64 idStaticNavSession = 0;
             string zoomDate = string.Empty;
@@ -67,7 +71,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     switch (webSession.CurrentModule)
                     {
                         case WebCst.Module.Name.BILAN_CAMPAGNE:
-                            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.mnevis);
+                            idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.mnevis);
                             break;                        
                         case WebCst.Module.Name.ANALYSE_CONCURENTIELLE:
                         case WebCst.Module.Name.ANALYSE_DYNAMIQUE:
@@ -87,7 +91,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 //}
                                 if (sel.Count > 0)
                                     webSession.CreativesExportOptions = sel;
-                                idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.dedoum);
+                                idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.dedoum);
 
                             }
                             else
@@ -159,16 +163,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 if (!string.IsNullOrEmpty(_idUnit))
                                     webSession.Unit = (WebCst.CustomerSessions.Unit)int.Parse(_idUnit);
 
-                                idStaticNavSession = (webSession.CurrentModule == WebCst.Module.Name.CELEBRITIES) ? ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.apis) :
-                                    ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
+                                idStaticNavSession = (webSession.CurrentModule == WebCst.Module.Name.CELEBRITIES) ? ExportResultsDAL.Save(webSession, AnubisCst.Result.type.apis) :
+                                    ExportResultsDAL.Save(webSession, resultType);
                             }
                             break;
 
                         case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
-                            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.pachet);
+                            idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.pachet);
                             break;
                         case WebCst.Module.Name.INDICATEUR:
-                            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.hotep);
+                            idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.hotep);
                             break;                     
                         
                         //case WebCst.Module.Name.VP:

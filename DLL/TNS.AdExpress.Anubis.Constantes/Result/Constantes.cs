@@ -108,8 +108,12 @@ namespace TNS.AdExpress.Anubis.Constantes{
             amon = 27,
             /// Export PDF Rolex files
             /// </summary>
-            ptah = 28
-		}
+            ptah = 28,
+            /// <summary>
+            /// Type Alerte Plan Média PPTX (plug-in Miysis)
+            /// </summary>
+            miysisPptx = 45
+        }
 
 		/// <summary>
 		/// Statut de la génération du résultat
