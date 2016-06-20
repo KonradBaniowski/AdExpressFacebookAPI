@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Facebook.DataAccess.Mapping
+namespace Facebook.DataAccess.Mapping.Mau
 {
     public class TemplateAssignmentMapping : EntityTypeConfiguration<TemplateAssignment>
     {

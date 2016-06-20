@@ -1,7 +1,7 @@
 ﻿using Facebook.Service.Core.DomainModels.MauSchema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Facebook.DataAccess.Mapping
+namespace Facebook.DataAccess.Mapping.Mau
 {
     public class OrderClientMediaMapping : EntityTypeConfiguration<OrderClientMedia>
     {

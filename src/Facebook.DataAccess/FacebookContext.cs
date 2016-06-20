@@ -24,12 +24,22 @@ namespace Facebook.DataAccess
         {
             var assemblyTypes = GetType().Assembly.GetTypes().ToList();
 
-            assemblyTypes.Where(p => p.Name.EndsWith("Mapping")
+            assemblyTypes.Where(p => p.Namespace.Contains("MAU")
                 && p.BaseType != null
                 && p.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>)).ToList().ForEach(
                 p =>
                 {
                     dynamic mapping = Activator.CreateInstance(p, schemaMau);
+                    modelBuilder.Configurations.Add(mapping);
+                });
+            var assemblyTypes2 = GetType().Assembly.GetTypes().ToList();
+
+            assemblyTypes2.Where(p => p.Namespace.Contains("Adexpr")
+                && p.BaseType != null
+                && p.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>)).ToList().ForEach(
+                p =>
+                {
+                    dynamic mapping = Activator.CreateInstance(p, schema);
                     modelBuilder.Configurations.Add(mapping);
                 });
         }

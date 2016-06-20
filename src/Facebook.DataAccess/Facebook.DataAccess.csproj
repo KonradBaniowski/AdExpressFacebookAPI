@@ -59,11 +59,12 @@
   <ItemGroup>
     <Compile Include="FacebookContext.cs" />
     <Compile Include="FacebookUow.cs" />
+    <Compile Include="Mapping\Adexpr\DataFacebookMapping.cs" />
     <Compile Include="Mapping\MapperFunctionOracle.cs" />
-    <Compile Include="Mapping\OrderClientMediaMapping.cs" />
-    <Compile Include="Mapping\OrderTemplateMediaMapping.cs" />
-    <Compile Include="Mapping\TemplateAssignmentMapping.cs" />
-    <Compile Include="Mapping\TemplateMapping.cs" />
+    <Compile Include="Mapping\Mau\OrderClientMediaMapping.cs" />
+    <Compile Include="Mapping\Mau\OrderTemplateMediaMapping.cs" />
+    <Compile Include="Mapping\Mau\TemplateAssignmentMapping.cs" />
+    <Compile Include="Mapping\Mau\TemplateMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\OrderClientMediaRepository.cs" />
@@ -83,6 +84,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
