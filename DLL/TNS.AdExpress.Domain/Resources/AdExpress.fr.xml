@@ -2321,5 +2321,6 @@
     <item mnemonic="w3063" type="System.String">Analyses</item>
     <item mnemonic="w3064" type="System.String">Facebook</item>
     <item mnemonic="w3065" type="System.String">En cours de construction</item>
+    <item mnemonic="w3066" type="System.String"> est disponible sur &lt;a href="{0}"&gt;AdExpress&lt;/a&gt;.</item>
   </items>
 </localization>

@@ -63,6 +63,14 @@
             <param name="minL">Maximal Length of the string (0 or less for no limit)</param>
             <returns>Random String</returns>
         </member>
+        <member name="M:TNS.Ares.Functions.GetRandomMailString(System.Int32,System.Int32)">
+            <summary>
+            Same as GetRandomString but uses charecters that could be sent in an html email 
+            </summary>
+            <param name="minL"></param>
+            <param name="maxL"></param>
+            <returns></returns>
+        </member>
         <member name="M:TNS.Ares.Functions.GetRandomInteger(System.Int32,System.Int32)">
             <summary>
             Determine a random integer between i and j included
