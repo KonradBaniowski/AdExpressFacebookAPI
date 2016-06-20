@@ -60,6 +60,7 @@
     <Compile Include="FacebookContext.cs" />
     <Compile Include="FacebookUow.cs" />
     <Compile Include="Mapping\Adexpr\DataFacebookMapping.cs" />
+    <Compile Include="Mapping\Adexpr\ProductMapping.cs" />
     <Compile Include="Mapping\MapperFunctionOracle.cs" />
     <Compile Include="Mapping\Mau\OrderClientMediaMapping.cs" />
     <Compile Include="Mapping\Mau\OrderTemplateMediaMapping.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\OrderClientMediaRepository.cs" />
     <Compile Include="Repository\OrderTemplateMediaRepository.cs" />
+    <Compile Include="Repository\ProductRepository.cs" />
     <Compile Include="Repository\TemplateAssignmnetRepository.cs" />
   </ItemGroup>
   <ItemGroup>
