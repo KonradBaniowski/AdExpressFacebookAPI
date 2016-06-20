@@ -39,38 +39,43 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const long OverLimitMsgCode = 2286;
         public const long ElementLabelCode = 2278;
 
-        public List<UniversItem> GetItems(int universeLevelId, string keyWord, string idSession, Dimension dimension, List<int> idMedias, out int nbItems)
+        public List<UniversItem> GetItems(SearchRequest request, out int nbItems)
         {
-            webSession = (WebSession)WebSession.Load(idSession);            
-            webSession.SelectionUniversMedia.Nodes.Clear();
-            //webSession.SelectionUniversMedia.Nodes.Add(node);
-            // Tracking
-            //webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
-            //CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
-            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
-            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
-            object[] param = new object[3];
-            param[0] = webSession;
-            param[1] = dimension;
-            if (idMedias != null)
-                param[2] = string.Join(",", idMedias.Select(e => e));
-            IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
-                string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
-              cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-            
-            classficationDAL.DBSchema = GetSchema(webSession.CurrentModule);
-            DataTable data = classficationDAL.GetItems(universeLevelId, keyWord).Tables[0];
+            webSession = (WebSession)WebSession.Load(request.WebSessionId);
             var result = new List<UniversItem>();
-            foreach (var item in data.AsEnumerable())
+            switch (webSession.CurrentModule)
             {
-                var UItem = new UniversItem
-                {
-                    Id = int.Parse(item.ItemArray[0].ToString()),
-                    Label = item.ItemArray[1].ToString()
-                };
-                result.Add(UItem);
+                case WebConstantes.Module.Name.FACEBOOK:
+                    nbItems=100;
+                    //TODO
+                    break;
+                default:
+                    webSession.SelectionUniversMedia.Nodes.Clear();
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+                    if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                    object[] param = new object[3];
+                    param[0] = webSession;
+                    param[1] = request.Dimension;
+                    if (request.MediaList != null)
+                        param[2] = string.Join(",", request.MediaList.Select(e => e));
+                    IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                        string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
+                      cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+
+                    classficationDAL.DBSchema = GetSchema(webSession.CurrentModule);
+                    DataTable data = classficationDAL.GetItems(request.LevelId, request.Keyword).Tables[0];                    
+                    foreach (var item in data.AsEnumerable())
+                    {
+                        var UItem = new UniversItem
+                        {
+                            Id = int.Parse(item.ItemArray[0].ToString()),
+                            Label = item.ItemArray[1].ToString()
+                        };
+                        result.Add(UItem);
+                    }
+                    nbItems = result.Count;
+                    break;
             }
-            nbItems = result.Count;
             return result.Take(1000).ToList();
         }
 
@@ -147,6 +152,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 // Create trees according to the dimension
                 int idTree = 0;
+                 if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+                {
+                    MaxIncludeNbr = MaxExcludeNbr = 1;
+                }
                 foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
                 {
                     var maxTreesNbr = (type == AccessType.includes) ? MaxIncludeNbr : MaxExcludeNbr;//(Enum.GetValues(typeof(AccessType)))

@@ -51,7 +51,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
-            var model = _universeService.GetItems(universeId, keyWord, idSession, dimension, idMedias, out totalItems);
+            Domain.SearchRequest request = new Domain.SearchRequest(universeId, keyWord, idSession, dimension, idMedias);
+            var model = _universeService.GetItems(request, out totalItems);
             return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
 
