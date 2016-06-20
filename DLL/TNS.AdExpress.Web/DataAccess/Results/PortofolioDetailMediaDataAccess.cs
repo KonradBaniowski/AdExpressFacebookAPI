@@ -80,8 +80,8 @@
 //            string mediaAgencyYear="";
 //            #endregion
 
-//            dateBegin = WebFunctions.Dates.getPeriodBeginningDate(dateBegin, webSession.PeriodType).ToString("yyyyMMdd");
-//            dateEnd = WebFunctions.Dates.getPeriodEndDate(dateEnd, webSession.PeriodType).ToString("yyyyMMdd");
+//            dateBegin = WebFunctions.Dates.GetPeriodBeginningDate(dateBegin, webSession.PeriodType).ToString("yyyyMMdd");
+//            dateEnd = WebFunctions.Dates.GetPeriodEndDate(dateEnd, webSession.PeriodType).ToString("yyyyMMdd");
 
 //            #region Construction de la requête
 
@@ -340,8 +340,8 @@
 
 //            try {
 
-//                dateBegin = WebFunctions.Dates.getPeriodBeginningDate(dateBegin, webSession.PeriodType).ToString("yyyyMMdd");
-//                dateEnd = WebFunctions.Dates.getPeriodEndDate(dateEnd, webSession.PeriodType).ToString("yyyyMMdd");
+//                dateBegin = WebFunctions.Dates.GetPeriodBeginningDate(dateBegin, webSession.PeriodType).ToString("yyyyMMdd");
+//                dateEnd = WebFunctions.Dates.GetPeriodEndDate(dateEnd, webSession.PeriodType).ToString("yyyyMMdd");
 
 //                //Select
 //                sql.Append(" select distinct");

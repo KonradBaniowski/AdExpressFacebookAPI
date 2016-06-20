@@ -290,8 +290,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 
 								
         //    //Formatting date to be used in the tabs which use APPM Press table
-        //    dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(zoomDate,webSession.PeriodType).ToString("yyyyMMdd"));
-        //    dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(zoomDate,webSession.PeriodType).ToString("yyyyMMdd"));
+        //    dateBegin = int.Parse(WebFunctions.Dates.GetPeriodBeginningDate(zoomDate,webSession.PeriodType).ToString("yyyyMMdd"));
+        //    dateEnd = int.Parse(WebFunctions.Dates.GetPeriodEndDate(zoomDate,webSession.PeriodType).ToString("yyyyMMdd"));
 	
 
         //    #region Get Data

@@ -61,15 +61,15 @@
 ////        /// <returns>Tableau Formaté</returns>
 ////        /// <remarks>
 ////        /// Utilise les méthodes:
-////        ///		public static DateTime TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
-////        ///		public static DateTime TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
+////        ///		public static DateTime TNS.AdExpress.Web.Functions.Dates.GetPeriodBeginningDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
+////        ///		public static DateTime TNS.AdExpress.Web.Functions.Dates.GetPeriodEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
 ////        ///		public static DataSet TNS.AdExpress.Web.DataAccess.Results.CompetitorMediaPlanAlertDataAccess.getPluriMediaDataset(WebSession webSession, string beginningDate, string endDate)
 ////        /// </remarks>
 ////        public static object[,] GetFormattedTable(WebSession webSession, string beginningPeriod, string endPeriod){
 		
 ////            #region Formattage des dates sur 8 chiffres
-////            string periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(beginningPeriod, webSession.PeriodType).ToString("yyyyMMdd");
-////            string periodEnd = WebFunctions.Dates.getPeriodEndDate(endPeriod, webSession.PeriodType).ToString("yyyyMMdd");
+////            string periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(beginningPeriod, webSession.PeriodType).ToString("yyyyMMdd");
+////            string periodEnd = WebFunctions.Dates.GetPeriodEndDate(endPeriod, webSession.PeriodType).ToString("yyyyMMdd");
 ////            #endregion
 
 ////            #region Chargement des données à partir de la base				
@@ -195,8 +195,8 @@
 
 ////            #region Création du tableau des jours
 ////            ArrayList periodItemsList=new ArrayList();
-////            DateTime currentDateTime =  WebFunctions.Dates.getPeriodBeginningDate(beginningPeriod, webSession.PeriodType);
-////            DateTime endDate = WebFunctions.Dates.getPeriodEndDate(endPeriod, webSession.PeriodType);
+////            DateTime currentDateTime =  WebFunctions.Dates.GetPeriodBeginningDate(beginningPeriod, webSession.PeriodType);
+////            DateTime endDate = WebFunctions.Dates.GetPeriodEndDate(endPeriod, webSession.PeriodType);
 ////            while(currentDateTime<=endDate){
 ////                periodItemsList.Add(currentDateTime);
 ////                currentDateTime = currentDateTime.AddDays(1);
@@ -906,15 +906,15 @@
 //        /// <returns>Tableau Formaté</returns>
 //        /// <remarks>
 //        /// Utilise les méthodes:
-//        ///		public static DateTime TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
-//        ///		public static DateTime TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
+//        ///		public static DateTime TNS.AdExpress.Web.Functions.Dates.GetPeriodBeginningDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
+//        ///		public static DateTime TNS.AdExpress.Web.Functions.Dates.GetPeriodEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
 //        ///		public static DataSet TNS.AdExpress.Web.DataAccess.Results.CompetitorMediaPlanAlertDataAccess.getPluriMediaDataset(WebSession webSession, string beginningDate, string endDate)
 //        /// </remarks>
 //        public static object[,] GetFormattedTable(WebSession webSession, string beginningPeriod, string endPeriod) {
 
 //            #region Formattage des dates sur 8 chiffres
-//            string periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(beginningPeriod, webSession.PeriodType).ToString("yyyyMMdd");
-//            string periodEnd = WebFunctions.Dates.getPeriodEndDate(endPeriod, webSession.PeriodType).ToString("yyyyMMdd");
+//            string periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(beginningPeriod, webSession.PeriodType).ToString("yyyyMMdd");
+//            string periodEnd = WebFunctions.Dates.GetPeriodEndDate(endPeriod, webSession.PeriodType).ToString("yyyyMMdd");
 //            #endregion
 
 //            #region Chargement des données à partir de la base
@@ -1047,8 +1047,8 @@
 
 //            #region Création du tableau des jours
 //            ArrayList periodItemsList = new ArrayList();
-//            DateTime currentDateTime = WebFunctions.Dates.getPeriodBeginningDate(beginningPeriod, webSession.PeriodType);
-//            DateTime endDate = WebFunctions.Dates.getPeriodEndDate(endPeriod, webSession.PeriodType);
+//            DateTime currentDateTime = WebFunctions.Dates.GetPeriodBeginningDate(beginningPeriod, webSession.PeriodType);
+//            DateTime endDate = WebFunctions.Dates.GetPeriodEndDate(endPeriod, webSession.PeriodType);
 //            while (currentDateTime <= endDate) {
 //                periodItemsList.Add(currentDateTime);
 //                currentDateTime = currentDateTime.AddDays(1);

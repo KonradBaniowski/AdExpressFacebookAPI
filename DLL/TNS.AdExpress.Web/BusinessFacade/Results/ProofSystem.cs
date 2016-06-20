@@ -31,8 +31,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results
 			try{
 
 				#region Formattage des dates 
-				string periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-				string periodEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+				string periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+				string periodEnd = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
 				#endregion
 
 				//Construction du tableau de résultats				

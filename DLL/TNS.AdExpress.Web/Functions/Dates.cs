@@ -154,7 +154,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// Utilise la classe:
 		///		public TNS.FrameWork.Date.AtomicPeriodWeek
 		/// </remarks>
-		/*public static DateTime getPeriodEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType){
+		/*public static DateTime GetPeriodEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType){
 			switch(periodType){
 				case CstCustomerSession.Period.Type.dateToDateWeek:
 				case CstCustomerSession.Period.Type.nLastWeek:
@@ -661,10 +661,10 @@ namespace TNS.AdExpress.Web.Functions{
 						return year.ToString()+period.Substring(4,2);
 				
 					default : 
-						throw new FunctionsException(" Impossible d'identifier le niveau de détail de la période.");
+						throw new Exception(" Impossible d'identifier le niveau de détail de la période.");
 				}
 			}catch(Exception ex){
-				throw new FunctionsException(" Impossible de récupérer la date de l'année précédente.",ex);
+				throw new Exception(" Impossible de récupérer la date de l'année précédente.",ex);
 			}
 		}
 		#endregion

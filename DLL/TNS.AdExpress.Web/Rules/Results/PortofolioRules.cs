@@ -1259,7 +1259,7 @@
 //        internal static string GetDateBegin(WebSession webSession){
 //            switch(webSession.CurrentModule){
 //                case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:			
-//                    return(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                    return(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
 //                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:			
 //                    return(webSession.PeriodBeginningDate);
 //            }
@@ -1274,7 +1274,7 @@
 //        internal static string GetDateEnd(WebSession webSession){
 //            switch(webSession.CurrentModule){
 //                case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:		
-//                    return(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                    return(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 //                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
 //                    return(webSession.PeriodEndDate);
 //            }

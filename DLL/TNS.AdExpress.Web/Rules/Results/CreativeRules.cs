@@ -144,8 +144,8 @@ namespace TNS.AdExpress.Web.Rules.Results {
             int dateBegin = 0;
             int dateEnd = 0;
 
-            dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(session.PeriodBeginningDate, session.PeriodType).ToString("yyyyMMdd"));
-            dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(session.PeriodEndDate, session.PeriodType).ToString("yyyyMMdd"));
+            dateBegin = int.Parse(WebFunctions.Dates.GetPeriodBeginningDate(session.PeriodBeginningDate, session.PeriodType).ToString("yyyyMMdd"));
+            dateEnd = int.Parse(WebFunctions.Dates.GetPeriodEndDate(session.PeriodEndDate, session.PeriodType).ToString("yyyyMMdd"));
             #endregion
 
             string list = string.Empty;

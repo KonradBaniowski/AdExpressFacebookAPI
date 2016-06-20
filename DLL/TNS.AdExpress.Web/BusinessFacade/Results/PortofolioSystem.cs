@@ -52,8 +52,8 @@
 //            int dateBegin;
 //            int dateEnd;
 //            try {
-//                dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-//                dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                dateBegin = int.Parse(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                dateEnd = int.Parse(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 //            }
 //            catch (System.Exception err) {
 //                throw (new WebExceptions.PortofolioSystemException("Impossible de formater les dates", err));
@@ -123,8 +123,8 @@
 //            int dateBegin;
 //            int dateEnd;
 //            try {
-//                dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-//                dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                dateBegin = int.Parse(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                dateEnd = int.Parse(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 //            }
 //            catch (System.Exception err) {
 //                throw (new WebExceptions.PortofolioSystemException("Impossible de formater les dates", err));
@@ -210,8 +210,8 @@
 //            int dateBegin;
 //            int dateEnd;
 //            try {
-//                dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-//                dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                dateBegin = int.Parse(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                dateEnd = int.Parse(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 //            }
 //            catch (System.Exception err) {
 //                throw (new WebExceptions.PortofolioSystemException("Impossible de formater les dates", err));

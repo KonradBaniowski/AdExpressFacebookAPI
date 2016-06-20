@@ -680,8 +680,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
             if (webSession.DetailPeriod == WebConstantes.CustomerSessions.Period.DisplayLevel.dayly && webSession.PeriodBeginningDate.Length < 8)
             {
-                periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-                periodEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+                periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+                periodEnd = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
             }
             else
             {
@@ -706,8 +706,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
             if (webSession.DetailPeriod == WebConstantes.CustomerSessions.Period.DisplayLevel.dayly && webSession.PeriodBeginningDate.Length < 8)
             {
-                periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-                periodEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+                periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+                periodEnd = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
             }
             else
             {
@@ -731,12 +731,12 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 			#region Formattage des dates sur 8 chiffres
             if (webSession.PeriodType == WebConstantes.CustomerSessions.Period.Type.globalDate){
-                periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(zoomDate, WebConstantes.CustomerSessions.Period.Type.dateToDateMonth).ToString("yyyyMMdd");
-                periodEnd = WebFunctions.Dates.getPeriodEndDate(zoomDate, WebConstantes.CustomerSessions.Period.Type.dateToDateMonth).ToString("yyyyMMdd");
+                periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(zoomDate, WebConstantes.CustomerSessions.Period.Type.dateToDateMonth).ToString("yyyyMMdd");
+                periodEnd = WebFunctions.Dates.GetPeriodEndDate(zoomDate, WebConstantes.CustomerSessions.Period.Type.dateToDateMonth).ToString("yyyyMMdd");
             }
             else{
-			    periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
-			    periodEnd = WebFunctions.Dates.getPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+			    periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+			    periodEnd = WebFunctions.Dates.GetPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
             }
 			#endregion
 
@@ -755,8 +755,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 		public static object[,] GetAdNetTrackFormattedTableWithMediaDetailLevelForZoom(WebSession webSession,string zoomDate){
 
 			#region Formattage des dates sur 8 chiffres
-			string periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
-			string periodEnd = WebFunctions.Dates.getPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+			string periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+			string periodEnd = WebFunctions.Dates.GetPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
 			#endregion
 
 			return(GetFormattedTableWithMediaDetailLevel(webSession,periodBeginning,periodEnd,true,(Int64)DBClassificationConstantes.Vehicles.names.adnettrack));

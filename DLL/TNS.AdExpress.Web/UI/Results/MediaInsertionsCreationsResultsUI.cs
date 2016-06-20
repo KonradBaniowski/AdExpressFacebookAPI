@@ -2191,18 +2191,18 @@ namespace TNS.AdExpress.Web.UI.Results{
                     periodType = CstCustomerSession.Period.Type.dateToDateMonth;
                 }
                 dateBegin = Convert.ToInt32(
-                    Dates.Max(Dates.getPeriodBeginningDate(zoomDate, periodType),
-                        Dates.getPeriodBeginningDate(periodBegin, webSession.PeriodType)).ToString("yyyyMMdd")
+                    Dates.Max(Dates.GetPeriodBeginningDate(zoomDate, periodType),
+                        Dates.GetPeriodBeginningDate(periodBegin, webSession.PeriodType)).ToString("yyyyMMdd")
                     );
                 dateEnd = Convert.ToInt32(
-                    Dates.Min(Dates.getPeriodEndDate(zoomDate, periodType),
-                        Dates.getPeriodEndDate(periodEnd, webSession.PeriodType)).ToString("yyyyMMdd")
+                    Dates.Min(Dates.GetPeriodEndDate(zoomDate, periodType),
+                        Dates.GetPeriodEndDate(periodEnd, webSession.PeriodType)).ToString("yyyyMMdd")
                     );
             }
             else
             {
-                dateBegin = Convert.ToInt32(Dates.getPeriodBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
-                dateEnd = Convert.ToInt32(Dates.getPeriodEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
+                dateBegin = Convert.ToInt32(Dates.GetPeriodBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
+                dateEnd = Convert.ToInt32(Dates.GetPeriodEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
             }
             #endregion
 		
@@ -2356,20 +2356,20 @@ namespace TNS.AdExpress.Web.UI.Results{
                     periodType = CstCustomerSession.Period.Type.dateToDateMonth;
                 }
                 dateBegin = Convert.ToInt32(
-                    Dates.Max(Dates.getPeriodBeginningDate(period, periodType),
-                        Dates.getPeriodBeginningDate(periodBegin, webSession.PeriodType)).ToString("yyyyMMdd")
+                    Dates.Max(Dates.GetPeriodBeginningDate(period, periodType),
+                        Dates.GetPeriodBeginningDate(periodBegin, webSession.PeriodType)).ToString("yyyyMMdd")
                     );
                 dateEnd = Convert.ToInt32(
-                    Dates.Min(Dates.getPeriodEndDate(period, periodType),
-                        Dates.getPeriodEndDate(periodEnd, webSession.PeriodType)).ToString("yyyyMMdd")
+                    Dates.Min(Dates.GetPeriodEndDate(period, periodType),
+                        Dates.GetPeriodEndDate(periodEnd, webSession.PeriodType)).ToString("yyyyMMdd")
                     );
 				PeriodBeginningDate = PeriodEndDate = period;
 
             }
             else
             {
-                dateBegin = Convert.ToInt32(Dates.getPeriodBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
-                dateEnd = Convert.ToInt32(Dates.getPeriodEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
+                dateBegin = Convert.ToInt32(Dates.GetPeriodBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
+                dateEnd = Convert.ToInt32(Dates.GetPeriodEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
 				PeriodBeginningDate = webSession.PeriodBeginningDate;
 				PeriodEndDate = webSession.PeriodEndDate;
             }
