@@ -33,8 +33,8 @@ namespace ClientApi.Controllers
         {
 
             var dbfb = _fbsvc.GetDataFacebook();
-            //var test2 = _rightSvc.GetProductRight(1087);
-            //var next = _rightSvc.GetMediaRight(1087);
+            var test2 = _rightSvc.GetProductRight(1084);
+            var next = _rightSvc.GetMediaRight(1084);
             var products = _productSvc.GetLevelItems("BOISSONS",1);
             return View("Index");
         }

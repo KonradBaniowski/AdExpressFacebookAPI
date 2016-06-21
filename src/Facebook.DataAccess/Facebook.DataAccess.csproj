@@ -60,6 +60,7 @@
     <Compile Include="FacebookContext.cs" />
     <Compile Include="FacebookUow.cs" />
     <Compile Include="Mapping\Adexpr\DataFacebookMapping.cs" />
+    <Compile Include="Mapping\Adexpr\DataPostFacebookMapping.cs" />
     <Compile Include="Mapping\Adexpr\ProductMapping.cs" />
     <Compile Include="Mapping\MapperFunctionOracle.cs" />
     <Compile Include="Mapping\Mau\OrderClientMediaMapping.cs" />
