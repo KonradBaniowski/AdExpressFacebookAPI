@@ -1535,11 +1535,11 @@
         <selections>
           <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
             <allowedUniverseLevels>
-              <!--<allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
-              <allowedUniverseLevel id="7" name="holding_company"/>-->
+              <allowedUniverseLevel id="7" name="holding_company"/>
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
               <!--<allowedUniverseLevel id="5" name="product"/>-->
