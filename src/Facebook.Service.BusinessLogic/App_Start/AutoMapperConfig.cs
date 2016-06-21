@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Facebook.Service.BusinessLogic;
+using Facebook.Service.Contract.ContractModels.ModuleFacebook;
 using Facebook.Service.Contract.ContractModels.RightService;
+using Facebook.Service.Core.DomainModels.AdExprSchema;
 using Facebook.Service.Core.DomainModels.MauSchema;
 
 namespace Facebook.Service.BusinessLogic
@@ -25,6 +27,7 @@ namespace Facebook.Service.BusinessLogic
                 e.CreateMap<OrderClientMedia, Right>()
                 .ForMember(a => a.Rights, d => d.MapFrom(dst => dst.ListMedia))
                 .ForMember(a => a.IdTypeMedia, d => d.MapFrom(dst => dst.IdTypeMedia));
+                e.CreateMap<DataFacebook, DataFacebookContract>();
             });
         }
     }

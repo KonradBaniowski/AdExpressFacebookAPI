@@ -11,7 +11,8 @@ namespace Facebook.Service.Core.DataAccess.Repository
     {
         void Delete(TEntity entityToDelete);
         void Delete(object id);
-        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
         TEntity GetByID(object id);
         void Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
