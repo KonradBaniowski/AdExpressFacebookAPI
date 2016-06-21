@@ -1,11 +1,11 @@
 ﻿
 
-namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
+namespace Facebook.Service.Core.DomainModels.AdExprSchema
 {
-    public class ProductContract
+    public class LevelItem
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
+        public long ProductId { get; set; }
+        public string Product { get; set;}
         public long SegmentId { get; set; }
         public string Segment { get; set; }
         public long GroupId { get; set; }
@@ -20,5 +20,6 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public string Advertiser { get; set; }
         public long HoldingCompanyId { get; set; }
         public string HoldingCompany { get; set; }
+        
     }
 }

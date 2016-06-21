@@ -3,14 +3,14 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace Facebook.DataAccess.Mapping.Adexpr
 {
-    public class ProductMapping : EntityTypeConfiguration<Product>
+    public class ProductMapping : EntityTypeConfiguration<LevelItem>
     {
         public ProductMapping(string schema)
         {
-            HasKey(p => p.Id);
+            HasKey(p => p.ProductId);
             ToTable("ALL_PRODUCT_FACEBOOK_33", schema);
-            Property(p => p.Id).HasColumnName("ID_PRODUCT");
-            Property(P => P.Name).HasColumnName("PRODUCT");
+            Property(p => p.ProductId).HasColumnName("ID_PRODUCT");
+            Property(P => P.Product).HasColumnName("PRODUCT");
             Property(p => p.SegmentId).HasColumnName("ID_SEGMENT");
             Property(p => p.Segment).HasColumnName("SEGMENT");
             Property(p => p.GroupId).HasColumnName("ID_GROUP_");

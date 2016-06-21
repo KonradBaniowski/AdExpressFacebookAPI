@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Facebook.Service.Core.DataAccess.Repository
 {
-    public interface IProductRepository : IGenericRepository<Product>
+    public interface IProductRepository : IGenericRepository<LevelItem>
     {
-        List<Product> Search(string keyword);
+        List<LevelItem> Search(string keyword);
     }
 }

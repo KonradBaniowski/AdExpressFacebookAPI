@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 namespace Facebook.DataAccess.Repository
 {
-    public class ProductRepository : GenericRepository<Product>, IProductRepository
+    public class ProductRepository : GenericRepository<LevelItem>, IProductRepository
     {
         public ProductRepository(FacebookContext context) : base(context)
         {
 
         }
-        public List<Product> Search(string keyword)
+        public List<LevelItem> Search(string keyword)
         {
-            return new List<Product>();
+            return new List<LevelItem>();
         }
     }
 }

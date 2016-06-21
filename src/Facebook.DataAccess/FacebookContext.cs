@@ -50,7 +50,7 @@ namespace Facebook.DataAccess
         public DbSet<OrderClientMedia> OrderClientMedia { get; set; }
         public DbSet<OrderTemplateMedia> OrderTemplateMedia { get; set; }
         public DbSet<Template> Template { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<LevelItem> Products { get; set; }
         public DbSet<DataFacebook> DataFacebook { get; set; }
     }
 
