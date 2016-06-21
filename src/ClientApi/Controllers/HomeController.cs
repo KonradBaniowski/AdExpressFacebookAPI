@@ -13,11 +13,13 @@ namespace ClientApi.Controllers
         
         private IRightService _rightSvc;
         private IFacebookPageService _fbsvc;
+        private IProductService _productSvc;
 
-        public HomeController(IRightService rightSvc, IFacebookPageService fbsvc)
+        public HomeController(IRightService rightSvc, IFacebookPageService fbsvc, IProductService productSvc)
         {
             _rightSvc = rightSvc;
             _fbsvc = fbsvc;
+            _productSvc = productSvc;
         }
 
         public ActionResult Index()
@@ -33,6 +35,7 @@ namespace ClientApi.Controllers
             var dbfb = _fbsvc.GetDataFacebook();
             //var test2 = _rightSvc.GetProductRight(1087);
             //var next = _rightSvc.GetMediaRight(1087);
+            var products = _productSvc.GetProducts("FERRERO");
             return View("Index");
         }
 

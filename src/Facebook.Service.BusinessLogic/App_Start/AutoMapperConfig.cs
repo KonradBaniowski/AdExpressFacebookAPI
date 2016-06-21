@@ -28,6 +28,7 @@ namespace Facebook.Service.BusinessLogic
                 .ForMember(a => a.Rights, d => d.MapFrom(dst => dst.ListMedia))
                 .ForMember(a => a.IdTypeMedia, d => d.MapFrom(dst => dst.IdTypeMedia));
                 e.CreateMap<DataFacebook, DataFacebookContract>();
+                e.CreateMap<Product, ProductContract>();
             });
         }
     }

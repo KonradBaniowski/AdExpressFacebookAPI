@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessService\IFacebookPageService.cs" />
+    <Compile Include="BusinessService\IProductService.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
     <Compile Include="DataAccess\IFacebookUow.cs" />
     <Compile Include="DataAccess\Repository\IDataFacebookRepository.cs" />

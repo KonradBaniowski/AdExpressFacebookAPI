@@ -13,6 +13,7 @@ namespace Facebook.Service.Core.DataAccess
         IOrderTemplateMediaRepository OrderTemplateMediaRepository { get; }
         ITemplateAssignmentRepository TemplateAssignmentRepository { get; }
         IDataFacebookRepository DataFacebookRepository { get; }
+        IProductRepository ProductRepository { get; }
         void Dispose();
         void Save();
     }

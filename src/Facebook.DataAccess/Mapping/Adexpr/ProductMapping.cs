@@ -13,8 +13,8 @@ namespace Facebook.DataAccess.Mapping.Adexpr
             Property(P => P.Name).HasColumnName("PRODUCT");
             Property(p => p.SegmentId).HasColumnName("ID_SEGMENT");
             Property(p => p.Segment).HasColumnName("SEGMENT");
-            Property(p => p.GroupId).HasColumnName("ID_GROUP");
-            Property(P => P.Group).HasColumnName("GROUP");
+            Property(p => p.GroupId).HasColumnName("ID_GROUP_");
+            Property(p => p.Group).HasColumnName("GROUP_");
             Property(p => p.SubSectorId).HasColumnName("ID_SUBSECTOR");
             Property(p => p.SubSector).HasColumnName("SUBSECTOR");
             Property(p => p.SectorId).HasColumnName("ID_SECTOR");
