@@ -1,4 +1,5 @@
-﻿using Facebook.Service.Core.DomainModels.MauSchema;
+﻿using Facebook.Service.Core.DomainModels.AdExprSchema;
+using Facebook.Service.Core.DomainModels.MauSchema;
 using Oracle.ManagedDataAccess.EntityFramework;
 using System;
 using System.Data.Entity;
@@ -47,6 +48,7 @@ namespace Facebook.DataAccess
         public DbSet<OrderClientMedia> OrderClientMedia { get; set; }
         public DbSet<OrderTemplateMedia> OrderTemplateMedia { get; set; }
         public DbSet<Template> Template { get; set; }
+        public DbSet<DataFacebook> DataFacebook { get; set; }
     }
 
     public class ModelConfiguration : DbConfiguration
@@ -54,9 +56,6 @@ namespace Facebook.DataAccess
         public ModelConfiguration()
         {
             SetProviderServices("Oracle.ManagedDataAccess.Client", EFOracleProviderServices.Instance);
-            //DataAccess
-            //SetProviderServices("Oracle.ManagedDataAccess.Client", EFOracleProviderServices.Instance);
-
         }
     }
 

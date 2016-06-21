@@ -67,6 +67,7 @@
     <Compile Include="Mapping\Mau\TemplateAssignmentMapping.cs" />
     <Compile Include="Mapping\Mau\TemplateMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\DataFacebookRepository.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\OrderClientMediaRepository.cs" />
     <Compile Include="Repository\OrderTemplateMediaRepository.cs" />

@@ -23,11 +23,14 @@ namespace Facebook.DataAccess
             this.OrderClientMediaRepository = new OrderClientMediaRepository(_context);
             this.OrderTemplateMediaRepository = new OrderTemplateMediaRepository(_context);
             this.TemplateAssignmentRepository = new TemplateAssignmnetRepository(_context);
+            this.DataFacebookRepository = new DataFacebookRepository(_context);
+
         }
 
         public IOrderClientMediaRepository OrderClientMediaRepository { get; private set; }
         public IOrderTemplateMediaRepository OrderTemplateMediaRepository { get; private set; }
         public ITemplateAssignmentRepository TemplateAssignmentRepository { get; private set; }
+        public IDataFacebookRepository DataFacebookRepository { get; private set; }
 
         public void Save()
         {

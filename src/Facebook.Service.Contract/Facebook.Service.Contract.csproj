@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContractModels\ModuleFacebook\DataFacebookContract.cs" />
     <Compile Include="ContractModels\RightService\Right.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
