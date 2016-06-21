@@ -24,8 +24,9 @@ namespace Facebook.DataAccess
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             var assemblyTypes = GetType().Assembly.GetTypes().ToList();
-
-            assemblyTypes.Where(p => p.Namespace.Contains("MAU")
+            //GetType().Assembly.GetTypes().ToList().Where(e => e.FullName.Contains("Mau"))
+            assemblyTypes.Where(p => p.Namespace != null 
+                && p.Namespace.Contains("Mau")
                 && p.BaseType != null
                 && p.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>)).ToList().ForEach(
                 p =>
@@ -35,7 +36,8 @@ namespace Facebook.DataAccess
                 });
             var assemblyTypes2 = GetType().Assembly.GetTypes().ToList();
 
-            assemblyTypes2.Where(p => p.Namespace.Contains("Adexpr")
+            assemblyTypes2.Where(p => p.Namespace != null
+                && p.Namespace.Contains("Adexpr")
                 && p.BaseType != null
                 && p.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>)).ToList().ForEach(
                 p =>

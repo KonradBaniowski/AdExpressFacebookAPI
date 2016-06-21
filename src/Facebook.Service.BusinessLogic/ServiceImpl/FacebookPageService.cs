@@ -22,7 +22,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
         public List<DataFacebookContract> GetDataFacebook()
         {
-            var query = _uow.DataFacebookRepository.Find(e => e.IdMedia == 1).ToList();
+            var query = _uow.DataFacebookRepository.Find(e => e.IdMedia == 24862).ToList();
             var result = _mapper.Map<List<DataFacebookContract>>(query);
             return result;
         }
