@@ -1525,11 +1525,8 @@
             <allowedMediaLevelItem id="11" name="Famille"/>
             <allowedMediaLevelItem id="12" name="Classe"/>
             <allowedMediaLevelItem id="13" name="Groupe"/>
-            <allowedMediaLevelItem id="14" name="Variété"/>
-            <allowedMediaLevelItem id="15" name="Groupe d'agence"/>
-            <allowedMediaLevelItem id="16" name="Agence"/>
-            <allowedMediaLevelItem id="17" name="Titre"/>
-            <allowedMediaLevelItem id="26" name="Pays"/>
+            <allowedMediaLevelItem id="14" name="Variété"/>          
+            <allowedMediaLevelItem id="17" name="Titre"/>        
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>

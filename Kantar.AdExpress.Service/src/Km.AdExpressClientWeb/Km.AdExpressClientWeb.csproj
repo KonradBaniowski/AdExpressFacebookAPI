@@ -198,6 +198,7 @@
     <Compile Include="Controllers\PresentAbsentExportController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\SelectionController.cs" />
+    <Compile Include="Controllers\SocialMediaController.cs" />
     <Compile Include="Helpers\PageHelper.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
@@ -1624,6 +1625,7 @@
     <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
     <Folder Include="Views\Pdf\" />
+    <Folder Include="Views\SocialMedia\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>

@@ -46,6 +46,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         private const int MaxItemsPerLevel = 100;
+        private const string FACEBOOK = "Facebook";
         #endregion
         private WebSession _webSession = null;
         public WebSessionResponse SaveMediaSelection( SaveMediaSelectionRequest request)
@@ -876,6 +877,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                     currentModuleCode = CstWeb.LanguageConstantes.AnalysisDetailedReport;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
+                    break;
+                case CstWeb.Module.Name.FACEBOOK:
+                    currentModuleCode = CstWeb.LanguageConstantes.FacebookCode;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? FACEBOOK : SELECTION;
                     break;
                 default:
                     break;

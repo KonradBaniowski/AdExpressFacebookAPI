@@ -1688,9 +1688,7 @@
         <allowedMediaLevelItem>agency</allowedMediaLevelItem>
         <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>
-        <!-- Titre -->
-        <allowedMediaLevelItem>country</allowedMediaLevelItem>
-        <!-- Pays -->
+        <!-- Titre -->     
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
