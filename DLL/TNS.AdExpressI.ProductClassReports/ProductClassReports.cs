@@ -270,7 +270,8 @@ namespace TNS.AdExpressI.ProductClassReports
                     throw new NotImplementedReportException(string.Format("Tableau {0} ({1}) is not implemented.", _session.PreformatedTable, _session.PreformatedTable.GetHashCode()));
             }
             _genericEngine.Excel = excel;
-            return _genericEngine.GetResult();
+            var result = _genericEngine.GetResult();
+            return result;
         }
         #endregion
 

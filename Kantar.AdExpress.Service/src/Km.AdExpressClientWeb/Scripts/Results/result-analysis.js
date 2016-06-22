@@ -185,6 +185,9 @@
             datatype: "json",
             data: params,
             error: function (xmlHttpRequest, errorText, thrownError) {
+                var message = $('#Labels_ResultError').val() + '. ' + $('#Labels_WarningBackNavigator').val();
+                bootbox.alert(message);
+                $("#gridLoader").addClass("hide");
             },
             success: function (data) {
                 if (data != null && data != "") {
