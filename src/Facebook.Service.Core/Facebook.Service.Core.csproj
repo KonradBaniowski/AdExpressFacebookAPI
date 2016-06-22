@@ -47,13 +47,16 @@
     <Compile Include="DataAccess\Repository\IDataFacebookRepository.cs" />
     <Compile Include="DataAccess\Repository\IGenericRepository.cs" />
     <Compile Include="DataAccess\Repository\IOrderClientMediaRepository.cs" />
+    <Compile Include="DataAccess\Repository\IOrderClientProductRepository.cs" />
     <Compile Include="DataAccess\Repository\IOrderTemplateMediaRepository.cs" />
+    <Compile Include="DataAccess\Repository\IOrderTemplateProductRepository.cs" />
     <Compile Include="DataAccess\Repository\IProductRepository.cs" />
     <Compile Include="DataAccess\Repository\ITemplateAssignmentRepository.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataPostFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\LevelItem.cs" />
     <Compile Include="DomainModels\MauSchema\OrderClientMedia.cs" />
+    <Compile Include="DomainModels\MauSchema\OrderClientProduct.cs" />
     <Compile Include="DomainModels\MauSchema\OrderTemplateMedia.cs" />
     <Compile Include="DomainModels\MauSchema\OrderTemplateProduct.cs" />
     <Compile Include="DomainModels\MauSchema\Template.cs" />

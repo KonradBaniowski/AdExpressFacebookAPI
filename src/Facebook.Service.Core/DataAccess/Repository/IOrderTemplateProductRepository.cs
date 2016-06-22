@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Facebook.Service.Core.DataAccess.Repository
 {
-    public interface IOrderTemplateMediaRepository : IGenericRepository<OrderTemplateMedia>
+    public interface IOrderTemplateProductRepository : IGenericRepository<OrderTemplateProduct>
     {
-        List<OrderTemplateMedia> GetTemplateMediaRight(int idLogin);
+        List<OrderTemplateProduct> GetTemplateProductRight(int idLogin);
     }
 }

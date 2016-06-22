@@ -1,15 +1,15 @@
-﻿using Facebook.Service.Contract.ContractModels.RightService;
-using System;
+﻿using Facebook.Service.Contract.BusinessModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Facebook.Service.Core.BusinessService
 {
     public interface IRightService
     {
-        List<Right> GetProductRight(int idLogin);
-        List<Right> GetMediaRight(int idLogin);
+        List<Criteria> GetTemplateMediaRight(int idLogin);
+        List<Criteria> GetMediaRight(int idLogin);
+
+        List<Criteria> GetProductRight(int idLogin);
+
+        List<Criteria> GetTemplateProductRight(int idLogin);
     }
 }

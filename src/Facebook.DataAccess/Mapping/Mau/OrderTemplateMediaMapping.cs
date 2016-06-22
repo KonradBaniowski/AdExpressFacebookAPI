@@ -12,14 +12,12 @@ namespace Facebook.DataAccess.Mapping.Mau
     {
         public OrderTemplateMediaMapping(string schema)
         {
-            HasKey(e => e.IdOrderTemplateMedia);
+            HasKey(e => e.Id);
             ToTable("ORDER_TEMPLATE_MEDIA", schema);
-            Property(e => e.IdOrderTemplateMedia).HasColumnName("ID_ORDER_TEMPLATE_MEDIA");
+            Property(e => e.Id).HasColumnName("ID_ORDER_TEMPLATE_MEDIA");
             Property(e => e.IdTypeMedia).HasColumnName("ID_TYPE_MEDIA");
-            Property(e => e.IdTemplate).HasColumnName("ID_TEMPLATE").IsOptional();
             Property(_ => _.ListMedia).HasColumnName("LIST_MEDIA");
-
-            HasRequired(e => e.TypeMedia).WithMany().HasForeignKey(e => e.IdTypeMedia);
+            //HasRequired(e => e.TypeMedia).WithMany().HasForeignKey(e => e.IdTypeMedia);
         }
     }
 }

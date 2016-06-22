@@ -25,6 +25,8 @@ namespace Facebook.DataAccess
             this.TemplateAssignmentRepository = new TemplateAssignmnetRepository(_context);
             this.ProductRepository = new ProductRepository(_context);
             this.DataFacebookRepository = new DataFacebookRepository(_context);
+            this.OrderClientProductRepository = new OrderClientProductRepository(_context);
+            this.OrderTemplateProductRepository = new OrderTemplateProductRepository(_context);
 
         }
 
@@ -33,6 +35,8 @@ namespace Facebook.DataAccess
         public ITemplateAssignmentRepository TemplateAssignmentRepository { get; private set; }
         public IProductRepository ProductRepository { get; private set; }
         public IDataFacebookRepository DataFacebookRepository { get; private set; }
+        public IOrderClientProductRepository OrderClientProductRepository { get; private set; }
+        public IOrderTemplateProductRepository OrderTemplateProductRepository { get; private set; }
 
         public void Save()
         {

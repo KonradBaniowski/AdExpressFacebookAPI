@@ -64,6 +64,7 @@
     <Compile Include="Mapping\Adexpr\ProductMapping.cs" />
     <Compile Include="Mapping\MapperFunctionOracle.cs" />
     <Compile Include="Mapping\Mau\OrderClientMediaMapping.cs" />
+    <Compile Include="Mapping\Mau\OrderClientProductMapping.cs" />
     <Compile Include="Mapping\Mau\OrderTemplateMediaMapping.cs" />
     <Compile Include="Mapping\Mau\TemplateAssignmentMapping.cs" />
     <Compile Include="Mapping\Mau\TemplateMapping.cs" />
@@ -71,7 +72,9 @@
     <Compile Include="Repository\DataFacebookRepository.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\OrderClientMediaRepository.cs" />
+    <Compile Include="Repository\OrderClientProductRepository.cs" />
     <Compile Include="Repository\OrderTemplateMediaRepository.cs" />
+    <Compile Include="Repository\OrderTemplateProductRepository.cs" />
     <Compile Include="Repository\ProductRepository.cs" />
     <Compile Include="Repository\TemplateAssignmnetRepository.cs" />
   </ItemGroup>

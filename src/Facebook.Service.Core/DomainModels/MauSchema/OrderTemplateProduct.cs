@@ -8,6 +8,8 @@ namespace Facebook.Service.Core.DomainModels.MauSchema
 {
     public class OrderTemplateProduct
     {
-
+        public int IdTypeProduct { get; set; }
+        public int Exception { get; set; }
+        public string ListMedia { get; set; }
     }
 }
