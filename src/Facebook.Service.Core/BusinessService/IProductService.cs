@@ -5,6 +5,7 @@ namespace Facebook.Service.Core.BusinessService
 {
     public interface IProductService
     {
-        List<LevelItemContract> GetLevelItems(string keyword, int level);
+        List<LevelItemContract> GetItems(string keyword, int level);
+        List<LevelItemContract> GetItems(int level, string selectedItemIds, int selectedLevel);
     }
 }

@@ -21,7 +21,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             _mapper = mapper;
         }
 
-        public List<LevelItemContract> GetLevelItems(string  keyword, int level)
+        public List<LevelItemContract> GetItems(string  keyword, int level)
         {
             var products = new List<LevelItem>();
             switch (level)
@@ -54,6 +54,13 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     break;
             }
             var result = _mapper.Map<List<LevelItemContract>>(products);
+            return result;
+        }
+        public List<LevelItemContract> GetItems(int level, string selectedItemIds, int selectedLevel)
+        {
+            var items = new List<LevelItem>();
+            List<long> selectedIds = selectedItemIds.Split(',').Select(p => long.Parse(p)).ToList();            
+            var result = _mapper.Map<List<LevelItemContract>>(items);
             return result;
         }
     }
