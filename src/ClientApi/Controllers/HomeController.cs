@@ -35,7 +35,8 @@ namespace ClientApi.Controllers
             var dbfb = _fbsvc.GetDataFacebook();
             //var test2 = _rightSvc.GetProductRight(1087);
             //var next = _rightSvc.GetMediaRight(1087);
-            var products = _productSvc.GetItems("BOISSONS",1);
+            var test2 = _rightSvc.GetProductRight(1084);
+            var next = _rightSvc.GetMediaRight(1084);            
             return View("Index");
         }
 

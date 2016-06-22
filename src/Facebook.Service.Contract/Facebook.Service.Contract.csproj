@@ -43,6 +43,7 @@
     <Compile Include="ContractModels\ModuleFacebook\DataFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\LevelItemContract.cs" />
     <Compile Include="ContractModels\RightService\Right.cs" />
+    <Compile Include="ContractModels\RightWebSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
