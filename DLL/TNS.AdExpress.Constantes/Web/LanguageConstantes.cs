@@ -195,6 +195,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Password = 3060;
         public const long Search = 3062;
         public const long AnalysisLabel = 3063;
+        public const long FacebookCode = 3064;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;        
         #endregion
