@@ -1154,6 +1154,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                 case WebConstantes.Module.Name.INDICATEUR:
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                case WebConstantes.Module.Name.FACEBOOK:
                     adExpressUniverse = GetUniverseToSave(request);
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
                     {
