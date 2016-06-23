@@ -70,7 +70,7 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "ID" });
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
-            columns.Add(new { headerText = "profilPage", key = "profilPage", dataType = "number", width = "*", hidden = true });
+            columns.Add(new { headerText = "profilPage", key = "profilPage", dataType = "string", width = "*", hidden = true });
             schemaFields.Add(new { name = "profilPage" });
 
             columns.Add(new { headerText = "", key = "Title", dataType = "string", width = "*" });
@@ -124,7 +124,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     gridData[2, 0] = 3;
                     gridData[2, 1] = 2;
-                    gridData[2, 2] = 11;
+                    gridData[2, 2] = "98368363924";
                     gridData[2, 3] = "WooowWw";
                     gridData[2, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
                     gridData[2, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
@@ -138,7 +138,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     gridData[3, 0] = 4;
                     gridData[3, 1] = 2;
-                    gridData[3, 2] = 22;
+                    gridData[3, 2] = "98368363924";
                     gridData[3, 3] = "WooowWw";
                     gridData[3, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
                     gridData[3, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
@@ -152,7 +152,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             gridData[4, 0] = 5;
             gridData[4, 1] = -1;
-            gridData[4, 2] = 0;
+            gridData[4, 2] = "0";
             gridData[4, 3] = "Concurrents";
             gridData[4, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
             gridData[4, 5] = "";
@@ -166,7 +166,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 gridData[5, 0] = 6;
                 gridData[5, 1] = 5;
-                gridData[5, 2] = 0;
+                gridData[5, 2] = "0";
                 gridData[5, 3] = "AUDI";
                 gridData[5, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
                 gridData[5, 5] = "";
@@ -180,7 +180,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     gridData[6, 0] = 7;
                     gridData[6, 1] = 6;
-                    gridData[6, 2] = 33;
+                    gridData[6, 2] = "98368363924";
                     gridData[6, 3] = "Yeahhhh";
                     gridData[6, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
                     gridData[6, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
@@ -194,7 +194,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     gridData[7, 0] = 8;
                     gridData[7, 1] = 6;
-                    gridData[7, 2] = 44;
+                    gridData[7, 2] = "98368363924";
                     gridData[7, 3] = "Yeahhhh";
                     gridData[7, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
                     gridData[7, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
@@ -208,7 +208,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     gridData[8, 0] = 9;
                     gridData[8, 1] = 6;
-                    gridData[8, 2] = 55;
+                    gridData[8, 2] = "98368363924";
                     gridData[8, 3] = "Yeahhhh";
                     gridData[8, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
                     gridData[8, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
@@ -222,7 +222,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 gridData[9, 0] = 10;
                 gridData[9, 1] = 5;
-                gridData[9, 2] = 0;
+                gridData[9, 2] = "0";
                 gridData[9, 3] = "VOLKSWAGEN";
                 gridData[9, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
                 gridData[9, 5] = "";
@@ -236,7 +236,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     gridData[10, 0] = 11;
                     gridData[10, 1] = 10;
-                    gridData[10, 2] = 66;
+                    gridData[10, 2] = "98368363924";
                     gridData[10, 3] = "ChoooOou";
                     gridData[10, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
                     gridData[10, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
