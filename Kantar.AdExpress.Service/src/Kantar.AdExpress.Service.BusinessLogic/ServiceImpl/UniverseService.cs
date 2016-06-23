@@ -43,13 +43,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             webSession = (WebSession)WebSession.Load(request.WebSessionId);
             var result = new List<UniversItem>();
-            switch (webSession.CurrentModule)
-            {
-                case WebConstantes.Module.Name.FACEBOOK:
-                    nbItems=100;
-                    //TODO
-                    break;
-                default:
+            //switch (webSession.CurrentModule)
+            //{
+                //case WebConstantes.Module.Name.FACEBOOK:
+                //    nbItems=100;
+                //    //TODO
+                //    break;
+                //default:
                     webSession.SelectionUniversMedia.Nodes.Clear();
                     CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
                     if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
@@ -74,8 +74,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         result.Add(UItem);
                     }
                     nbItems = result.Count;
-                    break;
-            }
+                    //break;
+            //}
             return result.Take(1000).ToList();
         }
 
@@ -1121,6 +1121,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                case WebConstantes.Module.Name.FACEBOOK:
                     schema = WebApplicationParameters.DataBaseDescription.
                     GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
                     break;

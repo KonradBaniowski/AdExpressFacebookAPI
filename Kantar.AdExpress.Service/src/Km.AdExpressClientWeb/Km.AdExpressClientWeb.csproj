@@ -199,6 +199,7 @@
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\SelectionController.cs" />
     <Compile Include="Controllers\SocialMediaController.cs" />
+    <Compile Include="Controllers\SocialMediaExportController.cs" />
     <Compile Include="Helpers\PageHelper.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Models\Shared\MediaSelectionViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserResultViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
+    <Compile Include="Models\SocialMedia\ResultsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1516,6 +1518,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Results\portfolio-vehicle-view.js" />
+    <Content Include="Scripts\Results\socialMedia-results.js" />
     <Content Include="Scripts\Results\result-analysis.js" />
     <Content Include="Scripts\Results\result.js" />
     <Content Include="Scripts\selectableScroll.js" />
@@ -1616,6 +1619,7 @@
     <Content Include="Views\Selection\Market.cshtml" />
     <Content Include="Views\Analysis\Results.cshtml" />
     <Content Include="Views\Analysis\_ResultOptions.cshtml" />
+    <Content Include="Views\SocialMedia\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1625,7 +1629,7 @@
     <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
     <Folder Include="Views\Pdf\" />
-    <Folder Include="Views\SocialMedia\" />
+    <Folder Include="Views\SocialMediaExport\" />
     <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
