@@ -316,7 +316,7 @@
     <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>
     <view enumId="5" description="Classif: all Promo brand" schemaEnumId="11" label="all_brand" prefix="allpb"/>
     <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>
-    <table enumId="7" description="Classif: all product facebook" schemaEnumId="0" label="ALL_PRODUCT_FACEBOOK_" prefix="allpfcb"/>
+    <view enumId="7" description="Classif: all product facebook" schemaEnumId="0" label="ALL_PRODUCT_FACEBOOK_" prefix="allpfcb"/>
   </views>
 </database>
 
