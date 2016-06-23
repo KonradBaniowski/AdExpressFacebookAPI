@@ -10,6 +10,20 @@ $('#move-item').on('click', function () {
         var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li')
         var nbItemSrc = levelSrc.length;
         var nbItemDst = levelDst.length;
+        if ($('#CurrentModule').val() == 17109)
+        {
+            if (!(universSrc == 6 || universSrc == 8))
+            {
+                bootbox.alert("You can select only advertisers or brands.");
+                return
+            }
+            if(nbItemSrc>5 ||nbItemDst>5 )
+            {
+                bootbox.alert("Please select at maximum 5 advertisers or brands. ");
+                return
+            }
+        }
+        
         if (nbItemDst + nbItemSrc > 1000) {
             bootbox.alert($('#Labels_ErrorMessageLimitUniverses').val());
             return
