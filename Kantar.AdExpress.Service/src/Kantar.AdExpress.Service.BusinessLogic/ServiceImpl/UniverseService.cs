@@ -626,7 +626,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
             var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
-            var data = UniversListDataAccess.GetData(tuple.Item3, branch, string.Empty);
+            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK) branch = Branch.type.productSocial.GetHashCode().ToString();
+                var data = UniversListDataAccess.GetData(tuple.Item3, branch, string.Empty);
             if (data != null && data.Tables[0].AsEnumerable().Any())
             {
                 var list = data.Tables[0].AsEnumerable().Select(p => new
@@ -1007,7 +1008,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return defaultBranchId;
         }
 
-        private Branch.type GetBrancheType(Dimension dimension)
+        private Branch.type GetBrancheType(Dimension dimension, long idModule=0)
         {
 
             switch (dimension)
@@ -1015,7 +1016,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case (Dimension.media):
                     return Branch.type.media;
                 case (Dimension.product):
-                    return Branch.type.product;
+                    Branch.type type =(idModule== WebConstantes.Module.Name.FACEBOOK)? Branch.type.productSocial: Branch.type.product;
+                    return type;
                 case (Dimension.advertisingAgency):
                     return Branch.type.advertisingAgency;
                 case (Dimension.advertisementType):
@@ -1186,7 +1188,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Sauvegarde de l'univers
             if (universes.Any())
             {
-                Branch.type branchType = GetBrancheType(request.Dimension);
+                Branch.type branchType = GetBrancheType(request.Dimension, idModule);
                 string universeName = request.Name;
                 if (String.IsNullOrEmpty(request.Name) && idSelectedUniverse != 0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
                 {
