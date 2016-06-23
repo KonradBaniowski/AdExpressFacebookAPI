@@ -153,7 +153,8 @@ namespace TNS.AdExpressI.Classification.DAL
                 /*To improve the performance of research. The target table varies according to the rights 
                  * of clients. For example, for a given classification level, if no rights is applied, 
                  * the corresponding table  of classification will be targeted instead of view. */
-                useView = CanUseView(_dimension, classificationRight);
+                useView = (_session.CurrentModule==WebConstantes.Module.Name.FACEBOOK)?CanUseFcbView(_dimension, classificationRight) :CanUseView(_dimension, classificationRight);
+
             }
             catch (System.Exception err)
             {
@@ -809,11 +810,27 @@ namespace TNS.AdExpressI.Classification.DAL
              * The view corresponding to a classification brand contains all fields (identifier and label) of brand.
              * For example for the product classification the View will be like this : id_produt,product, id_sector,sector, di_group_,
              * group_ etc */
-            if ((classificationRight != null && classificationRight.Length > 0)
-            || (dimension == Dimension.media && _module.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
-             || _filterWithProductSelection)
-                return true;
-            return false;
+            bool result = false;
+            bool partial = (!String.IsNullOrEmpty(classificationRight) || _filterWithProductSelection) ? true : false;
+             switch (_session.CurrentModule)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    result = (dimension == Dimension.media || partial) ? true : false;
+                    break;
+                case WebConstantes.Module.Name.FACEBOOK:
+                    result = (dimension == Dimension.product) ? true : false;
+                    break;
+                default:
+                    result = partial;
+                    break;
+            }
+            return result;
+        }
+        protected virtual bool CanUseFcbView(Dimension dimension, string classificationRight)
+        {
+            //TODO check classificationRight for fcb isn't null or empty once we have an idea about this
+            var result = (_session.CurrentModule == WebConstantes.Module.Name.FACEBOOK && dimension == Dimension.product) ? true : false;
+            return result;
         }
         #endregion
 
