@@ -110,7 +110,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, bool selectionPage = true, int MaxIncludeNbr = 2, int MaxExcludeNbr = 1)
         {
-            var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            var tuple = GetAllowedIds(webSession, dimension, selectionPage);
             var result = new UniversBranchResult(tuple.Item4, tuple.Item5, MaxIncludeNbr + MaxExcludeNbr);
             result.ControllerDetails = GetCurrentControllerDetails(tuple.Item3.CurrentModule);          
             var allowedBranchesIds = tuple.Item2;
@@ -177,7 +178,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         public UniversGroupsResponse GetUserSavedUniversGroups(string webSessionId, Dimension dimension, bool selectionPage = true)
         {
-            var tuple = GetAllowedIds(webSessionId, dimension, selectionPage);
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            var tuple = GetAllowedIds(webSession, dimension, selectionPage);
             UniversGroupsResponse result = new UniversGroupsResponse
             {
                 UniversGroups = new List<UserUniversGroup>(),
@@ -186,7 +188,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
             var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
-            var data = UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
+
+            //branch product type associated to module Facebook
+            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK) branch = Branch.type.productSocial.GetHashCode().ToString(); 
+             var data = UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
             List<UserUnivers> UserUniversList = new List<UserUnivers>();
             if (data != null && data.Rows.Count > 0)
             {
@@ -277,7 +282,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                         param[1] = dimension;
                                         ClassificationDAL classficationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                                         classficationDAL.DBSchema = GetSchema(webSession.CurrentModule);
-                                        var tuple = GetAllowedIds(webSessionId, dimension, true);
+                                        var tuple = GetAllowedIds(webSession, dimension, true);
 
                                         foreach (var currentLevel in tuple.Item1)
                                         {
@@ -367,7 +372,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                             param[1] = dimension;
                                             ClassificationDAL classficationDAL = (ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                                             classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
-                                            var tuple = GetAllowedIds(webSessionId, dimension, true);
+                                            var tuple = GetAllowedIds(webSession, dimension, true);
 
                                             foreach (var currentLevel in tuple.Item1)
                                             {
@@ -446,7 +451,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public UniversGroupSaveResponse SaveUserUnivers(UniversGroupSaveRequest request)
         {
             UniversGroupSaveResponse result = new UniversGroupSaveResponse();
-            webSession = (WebSession)WebSession.Load(request.WebSessionId);
+             webSession = (WebSession)WebSession.Load(request.WebSessionId);
             #region To be Refactored
             if (request.Trees.Any() && request.Trees.Where(p => p.UniversLevels != null).Any() && request.UniversGroupId>0 && (request.UserUniversId>0 || !String.IsNullOrEmpty(request.Name)))
             {
@@ -610,7 +615,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public UniversGroupsResponse GetUserUniversGroups(string webSessionId, Dimension dimension, long idGroup = 0)
         {
-            var tuple = GetAllowedIds(webSessionId, dimension);
+            var webSession = (WebSession)WebSession.Load(webSessionId);
+            var tuple = GetAllowedIds(webSession, dimension);
             UniversGroupsResponse result = new UniversGroupsResponse
             {
                 UniversGroups = new List<UserUniversGroup>(),
@@ -921,9 +927,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result.Take(1000).ToList();
         }
         #region private methods
-        private Tuple<List<long>, List<int>, WebSession, int, int> GetAllowedIds(string webSessionId, Dimension dimension, bool selectionPage = true)
+        private Tuple<List<long>, List<int>, WebSession, int, int> GetAllowedIds(WebSession webSession, Dimension dimension, bool selectionPage = true)
         {
-            webSession = (WebSession)WebSession.Load(webSessionId);
+        
             var siteLanguage = webSession.SiteLanguage;
             string listUniverseClientDescription = "";
             ILevelsRules levelsRules = null;

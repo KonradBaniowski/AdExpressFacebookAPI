@@ -27,13 +27,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var param = new object[1];
             param[0] = _customerSession;
 
-            //_customerSession.PeriodType = WebConstantes.CustomerSessions.Period.Type.dateToDateMonth;
-            //_customerSession.DetailPeriod = CstPeriodDetail.monthly;
-            //_customerSession.ComparativeStudy = true;
-            //_customerSession.PeriodBeginningDate = "201501";
-            //_customerSession.PeriodEndDate = "201512";
-            //_customerSession.Save();
-
             var productClassLayer = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             var gridResult = productClassLayer.GetGridResult(sortOrder, columnIndex);
             return gridResult;
