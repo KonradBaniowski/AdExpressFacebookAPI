@@ -150,7 +150,11 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// <summary>
             /// Profession
             /// </summary>
-            profession =32
+            profession =32,
+            /// <summary>
+            /// Product unçverse link to module facebook
+            /// </summary>
+            productSocial = 33
 		}
 		#endregion
 

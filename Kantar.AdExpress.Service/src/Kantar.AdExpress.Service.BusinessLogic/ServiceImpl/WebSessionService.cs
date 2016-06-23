@@ -532,6 +532,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (System.Exception) { }
 
+            //Intiliaze Facebook module Criteria
+            if (_webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK)
+            {
+                //Set default media
+                _webSession.SelectionUniversMedia.Nodes.Clear();
+                System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("SOCIAL MEDIA");
+                tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.social), "SOCIAL MEDIA");
+                _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+
+                //Set last 3 months by defaut
+                _webSession.PeriodLength = 3;              
+                _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.nLastMonth;
+                _webSession.DetailPeriod = CstPeriodDetail.dayly;
+                var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                _webSession.PeriodBeginningDate = DateTime.Now.AddMonths(1 - _webSession.PeriodLength).ToString("yyyy0101");
+                _webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+
+                //TODO: Set default product universe 
+            }
+
             _webSession.Save();
         }
 
