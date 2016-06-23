@@ -12,7 +12,7 @@
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
-    @Html.Hidden("ExportController", "LostWonExport")
+    @Html.Hidden("ExportController", "SocialMediaExport")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -24,7 +24,6 @@
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
                 <option value="1"> @Model.Labels.ExportFormattedResult</option>
-                <option value="3"> @Model.Labels.ExportGrossResult</option>
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
@@ -85,12 +84,13 @@
     <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
 
     <script id="titleTmpl" type="text/template">
-        {{if parseInt(${profilPage}) != 0 }}
-            ${profilPage}
+        {{if parseInt(${profilPage}) != 0}}
+            <img id="imgPageFacebook" style="max-width:50px;" data-post="${profilPage}" src=""/>
         {{/if}}
         ${Title}
     </script>
 
+    @Scripts.Render("~/bundles/results")
     @Scripts.Render("~/bundles/socialMedia-results")
 }
 
