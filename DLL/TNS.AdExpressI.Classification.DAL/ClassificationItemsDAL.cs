@@ -674,34 +674,15 @@ namespace TNS.AdExpressI.Classification.DAL
             {
                 /* Obtains user View of the product or media classification for the modules  
                 * " Product class analysis: Graphic key reports " and "Product class analysis: Detailed reports".*/
-                case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
-                case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
-                    switch (dimension)
-                    {   //View for product classification brand
-                        case Dimension.product:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapProduct);
+                case WebConstantes.Module.Name.INDICATEUR:
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    return GetAnalysisClassificationBrand(dimension);
 
-                        //View for vehicle classification brand
-                        case Dimension.media:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapMedia);
-                        default:
-                            throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
-                    }
+                case WebConstantes.Module.Name.FACEBOOK:
+                    return GetFacebookClassificationBrand(dimension);
+
                 default:
-                    /* Obtains user View of the product or media classification for the others modules */
-                    switch (dimension)
-                    {
-                        //View for product classification brand
-                        case Dimension.product:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
-                        //View for vehicle classification brand
-                        case Dimension.media:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
-                        case Dimension.advertisingAgency:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
-                        default:
-                            throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
-                    }
+                    return GetDefaultClassificationBrand(dimension);
             }
 
         }
@@ -833,6 +814,46 @@ namespace TNS.AdExpressI.Classification.DAL
              || _filterWithProductSelection)
                 return true;
             return false;
+        }
+        #endregion
+
+        #region Get classification brands foreach module by dimension 
+        private View GetAnalysisClassificationBrand(Dimension dimension)
+        {
+            switch (dimension)
+            {
+                case Dimension.product:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapProduct);
+
+                case Dimension.media:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapMedia);
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
+        }
+        private View GetFacebookClassificationBrand(Dimension dimension)
+        {
+            switch (dimension)
+            {
+                case Dimension.product:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allFacebookProduct);
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
+        }
+        private View GetDefaultClassificationBrand(Dimension dimension)
+        {
+            switch (dimension)
+            {
+                case Dimension.product:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+                case Dimension.media:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
+                case Dimension.advertisingAgency:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
         }
         #endregion
 
