@@ -1,0 +1,96 @@
+﻿@model Km.AdExpressClientWeb.Models.SocialMedia.ResultsViewModel
+@using TNS.AdExpress.Domain.Translation; 
+@{
+    ViewBag.Title = "Results";
+    Layout = "~/Views/Shared/_LayoutResults.cshtml";
+}
+
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
+
+
+<div class="row">
+    @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("DetailSelection")
+    @Html.Hidden("ExportController", "LostWonExport")
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+        <div class="row row-sm">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right custom-button selectexporttype">
+            <select id="export-type" class="selectdatepicker hide">
+                <option value="1"> @Model.Labels.ExportFormattedResult</option>
+                <option value="3"> @Model.Labels.ExportGrossResult</option>
+            </select>&nbsp;
+            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
+        </div>
+    </div>
+</div>
+@*<div class="h20">
+    </div>*@
+@*<div class="row">
+    <div class="col-md-12">
+        @Html.Action("ResultOptions", _controller)
+    </div>
+</div>*@
+<div class="h20">
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <center>
+            <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
+            <div id="grid" class="hide">
+            </div>
+            <div id="gridLoader">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </center>
+    </div>
+</div>
+<div id="resultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="gadModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="exportResultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+
+    <script id="titleTmpl" type="text/template">
+        {{if parseInt(${profilPage}) != 0 }}
+            ${profilPage}
+        {{/if}}
+        ${Title}
+    </script>
+
+    @Scripts.Render("~/bundles/socialMedia-results")
+}
+
