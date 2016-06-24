@@ -8,6 +8,6 @@ namespace Facebook.Service.Core.BusinessService
     {
         List<DataFacebookContract> GetDataFacebook();
 
-        List<DataFacebookContract> GetDataFacebook(int IdLogin, long Begin, long End, List<int> Advertiser, List<int> Brand);
+        List<DataFacebookContract> GetDataFacebook(int IdLogin, long Begin, long End, List<long> Advertiser, List<long> Brand);
     }
 }

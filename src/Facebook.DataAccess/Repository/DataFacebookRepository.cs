@@ -30,23 +30,26 @@ namespace Facebook.DataAccess.Repository
             return new List<DataFacebook>();
         }
 
-        public List<DataFacebook> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<int> Advertiser, List<int> Brand)
+        public List<DataFacebook> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand)
         {
             var query = (from d in context.DataFacebook
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
                          select d);
 
-            var includedMedia = Criteria.Where(e => e.TypeCriteria.HasFlag(TypeCriteria.Include) && e.TypeNomenclature.HasFlag(TypeNomenclature.Media));
-            var excludedMedia = Criteria.Where(e => e.TypeCriteria.HasFlag(TypeCriteria.Exclude) && e.TypeNomenclature.HasFlag(TypeNomenclature.Media));
-            var includedProduct = Criteria.Where(e => e.TypeCriteria.HasFlag(TypeCriteria.Include) && e.TypeNomenclature.HasFlag(TypeNomenclature.Product));
-            var excludedProduct = Criteria.Where(e => e.TypeCriteria.HasFlag(TypeCriteria.Exclude) && e.TypeNomenclature.HasFlag(TypeNomenclature.Product));
-            
+            var includedMedia = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Include) && e.TypeNomenclature == (TypeNomenclature.Media));
+            var excludedMedia = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Exclude) && e.TypeNomenclature == (TypeNomenclature.Media));
+            var includedProduct = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Include) && e.TypeNomenclature == (TypeNomenclature.Product));
+            var excludedProduct = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Exclude) && e.TypeNomenclature == (TypeNomenclature.Product));
+
             var include1 = query.Predicate(includedMedia);
             var include2 = query.Predicate(includedProduct);
             var exclude1 = query.Predicate(excludedMedia);
             var exclude2 = query.Predicate(excludedProduct);
-            Expression<Func<DataFacebook, bool>> predicate = arg => ((include1.Invoke(arg) || include2.Invoke(arg)) && (exclude1.Invoke(arg) && exclude2.Invoke(arg)));
+            Expression<Func<DataFacebook, bool>> predicate = arg => ((include1.Invoke(arg) || include2.Invoke(arg)) && !(exclude1.Invoke(arg) && exclude2.Invoke(arg)));
+            //Expression<Func<DataFacebook, bool>> predicate = arg => ((include2.Invoke(arg)) && !(exclude2.Invoke(arg)));
+
             query = query.AsExpandable().Where(predicate);
+
             //query = query.ApplyRight(includedMedia);
             //query = query.ApplyRight(includedProduct);
             //query = query.ApplyRight(excludedMedia);
@@ -54,11 +57,11 @@ namespace Facebook.DataAccess.Repository
 
             if (Brand != null && Brand.Count > 0)
             {
-                query = query.Where(e => Brand.Cast<long>().Contains(e.IdBrand));
+                query = query.Where(e => Brand.Contains(e.IdBrand));
             }
             else if (Advertiser != null && Advertiser.Count > 0)
             {
-                query = query.Where(e => Advertiser.Cast<long>().Contains(e.IdAdvertiser));
+                query = query.Where(e => Advertiser.Contains(e.IdAdvertiser));
             }
             else
                 return new List<DataFacebook>();

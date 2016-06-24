@@ -28,8 +28,9 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<DataFacebookContract> GetDataFacebook(int IdLogin, long Begin, long End, List<int> Advertiser, List<int> Brand)
+        public List<DataFacebookContract> GetDataFacebook(int IdLogin, long Begin, long End, List<long> Advertiser, List<long> Brand)
         {
+
             var criteria = _rightsvc.GetCriteria(IdLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
             var query = _uow.DataFacebookRepository.GetDataFacebook(criteriaData, Begin, End, Advertiser, Brand);

@@ -65,7 +65,7 @@ namespace ClientApi.Controllers
             long begin = 20150101;
             long end = 20160301;
 
-            var model = _fbsvc.GetDataFacebook(1102, begin, end, new List<int> { 155218,128120,175295,120080,65194 }, null);
+            var model = _fbsvc.GetDataFacebook(1155, begin, end, new List<long> {1060, 332860,48750 }, null);
             
             return View("Index");
         }

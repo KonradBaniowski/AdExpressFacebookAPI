@@ -8,6 +8,6 @@ namespace Facebook.Service.Core.DataAccess.Repository
 {
     public interface IDataFacebookRepository: IGenericRepository<DataFacebook>
     {
-        List<DataFacebook> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<int> Advertiser, List<int> Brand);
+        List<DataFacebook> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand);
     }
 }

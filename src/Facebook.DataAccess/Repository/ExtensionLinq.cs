@@ -146,14 +146,14 @@ namespace ExtensionMethods
         public static Expression<Func<T, bool>> Predicate<T>(this IQueryable<T> data, IEnumerable<CriteriaData> filter) where T : Data
         {
             if (!filter.Any())
-                return null;
+                return x => true;
             else
             {
                 var predicateBuilder = PredicateBuilder.False<T>();
 
                 var typeCriteria = filter.First().TypeCriteria.HasFlag(TypeCriteria.Include) ? TypeCriteria.Include : TypeCriteria.Exclude;
                 var lvlType = filter.First().TypeNomenclature.HasFlag(TypeNomenclature.Media) ? TypeNomenclature.Media : TypeNomenclature.Product;
-                if (typeCriteria.HasFlag(TypeCriteria.Include) && lvlType.HasFlag(TypeNomenclature.Media))
+                if (typeCriteria == (TypeCriteria.Include) && lvlType == (TypeNomenclature.Media))
                 {
                     foreach (var i in filter)
                     {
@@ -173,7 +173,7 @@ namespace ExtensionMethods
                         }
                     }
                 }
-                else if (typeCriteria.HasFlag(TypeCriteria.Include) && lvlType.HasFlag(TypeNomenclature.Product))
+                else if (typeCriteria == (TypeCriteria.Include) && lvlType == (TypeNomenclature.Product))
                 {
                     foreach (var i in filter)
                     {
@@ -209,59 +209,59 @@ namespace ExtensionMethods
                         }
                     }
                 }
-                else if (typeCriteria.HasFlag(TypeCriteria.Exclude) && lvlType.HasFlag(TypeNomenclature.Media))
+                else if (typeCriteria == (TypeCriteria.Exclude) && lvlType == (TypeNomenclature.Media))
                 {
                     foreach (var i in filter)
                     {
                         if (i.LevelType == (LevelType.Media))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdVehicle));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdVehicle));
                             //predicate = predicate.AndAlso(t => !i.Filter.Cast<long>().Contains(t.IdVehicle));
                         }
                         else if (i.LevelType == (LevelType.Categorie))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdCategory));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdCategory));
                             //predicate = predicate.AndAlso(t => !i.Filter.Cast<long>().Contains(t.IdCategory));
                         }
                         else if (i.LevelType == (LevelType.Support))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdMedia));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdMedia));
                             //predicate = predicate.AndAlso(t => !i.Filter.Cast<long>().Contains(t.IdMedia));
                         }
                     }
                 }
-                else if (typeCriteria.HasFlag(TypeCriteria.Exclude) && lvlType.HasFlag(TypeNomenclature.Product))
+                else if (typeCriteria == (TypeCriteria.Exclude) && lvlType==(TypeNomenclature.Product))
                 {
                     foreach (var i in filter)
                     {
                         if (i.LevelType == (LevelType.Famille))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdSector));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdSector));
                             //predicate = predicate.OrElse(t => i.Filter.Cast<long>().Contains(t.IdSector));
                         }
                         else if (i.LevelType == (LevelType.Classe))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdSubSector));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdSubSector));
                             //predicate = predicate.OrElse(t => i.Filter.Cast<long>().Contains(t.IdSubSector));
                         }
                         else if (i.LevelType == (LevelType.Groupe))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdGroup));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdGroup));
                             //predicate = predicate.OrElse(t => i.Filter.Cast<long>().Contains(t.IdGroup));
                         }
                         else if (i.LevelType == (LevelType.Variete))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdSegment));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdSegment));
                             //predicate = predicate.OrElse(t => i.Filter.Cast<long>().Contains(t.IdSegment));
                         }
                         else if (i.LevelType == (LevelType.Annonceur))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdAdvertiser));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdAdvertiser));
                             //predicate = predicate.OrElse(t => i.Filter.Cast<long>().Contains(t.IdAdvertiser));
                         }
                         else if (i.LevelType == (LevelType.Marque))
                         {
-                            predicateBuilder = predicateBuilder.Or(t => !i.Filter.Contains(t.IdBrand));
+                            predicateBuilder = predicateBuilder.And(t => i.Filter.Contains(t.IdBrand));
                             //predicate = predicate.OrElse(t => i.Filter.Cast<long>().Contains(t.IdBrand));
                         }
                     }
