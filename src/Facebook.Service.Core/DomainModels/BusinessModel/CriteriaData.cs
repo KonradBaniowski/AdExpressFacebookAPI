@@ -4,24 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Facebook.Service.Contract.BusinessModels
+namespace Facebook.Service.Core.DomainModels.BusinessModel
 {
-    public class Criteria
+    public class CriteriaData
     {
         public TypeCriteria TypeCriteria { get; set; }
         public TypeNomenclature TypeNomenclature { get; set; }
         public LevelType LevelType { get; set; }
-        public List<int> Filter { get; set; }
+        public List<long> Filter { get; set; }
     }
 
-    [Flags]
     public enum TypeCriteria
     {
         Include = 0,
         Exclude = 1
     }
 
-    [Flags]
     public enum TypeNomenclature
     {
         Product = 0,
@@ -40,5 +38,4 @@ namespace Facebook.Service.Contract.BusinessModels
         Annonceur = 65,
         Marque = 66
     }
-
 }

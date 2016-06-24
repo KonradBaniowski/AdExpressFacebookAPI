@@ -1,9 +1,13 @@
-﻿using Facebook.Service.Core.DomainModels.AdExprSchema;
+﻿using Facebook.Service.Contract.BusinessModels;
+using Facebook.Service.Core.DomainModels.AdExprSchema;
+using Facebook.Service.Core.DomainModels.BusinessModel;
+using System;
+using System.Collections.Generic;
 
 namespace Facebook.Service.Core.DataAccess.Repository
 {
     public interface IDataFacebookRepository: IGenericRepository<DataFacebook>
     {
-        //List<DataFacebook> GetDataFacebook(Dictionary<int, List<RightDomain>> ProductRights, Dictionary<int, List<RightDomain>> MediasRights, DateTime Begin, DateTime End, List<int> Advertiser, List<int> Brand);
+        List<DataFacebook> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<int> Advertiser, List<int> Brand);
     }
 }

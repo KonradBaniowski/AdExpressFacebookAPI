@@ -5,11 +5,12 @@ namespace Facebook.Service.Core.BusinessService
 {
     public interface IRightService
     {
-        List<Criteria> GetTemplateMediaRight(int idLogin);
-        List<Criteria> GetMediaRight(int idLogin);
+        List<Criteria> GetCriteria(int idLogin);
+        //List<Criteria> GetTemplateMediaRight(int idLogin);
+        //List<Criteria> GetMediaRight(int idLogin);
 
-        List<Criteria> GetProductRight(int idLogin);
+        //List<Criteria> GetProductRight(int idLogin);
 
-        List<Criteria> GetTemplateProductRight(int idLogin);
+        //List<Criteria> GetTemplateProductRight(int idLogin);
     }
 }

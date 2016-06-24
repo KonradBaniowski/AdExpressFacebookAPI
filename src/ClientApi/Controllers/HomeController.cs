@@ -1,5 +1,6 @@
 ﻿using Facebook.Service.Contract.BusinessModels;
 using Facebook.Service.Core.BusinessService;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -32,8 +33,8 @@ namespace ClientApi.Controllers
             //var products = _productSvc.GetLevelItems("BOISSONS",1);
             //var test2 = _rightSvc.GetProductRight(1087);
             //var next = _rightSvc.GetMediaRight(1087);
-            var test2 = _rightSvc.GetProductRight(1084);
-            var next = _rightSvc.GetMediaRight(1084);            
+            //var test2 = _rightSvc.GetProductRight(1084);
+            //var next = _rightSvc.GetMediaRight(1084);            
             return View("Index");
         }
 
@@ -52,15 +53,19 @@ namespace ClientApi.Controllers
             //    var OCP = _rightSvc.GetProductRight(e);
             //}
 
-            var OTM = _rightSvc.GetTemplateMediaRight(2457);
-            var OCM = _rightSvc.GetMediaRight(2457);
-            var OTP = _rightSvc.GetTemplateProductRight(2457);
-            var OCP = _rightSvc.GetProductRight(2457);
-            OTM.AddRange(OCM);
-            OTM.AddRange(OTP);
-            OTM.AddRange(OCP);
+            //var OTM = _rightSvc.GetTemplateMediaRight(2457);
+            //var OCM = _rightSvc.GetMediaRight(2457);
+            //var OTP = _rightSvc.GetTemplateProductRight(2457);
+            //var OCP = _rightSvc.GetProductRight(2457);
+            //OTM.AddRange(OCM);
+            //OTM.AddRange(OTP);
+            //OTM.AddRange(OCP);
 
-            List<Criteria> filter = OTM;
+            //List<Criteria> filter = OTM;
+            long begin = 20150101;
+            long end = 20160301;
+
+            var model = _fbsvc.GetDataFacebook(1102, begin, end, new List<int> { 155218,128120,175295,120080,65194 }, null);
             
             return View("Index");
         }

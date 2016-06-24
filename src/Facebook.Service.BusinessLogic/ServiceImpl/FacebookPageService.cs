@@ -2,6 +2,7 @@
 using Facebook.Service.Contract.ContractModels.ModuleFacebook;
 using Facebook.Service.Core.BusinessService;
 using Facebook.Service.Core.DataAccess;
+using Facebook.Service.Core.DomainModels.BusinessModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
     {
         private IFacebookUow _uow;
         private readonly IMapper _mapper;
-        public FacebookPageService(IFacebookUow uow, IMapper mapper)
+        private readonly IRightService _rightsvc;
+        public FacebookPageService(IFacebookUow uow, IMapper mapper, IRightService rightsvc)
         {
             _mapper = mapper;
             _uow = uow;
+            _rightsvc = rightsvc;
         }
 
         public List<DataFacebookContract> GetDataFacebook()
@@ -25,9 +28,13 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<DataFacebookContract> GetDataFacebook(DateTime Begin, DateTime End, List<int> Advertiser, List<int> Brand)
+        public List<DataFacebookContract> GetDataFacebook(int IdLogin, long Begin, long End, List<int> Advertiser, List<int> Brand)
         {
-            return new List<DataFacebookContract>();
+            var criteria = _rightsvc.GetCriteria(IdLogin);
+            var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
+            var query = _uow.DataFacebookRepository.GetDataFacebook(criteriaData, Begin, End, Advertiser, Brand);
+            var result = _mapper.Map<List<DataFacebookContract>>(query);
+            return result;
         }
     }
 }

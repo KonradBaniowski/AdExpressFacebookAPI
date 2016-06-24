@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Facebook.Service.Contract.BusinessModels;
 using Facebook.Service.Contract.ContractModels.ModuleFacebook;
 using Facebook.Service.Core.DomainModels.AdExprSchema;
+using Facebook.Service.Core.DomainModels.BusinessModel;
 
 namespace Facebook.Service.BusinessLogic
 {
@@ -32,6 +34,7 @@ namespace Facebook.Service.BusinessLogic
                 //.ForMember(a => a.IdType, d => d.MapFrom(dst => dst.IdTypeProduct));
                 //e.CreateMap<RightDomain, Right>().ReverseMap();
                 e.CreateMap<DataFacebook, DataFacebookContract>();
+                e.CreateMap<CriteriaData, Criteria>().ReverseMap();
                 e.CreateMap<LevelItem, LevelItemContract>();
             });
         }

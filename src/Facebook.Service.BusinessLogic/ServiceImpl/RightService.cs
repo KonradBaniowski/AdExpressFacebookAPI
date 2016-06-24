@@ -17,7 +17,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             _uow = uow;
         }
 
-        public List<Criteria> GetMediaRight(int idLogin)
+        private List<Criteria> GetMediaRight(int idLogin)
         {
             var svc = _uow.OrderClientMediaRepository.GetMediaRights(idLogin);
             List<Criteria> result = new List<Criteria>();
@@ -25,16 +25,15 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             {
                 Criteria e = new Criteria();
                 e.TypeCriteria = i.Exception == 0 ? TypeCriteria.Include : TypeCriteria.Exclude;
-                e.TypeKantar = (LevelType)i.IdTypeMedia;
+                e.LevelType = (LevelType)i.IdTypeMedia;
                 e.TypeNomenclature = TypeNomenclature.Media;
                 e.Filter = i.ListMedia.Split(',').Select(int.Parse).ToList();
                 result.Add(e);
             }
-            //var res = _mapper.Map<List<Criteria>>(svc);
             return result;
         }
 
-        public List<Criteria> GetTemplateMediaRight(int idLogin)
+        private List<Criteria> GetTemplateMediaRight(int idLogin)
         {
             var svc = _uow.OrderTemplateMediaRepository.GetTemplateMediaRight(idLogin);
             List<Criteria> result = new List<Criteria>();
@@ -42,7 +41,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             {
                 Criteria e = new Criteria();
                 e.TypeCriteria = i.Exception == 0 ? TypeCriteria.Include : TypeCriteria.Exclude;
-                e.TypeKantar = (LevelType)i.IdTypeMedia;
+                e.LevelType = (LevelType)i.IdTypeMedia;
                 e.TypeNomenclature = TypeNomenclature.Media;
                 e.Filter = i.ListMedia.Split(',').Select(int.Parse).ToList();
                 result.Add(e);
@@ -50,7 +49,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<Criteria> GetProductRight(int idLogin)
+        private List<Criteria> GetProductRight(int idLogin)
         {
             var svc = _uow.OrderClientProductRepository.GetProductRights(idLogin);
             List<Criteria> result = new List<Criteria>();
@@ -58,7 +57,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             {
                 Criteria e = new Criteria();
                 e.TypeCriteria = i.Exception == 0 ? TypeCriteria.Include : TypeCriteria.Exclude;
-                e.TypeKantar = (LevelType)i.IdTypeProduct;
+                e.LevelType = (LevelType)i.IdTypeProduct;
                 e.TypeNomenclature = TypeNomenclature.Product;
                 e.Filter = i.ListMedia.Split(',').Select(int.Parse).ToList();
                 result.Add(e);
@@ -66,7 +65,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<Criteria> GetTemplateProductRight(int idLogin)
+        private List<Criteria> GetTemplateProductRight(int idLogin)
         {
             var svc = _uow.OrderTemplateProductRepository.GetTemplateProductRight(idLogin);
             List<Criteria> result = new List<Criteria>();
@@ -74,12 +73,25 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             {
                 Criteria e = new Criteria();
                 e.TypeCriteria = i.Exception == 0 ? TypeCriteria.Include : TypeCriteria.Exclude;
-                e.TypeKantar = (LevelType)i.IdTypeProduct;
+                e.LevelType = (LevelType)i.IdTypeProduct;
                 e.TypeNomenclature = TypeNomenclature.Product;
                 e.Filter = i.ListMedia.Split(',').Select(int.Parse).ToList();
                 result.Add(e);
             }
             return result;
+        }
+
+        public List<Criteria> GetCriteria(int idLogin)
+        {
+            var OTM = GetTemplateMediaRight(idLogin);
+            var OCM = GetMediaRight(idLogin);
+            var OTP = GetTemplateProductRight(idLogin);
+            var OCP = GetProductRight(idLogin);
+            OTM.AddRange(OCM);
+            OTM.AddRange(OTP);
+            OTM.AddRange(OCP);
+
+            return OTM;
         }
     }
 }

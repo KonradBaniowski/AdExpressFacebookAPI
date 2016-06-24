@@ -52,9 +52,11 @@
     <Compile Include="DataAccess\Repository\IOrderTemplateProductRepository.cs" />
     <Compile Include="DataAccess\Repository\IProductRepository.cs" />
     <Compile Include="DataAccess\Repository\ITemplateAssignmentRepository.cs" />
+    <Compile Include="DomainModels\AdExprSchema\Data.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataPostFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\LevelItem.cs" />
+    <Compile Include="DomainModels\BusinessModel\CriteriaData.cs" />
     <Compile Include="DomainModels\MauSchema\OrderClientMedia.cs" />
     <Compile Include="DomainModels\MauSchema\OrderClientProduct.cs" />
     <Compile Include="DomainModels\MauSchema\OrderTemplateMedia.cs" />
