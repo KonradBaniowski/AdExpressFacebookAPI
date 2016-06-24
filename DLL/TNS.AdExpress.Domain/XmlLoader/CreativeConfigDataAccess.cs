@@ -214,6 +214,9 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "LOCAL_PATH_EVALIANT":
                                         CreationServerPathes.LOCAL_PATH_EVALIANT = value;
                                         break;
+                                    case "LOCAL_PATH_POSTS_FACEBOOK":
+                                        CreationServerPathes.LOCAL_PATH_POSTS_FACEBOOK = value;
+                                        break;
                                 }
                                 break;
                         }
