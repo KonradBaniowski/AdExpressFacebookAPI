@@ -1071,7 +1071,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Sauvegarde de l'univers
             if (universes.Any())
             {
-                ManageFacebookDefaultUniverse(webSession, request.IsDefaultUniverse, idSelectedUniverse);
+                bool goFurther = false;               
                 
                 Branch.type branchType = GetBrancheType(request.Dimension, idModule);
                 string universeName = request.Name;
@@ -1105,6 +1105,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, isDefault, levels, mediaIds))
                         //if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession))
                         {
+                            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK && request.IsDefaultUniverse)
+                            {
+                              ManageFacebookDefaultUniverse(webSession, request.IsDefaultUniverse, idSelectedUniverse);
+                            }
                             // Validation : confirmation d'enregistrement de l'univers
                             webSession.Source.Close();
                             result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
@@ -1232,12 +1236,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         private void ManageFacebookDefaultUniverse(WebSession webSession, bool isDefaultUniverse, long idSelectedUniverse)
         {
+            bool success = false;
             if(webSession.CurrentModule==WebConstantes.Module.Name.FACEBOOK && isDefaultUniverse)
             {
                 UserUnivers defaultUniverse = GetUniverses(Dimension.product, webSession, 0, true).FirstOrDefault();
                 if(defaultUniverse !=null && defaultUniverse.Id == idSelectedUniverse)
                 {
-                    //TODO
+                    success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);
                 }
             }
         }
