@@ -1,5 +1,6 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using System;
+using System.Data;
 using System.Collections;
 using System.Collections.Generic;
 using TNS.AdExpress.Domain.Classification;
@@ -29,6 +30,9 @@ using TNS.AdExpressI.Date.DAL;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.AdExpress.Domain.Layers;
 using System.Windows.Forms;
+using TNS.AdExpress.Constantes.Classification;
+using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
+using TNS.AdExpressI.Classification.DAL;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -565,8 +569,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession.PeriodBeginningDate = DateTime.Now.AddMonths(1 - _webSession.PeriodLength).ToString("yyyy0101");
             _webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
 
-            //TODO: Set default product universe 
+            //TODO: Set default product universe
+            var defaultUniverse = GetUniverses(Dimension.product, _webSession, 0, true).FirstOrDefault();
+            if(defaultUniverse != null)
+            {
+                SetFcbProductUniverse(defaultUniverse.Id, _webSession);
+                //var a = UniversListDataAccess.GetTreeNodeUniverse(defaultUniverse.Id, _webSession);
+            }
+
+
         }
+
+        private void SetFcbProductUniverse(long idUniverse, WebSession webSession)
+        {
+            Dictionary<int, AdExpressUniverse> result = new Dictionary<int, AdExpressUniverse>();
+            List<long> idMedia = new List<long>();
+            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universe =(Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>) UniversListDataAccess.GetTreeNodeUniverseWithMedia(idUniverse, _webSession, out idMedia);
+            webSession.PrincipalProductUniverses = universe;            
+            
+        }
+
         /// <summary>
         /// Set default media selection
         /// <remarks>Plurimedia will be the default choice</remarks>
@@ -952,7 +974,42 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return _webSession.isMediaSelected() && _webSession.isDatesSelected() && _webSession.IsCurrentUniversProductSelected();
         }
 
-
+        private List<UserUnivers> GetUniverses(Dimension dimension, WebSession webSession, long idGroup = 0, bool getDefaultUniverse = false)
+        {
+            List<UserUnivers> result = new List<UserUnivers>();
+            var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
+            if (webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK)
+                branch = Branch.type.productSocial.GetHashCode().ToString();
+            var data = UniversListDataAccess.GetData(webSession, branch, string.Empty);
+            if (data != null && data.Tables[0].AsEnumerable().Any())
+            {
+                var list = data.Tables[0].AsEnumerable().Select(p => new
+                {
+                    GroupID = p.Field<long?>("ID_GROUP_UNIVERSE_CLIENT"),
+                    GroupDescription = p.Field<string>("GROUP_UNIVERSE_CLIENT"),
+                    UniversID = p.Field<long?>("ID_UNIVERSE_CLIENT"),
+                    UniversDescription = p.Field<string>("UNIVERSE_CLIENT"),
+                    IsDefault = (p["IS_DEFAULT"] != null && Convert.ToInt32(p["IS_DEFAULT"]) == 1) ? true : false
+                }).ToList();
+                if (idGroup > 0)
+                    list = list.Where(p => p.GroupID == idGroup).ToList();
+                foreach (var item in list)
+                {
+                    UserUnivers UserUnivers = new UserUnivers
+                    {
+                        ParentId = item.GroupID ?? 0,
+                        ParentDescription = item.GroupDescription,
+                        Id = item.UniversID ?? 0,
+                        Description = item.UniversDescription,
+                        IsDefault = item.IsDefault
+                    };
+                    result.Add(UserUnivers);
+                }
+                if (getDefaultUniverse && webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK)
+                    result = result.Where(p => p.IsDefault).ToList();
+            }
+            return result;
+        }
         #endregion
     }
 }
