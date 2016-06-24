@@ -123,7 +123,7 @@
 
         $(".imgPageFacebook").each(function () {
             var datas = $(this).attr('data-post').toString();
-            var link = "PostsFacebook/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + ".jpg"
+            var link = "PostsFacebook/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
             $(this).attr("src", link);
         });
 

@@ -68,7 +68,7 @@ namespace Km.AdExpressClientWeb.Controllers
             /************************** MOCK ***********************************/
             var gridResult = new GridResult();
 
-            object[,] gridData = new object[11, 13]; 
+            object[,] gridData = new object[11, 14]; 
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
@@ -102,6 +102,9 @@ namespace Km.AdExpressClientWeb.Controllers
             columns.Add(new { headerText = "Brand exposure", key = "90", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "90" });
 
+            columns.Add(new { headerText = "LevelType", key = "LevelType", dataType = "string", width = "*", hidden = true });
+            schemaFields.Add(new { name = "LevelType" });
+
             gridData[0, 0] = 1;
             gridData[0, 1] = -1;
             gridData[0, 2] = 0;
@@ -115,6 +118,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[0, 10] = "300";
             gridData[0, 11] = "20";
             gridData[0, 12] = "4500";
+            gridData[0, 13] = "";
 
                 gridData[1, 0] = 2;
                 gridData[1, 1] = 1;
@@ -129,6 +133,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 gridData[1, 10] = "300";
                 gridData[1, 11] = "20";
                 gridData[1, 12] = "4500";
+                gridData[1, 13] = "";
 
                     gridData[2, 0] = 3;
                     gridData[2, 1] = 2;
@@ -143,6 +148,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     gridData[2, 10] = "150";
                     gridData[2, 11] = "10";
                     gridData[2, 12] = "";
+                    gridData[2, 13] = "";
 
                     gridData[3, 0] = 4;
                     gridData[3, 1] = 2;
@@ -157,6 +163,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     gridData[3, 10] = "150";
                     gridData[3, 11] = "10";
                     gridData[3, 12] = "";
+                    gridData[3, 13] = "";
 
             gridData[4, 0] = 5;
             gridData[4, 1] = -1;
@@ -171,6 +178,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[4, 10] = "300";
             gridData[4, 11] = "60";
             gridData[4, 12] = "9000";
+            gridData[4, 13] = "";
 
                 gridData[5, 0] = 6;
                 gridData[5, 1] = 5;
@@ -185,6 +193,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 gridData[5, 10] = "400";
                 gridData[5, 11] = "30";
                 gridData[5, 12] = "4500";
+                gridData[5, 13] = "";
 
                     gridData[6, 0] = 7;
                     gridData[6, 1] = 6;
@@ -199,6 +208,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     gridData[6, 10] = "150";
                     gridData[6, 11] = "10";
                     gridData[6, 12] = "";
+                    gridData[6, 13] = "";
 
                     gridData[7, 0] = 8;
                     gridData[7, 1] = 6;
@@ -213,6 +223,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     gridData[7, 10] = "150";
                     gridData[7, 11] = "10";
                     gridData[7, 12] = "";
+                    gridData[7, 13] = "";
 
                     gridData[8, 0] = 9;
                     gridData[8, 1] = 6;
@@ -227,6 +238,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     gridData[8, 10] = "100";
                     gridData[8, 11] = "10";
                     gridData[8, 12] = "";
+                    gridData[8, 13] = "";
 
                 gridData[9, 0] = 10;
                 gridData[9, 1] = 5;
@@ -241,6 +253,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 gridData[9, 10] = "400";
                 gridData[9, 11] = "30";
                 gridData[9, 12] = "4500";
+                gridData[9, 13] = "";
 
                     gridData[10, 0] = 11;
                     gridData[10, 1] = 10;
@@ -255,6 +268,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     gridData[10, 10] = "150";
                     gridData[10, 11] = "10";
                     gridData[10, 12] = "";
+                    gridData[10, 13] = "";
 
 
             gridResult.HasData = true;
