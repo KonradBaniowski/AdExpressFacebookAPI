@@ -455,106 +455,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     if (request.Trees.Count > 0)
                     {
-                        result = SetUnivers(webSession, request);
                         #region Get universe to save
-
-
-                        //if (idModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || idModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE || idModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
-                        //{
-                        //    adExpressUniverse = GetUniverseToSave(request);
-                        //    if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
-                        //    {
-                        //        // Erreur : Aucun groupe d'univers, veuillez en créer un.
-                        //        result.ErrorMessage = GestionWeb.GetWebWord(927, webSession.SiteLanguage);
-                        //        result.Success = false;
-                        //    }
-                        //    else
-                        //    {
-                        //        universes.Add(universes.Count, adExpressUniverse);
-                        //    }
-                        //}
-                        //else
-                        //if (idModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
-                        //{
-                        //    adExpressUniverses = GetConcurrentUniversesToSave(request);
-                        //    int id = 0;
-                        //    foreach (var item in adExpressUniverses)
-                        //    {
-                        //        universes.Add(id, item);
-                        //        id++;
-                        //    }
-                        //}
-                        //if (universes.Any())
-                        //{
-                        //    #region Sauvegarde de l'univers
-
-                        //    string universeName = request.Name;
-                        //    if (String.IsNullOrEmpty(request.Name) && idSelectedUniverse != 0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
-                        //    {
-
-                        //        //Add AdExpress universe to collection
-                        //        universes.Add(universes.Count, adExpressUniverse);
-
-                        //        if (UniversListDataAccess.UpdateUniverse(idSelectedUniverse, webSession, request.IdUniverseClientDescription, branchType.GetHashCode(), universes))
-                        //        {
-
-                        //            // Validation : confirmation d'enregistrement de la requête
-                        //            webSession.Source.Close();
-                        //            result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
-                        //            result.Success = true;
-                        //        }
-                        //        else {
-                        //            // Erreur : Echec de l'enregistrement de la requête	
-                        //            webSession.Source.Close();
-                        //            result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
-                        //            result.Success = false;
-                        //        }
-                        //    }
-                        //    else if (universeName.Length != 0 && universeName.Length < TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT)
-                        //    {
-                        //        if (!UniversListDataAccess.IsUniverseExist(webSession, universeName))
-                        //        {
-
-                        //            //Add AdExpress universe to collection
-                        //            universes.Add(universes.Count, adExpressUniverse);
-                        //            if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, levels, mediaIds))
-                        //            //if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession))
-                        //            {
-                        //                // Validation : confirmation d'enregistrement de l'univers
-                        //                webSession.Source.Close();
-                        //                result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
-                        //                result.Success = true;
-                        //            }
-                        //            else {
-                        //                // Erreur : Echec de l'enregistrement de l'univers
-                        //                webSession.Source.Close();
-                        //                result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
-                        //                result.Success = false;
-                        //            }
-                        //        }
-                        //        else {
-                        //            // Erreur : univers déjà existant
-                        //            webSession.Source.Close();
-                        //            result.ErrorMessage = GestionWeb.GetWebWord(923, webSession.SiteLanguage);
-                        //            result.Success = false;
-                        //        }
-                        //    }
-                        //    else if (universeName.Length == 0)
-                        //    {
-                        //        // Erreur : Le champs est vide
-                        //        webSession.Source.Close();
-                        //        result.ErrorMessage = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
-                        //        result.Success = false;
-                        //    }
-                        //    else {
-                        //        // Erreur : suppérieur à 50 caractères
-                        //        webSession.Source.Close();
-                        //        result.ErrorMessage = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
-                        //        result.Success = false;
-                        //    }
-
-                        //    #endregion
-                        //}
+                        result = SetUnivers(webSession, request);
                         #endregion
                     }
 
@@ -619,13 +521,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             List<UserUnivers> userUniversList = new List<UserUnivers>();
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
-            //
             var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
-            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK) branch = Branch.type.productSocial.GetHashCode().ToString();
-                var data = UniversListDataAccess.GetData(tuple.Item3, branch, string.Empty);
-            if (data != null && data.Tables[0].AsEnumerable().Any())
+            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
             {
-                userUniversList = GetUniverses(dimension,webSession,idGroup);
+                branch = Branch.type.productSocial.GetHashCode().ToString();
+                result.CanSetDefaultUniverse = true;
+            }
+            userUniversList = GetUniverses(dimension, webSession, idGroup);
+            if (userUniversList.Any())
+            {
                 var groupedUniversList = userUniversList.GroupBy(p => p.ParentId);
                 foreach (var item in groupedUniversList)
                 {
@@ -641,7 +545,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             else
             {
-                var ds = UniversListDataAccess.GetGroupUniverses(tuple.Item3);
+                var ds = UniversListDataAccess.GetGroupUniverses(webSession);
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
                     UserUniversGroup universGroup = new UserUniversGroup
@@ -984,7 +888,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return defaultBranchId;
         }
 
-        private Branch.type GetBrancheType(Dimension dimension, long idModule=0)
+        private Branch.type GetBrancheType(Dimension dimension, long idModule = 0)
         {
 
             switch (dimension)
@@ -992,7 +896,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case (Dimension.media):
                     return Branch.type.media;
                 case (Dimension.product):
-                    Branch.type type =(idModule== WebConstantes.Module.Name.FACEBOOK)? Branch.type.productSocial: Branch.type.product;
+                    Branch.type type = (idModule == WebConstantes.Module.Name.FACEBOOK) ? Branch.type.productSocial : Branch.type.product;
                     return type;
                 case (Dimension.advertisingAgency):
                     return Branch.type.advertisingAgency;
@@ -1006,9 +910,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
         }
 
-        private TNS.AdExpress.Classification.AdExpressUniverse GetUniverseToSave(UniversGroupSaveRequest request)
+        private AdExpressUniverse GetUniverseToSave(UniversGroupSaveRequest request)
         {
-            TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(request.Dimension);
+            AdExpressUniverse adExpressUniverse = new AdExpressUniverse(request.Dimension);
             int groupIndex = 0;
             Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
             foreach (var tree in request.Trees)
@@ -1124,6 +1028,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (request.MediaIds.Any())
                 mediaIds = string.Join(", ", request.MediaIds);
             string levels = null;
+            int isDefault = request.IsDefaultUniverse ? 1 : 0;
             foreach (var item in request.Trees)
             {
                 levels = string.Join(", ", item.UniversLevels.Where(d => d.UniversItems.Any()).Select(x => x.Id));
@@ -1166,15 +1071,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Sauvegarde de l'univers
             if (universes.Any())
             {
+                bool goFurther = false;               
+                
                 Branch.type branchType = GetBrancheType(request.Dimension, idModule);
                 string universeName = request.Name;
                 if (String.IsNullOrEmpty(request.Name) && idSelectedUniverse != 0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
                 {
-
                     //Add AdExpress universe to collection
                     universes.Add(universes.Count, adExpressUniverse);
 
-                    if (UniversListDataAccess.UpdateUniverse(idSelectedUniverse, webSession, request.IdUniverseClientDescription, branchType.GetHashCode(), universes))
+                    if (UniversListDataAccess.UpdateUniverse(idSelectedUniverse, webSession, request.IdUniverseClientDescription, branchType.GetHashCode(), universes,isDefault))
                     {
 
                         // Validation : confirmation d'enregistrement de la requête
@@ -1196,9 +1102,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                         //Add AdExpress universe to collection
                         universes.Add(universes.Count, adExpressUniverse);
-                        if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, levels, mediaIds))
+                        if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, isDefault, levels, mediaIds))
                         //if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession))
                         {
+                            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK && request.IsDefaultUniverse)
+                            {
+                              ManageFacebookDefaultUniverse(webSession, request.IsDefaultUniverse, idSelectedUniverse);
+                            }
                             // Validation : confirmation d'enregistrement de l'univers
                             webSession.Source.Close();
                             result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
@@ -1324,6 +1234,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
+        private void ManageFacebookDefaultUniverse(WebSession webSession, bool isDefaultUniverse, long idSelectedUniverse)
+        {
+            bool success = false;
+            if(webSession.CurrentModule==WebConstantes.Module.Name.FACEBOOK && isDefaultUniverse)
+            {
+                UserUnivers defaultUniverse = GetUniverses(Dimension.product, webSession, 0, true).FirstOrDefault();
+                if(defaultUniverse !=null && defaultUniverse.Id == idSelectedUniverse)
+                {
+                    success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);
+                }
+            }
+        }
         #endregion
-    }    
+    }
 }

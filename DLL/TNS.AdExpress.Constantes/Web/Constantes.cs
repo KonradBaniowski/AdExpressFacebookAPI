@@ -2720,6 +2720,11 @@ namespace TNS.AdExpress.Constantes.Web
         public static string LOCAL_PATH_BANNERS_PSA = string.Empty;
 
         /// <summary>
+        /// Répertoire contenant les posts facebook
+        /// </summary>
+        public static string LOCAL_PATH_POSTS_FACEBOOK = string.Empty;
+
+        /// <summary>
         /// PSA radio creative's virtual directory
         /// </summary>
         public static string RADIOS_PSA = string.Empty;

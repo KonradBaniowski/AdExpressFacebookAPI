@@ -81,7 +81,7 @@ namespace Km.AdExpressClientWeb.Controllers
             columns.Add(new { headerText = "profilPage", key = "profilPage", dataType = "string", width = "*", hidden = true });
             schemaFields.Add(new { name = "profilPage" });
 
-            columns.Add(new { headerText = "", key = "Title", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "", key = "Title", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "Title" });
             columns.Add(new { headerText = "Lien vers les Post", key = "10", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "10" });

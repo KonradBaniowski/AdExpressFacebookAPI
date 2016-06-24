@@ -958,7 +958,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
         /// <param name="webSession">Session utilisateur</param>
         /// <param name="idUniverseClientDescription">idUniverseClientDescription</param>
         /// <returns>Retourne true si l'univers a été crée</returns>
-        public static bool SaveUniverse(Int64 idGroupUniverse, string universe, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave, TNS.AdExpress.Constantes.Classification.Branch.type type, Int64 idUniverseClientDescription, WebSession webSession, string level=null, string filter= null)
+        public static bool SaveUniverse(Int64 idGroupUniverse, string universe, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave, TNS.AdExpress.Constantes.Classification.Branch.type type, Int64 idUniverseClientDescription, WebSession webSession,int isDefault, string level=null, string filter= null)
         {
 
             #region Ouverture de la base de données
@@ -1022,13 +1022,13 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                 //blob_universe_client, 
                 query.Append(" BEGIN  ");
                 query.AppendFormat("INSERT INTO {0} ", universeTable.Sql);
-                query.AppendFormat("(ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT, ID_TYPE_UNIVERSE_CLIENT, ID_UNIVERSE_CLIENT_DESCRIPTION, DATE_CREATION, DATE_MODIFICATION, ACTIVATION");
+                query.AppendFormat("(ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT, ID_TYPE_UNIVERSE_CLIENT, ID_UNIVERSE_CLIENT_DESCRIPTION, DATE_CREATION, DATE_MODIFICATION, ACTIVATION, IS_DEFAULT");
                 if (!String.IsNullOrEmpty(level))
                     query.AppendFormat(", \"LEVEL\" ");
                 if (!String.IsNullOrEmpty(filter))
                     query.AppendFormat(", FILTER ");
                 query.AppendFormat(") Values ");
-                query.AppendFormat(" ( {0}.seq_universe_client.nextval, {1}, '{2}', :1, {3},{4},sysdate, sysdate, {5}", schema.Label, idGroupUniverse, universe, idTypeUniverseClient, idUniverseClientDescription, DBConstantes.ActivationValues.ACTIVATED);
+                query.AppendFormat(" ( {0}.seq_universe_client.nextval, {1}, '{2}', :1, {3},{4},sysdate, sysdate, {5}, {6}", schema.Label, idGroupUniverse, universe, idTypeUniverseClient, idUniverseClientDescription, DBConstantes.ActivationValues.ACTIVATED, isDefault);
                 if (!String.IsNullOrEmpty(level))
                     query.AppendFormat(", '{0}'",level);
                 if (!String.IsNullOrEmpty(filter))
@@ -1594,7 +1594,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
         /// <param name="idTypeUniverseClient">id Type universe client</param>
         /// <param name="idUniverseClientDescription">Id universe client description</param>
         /// <param name="universesToSave">Universes to save</param>
-        public static bool UpdateUniverse(Int64 idUniverse, WebSession webSession, Int64 idUniverseClientDescription, int idTypeUniverseClient, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave, string levels = null, string filter = null)
+        public static bool UpdateUniverse(Int64 idUniverse, WebSession webSession, Int64 idUniverseClientDescription, int idTypeUniverseClient, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave, int isDefault, string levels = null, string filter = null)
         {
 
             #region Ouverture de la base de données
@@ -1656,7 +1656,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                  * Code add to improve the performance of the universe loading process
                 * 
                 sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription + ", COMMENTARY =" + levelsIdsField;*/
-                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription;
+                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription + ", IS_DEFAULT= "+ isDefault;
                 if(!String.IsNullOrEmpty(levels))
                 {
                     sql += ", \"LEVEL\" = " + levels;
@@ -1804,6 +1804,81 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
 
             return (success);
 
+        }
+
+        public static bool UpdateDefaultFcbUniverse(Int64 idUniverse, WebSession webSession, int isDefault)
+        {
+            #region Ouverture de la base de données
+            OracleConnection connection = (OracleConnection)webSession.Source.GetSource();
+            bool DBToClosed = false;
+            bool success = false;
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new UniversListException("Impossible d'ouvrir la base de données :" + e.Message));
+                }
+            }
+            #endregion
+            #region Sérialisation et Mise à jour de la session
+            OracleCommand sqlCommand = null;
+
+
+            try
+            {
+                Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
+
+                //mise à jour de la session
+                string sql = " UPDATE  " + universeTable.Sql + " ";
+                sql += " SET  IS_DEFAULT = " + isDefault;
+                sql += " WHERE  ID_UNIVERSE_CLIENT=" + idUniverse + " ";
+
+                //Exécution de la requête
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = connection;
+                sqlCommand.CommandType = CommandType.Text;
+
+                //Execution PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+
+            }
+            #endregion
+            #region Gestion des erreurs dues à la sérialisation et à la sauvegarde de l'objet
+            catch (System.Exception e)
+            {
+                // Fermeture des structures
+                try
+                {
+
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) connection.Close();
+                }
+                catch (System.Exception et)
+                {
+                    throw (new UniversListException(" Impossible de libérer les ressources après échec de la méthode : " + et.Message));
+                }
+                throw (new UniversListException(" Echec de la sauvegarde de l'objet dans la base de donnée : " + e.Message));
+            }
+            //pas d'erreur
+            try
+            {
+                // Fermeture des structures               
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) connection.Close();
+                success = true;
+            }
+            catch (System.Exception et)
+            {
+                throw (new UniversListException(" Impossible de fermer la base de données : " + et.Message));
+            }
+            #endregion
+            return success;
         }
         #endregion
 

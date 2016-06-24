@@ -121,9 +121,9 @@
     //** charge les images au fur et a mesure que le teableau s'affiche (image page facebook)
     $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
 
-        $("#imgPageFacebook").each(function () {
+        $(".imgPageFacebook").each(function () {
             var datas = $(this).attr('data-post').toString();
-            var link = "\\\\frmitch-fs03\\quali_multimedia_perf\\Adscope\\FRANCE\\POSTS\\" + datas.substring(0, 1) + "\\" + datas.substring(1, 4) + "\\" + datas + ".jpg"
+            var link = "PostsFacebook/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + ".jpg"
             $(this).attr("src", link);
         });
 
