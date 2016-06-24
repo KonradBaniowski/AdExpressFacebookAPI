@@ -40,5 +40,6 @@ namespace Facebook.Service.Core.DomainModels.AdExprSchema
         public long IdMediaGroup { get; set; }
         public long IdGroupAdvertisingAgency { get; set; }
         public long IdAdvertisingAgency { get; set; }
+        public virtual Advertiser Advertiser { get; set; }
     }
 }

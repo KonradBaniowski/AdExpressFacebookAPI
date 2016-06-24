@@ -52,6 +52,7 @@ namespace Facebook.DataAccess
         public DbSet<Template> Template { get; set; }
         public DbSet<LevelItem> Products { get; set; }
         public DbSet<DataFacebook> DataFacebook { get; set; }
+        public DbSet<Advertiser> Advertiser { get; set; }
     }
 
     public class ModelConfiguration : DbConfiguration

@@ -6,6 +6,7 @@ using Facebook.Service.Core.DomainModels.MauSchema;
 using LinqKit;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -46,27 +47,38 @@ namespace Facebook.DataAccess.Repository
             var exclude1 = query.Predicate(excludedMedia);
             var exclude2 = query.Predicate(excludedProduct);
             Expression<Func<DataFacebook, bool>> predicate = arg => ((include1.Invoke(arg) || include2.Invoke(arg)) && !(exclude1.Invoke(arg) && exclude2.Invoke(arg)));
-            //Expression<Func<DataFacebook, bool>> predicate = arg => ((include2.Invoke(arg)) && !(exclude2.Invoke(arg)));
-
             query = query.AsExpandable().Where(predicate);
-
-            //query = query.ApplyRight(includedMedia);
-            //query = query.ApplyRight(includedProduct);
-            //query = query.ApplyRight(excludedMedia);
-            //query = query.ApplyRight(excludedProduct);
-
             if (Brand != null && Brand.Count > 0)
             {
+               
                 query = query.Where(e => Brand.Contains(e.IdBrand));
+                //query.GroupBy(e => new { e.IdPageFacebook, e.IdAdvertiser}).Select(c => new DataFacebookKPI
+                //{
+                //    AdvertiserLabel = c.First().Advertiser.AdvertiserLabel,
+                //    IdPageFacebook = c.First().IdPageFacebook,
+                //    IdAdvertiser = c.First().IdAdvertiser,
+                //    NumberPost = c.Sum(e => e.NumberPost),
+                //    NumberLike = c.Sum(e => e.NumberLike),
+                //    NumberShare = c.Sum(e => e.NumberShare),
+                //    Expenditure = c.Sum(e => e.Expenditure),
+                //    NumberFan = c.Max(e => e.NumberFan),
+
+                //});
             }
             else if (Advertiser != null && Advertiser.Count > 0)
             {
-                query = query.Where(e => Advertiser.Contains(e.IdAdvertiser));
+                //query = query.Join(context.Advertiser,
+                //   e => e.IdAdvertiser,
+                //   a => a.IdAdvertiser,
+                //   (e, a) => new DataFacebook
+                //   {
+                //       Advertiser = a
+                //   });
+                query = query.Include(a => a.Advertiser).Where(e => Advertiser.Contains(e.IdAdvertiser));
             }
             else
                 return new List<DataFacebook>();
             return query.ToList();
-            //        //query = query.Where(e => string.Join(",", ProductRights[61].Where(_ => _.Exception == 0).Select(_ => _.Rights)).Split(',').AsEnumerable<string>().Cast<long>().ToList().Contains(e.IdSubSector));
         }
     }
 }

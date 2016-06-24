@@ -54,6 +54,8 @@ namespace Facebook.DataAccess.Mapping.Adexpr
             Property(e => e.IdMediaGroup).HasColumnName("ID_MEDIA_GROUP");
             Property(e => e.IdGroupAdvertisingAgency).HasColumnName("ID_GROUP_ADVERTISING_AGENCY");
             Property(e => e.IdAdvertisingAgency).HasColumnName("ID_ADVERTISING_AGENCY");
+
+            HasRequired(e => e.Advertiser).WithMany().HasForeignKey(z => new { z.IdAdvertiser, z.IdLanguageData });
         }
     }
 }
