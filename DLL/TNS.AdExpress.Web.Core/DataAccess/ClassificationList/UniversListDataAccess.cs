@@ -958,7 +958,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
         /// <param name="webSession">Session utilisateur</param>
         /// <param name="idUniverseClientDescription">idUniverseClientDescription</param>
         /// <returns>Retourne true si l'univers a été crée</returns>
-        public static bool SaveUniverse(Int64 idGroupUniverse, string universe, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave, TNS.AdExpress.Constantes.Classification.Branch.type type, Int64 idUniverseClientDescription, WebSession webSession, string level=null, string filter= null)
+        public static bool SaveUniverse(Int64 idGroupUniverse, string universe, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave, TNS.AdExpress.Constantes.Classification.Branch.type type, Int64 idUniverseClientDescription, WebSession webSession,int isDefault, string level=null, string filter= null)
         {
 
             #region Ouverture de la base de données
@@ -1022,13 +1022,13 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                 //blob_universe_client, 
                 query.Append(" BEGIN  ");
                 query.AppendFormat("INSERT INTO {0} ", universeTable.Sql);
-                query.AppendFormat("(ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT, ID_TYPE_UNIVERSE_CLIENT, ID_UNIVERSE_CLIENT_DESCRIPTION, DATE_CREATION, DATE_MODIFICATION, ACTIVATION");
+                query.AppendFormat("(ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT, ID_TYPE_UNIVERSE_CLIENT, ID_UNIVERSE_CLIENT_DESCRIPTION, DATE_CREATION, DATE_MODIFICATION, ACTIVATION, IS_DEFAULT");
                 if (!String.IsNullOrEmpty(level))
                     query.AppendFormat(", \"LEVEL\" ");
                 if (!String.IsNullOrEmpty(filter))
                     query.AppendFormat(", FILTER ");
                 query.AppendFormat(") Values ");
-                query.AppendFormat(" ( {0}.seq_universe_client.nextval, {1}, '{2}', :1, {3},{4},sysdate, sysdate, {5}", schema.Label, idGroupUniverse, universe, idTypeUniverseClient, idUniverseClientDescription, DBConstantes.ActivationValues.ACTIVATED);
+                query.AppendFormat(" ( {0}.seq_universe_client.nextval, {1}, '{2}', :1, {3},{4},sysdate, sysdate, {5}, {6}", schema.Label, idGroupUniverse, universe, idTypeUniverseClient, idUniverseClientDescription, DBConstantes.ActivationValues.ACTIVATED, isDefault);
                 if (!String.IsNullOrEmpty(level))
                     query.AppendFormat(", '{0}'",level);
                 if (!String.IsNullOrEmpty(filter))
@@ -1594,7 +1594,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
         /// <param name="idTypeUniverseClient">id Type universe client</param>
         /// <param name="idUniverseClientDescription">Id universe client description</param>
         /// <param name="universesToSave">Universes to save</param>
-        public static bool UpdateUniverse(Int64 idUniverse, WebSession webSession, Int64 idUniverseClientDescription, int idTypeUniverseClient, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave, string levels = null, string filter = null)
+        public static bool UpdateUniverse(Int64 idUniverse, WebSession webSession, Int64 idUniverseClientDescription, int idTypeUniverseClient, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave, int isDefault, string levels = null, string filter = null)
         {
 
             #region Ouverture de la base de données
@@ -1656,7 +1656,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                  * Code add to improve the performance of the universe loading process
                 * 
                 sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription + ", COMMENTARY =" + levelsIdsField;*/
-                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription;
+                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription + ", IS_DEFAULT= "+ isDefault;
                 if(!String.IsNullOrEmpty(levels))
                 {
                     sql += ", \"LEVEL\" = " + levels;

@@ -29,6 +29,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public List<UserUniversGroup> UniversGroups { get; set; }
         public int SiteLanguage { get; set; }
+        public bool CanSetDefaultUniverse { get; set; }
     }
 
     public class UniversGroupSaveResponse
@@ -47,6 +48,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public string WebSessionId { get; set; }
         public long IdUniverseClientDescription { get; set; }
         public List<long> MediaIds { get; set; }
+        public bool IsDefaultUniverse { get; set; }
     }
 
     public class UniversResponse
