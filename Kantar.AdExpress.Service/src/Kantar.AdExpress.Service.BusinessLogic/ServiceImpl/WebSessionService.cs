@@ -946,7 +946,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return success;
         }
 
-        
+        public bool IsAllSelectionStep(string webSessionId)
+        {
+            _webSession = (WebSession)WebSession.Load(webSessionId);
+            return _webSession.isMediaSelected() && _webSession.isDatesSelected() && _webSession.IsCurrentUniversProductSelected();
+        }
+
+
         #endregion
     }
 }

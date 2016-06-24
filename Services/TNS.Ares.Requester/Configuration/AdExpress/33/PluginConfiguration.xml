@@ -22,6 +22,7 @@
     <plugin enumId="Pachet" name="Pachet" resultType="25" longevity="10" deleteExpired="true" extension=".txt"/>
     <plugin enumId="Amon" name="Amon" resultType="27" resultLongevity="5" deleteExpired="true" extension=".pdf"/>
     <plugin enumId="Ptah" name="Ptah" resultType="28" resultLongevity="5" deleteExpired="true" extension=".pdf"/>
+    <plugin enumId="MiysisPptx" name="miysisPptx" resultType="45" resultLongevity="5" deleteExpired="true" extension=".pptx"/>
     
     <plugin enumId="Alertes" name="Alertes" resultType="20" longevity="120" deleteExpired="true" useExec="true" deleteRowSuccess="true">
       <exec dayOfWeekFrom="Saturday"  dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
