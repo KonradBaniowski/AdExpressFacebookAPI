@@ -17,6 +17,8 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IWebSessionService _webSessionService;
         private int _siteLanguage = 33;
+      
+
 
         public SocialMediaController(IWebSessionService webSessionService)
         {
@@ -29,12 +31,18 @@ namespace Km.AdExpressClientWeb.Controllers
             return View();
         }
 
-
+    
         public ActionResult Results()
         {
 
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            if(!_webSessionService.IsAllSelectionStep(idSession))
+            {
+                return RedirectToAction("Market", "Selection");
+            }
+
             var result = _webSessionService.GetWebSession(idSession);
             _siteLanguage = result.WebSession.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);

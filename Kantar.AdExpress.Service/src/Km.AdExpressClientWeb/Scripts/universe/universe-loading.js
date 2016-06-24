@@ -73,6 +73,7 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
     var groupId = $('#ddlGroup').val();
     var universId = $('#ddlUnivers').val();
     var name = $('#universName').val();
+    var isDefaultUniverse = $('#isDefaultUniverse').is(":checked");
     var idMedias = [];
     $.each($('.tuile-medias-active'), function (index, value) {
         idMedias.push($(value).attr('data-attr-id'));
@@ -113,6 +114,7 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         universId: universId,
         name: name,
         dimension: dimension,
+        isDefaultUniverse: isDefaultUniverse,
         media: idMedias
     };
     $.ajax({

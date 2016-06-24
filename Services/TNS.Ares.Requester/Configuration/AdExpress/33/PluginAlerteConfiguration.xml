@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pluginAlerteConfiguration isAlertsActivated="true">
+<pluginAlerteConfiguration isAlertsActivated="false">
   <alert delete="false"/>
   <occurrence dayExpiration="10" delete="false"/>
-  <mailConfiguration targetHost="http://tnsadexpress.com/" />
+  <mailConfiguration targetHost="http://km-adexpress.kantarmedia.fr/" />
 </pluginAlerteConfiguration>
