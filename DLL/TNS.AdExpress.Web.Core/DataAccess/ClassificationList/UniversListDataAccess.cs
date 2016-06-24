@@ -108,7 +108,8 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
              * Code add to improve the performance of the universe loading process
             * 
             string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".COLUMN_NAME ";*/
-            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
+            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT";
+            sql += "," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".IS_DEFAULT";
             sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).SqlWithPrefix + " , "
                 + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).SqlWithPrefix + " , "
                 + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).SqlWithPrefix;
@@ -227,6 +228,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                 dt.Columns.Add("GROUP_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["GROUP_UNIVERSE_CLIENT"].GetType());
                 dt.Columns.Add("ID_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["ID_UNIVERSE_CLIENT"].GetType());
                 dt.Columns.Add("UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["UNIVERSE_CLIENT"].GetType());
+                dt.Columns.Add("IS_DEFAULT", ds.Tables[0].Rows[0]["IS_DEFAULT"].GetType());
                 /* TODO MODIFICATION
                  * Code add to improve the performance of the universe loading process
                 * 

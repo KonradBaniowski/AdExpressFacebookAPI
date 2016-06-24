@@ -22,6 +22,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public long ParentId { get; set; }
         public string ParentDescription { get; set; }
         public List<UniversLevel> Levels { get; set; }
+        public bool IsDefault { get; set; }
     }
 
     public class UniversGroupsResponse

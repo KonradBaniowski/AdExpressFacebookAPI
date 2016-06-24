@@ -244,6 +244,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                     case WebConstantes.Module.Name.INDICATEUR:
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    case WebConstantes.Module.Name.FACEBOOK:
                         var adExpressUniverse = Universes[index];
                         #region Iterate by Access Type
                         int id = 0;
@@ -618,31 +619,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             List<UserUnivers> userUniversList = new List<UserUnivers>();
             var allowedLevels = tuple.Item1;
             var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
+            //
             var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
             if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK) branch = Branch.type.productSocial.GetHashCode().ToString();
                 var data = UniversListDataAccess.GetData(tuple.Item3, branch, string.Empty);
             if (data != null && data.Tables[0].AsEnumerable().Any())
             {
-                var list = data.Tables[0].AsEnumerable().Select(p => new
-                {
-                    GroupID = p.Field<long?>("ID_GROUP_UNIVERSE_CLIENT"),
-                    GroupDescription = p.Field<string>("GROUP_UNIVERSE_CLIENT"),
-                    UniversID = p.Field<long?>("ID_UNIVERSE_CLIENT"),
-                    UniversDescription = p.Field<string>("UNIVERSE_CLIENT"),
-                }).ToList();
-                if (idGroup > 0)
-                    list = list.Where(p => p.GroupID == idGroup).ToList();
-                foreach (var item in list)
-                {
-                    UserUnivers UserUnivers = new UserUnivers
-                    {
-                        ParentId = item.GroupID ?? 0,
-                        ParentDescription = item.GroupDescription,
-                        Id = item.UniversID ?? 0,
-                        Description = item.UniversDescription
-                    };
-                    userUniversList.Add(UserUnivers);
-                }
+                userUniversList = GetUniverses(dimension,webSession,idGroup);
                 var groupedUniversList = userUniversList.GroupBy(p => p.ParentId);
                 foreach (var item in groupedUniversList)
                 {
@@ -1305,6 +1288,42 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             webSession.PrincipalProductUniverses.Clear();
             webSession.Save();
         }
+        private List<UserUnivers> GetUniverses(Dimension dimension, WebSession webSession, long idGroup = 0, bool getDefaultUniverse = false)
+        {
+            List<UserUnivers> result = new List<UserUnivers>();
+            var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
+            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+                branch = Branch.type.productSocial.GetHashCode().ToString();
+            var data = UniversListDataAccess.GetData(webSession, branch, string.Empty);
+            if (data != null && data.Tables[0].AsEnumerable().Any())
+            {
+                var list = data.Tables[0].AsEnumerable().Select(p => new
+                {
+                    GroupID = p.Field<long?>("ID_GROUP_UNIVERSE_CLIENT"),
+                    GroupDescription = p.Field<string>("GROUP_UNIVERSE_CLIENT"),
+                    UniversID = p.Field<long?>("ID_UNIVERSE_CLIENT"),
+                    UniversDescription = p.Field<string>("UNIVERSE_CLIENT"),
+                    IsDefault = (p["IS_DEFAULT"] != null && Convert.ToInt32(p["IS_DEFAULT"]) == 1) ? true : false
+                }).ToList();
+                if (idGroup > 0)
+                    list = list.Where(p => p.GroupID == idGroup).ToList();
+                foreach (var item in list)
+                {
+                    UserUnivers UserUnivers = new UserUnivers
+                    {
+                        ParentId = item.GroupID ?? 0,
+                        ParentDescription = item.GroupDescription,
+                        Id = item.UniversID ?? 0,
+                        Description = item.UniversDescription,
+                        IsDefault = item.IsDefault
+                    };
+                    result.Add(UserUnivers);
+                }
+                if (getDefaultUniverse && webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+                    result = result.Where(p => p.IsDefault).ToList();
+            }
+            return result;
+        }
         #endregion
-    }
+    }    
 }
