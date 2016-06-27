@@ -346,7 +346,7 @@ namespace TNS.Ares.AdExpress.MailAlert
                             // Creating alert content
                             this.Log(new LogLine(string.Format("Creating alert content for alert '{0}'", alertId.ToString()), eLogCategories.Information, "Alerts"));
 
-                            string alertContent = GetMailContent(alert.Title, String.Format("{0}Private/Alerts/ShowAlert.aspx?idAlert={1}&idOcc={2}", TNS.Alert.Domain.AlertConfiguration.MailInformation.TargetHost, alert.AlertId, occId), session.SiteLanguage);
+                            string alertContent = GetMailContent(alert.Title, String.Format("{0}/Alert?idSession={1}&idAlert={2}&idOcc={3}", TNS.Alert.Domain.AlertConfiguration.MailInformation.TargetHost, session.IdSession, alert.AlertId, occId), session.SiteLanguage);
 
                             // Sending email
                             this.Log(new LogLine(string.Format("Sending email for alert '{0}'", alertId.ToString()), eLogCategories.Information, "Alerts"));
