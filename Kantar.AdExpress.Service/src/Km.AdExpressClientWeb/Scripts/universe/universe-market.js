@@ -1,5 +1,6 @@
 ﻿
 var dimension = $('#Dimension').val();
+var maxUniverseItems = $('#MaxUniverseItems').val();
 //Déplacer un élement marché
 $('#move-item').on('click', function () {
     var levelSrc = $('.panel-marche .ui-selectee.ui-selected');
@@ -17,7 +18,7 @@ $('#move-item').on('click', function () {
                 bootbox.alert("You can select only advertisers or brands.");
                 return
             }
-            if(nbItemSrc>5 ||nbItemDst>5 )
+            if (nbItemSrc > maxUniverseItems || nbItemDst > maxUniverseItems)
             {
                 bootbox.alert("Please select at maximum 5 advertisers or brands. ");
                 return

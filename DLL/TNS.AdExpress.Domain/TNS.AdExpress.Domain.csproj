@@ -121,6 +121,9 @@
     <Compile Include="ModulesDescritpion\Trends.cs" />
     <Compile Include="ModulesDescritpion\TrendsDateOpeningOption.cs" />
     <Compile Include="Results\GridResult.cs" />
+    <Compile Include="Results\GridResultExport.cs" />
+    <Compile Include="Results\InfragisticColumn.cs" />
+    <Compile Include="Results\InfragisticData.cs" />
     <Compile Include="Results\RolexConfigurationDetail.cs" />
     <Compile Include="Results\DateConfigurations.cs" />
     <Compile Include="Results\VpConfigurationDetail.cs" />

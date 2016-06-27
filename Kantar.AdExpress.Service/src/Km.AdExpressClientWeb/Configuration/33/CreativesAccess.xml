@@ -14,6 +14,7 @@
     <VirtualPath id="MEDIA_UPDATE" name="Répertoire contenant la liste des médias dispo" value="/MediaList"/>
     <VirtualPath id="IMAGES_VP" name="Répertoire virtuel des créations presse" value="/ImagesVP"/>
     <VirtualPath id="IMAGES_ROLEX" name="Répertoire virtuel des créations presse" value="/ImagesRolex"/>
+    <VirtualPath id="POSTS_FACEBOOK" name="Répertoire virtuel posts Facebook" value="/PostsFacebook"/>
 
     <VirtualPath id="IMAGES_PSA" name="Répertoire virtuel des créations psa" value="/ImagesPsa"/>
     <VirtualPath id="IMAGES_PSA_MR" name="Répertoire virtuel des créations moyenne resolution psa" value="/ImagesPsaMR"/>
@@ -51,5 +52,6 @@
     <Network id="LOCAL_PATH_ROLEX" name="Visuels de Rolex" value="\\KMCHMFS001\Adex\Multimedia\Rolex\"/>
     <Network id="LOCAL_PATH_IMAGES_PSA_MR" name="Visuels de PSA" value="\\frmitch-fs03.tnsad.com\quali_multimedia_perf\Adscope\FRANCE\IMAGES\MR\"/>
     <Network id="LOCAL_PATH_BANNERS_PSA" name="Visuels de PSA" value="\\frmitch-fs03.tnsad.com\quali_multimedia_perf\Adscope\FRANCE\BANNIERES\"/>
+    <Network id="LOCAL_PATH_POSTS_FACEBOOK" name="Posts Facebook" value="\\frmitch-fs03\quali_multimedia_perf\Adscope\FRANCE\POSTS\"/>
   </Networks>
 </CreativesAccess>

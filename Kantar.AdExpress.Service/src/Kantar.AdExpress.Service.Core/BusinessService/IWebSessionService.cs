@@ -15,5 +15,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         void UpdateSiteLanguage(string webSessionId, int siteLanguage);
         int GetSiteLanguage(string webSessionId);
         WebSessionDetails GetWebSession(string webSessionId);
+
+        bool IsAllSelectionStep(string webSessionId);
     }
 }
