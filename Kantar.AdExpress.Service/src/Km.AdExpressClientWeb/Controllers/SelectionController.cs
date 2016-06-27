@@ -64,6 +64,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Load Branches
             var result = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
             model.CurrentModule = result.ControllerDetails.ModuleId;
+            model.MaxUniverseItems = result.MaxUniverseItems;
             #endregion
 
             #region Load each label's text in the appropriate language

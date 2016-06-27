@@ -149,6 +149,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
                 {
                     MaxIncludeNbr = MaxExcludeNbr = 1;
+                    result.MaxUniverseItems =  int.Parse(System.Configuration.ConfigurationManager.AppSettings["FacebookMaxItems"]);
                 }
                 foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
                 {
