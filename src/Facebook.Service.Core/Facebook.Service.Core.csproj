@@ -53,6 +53,7 @@
     <Compile Include="DataAccess\Repository\IProductRepository.cs" />
     <Compile Include="DataAccess\Repository\ITemplateAssignmentRepository.cs" />
     <Compile Include="DomainModels\AdExprSchema\Advertiser.cs" />
+    <Compile Include="DomainModels\AdExprSchema\Brand.cs" />
     <Compile Include="DomainModels\AdExprSchema\Data.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataPostFacebook.cs" />
