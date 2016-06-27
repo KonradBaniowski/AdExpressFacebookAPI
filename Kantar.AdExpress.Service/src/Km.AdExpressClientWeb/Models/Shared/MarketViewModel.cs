@@ -19,6 +19,7 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public UserUniversGroupsModel UniversGroups { get; set; }
         public List<Tree> Trees { get; set; }
         public long CurrentModule { get;set;}
+        public int MaxUniverseItems { get; set; }
 
     }   
 
