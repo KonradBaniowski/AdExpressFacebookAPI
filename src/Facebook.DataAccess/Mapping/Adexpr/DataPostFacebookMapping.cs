@@ -13,7 +13,7 @@ namespace Facebook.DataAccess.Mapping.Adexpr
         public DataPostFacebookMapping(string schema)
         {
             HasKey(e => e.IdPostFacebook);
-            ToTable("DATA__POST_FACEBOOK", schema);
+            ToTable("DATA_POST_FACEBOOK", schema);
             Property(e => e.IdPostFacebook).HasColumnName("ID_POST_FACEBOOK");
             Property(e => e.IdPageFacebook).HasColumnName("ID_PAGE_FACEBOOK");
             Property(e => e.IdPost).HasColumnName("ID_POST");
