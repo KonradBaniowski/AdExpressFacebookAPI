@@ -64,6 +64,7 @@
     <Compile Include="FacebookContext.cs" />
     <Compile Include="FacebookUow.cs" />
     <Compile Include="Mapping\Adexpr\AdvertiserMapping.cs" />
+    <Compile Include="Mapping\Adexpr\BrandMapping.cs" />
     <Compile Include="Mapping\Adexpr\DataFacebookMapping.cs" />
     <Compile Include="Mapping\Adexpr\DataPostFacebookMapping.cs" />
     <Compile Include="Mapping\Adexpr\ProductMapping.cs" />

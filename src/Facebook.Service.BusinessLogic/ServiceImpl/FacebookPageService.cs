@@ -31,11 +31,38 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
         public List<DataFacebookContract> GetDataFacebook(int IdLogin, long Begin, long End, List<long> Advertiser, List<long> Brand)
         {
 
+
             var criteria = _rightsvc.GetCriteria(IdLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
             var query = _uow.DataFacebookRepository.GetDataFacebook(criteriaData, Begin, End, Advertiser, Brand);
-            var result = _mapper.Map<List<DataFacebookContract>>(query);
-            return result;
+            //var res = query.GroupBy(e => new { e.IdAdvertiser }).Select((c) => new DataFacebookContract
+            //{
+            //    ID = c.First().IdAdvertiser,
+            //    PID = -1,
+            //    IdPageFacebook = c.First().IdPageFacebook,
+            //    AdvertiserLabel = c.First().Advertiser.AdvertiserLabel,
+            //    NbPage = c.Count(),
+            //    PageName = "X",
+            //    NumberPost = c.Sum(e => e.NumberPost),
+            //    NumberLike = c.Sum(e => e.NumberLike),
+            //    NumberShare = c.Sum(e => e.NumberShare),
+            //    Expenditure = c.Sum(e => e.Expenditure),
+            //    NumberFan = c.Max(e => e.NumberFan),
+                
+            //    PageFacebookContracts = c.GroupBy(u=> u.IdPageFacebook).Select(u => new PageFacebookContract()
+            //    {
+            //        PID = u.Key,
+            //        NumberFan = u.First().NumberFan,
+            //        NumberPost = u.First().NumberPost,
+            //        Expenditure = u.First().Expenditure,
+            //        NumberLike = u.First().NumberLike,
+            //        NumberShare = u.First().NumberShare,
+            //        PageName = u.First().PageName,
+            //        IdAdvertiser = u.First().IdAdvertiser,
+            //        IdPage = u.First().IdPageFacebook
+            //    }).ToList()
+            //}).ToList();
+            return new List<DataFacebookContract>();
         }
     }
 }
