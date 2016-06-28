@@ -30,7 +30,7 @@ namespace ClientApi.Controllers
 
         public ActionResult Test()
         {
-            var dbfb = _fbsvc.GetDataFacebook();
+            //var dbfb = _fbsvc.GetDataFacebook();
             //var products = _productSvc.GetLevelItems("BOISSONS",1);
             //var test2 = _rightSvc.GetProductRight(1087);
             //var next = _rightSvc.GetMediaRight(1087);

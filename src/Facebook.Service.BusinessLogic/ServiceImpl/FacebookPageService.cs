@@ -35,34 +35,41 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             var criteria = _rightsvc.GetCriteria(IdLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
             var query = _uow.DataFacebookRepository.GetDataFacebook(criteriaData, Begin, End, Advertiser, Brand);
-            //var res = query.GroupBy(e => new { e.IdAdvertiser }).Select((c) => new DataFacebookContract
-            //{
-            //    ID = c.First().IdAdvertiser,
-            //    PID = -1,
-            //    IdPageFacebook = c.First().IdPageFacebook,
-            //    AdvertiserLabel = c.First().Advertiser.AdvertiserLabel,
-            //    NbPage = c.Count(),
-            //    PageName = "X",
-            //    NumberPost = c.Sum(e => e.NumberPost),
-            //    NumberLike = c.Sum(e => e.NumberLike),
-            //    NumberShare = c.Sum(e => e.NumberShare),
-            //    Expenditure = c.Sum(e => e.Expenditure),
-            //    NumberFan = c.Max(e => e.NumberFan),
-                
-            //    PageFacebookContracts = c.GroupBy(u=> u.IdPageFacebook).Select(u => new PageFacebookContract()
-            //    {
-            //        PID = u.Key,
-            //        NumberFan = u.First().NumberFan,
-            //        NumberPost = u.First().NumberPost,
-            //        Expenditure = u.First().Expenditure,
-            //        NumberLike = u.First().NumberLike,
-            //        NumberShare = u.First().NumberShare,
-            //        PageName = u.First().PageName,
-            //        IdAdvertiser = u.First().IdAdvertiser,
-            //        IdPage = u.First().IdPageFacebook
-            //    }).ToList()
-            //}).ToList();
-            return new List<DataFacebookContract>();
+
+            var data = query.GroupBy(e => e.IdAdvertiser);
+            List<DataFacebookContract> contract = new List<DataFacebookContract>();
+            foreach (var i in data)
+            {
+                DataFacebookContract item = new DataFacebookContract();
+                item.PID = -1;
+                item.ID = i.FirstOrDefault().IdAdvertiser;
+                item.AdvertiserLabel = i.FirstOrDefault().AdvertiserLabel;
+                item.BrandLabel = i.FirstOrDefault().BrandLabel;
+                item.Expenditure = i.Sum(e => e.Expenditure);
+                item.NbPage = i.Count();
+                item.NumberPost = i.Sum(a => a.NumberPost);
+                item.NumberLike = i.Sum(a => a.NumberLike);
+                item.NumberComment = i.Sum(a => a.NumberComment);
+                item.NumberShare = i.Sum(a => a.NumberShare);
+                item.NumberFan = i.Max(a => a.NumberFan);
+                item.PageFacebookContracts = new List<PageFacebookContract>();
+                foreach(var elem in i)
+                {
+                    PageFacebookContract page = new PageFacebookContract();
+                    page.PID = i.FirstOrDefault().IdAdvertiser;
+                    page.Expenditure = i.FirstOrDefault(e => e.IdPageFacebook == elem.IdPageFacebook).Expenditure;
+                    page.IdPageFacebook = i.FirstOrDefault(e => e.IdPageFacebook == elem.IdPageFacebook).IdPageFacebook;
+                    page.NumberPost = i.FirstOrDefault(e => e.IdPageFacebook == elem.IdPageFacebook).NumberPost;
+                    page.NumberLike = i.FirstOrDefault(e => e.IdPageFacebook == elem.IdPageFacebook).NumberLike;
+                    page.NumberComment = i.FirstOrDefault(e => e.IdPageFacebook == elem.IdPageFacebook).NumberComment;
+                    page.NumberShare = i.FirstOrDefault(e => e.IdPageFacebook == elem.IdPageFacebook).NumberShare;
+                    page.NumberFan = i.FirstOrDefault(e => e.IdPageFacebook == elem.IdPageFacebook).NumberFan;
+                    page.PageName = i.FirstOrDefault(e => e.IdPageFacebook == elem.IdPageFacebook).PageName;
+                    item.PageFacebookContracts.Add(page);
+                }
+                contract.Add(item);
+            }
+            return contract;
         }
 
       

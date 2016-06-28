@@ -19,9 +19,8 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public long NumberLike { get; set; }
         public long NumberShare { get; set; }
         public long NumberFan { get; set; }
+        public long NumberComment { get; set; }
         public long Expenditure { get; set; }
-
-
         public List<PageFacebookContract> PageFacebookContracts { get; set; }
     }
 
@@ -31,11 +30,13 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public string Url { get; set; }
         public long IdPage { get; set; }
         public long IdAdvertiser { get; set; }
+        public long IdPageFacebook { get; set; }
         public string PageName { get; set; }
         public long NumberPost { get; set; }
         public long NumberLike { get; set; }
         public long NumberShare { get; set; }
         public long NumberFan { get; set; }
+        public long NumberComment { get; set; }
         public long Expenditure { get; set; }
 
 
