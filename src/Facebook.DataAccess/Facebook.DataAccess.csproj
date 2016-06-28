@@ -76,6 +76,7 @@
     <Compile Include="Mapping\Mau\TemplateMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DataFacebookRepository.cs" />
+    <Compile Include="Repository\DataPostFacebookRepository.cs" />
     <Compile Include="Repository\ExtensionLinq.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\OrderClientMediaRepository.cs" />

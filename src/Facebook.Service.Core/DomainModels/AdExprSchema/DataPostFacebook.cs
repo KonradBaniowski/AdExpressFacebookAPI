@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Facebook.Service.Core.DomainModels.AdExprSchema
 {
-    public class DataPostFacebook
+    public class DataPostFacebook : Data
     {
         public long IdPostFacebook { get; set; }
         public long IdPageFacebook { get; set; }
@@ -32,8 +32,9 @@ namespace Facebook.Service.Core.DomainModels.AdExprSchema
         public string AssociatedFileVideo { get; set; }
         public long IdTypePost { get; set; }
         public long IdLanguageData { get; set; }
-        public long NumberLike { get; set; }
-        public long NumberComment { get; set; }
-        public long NumberShare { get; set; }
+        public string NumberLike { get; set; }
+        public string NumberComment { get; set; }
+        public string NumberShare { get; set; }
+        public string Commitment { get; set; }
     }
 }

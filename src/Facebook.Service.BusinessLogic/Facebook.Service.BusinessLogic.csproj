@@ -55,6 +55,7 @@
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl\FacebookPageService.cs" />
+    <Compile Include="ServiceImpl\FacebookPostService.cs" />
     <Compile Include="ServiceImpl\ProductService.cs" />
     <Compile Include="ServiceImpl\RightService.cs" />
   </ItemGroup>

@@ -41,10 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessService\IFacebookPageService.cs" />
+    <Compile Include="BusinessService\IFacebookPostService.cs" />
     <Compile Include="BusinessService\IProductService.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
     <Compile Include="DataAccess\IFacebookUow.cs" />
     <Compile Include="DataAccess\Repository\IDataFacebookRepository.cs" />
+    <Compile Include="DataAccess\Repository\IDataPostFacebookRepository.cs" />
     <Compile Include="DataAccess\Repository\IGenericRepository.cs" />
     <Compile Include="DataAccess\Repository\IOrderClientMediaRepository.cs" />
     <Compile Include="DataAccess\Repository\IOrderClientProductRepository.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="DomainModels\AdExprSchema\LevelItem.cs" />
     <Compile Include="DomainModels\BusinessModel\CriteriaData.cs" />
     <Compile Include="DomainModels\BusinessModel\DataFacebookKPI.cs" />
+    <Compile Include="DomainModels\BusinessModel\PostFacebook.cs" />
     <Compile Include="DomainModels\MauSchema\OrderClientMedia.cs" />
     <Compile Include="DomainModels\MauSchema\OrderClientProduct.cs" />
     <Compile Include="DomainModels\MauSchema\OrderTemplateMedia.cs" />

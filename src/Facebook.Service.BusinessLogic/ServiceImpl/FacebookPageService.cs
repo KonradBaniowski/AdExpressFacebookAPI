@@ -65,11 +65,6 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return new List<DataFacebookContract>();
         }
 
-        public List<DataPostFacebookContract> GetDataPostFacebook(int IdLogin, long Begin, long End, List<long> Advertiser, List<long> Brand, List<long> Post)
-        {
-            var criteria = _rightsvc.GetCriteria(IdLogin);
-            var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
-            throw new NotImplementedException();
-        }
+      
     }
 }

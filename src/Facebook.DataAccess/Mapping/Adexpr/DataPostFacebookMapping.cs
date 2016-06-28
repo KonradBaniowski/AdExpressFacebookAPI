@@ -41,6 +41,7 @@ namespace Facebook.DataAccess.Mapping.Adexpr
             Property(e => e.NumberLike).HasColumnName("NUMBER_LIKE");
             Property(e => e.NumberComment).HasColumnName("NUMBER_COMMENT");
             Property(e => e.NumberComment).HasColumnName("NUMBER_SHARE");
+            Property(e => e.Commitment).HasColumnName("COMMITMENT");
         }
     }
 }
