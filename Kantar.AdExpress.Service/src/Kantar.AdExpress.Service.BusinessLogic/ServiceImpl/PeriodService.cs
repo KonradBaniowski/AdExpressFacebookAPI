@@ -27,6 +27,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string PRESENTABSENT = "PresentAbsent";
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string ANALYSIS = "Analysis";
+        private const string FACEBOOK = "SocialMedia";
         private const string RESULTS = "Results";
         public const string MEDIATYPESELECTIONERROR = "Selection of media type is not correct";
         public const string YYYYMM = "yyyyMM";
@@ -192,6 +193,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                     currentModuleCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
+                    break;
+                case WebConstantes.Module.Name.FACEBOOK:
+                    currentModuleCode = WebConstantes.LanguageConstantes.FacebookCode;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? FACEBOOK : SELECTION;
+                    currentModuleIcon = "icon-social-facebook";
                     break;
                 default:
                     break;

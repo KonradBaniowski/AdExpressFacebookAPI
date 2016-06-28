@@ -55,9 +55,9 @@ namespace TNS.Ares.Alerts.DAL.Default
                 insertCommand.Append("BEGIN ");
                 insertCommand.AppendFormat("SELECT {0}.SEQ_ALERT.NEXTVAL INTO :new_id FROM dual; ", DataBaseConfiguration.DataBase.GetSchema(SchemaIds.alert).Label);
                 insertCommand.AppendFormat("INSERT INTO {0} ", DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Sql);
-                insertCommand.Append("(ID_ALERT, ID_MODULE, ID_LOGIN, ALERT, EMAIL_LIST, ID_ALERT_TYPE, ID_USER_, DATE_BEGINNING, DATE_END, DATE_CREATION, DATE_MODIFICATION, ACTIVATION, ID_TYPE_PERIODICITY, EXPIRY, ID_ALERT_SCHEDULE, SESSION_) ");
+                insertCommand.Append("(ID_ALERT, ID_MODULE, ID_LOGIN, ALERT, EMAIL_LIST, ID_ALERT_TYPE, ID_USER_, DATE_BEGINNING, DATE_END, DATE_CREATION, DATE_MODIFICATION, ACTIVATION, ID_TYPE_PERIODICITY, EXPIRY, ID_ALERT_SCHEDULE, ID_SITE, SESSION_) ");
                 insertCommand.Append("VALUES ");
-                insertCommand.AppendFormat("(:new_id, {0}, {1}, :title, :recepients, {2}, 1079, SYSDATE, (SELECT DATE_END_MODULE FROM {7} WHERE id_module={8} AND id_login = {1}), SYSDATE, SYSDATE, {3}, {4}, {5}, {6}, :blobtodb); ",
+                insertCommand.AppendFormat("(:new_id, {0}, {1}, :title, :recepients, {2}, 1079, SYSDATE, (SELECT DATE_END_MODULE FROM {7} WHERE id_module={8} AND id_login = {1}), SYSDATE, SYSDATE, {3}, {4}, {5}, {6}, {9}, :blobtodb); ",
                         moduleId.ToString(),
                         idLogin.ToString(),
                         ConstDB.Alerts.AlertType.AdExpressAlert.GetHashCode(),
@@ -66,7 +66,8 @@ namespace TNS.Ares.Alerts.DAL.Default
                         expiry.ToString(),
                         idAlertSchedule.ToString(),
                         DataBaseConfiguration.DataBase.GetTable(TableIds.rightModuleAssignment).Sql,
-                        TNS.AdExpress.Constantes.Web.Module.Name.ALERT_ADEXPRESS.ToString());
+                        TNS.AdExpress.Constantes.Web.Module.Name.ALERT_ADEXPRESS.ToString(),
+                        ConstDB.Alerts.ID_SITE_NEW);
                 insertCommand.Append("END; "); ;
 
                 command.CommandText = insertCommand.ToString();

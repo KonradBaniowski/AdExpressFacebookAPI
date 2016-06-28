@@ -118,6 +118,12 @@ namespace TNS.Ares.Constantes {
         #region Classe des statuts et types des alertes
 
         public class Alerts {
+
+            /// <summary>
+            /// To indicates that this alert belongs to the new AdExpress Site
+            /// </summary>
+            public const int ID_SITE_NEW = 1;
+
             /// <summary>
             /// Defines the type of an alert
             /// </summary>

@@ -94,6 +94,9 @@ namespace TNS.Ares.Alerts.DAL
                 DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
                 loginId, 
                 ConstDB.Alerts.AlertType.AdExpressAlert.GetHashCode());
+            sql.AppendFormat("AND {0}.id_site = {1} ",
+                DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
+                ConstDB.Alerts.ID_SITE_NEW);
             sql.AppendFormat("ORDER BY {0}.activation, {0}.id_alert_type ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix);
 
@@ -212,15 +215,19 @@ namespace TNS.Ares.Alerts.DAL
             sql.AppendFormat("AND {0}.id_module = {1} ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.rightModuleAssignment).Prefix,
                 TNS.AdExpress.Constantes.Web.Module.Name.ALERT_ADEXPRESS.ToString());
+            sql.AppendFormat("AND {0}.id_site = {1} ",
+                DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
+                ConstDB.Alerts.ID_SITE_NEW);
 
 
             StringBuilder deleteCommand = new StringBuilder();
-                deleteCommand.AppendFormat("DELETE FROM {0} WHERE ID_ALERT_TYPE = {1} AND (({4}) <= '{2}' OR ACTIVATION = {3})",
+                deleteCommand.AppendFormat("DELETE FROM {0} WHERE ID_ALERT_TYPE = {1} AND ID_SITE = {5} AND (({4}) <= '{2}' OR ACTIVATION = {3})",
                               DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Sql, 
                               ConstDB.Alerts.AlertType.AdExpressAlert.GetHashCode(),
                               DateTime.Now.ToString("yyyy-MM-dd"), 
                               ConstDB.Alerts.AlertStatuses.ToDelete.GetHashCode(),
-                              sql.ToString());
+                              sql.ToString(),
+                              ConstDB.Alerts.ID_SITE_NEW);
 
             this._src.Delete(deleteCommand.ToString());
         }
@@ -451,6 +458,9 @@ namespace TNS.Ares.Alerts.DAL
                 ConstDB.Alerts.AlertType.AdExpressAlert.GetHashCode());
             sql.AppendFormat("AND {0}.date_end_module < SYSDATE ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.rightModuleAssignment).Prefix);
+            sql.AppendFormat("AND {0}.id_site = {1} ",
+                DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
+                ConstDB.Alerts.ID_SITE_NEW);
             sql.AppendFormat("ORDER BY {0}.activation, {0}.id_alert_type ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix);
 
@@ -512,6 +522,9 @@ namespace TNS.Ares.Alerts.DAL
             sql.AppendFormat("AND {0}.id_module = {1} ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.rightModuleAssignment).Prefix,
                 TNS.AdExpress.Constantes.Web.Module.Name.ALERT_ADEXPRESS.ToString());
+            sql.AppendFormat("AND {0}.id_site = {1} ",
+                DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
+                ConstDB.Alerts.ID_SITE_NEW);
             sql.AppendFormat("AND {0}.DATE_VALIDATE IS NULL AND {0}.id_alert_type = {1} AND ACTIVATION = {2} ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
                 ConstDB.Alerts.AlertType.AdExpressAlert.GetHashCode(),
@@ -557,6 +570,9 @@ namespace TNS.Ares.Alerts.DAL
             sql.AppendFormat("AND {0}.id_module = {1} ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.rightModuleAssignment).Prefix,
                 TNS.AdExpress.Constantes.Web.Module.Name.ALERT_ADEXPRESS.ToString());
+            sql.AppendFormat("AND {0}.id_site = {1} ",
+                DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
+                ConstDB.Alerts.ID_SITE_NEW);
             sql.AppendFormat("AND {0}.id_alert_schedule = {1}.id_alert_schedule ",
                 DataBaseConfiguration.DataBase.GetTable(TableIds.alert).Prefix,
                 DataBaseConfiguration.DataBase.GetTable(TableIds.alertSchedule).Prefix);
