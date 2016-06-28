@@ -31,7 +31,7 @@ namespace Facebook.DataAccess.Repository
             return new List<DataFacebook>();
         }
 
-        public List<DataFacebookKPI> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand)
+        public List<DateFacebookContract> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand)
         {
             var query = (from d in context.DataFacebook
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
@@ -59,7 +59,7 @@ namespace Facebook.DataAccess.Repository
             {
                 query = query.Include(a => a.Brand)
                     .Where(e => Brand.Contains(e.IdBrand));
-                return query.GroupBy(a => new { a.IdAdvertiser, a.IdPageFacebook }).Select(e => new DataFacebookKPI
+                return query.GroupBy(a => new { a.IdAdvertiser, a.IdPageFacebook }).Select(e => new DateFacebookContract
                 {
                     IdAdvertiser = e.First().IdAdvertiser,
                     NumberPost = e.Sum(a => a.NumberPost),
@@ -68,6 +68,7 @@ namespace Facebook.DataAccess.Repository
                     NumberShare = e.Sum(a => a.NumberShare),
                     Expenditure = e.Sum(a => a.Expenditure),
                     NumberFan = e.Max(a => a.NumberFan),
+                    PageName = e.First().PageName,
                     AdvertiserLabel = e.FirstOrDefault().Advertiser.AdvertiserLabel
                 }).ToList();
             }
@@ -79,7 +80,7 @@ namespace Facebook.DataAccess.Repository
                 var tata = (from g in query.GroupBy(p => new { p.IdAdvertiser, p.IdPageFacebook, p.IdLanguageData })
                             join c in context.Advertiser on new { g.Key.IdAdvertiser, IdLanguage=g.Key.IdLanguageData } equals new { c.IdAdvertiser, IdLanguage=c.IdLanguage }
                             where c.IdLanguage == 33
-                            select new DataFacebookKPI
+                            select new DateFacebookContract
                             {
                                 IdAdvertiser = g.Key.IdAdvertiser,
                                 NumberPost = g.Sum(a => a.NumberPost),
@@ -88,6 +89,8 @@ namespace Facebook.DataAccess.Repository
                                 NumberShare = g.Sum(a => a.NumberShare),
                                 Expenditure = g.Sum(a => a.Expenditure),
                                 NumberFan = g.Max(a => a.NumberFan),
+                                PageName = g.FirstOrDefault().PageName,
+                                IdPageFacebook = g.FirstOrDefault().IdPageFacebook,
                                 AdvertiserLabel = c.AdvertiserLabel
                             });
                 return tata.ToList();
@@ -111,7 +114,7 @@ namespace Facebook.DataAccess.Repository
                 //}).ToList();
             }
             else
-                return new List<DataFacebookKPI>();
+                return new List<DateFacebookContract>();
         }
     }
 }

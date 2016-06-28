@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApi", "src\ClientApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.DataAccess", "src\Facebook.DataAccess\Facebook.DataAccess.csproj", "{4F513F8F-F2FB-4C42-9785-6F8086E262A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Test", "src\Facebook.Test\Facebook.Test.csproj", "{0833BFE1-7C23-4F38-BF8D-B836C358FBF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{4F513F8F-F2FB-4C42-9785-6F8086E262A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F513F8F-F2FB-4C42-9785-6F8086E262A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F513F8F-F2FB-4C42-9785-6F8086E262A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0833BFE1-7C23-4F38-BF8D-B836C358FBF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0833BFE1-7C23-4F38-BF8D-B836C358FBF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0833BFE1-7C23-4F38-BF8D-B836C358FBF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0833BFE1-7C23-4F38-BF8D-B836C358FBF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -34,6 +34,7 @@ namespace Facebook.Service.BusinessLogic
                 //.ForMember(a => a.IdType, d => d.MapFrom(dst => dst.IdTypeProduct));
                 //e.CreateMap<RightDomain, Right>().ReverseMap();
                 e.CreateMap<DataFacebook, DataFacebookContract>();
+                e.CreateMap<DateFacebookContract, DataFacebookContract>();
                 e.CreateMap<CriteriaData, Criteria>().ReverseMap();
                 e.CreateMap<LevelItem, LevelItemContract>();
             });
