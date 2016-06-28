@@ -9,6 +9,11 @@ using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models;
 using TNS.AdExpress.Domain.Results;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using Facebook.Service.Contract.ContractModels.ModuleFacebook;
+using System.Threading.Tasks;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -61,10 +66,23 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
 
-        public JsonResult SocialMediaResult()
+        public async Task<ActionResult> SocialMediaResult()
         {
             //var gridResult = ServiceRomain();
+            using (var client = new HttpClient())
+            {
+                
+                //var message = new HttpRequestMessage(HttpMethod.Post, new Uri("http://localhost:80/api/FacebookPage"));
+                //string content = string.Format("idLogin={0}&beginDate={1}&endDate={2}&idAdvertisers={3}&idBrands={4}", 1155, 20150101, 20160301, string.Join(",", new List<long> { 1060, 332860, 48750 }), string.Join(",", new List<long> { }));
 
+                var model = new postmodel();
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:80/api/FacebookPage"), model).Result;
+
+                var res = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                var data = JsonConvert.DeserializeObject<List<DataFacebookContract>>(res);
+                var res1 = response.Content.ReadAsAsync<List<DataFacebookContract>>();
+            }
             /************************** MOCK ***********************************/
             var gridResult = new GridResult();
 
@@ -398,6 +416,15 @@ namespace Km.AdExpressClientWeb.Controllers
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
             return jsonModel;
+        }
+
+        public class postmodel
+        {
+            public int idLogin = 1155;
+            public long beginDate = 20150101;
+            public long endDate = 20160301;
+            public List<long> idAdvertisers = new List<long> { 1060, 332860, 48750 };
+            public List<long> idBrands = null;
         }
 
     }
