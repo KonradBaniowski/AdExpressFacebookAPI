@@ -1,5 +1,5 @@
 ﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.OptionsMediaSchedule
-
+@using TNS.AdExpress.Domain.Translation;
 @{
     string sloganClass = "";
 }
@@ -9,7 +9,7 @@
         <div class="panel-heading head-results" role="tab" id="headingOne">
             <h3 class="panel-title pull-left orange">
                 <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
-                    <i class="fa fa-cog text-lg orange"></i> Options d'analyse
+                    <i class="fa fa-cog text-lg orange"></i> @GestionWeb.GetWebWord(792, Model.SiteLanguage) 
                     <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
                 </a>
             </h3>
@@ -22,7 +22,7 @@
                         <div id="perioddetailTypeContainer" class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Période détaillée par
+                                    @GestionWeb.GetWebWord(2288, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseFour" class="panel-collapse collapse in">
@@ -50,7 +50,7 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Niveaux détaillées par
+                                    @GestionWeb.GetWebWord(1886, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseHeight" class="panel-collapse collapse in">
@@ -86,7 +86,7 @@
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
-                                    Niveaux personnalisés
+                                    @GestionWeb.GetWebWord(1896, Model.SiteLanguage)
                                 </p>
                             </div>
                             <div id="collapseNine" class="panel-collapse collapse in">
@@ -176,7 +176,7 @@
 
                 <div class="row">
                     <div class="padder-btn btn-options pull-right">
-                        <button id="validate-options" class="btn btn-valider">Appliquer&nbsp;<i class="fa fa-check"></i></button>
+                        <button id="validate-options" class="btn btn-valider">@GestionWeb.GetWebWord(3040, Model.SiteLanguage)&nbsp;<i class="fa fa-check"></i></button>
                     </div>
                 </div>
             </div>
