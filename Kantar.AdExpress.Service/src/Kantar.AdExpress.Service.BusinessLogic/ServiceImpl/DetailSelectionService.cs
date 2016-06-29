@@ -242,6 +242,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     universLevel.LabelId = UniverseLevels.Get(levelIdsList[j]).LabelId;
                                     universLevel.UniversItems = new List<UniversItem>();
                                     universLevel.Label = GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, SiteLanguage);
+                                    universLevel.Id = levelIdsList[j];
                                     TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[i].GetAsString(levelIdsList[j]));
                                     if (universeItems != null)
                                     {
@@ -253,6 +254,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                                 var universItem = new UniversItem();
                                                 universItem.Label = universeItems[itemIdList[z]];
                                                 universLevel.UniversItems.Add(universItem);
+
+                                                universItem.Id = itemIdList[z];
+                                                universItem.IdLevelUniverse = levelIdsList[j];
                                             }
                                         }
                                     }
@@ -379,6 +383,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return result;
             }
             return result;
+        }
+
+        public List<Tree> GetMarket(string idWebSession)
+        {
+            var _webSession = (WebSession)WebSession.Load(idWebSession);
+
+            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+            object[] param = new object[2];
+            param[0] = _webSession.Source;
+            param[1] = _webSession.SiteLanguage;
+
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+
+            var UniversMarket = new List<Core.Domain.Tree>();
+            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, UniversMarket, factoryLevels, _webSession.SiteLanguage);
+
+            return UniversMarket;
         }
     }
 }

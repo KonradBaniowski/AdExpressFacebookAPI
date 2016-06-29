@@ -1,5 +1,6 @@
 ﻿using Kantar.AdExpress.Service.Core.Domain;
 using System.Collections.Generic;
+using TNS.AdExpress.Domain.Results;
 using TNS.Classification.Universe;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
@@ -17,5 +18,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         WebSessionDetails GetWebSession(string webSessionId);
 
         bool IsAllSelectionStep(string webSessionId);
+
+        PostModel GetPostModel();
     }
 }

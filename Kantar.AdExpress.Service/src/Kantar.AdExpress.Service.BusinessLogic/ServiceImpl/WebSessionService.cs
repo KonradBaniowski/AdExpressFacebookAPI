@@ -34,6 +34,7 @@ using TNS.AdExpress.Constantes.Classification;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using TNS.AdExpressI.Classification.DAL;
 using System.Web.Configuration;
+using TNS.AdExpress.Domain.Results;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -1112,6 +1113,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             response.Success = true;
             webSession.Save();
             
+        }
+
+        public PostModel GetPostModel()
+        {
+            PostModel pM = new PostModel();
+
+            pM.beginDate = long.Parse(_webSession.PeriodBeginningDate);
+            pM.endDate = long.Parse(_webSession.PeriodEndDate);
+            pM.idLogin = (int)_webSession.CustomerLogin.IdLogin;
+
+            return pM;
         }
         #endregion
     }
