@@ -40,7 +40,7 @@ namespace Facebook.DataAccess.Mapping.Adexpr
             Property(e => e.IdLanguageData).HasColumnName("ID_LANGUAGE_DATA_I");
             Property(e => e.NumberLike).HasColumnName("NUMBER_LIKE");
             Property(e => e.NumberComment).HasColumnName("NUMBER_COMMENT");
-            Property(e => e.NumberComment).HasColumnName("NUMBER_SHARE");
+            Property(e => e.NumberShare).HasColumnName("NUMBER_SHARE");
             Property(e => e.Commitment).HasColumnName("COMMITMENT");
         }
     }

@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Facebook.Service.Core.DomainModels.BusinessModel;
 using ExtensionMethods;
+using System.Linq.Expressions;
+using LinqKit;
+using System.Data.Entity;
+
 namespace Facebook.DataAccess.Repository
 {
     public class DataPostFacebookRepository : GenericRepository<DataPostFacebook>, IDataPostFacebookRepository
@@ -30,6 +34,22 @@ namespace Facebook.DataAccess.Repository
             var include2 = query.Predicate(includedProduct);
             var exclude2 = query.Predicate(excludedProduct);
 
+            Expression<Func<DataFacebook, bool>> predicate = arg => (include2.Invoke(arg)) && !(exclude2.Invoke(arg));
+
+            query = query.AsExpandable().Where(predicate);
+
+            if (brands != null && brands.Count > 0)
+            {
+                query = query.Include(a => a.Brand)
+                    .Where(e => brands.Contains(e.IdBrand));
+               
+            }
+            else if (advertisers != null && advertisers.Count > 0)
+            {
+                query = query.Include(a => a.Advertiser)
+                    .Where(e => advertisers.Contains(e.IdAdvertiser));              
+            }
+
             var query2 = (from df in query
                          join dp in context.DataPostFacebook on df.IdPageFacebook equals dp.IdPageFacebook
                          join ap in context.Products on new { pd = df.IdProduct } equals new { pd = ap.ProductId }
@@ -46,7 +66,8 @@ namespace Facebook.DataAccess.Repository
                              Commitment = dp.Commitment,
                              NumberLike = dp.NumberLike,
                              NumberShare = dp.NumberShare,
-                             NumberComment = dp.NumberComment
+                             NumberComment = dp.NumberComment,
+                             PageName = df.PageName
                          });
 
 
