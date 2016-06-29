@@ -19,6 +19,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 
         bool IsAllSelectionStep(string webSessionId);
 
-        PostModel GetPostModel();
+        PostModel GetPostModel(string webSessionId);
     }
 }

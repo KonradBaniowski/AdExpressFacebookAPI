@@ -1115,8 +1115,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             
         }
 
-        public PostModel GetPostModel()
+        public PostModel GetPostModel(string webSessionId)
         {
+            _webSession = (WebSession)WebSession.Load(webSessionId);
             PostModel pM = new PostModel();
 
             pM.beginDate = long.Parse(_webSession.PeriodBeginningDate);

@@ -15,7 +15,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Km.AdExpressClientWeb.Models.SocialMedia;
 using Kantar.AdExpress.Service.Core.Domain;
-
+using TNS.Classification.Universe;
 namespace Km.AdExpressClientWeb.Controllers
 {
     [Authorize]
@@ -110,22 +110,17 @@ namespace Km.AdExpressClientWeb.Controllers
             using (var client = new HttpClient())
             {
 
-                //var message = new HttpRequestMessage(HttpMethod.Post, new Uri("http://localhost:9990/api/FacebookPage"));
-                //string content = string.Format("idLogin={0}&beginDate={1}&endDate={2}&idAdvertisers={3}&idBrands={4}", 1155, 20150101, 20160301, string.Join(",", new List<long> { 1060, 332860, 48750 }), string.Join(",", new List<long> { }));
-
-
+               
                 var cla = new ClaimsPrincipal(User.Identity);
                 string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
                 List<Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
-                PostModel postModelRef = _webSessionService.GetPostModel(); //Params : 0 = Référents; 1 = Concurrents
-                postModelRef.idAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == 6).Select(z => z.Id).ToList();
-                postModelRef.idAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == 8).Select(z => z.Id).ToList();
+                PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                postModelRef.idAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelRef.idBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
-                PostModel postModelConc = _webSessionService.GetPostModel(); //Params : 0 = Référents; 1 = Concurrents
-                postModelConc.idAdvertisers = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == 6).Select(z => z.Id).ToList();
-                postModelConc.idAdvertisers = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == 8).Select(z => z.Id).ToList();
+
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), postModelRef).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -151,29 +146,38 @@ namespace Km.AdExpressClientWeb.Controllers
                 parent.Add(par);
                 parent.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
 
-                response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), postModelConc).Result;
-                content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                if (!response.IsSuccessStatusCode)
-                    throw new Exception(response.StatusCode.ToString());
-
-                data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
-                parent = new List<DataFacebook>();
-                par = new DataFacebook()
+              
+                if (universeMarket.Count > 1)
                 {
-                    PID = -1,
-                    ID = 2,
-                    Expenditure = data.Sum(e => e.Expenditure),
-                    IdPageFacebook = string.Join(",", data.SelectMany(e => e.IdPageFacebook)),
-                    NbPage = data.Sum(e => e.NbPage),
-                    NumberComment = data.Sum(e => e.NumberComment),
-                    NumberFan = data.Sum(e => e.NumberFan),
-                    NumberLike = data.Sum(e => e.NumberLike),
-                    NumberPost = data.Sum(e => e.NumberPost),
-                    NumberShare = data.Sum(e => e.NumberShare),
-                    PageName = "Concurrents"
-                };
-                parent.Add(par);
-                parent.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
+                    PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                    postModelConc.idAdvertisers = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModelConc.idBrands = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+
+                    response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), postModelConc).Result;
+                    content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (!response.IsSuccessStatusCode)
+                        throw new Exception(response.StatusCode.ToString());
+
+                    data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
+                    parent = new List<DataFacebook>();
+                    par = new DataFacebook()
+                    {
+                        PID = -1,
+                        ID = 2,
+                        Expenditure = data.Sum(e => e.Expenditure),
+                        IdPageFacebook = string.Join(",", data.SelectMany(e => e.IdPageFacebook)),
+                        NbPage = data.Sum(e => e.NbPage),
+                        NumberComment = data.Sum(e => e.NumberComment),
+                        NumberFan = data.Sum(e => e.NumberFan),
+                        NumberLike = data.Sum(e => e.NumberLike),
+                        NumberPost = data.Sum(e => e.NumberPost),
+                        NumberShare = data.Sum(e => e.NumberShare),
+                        PageName = "Concurrents"
+                    };
+                    parent.Add(par);
+                    parent.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
+                }
 
                 gridResult.HasData = true;
                 gridResult.Columns = columns;
@@ -193,7 +197,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return null;
+                    throw new Exception("Error Social Media Result", ex); 
                 }
             }
 
