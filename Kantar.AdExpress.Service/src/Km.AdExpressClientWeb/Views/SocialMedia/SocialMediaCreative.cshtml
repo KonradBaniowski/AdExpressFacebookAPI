@@ -1,1 +1,574 @@
-﻿
+﻿@model Km.AdExpressClientWeb.Models.Shared.InsertionCreativeViewModel
+
+@{
+    ViewBag.Title = "Facebook Creative";
+    Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
+}
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12" style="background-color:black;padding-bottom:15px;">
+        <div class="panel-heading">
+            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @Model.Labels.InsertionsLabel</span></h5>
+            <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
+        </div>
+
+        <div id="HeaderElmt" style="display:none">
+            <div id="subPeriodSelection" style="background-color:grey"></div>
+            <div id="detailLevelItem" class="col-md-12 bg-orange" style="color:white;"></div>
+        </div>
+    </div>
+
+    <div class="col-md-12" style="margin-top:10px;">
+        <div class="pull-right custom-button">
+            <button class="btn btn-save" id="btn-export" style="display:none">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+        </div>
+    </div>
+
+    <div class="col-md-12" style="margin-top:10px;">
+        <center>
+            <p id="gridEmpty" style="display:none">@Model.Labels.EmptyGrid</p>
+            <div id="grid" style="display:none"></div>
+            <div id="gridLoader" style="display:none">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </center>
+    </div>
+
+    <!-- Modal lien video radio -->
+    <div id="creativeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header header-kantar-popup">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="font-normal" style="color:white;"><i></i></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="media video-audio-container">
+                        <video id="creativeStream" class="hide" width="100%" controls="controls" preload="auto" autoplay>
+                            Votre navigateur ne gère pas l'élément
+                        </video>
+                        <div id="mediaLoader">
+                            <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="" download="" class="btn btn-valider w-full">@Model.Labels.DownloadLabel&nbsp;<i class="fa fa-arrow-down"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal zoom visuel -->
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="Visuel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header header-kantar-popup">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                    <h4 class="modal-title" id="myModalLabel">@Model.Labels.VisuelLabel</h4>
+                </div>
+                <div class="modal-body">
+                    <center><img style="max-width:100%;" src="" id="imagepreview"></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+
+  
+    <script>
+    if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
+
+        $("#grid").igTreeGrid({
+            //dataSource: data,
+            primaryKey: "Id",
+            width: "95%",
+            defaultColumnWidth: 200,
+            avgRowHeight: 60,
+            autoGenerateColumns: true
+        });
+
+
+        var ds;
+        var cols;
+        var colsFixed;
+        var needFixedColumns = false;
+        var periodType = "Mois";
+
+        function GenericDetailLevelFilter() {
+            this.L1DetailValue = -1;
+            this.L2DetailValue = -1;
+            this.L3DetailValue = -1;
+        }
+        function paramsUrl() {
+            this.ids = "@(Model.paramsUrl[0])";
+            this.zoomDate = "@(Model.paramsUrl[1])";
+            this.idUnivers = "@(Model.paramsUrl[2])";
+            this.moduleId = "@(Model.paramsUrl[3])";
+            this.idVehicle = "@(Model.paramsUrl[4])";
+        }
+
+        function UserFilter() {
+            this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
+            this.paramsUrl = new paramsUrl();
+            this.isVehicleChanged = true;
+        }
+
+        var userFilter = new UserFilter();
+
+        var renderGrid = function (success, error) {
+
+            if (success) {
+                $("#grid").igTreeGrid("destroy");
+                $("#gridLoader").hide();
+                $("#grid").show();
+                var height = window.innerHeight - $("#grid").offset().top - 10;
+                if (needFixedColumns) {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: height,
+                        autoGenerateColumns: false,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        width: "100%",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 100
+                            },
+                            {
+                                name: "ColumnFixing",
+                                fixingDirection: "left",
+                                columnSettings: colsFixed
+                            }
+                        ]
+                    })
+                }
+                else {
+                    $("#grid").igTreeGrid({
+                        dataSource: ds.dataView(),
+                        columns: cols,
+                        height: height,
+                        autoGenerateColumns: true,
+                        primaryKey: "ID",
+                        foreignKey: "PID",
+                        width: "100%",
+                        features: [
+                            {
+                                name: "MultiColumnHeaders"
+                            },
+                            {
+                                name: "Paging",
+                                mode: "allLevels",
+                                pageSize: 100
+                            }
+                        ]
+                    })
+                }
+            } else {
+                alert("Error");
+            }
+        }
+
+        function CallInsertionsResult() {
+            $("#gridEmpty").hide();
+            $("#gridLoader").show();
+            var parameters = {
+                //ids: userFilter.paramsUrl.ids,
+                //zoomDate: userFilter.paramsUrl.zoomDate,
+                //idUnivers: userFilter.paramsUrl.idUnivers,
+                //moduleId: userFilter.paramsUrl.moduleId,
+                //idVehicle: userFilter.paramsUrl.idVehicle,
+                //isVehicleChanged: userFilter.isVehicleChanged
+                id:1,
+                type:6
+            };
+
+            $.ajax({
+                url: '@Url.Action("GetSocialMediaCreative", "SocialMedia")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    bootbox.alert("Error : GetSocialMediaCreative");
+                },
+                success: function (data) {
+
+                    if (data != null && data != "") {
+                        dataTreeGrid = data.datagrid;
+                        colsFixed = data.columnsfixed;
+                        needFixedColumns = data.needfixedcolumns;
+
+                        var schema = new $.ig.DataSchema("array", {
+                            fields: data.schema
+                        });
+
+                        cols = data.columns
+                        for (i = 0; i < cols.length; i++) {
+                            if (cols[i].key == "10") //Spot = 10
+                                cols[i].template = $("#colSpotTmpl").html();
+                            else if (cols[i].key == "Visu")
+                                cols[i].template = $("#colVisuTmpl").html();
+                        }
+
+                        ds = new $.ig.DataSource({
+                            type: "json",
+                            schema: schema,
+                            dataSource: dataTreeGrid,
+                            callback: renderGrid
+                        });
+
+                        ds.dataBind();
+                    }
+                    else {
+                        $("#gridLoader").hide();
+                        $("#gridEmpty").show();
+                        $("#grid").hide();
+                    }
+                }
+            });
+        }
+
+
+        @*function CallGetPresentVehicles() {
+
+            var parameters = {
+                ids: userFilter.paramsUrl.ids,
+                moduleId: userFilter.paramsUrl.moduleId,
+                idUnivers: userFilter.paramsUrl.idUnivers,
+            };
+
+            $.ajax({
+                url: '@Url.Action("GetPresentVehicles", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: parameters,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    bootbox.alert("Error: GetPresentVehicles");
+                },
+                success: function (response) {
+                    if (response != null) {
+                        var data = JSON.parse(response);
+
+                        if (data.length > 0) {
+                            var strHTML = "";
+                            var idV = data[0][0];
+                            if (!(0 === userFilter.paramsUrl.idVehicle) && userFilter.paramsUrl.idVehicle)
+                                idV = userFilter.paramsUrl.idVehicle;
+
+                            $.each(data, function (i, item) {
+                                if (idV == item[i]) {
+                                    strHTML += '<li class="active"><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                } else {
+                                    strHTML += '<li><a data-target="#tab-1" role="tab" data-toggle="tab" aria-expanded="true" id="' + item[0] + '">' + item[1] + '</a></li>'
+                                }
+                            });
+                            $('#PresentVehicles').html(strHTML);
+                            userFilter.paramsUrl.idVehicle = idV.toString();
+                            userFilter.isVehicleChanged = true;
+
+                            GetDetailLevelItem();
+                            CallInsertionsResult();
+
+                            $("#HeaderElmt").show();
+                            $("#btn-export").show();
+
+                        } else {
+                            $("#gridEmpty").show();
+                            $("#btn-export").hide();
+                        }
+
+                        $("#HeaderLoader").hide();
+                    }
+                }
+            });
+        }*@
+
+
+        @*function GetSubPeriodSelection() {
+            var params = {
+                zoomDate: userFilter.paramsUrl.zoomDate
+            };
+            $.ajax({
+                url: '@Url.Action("SubPeriodSelection", "MediaSchedule")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                        $('#subPeriodSelection').html(data);
+                        $('#allSubPeriod').removeClass("hidden");
+                        userFilter.paramsUrl.zoomDate = $(".btn-default-sub-period[disabled]").attr("period");
+                        $("#leave-zoom").addClass("hide");
+                        $(".sub-period-btn").on('click', function (e) {
+                            $(".btn-default-sub-period").prop('disabled', false);
+                            $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+                            $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+                            $(this).prop('disabled', true);
+                            $("#grid").hide();
+                            $("#gridLoader").show();
+                            userFilter.paramsUrl.zoomDate = $(this).attr("period");
+                            userFilter.isVehicleChange = false;
+                            CallInsertionsResult();
+                        });
+                        $(".sub-period-btn").on('mouseenter', function (e) {
+                            previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+                            $("#subPeriodLabel").text($(this).attr("periodlabel"));
+                        });
+                        $(".sub-period-btn").on('mouseleave', function (e) {
+                            $("#subPeriodLabel").text(previousSubPeriodLabel);
+                        });
+                    }
+                }
+            });
+        }*@
+
+        @*function GetDetailLevelItem() {
+            var params = {
+                idVehicle: userFilter.paramsUrl.idVehicle,
+                isVehicleChanged : userFilter.isVehicleChanged
+            };
+            $.ajax({
+                url: '@Url.Action("GetDetailLevel", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    if (data != null) {
+                        $('#detailLevelItem').html(data);
+                    }
+                },
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("detailLevel error")
+                }
+            });
+        }*@
+
+        @*function CallSetDetailLvl() {
+            $.ajax({
+                url: '@Url.Action("SetDetailLevel", "Insertions")',
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                datatype: "json",
+                data: userFilter,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    userFilter.isVehicleChanged = false;
+                    CallInsertionsResult();
+                }
+            });
+        }*@
+
+        function AutoPlayCreativeModal() {
+            $("#creativeStream").attr('src', '');
+
+            $("#creativeModal").on('shown.bs.modal', function (event) {
+                $('#creativeModal h4 > i').attr("class", 'fa iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
+                var button = $(event.relatedTarget);// Button that triggered the modal
+                var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les fichiers média ne sont pas disponibles.");
+                }
+                else {
+                    var parameters = {
+                        idVersion: datas[0],
+                        idVehicle: datas[2]
+                    };
+                    $.ajax({
+                        url: '@Url.Action("GetCreativePath", "Insertions")',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: 'POST',
+                        datatype: 'JSON',
+                        data: parameters,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                            alert("Erreur lors de la recuperation de url de la version");
+                        },
+                        success: function (response) {
+                            if (response != null) {
+                                var url = response.PathReadingFile;
+                                var urlDownload = response.PathDownloadingFile;
+                                if (url) {
+                                    $("#creativeStream").attr('src', url);
+                                    $("#mediaLoader").addClass("hide");
+                                    $("#creativeStream").removeClass("hide");
+                                    $("#creativeStream").load();
+                                }
+                                if (urlDownload) {
+                                    $("#creativeModal .modal-footer").removeClass("hide");
+                                    $("#creativeModal .modal-footer > a").attr("href", urlDownload);
+                                    //$("#creativeModal .modal-footer > a").attr("download", parameters.idVersion);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            $("#creativeModal").on('hide.bs.modal', function () {
+                $("#creativeStream").attr('src', '');
+                $("#creativeStream").addClass("hide");
+                $("#mediaLoader").removeClass("hide");
+                $("#creativeModal .modal-footer").addClass("hide");
+            });
+        }
+
+        function AutoPlayVisu() {
+            $("#imgPageFacebook").each(function (index) {
+                var datas = $(this).attr('datavisu').toString();
+                $(this).attr("id", "visuCarou" + index);
+                var active = "active";
+                datas = datas.split('],[');
+                visus = datas[0].replace(/\[|\]/g, '').split(",");
+                infos = datas[1].replace(/\[|\]/g, '').split(";");
+                if (visus.length > 1) {
+                    for (i = 0; i < visus.length; i++) {
+                        if (i != 0) active = "";
+                        $(this).find(".carousel-inner").prepend('<div class="item ' + active + '" ><center><img id="pop"  class="imgCreaInser" src="' + visus[i] + '" /></center></div>')
+                    }
+                } else {
+                    $(this).attr("id", "visu");
+                    $(this).html('<center><img id="pop" class="imgCreaInser" src="' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
+                }
+                for (j = infos.length - 1; j >= 0; j--) {
+                    if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
+                        tmp = infos[j].split(":");
+                        $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
+                    }
+                }
+            });
+        }
+
+        //GetSubPeriodSelection();
+        //CallGetPresentVehicles();
+        //AutoPlayCreativeModal();
+
+
+        //** Important charge les images au fur et a mesure que le teableau s'affiche
+        $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
+            AutoPlayVisu();
+
+            $(".carousel").each(function (index) {
+                $("#visuCarou" + index.toString()).carousel("pause");
+                $("#visuCarou" + index.toString()).find('.left').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("prev");
+                });
+                $("#visuCarou" + index.toString()).find('.right').click(function () {
+                    $("#visuCarou" + index.toString()).carousel("next");
+                });
+            });
+
+            $(".triggerModal > .fa").each(function () {
+                $(this).addClass('iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
+            });
+
+        });
+        CallInsertionsResult();
+
+        //OnChange Vehicle
+        //function getEventTarget(e) {
+        //    e = e || window.event;
+        //    return e.target || e.srcElement;
+        //}
+        //$(document).on("click", "#PresentVehicles li a", function () {
+        //    $("#grid").hide();
+        //    $("#gridLoader").show();
+        //    userFilter.isVehicleChanged = true;
+        //    userFilter.paramsUrl.idVehicle = $(this).attr('id');
+        //    CallInsertionsResult();
+        //    GetDetailLevelItem();
+        //});
+
+        //function ResetLnLevel(lx, ly) {
+        //    if ($(lx).val() == $(ly).val())
+        //        $(ly).val('-1');
+        //    userFilter.GenericDetailLevelFilter.L1DetailValue = $('#l1Detail').val();
+        //    userFilter.GenericDetailLevelFilter.L2DetailValue = $('#l2Detail').val();
+        //    userFilter.GenericDetailLevelFilter.L3DetailValue = $('#l3Detail').val();
+        //}
+
+        //Zoom visuel
+        //$(document).on("click", "#pop", function () {
+        //    $('#imagepreview').attr('src', $(this).attr('src'));
+        //    $('#imagemodal').modal('show');
+        //});
+
+        //$(document).on("change", "#l1Detail", function (e) {
+        //    ResetLnLevel("#l1Detail", "#l2Detail");
+        //    ResetLnLevel("#l1Detail", "#l3Detail");
+        //});
+        //$(document).on("change", "#l2Detail", function (e) {
+        //    ResetLnLevel("#l2Detail", "#l1Detail");
+        //    ResetLnLevel("#l2Detail", "#l3Detail");
+        //});
+        //$(document).on("change", "#l3Detail", function (e) {
+        //    ResetLnLevel("#l3Detail", "#l1Detail");
+        //    ResetLnLevel("#l3Detail", "#l2Detail");
+        //});
+
+        //Changement de Level
+        //$(document).on("click", "#submitLvl", function (e) {
+        //    $("#grid").hide();
+        //    $("#gridLoader").show();
+        //    CallSetDetailLvl();
+        //});
+
+        //Change Icone DetailLevel quand hide/show collapse
+        $(document).on('show.bs.collapse', '#lvlperso', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-right")
+                .removeClass("glyphicon-chevron-right")
+                .addClass("glyphicon-chevron-down");
+        });
+        $(document).on('hide.bs.collapse', '#lvlperso', function (e) {
+            $(this)
+                .parent()
+                .find(".glyphicon-chevron-down")
+                .removeClass("glyphicon-chevron-down")
+                .addClass("glyphicon-chevron-right");
+        });
+
+        //Export btn
+        $('#btn-export').on('click', function (e) {
+           window.open('@Url.Action("InsertionsResult", "InsertionsExport")?ids='+userFilter.paramsUrl.ids+'&zoomDate='+userFilter.paramsUrl.zoomDate+'&idUnivers='+userFilter.paramsUrl.idUnivers+'&moduleId='+userFilter.paramsUrl.moduleId+'&idVehicle='+userFilter.paramsUrl.idVehicle, "_blank");
+        });
+
+        //Resize de la page, la longuer du tableau egalament
+        $(window).resize(function () {
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
+        $(document).on('shown.bs.collapse', '#lvlperso', function (e) {
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
+        $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
+            $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
+
+
+
+    </script>
+}
