@@ -3,6 +3,7 @@ using Kantar.AdExpress.Service.Core;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.BusinessService;
 using Km.AdExpressClientWeb.Helpers;
+using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.MediaSchedule;
 using Km.AdExpressClientWeb.Models.Shared;
@@ -80,7 +81,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     AccessType = item.AccessType,
                     UniversLevels = Mapper.Map<List<UniversLevel>>(item.UniversLevels)
                 };
-                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                if (result.ControllerDetails.ModuleId == Module.Name.FACEBOOK)
+                {
+                    tree.Label = (item.Id==0)? model.Labels.Concurrent : model.Labels.Referent;
+                }
+                else
+                {
+                    tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                }
                 model.Trees.Add(tree);
             }
             #endregion

@@ -149,22 +149,36 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
                 {
                     MaxIncludeNbr = MaxExcludeNbr = 1;
-                    result.MaxUniverseItems =  int.Parse(System.Configuration.ConfigurationManager.AppSettings["FacebookMaxItems"]);
-                }
-                foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
-                {
-                    var maxTreesNbr = (type == AccessType.includes) ? MaxIncludeNbr : MaxExcludeNbr;//(Enum.GetValues(typeof(AccessType)))
-                    for (int i = 1; i <= maxTreesNbr; i++)
+                    result.MaxUniverseItems = int.Parse(System.Configuration.ConfigurationManager.AppSettings["FacebookMaxItems"]);
+                    for (int i = 1; i <= MaxIncludeNbr+ MaxExcludeNbr; i++)
                     {
                         var tree = new Tree
                         {
                             Id = idTree,
                             LabelId = ElementLabelCode,
                             UniversLevels = allUnivers,
-                            AccessType = type
-                        };
+                            AccessType = AccessType.includes
+                    };
                         idTree++;
                         result.Trees.Add(tree);
+                    }
+                }
+                else {
+                    foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
+                    {
+                        var maxTreesNbr = (type == AccessType.includes) ? MaxIncludeNbr : MaxExcludeNbr;//(Enum.GetValues(typeof(AccessType)))
+                        for (int i = 1; i <= maxTreesNbr; i++)
+                        {
+                            var tree = new Tree
+                            {
+                                Id = idTree,
+                                LabelId = ElementLabelCode,
+                                UniversLevels = allUnivers,
+                                AccessType = type
+                            };
+                            idTree++;
+                            result.Trees.Add(tree);
+                        }
                     }
                 }
             }
