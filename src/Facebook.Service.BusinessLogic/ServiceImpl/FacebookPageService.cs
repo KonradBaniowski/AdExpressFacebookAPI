@@ -43,7 +43,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 DataFacebookContract item = new DataFacebookContract();
                 item.PID = -1;
                 item.ID = i.FirstOrDefault().IdAdvertiser;
-                //item.IdPageFacebook = string.Join(",", i.Select(e => e.IdPageFacebook).ToList().ForEach(e => e));
+                item.IdPageFacebook = string.Join(",", i.Select(e => e.IdPageFacebook).ToList());
                 item.PageName = i.FirstOrDefault().AdvertiserLabel;
                 //item.BrandLabel = i.FirstOrDefault().BrandLabel;
                 item.Expenditure = i.Sum(e => e.Expenditure);
