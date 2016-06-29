@@ -32,12 +32,28 @@ namespace Facebook.DataAccess.Repository
             var query = (from df in context.DataFacebook
                          select df);
 
-            var include2 = query.Predicate(includedProduct);
-            var exclude2 = query.Predicate(excludedProduct);
+            Expression<Func<DataFacebook, bool>> predicate = null;
 
-            Expression<Func<DataFacebook, bool>> predicate = arg => (include2.Invoke(arg)) && !(exclude2.Invoke(arg));
 
-            query = query.AsExpandable().Where(predicate);
+            if (pages == null || !pages.Any()) //Do not apply right on facebook pages
+            {
+                if (includedProduct != null && includedProduct.Any())
+                {
+                    var include2 = query.Predicate(includedProduct);
+                    predicate = arg => include2.Invoke(arg);
+                }
+
+                if (excludedProduct != null && excludedProduct.Any())
+                {
+                    var exclude2 = query.Predicate(excludedProduct);
+                    predicate = arg => !(exclude2.Invoke(arg));
+                }
+                if (predicate != null)
+                    query = query.AsExpandable().Where(predicate);
+            }
+
+
+           
 
             if (brands != null && brands.Count > 0)
             {
@@ -51,16 +67,14 @@ namespace Facebook.DataAccess.Repository
                     .Where(e => advertisers.Contains(e.IdAdvertiser));
             }
 
+
             var query1 = (from dp in context.DataPostFacebook
                           select dp);
             if (pages != null && pages.Any())
             {
-               var pagesFilter =  query1.Contains(pages);
-
-                Expression<Func<DataPostFacebook, bool>> predicate1 = page => pagesFilter.Invoke(page);
-                query1 = query1.AsExpandable().Where(predicate1);
-
+                query1 = query1.Where(p => pages.Contains(p.IdPageFacebook));
             }
+
 
             var query2 = (from df in query
                           join dp in query1 on df.IdPageFacebook equals dp.IdPageFacebook
@@ -79,11 +93,12 @@ namespace Facebook.DataAccess.Repository
                               NumberLike = dp.NumberLike,
                               NumberShare = dp.NumberShare,
                               NumberComment = dp.NumberComment,
-                              PageName = df.PageName
+                              PageName = df.PageName,
                           });
-          
 
-            return query2.ToList();
+            return query2.Distinct().ToList();
+
+
         }
     }
 }

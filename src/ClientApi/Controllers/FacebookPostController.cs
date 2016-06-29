@@ -1,4 +1,5 @@
-﻿using Facebook.Service.Contract.ContractModels.ModuleFacebook;
+﻿using ClientApi.Models;
+using Facebook.Service.Contract.ContractModels.ModuleFacebook;
 using Facebook.Service.Core.BusinessService;
 using System;
 using System.Collections.Generic;
@@ -23,20 +24,12 @@ namespace ClientApi.Controllers
         }
 
         [HttpPost]
-        public List<DataPostFacebookContract> Get([FromBody] postmodel model)
+        public List<DataPostFacebookContract> Get([FromBody] PostModel model)
         {
-            return _fbsvc.GetDataPostFacebook(model.idLogin, model.beginDate, model.endDate, model.idAdvertisers, model.idBrands, model.pages);
+            return _fbsvc.GetDataPostFacebook(model.IdLogin , model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdPages);
 
         }
 
-        public class postmodel
-        {
-            public int idLogin { get; set; }
-            public long beginDate { get; set; }
-            public long endDate { get; set; }
-            public List<long> idAdvertisers { get; set; }
-            public List<long> idBrands { get; set; }
-            public List<long> pages { get; set; }
-        }
+       
     }
 }

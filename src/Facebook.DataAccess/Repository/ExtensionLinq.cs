@@ -12,19 +12,19 @@ namespace ExtensionMethods
 {
     public static class MyExtensions
     {
-        public static Expression<Func<T, bool>> Contains<T>(this IQueryable<T> data, IEnumerable<long> filter) where T : DataPostFacebook
-        {
-            if (!filter.Any())
-                return x => true;
-            else
-            {
-                var predicateBuilder = PredicateBuilder.False<T>();
+        //public static Expression<Func<T, bool>> Contains<T>(this IQueryable<T> data, IEnumerable<long> filter) where T : PostFacebook
+        //{
+        //    if (!filter.Any())
+        //        return x => true;
+        //    else
+        //    {
+        //        var predicateBuilder = PredicateBuilder.False<T>();
 
-                predicateBuilder = predicateBuilder.And(p => filter.Contains(p.IdPageFacebook));
-                return predicateBuilder;
-            }
+        //        predicateBuilder = predicateBuilder.And(p => filter.Contains(p.IdPageFacebook));
+        //        return predicateBuilder;
+        //    }
             
-        }
+        //}
         public static Expression<Func<T, bool>> Predicate<T>(this IQueryable<T> data, IEnumerable<CriteriaData> filter) where T : Data
         {
             if (!filter.Any())

@@ -18,5 +18,7 @@ namespace Facebook.Service.Core.DomainModels.BusinessModel
         public string NumberShare { get; set; }
         public string Commitment { get; set; }
         public string Brand { get; set; }
+
+      
     }
 }
