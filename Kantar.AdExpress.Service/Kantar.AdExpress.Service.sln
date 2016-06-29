@@ -139,8 +139,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClass
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Vehicle.DAL", "TNS.AdExpress.Vehicle.DAL\TNS.AdExpress.Vehicle.DAL.csproj", "{EB452F8B-BB77-4F6B-9169-31781FDBC1C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Service.Contract", "..\..\AdExpress-master\src\Facebook.Service.Contract\Facebook.Service.Contract.csproj", "{B16CB8F5-F524-4784-B339-EA711860895E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -509,12 +507,6 @@ Global
 		{EB452F8B-BB77-4F6B-9169-31781FDBC1C9}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{EB452F8B-BB77-4F6B-9169-31781FDBC1C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB452F8B-BB77-4F6B-9169-31781FDBC1C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B16CB8F5-F524-4784-B339-EA711860895E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B16CB8F5-F524-4784-B339-EA711860895E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B16CB8F5-F524-4784-B339-EA711860895E}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
-		{B16CB8F5-F524-4784-B339-EA711860895E}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
-		{B16CB8F5-F524-4784-B339-EA711860895E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B16CB8F5-F524-4784-B339-EA711860895E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -587,6 +579,5 @@ Global
 		{F0E136B5-AA9D-468D-BAE4-3599B11D854F} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 		{8EFDFB61-D41D-42C3-A887-898CAB250258} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 		{EB452F8B-BB77-4F6B-9169-31781FDBC1C9} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
-		{B16CB8F5-F524-4784-B339-EA711860895E} = {81DC8D53-B9D7-44FA-9FBD-0D77BFCC963C}
 	EndGlobalSection
 EndGlobal
