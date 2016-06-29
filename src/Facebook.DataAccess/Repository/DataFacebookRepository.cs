@@ -62,6 +62,7 @@ namespace Facebook.DataAccess.Repository
                 return query.GroupBy(a => new { a.IdAdvertiser, a.IdPageFacebook }).Select(e => new DateFacebookContract
                 {
                     IdAdvertiser = e.First().IdAdvertiser,
+
                     NumberPost = e.Sum(a => a.NumberPost),
                     NumberLike = e.Sum(a => a.NumberLike),
                     NumberComment = e.Sum(a => a.NumberComment),
@@ -69,7 +70,6 @@ namespace Facebook.DataAccess.Repository
                     Expenditure = e.Sum(a => a.Expenditure),
                     NumberFan = e.Max(a => a.NumberFan),
                     PageName = e.First().PageName,
-                    AdvertiserLabel = e.FirstOrDefault().Advertiser.AdvertiserLabel
                 }).ToList();
             }
             else if (Advertiser != null && Advertiser.Count > 0)
@@ -90,28 +90,13 @@ namespace Facebook.DataAccess.Repository
                                 Expenditure = g.Sum(a => a.Expenditure),
                                 NumberFan = g.Max(a => a.NumberFan),
                                 PageName = g.FirstOrDefault().PageName,
+                                IdPage = g.FirstOrDefault().IdPage,
                                 IdPageFacebook = g.FirstOrDefault().IdPageFacebook,
+                                Url = g.FirstOrDefault().Url,
                                 AdvertiserLabel = c.AdvertiserLabel
+
                             });
                 return tata.ToList();
-                //query = query.GroupBy(p => new { p.IdAdvertiser, p.IdPageFacebook }).Join(context.Advertiser, a => a.Key, b => b.IdAdvertiser, (a , b) => new { a, b} )
-                //.(from e in context.DataFacebook
-
-                //     group e by new { e.IdAdvertiser, e.IdPageFacebook } into g
-                //     join c in context.Advertiser on g.Key.IdAdvertiser equals c.IdAdvertiser
-                //    
-
-                //return query.GroupBy(a => new { a.IdAdvertiser, a.IdPageFacebook }).Select(e => new DataFacebookKPI
-                //{
-                //    IdAdvertiser = e.FirstOrDefault().IdAdvertiser,
-                //    NumberPost = e.Sum(a => a.NumberPost),
-                //    NumberLike = e.Sum(a => a.NumberLike),
-                //    NumberComment = e.Sum(a => a.NumberComment),
-                //    NumberShare = e.Sum(a => a.NumberShare),
-                //    Expenditure = e.Sum(a => a.Expenditure),
-                //    NumberFan = e.Max(a => a.NumberFan),
-                //    AdvertiserLabel = e.FirstOrDefault().Advertiser.AdvertiserLabel
-                //}).ToList();
             }
             else
                 return new List<DateFacebookContract>();
