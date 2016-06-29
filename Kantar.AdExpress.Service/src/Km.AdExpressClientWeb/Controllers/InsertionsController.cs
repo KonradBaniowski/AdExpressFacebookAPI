@@ -38,8 +38,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var model = new InsertionCreativeViewModel()
             {
-                paramsUrl = new List<string>(),
-                SiteLanguage = 33, // Default
+                paramsUrl = new List<string>()
             };
 
             model.paramsUrl.Add(ids);
@@ -47,8 +46,6 @@ namespace Km.AdExpressClientWeb.Controllers
             model.paramsUrl.Add(idUnivers);
             model.paramsUrl.Add(moduleId);
             model.paramsUrl.Add(idVehicle);
-
-            //var result = _universService.GetBranches(idWebSession, TNS.Classification.Universe.Dimension.product, true);
             var result = _webSessionService.GetSiteLanguage(idWebSession);
             model.SiteLanguage = result;
             model.Labels = LoadPageLabels(result);
@@ -132,7 +129,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             _detailLevelService.SetDetailLevelItem(idWebSession, userFilter);
-        }
+        }       
 
         private Labels LoadPageLabels(int siteLanguage)
         {

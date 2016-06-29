@@ -9,6 +9,8 @@ using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models;
 using TNS.AdExpress.Domain.Results;
 using Newtonsoft.Json;
+using Km.AdExpressClientWeb.Models.Shared;
+using Km.AdExpressClientWeb.I18n;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
@@ -131,7 +133,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[0, 1] = -1;
             gridData[0, 2] = 0;
             gridData[0, 3] = "Référents";
-            gridData[0, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[0, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[0, 5] = "";
             gridData[0, 6] = "2";
             gridData[0, 7] = "100";
@@ -146,7 +148,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[1, 1] = 1;
             gridData[1, 2] = 0;
             gridData[1, 3] = "BMW";
-            gridData[1, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[1, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[1, 5] = "";
             gridData[1, 6] = "2";
             gridData[1, 7] = "100";
@@ -161,8 +163,8 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[2, 1] = 2;
             gridData[2, 2] = "98368363924";
             gridData[2, 3] = "WooowWw";
-            gridData[2, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
-            gridData[2, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[2, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
+            gridData[2, 5] = "";
             gridData[2, 6] = "1";
             gridData[2, 7] = "50";
             gridData[2, 8] = "50";
@@ -177,7 +179,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[3, 2] = "98368363924";
             gridData[3, 3] = "WooowWw";
             gridData[3, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
-            gridData[3, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[3, 5] = "";
             gridData[3, 6] = "1";
             gridData[3, 7] = "50";
             gridData[3, 8] = "50";
@@ -191,7 +193,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[4, 1] = -1;
             gridData[4, 2] = "0";
             gridData[4, 3] = "Concurrents";
-            gridData[4, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[4, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[4, 5] = "";
             gridData[4, 6] = "4";
             gridData[4, 7] = "300";
@@ -206,7 +208,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[5, 1] = 5;
             gridData[5, 2] = "0";
             gridData[5, 3] = "AUDI";
-            gridData[5, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[5, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[5, 5] = "";
             gridData[5, 6] = "3";
             gridData[5, 7] = "150";
@@ -221,7 +223,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[6, 1] = 6;
             gridData[6, 2] = "98368363924";
             gridData[6, 3] = "Yeahhhh";
-            gridData[6, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[6, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[6, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
             gridData[6, 6] = "1";
             gridData[6, 7] = "50";
@@ -236,7 +238,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[7, 1] = 6;
             gridData[7, 2] = "98368363924";
             gridData[7, 3] = "Yeahhhh";
-            gridData[7, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[7, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[7, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
             gridData[7, 6] = "1";
             gridData[7, 7] = "50";
@@ -251,7 +253,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[8, 1] = 6;
             gridData[8, 2] = "98368363924";
             gridData[8, 3] = "Yeahhhh";
-            gridData[8, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[8, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[8, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
             gridData[8, 6] = "1";
             gridData[8, 7] = "50";
@@ -266,7 +268,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[9, 1] = 5;
             gridData[9, 2] = "0";
             gridData[9, 3] = "VOLKSWAGEN";
-            gridData[9, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[9, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[9, 5] = "";
             gridData[9, 6] = "2";
             gridData[9, 7] = "150";
@@ -281,7 +283,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[10, 1] = 10;
             gridData[10, 2] = "98368363924";
             gridData[10, 3] = "ChoooOou";
-            gridData[10, 4] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
+            gridData[10, 4] = "<center><a href='/SocialMedia/SocialMediaCreative?id=1&type=6' target='_blank'><span class='fa fa-search-plus'></a></center>";
             gridData[10, 5] = "<center><a href='#'><span class='fa fa-search-plus'></a></center>";
             gridData[10, 6] = "1";
             gridData[10, 7] = "50";
@@ -322,7 +324,25 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult SocialMediaCreative(int id, int type)
         {
-            return View();
+
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var model = new InsertionCreativeViewModel()
+            {
+                paramsUrl = new List<string>()
+            };
+
+            model.paramsUrl.Add(id.ToString());
+            model.paramsUrl.Add("");
+            model.paramsUrl.Add("-1");
+            model.paramsUrl.Add("17109");
+            model.paramsUrl.Add("");
+            int siteLanguage = _webSessionService.GetSiteLanguage(idWebSession);
+            model.SiteLanguage = siteLanguage;
+            model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
+            return View(model);
+
 
         }
 
@@ -330,7 +350,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var gridResult = new GridResult();
 
-            object[,] gridData = new object[11, 14];
+            object[,] gridData = new object[3, 14];
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
@@ -344,13 +364,13 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "5" });
             columns.Add(new { headerText = "Post", key = "10", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "10" });
-            columns.Add(new { headerText = "AdvertiserLabel", key = "20", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Advertiser Label", key = "20", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "20" });
-            columns.Add(new { headerText = "BrandLabel", key = "30", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Brand Label", key = "30", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "30" });
-            columns.Add(new { headerText = "PageLabel", key = "40", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Page Label", key = "40", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "40" });
-            columns.Add(new { headerText = "DateLabel", key = "50", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Date Label", key = "50", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "50" });
             columns.Add(new { headerText = "Commitment", key = "60", dataType = "number", width = "*" });
             schemaFields.Add(new { name = "60" });
@@ -383,7 +403,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[1, 3] = 0;
             gridData[1, 4] = "Fiat";
             gridData[1, 5] = "Maseratti";
-            gridData[1, 6] = "Fiat auto";
+            gridData[1, 6] = "Maseratti Cars";
             gridData[1, 7] = "06/05/2016";
             gridData[1, 8] = "13596";
             gridData[1, 9] = "20480";
@@ -396,7 +416,7 @@ namespace Km.AdExpressClientWeb.Controllers
             gridData[2, 3] = 0;
             gridData[2, 4] = "Ferrero";
             gridData[2, 5] = "Nutella";
-            gridData[2, 6] = "Ferrero";
+            gridData[2, 6] = "Nutella";
             gridData[2, 7] = "06/06/2016";
             gridData[2, 8] = "13596";
             gridData[2, 9] = "20480";
