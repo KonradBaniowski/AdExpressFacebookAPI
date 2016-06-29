@@ -66,7 +66,8 @@ namespace Facebook.DataAccess.Repository
                              Commitment = dp.Commitment,
                              NumberLike = dp.NumberLike,
                              NumberShare = dp.NumberShare,
-                             NumberComment = dp.NumberComment
+                             NumberComment = dp.NumberComment,
+                             PageName = df.PageName
                          });
 
 
