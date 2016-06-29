@@ -35,7 +35,7 @@ namespace Facebook.DataAccess.Repository
         {
             var query = (from d in context.DataFacebook
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
-                         
+
                          select d);
 
             //var includedMedia = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Include) && e.TypeNomenclature == (TypeNomenclature.Media));
@@ -46,14 +46,24 @@ namespace Facebook.DataAccess.Repository
 
             //var include1 = query.Predicate(includedMedia);
             //var exclude1 = query.Predicate(excludedMedia);
+            Expression<Func<DataFacebook, bool>> predicate = null;
 
-            var include2 = query.Predicate(includedProduct);
-            var exclude2 = query.Predicate(excludedProduct);
-
+            if (includedProduct != null && includedProduct.Any())
+            {
+                var include2 = query.Predicate(includedProduct);
+                predicate = arg => (include2.Invoke(arg));
+            }
+            if (excludedProduct != null && excludedProduct.Any())
+            {
+                var exclude2 = query.Predicate(excludedProduct);
+                predicate = arg => !(exclude2.Invoke(arg));
+            }
             //Expression<Func<DataFacebook, bool>> predicate = arg => ((include1.Invoke(arg) || include2.Invoke(arg)) && !(exclude1.Invoke(arg) && exclude2.Invoke(arg)));
-            Expression<Func<DataFacebook, bool>> predicate = arg => (include2.Invoke(arg)) && !(exclude2.Invoke(arg));
+            //predicate = arg => (include2.Invoke(arg)) && !(exclude2.Invoke(arg));
+            //var exp = Expression.Equal(predicate, Expression.Constant(null, predicate.Type));
 
-            query = query.AsExpandable().Where(predicate);
+            if (predicate != null)
+                query = query.AsExpandable().Where(predicate);
 
             if (Brand != null && Brand.Count > 0)
             {
@@ -62,6 +72,7 @@ namespace Facebook.DataAccess.Repository
                 return query.GroupBy(a => new { a.IdAdvertiser, a.IdPageFacebook }).Select(e => new DateFacebookContract
                 {
                     IdAdvertiser = e.First().IdAdvertiser,
+
                     NumberPost = e.Sum(a => a.NumberPost),
                     NumberLike = e.Sum(a => a.NumberLike),
                     NumberComment = e.Sum(a => a.NumberComment),
@@ -69,7 +80,6 @@ namespace Facebook.DataAccess.Repository
                     Expenditure = e.Sum(a => a.Expenditure),
                     NumberFan = e.Max(a => a.NumberFan),
                     PageName = e.First().PageName,
-                    AdvertiserLabel = e.FirstOrDefault().Advertiser.AdvertiserLabel
                 }).ToList();
             }
             else if (Advertiser != null && Advertiser.Count > 0)
@@ -78,7 +88,7 @@ namespace Facebook.DataAccess.Repository
                     .Where(e => Advertiser.Contains(e.IdAdvertiser));
 
                 var tata = (from g in query.GroupBy(p => new { p.IdAdvertiser, p.IdPageFacebook, p.IdLanguageData })
-                            join c in context.Advertiser on new { g.Key.IdAdvertiser, IdLanguage=g.Key.IdLanguageData } equals new { c.IdAdvertiser, IdLanguage=c.IdLanguage }
+                            join c in context.Advertiser on new { g.Key.IdAdvertiser, IdLanguage = g.Key.IdLanguageData } equals new { c.IdAdvertiser, IdLanguage = c.IdLanguage }
                             where c.IdLanguage == 33
                             select new DateFacebookContract
                             {
@@ -90,28 +100,13 @@ namespace Facebook.DataAccess.Repository
                                 Expenditure = g.Sum(a => a.Expenditure),
                                 NumberFan = g.Max(a => a.NumberFan),
                                 PageName = g.FirstOrDefault().PageName,
+                                IdPage = g.FirstOrDefault().IdPage,
                                 IdPageFacebook = g.FirstOrDefault().IdPageFacebook,
+                                Url = g.FirstOrDefault().Url,
                                 AdvertiserLabel = c.AdvertiserLabel
+
                             });
                 return tata.ToList();
-                //query = query.GroupBy(p => new { p.IdAdvertiser, p.IdPageFacebook }).Join(context.Advertiser, a => a.Key, b => b.IdAdvertiser, (a , b) => new { a, b} )
-                //.(from e in context.DataFacebook
-
-                //     group e by new { e.IdAdvertiser, e.IdPageFacebook } into g
-                //     join c in context.Advertiser on g.Key.IdAdvertiser equals c.IdAdvertiser
-                //    
-
-                //return query.GroupBy(a => new { a.IdAdvertiser, a.IdPageFacebook }).Select(e => new DataFacebookKPI
-                //{
-                //    IdAdvertiser = e.FirstOrDefault().IdAdvertiser,
-                //    NumberPost = e.Sum(a => a.NumberPost),
-                //    NumberLike = e.Sum(a => a.NumberLike),
-                //    NumberComment = e.Sum(a => a.NumberComment),
-                //    NumberShare = e.Sum(a => a.NumberShare),
-                //    Expenditure = e.Sum(a => a.Expenditure),
-                //    NumberFan = e.Max(a => a.NumberFan),
-                //    AdvertiserLabel = e.FirstOrDefault().Advertiser.AdvertiserLabel
-                //}).ToList();
             }
             else
                 return new List<DateFacebookContract>();

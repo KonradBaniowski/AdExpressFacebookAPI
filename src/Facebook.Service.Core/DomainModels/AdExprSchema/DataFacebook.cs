@@ -8,7 +8,6 @@ namespace Facebook.Service.Core.DomainModels.AdExprSchema
 {
     public class DataFacebook : Data
     {
-        
         public long DateMediaNum { get; set; }
         public long IdDataFacebook { get; set; }
         public long IdLanguageData { get; set; }

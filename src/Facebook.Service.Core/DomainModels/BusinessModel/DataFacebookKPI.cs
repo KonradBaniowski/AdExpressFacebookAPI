@@ -9,6 +9,8 @@ namespace Facebook.Service.Core.DomainModels.BusinessModel
 {
     public class DateFacebookContract
     {
+        public string Url { get; set; }
+        public long IdPage { get; set; }
         public long IdAdvertiser { get; set; }
         public long NumberPost { get; set; }
         public long NumberLike { get; set; }
@@ -17,7 +19,7 @@ namespace Facebook.Service.Core.DomainModels.BusinessModel
         public long NumberFan { get; set; }
         public long Expenditure { get; set; }
         public string AdvertiserLabel { get; set; }
-        public string BrandLabel { get; set; }
+        //public string BrandLabel { get; set; }
         public string PageName { get; set; }
         public long IdPageFacebook { get; set; }
     }
