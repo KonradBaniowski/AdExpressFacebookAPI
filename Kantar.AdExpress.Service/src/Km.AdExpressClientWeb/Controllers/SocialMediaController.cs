@@ -76,7 +76,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 //string content = string.Format("idLogin={0}&beginDate={1}&endDate={2}&idAdvertisers={3}&idBrands={4}", 1155, 20150101, 20160301, string.Join(",", new List<long> { 1060, 332860, 48750 }), string.Join(",", new List<long> { }));
 
                 var model = new postmodel();
-                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:80/api/FacebookPage"), model).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), model).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
@@ -84,6 +84,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 var data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
 
             }
+
+          
 
             /************************** MOCK ***********************************/
             var gridResult = new GridResult();
@@ -427,6 +429,7 @@ namespace Km.AdExpressClientWeb.Controllers
             public long endDate = 20160301;
             public List<long> idAdvertisers = new List<long> { 1060, 332860, 48750 };
             public List<long> idBrands = null;
+            public List<long> posts = null;
         }
 
     }
