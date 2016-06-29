@@ -1120,9 +1120,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession = (WebSession)WebSession.Load(webSessionId);
             PostModel pM = new PostModel();
 
-            pM.beginDate = long.Parse(_webSession.PeriodBeginningDate);
-            pM.endDate = long.Parse(_webSession.PeriodEndDate);
-            pM.idLogin = (int)_webSession.CustomerLogin.IdLogin;
+            pM.BeginDate = long.Parse(_webSession.PeriodBeginningDate);
+            pM.EndDate = long.Parse(_webSession.PeriodEndDate);
+            pM.IdLogin = (int)_webSession.CustomerLogin.IdLogin;
+
 
             return pM;
         }
