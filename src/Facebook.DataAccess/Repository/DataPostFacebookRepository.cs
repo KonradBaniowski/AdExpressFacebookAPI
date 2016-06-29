@@ -19,7 +19,7 @@ namespace Facebook.DataAccess.Repository
         {
         }
 
-        public List<PostFacebook> GetDataPostFacebook(List<CriteriaData> criteria, long begin, long end, List<long> advertisers, List<long> brands, List<long> posts)
+        public List<PostFacebook> GetDataPostFacebook(List<CriteriaData> criteria, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages)
         {
             var beginDate = new DateTime(Convert.ToInt32(begin.ToString().Substring(0, 4)), Convert.ToInt32(begin.ToString().Substring(4, 2))
                 , Convert.ToInt32(begin.ToString().Substring(6, 2)));
@@ -31,6 +31,7 @@ namespace Facebook.DataAccess.Repository
 
             var query = (from df in context.DataFacebook
                          select df);
+
             var include2 = query.Predicate(includedProduct);
             var exclude2 = query.Predicate(excludedProduct);
 
@@ -42,35 +43,45 @@ namespace Facebook.DataAccess.Repository
             {
                 query = query.Include(a => a.Brand)
                     .Where(e => brands.Contains(e.IdBrand));
-               
+
             }
             else if (advertisers != null && advertisers.Count > 0)
             {
                 query = query.Include(a => a.Advertiser)
-                    .Where(e => advertisers.Contains(e.IdAdvertiser));              
+                    .Where(e => advertisers.Contains(e.IdAdvertiser));
+            }
+
+            var query1 = (from dp in context.DataPostFacebook
+                          select dp);
+            if (pages != null && pages.Any())
+            {
+               var pagesFilter =  query1.Contains(pages);
+
+                Expression<Func<DataPostFacebook, bool>> predicate1 = page => pagesFilter.Invoke(page);
+                query1 = query1.AsExpandable().Where(predicate1);
+
             }
 
             var query2 = (from df in query
-                         join dp in context.DataPostFacebook on df.IdPageFacebook equals dp.IdPageFacebook
-                         join ap in context.Products on new { pd = df.IdProduct } equals new { pd = ap.ProductId }
-                         orderby ap.Advertiser
-                         where df.DateMediaNum >= begin && df.DateMediaNum <= end
-                         && dp.DateCreationPost >= beginDate.Date && dp.DateCreationPost <= endDate.Date
-                         select new PostFacebook
-                         {
-                             IdPostFacebook = dp.IdPostFacebook,
-                             IdPost = dp.IdPost,
-                             Advertiser = ap.Advertiser,
-                             Brand = ap.Brand,
-                             DateCreationPost = dp.DateCreationPost,
-                             Commitment = dp.Commitment,
-                             NumberLike = dp.NumberLike,
-                             NumberShare = dp.NumberShare,
-                             NumberComment = dp.NumberComment,
-                             PageName = df.PageName
-                         });
-
-
+                          join dp in query1 on df.IdPageFacebook equals dp.IdPageFacebook
+                          join ap in context.Products on new { pd = df.IdProduct } equals new { pd = ap.ProductId }
+                          orderby ap.Advertiser
+                          where df.DateMediaNum >= begin && df.DateMediaNum <= end
+                          && dp.DateCreationPost >= beginDate.Date && dp.DateCreationPost <= endDate.Date
+                          select new PostFacebook
+                          {
+                              IdPostFacebook = dp.IdPostFacebook,
+                              IdPost = dp.IdPost,
+                              Advertiser = ap.Advertiser,
+                              Brand = ap.Brand,
+                              DateCreationPost = dp.DateCreationPost,
+                              Commitment = dp.Commitment,
+                              NumberLike = dp.NumberLike,
+                              NumberShare = dp.NumberShare,
+                              NumberComment = dp.NumberComment,
+                              PageName = df.PageName
+                          });
+          
 
             return query2.ToList();
         }
