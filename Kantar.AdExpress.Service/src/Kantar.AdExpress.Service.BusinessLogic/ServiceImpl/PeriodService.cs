@@ -146,7 +146,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 case WebConstantes.Module.Name.FACEBOOK:
                     SocialMediaSlidingValidation(request, result, _customerSession);
-                    break;                    
+                    break;
                 default:
                     DefaultSlidingPeriodValidation(request, result, _customerSession);
                     break;
@@ -279,7 +279,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region Try-Catch block
                 try
                 {
-                    SaveCalendarData(request.StudyId, _customerSession, result, startDate, endDate);
+                    SaveSocialMediaCalendarData( _customerSession, result, startDate, endDate);
                     _customerSession.Save();
                 }
                 catch (Exception ex)
@@ -411,6 +411,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     webSession.PeriodEndDate = absolutEndPeriod;
                 }
             }
+            return result;
+        }
+
+        private PeriodResponse SaveSocialMediaCalendarData( WebSession webSession, PeriodResponse result, DateTime startDate, DateTime endDate)
+        {
+
+            webSession.PeriodType = CstPeriodType.dateToDate;
+            webSession.DetailPeriod = CstPeriodDetail.monthly;
+            webSession.PeriodBeginningDate = startDate.ToString("yyyyMMdd");
+            webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+            result.StartYear = startDate.Year;
+            result.EndYear = endDate.Year;
+            result.Success = true;
+
             return result;
         }
         #endregion
