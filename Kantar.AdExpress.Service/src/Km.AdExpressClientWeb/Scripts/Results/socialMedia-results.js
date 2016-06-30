@@ -10,7 +10,7 @@
         defaultColumnWidth: 200,
         avgRowHeight: 60,
         autoGenerateColumns: true
-    });  
+    });
     var ds;
     var cols;
     var colsFixed;
@@ -18,7 +18,7 @@
     var gridWidth;
 
     CallSocialMediaResult();
-    
+
 
     CallCombo();
 
@@ -32,12 +32,14 @@
             },
             success: function (data) {
                 $.each(data.combo, function (index, value) {
-                    $('#combo > .form-control').append('<option '+value.Selected+'value=' + value.Value + '>' + value.Text + '</option>');
+                    $('#combo > .form-control').append('<option ' + value.Selected + ' value=' + value.Value + '>' + value.Text + '</option>');
                 })
             }
         });
     }
-   
+
+
+
     function CallSocialMediaResult() {
         $("#gridEmpty").hide();
         $.ajax({
@@ -84,7 +86,7 @@
             }
         });
     }
-    
+
     var renderGrid = function (success, error) {
         if (success) {
 
@@ -118,7 +120,7 @@
                         enableCheckBoxes: true,
                         enableRowNumbering: false
                     }
-                    ]
+                ]
             })
 
             gridWidth = $("#grid_table_headers").width();
@@ -134,7 +136,7 @@
                     $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                 }
             });
-        
+
         } else {
             bootbox.alert(error);
         }
@@ -150,5 +152,32 @@
             $(this).attr("src", link);
         });
 
+    });
+});
+
+$('#combo > .form-control').on('change', function () {
+    var id = $(this).val();
+    var array = id.split(",");
+    var ids = []
+    $.each(array, function (index, value) {
+        ids.push(Number(value));
+    });
+    console.log(ids);
+    var params = {
+        ids: ids
+    };
+    $.ajax({
+        url: '/SocialMedia/GetPostbyIdpage',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        data: {
+            ids: ids
+        },
+        error: function (xmlHttpRequest, errorText, thrownError) {
+        },
+        success: function (data) {
+            console.log();
+        }
     });
 });
