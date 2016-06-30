@@ -2764,3 +2764,9 @@ ul.ui-selectable {
 .tuile-medias.disabled-effect {
     opacity:0.4;
 }
+
+
+/*CSS pour Alignement à droite des numeriques tableau infragistics*/
+.numericAlignment {
+    text-align: right;
+}

@@ -93,23 +93,23 @@ namespace Km.AdExpressClientWeb.Controllers
 
             columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "PageName" });
-            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "number", width = "*" , format= "number", columnCssClass= "numericAlignment" });
             schemaFields.Add(new { name = "IdPageFacebook" });
             columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "Url" });
-            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NbPage" });
-            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberFan" });
-            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberPost" });
-            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberLike" });
-            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberComment" });
-            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberShare" });
-            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "Expenditure" });
 
             using (var client = new HttpClient())
@@ -203,7 +203,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         return null;
 
                     string jsonData = JsonConvert.SerializeObject(datas);
-                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, combo = combos };
+                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, combo = combos, unit = "number" };
                     JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                     jsonModel.MaxJsonLength = Int32.MaxValue;
 
@@ -371,6 +371,31 @@ namespace Km.AdExpressClientWeb.Controllers
                 List<DataPostFacebook> data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
                 string jsonData = JsonConvert.SerializeObject(data);
                 var obj = new { datagrid = jsonData, columns = columns, schema = schemaFields, columnsfixed = columnsFixed, needfixedcolumns = false, isonecolumnline = gridResult.isOneColumnLine };
+                JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
+            }
+        }
+
+        public async Task<JsonResult> GetPostbyIdPage(List<long> ids)
+        {
+            using (var client = new HttpClient())
+            {
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession);
+                postModelRef.IdPages = ids;
+
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/TopPosts"), postModelRef).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                var data = JsonConvert.DeserializeObject<List<PostFacebook>>(content);
+                string jsonData = JsonConvert.SerializeObject(data);
+                var obj = new {data = data };
                 JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                 jsonModel.MaxJsonLength = Int32.MaxValue;
 
