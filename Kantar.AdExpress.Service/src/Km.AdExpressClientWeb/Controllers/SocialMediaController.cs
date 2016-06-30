@@ -378,5 +378,30 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
+        public async Task<JsonResult> GetPostbyIdPage(List<long> ids)
+        {
+            using (var client = new HttpClient())
+            {
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession);
+                postModelRef.IdPages = ids;
+
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/TopPosts"), postModelRef).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                var data = JsonConvert.DeserializeObject<List<PostFacebook>>(content);
+                string jsonData = JsonConvert.SerializeObject(data);
+                var obj = new {data = data };
+                JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
+            }
+        }
+
     }
 }
