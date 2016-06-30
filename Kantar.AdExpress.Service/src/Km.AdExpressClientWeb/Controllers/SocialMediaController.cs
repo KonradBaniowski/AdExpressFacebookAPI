@@ -93,23 +93,23 @@ namespace Km.AdExpressClientWeb.Controllers
 
             columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "PageName" });
-            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "number", width = "*" , format= "number", columnCssClass= "numericAlignment" });
             schemaFields.Add(new { name = "IdPageFacebook" });
             columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "Url" });
-            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NbPage" });
-            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberFan" });
-            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberPost" });
-            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberLike" });
-            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberComment" });
-            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberShare" });
-            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "Expenditure" });
 
             using (var client = new HttpClient())
@@ -203,7 +203,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         return null;
 
                     string jsonData = JsonConvert.SerializeObject(datas);
-                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, combo = combos };
+                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, combo = combos, unit = "number" };
                     JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                     jsonModel.MaxJsonLength = Int32.MaxValue;
 
