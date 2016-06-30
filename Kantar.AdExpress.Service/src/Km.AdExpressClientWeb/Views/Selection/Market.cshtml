@@ -90,6 +90,20 @@
                     <ul class="nav nav-tabs" role="tablist">
                         @foreach (var tree in Model.Trees)
                         {
+                            if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
+                            {
+                                <li @(tree == Model.Trees.LastOrDefault() ? "class=active" : "" )>
+                                    <a data-target="#tab-@(tree.Id)"
+                                       data-tab="@(tree.Id)"
+                                       role="tab"
+                                       data-toggle="tab"
+                                       aria-expanded="true">
+                                        @tree.Label
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
                             <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
                                 <a data-target="#tab-@(tree.Id)"
                                    data-tab="@(tree.Id)"
@@ -99,6 +113,7 @@
                                     @tree.Label
                                 </a>
                             </li>
+                            }
                         }
                     </ul>
                 </div>

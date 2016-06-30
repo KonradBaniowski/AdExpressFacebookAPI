@@ -14,8 +14,11 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Km.AdExpressClientWeb.Models.SocialMedia;
-using Kantar.AdExpress.Service.Core.Domain;
+using Domain=Kantar.AdExpress.Service.Core.Domain;
 using TNS.Classification.Universe;
+using Km.AdExpressClientWeb.Models.Shared;
+using Km.AdExpressClientWeb.I18n;
+
 namespace Km.AdExpressClientWeb.Controllers
 {
     [Authorize]
@@ -113,9 +116,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 var cla = new ClaimsPrincipal(User.Identity);
                 string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-                List<Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
+                List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
-                PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
                 postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
                 postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
@@ -148,8 +151,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 if (universeMarket.Count > 1)
                 {
-
-                    PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                    Domain.PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
                     postModelConc.IdAdvertisers = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
                     postModelConc.IdBrands = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
@@ -205,11 +207,16 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult SocialMediaCreative(int id, int type)
         {
-            return View();
+            InsertionCreativeViewModel model = new InsertionCreativeViewModel();
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            int siteLanguage = _webSessionService.GetSiteLanguage(webSessionId);
+            model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
+            return View(model);
 
         }
 
-        public JsonResult GetSocialMediaCreative(int id, int type)
+        public async Task<JsonResult> GetSocialMediaCreative(string ids, int type)
         {
             var gridResult = new GridResult();
 
@@ -217,7 +224,8 @@ namespace Km.AdExpressClientWeb.Controllers
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
-            #region Mock Data
+
+            #region
             //Hierachical ids for Treegrid
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "ID" });
@@ -246,55 +254,84 @@ namespace Km.AdExpressClientWeb.Controllers
             columns.Add(new { headerText = "LevelType", key = "LevelType", dataType = "string", width = "*", hidden = true });
             schemaFields.Add(new { name = "LevelType" });
             //End
+            #endregion
+            #region Mock Data
+
             //Mock data
-            gridData[0, 0] = 1;
-            gridData[0, 1] = -1;
-            gridData[0, 2] = 1;
-            gridData[0, 3] = 0;
-            gridData[0, 4] = "bmw";
-            gridData[0, 5] = "bmw gamme auto";
-            gridData[0, 6] = "bmw france";
-            gridData[0, 7] = "06/01/2016";
-            gridData[0, 8] = "3596";
-            gridData[0, 9] = "2480";
-            gridData[0, 10] = "484";
-            gridData[0, 11] = "37";
+            //gridData[0, 0] = 1;
+            //gridData[0, 1] = -1;
+            //gridData[0, 2] = 1;
+            //gridData[0, 3] = 0;
+            //gridData[0, 4] = "bmw";
+            //gridData[0, 5] = "bmw gamme auto";
+            //gridData[0, 6] = "bmw france";
+            //gridData[0, 7] = "06/01/2016";
+            //gridData[0, 8] = "3596";
+            //gridData[0, 9] = "2480";
+            //gridData[0, 10] = "484";
+            //gridData[0, 11] = "37";
 
-            gridData[1, 0] = 2;
-            gridData[1, 1] = -1;
-            gridData[1, 2] = 2;
-            gridData[1, 3] = 0;
-            gridData[1, 4] = "Fiat";
-            gridData[1, 5] = "Maseratti";
-            gridData[1, 6] = "Fiat auto";
-            gridData[1, 7] = "06/05/2016";
-            gridData[1, 8] = "13596";
-            gridData[1, 9] = "20480";
-            gridData[1, 10] = "1484";
-            gridData[1, 11] = "3700";
+            //gridData[1, 0] = 2;
+            //gridData[1, 1] = -1;
+            //gridData[1, 2] = 2;
+            //gridData[1, 3] = 0;
+            //gridData[1, 4] = "Fiat";
+            //gridData[1, 5] = "Maseratti";
+            //gridData[1, 6] = "Fiat auto";
+            //gridData[1, 7] = "06/05/2016";
+            //gridData[1, 8] = "13596";
+            //gridData[1, 9] = "20480";
+            //gridData[1, 10] = "1484";
+            //gridData[1, 11] = "3700";
 
-            gridData[2, 0] = 3;
-            gridData[2, 1] = -1;
-            gridData[2, 2] = 3;
-            gridData[2, 3] = 0;
-            gridData[2, 4] = "Ferrero";
-            gridData[2, 5] = "Nutella";
-            gridData[2, 6] = "Ferrero";
-            gridData[2, 7] = "06/06/2016";
-            gridData[2, 8] = "13596";
-            gridData[2, 9] = "20480";
-            gridData[2, 10] = "1484";
-            gridData[2, 11] = "3700";
+            //gridData[2, 0] = 3;
+            //gridData[2, 1] = -1;
+            //gridData[2, 2] = 3;
+            //gridData[2, 3] = 0;
+            //gridData[2, 4] = "Ferrero";
+            //gridData[2, 5] = "Nutella";
+            //gridData[2, 6] = "Ferrero";
+            //gridData[2, 7] = "06/06/2016";
+            //gridData[2, 8] = "13596";
+            //gridData[2, 9] = "20480";
+            //gridData[2, 10] = "1484";
+            //gridData[2, 11] = "3700";
 
-            gridResult.HasData = true;
-            gridResult.Columns = columns;
-            gridResult.Schema = schemaFields;
-            gridResult.ColumnsFixed = columnsFixed;
-            gridResult.NeedFixedColumns = false;
-            gridResult.Data = gridData;
+            //gridResult.HasData = true;
+            //gridResult.Columns = columns;
+            //gridResult.Schema = schemaFields;
+            //gridResult.ColumnsFixed = columnsFixed;
+            //gridResult.NeedFixedColumns = false;
+            //gridResult.Data = gridData;
             //end Mock Data
             #endregion
-            if (!gridResult.HasData)
+
+            using (var client = new HttpClient())
+            {
+
+
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+
+
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPost"), postModelRef).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                List<DataPostFacebook> data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
+               
+            }
+
+
+                if (!gridResult.HasData)
                 return null;
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
