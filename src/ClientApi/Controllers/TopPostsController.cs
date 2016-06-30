@@ -10,13 +10,14 @@ using System.Web.Http;
 
 namespace ClientApi.Controllers
 {
-    public class FacebookPostController : ApiController
+    public class TopPostsController : ApiController
     {
+
         private IRightService _rightSvc;
         private IFacebookPostService _fbsvc;
         private IProductService _productSvc;
 
-        public FacebookPostController(IRightService rightSvc, IFacebookPostService fbsvc, IProductService productSvc)
+        public TopPostsController(IRightService rightSvc, IFacebookPostService fbsvc, IProductService productSvc)
         {
             _rightSvc = rightSvc;
             _fbsvc = fbsvc;
@@ -24,12 +25,11 @@ namespace ClientApi.Controllers
         }
 
         [HttpPost]
-        public List<DataPostFacebookContract> Get([FromBody] PostModel model)
+        public List<PostFacebookContract> Get([FromBody] PostModel model)
         {
-            return _fbsvc.GetDataPostFacebook(model.IdLogin , model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdPages);
+            return _fbsvc.GetTopPostFacebook(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdPages);
 
         }
-
 
     }
 }
