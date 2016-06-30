@@ -1437,6 +1437,10 @@ a {
     font-weight: normal;
 }
 
+.container .panel-group .panel {
+    overflow:inherit !important;
+}
+
 input[type=radio].with-font,
 input[type=checkbox].with-font {
     border: 0;

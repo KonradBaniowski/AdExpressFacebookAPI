@@ -259,7 +259,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                     case WebConstantes.Module.Name.INDICATEUR:
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                    case WebConstantes.Module.Name.FACEBOOK:
+                    
                         var adExpressUniverse = Universes[index];
                         #region Iterate by Access Type
                         int id = 0;
@@ -350,6 +350,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         #endregion
                         break;
                     case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    case WebConstantes.Module.Name.FACEBOOK:
                         for (int counter = 0; counter < Math.Min(5, Universes.Count()); counter++)
                         {
                             #region Iterate by Access Type
