@@ -235,7 +235,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
                                     AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
-                                    SetDefaultMarketUniverse(response, univers, request);
+                                    SetDefaultMarketUniverse(response, univers, request,_webSession);
                                     break;
                                 case CstWeb.Module.Name.FACEBOOK:
                                     Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
@@ -1026,11 +1026,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        private void SetDefaultMarketUniverse(WebSessionResponse response, AdExpressUnivers univers, SaveMarketSelectionRequest request)
+        private void SetDefaultMarketUniverse(WebSessionResponse response, AdExpressUnivers univers, SaveMarketSelectionRequest request, WebSession webSession)
         {
             if (univers.AdExpressUniverse != null && univers.AdExpressUniverse.Count() > 0)
             {
-                bool mustSelectIncludeItems = MustSelectIncludeItems(_webSession);
+                bool mustSelectIncludeItems = MustSelectIncludeItems(webSession);
                 List<NomenclatureElementsGroup> nGroups = univers.AdExpressUniverse.GetIncludes();
                 if ((mustSelectIncludeItems && nGroups != null && nGroups.Count > 0) || !mustSelectIncludeItems)
                 {
@@ -1038,26 +1038,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             universDictionary = new Dictionary<int, AdExpressUniverse>();
                     universDictionary.Add(universDictionary.Count, univers.AdExpressUniverse);
 
-                    if (!IsValidUniverseLevels(univers.AdExpressUniverse, _webSession))
+                    if (!IsValidUniverseLevels(univers.AdExpressUniverse, webSession))
                     {
-                        response.ErrorMessage = GestionWeb.GetWebWord(2990, _webSession.SiteLanguage);
+                        response.ErrorMessage = GestionWeb.GetWebWord(2990, webSession.SiteLanguage);
                     }
                     else
                     {
-                        _webSession.PrincipalProductUniverses = universDictionary;
+                        webSession.PrincipalProductUniverses = universDictionary;
                         response.Success = true;
-                        _webSession.Save();
-                        _webSession.Source.Close();
+                        webSession.Save();
+                        webSession.Source.Close();
                     }
                 }
                 else
                 {
-                    response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                    response.ErrorMessage = GestionWeb.GetWebWord(2299, webSession.SiteLanguage);
                 }
             }
             else if (request.Required)
             {
-                response.ErrorMessage = GestionWeb.GetWebWord(878, _webSession.SiteLanguage);
+                response.ErrorMessage = GestionWeb.GetWebWord(878, webSession.SiteLanguage);
             }
             else
             {

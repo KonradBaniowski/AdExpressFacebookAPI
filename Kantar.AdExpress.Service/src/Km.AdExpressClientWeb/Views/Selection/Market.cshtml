@@ -27,6 +27,9 @@
         @Html.HiddenFor(e => e.Labels.CurrentController)
         @Html.HiddenFor(e => e.CurrentModule)
         @Html.HiddenFor(e => e.MaxUniverseItems)
+        @Html.HiddenFor(e => e.Labels.DefaultUniverse)
+        @Html.HiddenFor(e => e.Labels.MaxFacebookItems)
+        @Html.HiddenFor(e => e.Labels.FacebookAllowedLevels)
         <div class="row bg-black-only">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 heading">
                 <h4 class="pull-left"><i class="fa fa-quote-left"></i>&nbsp; @Model.Labels.KeyWordLabel </h4>
@@ -90,7 +93,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         @foreach (var tree in Model.Trees)
                         {
-                            if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
+                            @*if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
                             {
                                 <li @(tree == Model.Trees.LastOrDefault() ? "class=active" : "" )>
                                     <a data-target="#tab-@(tree.Id)"
@@ -103,7 +106,7 @@
                                 </li>
                             }
                             else
-                            {
+                            {*@
                             <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
                                 <a data-target="#tab-@(tree.Id)"
                                    data-tab="@(tree.Id)"
@@ -113,7 +116,7 @@
                                     @tree.Label
                                 </a>
                             </li>
-                            }
+                            @*}*@
                         }
                     </ul>
                 </div>

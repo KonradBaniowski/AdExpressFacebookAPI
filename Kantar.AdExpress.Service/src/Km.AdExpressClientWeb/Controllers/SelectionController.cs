@@ -181,7 +181,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
-            model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+
+            //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+            model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
+            var msg =model.Labels.MaxFacebookItems;
             var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
