@@ -58,18 +58,16 @@
         <form class="form-inline pull-right">
             <div id="combo" class="form-group">
                 <label for="wombocombo">Filter</label>
-                <select class="form-control">
-
-                </select>
+                <select class="form-control"></select>
             </div>
         </form>
     </div>
 </div>
 <div class="row margin-top-30">
     <div class="col-md-12">
-      <div class="post-selected" hidden>
+        <div class="post-selected" hidden>
 
-      </div>
+        </div>
     </div>
 </div>
 <div id="resultModal" class="modal fade">
@@ -104,11 +102,30 @@
     <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
 
     <script id="titleTmpl" type="text/template">
-        {{if parseInt(${profilPage}) != 0}}
-        <img class="imgPageFacebook" style="max-width:18px;" data-post="${profilPage}" src="" />
+        {{if parseInt(${IdPage}) != 0}}
+        <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src="" />
         {{/if}}
-        ${Title}
+        ${PageName}
     </script>
+
+    <script id="linkToPostTmpl" type="text/template">
+        <center>
+            <a href="/SocialMedia/SocialMediaCreative?ids=${IdPageFacebook}&type=0" target="_blank">
+                <span class="fa fa-search-plus"></span>
+            </a>
+        </center>
+    </script>
+
+    <script id="linkUrlTmpl" type="text/template">
+        {{if ${Url} != "" }}
+        <center>
+            <a href="${Url}" target="_blank">
+                <span class="fa fa-search-plus"></span>
+            </a>
+        </center>
+        {{/if}}
+    </script>
+
 
     @Scripts.Render("~/bundles/results")
     @Scripts.Render("~/bundles/socialMedia-results")

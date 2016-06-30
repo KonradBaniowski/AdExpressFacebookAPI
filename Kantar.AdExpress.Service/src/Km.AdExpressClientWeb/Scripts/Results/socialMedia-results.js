@@ -55,8 +55,12 @@
                     needFixedColumns = data.needfixedcolumns;
 
                     for (i = 0; i < cols.length; i++) {
-                        if (cols[i].key == "Title")
+                        if (cols[i].key == "PageName")
                             cols[i].template = $("#titleTmpl").html();
+                        if (cols[i].key == "IdPageFacebook")
+                            cols[i].template = $("#linkToPostTmpl").html();
+                        if (cols[i].key == "Url")
+                            cols[i].template = $("#linkUrlTmpl").html();
                     }
 
                     var schema = new $.ig.DataSchema("array", {
@@ -90,7 +94,7 @@
             $("#grid").igTreeGrid({
                 dataSource: ds.dataView(),
                 columns: cols,
-                height: "400px",
+                height: "600px",
                 autoGenerateColumns: false,
                 primaryKey: "ID",
                 foreignKey: "PID",

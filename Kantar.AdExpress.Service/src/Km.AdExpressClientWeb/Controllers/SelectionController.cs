@@ -3,6 +3,7 @@ using Kantar.AdExpress.Service.Core;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.BusinessService;
 using Km.AdExpressClientWeb.Helpers;
+using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.MediaSchedule;
 using Km.AdExpressClientWeb.Models.Shared;
@@ -80,7 +81,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     AccessType = item.AccessType,
                     UniversLevels = Mapper.Map<List<UniversLevel>>(item.UniversLevels)
                 };
-                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                if (result.ControllerDetails.ModuleId == Module.Name.FACEBOOK)
+                {
+                    tree.Label = (item.Id==0)? model.Labels.Concurrent : model.Labels.Referent;
+                }
+                else
+                {
+                    tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                }
                 model.Trees.Add(tree);
             }
             #endregion
@@ -173,7 +181,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
-            model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+
+            //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+            model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
+            var msg =model.Labels.MaxFacebookItems;
             var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)

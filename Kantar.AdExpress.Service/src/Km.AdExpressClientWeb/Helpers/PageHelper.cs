@@ -26,7 +26,7 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string PORTFOLIO = "Portfolio";
         private const string LOSTWON = "LostWon";
         private const string MEDIASCHEDULE = "MediaSchedule";
-        private const string FACEBOOK = "Facebook";
+        private const string FACEBOOK = "SocialMedia";
         private const string ANALYSIS = "Analysis";
         public List<NavigationNode> LoadNavBar(string idWebSession, string controller,int siteLanguage = 33, int CurrentPosition = 0)
         {

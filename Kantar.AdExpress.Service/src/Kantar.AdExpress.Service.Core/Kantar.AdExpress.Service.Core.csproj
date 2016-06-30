@@ -113,6 +113,7 @@
     <Compile Include="Domain\MSCreative.cs" />
     <Compile Include="Domain\MSCreatives.cs" />
     <Compile Include="Domain\Period.cs" />
+    <Compile Include="Domain\PostModel.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoOption.cs" />
     <Compile Include="Domain\ResultOptions\CheckBoxOption.cs" />

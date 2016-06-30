@@ -1377,7 +1377,7 @@
     <item mnemonic="w2171" type="System.String">Plan media</item>
     <item mnemonic="w2172" type="System.String">Plan media concurrentiel</item>
     <item mnemonic="w2173" type="System.String">Analyse sectorielle: Les indicateurs graphiques </item>
-    <item mnemonic="w2174" type="System.String">Analyse sectorielle: Les tableaux dynamiques</item>
+    <item mnemonic="w2174" type="System.String">Analyse sectorielle plurimedia</item>
     <item mnemonic="w2175" type="System.String">Tableau de bord Presse</item>
     <item mnemonic="w2176" type="System.String">Tableau de bord Télévision</item>
     <item mnemonic="w2177" type="System.String">Tableau de bord Radio</item>
@@ -2322,5 +2322,9 @@
     <item mnemonic="w3064" type="System.String">Facebook</item>
     <item mnemonic="w3065" type="System.String">En cours de construction</item>
     <item mnemonic="w3066" type="System.String"> est disponible sur &lt;a href="{0}"&gt;AdExpress&lt;/a&gt;.</item>
+    <item mnemonic="w3067" type="System.String">Univers par défaut</item>
+    <item mnemonic="w3068" type="System.String">Vous ne pouvez sélectionner que des annonceurs ou des marques.</item>
+    <item mnemonic="w3069" type="System.String">Vous pouvez sélectionner au maximum {0} annonceurs ou marques.</item>
+    <item mnemonic="w3070" type="System.String">Redirection en cours</item>
   </items>
 </localization>

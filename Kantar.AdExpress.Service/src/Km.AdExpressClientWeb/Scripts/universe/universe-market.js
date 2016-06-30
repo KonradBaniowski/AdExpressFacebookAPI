@@ -15,12 +15,13 @@ $('#move-item').on('click', function () {
         {
             if (!(universSrc == 6 || universSrc == 8))
             {
-                bootbox.alert("You can select only advertisers or brands.");
+                bootbox.alert($('#Labels_FacebookAllowedLevels').val())//("You can select only advertisers or brands.");
                 return
             }
             if (nbItemSrc > maxUniverseItems || nbItemDst > maxUniverseItems)
             {
-                bootbox.alert("Please select at maximum 5 advertisers or brands. ");
+                var message = $('#Labels_MaxFacebookItems').val();               
+                bootbox.alert(message)//bootbox.alert("Please select at maximum 5 advertisers or brands. ");
                 return
             }
         }
@@ -100,4 +101,13 @@ $(".btn-recherche").on('click', function (event) {
 
     });
 });
+
+String.prototype.format = function () {
+    var formatted = this;
+    for (var i = 0; i < arguments.length; i++) {
+        var regexp = new RegExp('\\{' + i + '\\}', 'gi');
+        formatted = formatted.replace(regexp, arguments[i]);
+    }
+    return formatted;
+};
 
