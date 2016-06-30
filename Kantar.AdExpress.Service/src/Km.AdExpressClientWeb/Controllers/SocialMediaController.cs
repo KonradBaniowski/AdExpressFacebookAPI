@@ -217,7 +217,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-        public async Task<JsonResult> GetSocialMediaCreative(int id, int type)
+        public async Task<JsonResult> GetSocialMediaCreative(string ids, int type)
         {
             var gridResult = new GridResult();
 
