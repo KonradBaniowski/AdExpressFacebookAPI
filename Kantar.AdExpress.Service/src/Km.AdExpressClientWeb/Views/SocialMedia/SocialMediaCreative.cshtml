@@ -109,17 +109,17 @@
             this.L2DetailValue = -1;
             this.L3DetailValue = -1;
         }
-        function paramsUrl() {
+        @*function paramsUrl() {
             this.ids = "@(Model.paramsUrl[0])";
             this.zoomDate = "@(Model.paramsUrl[1])";
             this.idUnivers = "@(Model.paramsUrl[2])";
             this.moduleId = "@(Model.paramsUrl[3])";
             this.idVehicle = "@(Model.paramsUrl[4])";
-        }
+        }*@
 
         function UserFilter() {
             this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
-            this.paramsUrl = new paramsUrl();
+            // this.paramsUrl = new paramsUrl();
             this.isVehicleChanged = true;
         }
 

@@ -54,6 +54,6 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public long NumberComment { get; set; }
         public long NumberShare { get; set; }
         public long Commitment { get; set; }
-        public long Brand { get; set; }
+        public string Brand { get; set; }
     }
 }

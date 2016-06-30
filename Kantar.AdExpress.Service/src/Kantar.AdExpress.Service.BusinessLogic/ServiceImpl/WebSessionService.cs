@@ -224,9 +224,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region try catch block
                 else
                 {
-                    AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
-                    if (univers.Success)
-                    {
                         try
                         {
                             switch (_webSession.CurrentModule)
@@ -237,10 +234,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 case CstWeb.Module.Name.INDICATEUR:
                                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                                    AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
                                     SetDefaultMarketUniverse(response, univers, request);
                                     break;
                                 case CstWeb.Module.Name.FACEBOOK:
-                                    SetFacebookMarketUniverse(response, _webSession, request);
+                                    Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
+                                    _webSession.PrincipalMediaUniverses = universes;
+                                    response.Success = true;
                                     break;
                                 default:
                                     break;
@@ -263,11 +263,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
                         }
-                    }
-                    else
-                    {
-                        response.ErrorMessage = String.Format(GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
-                    }
                 }
                 #endregion
             }
