@@ -907,10 +907,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                     currentModuleCode = CstWeb.LanguageConstantes.AnalysisDetailedReport;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
+                    currentModuleIcon = "icon-book-open";
                     break;
                 case CstWeb.Module.Name.FACEBOOK:
                     currentModuleCode = CstWeb.LanguageConstantes.FacebookCode;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? FACEBOOK : SELECTION;
+                    currentModuleIcon = "icon-social-facebook";
                     break;
                 default:
                     break;

@@ -193,6 +193,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                     currentModuleCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
+                    currentModuleIcon = "icon-book-open";
                     break;
                 case WebConstantes.Module.Name.FACEBOOK:
                     currentModuleCode = WebConstantes.LanguageConstantes.FacebookCode;

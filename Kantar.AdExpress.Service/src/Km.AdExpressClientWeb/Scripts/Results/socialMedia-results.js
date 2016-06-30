@@ -38,7 +38,52 @@
         });
     }
 
+    function UnitFormatter(val) {
+        if (val > 0)
+            return $.ig.formatter(val, "number");
 
+        return "";
+    }
+
+    function PageFormatter(val) {
+        if (val > 0)
+            return $.ig.formatter(val, "number", "#,##0.###");
+
+        return "";
+    }
+
+    function DurationFormatter(val) {
+
+        if (val == 0)
+            return "";
+
+        var s = val.toString();
+        var nbToFillWithZero = 6 - s.length;
+        for (var i = 0; i < nbToFillWithZero; i++)
+            s = "0" + s;
+        return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+    }
+
+    function GetColumnsFormatter(columns, unit) {
+
+        if (columns != null) {
+
+            columns.forEach(function (elem) {
+                if (elem.key != "ID" && elem.key != "PID" && elem.key != "PageName" && elem.key != "IdPage") {
+                    if (unit == "duration")
+                        elem.formatter = DurationFormatter;
+                    else if (unit == "pages")
+                        elem.formatter = PageFormatter;
+                    else
+                        elem.formatter = UnitFormatter;
+                }
+            });
+
+            return columns;
+        }
+
+        return columns;
+    }
 
     function CallSocialMediaResult() {
         $("#gridEmpty").hide();
@@ -52,6 +97,7 @@
             success: function (data) {
                 if (data != null && data != "") {
                     dataTreeGrid = data.datagrid;
+                    //cols = GetColumnsFormatter(data.columns, data.unit);
                     cols = data.columns;
                     colsFixed = data.columnsfixed;
                     needFixedColumns = data.needfixedcolumns;
@@ -141,6 +187,8 @@
             bootbox.alert(error);
         }
     }
+
+
 
 
     //** charge les images au fur et a mesure que le teableau s'affiche (image page facebook)
