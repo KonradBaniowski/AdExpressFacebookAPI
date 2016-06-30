@@ -52,7 +52,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         private const int MaxItemsPerLevel = 100;
-        private const string FACEBOOK = "Facebook";
+        private const string FACEBOOK = "SocialMedia";
         private const int ADVERTISERID = 6;
         private const int BRANDID = 8;
         private const string FcbMarketErrorMsg = "Please select at maximum 5 advertisers or brands.";
