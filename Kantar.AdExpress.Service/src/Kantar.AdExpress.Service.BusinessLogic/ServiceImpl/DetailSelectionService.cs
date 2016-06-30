@@ -221,8 +221,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         for (int i = 0; i < result.Count; i++)
                         {
                             var model = new Core.Domain.Tree();
-                            List<long> levelIdsList = result[i].GetLevelIdsList();
-                            model.AccessType = result[i].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
+                            List<long> levelIdsList = result[k+i].GetLevelIdsList();
+                            model.AccessType = result[k+i].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
                             if (model.AccessType == AccessType.excludes)
                             {
                                 model.Label = GestionWeb.GetWebWord(2269, SiteLanguage);
@@ -243,7 +243,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     universLevel.UniversItems = new List<UniversItem>();
                                     universLevel.Label = GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, SiteLanguage);
                                     universLevel.Id = levelIdsList[j];
-                                    TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[i].GetAsString(levelIdsList[j]));
+                                    TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = 
+                                        factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[k+i].GetAsString(levelIdsList[j]));
                                     if (universeItems != null)
                                     {
                                         itemIdList = universeItems.IdListOrderByClassificationItem;
