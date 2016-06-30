@@ -74,46 +74,45 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var gridResult = new GridResult();
 
-            object[,] gridData = new object[11, 14];
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
+            List<DataFacebook> data = new List<DataFacebook>();
+            List<DataFacebook> datas = new List<DataFacebook>();
+            HttpResponseMessage response = new HttpResponseMessage();
+            DataFacebook par = new DataFacebook();
+            string content = string.Empty;
 
             //Hierachical ids for Treegrid
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "ID" });
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
-            columns.Add(new { headerText = "IdPageFacebook", key = "IdPageFacebook", dataType = "number", width = "*", hidden = true });
-            schemaFields.Add(new { name = "IdPageFacebook" });
+            columns.Add(new { headerText = "IdPage", key = "IdPage", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "IdPage" });
 
-            columns.Add(new { headerText = "", key = "Title", dataType = "string", width = "350" });
-            schemaFields.Add(new { name = "Title" });
-            columns.Add(new { headerText = "Lien vers les Post", key = "10", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "10" });
+            columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "350" });
+            schemaFields.Add(new { name = "PageName" });
+            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "IdPageFacebook" });
             columns.Add(new { headerText = "URL Page", key = "20", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "20" });
-            columns.Add(new { headerText = "Page", key = "30", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "30" });
-            columns.Add(new { headerText = "Fan", key = "40", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "40" });
-            columns.Add(new { headerText = "Post", key = "50", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "50" });
-            columns.Add(new { headerText = "Like", key = "60", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "60" });
-            columns.Add(new { headerText = "Comment", key = "70", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "70" });
-            columns.Add(new { headerText = "Share", key = "80", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "80" });
-            columns.Add(new { headerText = "Brand exposure", key = "90", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "90" });
-
-            columns.Add(new { headerText = "LevelType", key = "LevelType", dataType = "string", width = "*", hidden = true });
-            schemaFields.Add(new { name = "LevelType" });
+            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "NbPage" });
+            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "NumberFan" });
+            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "NumberPost" });
+            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "NumberLike" });
+            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "NumberComment" });
+            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "NumberShare" });
+            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "Expenditure" });
 
             using (var client = new HttpClient())
             {
-
-
                 var cla = new ClaimsPrincipal(User.Identity);
                 string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
@@ -123,31 +122,31 @@ namespace Km.AdExpressClientWeb.Controllers
                 postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
                 postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
-              
 
-                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), postModelRef).Result;
-                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), postModelRef).Result;
+                content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
 
-                List<DataFacebook> data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
-                List<DataFacebook> parent = new List<DataFacebook>();
-                DataFacebook par = new DataFacebook()
+                data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
+                par = new DataFacebook()
                 {
                     PID = -1,
                     ID = 1,
-                    Expenditure = data.Sum(e => e.Expenditure),
-                    IdPageFacebook = string.Join(",", data.SelectMany(e => e.IdPageFacebook)),
-                    NbPage = data.Sum(e => e.NbPage),
-                    NumberComment = data.Sum(e => e.NumberComment),
-                    NumberFan = data.Sum(e => e.NumberFan),
-                    NumberLike = data.Sum(e => e.NumberLike),
-                    NumberPost = data.Sum(e => e.NumberPost),
-                    NumberShare = data.Sum(e => e.NumberShare),
+                    Expenditure = data.Where(e => e.PID == -1).Sum(a => a.Expenditure),
+                    IdPageFacebook = string.Join(",", data.Select(e => e.IdPageFacebook).ToList()),
+                    NbPage = data.Where(e => e.PID == -1).Sum(a => a.NbPage),
+                    NumberComment = data.Where(e => e.PID == -1).Sum(a => a.NumberComment),
+                    NumberFan = data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
+                    NumberLike = data.Where(e => e.PID == -1).Sum(a => a.NumberLike),
+                    NumberPost = data.Where(e => e.PID == -1).Sum(a => a.NumberPost),
+                    NumberShare = data.Where(e => e.PID == -1).Sum(a => a.NumberShare),
                     PageName = "Référents"
                 };
-                parent.Add(par);
-                parent.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
+                datas.Add(par);
+
+                datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
+                datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
 
 
                 if (universeMarket.Count > 1)
@@ -156,43 +155,43 @@ namespace Km.AdExpressClientWeb.Controllers
                     postModelConc.IdAdvertisers = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
                     postModelConc.IdBrands = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
-
                     response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), postModelConc).Result;
                     content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (!response.IsSuccessStatusCode)
                         throw new Exception(response.StatusCode.ToString());
 
                     data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
-                    parent = new List<DataFacebook>();
                     par = new DataFacebook()
                     {
                         PID = -1,
                         ID = 2,
-                        Expenditure = data.Sum(e => e.Expenditure),
-                        IdPageFacebook = string.Join(",", data.SelectMany(e => e.IdPageFacebook)),
-                        NbPage = data.Sum(e => e.NbPage),
-                        NumberComment = data.Sum(e => e.NumberComment),
-                        NumberFan = data.Sum(e => e.NumberFan),
-                        NumberLike = data.Sum(e => e.NumberLike),
-                        NumberPost = data.Sum(e => e.NumberPost),
-                        NumberShare = data.Sum(e => e.NumberShare),
+                        Expenditure = data.Where(e => e.PID == -1).Sum(a => a.Expenditure),
+                        IdPageFacebook = string.Join(",", data.Select(e => e.IdPageFacebook).ToList()),
+                        NbPage = data.Where(e => e.PID == -1).Sum(a => a.NbPage),
+                        NumberComment = data.Where(e => e.PID == -1).Sum(a => a.NumberComment),
+                        NumberFan = data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
+                        NumberLike = data.Where(e => e.PID == -1).Sum(a => a.NumberLike),
+                        NumberPost = data.Where(e => e.PID == -1).Sum(a => a.NumberPost),
+                        NumberShare = data.Where(e => e.PID == -1).Sum(a => a.NumberShare),
                         PageName = "Concurrents"
                     };
-                    parent.Add(par);
-                    parent.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
+                    datas.Add(par);
+                    datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
+                    datas.AddRange(data.Where(e => e.PID != -1).Select(e => e).ToList());
                 }
 
                 gridResult.HasData = true;
                 gridResult.Columns = columns;
                 gridResult.Schema = schemaFields;
 
+
                 try
                 {
                     if (!gridResult.HasData)
                         return null;
 
-                    string jsonData = JsonConvert.SerializeObject(gridResult.Data);
-                    var obj = new { datagrid = data, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, isonecolumnline = gridResult.isOneColumnLine };
+                    string jsonData = JsonConvert.SerializeObject(datas);
+                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, isonecolumnline = gridResult.isOneColumnLine };
                     JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                     jsonModel.MaxJsonLength = Int32.MaxValue;
 
@@ -217,7 +216,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-        public async Task<JsonResult> GetSocialMediaCreative(int id, int type)
+        public async Task<JsonResult> GetSocialMediaCreative(string ids, int type)
         {
             var gridResult = new GridResult();
 
