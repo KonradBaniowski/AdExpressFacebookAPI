@@ -328,21 +328,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 List<DataPostFacebook> data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
-                //List<PostFacebook> parent = new List<PostFacebook>();
-                //DataFacebook par = new DataFacebook()
-                //{
-                //    PID = -1,
-                //    ID = 1,
-                //    Expenditure = data.Sum(e => e.Expenditure),
-                //    IdPageFacebook = string.Join(",", data.SelectMany(e => e.IdPageFacebook)),
-                //    NbPage = data.Sum(e => e.NbPage),
-                //    NumberComment = data.Sum(e => e.NumberComment),
-                //    NumberFan = data.Sum(e => e.NumberFan),
-                //    NumberLike = data.Sum(e => e.NumberLike),
-                //    NumberPost = data.Sum(e => e.NumberPost),
-                //    NumberShare = data.Sum(e => e.NumberShare),
-                //    PageName = "Référents"
-                //};
+               
             }
 
 

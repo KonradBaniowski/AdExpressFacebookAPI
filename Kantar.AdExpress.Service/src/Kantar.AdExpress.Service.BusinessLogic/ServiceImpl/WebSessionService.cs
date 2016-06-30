@@ -239,8 +239,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     break;
                                 case CstWeb.Module.Name.FACEBOOK:
                                     Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
-                                    _webSession.PrincipalMediaUniverses = universes;
+                                    _webSession.PrincipalProductUniverses = universes;
                                     response.Success = true;
+                                    _webSession.Save();
                                     break;
                                 default:
                                     break;
