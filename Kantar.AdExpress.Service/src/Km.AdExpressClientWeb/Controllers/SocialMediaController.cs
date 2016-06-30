@@ -123,7 +123,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 postModelRef.IdBrands = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
 
-                response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), postModelRef).Result;
+                response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPageUri"]), postModelRef).Result;
                 content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
@@ -144,7 +144,6 @@ namespace Km.AdExpressClientWeb.Controllers
                     PageName = "Référents"
                 };
                 datas.Add(par);
-
                 datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
 
@@ -155,7 +154,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     postModelConc.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
                     postModelConc.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
-                    response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPage"), postModelConc).Result;
+                    response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPageUri"]), postModelConc).Result;
                     content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (!response.IsSuccessStatusCode)
                         throw new Exception(response.StatusCode.ToString());
