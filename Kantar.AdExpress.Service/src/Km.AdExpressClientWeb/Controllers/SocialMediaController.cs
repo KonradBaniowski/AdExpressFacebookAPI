@@ -80,6 +80,7 @@ namespace Km.AdExpressClientWeb.Controllers
             List<DataFacebook> datas = new List<DataFacebook>();
             HttpResponseMessage response = new HttpResponseMessage();
             DataFacebook par = new DataFacebook();
+            List<SelectListItem> combos = new List<SelectListItem>();
             string content = string.Empty;
 
             //Hierachical ids for Treegrid
@@ -153,6 +154,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
 
+                combos.Add(new SelectListItem { Text = "Select a post", Value = "", Selected = true });
+                combos.Add(new SelectListItem { Text = par.PageName, Value = par.IdPageFacebook });
+                combos.AddRange(data.Select(e => { return new SelectListItem { Text = e.PageName, Value = e.IdPageFacebook }; }).ToList());
 
                 if (universeMarket.Count > 1)
                 {
@@ -183,6 +187,9 @@ namespace Km.AdExpressClientWeb.Controllers
                     datas.Add(par);
                     datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
                     datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 2).Select(e => e).ToList());
+
+                    combos.Add(new SelectListItem { Text = par.PageName, Value = par.IdPageFacebook });
+                    combos.AddRange(data.Select(e => { return new SelectListItem { Text = e.PageName, Value = e.IdPageFacebook }; }).ToList());
                 }
 
                 gridResult.HasData = true;
@@ -196,7 +203,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         return null;
 
                     string jsonData = JsonConvert.SerializeObject(datas);
-                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, isonecolumnline = gridResult.isOneColumnLine };
+                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, combo = combos };
                     JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                     jsonModel.MaxJsonLength = Int32.MaxValue;
 
