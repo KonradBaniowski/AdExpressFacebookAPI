@@ -52,7 +52,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 item.NumberLike = i.Sum(a => a.NumberLike);
                 item.NumberComment = i.Sum(a => a.NumberComment);
                 item.NumberShare = i.Sum(a => a.NumberShare);
-                item.NumberFan = i.Max(a => a.NumberFan);
+                item.NumberFan = i.Sum(a => a.NumberFan);
                 foreach (var elem in i)
                 {
                     DataFacebookContract page = new DataFacebookContract();
