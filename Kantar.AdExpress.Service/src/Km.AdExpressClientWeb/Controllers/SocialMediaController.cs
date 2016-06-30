@@ -212,7 +212,6 @@ namespace Km.AdExpressClientWeb.Controllers
             int siteLanguage = _webSessionService.GetSiteLanguage(webSessionId);
             model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
             return View(model);
-
         }
 
         public async Task<JsonResult> GetSocialMediaCreative(string ids, int type)

@@ -1377,7 +1377,7 @@
     <item mnemonic="w2171" type="System.String">Plan media</item>
     <item mnemonic="w2172" type="System.String">Plan media concurrentiel</item>
     <item mnemonic="w2173" type="System.String">Analyse sectorielle: Les indicateurs graphiques </item>
-    <item mnemonic="w2174" type="System.String">Analyse sectorielle: Les tableaux dynamiques</item>
+    <item mnemonic="w2174" type="System.String">Analyse sectorielle plurimedia</item>
     <item mnemonic="w2175" type="System.String">Tableau de bord Presse</item>
     <item mnemonic="w2176" type="System.String">Tableau de bord Télévision</item>
     <item mnemonic="w2177" type="System.String">Tableau de bord Radio</item>
