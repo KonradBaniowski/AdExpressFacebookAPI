@@ -75,7 +75,7 @@
             $("#grid").igTreeGrid({
                 dataSource: ds.dataView(),
                 columns: cols,
-                height: "400px",
+                height: "600px",
                 autoGenerateColumns: false,
                 primaryKey: "ID",
                 foreignKey: "PID",
