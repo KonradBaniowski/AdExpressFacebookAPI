@@ -196,6 +196,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Search = 3062;
         public const long AnalysisLabel = 3063;
         public const long FacebookCode = 3064;
+        public const long DefaultUniverse = 3067;
+        public const long FacebookAllowedLevels = 3068;
+        public const long MaxFacebookItems = 3069;
+        public const long Redirecting = 3070;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;        
         #endregion

@@ -133,7 +133,11 @@ namespace Km.AdExpressClientWeb.I18n
                 FileName = GestionWeb.GetWebWord(LanguageConstantes.FileName, siteLanguage),
                 Email = GestionWeb.GetWebWord(LanguageConstantes.MailCode, siteLanguage),
                 Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
-                Close = GestionWeb.GetWebWord(LanguageConstantes.Close, siteLanguage)
+                Close = GestionWeb.GetWebWord(LanguageConstantes.Close, siteLanguage),
+                DefaultUniverse = GestionWeb.GetWebWord(LanguageConstantes.DefaultUniverse, siteLanguage),
+                FacebookAllowedLevels = GestionWeb.GetWebWord(LanguageConstantes.FacebookAllowedLevels, siteLanguage),
+                MaxFacebookItems = GestionWeb.GetWebWord(LanguageConstantes.MaxFacebookItems, siteLanguage),
+                Redirecting = GestionWeb.GetWebWord(LanguageConstantes.Redirecting, siteLanguage)
             };
             return result;
         }
