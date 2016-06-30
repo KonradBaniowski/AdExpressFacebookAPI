@@ -102,16 +102,16 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
-                @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PORTEFEUILLE))
+                @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                 {
                     <a href="@Url.Action("MediaSelection", "Portfolio" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PORTEFEUILLE">
                         <div class="flip-container">
                             <div class="front">
-                                <i class="icon-layers sli-size blue"></i>
-                                <h3>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h3>
+                                <i class="icon-book-open sli-size blue"></i>
+                                <h4>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h4>
                             </div>
                             <div class="back">
-                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -121,11 +121,11 @@
                     <div class="tile-body text-center disabled-effect">
                         <div class="flip-container">
                             <div class="front">
-                                <i class="icon-layers sli-size blue"></i>
-                                <h3>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h3>
+                                <i class="icon-book-open sli-size blue"></i>
+                                <h4>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h4>
                             </div>
                             <div class="back">
-                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -207,18 +207,18 @@
                     {
                     <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</div>
                     }*@
-                @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
+                @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PORTEFEUILLE))
                 {
 
                     @* <a href="@Url.Action("Index","Chrono")" class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">*@
                     <a href="@Url.Action("Market", "Selection")" class="tile-body text-center module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">
                         <div class="flip-container-second">
                             <div class="front-second">
-                                <i class="icon-book-open sli-size-small green"></i>
-                                <h5>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h5>
+                                <i class="icon-layers sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h5>
                             </div>
                             <div class="back-second">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -228,11 +228,11 @@
                     <div class="tile-body text-center disabled-effect">
                         <div class="flip-container">
                             <div class="front">
-                                <i class="icon-book-open sli-size-small green"></i>
-                                <h5>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h5>
+                                <i class="icon-layers sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h5>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
                             </div>
                         </div>
                     </div>

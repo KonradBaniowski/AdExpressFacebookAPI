@@ -18,6 +18,25 @@
     var gridWidth;
 
     CallSocialMediaResult();
+    
+
+    CallCombo();
+
+    function CallCombo() {
+        $.ajax({
+            url: '/SocialMedia/GetFilterPost',
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            datatype: "json",
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                $.each(data.combo, function (index, value) {
+                    $('#combo > .form-control').append('<option '+value.Selected+'value=' + value.Value + '>' + value.Text + '</option>');
+                })
+            }
+        });
+    }
    
     function CallSocialMediaResult() {
         $("#gridEmpty").hide();
@@ -75,7 +94,7 @@
             $("#grid").igTreeGrid({
                 dataSource: ds.dataView(),
                 columns: cols,
-                height: "400px",
+                height: "600px",
                 autoGenerateColumns: false,
                 primaryKey: "ID",
                 foreignKey: "PID",
