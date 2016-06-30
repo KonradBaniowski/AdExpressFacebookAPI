@@ -210,7 +210,40 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-        public ActionResult SocialMediaCreative(int id, int type)
+
+        
+        public JsonResult GetFilterPost()
+        {
+            List<SelectListItem> combo = new List<SelectListItem>()
+            {
+                new SelectListItem{
+                    Text = "select a post",
+                    Value = "",
+                    Selected = true
+                },
+                new SelectListItem
+                {
+                    Text = "SONY PARENT ENTERN",
+                    Value = "1381,1156"
+                },
+                new SelectListItem
+                {
+                    Text = "play1",
+                    Value = "1381"
+                },
+                new SelectListItem
+                {
+                    Text = "play2",
+                    Value = "1156"
+                }
+            };
+            var obj = new { combo = combo };
+            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            jsonModel.MaxJsonLength = Int32.MaxValue;
+            return jsonModel;
+        }
+
+        public  ActionResult SocialMediaCreative(string ids, int type)
         {
             InsertionCreativeViewModel model = new InsertionCreativeViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
@@ -235,28 +268,26 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "ID" });
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
-            columns.Add(new { headerText = "PostId", key = "5", dataType = "string", width = "*", hidden = true });
-            schemaFields.Add(new { name = "5" });
-            columns.Add(new { headerText = "Post", key = "10", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "10" });
-            columns.Add(new { headerText = "AdvertiserLabel", key = "20", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "20" });
-            columns.Add(new { headerText = "BrandLabel", key = "30", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "30" });
-            columns.Add(new { headerText = "PageLabel", key = "40", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "40" });
-            columns.Add(new { headerText = "DateLabel", key = "50", dataType = "string", width = "*" });
-            schemaFields.Add(new { name = "50" });
-            columns.Add(new { headerText = "Commitment", key = "60", dataType = "number", width = "*" });
-            schemaFields.Add(new { name = "60" });
-            columns.Add(new { headerText = "Like", key = "70", dataType = "number", width = "*" });
-            schemaFields.Add(new { name = "70" });
-            columns.Add(new { headerText = "Share", key = "80", dataType = "number", width = "*" });
-            schemaFields.Add(new { name = "80" });
-            columns.Add(new { headerText = "Comment", key = "90", dataType = "number", width = "*" });
-            schemaFields.Add(new { name = "90" });
-            columns.Add(new { headerText = "LevelType", key = "LevelType", dataType = "string", width = "*", hidden = true });
-            schemaFields.Add(new { name = "LevelType" });
+            columns.Add(new { headerText = "PostId", key = "IdPost", dataType = "string", width = "*", hidden = true });
+            schemaFields.Add(new { name = "IdPost" });
+            columns.Add(new { headerText = "IdPostFacebook", key = "IdPostFacebook", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "IdPostFacebook" });
+            columns.Add(new { headerText = "Advertiser", key = "Advertiser", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "Advertiser" });
+            columns.Add(new { headerText = "Brand", key = "Brand", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "Brand" });
+            columns.Add(new { headerText = "Page", key = "PageName", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "PageName" });
+            columns.Add(new { headerText = "Date", key = "DateCreationPost", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "DateCreationPost" });
+            columns.Add(new { headerText = "Commitment", key = "Commitment", dataType = "number", width = "*" });
+            schemaFields.Add(new { name = "Commitment" });
+            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "*" });
+            schemaFields.Add(new { name = "NumberLike" });
+            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "*" });
+            schemaFields.Add(new { name = "NumberShare" });
+            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "*" });
+            schemaFields.Add(new { name = "NumberComment" });
             //End
             #endregion
             #region Mock Data
@@ -331,19 +362,13 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 List<DataPostFacebook> data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
-               
+                string jsonData = JsonConvert.SerializeObject(data);
+                var obj = new { datagrid = jsonData, columns = columns, schema = schemaFields, columnsfixed = columnsFixed, needfixedcolumns = false, isonecolumnline = gridResult.isOneColumnLine };
+                JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
             }
-
-
-                if (!gridResult.HasData)
-                return null;
-
-            string jsonData = JsonConvert.SerializeObject(gridResult.Data);
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, isonecolumnline = gridResult.isOneColumnLine };
-            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
-            jsonModel.MaxJsonLength = Int32.MaxValue;
-
-            return jsonModel;
         }
 
     }

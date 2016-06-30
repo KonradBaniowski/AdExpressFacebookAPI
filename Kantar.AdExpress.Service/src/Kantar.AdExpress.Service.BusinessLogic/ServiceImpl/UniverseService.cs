@@ -1057,7 +1057,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                 case WebConstantes.Module.Name.INDICATEUR:
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                case WebConstantes.Module.Name.FACEBOOK:
+                
                     adExpressUniverse = GetUniverseToSave(request);
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
                     {
@@ -1069,6 +1069,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         universes.Add(universes.Count, adExpressUniverse);
                     }
                     break;
+                case WebConstantes.Module.Name.FACEBOOK:
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                     adExpressUniverses = GetConcurrentUniversesToSave(request);
                     int id = 0;

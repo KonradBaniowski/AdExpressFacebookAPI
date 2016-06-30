@@ -219,12 +219,12 @@
                         });
 
                         cols = data.columns
-                        for (i = 0; i < cols.length; i++) {
-                            if (cols[i].key == "10") //Spot = 10
-                                cols[i].template = $("#colSpotTmpl").html();
-                            else if (cols[i].key == "Visu")
-                                cols[i].template = $("#colVisuTmpl").html();
-                        }
+                        //for (i = 0; i < cols.length; i++) {
+                        //    if (cols[i].key == "10") //Spot = 10
+                        //        cols[i].template = $("#colSpotTmpl").html();
+                        //    else if (cols[i].key == "Visu")
+                        //        cols[i].template = $("#colVisuTmpl").html();
+                        //}
 
                         ds = new $.ig.DataSource({
                             type: "json",

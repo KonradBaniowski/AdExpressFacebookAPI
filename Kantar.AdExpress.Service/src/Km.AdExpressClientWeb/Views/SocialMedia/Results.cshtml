@@ -1,5 +1,5 @@
 ﻿@model Km.AdExpressClientWeb.Models.SocialMedia.ResultsViewModel
-@using TNS.AdExpress.Domain.Translation; 
+@using TNS.AdExpress.Domain.Translation;
 @{
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
@@ -34,10 +34,10 @@
 @*<div class="h20">
     </div>*@
 @*<div class="row">
-    <div class="col-md-12">
-        @Html.Action("ResultOptions", _controller)
-    </div>
-</div>*@
+        <div class="col-md-12">
+            @Html.Action("ResultOptions", _controller)
+        </div>
+    </div>*@
 <div class="h20">
 </div>
 <div class="row">
@@ -50,6 +50,24 @@
                 <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
             </div>
         </center>
+    </div>
+</div>
+
+<div class="row margin-top-30">
+    <div class="col-md-12">
+        <form class="form-inline pull-right">
+            <div id="combo" class="form-group">
+                <label for="wombocombo">Filter</label>
+                <select class="form-control"></select>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row margin-top-30">
+    <div class="col-md-12">
+        <div class="post-selected" hidden>
+
+        </div>
     </div>
 </div>
 <div id="resultModal" class="modal fade">
@@ -85,7 +103,7 @@
 
     <script id="titleTmpl" type="text/template">
         {{if parseInt(${IdPage}) != 0}}
-            <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src=""/>
+        <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src="" />
         {{/if}}
         ${PageName}
     </script>
@@ -100,14 +118,14 @@
 
     <script id="linkUrlTmpl" type="text/template">
         {{if ${Url} != "" }}
-            <center>
-                <a href="${Url}" target="_blank">
-                    <span class="fa fa-search-plus"></span>
-                </a>
-            </center>
+        <center>
+            <a href="${Url}" target="_blank">
+                <span class="fa fa-search-plus"></span>
+            </a>
+        </center>
         {{/if}}
     </script>
-    
+
 
     @Scripts.Render("~/bundles/results")
     @Scripts.Render("~/bundles/socialMedia-results")

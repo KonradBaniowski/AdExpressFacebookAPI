@@ -70,7 +70,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
             #region Load each label's text in the appropriate language
             var helper = new Helpers.PageHelper();
-            model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+            //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+            model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
+             int maxItems = int.Parse(System.Configuration.ConfigurationManager.AppSettings["FacebookMaxItems"]);
+            model.Labels.MaxFacebookItems = string.Format(model.Labels.MaxFacebookItems,maxItems);
             model.Branches = Mapper.Map<List<UniversBranch>>(result.Branches);
             foreach (var item in result.Trees)
             {
@@ -184,7 +187,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
             //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
             model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
-            var msg =model.Labels.MaxFacebookItems;
             var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
