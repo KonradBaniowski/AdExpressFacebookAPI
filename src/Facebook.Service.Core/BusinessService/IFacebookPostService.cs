@@ -12,5 +12,7 @@ namespace Facebook.Service.Core.BusinessService
         List<DataPostFacebookContract> GetDataPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> posts);
 
         List<PostFacebookContract> GetTopPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> posts);
+
+        PostFacebookContract GetPostFacebook(long idPostFacebook);
     }
 }

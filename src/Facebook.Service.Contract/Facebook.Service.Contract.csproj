@@ -44,6 +44,7 @@
     <Compile Include="ContractModels\ModuleFacebook\DataFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\DataPostFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\LevelItemContract.cs" />
+    <Compile Include="ContractModels\ModuleFacebook\PostFacebookContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

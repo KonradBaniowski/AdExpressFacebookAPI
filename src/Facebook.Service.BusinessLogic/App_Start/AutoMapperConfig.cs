@@ -37,6 +37,7 @@ namespace Facebook.Service.BusinessLogic
                 e.CreateMap<DateFacebookContract, DataFacebookContract>();
                 e.CreateMap<CriteriaData, Criteria>().ReverseMap();
                 e.CreateMap<LevelItem, LevelItemContract>();
+                e.CreateMap<PostFacebook, PostFacebookContract>();
             });
         }
     }

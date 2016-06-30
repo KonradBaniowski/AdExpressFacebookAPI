@@ -10,6 +10,7 @@ namespace Facebook.Service.Core.DataAccess.Repository
 {
     public interface IDataPostFacebookRepository : IGenericRepository<DataPostFacebook>
     {
-        List<PostFacebook> GetDataPostFacebook(List<CriteriaData> criteria, long begin, long end, List<long> advertiser, List<long> brand, List<long> post);
+        List<PostFacebook> GetDataPostFacebook(List<CriteriaData> criteria, long begin, long end, List<long> advertiser, List<long> brand, List<long> pages);
+       PostFacebook GetDataPostFacebook(long idPostFacebook);
     }
 }

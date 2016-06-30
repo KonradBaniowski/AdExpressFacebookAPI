@@ -17,6 +17,28 @@ namespace Facebook.DataAccess.Repository
     {
         public DataPostFacebookRepository(FacebookContext context) : base(context)
         {
+           
+        }
+
+        public PostFacebook GetDataPostFacebook(long idPostFacebook)
+        {
+            var query = (from dp in context.DataPostFacebook
+                         join ap in context.Products on dp.IdBrand equals ap.BrandId
+                         where dp.IdPostFacebook == idPostFacebook
+                         select new PostFacebook
+                         {
+                             IdPostFacebook = dp.IdPostFacebook,
+                             IdPost = dp.IdPost,
+                             Advertiser = ap.Advertiser,
+                             Brand = ap.Brand,
+                             DateCreationPost = dp.DateCreationPost,
+                             Commitments = dp.Commitment,
+                             NumberLikes = dp.NumberLike,
+                             NumberShares = dp.NumberShare,
+                             NumberComments = dp.NumberComment,
+                             // PageName = df.PageName, TODO : voir Eric pour creeer la page name dans datasot facebook
+                         });
+            return query.FirstOrDefault();
         }
 
         public List<PostFacebook> GetDataPostFacebook(List<CriteriaData> criteria, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages)
@@ -89,10 +111,10 @@ namespace Facebook.DataAccess.Repository
                               Advertiser = ap.Advertiser,
                               Brand = ap.Brand,
                               DateCreationPost = dp.DateCreationPost,
-                              Commitment = dp.Commitment,
-                              NumberLike = dp.NumberLike,
-                              NumberShare = dp.NumberShare,
-                              NumberComment = dp.NumberComment,
+                              Commitments = dp.Commitment,
+                              NumberLikes = dp.NumberLike,
+                              NumberShares = dp.NumberShare,
+                              NumberComments = dp.NumberComment,
                               PageName = df.PageName,
                           });
 

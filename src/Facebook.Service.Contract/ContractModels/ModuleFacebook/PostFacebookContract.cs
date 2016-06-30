@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
 {
-    public class DataPostFacebookContract
+    public class PostFacebookContract
     {
         public long IdPostFacebook { get; set; }
         public string Advertiser { get; set; }
@@ -14,12 +14,12 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public string PageName { get; set; }
         public string IdPost { get; set; }
         public DateTime DateCreationPost { get; set; }
-        public long NumberLike { get; set; }
-        public long NumberComment { get; set; }
-        public long NumberShare { get; set; }
-        public long Commitment { get; set; }
-      
+        public string NumberLikes { get; set; }
+        public string NumberComments { get; set; }
+        public string NumberShares { get; set; }
+        public string Commitments { get; set; }
+
     }
 
-   
+  
 }

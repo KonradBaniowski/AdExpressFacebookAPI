@@ -25,11 +25,11 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public List<DataPostFacebookContract> GetDataPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> posts)
+        public List<DataPostFacebookContract> GetDataPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages)
         {
             var criteria = _rightsvc.GetCriteria(idLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
-            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(criteriaData, begin, end, advertisers, brands, posts);
+            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(criteriaData, begin, end, advertisers, brands, pages);
 
             var postsFacebbok = postsFacebook.Select(p =>
            new DataPostFacebookContract
@@ -39,21 +39,21 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                Advertiser = p.Advertiser,
                Brand = p.Brand,
                DateCreationPost = p.DateCreationPost,
-               Commitment = LastKPI(p.Commitment),
-               NumberComment = LastKPI(p.NumberComment),
-               NumberLike = LastKPI(p.NumberLike),
-               NumberShare = LastKPI(p.NumberShare),
+               Commitment = LastKPI(p.Commitments),
+               NumberComment = LastKPI(p.NumberComments),
+               NumberLike = LastKPI(p.NumberLikes),
+               NumberShare = LastKPI(p.NumberShares),
                PageName = p.PageName
            }).ToList();
 
             return postsFacebbok;
         }
 
-        public List<PostFacebookContract> GetTopPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> posts)
+        public List<PostFacebookContract> GetTopPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages)
         {
             var criteria = _rightsvc.GetCriteria(idLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
-            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(criteriaData, begin, end, advertisers, brands, posts);
+            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(criteriaData, begin, end, advertisers, brands, pages);
 
             var postsFacebbok = postsFacebook.Select(p =>
            new
@@ -63,15 +63,15 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                Advertiser = p.Advertiser,
                Brand = p.Brand,
                DateCreationPost = p.DateCreationPost,
-               Commitment = LastKPI(p.Commitment),
-               NumberComment = LastKPI(p.NumberComment),
-               NumberLike = LastKPI(p.NumberLike),
-               NumberShare = LastKPI(p.NumberShare),
+               Commitment = LastKPI(p.Commitments),
+               NumberComment = LastKPI(p.NumberComments),
+               NumberLike = LastKPI(p.NumberLikes),
+               NumberShare = LastKPI(p.NumberShares),
                PageName = p.PageName,
-               NumberComments = p.NumberComment,
-               NumberLikes = p.NumberLike,
-               NumberShares = p.NumberShare,
-               Commitments = p.Commitment,
+               NumberComments = p.NumberComments,
+               NumberLikes = p.NumberLikes,
+               NumberShares = p.NumberShares,
+               Commitments = p.Commitments,
            }).OrderByDescending(p => p.Commitment).Take(NB_TOP_POST).Select(p => new PostFacebookContract
            {
                Advertiser = p.Advertiser,
@@ -88,7 +88,18 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return postsFacebbok;
         }
 
+        public PostFacebookContract GetPostFacebook(long idPostFacebook)
+        {
+            PostFacebookContract postFacebookContract  = new PostFacebookContract();
+            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(idPostFacebook);
 
+            if (postsFacebook != null)
+            {
+               return _mapper.Map<PostFacebookContract>(postsFacebook);               
+            }
+
+            return postFacebookContract;
+        }
 
         private long LastKPI(string values)
         {
@@ -99,5 +110,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
             return 0;
         }
+
+      
     }
 }

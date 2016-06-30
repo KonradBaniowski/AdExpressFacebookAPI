@@ -42,6 +42,8 @@ namespace Facebook.DataAccess.Mapping.Adexpr
             Property(e => e.NumberComment).HasColumnName("NUMBER_COMMENT");
             Property(e => e.NumberShare).HasColumnName("NUMBER_SHARE");
             Property(e => e.Commitment).HasColumnName("COMMITMENT");
+            Property(e => e.IdBrand).HasColumnName("ID_BRAND");
+            Property(e => e.IdAdvertiser).HasColumnName("ID_ADVERTISER");
         }
     }
 }

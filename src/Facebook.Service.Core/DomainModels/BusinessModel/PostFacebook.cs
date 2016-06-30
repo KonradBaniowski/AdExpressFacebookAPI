@@ -13,10 +13,10 @@ namespace Facebook.Service.Core.DomainModels.BusinessModel
         public string PageName { get; set; }
         public string IdPost { get; set; }
         public DateTime DateCreationPost { get; set; }
-        public string NumberLike { get; set; }
-        public string NumberComment { get; set; }
-        public string NumberShare { get; set; }
-        public string Commitment { get; set; }
+        public string NumberLikes { get; set; }
+        public string NumberComments { get; set; }
+        public string NumberShares { get; set; }
+        public string Commitments { get; set; }
         public string Brand { get; set; }
 
       
