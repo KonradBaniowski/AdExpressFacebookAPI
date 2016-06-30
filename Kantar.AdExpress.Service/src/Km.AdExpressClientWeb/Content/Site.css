@@ -2766,7 +2766,7 @@ ul.ui-selectable {
 }
 
 
-/*CCS pour Alignement à droite des numeriques tableau infragistics*/
+/*CSS pour Alignement à droite des numeriques tableau infragistics*/
 .numericAlignment {
     text-align: right;
 }
