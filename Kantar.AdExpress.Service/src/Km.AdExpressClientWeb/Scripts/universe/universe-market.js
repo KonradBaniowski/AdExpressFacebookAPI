@@ -15,13 +15,12 @@ $('#move-item').on('click', function () {
         {
             if (!(universSrc == 6 || universSrc == 8))
             {
-                bootbox.alert($('#Labels_FacebookAllowedLevels').val())//("You can select only advertisers or brands.");
+                bootbox.alert($('#Labels_FacebookAllowedLevels').val());
                 return
             }
             if (nbItemSrc > maxUniverseItems || nbItemDst > maxUniverseItems)
-            {
-                var message = $('#Labels_MaxFacebookItems').val();               
-                bootbox.alert(message)//bootbox.alert("Please select at maximum 5 advertisers or brands. ");
+            {             
+                bootbox.alert($('#Labels_MaxFacebookItems').val());
                 return
             }
         }
