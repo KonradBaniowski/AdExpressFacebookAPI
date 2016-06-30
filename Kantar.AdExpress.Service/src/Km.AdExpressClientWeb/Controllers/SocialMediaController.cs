@@ -327,7 +327,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
 
-                List<PostFacebook> data = JsonConvert.DeserializeObject<List<PostFacebook>>(content);
+                List<DataPostFacebook> data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
                 //List<PostFacebook> parent = new List<PostFacebook>();
                 //DataFacebook par = new DataFacebook()
                 //{
