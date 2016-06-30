@@ -40,7 +40,7 @@
 </div>
 <div class="h20"></div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 analysis">
         <center>
             <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
             <div id="grid" class="hide">
@@ -65,18 +65,22 @@
 </div>
 
 @section Scripts {
-    <script src="~/IgniteUI/js/infragistics.core.js"></script>
-    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
     @switch (Model.Presentation.SiteLanguage.ToString())
         {
             case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
             <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.UK:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
             break;
         default:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
             break;
     }

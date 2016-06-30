@@ -276,16 +276,17 @@
                         var elementWidth = element.width();
                         var childWidth = child.width();
 
-                        if (elementWidth == childWidth || (elementWidth - childWidth) < 16) {
-                            var str = child.html();
-                            str = str.replace(/&nbsp;/g, " ");
-                            if (str.length > 6)
-                                str = str.substring(0, str.length - 6) + "...";
-                            else
-                                str = str.substring(0, str.length - 3) + ".";
+                        //if (elementWidth == childWidth || (elementWidth - childWidth) <= 20) {
+                        //    var str = child.html();
+                        //    str = str.replace(/&nbsp;/g, " ");
+                        //    if (str.length > 6)
+                        //        str = str.substring(0, str.length - 6) + "...";
+                        //    else
+                        //        str = str.substring(0, str.length - 3) + ".";
 
-                            child.html(str);
-                        }
+                        //    child.html(str);
+                        //}
+                        element.addClass("ui-iggrid-colheaderasc-ktr");
                         if (sortOrder == "ASC")
                             element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-asc ui-icon ui-icon-arrowthick-1-n"></span></div>');
                         else
