@@ -43,7 +43,7 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
 
     }
 
-    public class PostFacebook
+    public class DataPostFacebook
     {
         public long IdPostFacebook { get; set; }
         public string Advertiser { get; set; }
@@ -55,5 +55,19 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public long NumberShare { get; set; }
         public long Commitment { get; set; }
         public string Brand { get; set; }
+    }
+
+    public class PostFacebook
+    {
+        public long IdPostFacebook { get; set; }
+        public string Advertiser { get; set; }
+        public string Brand { get; set; }
+        public string PageName { get; set; }
+        public string IdPost { get; set; }
+        public DateTime DateCreationPost { get; set; }
+        public string NumberLikes { get; set; }
+        public string NumberComments { get; set; }
+        public string NumberShares { get; set; }
+        public string Commitments { get; set; }
     }
 }
