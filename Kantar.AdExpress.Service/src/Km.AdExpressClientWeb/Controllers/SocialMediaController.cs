@@ -400,6 +400,37 @@ namespace Km.AdExpressClientWeb.Controllers
             //}
         }
 
+        public JsonResult GetFilterPost()
+        {
+            List<SelectListItem> combo = new List<SelectListItem>()
+            {
+                new SelectListItem{
+                    Text = "select a post",
+                    Value = "",
+                    Selected = true
+                },
+                new SelectListItem
+                {
+                    Text = "SONY PARENT ENTERN",
+                    Value = "1381,1156"
+                },
+                new SelectListItem
+                {
+                    Text = "play1",
+                    Value = "1381"
+                },
+                new SelectListItem
+                {
+                    Text = "play2",
+                    Value = "1156"
+                }
+            };
+            var obj = new { combo = combo };
+            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            jsonModel.MaxJsonLength = Int32.MaxValue;
+            return jsonModel;
+        }
+
         public ActionResult SocialMediaCreative(int id, int type)
         {
             return View();
