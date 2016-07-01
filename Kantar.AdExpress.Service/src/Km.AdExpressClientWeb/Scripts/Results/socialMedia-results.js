@@ -20,7 +20,7 @@
     CallSocialMediaResult();
 
 
-    CallCombo();
+    //CallCombo();
 
     function CallCombo() {
         $.ajax({
@@ -93,8 +93,14 @@
             type: "POST",
             datatype: "json",
             error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert(errorText);
             },
             success: function (data) {
+                //ComboBox Init
+                $.each(data.combo, function (index, value) {
+                    $('#combo > .form-control').append('<option ' + value.Selected + ' value=' + value.Value + '>' + value.Text + '</option>');
+                })
+
                 if (data != null && data != "") {
                     dataTreeGrid = data.datagrid;
                     //cols = GetColumnsFormatter(data.columns, data.unit);
@@ -223,6 +229,7 @@ $('#combo > .form-control').on('change', function () {
             ids: ids
         },
         error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
         },
         success: function (data) {
             console.log();

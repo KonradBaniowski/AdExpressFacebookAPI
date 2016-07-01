@@ -163,6 +163,9 @@ namespace Km.AdExpressClientWeb
 
             bundles.Add(new ScriptBundle("~/bundles/socialMedia-results").Include(
             "~/Scripts/Results/socialMedia-results.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/socialMedia-creative").Include(
+            "~/Scripts/creative/socialMediaCreative.js"));
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Km.AdExpressClientWeb.Models.SocialMedia;
-using Domain=Kantar.AdExpress.Service.Core.Domain;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using Km.AdExpressClientWeb.I18n;
@@ -154,7 +154,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
 
-                combos.Add(new SelectListItem { Text = "Select a post", Value = "", Selected = true });
+                combos.Add(new SelectListItem { Text = "TOP 3 des posts", Value = "", Selected = true });
                 combos.Add(new SelectListItem { Text = par.PageName, Value = par.IdPageFacebook });
                 combos.AddRange(data.Select(e => { return new SelectListItem { Text = e.PageName, Value = e.IdPageFacebook }; }).ToList());
 
@@ -250,17 +250,19 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public  ActionResult SocialMediaCreative(string ids, int type)
+        public  ActionResult SocialMediaCreative(string ids, string type)
         {
             InsertionCreativeViewModel model = new InsertionCreativeViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int siteLanguage = _webSessionService.GetSiteLanguage(webSessionId);
             model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
+            model.paramsUrl.Add(ids);
+            model.paramsUrl.Add(type.ToString());
             return View(model);
         }
 
-        public async Task<JsonResult> GetSocialMediaCreative(string ids, int type)
+        public async Task<JsonResult> GetSocialMediaCreative(string ids, string type)
         {
             var gridResult = new GridResult();
 
@@ -362,8 +364,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
 
-
-                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPost"), postModelRef).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPostUri"]), postModelRef).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
@@ -380,6 +381,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public async Task<JsonResult> GetPostbyIdPage(List<long> ids)
         {
+            if (ids == null) { throw new ArgumentNullException("Parameters are null"); }
+            if (ids.Count == 0) { throw new ArgumentException("Parameters must be defined"); }
+
             using (var client = new HttpClient())
             {
                 var cla = new ClaimsPrincipal(User.Identity);

@@ -13,5 +13,6 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<long> IdAdvertisers { get; set; }
         public List<long> IdBrands { get; set; }
         public List<long> IdPages { get; set; }
+        public int IdLanguage { get; set; }
     }
 }
