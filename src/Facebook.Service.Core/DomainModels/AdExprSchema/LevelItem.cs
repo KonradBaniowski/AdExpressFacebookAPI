@@ -20,6 +20,7 @@ namespace Facebook.Service.Core.DomainModels.AdExprSchema
         public string Advertiser { get; set; }
         public long HoldingCompanyId { get; set; }
         public string HoldingCompany { get; set; }
+        public long IdLanguage { get; set; }
         
     }
 }
