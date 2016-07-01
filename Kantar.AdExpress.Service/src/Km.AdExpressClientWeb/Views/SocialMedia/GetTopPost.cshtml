@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Km.AdExpressClientWeb.Models.SocialMedia.PostFacebook>
+
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        @foreach (var post in Model)
+        {
+            var srvURL = "http://192.168.158.145/POSTS/" + post.IdPost.Substring(0, 1) + "/" + post.IdPost.Substring(1, 3) + "/" + post.IdPost + "_Post.png";
+            <div class="col-lg-4">
+                <img src="@(srvURL)" class="img-responsive" alt="@(post.PageName)">
+                @Html.Hidden(post.NumberComments)
+                @Html.Hidden(post.NumberLikes)
+                @Html.Hidden(post.NumberShares)
+                <div id="chart-div-comment" class="col-lg-12">
+
+                </div>
+                <div id="chart-div-like" class="col-lg-12">
+
+                </div>
+                <div id="chart-div-share" class="col-lg-12">
+
+                </div>
+            </div>
+            
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
+    </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+                ['Year', 'Sales', 'Expenses'],
+                ['2013',  1000,      400],
+                ['2014',  1170,      460],
+                ['2015',  660,       1120],
+                ['2016',  1030,      540]
+              ]);
+
+              var options = {
+                title: 'Company Performance',
+                hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+                vAxis: {minValue: 0}
+              };
+
+              var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+            }
+    });
+   
+      
+</script>
+
+}
+

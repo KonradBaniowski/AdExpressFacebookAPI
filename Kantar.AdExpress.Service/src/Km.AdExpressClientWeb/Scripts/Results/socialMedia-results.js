@@ -232,7 +232,7 @@ $('#combo > .form-control').on('change', function () {
             bootbox.alert(thrownError);
         },
         success: function (data) {
-            console.log();
+            $('#top-post').html('').append(data);
         }
     });
 });

@@ -379,7 +379,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
-        public async Task<JsonResult> GetPostbyIdPage(List<long> ids)
+        public async Task<ActionResult> GetPostbyIdPage(List<long> ids)
         {
             if (ids == null) { throw new ArgumentNullException("Parameters are null"); }
             if (ids.Count == 0) { throw new ArgumentException("Parameters must be defined"); }
@@ -398,12 +398,12 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 var data = JsonConvert.DeserializeObject<List<PostFacebook>>(content);
-                string jsonData = JsonConvert.SerializeObject(data);
-                var obj = new {data = data };
-                JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
-                jsonModel.MaxJsonLength = Int32.MaxValue;
+                //string jsonData = JsonConvert.SerializeObject(data);
+                //var obj = new {data = data };
+                //JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                //jsonModel.MaxJsonLength = Int32.MaxValue;
 
-                return jsonModel;
+                return PartialView("GetTopPost",data);
             }
         }
 
