@@ -138,6 +138,19 @@ CallInsertionsResult();
 //** charge les images au fur et a mesure que le teableau s'affiche (image post facebook)
 $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
 
+    //AutoPlayVisu();
+
+    $(".carousel").each(function (index) {
+        $("#visuCarou" + index.toString()).carousel("pause");
+        $("#visuCarou" + index.toString()).find('.left').click(function () {
+            $("#visuCarou" + index.toString()).carousel("prev");
+        });
+        $("#visuCarou" + index.toString()).find('.right').click(function () {
+            $("#visuCarou" + index.toString()).carousel("next");
+        });
+    });
+
+
     $(".imgPostsFacebook").each(function () {
         var datas = $(this).attr('data-post').toString();
         var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + "_Post.png"

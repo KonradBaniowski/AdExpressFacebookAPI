@@ -59,13 +59,11 @@
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
-
+    @Scripts.Render("~/bundles/socialMedia-creative")
+    @Scripts.Render("~/bundles/language-choice")
     <script id="colPostTmpl" type="text/template">
         {{if parseInt(${IdPostFacebook}) != 0}}
         <img class="imgPostsFacebook" style="max-width:40px;" data-post="${IdPost}" src="" onError="this.onerror=null;this.src='/Content/img/no_visu.jpg';" />
         {{/if}}
     </script>
-
-    @Scripts.Render("~/bundles/socialMedia-creative") 
-   
 }

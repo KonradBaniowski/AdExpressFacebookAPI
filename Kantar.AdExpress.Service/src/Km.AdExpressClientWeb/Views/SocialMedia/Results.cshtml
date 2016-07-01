@@ -1,6 +1,7 @@
 ﻿@model Km.AdExpressClientWeb.Models.SocialMedia.ResultsViewModel
 @using TNS.AdExpress.Domain.Translation;
 @{
+    var _controller = "SocialMedia";
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
 }
@@ -63,6 +64,10 @@
         </form>
     </div>
 </div>
+
+<div class="row margin-top-30" id="top-post">
+    
+</div>
 <div class="row margin-top-30">
     <div class="col-md-12">
         <div class="post-selected" hidden>
@@ -94,7 +99,7 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" id="current-url" value="/@_controller/Results" />
 @section Scripts{
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
