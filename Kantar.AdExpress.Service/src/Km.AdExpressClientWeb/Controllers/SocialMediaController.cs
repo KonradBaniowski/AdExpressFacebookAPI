@@ -360,7 +360,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
                 Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
-                postModelRef.IdPages = ids.Split(',').Select(long.Parse).ToList();
+                postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPostUri"]), postModelRef).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

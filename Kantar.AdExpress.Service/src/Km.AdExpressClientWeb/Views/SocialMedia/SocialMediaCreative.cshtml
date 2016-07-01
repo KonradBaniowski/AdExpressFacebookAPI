@@ -62,9 +62,8 @@
 
     <script id="colPostTmpl" type="text/template">
         {{if parseInt(${IdPostFacebook}) != 0}}
-        <img class="imgPostsFacebook" style="max-width:50px;" data-post="${IdPostFacebook}" src="" />
+        <img class="imgPostsFacebook" style="max-width:40px;" data-post="${IdPost}" src="" onError="this.onerror=null;this.src='/Content/img/no_visu.jpg';" />
         {{/if}}
-        ${IdPostFacebook}
     </script>
 
     @Scripts.Render("~/bundles/socialMedia-creative") 
