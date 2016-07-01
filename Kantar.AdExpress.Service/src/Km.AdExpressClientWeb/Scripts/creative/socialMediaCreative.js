@@ -15,20 +15,6 @@ var ds;
 var cols;
 var colsFixed;
 var needFixedColumns = false;
-var periodType = "Mois";
-
-function GenericDetailLevelFilter() {
-    this.L1DetailValue = -1;
-    this.L2DetailValue = -1;
-    this.L3DetailValue = -1;
-}
-
-function UserFilter() {
-    this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
-    this.isVehicleChanged = true;
-}
-
-var userFilter = new UserFilter();
 
 var renderGrid = function (success, error) {
 
@@ -122,6 +108,12 @@ function CallInsertionsResult() {
                 });
 
                 cols = data.columns
+
+                for (i = 0; i < cols.length; i++) {
+                    if (cols[i].key == "IdPostFacebook")
+                        cols[i].template = $("#colPostTmpl").html();
+                }
+
                 ds = new $.ig.DataSource({
                     type: "json",
                     schema: schema,
@@ -140,9 +132,13 @@ function CallInsertionsResult() {
     });
 }
 
-//** Important charge les images au fur et a mesure que le teableau s'affiche
+CallInsertionsResult();
+
+
+//** charge les images au fur et a mesure que le teableau s'affiche (image post facebook)
 $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
-    AutoPlayVisu();
+
+    //AutoPlayVisu();
 
     $(".carousel").each(function (index) {
         $("#visuCarou" + index.toString()).carousel("pause");
@@ -154,12 +150,37 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
         });
     });
 
-    $(".triggerModal > .fa").each(function () {
-        $(this).addClass('iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
+
+    $(".imgPostsFacebook").each(function () {
+        var datas = $(this).attr('data-post').toString();
+        var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + "_Post.png"
+        $(this).attr("src", link);
     });
 
 });
-CallInsertionsResult();
+
+
+$("#postFacebookModal").attr('src', '');
+$("#postFacebookModal").on('shown.bs.modal', function (event) {
+    var button = $(event.relatedTarget);// Button that triggered the modal
+    var datas = button.data('creative').toString(); // Extract info from data-* attributes
+
+    if (datas === null || datas == "" || datas == 0 || datas == "0") {
+        alert("Post disponible.");
+    }
+    else {
+        id = datas;
+        $("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id);
+        $("#objectPost").show();
+    }
+});
+
+$("#creativeModal").on('hide.bs.modal', function () {
+    $("#objectPost").attr('src', '');
+    $("#objectPost").addClass("hide");
+});
+
+
 
 //Resize de la page, la longuer du tableau egalament
 $(window).resize(function () {

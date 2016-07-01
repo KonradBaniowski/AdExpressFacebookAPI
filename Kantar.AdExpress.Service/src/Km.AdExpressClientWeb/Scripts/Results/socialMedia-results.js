@@ -194,15 +194,12 @@
         }
     }
 
-
-
-
     //** charge les images au fur et a mesure que le teableau s'affiche (image page facebook)
     $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
 
         $(".imgPageFacebook").each(function () {
             var datas = $(this).attr('data-post').toString();
-            var link = "PostsFacebook/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
+            var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
             $(this).attr("src", link);
         });
 
@@ -232,7 +229,7 @@ $('#combo > .form-control').on('change', function () {
             bootbox.alert(thrownError);
         },
         success: function (data) {
-            console.log();
+            $('#top-post').html('').append(data);
         }
     });
 });

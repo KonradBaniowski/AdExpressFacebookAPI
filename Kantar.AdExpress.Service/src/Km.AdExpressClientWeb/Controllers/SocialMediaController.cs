@@ -141,7 +141,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     PID = -1,
                     ID = 1,
                     Expenditure = data.Where(e => e.PID == -1).Sum(a => a.Expenditure),
-                    IdPageFacebook = string.Join(",", data.Select(e => e.IdPageFacebook).ToList()),
+                    IdPageFacebook = string.Join(",", data.Where(e => e.PID == -1).Select(e => e.IdPageFacebook).ToList()),
                     NbPage = data.Where(e => e.PID == -1).Sum(a => a.NbPage),
                     NumberComment = data.Where(e => e.PID == -1).Sum(a => a.NumberComment),
                     NumberFan = data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
@@ -175,7 +175,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         PID = -1,
                         ID = 2,
                         Expenditure = data.Where(e => e.PID == -1).Sum(a => a.Expenditure),
-                        IdPageFacebook = string.Join(",", data.Select(e => e.IdPageFacebook).ToList()),
+                        IdPageFacebook = string.Join(",", data.Where(e => e.PID == -1).Select(e => e.IdPageFacebook).ToList()),
                         NbPage = data.Where(e => e.PID == -1).Sum(a => a.NbPage),
                         NumberComment = data.Where(e => e.PID == -1).Sum(a => a.NumberComment),
                         NumberFan = data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
@@ -379,7 +379,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
-        public async Task<JsonResult> GetPostbyIdPage(List<long> ids)
+        public async Task<ActionResult> GetPostbyIdPage(List<long> ids)
         {
             if (ids == null) { throw new ArgumentNullException("Parameters are null"); }
             if (ids.Count == 0) { throw new ArgumentException("Parameters must be defined"); }
@@ -398,12 +398,26 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 var data = JsonConvert.DeserializeObject<List<PostFacebook>>(content);
-                string jsonData = JsonConvert.SerializeObject(data);
-                var obj = new {data = data };
-                JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
-                jsonModel.MaxJsonLength = Int32.MaxValue;
+                foreach(var item in data)
+                {
+                    item.LikesChart = new Dictionary<string, string>();
+                    item.LikesChart.Add("Evolution", "Nombre");
+                    var like = item.NumberLikes.Length;
+                    var likes = item.NumberLikes.Split(',');
+                    var comments = item.NumberComments.Split(',');
+                    var shares = item.NumberShares.Split(',');
+                    for (int i = like; i >= 0; i--)
+                    {
+                        item.LikesChart.Add(i.ToString(), likes[i]);
+                    }
+                    
+                }
+                //string jsonData = JsonConvert.SerializeObject(data);
+                //var obj = new {data = data };
+                //JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                //jsonModel.MaxJsonLength = Int32.MaxValue;
 
-                return jsonModel;
+                return PartialView("GetTopPost",data);
             }
         }
 
