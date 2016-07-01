@@ -7,6 +7,10 @@ namespace Km.AdExpressClientWeb.Models.Shared
 {
     public class InsertionCreativeViewModel
     {
+        public InsertionCreativeViewModel()
+        {
+            paramsUrl = new List<string>();
+        }
         public List<string> paramsUrl { get; set; }
         public int SiteLanguage { get; set; }
         public Labels Labels { get; set; }

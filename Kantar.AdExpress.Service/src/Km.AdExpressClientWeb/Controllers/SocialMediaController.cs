@@ -250,17 +250,19 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public  ActionResult SocialMediaCreative(string ids, int type)
+        public  ActionResult SocialMediaCreative(string ids, string type)
         {
             InsertionCreativeViewModel model = new InsertionCreativeViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int siteLanguage = _webSessionService.GetSiteLanguage(webSessionId);
             model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
+            model.paramsUrl.Add(ids);
+            model.paramsUrl.Add(type.ToString());
             return View(model);
         }
 
-        public async Task<JsonResult> GetSocialMediaCreative(string ids, int type)
+        public async Task<JsonResult> GetSocialMediaCreative(string ids, string type)
         {
             var gridResult = new GridResult();
 
