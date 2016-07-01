@@ -185,7 +185,8 @@ namespace TNS.AdExpressI.Classification.DAL
 
             /*Query conditions */
             sql.AppendFormat(" where ( upper(wp.{0}) like upper('{1}')  or upper(wp.{0}) like upper('{2}') ) ", classificationLevelLabel, wordToSearch1, wordToSearch2);
-
+            if (_session.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+                sql.AppendFormat(" and upper(wp.id_language) = {0}", _session.DataLanguage);
 
 
             /*Query tables joins */
@@ -325,6 +326,9 @@ namespace TNS.AdExpressI.Classification.DAL
             sql.AppendFormat(" select distinct wp.id_{0} as id_item, wp.{0} as item ", classificationLevelLabel);
 
             /*FROM clause : Obtains the targets tables of the query according to the web site data language*/
+            if (_session.CurrentModule== WebConstantes.Module.Name.FACEBOOK)
+                sql.AppendFormat(" from {0} wp", oView.Sql);
+            else
             sql.AppendFormat(" from {0}{1} wp", oView.Sql, _session.DataLanguage.ToString());
 
             /*Query conditions */
@@ -337,6 +341,8 @@ namespace TNS.AdExpressI.Classification.DAL
             {
                 sql.Append(classificationRight);
             }
+            if (_session.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+                sql.AppendFormat(" and upper(wp.id_language) = {0}", _session.DataLanguage);
 
             foreach (int filterId in Filters.Keys)
             {
@@ -724,7 +730,12 @@ namespace TNS.AdExpressI.Classification.DAL
         protected virtual void GetFromClause(StringBuilder sql, View oView, string table, bool useView)
         {
             if (useView)
-                sql.AppendFormat(" from {0}{1} wp ", oView.Sql, _session.DataLanguage.ToString());
+
+            { if (_session.CurrentModule != WebConstantes.Module.Name.FACEBOOK)
+                    sql.AppendFormat(" from {0}{1} wp ", oView.Sql, _session.DataLanguage.ToString());
+            else
+                    sql.AppendFormat(" from {0} wp ", oView.Sql);
+            }
             else sql.AppendFormat(" from {0}.{1} wp ", _dBSchema, table);
         }
         #endregion
