@@ -48,7 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             if (!_webSessionService.IsAllSelectionStep(idSession))
-            {
+            { 
                 return RedirectToAction("Market", "Selection");
             }
 
