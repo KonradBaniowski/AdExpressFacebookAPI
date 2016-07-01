@@ -159,6 +159,29 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
 
 });
 
+
+$("#postFacebookModal").attr('src', '');
+$("#postFacebookModal").on('shown.bs.modal', function (event) {
+    var button = $(event.relatedTarget);// Button that triggered the modal
+    var datas = button.data('creative').toString(); // Extract info from data-* attributes
+
+    if (datas === null || datas == "" || datas == 0 || datas == "0") {
+        alert("Post disponible.");
+    }
+    else {
+        id = datas;
+        $("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id);
+        $("#objectPost").show();
+    }
+});
+
+$("#creativeModal").on('hide.bs.modal', function () {
+    $("#objectPost").attr('src', '');
+    $("#objectPost").addClass("hide");
+});
+
+
+
 //Resize de la page, la longuer du tableau egalament
 $(window).resize(function () {
     $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);

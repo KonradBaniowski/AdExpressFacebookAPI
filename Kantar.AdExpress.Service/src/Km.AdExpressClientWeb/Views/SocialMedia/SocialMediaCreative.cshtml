@@ -38,14 +38,14 @@
 
     <!-- Modal zoom post -->
     <div class="modal fade" id="postFacebookModal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:auto;height:auto;margin:5px;">
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
                     <h4 class="modal-title" id="postFacebookModalTitle">Post Facebook</h4>
                 </div>
                 <div class="modal-body">
-                    coming soon
+                    <iframe id="objectPost" src="" scrolling="no" style="width:700px;height:700px; border:none;"></iframe>
                 </div>
             </div>
         </div>
@@ -63,7 +63,9 @@
     @Scripts.Render("~/bundles/language-choice")
     <script id="colPostTmpl" type="text/template">
         {{if parseInt(${IdPostFacebook}) != 0}}
-        <img class="imgPostsFacebook" style="max-width:40px;" data-post="${IdPost}" src="" onError="this.onerror=null;this.src='/Content/img/no_visu.jpg';" />
+        <a class="triggerModal" href='#postFacebookModal' data-toggle='modal' data-creative="${IdPostFacebook}">
+            <img class="imgPostsFacebook" style="max-width:40px;" data-post="${IdPost}" src="" onError="this.onerror=null;this.src='/Content/img/no_visu.jpg';" />
+        </a>
         {{/if}}
     </script>
 }
