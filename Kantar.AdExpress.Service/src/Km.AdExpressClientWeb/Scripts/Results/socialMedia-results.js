@@ -199,7 +199,7 @@
 
         $(".imgPageFacebook").each(function () {
             var datas = $(this).attr('data-post').toString();
-            var link = "PostsFacebook/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
+            var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
             $(this).attr("src", link);
         });
 

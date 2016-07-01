@@ -108,6 +108,12 @@ function CallInsertionsResult() {
                 });
 
                 cols = data.columns
+
+                for (i = 0; i < cols.length; i++) {
+                    if (cols[i].key == "IdPostFacebook")
+                        cols[i].template = $("#colPostTmpl").html();
+                }
+
                 ds = new $.ig.DataSource({
                     type: "json",
                     schema: schema,
@@ -147,7 +153,7 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
 
     $(".imgPostsFacebook").each(function () {
         var datas = $(this).attr('data-post').toString();
-        var link = "PostsFacebook/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + "_Post.png"
+        var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + "_Post.png"
         $(this).attr("src", link);
     });
 
