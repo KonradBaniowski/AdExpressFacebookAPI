@@ -93,7 +93,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "PageName" });
-            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "number", width = "*" , format= "number", columnCssClass= "numericAlignment" });
+            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "IdPageFacebook" });
             columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "Url" });
