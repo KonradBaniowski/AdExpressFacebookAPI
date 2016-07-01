@@ -66,6 +66,7 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public string IdPost { get; set; }
         public DateTime DateCreationPost { get; set; }
         public string NumberLikes { get; set; }
+        public Dictionary<string, string> LikesChart { get; set; }
         public string NumberComments { get; set; }
         public string NumberShares { get; set; }
         public string Commitments { get; set; }

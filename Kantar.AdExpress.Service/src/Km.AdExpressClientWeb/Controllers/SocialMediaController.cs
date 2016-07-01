@@ -398,6 +398,20 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 var data = JsonConvert.DeserializeObject<List<PostFacebook>>(content);
+                foreach(var item in data)
+                {
+                    item.LikesChart = new Dictionary<string, string>();
+                    item.LikesChart.Add("Evolution", "Nombre");
+                    var like = item.NumberLikes.Length;
+                    var likes = item.NumberLikes.Split(',');
+                    var comments = item.NumberComments.Split(',');
+                    var shares = item.NumberShares.Split(',');
+                    for (int i = like; i >= 0; i--)
+                    {
+                        item.LikesChart.Add(i.ToString(), likes[i]);
+                    }
+                    
+                }
                 //string jsonData = JsonConvert.SerializeObject(data);
                 //var obj = new {data = data };
                 //JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
