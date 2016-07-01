@@ -194,9 +194,6 @@
         }
     }
 
-
-
-
     //** charge les images au fur et a mesure que le teableau s'affiche (image page facebook)
     $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
 
