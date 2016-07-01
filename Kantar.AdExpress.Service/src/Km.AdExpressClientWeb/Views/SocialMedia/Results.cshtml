@@ -1,6 +1,7 @@
 ﻿@model Km.AdExpressClientWeb.Models.SocialMedia.ResultsViewModel
 @using TNS.AdExpress.Domain.Translation;
 @{
+    var _controller = "SocialMedia";
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
 }
@@ -98,7 +99,7 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" id="current-url" value="/@_controller/Results" />
 @section Scripts{
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>

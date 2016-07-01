@@ -15,20 +15,6 @@ var ds;
 var cols;
 var colsFixed;
 var needFixedColumns = false;
-var periodType = "Mois";
-
-function GenericDetailLevelFilter() {
-    this.L1DetailValue = -1;
-    this.L2DetailValue = -1;
-    this.L3DetailValue = -1;
-}
-
-function UserFilter() {
-    this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
-    this.isVehicleChanged = true;
-}
-
-var userFilter = new UserFilter();
 
 var renderGrid = function (success, error) {
 
@@ -140,9 +126,13 @@ function CallInsertionsResult() {
     });
 }
 
-//** Important charge les images au fur et a mesure que le teableau s'affiche
+CallInsertionsResult();
+
+
+//** charge les images au fur et a mesure que le teableau s'affiche (image post facebook)
 $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
-    AutoPlayVisu();
+
+    //AutoPlayVisu();
 
     $(".carousel").each(function (index) {
         $("#visuCarou" + index.toString()).carousel("pause");
@@ -154,12 +144,14 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
         });
     });
 
-    $(".triggerModal > .fa").each(function () {
-        $(this).addClass('iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
+
+    $(".imgPostsFacebook").each(function () {
+        var datas = $(this).attr('data-post').toString();
+        var link = "PostsFacebook/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + "_Post.png"
+        $(this).attr("src", link);
     });
 
 });
-CallInsertionsResult();
 
 //Resize de la page, la longuer du tableau egalament
 $(window).resize(function () {

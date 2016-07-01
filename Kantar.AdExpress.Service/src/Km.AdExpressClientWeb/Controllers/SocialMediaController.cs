@@ -141,7 +141,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     PID = -1,
                     ID = 1,
                     Expenditure = data.Where(e => e.PID == -1).Sum(a => a.Expenditure),
-                    IdPageFacebook = string.Join(",", data.Select(e => e.IdPageFacebook).ToList()),
+                    IdPageFacebook = string.Join(",", data.Where(e => e.PID == -1).Select(e => e.IdPageFacebook).ToList()),
                     NbPage = data.Where(e => e.PID == -1).Sum(a => a.NbPage),
                     NumberComment = data.Where(e => e.PID == -1).Sum(a => a.NumberComment),
                     NumberFan = data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
@@ -175,7 +175,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         PID = -1,
                         ID = 2,
                         Expenditure = data.Where(e => e.PID == -1).Sum(a => a.Expenditure),
-                        IdPageFacebook = string.Join(",", data.Select(e => e.IdPageFacebook).ToList()),
+                        IdPageFacebook = string.Join(",", data.Where(e => e.PID == -1).Select(e => e.IdPageFacebook).ToList()),
                         NbPage = data.Where(e => e.PID == -1).Sum(a => a.NbPage),
                         NumberComment = data.Where(e => e.PID == -1).Sum(a => a.NumberComment),
                         NumberFan = data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
@@ -360,9 +360,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
                 Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
-                postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
-
+                postModelRef.IdPages = ids.Split(',').Select(long.Parse).ToList();
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPostUri"]), postModelRef).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

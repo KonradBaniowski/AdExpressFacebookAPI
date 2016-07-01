@@ -1539,12 +1539,11 @@
               <allowedUniverseLevel id="7" name="holding_company"/>
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
-              <!--<allowedUniverseLevel id="5" name="product"/>-->
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="2">
-              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment\advertiser"/>
-              <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
-              <allowedUniverseBranch id="3" name="brand\product"/>
+            <allowedUniverseBranches defaultBranchId="21">
+              <allowedUniverseBranch id="20" name="sector\subsector\group_\segment\advertiser"/>
+              <allowedUniverseBranch id="21"  name="holding_company\advertiser"/>
+              <allowedUniverseBranch id="22" name="brand"/>
             </allowedUniverseBranches>
           </selection>
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
