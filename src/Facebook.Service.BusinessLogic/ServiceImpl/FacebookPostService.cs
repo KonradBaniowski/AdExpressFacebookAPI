@@ -25,11 +25,11 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public List<DataPostFacebookContract> GetDataPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages)
+        public List<DataPostFacebookContract> GetDataPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages, int idLanguage)
         {
             var criteria = _rightsvc.GetCriteria(idLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
-            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(criteriaData, begin, end, advertisers, brands, pages);
+            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(criteriaData, begin, end, advertisers, brands, pages, idLanguage);
 
             var postsFacebbok = postsFacebook.Select(p =>
            new DataPostFacebookContract
@@ -49,11 +49,11 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return postsFacebbok;
         }
 
-        public List<PostFacebookContract> GetTopPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages)
+        public List<PostFacebookContract> GetTopPostFacebook(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages, int idLanguage)
         {
             var criteria = _rightsvc.GetCriteria(idLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
-            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(criteriaData, begin, end, advertisers, brands, pages);
+            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(criteriaData, begin, end, advertisers, brands, pages, idLanguage);
 
             var postsFacebbok = postsFacebook.Select(p =>
            new
@@ -88,10 +88,10 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return postsFacebbok;
         }
 
-        public PostFacebookContract GetPostFacebook(long idPostFacebook)
+        public PostFacebookContract GetPostFacebook(long idPostFacebook, int idLanguage)
         {
             PostFacebookContract postFacebookContract  = new PostFacebookContract();
-            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(idPostFacebook);
+            var postsFacebook = _uow.DataPostFacebookRepository.GetDataPostFacebook(idPostFacebook, idLanguage);
 
             if (postsFacebook != null)
             {

@@ -23,7 +23,7 @@ namespace Facebook.Test
             long begin = 20150101;
             long end = 20160301;
 
-            var model = _fbsvc.GetDataFacebook(1155, begin, end, new List<long> { 1060, 332860, 48750 }, null); 
+            var model = _fbsvc.GetDataFacebook(1155, begin, end, new List<long> { 1060, 332860, 48750 }, null,33); 
         }
     }
 }

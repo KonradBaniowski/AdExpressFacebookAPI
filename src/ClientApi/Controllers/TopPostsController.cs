@@ -28,15 +28,15 @@ namespace ClientApi.Controllers
         [HttpPost]
         public List<PostFacebookContract> Get([FromBody] PostModel model)
         {
-            return _fbsvc.GetTopPostFacebook(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdPages);
+            return _fbsvc.GetTopPostFacebook(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdPages,model.IdLanguage);
 
         }
 
         [Route("Api/OnePost")]
         [HttpPost]
-        public PostFacebookContract Get([FromBody] long idPostFacebook)
+        public PostFacebookContract Get([FromBody] long idPostFacebook,int idLanguage)
         {
-            return _fbsvc.GetPostFacebook(idPostFacebook);
+            return _fbsvc.GetPostFacebook(idPostFacebook,idLanguage);
 
         }
 

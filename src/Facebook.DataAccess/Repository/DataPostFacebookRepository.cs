@@ -20,11 +20,12 @@ namespace Facebook.DataAccess.Repository
            
         }
 
-        public PostFacebook GetDataPostFacebook(long idPostFacebook)
+        public PostFacebook GetDataPostFacebook(long idPostFacebook,int idLanguage)
         {
             var query = (from dp in context.DataPostFacebook
                          join ap in context.Products on dp.IdBrand equals ap.BrandId
                          where dp.IdPostFacebook == idPostFacebook
+                         && ap.LanguageId == idLanguage
                          select new PostFacebook
                          {
                              IdPostFacebook = dp.IdPostFacebook,
@@ -41,7 +42,7 @@ namespace Facebook.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public List<PostFacebook> GetDataPostFacebook(List<CriteriaData> criteria, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages)
+        public List<PostFacebook> GetDataPostFacebook(List<CriteriaData> criteria, long begin, long end, List<long> advertisers, List<long> brands, List<long> pages, int idLanguage)
         {
             var beginDate = new DateTime(Convert.ToInt32(begin.ToString().Substring(0, 4)), Convert.ToInt32(begin.ToString().Substring(4, 2))
                 , Convert.ToInt32(begin.ToString().Substring(6, 2)));
@@ -104,6 +105,7 @@ namespace Facebook.DataAccess.Repository
                           orderby ap.Advertiser
                           where df.DateMediaNum >= begin && df.DateMediaNum <= end
                           && dp.DateCreationPost >= beginDate.Date && dp.DateCreationPost <= endDate.Date
+                          && ap.LanguageId == idLanguage
                           select new PostFacebook
                           {
                               IdPostFacebook = dp.IdPostFacebook,

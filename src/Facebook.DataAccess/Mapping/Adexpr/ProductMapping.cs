@@ -8,7 +8,7 @@ namespace Facebook.DataAccess.Mapping.Adexpr
         public ProductMapping(string schema)
         {
             HasKey(p => p.ProductId);
-            ToTable("ALL_PRODUCT_FACEBOOK_33", schema);
+            ToTable("ALL_PRODUCT_FACEBOOK", schema);
             Property(p => p.ProductId).HasColumnName("ID_PRODUCT");
             Property(P => P.Product).HasColumnName("PRODUCT");
             Property(p => p.SegmentId).HasColumnName("ID_SEGMENT");
@@ -24,7 +24,8 @@ namespace Facebook.DataAccess.Mapping.Adexpr
             Property(p => p.AdvertiserId).HasColumnName("ID_ADVERTISER");
             Property(P => P.Advertiser).HasColumnName("ADVERTISER");
             Property(p => p.HoldingCompanyId).HasColumnName("ID_HOLDING_COMPANY");
-            Property(p => p.HoldingCompany).HasColumnName("HOLDING_COMPANY");           
+            Property(p => p.HoldingCompany).HasColumnName("HOLDING_COMPANY");
+            Property(p => p.LanguageId).HasColumnName("ID_LANGUAGE");
         }
     }
 }

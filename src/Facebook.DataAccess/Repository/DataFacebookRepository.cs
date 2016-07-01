@@ -31,7 +31,7 @@ namespace Facebook.DataAccess.Repository
             return new List<DataFacebook>();
         }
 
-        public List<DateFacebookContract> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand)
+        public List<DateFacebookContract> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
         {
             var query = (from d in context.DataFacebook
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
@@ -89,7 +89,7 @@ namespace Facebook.DataAccess.Repository
 
                 var tata = (from g in query.GroupBy(p => new { p.IdAdvertiser, p.IdPageFacebook, p.IdLanguageData })
                             join c in context.Advertiser on new { g.Key.IdAdvertiser, IdLanguage = g.Key.IdLanguageData } equals new { c.IdAdvertiser, IdLanguage = c.IdLanguage }
-                            where c.IdLanguage == 33
+                            where c.IdLanguage == idLanguage
                             select new DateFacebookContract
                             {
                                 IdAdvertiser = g.Key.IdAdvertiser,

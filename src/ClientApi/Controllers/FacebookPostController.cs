@@ -26,7 +26,7 @@ namespace ClientApi.Controllers
         [HttpPost]
         public List<DataPostFacebookContract> Get([FromBody] PostModel model)
         {
-            return _fbsvc.GetDataPostFacebook(model.IdLogin , model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdPages);
+            return _fbsvc.GetDataPostFacebook(model.IdLogin , model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdPages,model.IdLanguage);
 
         }
 
