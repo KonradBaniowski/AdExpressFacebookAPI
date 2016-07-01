@@ -14,7 +14,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Km.AdExpressClientWeb.Models.SocialMedia;
-using Domain=Kantar.AdExpress.Service.Core.Domain;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using Km.AdExpressClientWeb.I18n;
@@ -48,7 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             if (!_webSessionService.IsAllSelectionStep(idSession))
-            {
+            { 
                 return RedirectToAction("Market", "Selection");
             }
 
@@ -93,7 +93,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "PageName" });
-            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "number", width = "*" , format= "number", columnCssClass= "numericAlignment" });
+            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "IdPageFacebook" });
             columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "Url" });
@@ -154,7 +154,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
 
-                combos.Add(new SelectListItem { Text = "Select a post", Value = "", Selected = true });
+                combos.Add(new SelectListItem { Text = "TOP 3 des posts", Value = "", Selected = true });
                 combos.Add(new SelectListItem { Text = par.PageName, Value = par.IdPageFacebook });
                 combos.AddRange(data.Select(e => { return new SelectListItem { Text = e.PageName, Value = e.IdPageFacebook }; }).ToList());
 
@@ -381,6 +381,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public async Task<JsonResult> GetPostbyIdPage(List<long> ids)
         {
+            if (ids == null) { throw new ArgumentNullException("Parameters are null"); }
+            if (ids.Count == 0) { throw new ArgumentException("Parameters must be defined"); }
+
             using (var client = new HttpClient())
             {
                 var cla = new ClaimsPrincipal(User.Identity);

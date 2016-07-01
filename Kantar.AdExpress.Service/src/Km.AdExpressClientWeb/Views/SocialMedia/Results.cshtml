@@ -110,9 +110,13 @@
 
     <script id="linkToPostTmpl" type="text/template">
         <center>
-            <a href="/SocialMedia/SocialMediaCreative?ids=${IdPageFacebook}&type=0" target="_blank">
-                <span class="fa fa-search-plus"></span>
-            </a>
+            <form id="${IdPageFacebook}" action="/SocialMedia/SocialMediaCreative" method="post" target="_blank">
+                <input type="hidden" name="ids" value="${IdPageFacebook}"/>
+                <input type="hidden" name="type" value="0"/>
+                <a href="javascript:;" onclick="document.getElementById('${IdPageFacebook}').submit();">
+                    <span class="fa fa-search-plus"></span>
+                </a>
+            </form>
         </center>
     </script>
 

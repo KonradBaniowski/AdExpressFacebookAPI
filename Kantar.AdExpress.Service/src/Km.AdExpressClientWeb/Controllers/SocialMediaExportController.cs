@@ -1,13 +1,19 @@
 ﻿using Aspose.Cells;
 using Kantar.AdExpress.Service.Core.BusinessService;
+using Km.AdExpressClientWeb.Models.SocialMedia;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.Classification.Universe;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -23,20 +29,21 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
         // GET: SocialMediaExport
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            //GridResultExport data = serviceRomain();
-
-
-            /************************** MOCK ***********************************/
             var gridResultExport = new GridResultExport();
 
             List<InfragisticData> gridData = new List<InfragisticData>();
+            List<InfragisticData> tmpList = new List<InfragisticData>();
+            List<DataFacebook> data = new List<DataFacebook>();
             List<InfragisticColumn> columns = new List<InfragisticColumn>();
             List<string> vals = new List<string>();
+            InfragisticData par = new InfragisticData();
+            HttpResponseMessage response = new HttpResponseMessage();
+            string content = string.Empty;
 
             columns.Add(new InfragisticColumn { HeaderText = "", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Page", Hidden = false });
@@ -47,100 +54,161 @@ namespace Km.AdExpressClientWeb.Controllers
             columns.Add(new InfragisticColumn { HeaderText = "Comment", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Brand exposure", Hidden = false });
 
+            using (var client = new HttpClient())
+            {
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            vals.Add("Referents");
-            vals.Add("2");
-            vals.Add("100");
-            vals.Add("100");
-            vals.Add("100");
-            vals.Add("300");
-            vals.Add("20");
-            vals.Add("4500");
-            gridData.Add(new InfragisticData { Level = 1 , Values = vals });
+                List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
+                int IndexListRef = 1;
+                if (universeMarket.Count < 2)
+                {
+                    IndexListRef = 0;
+                }
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
+                postModelRef.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelRef.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPageUri"]), postModelRef).Result;
+                content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
+                vals.Add("Référents");
+                vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NbPage).ToString());
+                vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberFan).ToString());
+                vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberPost).ToString());
+                vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberLike).ToString());
+                vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberShare).ToString());
+                vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberComment).ToString());
+                vals.Add(data.Where(e => e.PID == -1).Sum(a => a.Expenditure).ToString());
+                par = new InfragisticData()
+                {
+                    Level = 1,
+                    Values = vals
+                };
+                gridData.Add(par);
                 vals = new List<string>();
-                vals.Add("BMW");
-                vals.Add("2");
-                vals.Add("100");
-                vals.Add("100");
-                vals.Add("100");
-                vals.Add("300");
-                vals.Add("20");
-                vals.Add("4500");
-                gridData.Add(new InfragisticData { Level = 2, Values = vals });
+                foreach (var elmt in data)
+                {
+                    if (elmt.PID == -1)
+                    {
+                        gridData.Add(
+                            new InfragisticData
+                            {
+                                Level = 2,
+                                Values = new List<String> {
+                                    elmt.PageName,
+                                    elmt.NbPage.ToString(),
+                                    elmt.NumberFan.ToString(),
+                                    elmt.NumberPost.ToString(),
+                                    elmt.NumberLike.ToString(),
+                                    elmt.NumberShare.ToString(),
+                                    elmt.NumberComment.ToString(),
+                                    elmt.Expenditure.ToString()
+                                }
+                            });
+                    }
+                    else
+                    {
+                        tmpList.Add(
+                        new InfragisticData
+                        {
+                            Level = 3,
+                            Values = new List<String> {
+                                elmt.PageName,
+                                elmt.NbPage.ToString(),
+                                elmt.NumberFan.ToString(),
+                                elmt.NumberPost.ToString(),
+                                elmt.NumberLike.ToString(),
+                                elmt.NumberShare.ToString(),
+                                elmt.NumberComment.ToString(),
+                                elmt.Expenditure.ToString()
+                            }
+                        });
+                    }
+                }
+                gridData.AddRange(tmpList);
 
+                if (universeMarket.Count > 1)
+                {
+                    Domain.PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                    postModelConc.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModelConc.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                    response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPageUri"]), postModelConc).Result;
+                    content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (!response.IsSuccessStatusCode)
+                        throw new Exception(response.StatusCode.ToString());
+
+                    data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
+                    vals.Add("Concurrents");
+                    vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NbPage).ToString());
+                    vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberFan).ToString());
+                    vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberPost).ToString());
+                    vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberLike).ToString());
+                    vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberShare).ToString());
+                    vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberComment).ToString());
+                    vals.Add(data.Where(e => e.PID == -1).Sum(a => a.Expenditure).ToString());
+                    par = new InfragisticData()
+                    {
+                        Level = 1,
+                        Values = vals
+                    };
+                    gridData.Add(par);
                     vals = new List<string>();
-                    vals.Add("WoooowWw");
-                    vals.Add("1");
-                    vals.Add("50");
-                    vals.Add("50");
-                    vals.Add("50");
-                    vals.Add("150");
-                    vals.Add("10");
-                    vals.Add("");
-                    gridData.Add(new InfragisticData { Level = 3, Values = vals });
+                    tmpList = new List<InfragisticData>();
+                    foreach (var elmt in data)
+                    {
+                        if (elmt.PID == -1)
+                        {
+                            gridData.Add(
+                                new InfragisticData
+                                {
+                                    Level = 2,
+                                    Values = new List<String> {
+                                    elmt.PageName,
+                                    elmt.NbPage.ToString(),
+                                    elmt.NumberFan.ToString(),
+                                    elmt.NumberPost.ToString(),
+                                    elmt.NumberLike.ToString(),
+                                    elmt.NumberShare.ToString(),
+                                    elmt.NumberComment.ToString(),
+                                    elmt.Expenditure.ToString()
+                                    }
+                                });
+                        }
+                        else
+                        {
+                            tmpList.Add(
+                            new InfragisticData
+                            {
+                                Level = 3,
+                                Values = new List<String> {
+                                elmt.PageName,
+                                elmt.NbPage.ToString(),
+                                elmt.NumberFan.ToString(),
+                                elmt.NumberPost.ToString(),
+                                elmt.NumberLike.ToString(),
+                                elmt.NumberShare.ToString(),
+                                elmt.NumberComment.ToString(),
+                                elmt.Expenditure.ToString()
+                                }
+                            });
+                        }
+                    }
+                    gridData.AddRange(tmpList);
 
-                    vals = new List<string>();
-                    vals.Add("WoooowWw");
-                    vals.Add("1");
-                    vals.Add("50");
-                    vals.Add("50");
-                    vals.Add("50");
-                    vals.Add("150");
-                    vals.Add("10");
-                    vals.Add("");
-                    gridData.Add(new InfragisticData { Level = 3, Values = vals });
-
-            vals = new List<string>();
-            vals.Add("Concurrents");
-            vals.Add("2");
-            vals.Add("100");
-            vals.Add("100");
-            vals.Add("100");
-            vals.Add("300");
-            vals.Add("20");
-            vals.Add("4500");
-            gridData.Add(new InfragisticData { Level = 1, Values = vals });
-
-                vals = new List<string>();
-                vals.Add("AUDI");
-                vals.Add("2");
-                vals.Add("100");
-                vals.Add("100");
-                vals.Add("100");
-                vals.Add("300");
-                vals.Add("20");
-                vals.Add("4500");
-                gridData.Add(new InfragisticData { Level = 2, Values = vals });
-
-                    vals = new List<string>();
-                    vals.Add("YeeaaHHhh");
-                    vals.Add("1");
-                    vals.Add("50");
-                    vals.Add("50");
-                    vals.Add("50");
-                    vals.Add("150");
-                    vals.Add("10");
-                    vals.Add("");
-                    gridData.Add(new InfragisticData { Level = 3, Values = vals });
-
-                    vals = new List<string>();
-                    vals.Add("YeeaaHHhh");
-                    vals.Add("1");
-                    vals.Add("50");
-                    vals.Add("50");
-                    vals.Add("50");
-                    vals.Add("150");
-                    vals.Add("10");
-                    vals.Add("");
-                    gridData.Add(new InfragisticData { Level = 3, Values = vals });
-
+                }
+                
+            }
 
             gridResultExport.HasData = true;
             gridResultExport.Columns = columns;
             gridResultExport.Data = gridData;
-
-            /************************ FIN MOCK ***********************************/
 
 
 
