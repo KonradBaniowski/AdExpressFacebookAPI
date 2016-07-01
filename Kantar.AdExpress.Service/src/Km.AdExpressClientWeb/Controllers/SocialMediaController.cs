@@ -364,8 +364,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
 
-
-                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPost"), postModelRef).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPostUri"]), postModelRef).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
