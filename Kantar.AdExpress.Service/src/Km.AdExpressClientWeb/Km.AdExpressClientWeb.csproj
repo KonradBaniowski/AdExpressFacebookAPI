@@ -1717,6 +1717,10 @@
       <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
       <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Kantar.Core.Exception\Kantar.Core.Exception.csproj">
+      <Project>{e841c809-0777-4cbe-95d1-4885f08c04c4}</Project>
+      <Name>Kantar.Core.Exception</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\KM.AdExpress.Framework\KM.AdExpress.Framework.csproj">
       <Project>{162c80d7-64e5-4963-a991-95da1bd5f1b0}</Project>
       <Name>KM.AdExpress.Framework</Name>

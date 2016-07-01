@@ -1121,7 +1121,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             pM.BeginDate = long.Parse(_webSession.PeriodBeginningDate);
             pM.EndDate = long.Parse(_webSession.PeriodEndDate);
             pM.IdLogin = (int)_webSession.CustomerLogin.IdLogin;
-
+            pM.IdLanguage = _webSession.DataLanguage;
 
             return pM;
         }

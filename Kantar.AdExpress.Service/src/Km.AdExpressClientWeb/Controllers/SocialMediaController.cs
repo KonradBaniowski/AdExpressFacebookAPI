@@ -14,10 +14,11 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Km.AdExpressClientWeb.Models.SocialMedia;
-using Domain=Kantar.AdExpress.Service.Core.Domain;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using Km.AdExpressClientWeb.I18n;
+using Kantar.Core.Exception;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -154,7 +155,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
 
-                combos.Add(new SelectListItem { Text = "Select a post", Value = "", Selected = true });
+                combos.Add(new SelectListItem { Text = "TOP 3 des posts", Value = "", Selected = true });
                 combos.Add(new SelectListItem { Text = par.PageName, Value = par.IdPageFacebook });
                 combos.AddRange(data.Select(e => { return new SelectListItem { Text = e.PageName, Value = e.IdPageFacebook }; }).ToList());
 
@@ -380,6 +381,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public async Task<JsonResult> GetPostbyIdPage(List<long> ids)
         {
+            if (ids == null) { throw new ArgumentNullException("Parameters are null"); }
+            if (ids.Count == 0) { throw new ArgumentException("Parameters must be defined"); }
+
             using (var client = new HttpClient())
             {
                 var cla = new ClaimsPrincipal(User.Identity);
