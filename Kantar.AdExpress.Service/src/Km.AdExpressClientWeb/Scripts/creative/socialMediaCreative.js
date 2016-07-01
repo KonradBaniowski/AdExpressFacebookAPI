@@ -142,7 +142,7 @@ function CallInsertionsResult() {
 
 //** Important charge les images au fur et a mesure que le teableau s'affiche
 $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
-    AutoPlayVisu();
+    //AutoPlayVisu();
 
     $(".carousel").each(function (index) {
         $("#visuCarou" + index.toString()).carousel("pause");
