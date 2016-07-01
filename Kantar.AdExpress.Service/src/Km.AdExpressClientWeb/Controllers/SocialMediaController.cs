@@ -18,7 +18,6 @@ using Domain = Kantar.AdExpress.Service.Core.Domain;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using Km.AdExpressClientWeb.I18n;
-using Kantar.Core.Exception;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -251,17 +250,19 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public  ActionResult SocialMediaCreative(string ids, int type)
+        public  ActionResult SocialMediaCreative(string ids, string type)
         {
             InsertionCreativeViewModel model = new InsertionCreativeViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int siteLanguage = _webSessionService.GetSiteLanguage(webSessionId);
             model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
+            model.paramsUrl.Add(ids);
+            model.paramsUrl.Add(type.ToString());
             return View(model);
         }
 
-        public async Task<JsonResult> GetSocialMediaCreative(string ids, int type)
+        public async Task<JsonResult> GetSocialMediaCreative(string ids, string type)
         {
             var gridResult = new GridResult();
 
@@ -363,8 +364,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
 
-
-                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/FacebookPost"), postModelRef).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPostUri"]), postModelRef).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
