@@ -25,7 +25,7 @@ namespace Facebook.DataAccess.Mapping.Adexpr
             Property(P => P.Advertiser).HasColumnName("ADVERTISER");
             Property(p => p.HoldingCompanyId).HasColumnName("ID_HOLDING_COMPANY");
             Property(p => p.HoldingCompany).HasColumnName("HOLDING_COMPANY");
-            Property(p => p.IdLanguage).HasColumnName("ID_LANGUAGE");          
+            Property(p => p.LanguageId).HasColumnName("ID_LANGUAGE");
         }
     }
 }

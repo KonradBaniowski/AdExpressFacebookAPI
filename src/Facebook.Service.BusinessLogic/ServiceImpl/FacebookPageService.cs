@@ -28,13 +28,13 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<DataFacebookContract> GetDataFacebook(int IdLogin, long Begin, long End, List<long> Advertiser, List<long> Brand)
+        public List<DataFacebookContract> GetDataFacebook(int IdLogin, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
         {
 
 
             var criteria = _rightsvc.GetCriteria(IdLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
-            var query = _uow.DataFacebookRepository.GetDataFacebook(criteriaData, Begin, End, Advertiser, Brand);
+            var query = _uow.DataFacebookRepository.GetDataFacebook(criteriaData, Begin, End, Advertiser, Brand, idLanguage);
 
             var data = query.GroupBy(e => e.IdAdvertiser);
             List<DataFacebookContract> contract = new List<DataFacebookContract>();

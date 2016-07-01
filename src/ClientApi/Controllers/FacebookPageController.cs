@@ -24,17 +24,8 @@ namespace ClientApi.Controllers
         [HttpPost]
         public List<DataFacebookContract> Get([FromBody] PostModel model)
         {
-            //int idLogin, long beginDate, long endDate, List< long > idAdvertisers, List<long> idBrands
-            //int idLogin
-            //, long beginDate, long endDate
-            //, List<long> idAdvertisers, List< long > idBrands
-            //int idLogin, long beginDate, long endDate, List< long > idAdvertisers, List<long> idBrands
-            //int idLogin = 1155;
-            //long beginDate = 20150101;
-            //long endDate = 20160301;
-            //List<long> idAdvertisers = new List<long> { 1060, 332860, 48750 };
-            //List<long> idBrands = null;
-            return _fbsvc.GetDataFacebook(model.IdLogin , model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands);
+        
+            return _fbsvc.GetDataFacebook(model.IdLogin , model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands,model.IdLanguage);
 
         }
        
