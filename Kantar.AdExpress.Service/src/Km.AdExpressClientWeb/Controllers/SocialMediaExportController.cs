@@ -17,6 +17,7 @@ using Domain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class SocialMediaExportController : Controller
     {
         private IWebSessionService _webSessionService;

@@ -15,6 +15,7 @@ using CoreDomain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class MediaSchedulePopUpController : Controller
     {
         private IMediaScheduleService _mediaSchedule;

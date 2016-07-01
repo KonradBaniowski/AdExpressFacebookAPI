@@ -65,7 +65,7 @@
       <Name>TNS.AdExpressI.GAD.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.GAD\TNS.AdExpressI.GAD.csproj">
-      <Project>{A3E2BF3B-45F2-4253-826D-7A2CA03C15F7}</Project>
+      <Project>{a3e2bf3b-45f2-4253-826d-7a2ca03c15f7}</Project>
       <Name>TNS.AdExpressI.GAD</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">

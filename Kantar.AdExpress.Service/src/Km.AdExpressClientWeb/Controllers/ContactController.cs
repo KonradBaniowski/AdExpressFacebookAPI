@@ -13,6 +13,7 @@ using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class ContactController : Controller
     {
         public ActionResult Index(string returnUrl="/", int siteLanguage = 33)
