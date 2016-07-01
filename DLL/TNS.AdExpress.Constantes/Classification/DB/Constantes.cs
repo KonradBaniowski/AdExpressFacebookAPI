@@ -245,6 +245,10 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// </summary>
             PlurimediaWithoutMms = 51,
             /// <summary>
+            /// DOOH
+            /// </summary>
+            dooh = 52,
+            /// <summary>
             /// Web Promotion
             /// </summary>
             webPromotion =9999

@@ -1666,10 +1666,6 @@
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date.DAL.Default\TNS.AdExpressI.Date.DAL.Default.csproj">
-      <Project>{68d00a09-6ae1-4009-a790-d43f313b5912}</Project>
-      <Name>TNS.AdExpressI.Date.DAL.Default</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
       <Project>{8889ed07-01ce-4f3a-a296-3a2c4b21989c}</Project>
       <Name>TNS.AdExpressI.Date.DAL</Name>

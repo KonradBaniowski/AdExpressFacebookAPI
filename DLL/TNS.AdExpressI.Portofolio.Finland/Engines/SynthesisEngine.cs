@@ -16,10 +16,9 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
-using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
-using TNS.AdExpress.Web.Core.Utilities;
+using Utilities = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
@@ -65,8 +64,8 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 }
             }
             else {
-                dtFirstDate = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
-                dtLastDate = WebFunctions.Dates.getPeriodEndDate(_periodEnd, _webSession.PeriodType);
+                dtFirstDate = Utilities.Dates.GetPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
+                dtLastDate = Utilities.Dates.GetPeriodEndDate(_periodEnd, _webSession.PeriodType);
             }
         }
         #endregion		
