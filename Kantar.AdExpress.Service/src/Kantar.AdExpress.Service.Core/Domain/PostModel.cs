@@ -7,6 +7,12 @@ namespace Kantar.AdExpress.Service.Core.Domain
 {
     public class PostModel
     {
+        public PostModel()
+        {
+            IdAdvertisers = new List<long>();
+            IdBrands = new List<long>();
+            IdBrands = new List<long>();
+        }
         public int IdLogin { get; set; }
         public long BeginDate { get; set; }
         public long EndDate { get; set; }
