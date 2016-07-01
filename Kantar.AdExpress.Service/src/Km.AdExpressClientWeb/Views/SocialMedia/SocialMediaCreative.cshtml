@@ -37,12 +37,12 @@
     </div>
 
     <!-- Modal zoom post -->
-    <div class="modal fade" id="postFacebookmodal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
+    <div class="modal fade" id="postFacebookModal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Post Facebook</h4>
+                    <h4 class="modal-title" id="postFacebookModalTitle">Post Facebook</h4>
                 </div>
                 <div class="modal-body">
                     coming soon
@@ -59,6 +59,14 @@
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+
+    <script id="colPostTmpl" type="text/template">
+        {{if parseInt(${IdPostFacebook}) != 0}}
+        <img class="imgPostsFacebook" style="max-width:50px;" data-post="${IdPostFacebook}" src="" />
+        {{/if}}
+        ${IdPostFacebook}
+    </script>
+
     @Scripts.Render("~/bundles/socialMedia-creative") 
    
 }
