@@ -135,11 +135,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         string src = (p.CoverItem != null && !string.IsNullOrEmpty(p.CoverItem.Src)) ? p.CoverItem.Src : string.Empty;
                         string nbPage = string.Empty;
                         string media = string.Empty;
+                        string coverDate = string.Empty;
                         if (p.CoverItem != null && p.CoverItem.CoverLinkItem != null && p.CoverItem.CoverLinkItem is CoverLinkItemSynthesis)
                         {
                             CoverLinkItemSynthesis coverLinkItemSynthesis = p.CoverItem.CoverLinkItem as CoverLinkItemSynthesis;
                             nbPage = coverLinkItemSynthesis.NumberPageMedia;
                             media = coverLinkItemSynthesis.Media;
+                            coverDate = coverLinkItemSynthesis.DateCoverNum;
                         }
 
 
@@ -148,6 +150,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             DayN = p.ParutionDate.ToString("yyyyMMdd"),
                             ParutionDate = day,
+                            CoverDate = coverDate,
                             Id = mediaId,
                             Invest = p.TotalInvestment,
                             NbInser = p.InsertionNumber,
@@ -167,22 +170,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public List<VehiclePage> GetVehiclePages(string idWebSession, string mediaId, string dateMediaNum, string nbPage, string media, string subFolder = null)
+        public List<VehiclePage> GetVehiclePages(string idWebSession, string mediaId, string dateMediaNum,string dateCoverNum, string nbPage, string media, string subFolder = null)
         {
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             _subFolder = subFolder;
             List<VehiclePage> vehiclePages = new List<VehiclePage>();
 
             string pathWeb = string.Format("{0}/{1}/{2}/{3}",
-                WebConstantes.CreationServerPathes.IMAGES, mediaId, dateMediaNum,
+                WebConstantes.CreationServerPathes.IMAGES, mediaId, dateCoverNum,
                 (string.IsNullOrEmpty(_subFolder)) ? "imagette" : _subFolder);
 
             string pathWebZoom = string.Format("{0}/{1}/{2}",
-              WebConstantes.CreationServerPathes.IMAGES, mediaId, dateMediaNum);
+              WebConstantes.CreationServerPathes.IMAGES, mediaId, dateCoverNum);
 
 
             string path = string.Format("{0}{1}\\{2}\\{3}",
-                WebConstantes.CreationServerPathes.LOCAL_PATH_IMAGE, mediaId, dateMediaNum,
+                WebConstantes.CreationServerPathes.LOCAL_PATH_IMAGE, mediaId, dateCoverNum,
                 (string.IsNullOrEmpty(_subFolder)) ? "imagette" : _subFolder);
 
             string[] files = Directory.GetFiles(path, "*.jpg");
@@ -202,6 +205,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         NbPage = nbPage,
                         ParutionDate = day,
+                        CoverDate = dateCoverNum,
                         Src = string.Format("{0}/{1}", pathWeb, Path.GetFileName(name)),
                         SrcZoom = string.Format("{0}/{1}", pathWebZoom, Path.GetFileName(name)),
                         Title = media

@@ -486,12 +486,12 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-        public JsonResult VehiclePages(string mediaId,string dateMediaNum,string nbPage,string media)
+        public JsonResult VehiclePages(string mediaId,string dateMediaNum, string dateCoverNum,string nbPage,string media)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var pagesResult = _portofolioService.GetVehiclePages(idWebSession,mediaId, dateMediaNum,nbPage, media);
+            var pagesResult = _portofolioService.GetVehiclePages(idWebSession,mediaId, dateMediaNum, dateCoverNum,nbPage, media);
 
             try
             {
