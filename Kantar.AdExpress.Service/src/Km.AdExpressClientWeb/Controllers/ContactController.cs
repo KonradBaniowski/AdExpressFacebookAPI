@@ -23,7 +23,7 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguage = siteLanguage;
             var model = new ContactViewModel();
             model.QuestionsTagItem = new List<SelectListItem>();
-            var labels = LabelsHelper.LoadPageLabels(33);
+            var labels = LabelsHelper.LoadPageLabels(siteLanguage);
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag1, Value = labels.QuestionTag1 });
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag2, Value = labels.QuestionTag2 });
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag3, Value = labels.QuestionTag3 });
