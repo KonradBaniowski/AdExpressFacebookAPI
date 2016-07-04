@@ -125,22 +125,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     branch.Label = GestionWeb.GetWebWord(domainBranch.LabelId, result.SiteLanguage);
                     foreach (var item in domainBranch.Levels)
                     {
-                        UniversLevel level = new UniversLevel
+                        if (tuple != null && tuple.Item1.Contains(item.ID))
                         {
-                            Id = item.ID,
-                            LabelId = item.LabelId,
-                            Capacity = Capacity,
-                            Label = GestionWeb.GetWebWord(item.LabelId, result.SiteLanguage),
-                            BranchId = branch.Id,
-                            OverLimitMessage = GestionWeb.GetWebWord(OverLimitMsgCode, result.SiteLanguage),
-                            SecurityMessage = GestionWeb.GetWebWord(SecurityMsg, result.SiteLanguage),
-                            ExceptionMessage = GestionWeb.GetWebWord(ExceptionMsg, result.SiteLanguage)
-                        };
-                        if (!allUnivers.Any(p => p.Id == level.Id))
-                        {
-                            allUnivers.Add(level);
+                            UniversLevel level = new UniversLevel
+                            {
+                                Id = item.ID,
+                                LabelId = item.LabelId,
+                                Capacity = Capacity,
+                                Label = GestionWeb.GetWebWord(item.LabelId, result.SiteLanguage),
+                                BranchId = branch.Id,
+                                OverLimitMessage = GestionWeb.GetWebWord(OverLimitMsgCode, result.SiteLanguage),
+                                SecurityMessage = GestionWeb.GetWebWord(SecurityMsg, result.SiteLanguage),
+                                ExceptionMessage = GestionWeb.GetWebWord(ExceptionMsg, result.SiteLanguage)
+                            };
+                            if (!allUnivers.Any(p => p.Id == level.Id))
+                            {
+                                allUnivers.Add(level);
+                            }
+                            branch.UniversLevels.Add(level);
                         }
-                        branch.UniversLevels.Add(level);
+                       
                     }
                     result.Branches.Add(branch);
                 }
@@ -150,7 +154,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     MaxIncludeNbr = MaxExcludeNbr = 1;
                     result.MaxUniverseItems = int.Parse(System.Configuration.ConfigurationManager.AppSettings["FacebookMaxItems"]);
-                    for (int i = 1; i <= MaxIncludeNbr+ MaxExcludeNbr; i++)
+                    for (int i = 1; i <= MaxIncludeNbr + MaxExcludeNbr; i++)
                     {
                         var tree = new Tree
                         {
@@ -158,12 +162,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             LabelId = ElementLabelCode,
                             UniversLevels = allUnivers,
                             AccessType = AccessType.includes
-                    };
+                        };
                         idTree++;
                         result.Trees.Add(tree);
                     }
                 }
-                else {
+                else
+                {
                     foreach (AccessType type in Enum.GetValues(typeof(AccessType)))
                     {
                         var maxTreesNbr = (type == AccessType.includes) ? MaxIncludeNbr : MaxExcludeNbr;//(Enum.GetValues(typeof(AccessType)))
@@ -259,7 +264,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                     case WebConstantes.Module.Name.INDICATEUR:
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                    
+
                         var adExpressUniverse = Universes[index];
                         #region Iterate by Access Type
                         int id = 0;
@@ -476,7 +481,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         #endregion
                     }
 
-                    else {
+                    else
+                    {
                         // Erreur : Impossible de sauvegarder, pas de groupe d'univers créé
                         result.ErrorMessage = GestionWeb.GetWebWord(925, webSession.SiteLanguage);
                         result.Success = false;
@@ -1058,7 +1064,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                 case WebConstantes.Module.Name.INDICATEUR:
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                
+
                     adExpressUniverse = GetUniverseToSave(request);
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
                     {
@@ -1088,8 +1094,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Sauvegarde de l'univers
             if (universes.Any())
             {
-                bool goFurther = false;               
-                
+                bool goFurther = false;
+
                 Branch.type branchType = GetBrancheType(request.Dimension, idModule);
                 string universeName = request.Name;
                 if (String.IsNullOrEmpty(request.Name) && idSelectedUniverse != 0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
@@ -1097,7 +1103,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     //Add AdExpress universe to collection
                     universes.Add(universes.Count, adExpressUniverse);
 
-                    if (UniversListDataAccess.UpdateUniverse(idSelectedUniverse, webSession, request.IdUniverseClientDescription, branchType.GetHashCode(), universes,isDefault))
+                    if (UniversListDataAccess.UpdateUniverse(idSelectedUniverse, webSession, request.IdUniverseClientDescription, branchType.GetHashCode(), universes, isDefault))
                     {
 
                         // Validation : confirmation d'enregistrement de la requête
@@ -1105,7 +1111,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
                         result.Success = true;
                     }
-                    else {
+                    else
+                    {
                         // Erreur : Echec de l'enregistrement de la requête	
                         webSession.Source.Close();
                         result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
@@ -1124,21 +1131,23 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK && request.IsDefaultUniverse)
                             {
-                              ManageFacebookDefaultUniverse(webSession, request.IsDefaultUniverse, idSelectedUniverse);
+                                ManageFacebookDefaultUniverse(webSession, request.IsDefaultUniverse, idSelectedUniverse);
                             }
                             // Validation : confirmation d'enregistrement de l'univers
                             webSession.Source.Close();
                             result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
                             result.Success = true;
                         }
-                        else {
+                        else
+                        {
                             // Erreur : Echec de l'enregistrement de l'univers
                             webSession.Source.Close();
                             result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
                             result.Success = false;
                         }
                     }
-                    else {
+                    else
+                    {
                         // Erreur : univers déjà existant
                         webSession.Source.Close();
                         result.ErrorMessage = GestionWeb.GetWebWord(923, webSession.SiteLanguage);
@@ -1152,7 +1161,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     result.ErrorMessage = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
                     result.Success = false;
                 }
-                else {
+                else
+                {
                     // Erreur : suppérieur à 50 caractères
                     webSession.Source.Close();
                     result.ErrorMessage = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
@@ -1260,10 +1270,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private void ManageFacebookDefaultUniverse(WebSession webSession, bool isDefaultUniverse, long idSelectedUniverse)
         {
             bool success = false;
-            if(webSession.CurrentModule==WebConstantes.Module.Name.FACEBOOK && isDefaultUniverse)
+            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK && isDefaultUniverse)
             {
                 UserUnivers defaultUniverse = GetUniverses(Dimension.product, webSession, 0, true).FirstOrDefault();
-                if(defaultUniverse !=null && defaultUniverse.Id == idSelectedUniverse)
+                if (defaultUniverse != null && defaultUniverse.Id == idSelectedUniverse)
                 {
                     success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);
                 }
