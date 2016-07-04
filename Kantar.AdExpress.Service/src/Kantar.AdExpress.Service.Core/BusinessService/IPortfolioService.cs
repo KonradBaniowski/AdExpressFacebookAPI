@@ -15,6 +15,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 
         List<VehicleCover> GetVehicleCovers(string idWebSession, int resultType);
 
-        List<VehiclePage> GetVehiclePages(string idWebSession,string mediaId, string dateMediaNum, string nbPage, string media, string subFolder = null);
+        List<VehiclePage> GetVehiclePages(string idWebSession,string mediaId, string dateMediaNum, string dateCoverNum, string nbPage, string media, string subFolder = null);
     }
 }

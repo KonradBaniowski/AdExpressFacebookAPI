@@ -33,6 +33,12 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
             set { _mediaId = value; }
         }
 
+        public string DateCoverNum
+        {
+            get { return _dateCoverNum; }
+            set { _dateCoverNum = value; }
+        }
+
         #region Constructor
         /// <summary>
         /// Constructor

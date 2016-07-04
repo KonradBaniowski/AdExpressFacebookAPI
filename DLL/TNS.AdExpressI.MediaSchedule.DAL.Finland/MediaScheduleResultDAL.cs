@@ -78,6 +78,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Finland
                                     return (" trunc((max(duration)/86400)) as period_count ");
                             }
                         case CstDBClassif.Vehicles.names.outdoor:
+                        case CstDBClassif.Vehicles.names.dooh:
                         case CstDBClassif.Vehicles.names.instore:
                         case CstDBClassif.Vehicles.names.indoor:
                         case CstDBClassif.Vehicles.names.radio:

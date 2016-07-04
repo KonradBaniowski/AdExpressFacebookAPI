@@ -1,4 +1,8 @@
-﻿function VehicleCarouselAsync(resultType, labelNbInsertion, labelTotalInvest) {
+﻿var LABEL_NB_PAGES = "  Nombre de page : ";
+var LABEL_NEXT = "Suivant";
+var LABEL_PREV = "Précédent";
+
+function VehicleCarouselAsync(resultType, labelNbInsertion, labelTotalInvest) {
     var params = {
         resultType: resultType       
     };
@@ -60,6 +64,10 @@ function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest,
         htmlArr.push(" data-dayN='");
         htmlArr.push(val.DayN);
         htmlArr.push("'");
+        //data-cover-date
+        htmlArr.push(" data-cover-date='");
+        htmlArr.push(val.CoverDate);
+        htmlArr.push("'");
         //data-mId
         htmlArr.push(" data-mId='");
         htmlArr.push(val.Id);
@@ -119,12 +127,14 @@ function OpenOneVehicleModalCarouselAsync( labelNbPages, labelNext, labelPrev) {
         var button = $(event.relatedTarget);
         var mediaId = button.attr("data-mId");
         var dayN = button.attr("data-dayN");
+        var coverDate = button.attr("data-cover-date");
         var nbPage = button.attr("data-nb-page");
         var media = button.attr("data-media-label");
 
         var params = {
             mediaId: mediaId,
             dateMediaNum: dayN,
+            dateCoverNum : coverDate,
             nbPage: nbPage,
             media: media
         };
@@ -273,6 +283,3 @@ function OpenZoomImageModal() {
 }
 
 
-var LABEL_NB_PAGES = "  Nombre de page : ";
-var LABEL_NEXT = "Suivant";
-var LABEL_PREV = "Précédent";

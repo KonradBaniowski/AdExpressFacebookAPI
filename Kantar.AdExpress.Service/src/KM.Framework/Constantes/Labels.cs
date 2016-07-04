@@ -150,6 +150,9 @@ namespace KM.Framework.Constantes
         public string FacebookAllowedLevels { get; set; }
         public string MaxFacebookItems { get; set; }
         public string Redirecting { get; set; }
+        public string WriteToUs { get; set; }
+        public string CallUs { get; set; }
+        public string ClientService { get; set; }
 
     }
 }

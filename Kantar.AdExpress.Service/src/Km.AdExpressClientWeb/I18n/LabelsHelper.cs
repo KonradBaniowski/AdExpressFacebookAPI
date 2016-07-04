@@ -27,7 +27,7 @@ namespace Km.AdExpressClientWeb.I18n
                 Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
                 ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
-                Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
+                Results = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage),
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
@@ -137,7 +137,11 @@ namespace Km.AdExpressClientWeb.I18n
                 DefaultUniverse = GestionWeb.GetWebWord(LanguageConstantes.DefaultUniverse, siteLanguage),
                 FacebookAllowedLevels = GestionWeb.GetWebWord(LanguageConstantes.FacebookAllowedLevels, siteLanguage),
                 MaxFacebookItems = GestionWeb.GetWebWord(LanguageConstantes.MaxFacebookItems, siteLanguage),
-                Redirecting = GestionWeb.GetWebWord(LanguageConstantes.Redirecting, siteLanguage)
+                Redirecting = GestionWeb.GetWebWord(LanguageConstantes.Redirecting, siteLanguage),
+                WriteToUs = GestionWeb.GetWebWord(LanguageConstantes.WriteToUs, siteLanguage),
+                CallUs = GestionWeb.GetWebWord(LanguageConstantes.CallUs, siteLanguage),
+                ClientService = GestionWeb.GetWebWord(LanguageConstantes.ClientService, siteLanguage),
+
             };
             return result;
         }

@@ -14,6 +14,7 @@ namespace Km.AdExpressClientWeb.Controllers
     /// <summary>
     /// Analyse Sectorielle Controller pour les exports 
     /// </summary>
+    [Authorize]
     public class ProductClassAnalysisExportController : Controller
     {
         private readonly IAnalysisService _analysisService;

@@ -467,7 +467,7 @@
         }
 
         function AutoPlayVisu() {
-            $("#imgPageFacebook").each(function (index) {
+            $("div[datavisu]").each(function (index) {
                 var datas = $(this).attr('datavisu').toString();
                 $(this).attr("id", "visuCarou" + index);
                 var active = "active";

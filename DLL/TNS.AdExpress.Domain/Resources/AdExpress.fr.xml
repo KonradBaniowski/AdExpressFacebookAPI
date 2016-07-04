@@ -2326,5 +2326,8 @@
     <item mnemonic="w3068" type="System.String">Vous ne pouvez sélectionner que des annonceurs ou des marques.</item>
     <item mnemonic="w3069" type="System.String">Vous pouvez sélectionner au maximum {0} annonceurs ou marques.</item>
     <item mnemonic="w3070" type="System.String">Redirection en cours</item>
+    <item mnemonic="w3071" type="System.String">Écrivez-nous</item>
+    <item mnemonic="w3072" type="System.String">Appelez-nous</item>
+    <item mnemonic="w3073" type="System.String">Service Client AdExpress</item>
   </items>
 </localization>

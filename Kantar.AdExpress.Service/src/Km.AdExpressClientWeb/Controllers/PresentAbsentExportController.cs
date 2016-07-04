@@ -12,6 +12,7 @@ using TNS.FrameWork.WebResultUI;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class PresentAbsentExportController : Controller
     {
 

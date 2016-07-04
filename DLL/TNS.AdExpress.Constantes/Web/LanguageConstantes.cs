@@ -200,6 +200,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long FacebookAllowedLevels = 3068;
         public const long MaxFacebookItems = 3069;
         public const long Redirecting = 3070;
+        public const long WriteToUs = 3071;
+        public const long CallUs = 3072;
+        public const long ClientService = 3073;
+
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;        
         #endregion

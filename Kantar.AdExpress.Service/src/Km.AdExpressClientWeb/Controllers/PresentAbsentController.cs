@@ -25,6 +25,7 @@ using Kantar.AdExpress.Service.Core.Domain.BusinessService;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class PresentAbsentController : Controller
     {
         private IPresentAbsentService _presentAbsentService;

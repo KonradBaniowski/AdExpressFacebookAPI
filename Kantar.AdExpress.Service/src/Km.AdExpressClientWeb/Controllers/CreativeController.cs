@@ -14,6 +14,7 @@ using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class CreativeController : Controller
     {
         private ICreativeService _creativeService;

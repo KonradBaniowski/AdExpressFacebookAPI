@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class GadController : Controller
     {
         private IGadService _gadService;

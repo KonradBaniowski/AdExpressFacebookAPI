@@ -731,6 +731,38 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 lstColEvol.Add(cellCol);
             }
+            else if (cell is CellPage)
+            {
+                double value = ((CellPage)cell).Value;
+
+                if (double.IsInfinity(value) || double.IsNaN(value))
+                    sheet.Cells[cellRow, cellCol].Value = "";
+                else
+                    sheet.Cells[cellRow, cellCol].Value = value / 1000.0; 
+
+                if (((CellPage)cell).AsposeFormat == -1)
+                    SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                else
+                    SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellPage)cell).AsposeFormat);
+
+                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+            }
+            else if (cell is CellKEuro)
+            {
+                double value = ((CellKEuro)cell).Value;
+
+                if (double.IsInfinity(value) || double.IsNaN(value))
+                    sheet.Cells[cellRow, cellCol].Value = "";
+                else
+                    sheet.Cells[cellRow, cellCol].Value = value / 1000.0;
+
+                if (((CellKEuro)cell).AsposeFormat == -1)
+                    SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                else
+                    SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellKEuro)cell).AsposeFormat);
+
+                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+            }
             else if (cell is CellDuration)
             {
                 double value = ((CellUnit)cell).GetValue();
