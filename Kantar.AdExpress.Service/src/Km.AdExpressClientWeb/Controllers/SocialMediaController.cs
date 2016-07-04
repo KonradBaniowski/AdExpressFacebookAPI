@@ -96,19 +96,19 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "IdPageFacebook" });
             columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "Url" });
-            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NbPage" });
-            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberFan" });
-            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberPost" });
-            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberLike" });
-            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberComment" });
-            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberShare" });
-            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "number", width = "*", format= "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "Expenditure" });
 
             using (var client = new HttpClient())
@@ -119,7 +119,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
                 int IndexListRef = 1;
-                if(universeMarket.Count < 2)
+                if (universeMarket.Count < 2)
                 {
                     IndexListRef = 0;
                 }
@@ -217,7 +217,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
 
-        
+
         public JsonResult GetFilterPost()
         {
             List<SelectListItem> combo = new List<SelectListItem>()
@@ -249,7 +249,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public  ActionResult SocialMediaCreative(string ids, string type)
+        public ActionResult SocialMediaCreative(string ids, string type)
         {
             InsertionCreativeViewModel model = new InsertionCreativeViewModel();
             var claim = new ClaimsPrincipal(User.Identity);
@@ -397,28 +397,36 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 var data = JsonConvert.DeserializeObject<List<PostFacebook>>(content);
-                foreach(var item in data)
+                foreach (var item in data)
                 {
                     item.LikesChart = new Dictionary<string, string>();
                     item.LikesChart.Add("Evolution", "Nombre");
-                    var like = item.NumberLikes.Length;
+
                     var likes = item.NumberLikes.Split(',');
+                    var nbItems = likes.Count();
                     var comments = item.NumberComments.Split(',');
                     var shares = item.NumberShares.Split(',');
-                    for (int i = like; i >= 0; i--)
+                    for (int i = nbItems - 1; i >= 0; i--)
                     {
                         item.LikesChart.Add(i.ToString(), likes[i]);
                     }
-                    
+
                 }
                 //string jsonData = JsonConvert.SerializeObject(data);
                 //var obj = new {data = data };
                 //JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                 //jsonModel.MaxJsonLength = Int32.MaxValue;
 
-                return PartialView("GetTopPost",data);
+                return PartialView("GetTopPost", data);
             }
         }
 
+        public JsonResult GetDataChart(List<long> likes)
+        {
+            var obj = new { data = "" };
+            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            jsonModel.MaxJsonLength = Int32.MaxValue;
+            return jsonModel;
+        }
     }
 }

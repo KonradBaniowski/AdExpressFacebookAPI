@@ -206,6 +206,156 @@
     });
 });
 
+function getData(e) {
+    console.log(e);
+
+    $("[id^='chart-div-comment']").each(function (index) {
+        var dis = $(this);
+        var data = dis.prev().attr('name').split(",");
+
+        console.log(data);
+        var arrayData = [];
+        $.each(data, function (index, value) {
+            index = index + 1;
+            var elem = {
+                "COMMENT": "J" + index,
+                "NB": value
+            };
+            arrayData.push(elem);
+        });
+        dis.igDataChart({
+            autoMarginHeight: 15,
+            autoMarginWidth: 15,
+            width: "70%",
+            height: "250px",
+            title: "Evolution des commentaires",
+            dataSource: arrayData,
+            axes: [
+                {
+                    name: "NameAxis",
+                    type: "categoryX",
+                    label: "COMMENT"
+                },
+                {
+                    name: "PopulationAxis",
+                    type: "numericY",
+                    minimumValue: 0,
+                    title: "COMMENTS in K",
+                }
+            ],
+            series: [
+                {
+                    name: "2005Population",
+                    type: "line",
+                    title: "2005",
+                    xAxis: "NameAxis",
+                    yAxis: "PopulationAxis",
+                    valueMemberPath: "NB",
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true,
+                    thickness: 5
+                }]
+        });
+    });
+
+    $("[id^='chart-div-like']").each(function (index) {
+        var dis = $(this);
+        var data = dis.prev().attr('name').split(",");
+
+        console.log(data);
+        var arrayData = [];
+        $.each(data, function (index, value) {
+            index = index + 1;
+            var elem = {
+                "LIKE": "J" + index,
+                "NB": value
+            };
+            arrayData.push(elem);
+        });
+        dis.igDataChart({
+            autoMarginHeight: 15,
+            autoMarginWidth: 15,
+            width: "70%",
+            height: "250px",
+            title: "Evolution des likes",
+            dataSource: arrayData,
+            axes: [
+                {
+                    name: "NameAxis",
+                    type: "categoryX",
+                    label: "LIKE"
+                },
+                {
+                    name: "PopulationAxis",
+                    type: "numericY",
+                    minimumValue: 0,
+                    title: "LIKES in K",
+                }
+            ],
+            series: [
+                {
+                    name: "2005Population",
+                    type: "line",
+                    title: "2005",
+                    xAxis: "NameAxis",
+                    yAxis: "PopulationAxis",
+                    valueMemberPath: "NB",
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true,
+                    thickness: 5
+                }]
+        });
+    });
+    $("[id^='chart-div-share']").each(function (index) {
+       var dis = $(this);
+       var data = dis.prev().attr('name').split(",");
+       
+       console.log(data);
+       var arrayData = [];
+       $.each(data, function (index, value) {
+           index = index + 1;
+           var elem = {
+               "SHARE": "J" + index,
+               "NB" : value
+           };
+           arrayData.push(elem);
+       });
+       dis.igDataChart({
+           autoMarginHeight: 15,
+           autoMarginWidth: 15,
+           width: "70%",
+           height: "250px",
+           title: "Evolution des partages",
+           dataSource: arrayData,
+           axes: [
+               {
+                   name: "NameAxis",
+                   type: "categoryX",
+                   label: "SHARE"
+               },
+               {
+                   name: "PopulationAxis",
+                   type: "numericY",
+                   minimumValue: 0,
+                   title: "SHARES in K",
+               }
+           ],
+           series: [
+               {
+                   name: "2005Population",
+                   type: "line",
+                   title: "2005",
+                   xAxis: "NameAxis",
+                   yAxis: "PopulationAxis",
+                   valueMemberPath: "NB",
+                   isTransitionInEnabled: true,
+                   isHighlightingEnabled: true,
+                   thickness: 5
+               }]
+       });
+   });
+}
+
 $('#combo > .form-control').on('change', function () {
     var id = $(this).val();
     var array = id.split(",");
@@ -230,6 +380,53 @@ $('#combo > .form-control').on('change', function () {
         },
         success: function (data) {
             $('#top-post').html('').append(data);
+            getData();
+
+           
+
+            //$("#seriesType").change(function (e) {
+            //    var marker = "none";
+            //    var thickness = 5,
+            //        seriesType = $(this).val();
+
+            //    if (seriesType == "area" ||
+            //        seriesType == "splineArea" ||
+            //        seriesType == "column" ||
+            //        seriesType == "waterfall" ||
+            //        seriesType == "point" ||
+            //        seriesType == "stepArea") {
+            //        thickness = 1;
+            //    }
+            //    if (seriesType == "point") {
+            //        marker = "circle";
+            //    }
+            //    $("#chart-div-lik").igDataChart("option", "series", [{ name: "2005Population", remove: true }]);
+            //    $("#chart-div-lik").igDataChart("option", "series", [{ name: "1995Population", remove: true }]);
+            //    $("#chart-div-lik").igDataChart("option", "series", [{
+            //        type: $(this).val(),
+            //        name: "2005Population",
+            //        title: "2005",
+            //        xAxis: "NameAxis",
+            //        yAxis: "PopulationAxis",
+            //        valueMemberPath: "Pop2005",
+            //        markerType: marker,
+            //        isTransitionInEnabled: true,
+            //        isHighlightingEnabled: true,
+            //        thickness: thickness
+            //    }]);
+            //    $("#chart-div-lik").igDataChart("option", "series", [{
+            //        type: $(this).val(),
+            //        name: "1995Population",
+            //        title: "1995",
+            //        xAxis: "NameAxis",
+            //        yAxis: "PopulationAxis",
+            //        valueMemberPath: "Pop1995",
+            //        markerType: marker,
+            //        isTransitionInEnabled: true,
+            //        isHighlightingEnabled: true,
+            //        thickness: thickness
+            //    }]);
+            //});
         }
     });
 });
