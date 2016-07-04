@@ -39,7 +39,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_CONCURENTIELLE:
                     resultController = PRESENTABSENT;
                     break;
-                case Module.Name.ALERTE_PORTEFEUILLE:
+                case Module.Name.ANALYSE_PORTEFEUILLE:
                     resultController = PORTFOLIO;
                     break;
                 case Module.Name.ANALYSE_DYNAMIQUE:
@@ -67,7 +67,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 IsActive = webSession.IsCurrentUniversProductSelected(),
                 Description = MARKET,
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Market, siteLanguage),
-                Action = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? INDEX : MARKET,
+                Action = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ANALYSE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? INDEX : MARKET,
                 Controller = controller,
                 IconCssClass = "fa fa-file-text",
                 Position = CurrentPosition
