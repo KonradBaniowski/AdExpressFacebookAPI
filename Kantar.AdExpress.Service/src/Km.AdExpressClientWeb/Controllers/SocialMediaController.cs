@@ -48,10 +48,9 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             if (!_webSessionService.IsAllSelectionStep(idSession))
-            { 
+            {
                 return RedirectToAction("Market", "Selection");
             }
-
             var result = _webSessionService.GetWebSession(idSession);
             _siteLanguage = result.WebSession.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
@@ -116,7 +115,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 var cla = new ClaimsPrincipal(User.Identity);
                 string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-
+               
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
                 int IndexListRef = 1;

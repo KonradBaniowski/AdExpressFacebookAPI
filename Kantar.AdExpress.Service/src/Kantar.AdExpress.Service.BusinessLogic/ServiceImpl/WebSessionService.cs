@@ -861,7 +861,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     if (treeNomenclatureEG != null && treeNomenclatureEG.Count() > 0)
                     {
-                        adExpressUniverse.AddGroup(0, treeNomenclatureEG);
+                        int key = (webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK) ? index : 0;
+                        adExpressUniverse.AddGroup(key, treeNomenclatureEG);
                         adExpressUniverses.Add(index, adExpressUniverse);
                         index++;
                     }
