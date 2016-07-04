@@ -203,7 +203,7 @@ namespace TNS.AdExpressI.GAD
             html.AppendLine(" </div> ");
 
 
-            html.Append(TNS.AdExpress.Web.Functions.Script.OpenWindow());
+            //html.Append(TNS.AdExpress.Web.Functions.Script.OpenWindow());
 
             return html.ToString();
         }
