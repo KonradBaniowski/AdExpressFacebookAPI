@@ -763,7 +763,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
 
             #region Sélection support
             // media
-            sql.Append(GetMediaSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            if (_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)
+                sql.Append(GetMediaSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             #endregion
 
             #region Media classification
