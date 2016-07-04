@@ -667,7 +667,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Total
                                         if (_allowTotal)
                                         {
-                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -709,7 +709,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Totals years
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 1) + k]);
+                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 1) + k], _session.Unit);
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
 
@@ -759,7 +759,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Total
                                         if (_allowTotal)
                                         {
-                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            sheet.Cells[cellRow, colTotal].Value =  Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -783,7 +783,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Totals years
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value =  Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
 
@@ -825,7 +825,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Total
                                         if (_allowTotal)
                                         {
-                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -849,7 +849,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Totals years
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
 
@@ -898,7 +898,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     #region Total
                                     if (_allowTotal)
                                     {
-                                        sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                        sheet.Cells[cellRow, colTotal].Value =  Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -922,7 +922,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     #region Totals years
                                     for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                     {
-                                        sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                        sheet.Cells[cellRow, colTotalYears + (k - 1)].Value =  Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
 
@@ -3854,7 +3854,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (_allowTotal)
                                             {
                                                 if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
-                                                    sheet.Cells[cellRow, colTotalComp].Value = ((double)data[i, TOTAL_COMPARATIVE_COLUMN_INDEX]);
+                                                    sheet.Cells[cellRow, colTotalComp].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
 
                                                 SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
                                                 SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
@@ -3897,7 +3897,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             if (data[i, TOTAL_COLUMN_INDEX] != null)
-                                                sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
@@ -3963,7 +3963,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
                                             if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
-                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
@@ -4004,7 +4004,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (_allowTotal)
                                             {
                                                 if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
-                                                    sheet.Cells[cellRow, colTotalComp].Value = ((double)data[i, TOTAL_COMPARATIVE_COLUMN_INDEX]);
+                                                    sheet.Cells[cellRow, colTotalComp].Value =  Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
 
                                                 SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
                                                 SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
@@ -4031,7 +4031,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             if (data[i, TOTAL_COLUMN_INDEX] != null)
-                                                sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                                sheet.Cells[cellRow, colTotal].Value =  Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
@@ -4074,7 +4074,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
                                             if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
-                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value =  Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
@@ -4107,7 +4107,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (_allowTotal)
                                             {
                                                 if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
-                                                    sheet.Cells[cellRow, colTotalComp].Value = ((double)data[i, TOTAL_COMPARATIVE_COLUMN_INDEX]);
+                                                    sheet.Cells[cellRow, colTotalComp].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
 
                                                 SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
                                                 SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
@@ -4134,7 +4134,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             if (data[i, TOTAL_COLUMN_INDEX] != null)
-                                                sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
@@ -4177,7 +4177,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                         {
                                             if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
-                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value =  Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
@@ -4216,7 +4216,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
-                                                sheet.Cells[cellRow, colTotalComp].Value = ((double)data[i, TOTAL_COMPARATIVE_COLUMN_INDEX]);
+                                                sheet.Cells[cellRow, colTotalComp].Value =  Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
@@ -4243,7 +4243,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     if (_allowTotal)
                                     {
                                         if (data[i, TOTAL_COLUMN_INDEX] != null)
-                                            sheet.Cells[cellRow, colTotal].Value = ((double)data[i, TOTAL_COLUMN_INDEX]);
+                                            sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
 
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
@@ -4286,7 +4286,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     for (int k = 1; k <= nbColYear && _allowTotal; k++)
                                     {
                                         if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]);
+                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
 
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
