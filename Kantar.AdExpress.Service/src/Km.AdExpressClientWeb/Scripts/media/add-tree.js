@@ -62,6 +62,7 @@
         }
         else
         {
-            bootbox.alert('rien a locker');
+            var message =  $('#Labels_ErrorMininumInclude').val();
+            bootbox.alert(message);
         }
     })

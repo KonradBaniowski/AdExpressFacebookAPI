@@ -30,7 +30,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             ExportResponse response = new ExportResponse
             {
-                Message= "This feature is still under construction."
+                Message = string.Empty
             };
             #region Validation
             var webSession = (WebSession)WebSession.Load(request.WebSessionId);
@@ -46,7 +46,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             try
             {
-
+                #region Process
                 if (string.IsNullOrEmpty(request.FileName) || string.IsNullOrEmpty(request.Email) || request.FileName.Length == 0 || request.Email.Length == 0)
                 {
                     response.Message = GestionWeb.GetWebWord(WebCst.LanguageConstantes.AlertEmptyFields, webSession.SiteLanguage);
@@ -195,6 +195,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                     }
                 }
+                #endregion
+                response.Success = true;
+                response.Message = (webSession.SiteLanguage == 33) ? "Votre demande a été prise en compte" : "You have successfully created your export file. You will receive an email shortly.";
             }
             catch (System.Exception ex)
             {
@@ -203,7 +206,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     throw (ex);
                 }
             }
-            #endregion
+            #endregion            
             return response;
         }
         private bool IsValidEmail(string email)
