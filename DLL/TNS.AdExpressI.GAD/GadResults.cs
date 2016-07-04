@@ -202,7 +202,8 @@ namespace TNS.AdExpressI.GAD
             html.AppendLine(" </div> ");
             html.AppendLine(" </div> ");
 
-
+            //Commented because we don't use TNS.AdExpress.Web in the new AdExpress
+            //To reuse it, you need to move OpenWindow to TNS.AdExpress.Web.Core
             //html.Append(TNS.AdExpress.Web.Functions.Script.OpenWindow());
 
             return html.ToString();
