@@ -22,6 +22,7 @@ using LS = TNS.Ares.Domain.LS;
 using TNS.Ares.Alerts.DAL;
 using TNSDomain = TNS.Alert.Domain;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -208,7 +209,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return domain;
         }
 
-        private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage)
+        private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage, bool defaultFcbUniverse=false)
         {
             List<long> itemIdList = null;
             for (int k = 0; k < Principal.Count; k++)
@@ -221,8 +222,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         for (int i = 0; i < result.Count; i++)
                         {
                             var model = new Core.Domain.Tree();
-                            List<long> levelIdsList = result[k+i].GetLevelIdsList();
-                            model.AccessType = result[k+i].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
+                            int index = k + i;// (defaultFcbUniverse) ? k + i : i;
+                            List<long> levelIdsList = result[index].GetLevelIdsList();
+                            model.AccessType = result[index].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
                             if (model.AccessType == AccessType.excludes)
                             {
                                 model.Label = GestionWeb.GetWebWord(2269, SiteLanguage);
@@ -244,7 +246,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     universLevel.Label = GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, SiteLanguage);
                                     universLevel.Id = levelIdsList[j];
                                     TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = 
-                                        factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[k+i].GetAsString(levelIdsList[j]));
+                                        factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[index].GetAsString(levelIdsList[j]));
                                     if (universeItems != null)
                                     {
                                         itemIdList = universeItems.IdListOrderByClassificationItem;
@@ -397,8 +399,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             param[1] = _webSession.SiteLanguage;
 
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-
+           
             var UniversMarket = new List<Core.Domain.Tree>();
+            
             ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, UniversMarket, factoryLevels, _webSession.SiteLanguage);
 
             return UniversMarket;
