@@ -428,5 +428,48 @@ namespace Km.AdExpressClientWeb.Controllers
             jsonModel.MaxJsonLength = Int32.MaxValue;
             return jsonModel;
         }
+
+        public async Task<ActionResult> GetKPIByPostId(long id)
+        {
+            if (id==0) { throw new ArgumentNullException("Invalid parameter"); }
+            using (var client = new HttpClient())
+            {
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession);
+                //postModelRef.IdPost = id;
+                long idPost = id;
+                int idLanguage = postModelRef.IdLanguage;
+
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/OnePost"), new { idPost, idLanguage }).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                var data = JsonConvert.DeserializeObject<PostFacebook>(content);
+                //foreach (var item in data)
+                //{
+                    data.LikesChart = new Dictionary<string, string>();
+                    data.LikesChart.Add("Evolution", "Nombre");
+
+                    var likes = data.NumberLikes.Split(',');
+                    var nbItems = likes.Count();
+                    var comments = data.NumberComments.Split(',');
+                    var shares = data.NumberShares.Split(',');
+                    for (int i = nbItems - 1; i >= 0; i--)
+                    {
+                        data.LikesChart.Add(i.ToString(), likes[i]);
+                    }
+
+                //}
+                //string jsonData = JsonConvert.SerializeObject(data);
+                //var obj = new {data = data };
+                //JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                //jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return PartialView("Zoom", data);
+            }
+        }
     }
 }

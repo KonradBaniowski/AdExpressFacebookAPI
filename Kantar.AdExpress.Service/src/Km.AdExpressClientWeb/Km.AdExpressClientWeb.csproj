@@ -1491,8 +1491,8 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\pdf\Page_aide.pdf" />
     <Content Include="Content\pdf\Configuration.pdf" />
-    <Content Include="Content\pdf\AdExpress_Version-Optimisée.pdf" />
     <Content Include="Content\pdf\AdExpressMediaUpdatesCalendar.pdf" />
+    <Content Include="Content\pdf\AdExpress_Version-Optimisée.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1633,6 +1633,7 @@
     <Content Include="Views\SocialMedia\Results.cshtml" />
     <Content Include="Views\SocialMedia\SocialMediaCreative.cshtml" />
     <Content Include="Views\SocialMedia\GetTopPost.cshtml" />
+    <Content Include="Views\SocialMedia\Zoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

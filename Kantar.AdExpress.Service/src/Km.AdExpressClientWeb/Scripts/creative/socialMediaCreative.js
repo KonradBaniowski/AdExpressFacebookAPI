@@ -159,6 +159,11 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
 
 });
 
+//$(".triggerModal").on('click', function (event) {
+//    event.preventDefault();
+//    //var datas = $(this).attr('data-post').toString();
+//    //bootbox.alert(datas);
+//});
 
 $("#postFacebookModal").attr('src', '');
 $("#postFacebookModal").on('shown.bs.modal', function (event) {
@@ -166,12 +171,32 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
     var datas = button.data('creative').toString(); // Extract info from data-* attributes
 
     if (datas === null || datas == "" || datas == 0 || datas == "0") {
-        alert("Post disponible.");
+        bootbox.alert("Post indisponible.");
     }
     else {
-        id = datas;
-        $("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id);
-        $("#objectPost").show();
+        //id = datas;
+        //$("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id);
+        //$("#objectPost").show();
+        var params = {
+            id: datas
+        };
+        $.ajax({
+            url: '/SocialMedia/GetKPIByPostId',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("error");
+            },
+            success: function (response) {
+                $('#postFacebookModal .modal-content').html('');
+                $('#postFacebookModal .modal-content').append(response);
+                $('#postFacebookModal').modal('show');
+               
+            }
+        });
+
     }
 });
 
