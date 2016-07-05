@@ -1633,6 +1633,7 @@
     <Content Include="Views\SocialMedia\Results.cshtml" />
     <Content Include="Views\SocialMedia\SocialMediaCreative.cshtml" />
     <Content Include="Views\SocialMedia\GetTopPost.cshtml" />
+    <Content Include="Views\SocialMedia\Zoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
