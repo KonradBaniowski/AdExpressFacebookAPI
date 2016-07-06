@@ -265,6 +265,8 @@ function getData(e) {
 
 $('#combo > .form-control, #unity > .form-control').on('change', function () {
     var id = $('#combo > .form-control').val();
+    if (!id)
+        return false;
     var array = id.split(",");
     var ids = []
     $.each(array, function (index, value) {
