@@ -1712,6 +1712,13 @@ ul.ui-selectable {
     margin-left: 100%;
 }
 
+.img-responsive.center{
+    margin:0 auto;
+}
+
+.div-center {
+    margin:0 auto;
+}
 
 .logoNavBar {
     max-width: 240px;
