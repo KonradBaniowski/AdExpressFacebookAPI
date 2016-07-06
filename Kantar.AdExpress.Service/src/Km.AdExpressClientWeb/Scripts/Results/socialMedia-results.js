@@ -75,6 +75,7 @@
             datatype: "json",
             error: function (xmlHttpRequest, errorText, thrownError) {
                 bootbox.alert(errorText);
+                $("#gridLoader").addClass("hide");
             },
             success: function (data) {
                 //ComboBox Init
