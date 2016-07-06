@@ -11,7 +11,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         {
             IdAdvertisers = new List<long>();
             IdBrands = new List<long>();
-            IdBrands = new List<long>();
+            IdPages = new List<long>();
         }
         public int IdLogin { get; set; }
         public long BeginDate { get; set; }
