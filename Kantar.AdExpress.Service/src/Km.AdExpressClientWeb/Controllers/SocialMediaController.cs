@@ -115,7 +115,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 var cla = new ClaimsPrincipal(User.Identity);
                 string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-               
+
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
                 int IndexListRef = 1;
@@ -270,8 +270,7 @@ namespace Km.AdExpressClientWeb.Controllers
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
 
-            #region
-            //Hierachical ids for Treegrid
+            #region Hierachical ids for Treegrid
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "ID" });
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
@@ -296,72 +295,23 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "NumberShare" });
             columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "*" });
             schemaFields.Add(new { name = "NumberComment" });
-            //End
-            #endregion
-            #region Mock Data
-
-            //Mock data
-            //gridData[0, 0] = 1;
-            //gridData[0, 1] = -1;
-            //gridData[0, 2] = 1;
-            //gridData[0, 3] = 0;
-            //gridData[0, 4] = "bmw";
-            //gridData[0, 5] = "bmw gamme auto";
-            //gridData[0, 6] = "bmw france";
-            //gridData[0, 7] = "06/01/2016";
-            //gridData[0, 8] = "3596";
-            //gridData[0, 9] = "2480";
-            //gridData[0, 10] = "484";
-            //gridData[0, 11] = "37";
-
-            //gridData[1, 0] = 2;
-            //gridData[1, 1] = -1;
-            //gridData[1, 2] = 2;
-            //gridData[1, 3] = 0;
-            //gridData[1, 4] = "Fiat";
-            //gridData[1, 5] = "Maseratti";
-            //gridData[1, 6] = "Fiat auto";
-            //gridData[1, 7] = "06/05/2016";
-            //gridData[1, 8] = "13596";
-            //gridData[1, 9] = "20480";
-            //gridData[1, 10] = "1484";
-            //gridData[1, 11] = "3700";
-
-            //gridData[2, 0] = 3;
-            //gridData[2, 1] = -1;
-            //gridData[2, 2] = 3;
-            //gridData[2, 3] = 0;
-            //gridData[2, 4] = "Ferrero";
-            //gridData[2, 5] = "Nutella";
-            //gridData[2, 6] = "Ferrero";
-            //gridData[2, 7] = "06/06/2016";
-            //gridData[2, 8] = "13596";
-            //gridData[2, 9] = "20480";
-            //gridData[2, 10] = "1484";
-            //gridData[2, 11] = "3700";
-
-            //gridResult.HasData = true;
-            //gridResult.Columns = columns;
-            //gridResult.Schema = schemaFields;
-            //gridResult.ColumnsFixed = columnsFixed;
-            //gridResult.NeedFixedColumns = false;
-            //gridResult.Data = gridData;
-            //end Mock Data
             #endregion
 
             using (var client = new HttpClient())
             {
-
-
                 var cla = new ClaimsPrincipal(User.Identity);
                 string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
                 Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
-                postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
+                postModelRef.IdPages = ids.Split(',').Select(long.Parse).ToList();
+                if (!postModelRef.IdPages.Any())
+                {
+                    postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                }
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPostUri"]), postModelRef).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -431,42 +381,32 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public async Task<ActionResult> GetKPIByPostId(long id)
         {
-            if (id==0) { throw new ArgumentNullException("Invalid parameter"); }
+            if (id == 0) { throw new ArgumentNullException("Invalid parameter"); }
             using (var client = new HttpClient())
             {
                 var cla = new ClaimsPrincipal(User.Identity);
                 string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
                 Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession);
-                //postModelRef.IdPost = id;
                 long idPost = id;
                 int idLanguage = postModelRef.IdLanguage;
-
-                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/OnePost"), new { idPost, idLanguage }).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookOnePostUri"]), new { idPost, idLanguage }).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
 
                 var data = JsonConvert.DeserializeObject<PostFacebook>(content);
-                //foreach (var item in data)
-                //{
-                    data.LikesChart = new Dictionary<string, string>();
-                    data.LikesChart.Add("Evolution", "Nombre");
+                data.LikesChart = new Dictionary<string, string>();
+                data.LikesChart.Add("Evolution", "Nombre");
 
-                    var likes = data.NumberLikes.Split(',');
-                    var nbItems = likes.Count();
-                    var comments = data.NumberComments.Split(',');
-                    var shares = data.NumberShares.Split(',');
-                    for (int i = nbItems - 1; i >= 0; i--)
-                    {
-                        data.LikesChart.Add(i.ToString(), likes[i]);
-                    }
-
-                //}
-                //string jsonData = JsonConvert.SerializeObject(data);
-                //var obj = new {data = data };
-                //JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
-                //jsonModel.MaxJsonLength = Int32.MaxValue;
+                var likes = data.NumberLikes.Split(',');
+                var nbItems = likes.Count();
+                var comments = data.NumberComments.Split(',');
+                var shares = data.NumberShares.Split(',');
+                for (int i = nbItems - 1; i >= 0; i--)
+                {
+                    data.LikesChart.Add(i.ToString(), likes[i]);
+                }
 
                 return PartialView("Zoom", data);
             }
