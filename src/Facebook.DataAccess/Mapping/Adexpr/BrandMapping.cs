@@ -12,9 +12,9 @@ namespace Facebook.DataAccess.Mapping.Adexpr
     {
         public BrandMapping(string schema)
         {
-            HasKey(e => new { e.IdBrand, e.IdLanguage });
+            HasKey(e => new { e.Id, e.IdLanguage });
             ToTable("BRAND", schema);
-            Property(e => e.IdBrand).HasColumnName("ID_BRAND");
+            Property(e => e.Id).HasColumnName("ID_BRAND");
             Property(e => e.IdLanguage).HasColumnName("ID_LANGUAGE");
             Property(e => e.BrandLabel).HasColumnName("BRAND");
             Property(e => e.Activation).HasColumnName("ACTIVATION");

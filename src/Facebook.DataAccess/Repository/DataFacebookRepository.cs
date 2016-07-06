@@ -69,18 +69,36 @@ namespace Facebook.DataAccess.Repository
             {
                 query = query.Include(a => a.Brand)
                     .Where(e => Brand.Contains(e.IdBrand));
-                return query.GroupBy(a => new { a.IdAdvertiser, a.IdPageFacebook }).Select(e => new DateFacebookContract
-                {
-                    IdAdvertiser = e.First().IdAdvertiser,
-
-                    NumberPost = e.Sum(a => a.NumberPost),
-                    NumberLike = e.Sum(a => a.NumberLike),
-                    NumberComment = e.Sum(a => a.NumberComment),
-                    NumberShare = e.Sum(a => a.NumberShare),
-                    Expenditure = e.Sum(a => a.Expenditure),
-                    NumberFan = e.Max(a => a.NumberFan),
-                    PageName = e.First().PageName,
-                }).ToList();
+                var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand, p.IdPageFacebook, p.IdLanguageData })
+                                  join c in context.Brand on new {id= g.Key.IdBrand, IdLanguage = g.Key.IdLanguageData } equals new {id= c.Id, IdLanguage = c.IdLanguage }
+                                  where c.IdLanguage == idLanguage
+                                  select new DateFacebookContract
+                                  {
+                                      IdAdvertiser = g.Key.IdBrand,
+                                      NumberPost = g.Sum(a => a.NumberPost),
+                                      NumberLike = g.Sum(a => a.NumberLike),
+                                      NumberComment = g.Sum(a => a.NumberComment),
+                                      NumberShare = g.Sum(a => a.NumberShare),
+                                      Expenditure = g.Sum(a => a.Expenditure),
+                                      NumberFan = g.Max(a => a.NumberFan),
+                                      PageName = g.FirstOrDefault().PageName,
+                                      IdPage = g.FirstOrDefault().IdPage,
+                                      IdPageFacebook = g.FirstOrDefault().IdPageFacebook,
+                                      Url = g.FirstOrDefault().Url,
+                                      Label = c.BrandLabel
+                                  }).ToList(); 
+                return brandQuery;
+                //return query.GroupBy(a => new { a.IdBrand, a.IdPageFacebook }).Select(e => new DateFacebookContract
+                //{
+                //    IdBrand = e.FirstOrDefault().IdBrand,
+                //    NumberPost = e.Sum(a => a.NumberPost),
+                //    NumberLike = e.Sum(a => a.NumberLike),
+                //    NumberComment = e.Sum(a => a.NumberComment),
+                //    NumberShare = e.Sum(a => a.NumberShare),
+                //    Expenditure = e.Sum(a => a.Expenditure),
+                //    NumberFan = e.Max(a => a.NumberFan),
+                //    PageName = e.FirstOrDefault().PageName,
+                //}).ToList();
             }
             else if (Advertiser != null && Advertiser.Count > 0)
             {
@@ -103,7 +121,7 @@ namespace Facebook.DataAccess.Repository
                                 IdPage = g.FirstOrDefault().IdPage,
                                 IdPageFacebook = g.FirstOrDefault().IdPageFacebook,
                                 Url = g.FirstOrDefault().Url,
-                                AdvertiserLabel = c.AdvertiserLabel
+                                Label = c.AdvertiserLabel
 
                             });
                 return tata.ToList();

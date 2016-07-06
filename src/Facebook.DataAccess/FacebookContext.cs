@@ -54,6 +54,7 @@ namespace Facebook.DataAccess
         public DbSet<DataFacebook> DataFacebook { get; set; }
         public DbSet<Advertiser> Advertiser { get; set; }
         public DbSet<DataPostFacebook> DataPostFacebook { get; set; }
+        public DbSet<Brand> Brand { get; set; }
     }
 
     public class ModelConfiguration : DbConfiguration

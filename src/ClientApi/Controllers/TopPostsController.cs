@@ -34,9 +34,11 @@ namespace ClientApi.Controllers
 
         [Route("Api/OnePost")]
         [HttpPost]
-        public PostFacebookContract Get([FromBody] long idPostFacebook,int idLanguage)
+        public PostFacebookContract Get([FromBody] dynamic model)
         {
-            return _fbsvc.GetPostFacebook(idPostFacebook,idLanguage);
+            long idPost = (long)model.idPost;
+            int idLanguage = (int)model.idLanguage;
+            return _fbsvc.GetPostFacebook(idPost, idLanguage);
 
         }
 

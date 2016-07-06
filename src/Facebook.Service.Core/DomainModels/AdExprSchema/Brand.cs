@@ -8,7 +8,7 @@ namespace Facebook.Service.Core.DomainModels.AdExprSchema
 {
     public class Brand
     {
-        public long IdBrand { get; set; }
+        public long Id { get; set; }
         public long IdLanguage { get; set; }
         public string BrandLabel { get; set; }
         public long Activation { get; set; }

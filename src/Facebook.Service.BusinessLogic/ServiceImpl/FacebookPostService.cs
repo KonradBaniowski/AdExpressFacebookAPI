@@ -6,6 +6,7 @@ using Facebook.Service.Core.DataAccess;
 using AutoMapper;
 using Facebook.Service.Core.DomainModels.BusinessModel;
 using System.Linq;
+using System.Globalization;
 
 namespace Facebook.Service.BusinessLogic.ServiceImpl
 {
@@ -38,7 +39,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                IdPostFacebook = p.IdPostFacebook,
                Advertiser = p.Advertiser,
                Brand = p.Brand,
-               DateCreationPost = p.DateCreationPost,
+               DateCreationPost = GetDate(p.DateCreationPost, idLanguage),//p.DateCreationPost.ToString(),
                Commitment = LastKPI(p.Commitments),
                NumberComment = LastKPI(p.NumberComments),
                NumberLike = LastKPI(p.NumberLikes),
@@ -111,6 +112,13 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return 0;
         }
 
+        private string GetDate(DateTime date, int idLanguage)
+        {
+            string format = (idLanguage == 33) ? "fr-Fr" : "en-GB";
+            CultureInfo info = new CultureInfo(format);
+            string result = date.ToString("d", info);
+            return result;
+        }
       
     }
 }

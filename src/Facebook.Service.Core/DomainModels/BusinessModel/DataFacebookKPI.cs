@@ -18,9 +18,10 @@ namespace Facebook.Service.Core.DomainModels.BusinessModel
         public long NumberShare { get; set; }
         public long NumberFan { get; set; }
         public long Expenditure { get; set; }
-        public string AdvertiserLabel { get; set; }
+        public string Label { get; set; }
         //public string BrandLabel { get; set; }
         public string PageName { get; set; }
         public long IdPageFacebook { get; set; }
+        public long IdBrand { get; set; }
     }
 }

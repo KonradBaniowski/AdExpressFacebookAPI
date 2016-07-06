@@ -44,7 +44,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 item.PID = -1;
                 item.ID = i.FirstOrDefault().IdAdvertiser;
                 item.IdPageFacebook = string.Join(",", i.Select(e => e.IdPageFacebook).ToList());
-                item.PageName = i.FirstOrDefault().AdvertiserLabel;
+                item.PageName = i.FirstOrDefault().Label;
                 //item.BrandLabel = i.FirstOrDefault().BrandLabel;
                 item.Expenditure = i.Sum(e => e.Expenditure);
                 item.NbPage = i.Count();

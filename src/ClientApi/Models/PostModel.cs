@@ -14,5 +14,6 @@ namespace ClientApi.Models
         public List<long> IdBrands { get; set; }
         public List<long> IdPages { get; set; }
         public int IdLanguage { get; set; }
+        public long IdPost { get; set; }
     }
 }
