@@ -287,6 +287,8 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
         success: function (data) {
             $('#top-post').html('').append(data);
             getData();
+            var postPosition = $('#post-id').offset().top;
+            $('html, body').animate({ scrollTop: postPosition }, 'slow');
 
         }
     });
