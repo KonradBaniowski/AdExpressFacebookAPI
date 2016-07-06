@@ -70,7 +70,7 @@ $(function () {
                 UniversLvl.push(UnisLvl);
             });
             var stuff = {
-                Id: itemContainer,
+                Id: index,//itemContainer,
                 AccessType: accessType,
                 UniversLevels: UniversLvl
             };

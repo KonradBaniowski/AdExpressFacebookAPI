@@ -211,9 +211,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
             response.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep);
-            bool isValid = IsValidMarketRequest(request, _webSession);
+            IsValidMarketRequest(request, _webSession, response);
 
-            if (isValid)
+            if (response.Success)
             {
                 #region Fix max items per level
                 if (request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
@@ -221,57 +221,56 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
                 }
                 #endregion
+
                 #region try catch block
                 else
                 {
-                        try
+                    try
+                    {
+                        switch (_webSession.CurrentModule)
                         {
-                            switch (_webSession.CurrentModule)
-                            {
-                                case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
-                                case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
-                                case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                                case CstWeb.Module.Name.INDICATEUR:
-                                case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
-                                case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
-                                    AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
-                                    SetDefaultMarketUniverse(response, univers, request,_webSession);
-                                    break;
-                                case CstWeb.Module.Name.FACEBOOK:
-                                    Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
-                                    _webSession.PrincipalProductUniverses = universes;
-                                    response.Success = true;
-                                    _webSession.Save();
-                                    break;
-                                default:
-                                    break;
-                            }
+                            case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                            case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
+                            case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
+                            case CstWeb.Module.Name.INDICATEUR:
+                            case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                            case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                                AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
+                                SetDefaultMarketUniverse(response, univers, request, _webSession);
+                                break;
+                            case CstWeb.Module.Name.FACEBOOK:
+                                Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
+                                _webSession.PrincipalProductUniverses = universes;
+                                response.Success = true;
+                                _webSession.Save();
+                                break;
+                            default:
+                                break;
                         }
+                    }
 
-                        catch (SecurityException)
-                        {
-                            _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
-                            _webSession.Save();
-                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
-                        }
-                        catch (CapacityException)
-                        {
-                            _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-                            _webSession.Save();
-                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
-                        }
-                        catch (Exception)
-                        {
-                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
-                        }
+                    catch (SecurityException)
+                    {
+                        _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
+                        _webSession.Save();
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
+                    }
+                    catch (CapacityException)
+                    {
+                        _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                        _webSession.Save();
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
+                    }
+                    catch (Exception)
+                    {
+                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
+                    }
                 }
                 #endregion
             }
-            else
+            else if (_webSession.CurrentModule != CstWeb.Module.Name.FACEBOOK)
             {
-                response.ErrorMessage = (_webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK) ?
-                    FcbMarketErrorMsg
-                    : GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
             }
 
             return response;
@@ -997,13 +996,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        private bool IsValidMarketRequest(SaveMarketSelectionRequest request, WebSession webSession)
+        private void IsValidMarketRequest(SaveMarketSelectionRequest request, WebSession webSession, WebSessionResponse response)
         {
-            bool isValid = (request.Required) ? (request.Trees.Any() && request.Trees.Where(p => p.UniversLevels != null).Any() && request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any()) : true;
+            response.Success = (request.Required) ? (request.Trees.Any() && request.Trees.Where(p => p.UniversLevels != null).Any() && request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).Any()) : true;
 
-            if (webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK && isValid)
+            if (webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK && response.Success)
             {
-
+                if (!request.Trees.Where(p => p.Id == 1 && (p.UniversLevels != null)).Any())
+                {
+                    response.Success = false;
+                    response.ErrorMessage = GestionWeb.GetWebWord(2299, webSession.SiteLanguage);
+                    return ;
+                }
                 List<UniversLevel> advertisers = request.Trees.SelectMany(p => p.UniversLevels)
                                                                 .Where(x => x.Id == ADVERTISERID && x.UniversItems.Count > 0)
                                                                 .ToList();
@@ -1012,21 +1016,35 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                                                 .ToList();
                 if (advertisers.Count > 0 && brands.Count > 0)
                 {
-                    return isValid = false;
+                    response.Success = false;
                 }
                 else
                 {
-                    isValid = CheckFacebookItems(advertisers) && CheckFacebookItems(brands);
+                    List<long> referents = GetFacebookSelectedItems(request, 1);
+                    List<long> concurrents = GetFacebookSelectedItems(request, 0);
+                    response.Success = CheckFacebookItems(referents) && CheckFacebookItems(concurrents);
+                    if (response.Success)
+                    {
+                        List<long> result = referents.Where(p => concurrents.Any(p2 => p2 == p)).ToList();
+                        if (result.Any())
+                        {
+                            response.Success = false;
+                            response.ErrorMessage = " You can not select an item as a referent and as competitor.";
+                        }
+                    }
+                    else
+                    {
+                        response.ErrorMessage = FcbMarketErrorMsg;
+                    }
                 }
 
             }
-            return isValid;
         }
-        private bool CheckFacebookItems(List<UniversLevel> level)
+        private bool CheckFacebookItems(List<long> level)
         {
             int maxItems = int.Parse(System.Configuration.ConfigurationManager.AppSettings["FacebookMaxItems"]);
-            bool result = level.SelectMany(p => p.UniversItems).ToList().Count > maxItems ? false : true;
-            return result;
+            bool isValid = level.Count < maxItems + 1;
+            return isValid;
         }
 
         private void SetDefaultMarketUniverse(WebSessionResponse response, AdExpressUnivers univers, SaveMarketSelectionRequest request, WebSession webSession)
@@ -1067,7 +1085,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 response.Success = true;
             }
         }
-        private void SetFacebookMarketUniverse( WebSessionResponse response, WebSession webSession, SaveMarketSelectionRequest request)
+        private void SetFacebookMarketUniverse(WebSessionResponse response, WebSession webSession, SaveMarketSelectionRequest request)
         {
             Dictionary<int, AdExpressUniverse> adExpressUniverses = new Dictionary<int, AdExpressUniverse>(request.Trees.Count);
             try
@@ -1111,7 +1129,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             webSession.PrincipalProductUniverses = adExpressUniverses;
             response.Success = true;
             webSession.Save();
-            
+
         }
 
         public PostModel GetPostModel(string webSessionId)
@@ -1125,6 +1143,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             pM.IdLanguage = _webSession.DataLanguage;
 
             return pM;
+        }
+
+        private List<long> GetFacebookSelectedItems(SaveMarketSelectionRequest request, int idTree)
+        {
+            List<UniversLevel> levels = request.Trees.Where(x => x.Id == idTree).SelectMany(p => p.UniversLevels)
+                                                                .Where(x => (x.Id == ADVERTISERID || x.Id == BRANDID) && x.UniversItems.Count > 0)
+                                                                .ToList();
+            List<long> ids = levels.SelectMany(p => p.UniversItems.Select(x => x.Id))
+                                        .ToList();
+            return ids;
         }
         #endregion
     }
