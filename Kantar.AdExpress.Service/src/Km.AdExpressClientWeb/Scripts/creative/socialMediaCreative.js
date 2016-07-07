@@ -183,12 +183,10 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
             error: function (xmlHttpRequest, errorText, thrownError) {
                 bootbox.alert("error");
             },
-            success: function (response) {
-                $('#postFacebookModal .modal-content').html('');
-                $('#postFacebookModal .modal-content').append(response);
+            success: function (response) {                
+                $('#postFacebookModal .modal-content').html('').append(response);
                 $('#postFacebookModal').modal('show');
-                getData();
-               
+                getData();               
             }
         });
 
@@ -214,151 +212,122 @@ $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
 });
 
 function getData(e) {
-    console.log(e);
-
-    $("[id^='chart-div-comment']").each(function (index) {
-        var dis = $(this);
-        var data = dis.prev().attr('name').split(",");
-
-        console.log(data);
-        var arrayData = [];
-        $.each(data, function (index, value) {
-            index = index + 1;
-            var elem = {
-                "COMMENT": "J" + index,
-                "NB": value
-            };
-            arrayData.push(elem);
-        });
-        dis.igDataChart({
-            autoMarginHeight: 15,
-            autoMarginWidth: 15,
-            //width: "33%",
-            //height: "250px",
-            title: "Evolution des commentaires",
-            dataSource: arrayData,
-            axes: [
-                {
-                    name: "NameAxis",
-                    type: "categoryX",
-                    label: "COMMENT"
-                },
-                {
-                    name: "PopulationAxis",
-                    type: "numericY",
-                    minimumValue: 0,
-                    title: "COMMENTS in K",
-                }
-            ],
-            series: [
-                {
-                    name: "2005Population",
+            var serieType = $('#seriesType').val();
+            var dis = $('#chart');
+            var data = $("[id='" + serieType + "']");
+            var arrayData = [];
+            var series = []
+            $.each(data, function (indexLike, value) {
+                var serie = {
+                    name: "name",
                     type: "line",
-                    title: "2005",
-                    xAxis: "NameAxis",
-                    yAxis: "PopulationAxis",
-                    valueMemberPath: "NB",
+                    title: "1995",
+                    xAxis: "Days",
+                    yAxis: "Value",
+                    valueMemberPath: indexLike,
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true,
+                    thickness: 5
+                };
+                var datas = $(value).attr('value').split(",");
+                $.each(datas, function (index, value) {
+                    index = index + 1;
+                    var elem = {
+                        "DAY": "J" + index, 
+                        Data: value
+                    };
+                    arrayData.push(elem);
+                });
+                series.push(serie);
+            });
+            dis.igDataChart({
+                autoMarginHeight: 15,
+                autoMarginWidth: 15,
+                width: "70%",
+                height: "250px",
+                //title: "Evolution des partages",
+                dataSource: arrayData,
+                axes: [
+                    {
+                        name: "Days",
+                        type: "categoryX",
+                        label: "DAY"
+                    },
+                    {
+                        name: "Value",
+                        type: "numericY",
+                        minimumValue: 0,
+                        title: serieType,
+                    }
+                ],
+
+                series: [{
+                    name: "wahtever",
+                    type: "line",
+                    title: "1995",
+                    xAxis: "Days",
+                    yAxis: "Value",
+                    valueMemberPath: "Data",
                     isTransitionInEnabled: true,
                     isHighlightingEnabled: true,
                     thickness: 5
                 }]
-        });
-    });
+            });
+        //});
+    
+    //$("[id^='chart-div-comment']").each(function (index) {
+    //    var dis = $(this);
+    //    var data = dis.prev().attr('name').split(",");
 
-    $("[id^='chart-div-like']").each(function (index) {
-        var dis = $(this);
-        var data = dis.prev().attr('name').split(",");
+    //    console.log(data);
+    //    var arrayData = [];
+    //    $.each(data, function (index, value) {
+    //        index = index + 1;
+    //        var elem = {
+    //            "COMMENT": "J" + index,
+    //            "NB": value
+    //        };
+    //        arrayData.push(elem);
+    //    });
+    //    dis.igDataChart({
+    //        autoMarginHeight: 15,
+    //        autoMarginWidth: 15,
+    //        //width: "33%",
+    //        //height: "250px",
+    //        title: "Evolution des commentaires",
+    //        dataSource: arrayData,
+    //        axes: [
+    //            {
+    //                name: "NameAxis",
+    //                type: "categoryX",
+    //                label: "COMMENT"
+    //            },
+    //            {
+    //                name: "PopulationAxis",
+    //                type: "numericY",
+    //                minimumValue: 0,
+    //                title: "COMMENTS in K",
+    //            }
+    //        ],
+    //        series: [
+    //            {
+    //                name: "2005Population",
+    //                type: "line",
+    //                title: "2005",
+    //                xAxis: "NameAxis",
+    //                yAxis: "PopulationAxis",
+    //                valueMemberPath: "NB",
+    //                isTransitionInEnabled: true,
+    //                isHighlightingEnabled: true,
+    //                thickness: 5
+    //            }]
+    //    });
+    //});
 
-        console.log(data);
-        var arrayData = [];
-        $.each(data, function (index, value) {
-            index = index + 1;
-            var elem = {
-                "LIKE": "J" + index,
-                "NB": value
-            };
-            arrayData.push(elem);
-        });
-        dis.igDataChart({
-            autoMarginHeight: 15,
-            autoMarginWidth: 15,
-            //width: "33%",
-            //height: "250px",
-            title: "Evolution des likes",
-            dataSource: arrayData,
-            axes: [
-                {
-                    name: "NameAxis",
-                    type: "categoryX",
-                    label: "LIKE"
-                },
-                {
-                    name: "PopulationAxis",
-                    type: "numericY",
-                    minimumValue: 0,
-                    title: "LIKES in K",
-                }
-            ],
-            series: [
-                {
-                    name: "2005Population",
-                    type: "line",
-                    title: "2005",
-                    xAxis: "NameAxis",
-                    yAxis: "PopulationAxis",
-                    valueMemberPath: "NB",
-                    isTransitionInEnabled: true,
-                    isHighlightingEnabled: true,
-                    thickness: 5
-                }]
-        });
-    });
-    $("[id^='chart-div-share']").each(function (index) {
-        var dis = $(this);
-        var data = dis.prev().attr('name').split(",");
+    $('#unity > .form-control').on('change', function () {
+   getData();
+   
+});
 
-        console.log(data);
-        var arrayData = [];
-        $.each(data, function (index, value) {
-            index = index + 1;
-            var elem = {
-                "SHARE": "J" + index,
-                "NB": value
-            };
-            arrayData.push(elem);
-        });
-        dis.igDataChart({
-            autoMarginHeight: 15,
-            autoMarginWidth: 15,
-            //width: "33%",
-            //height: "250px",
-            title: "Evolution des partages",
-            dataSource: arrayData,
-            axes: [
-                {
-                    name: "NameAxis",
-                    type: "categoryX",
-                    label: "SHARE"
-                },
-                {
-                    name: "PopulationAxis",
-                    type: "numericY",
-                    minimumValue: 0,
-                    title: "SHARES in K",
-                }
-            ],
-            series: [
-                {
-                    name: "SHARE",
-                    type: "line",
-                    title: "SHARE",
-                    xAxis: "NameAxis",
-                    yAxis: "PopulationAxis",
-                    valueMemberPath: "NB",
-                    isTransitionInEnabled: true,
-                    isHighlightingEnabled: true,
-                    thickness: 5
-                }]
-        });
-    });
+   
 }
