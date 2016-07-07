@@ -279,7 +279,7 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "PID" });
             columns.Add(new { headerText = "PostId", key = "IdPost", dataType = "string", width = "*", hidden = true });
             schemaFields.Add(new { name = "IdPost" });
-            columns.Add(new { headerText = "IdPostFacebook", key = "IdPostFacebook", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Post", key = "IdPostFacebook", dataType = "string", width = "100px;" });
             schemaFields.Add(new { name = "IdPostFacebook" });
             columns.Add(new { headerText = "Advertiser", key = "Advertiser", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "Advertiser" });

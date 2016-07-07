@@ -1,16 +1,21 @@
 ﻿@model Km.AdExpressClientWeb.Models.SocialMedia.PostFacebookVM
-<div class="row">
+<div class="row" >
     <div class="modal-header header-kantar-popup">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
         <h4 class="modal-title" id="postFacebookModalTitle">@Model.Labels.FacebookModalTitle</h4>
     </div>
     
     <div class="modal-body col-lg-12 col-md-12 col-sm-12">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <iframe id="objectPost" src="" scrolling="no" style="width:100%;height:700px; border:none;"></iframe>
+
+        <div id="mediaLoader">
+            <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            <div class="form-inline row">
+
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <iframe id="objectPost" src="" scrolling="yes" style="width:100%;height:550px; border:none;"></iframe>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div id="chartsPostFacebook" class="form-inline row">
                 <div class="col-md-12">
                     <form class="form-inline text-center">                        
                         <div id="unity" class="form-group popup-text">
@@ -22,28 +27,27 @@
                             </select>
                         </div>
                     </form>
+                    </br>
+                        <div id="chart" class="img-responsive center">
+                        </div>
+                        @Html.Hidden("comment", Model.Post.NumberComments)
+                        @Html.Hidden("like", Model.Post.NumberLikes)
+
+                        @Html.Hidden("share", Model.Post.NumberShares)
+
+                        @Html.Hidden("id", Model.Post.IdPost)
+
+                    </div>
                 </div>
-            </div>
-            </br>
-            @Html.Hidden("comment", Model.Post.NumberComments)
-            <div id="chart"class="col-lg-4 col-md-4 col-sm-4 col-xs-12 img-responsive center" >
-            </div>
-
-            @Html.Hidden("like",Model.Post.NumberLikes)           
-
-            @Html.Hidden("share",Model.Post.NumberShares)
-            
-            @Html.Hidden("id", Model.Post.IdPost)
-
-        </div>
     </div>
-    @Html.Hidden("id", Model.Post.IdPost)
   </div>
 
-<script>
-    var id =$('#id').val();
-$("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id );
-$("#objectPost").show();
 
+<script>
+    var id = $('#id').val();
+    $("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id);
+    $("#mediaLoader").hide();
+    $("#objectPost").show();
+    $("#chartsPostFacebook").show();
 </script>
 

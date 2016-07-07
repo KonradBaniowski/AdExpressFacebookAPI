@@ -23,53 +23,27 @@ var renderGrid = function (success, error) {
         $("#gridLoader").hide();
         $("#grid").show();
         var height = window.innerHeight - $("#grid").offset().top - 10;
-        if (needFixedColumns) {
-            $("#grid").igTreeGrid({
-                dataSource: ds.dataView(),
-                columns: cols,
-                height: height,
-                autoGenerateColumns: false,
-                primaryKey: "ID",
-                foreignKey: "PID",
-                width: "100%",
-                features: [
-                    {
-                        name: "MultiColumnHeaders"
-                    },
-                    {
-                        name: "Paging",
-                        mode: "allLevels",
-                        pageSize: 100
-                    },
-                    {
-                        name: "ColumnFixing",
-                        fixingDirection: "left",
-                        columnSettings: colsFixed
-                    }
-                ]
-            })
-        }
-        else {
-            $("#grid").igTreeGrid({
-                dataSource: ds.dataView(),
-                columns: cols,
-                height: height,
-                autoGenerateColumns: true,
-                primaryKey: "ID",
-                foreignKey: "PID",
-                width: "100%",
-                features: [
-                    {
-                        name: "MultiColumnHeaders"
-                    },
-                    {
-                        name: "Paging",
-                        mode: "allLevels",
-                        pageSize: 100
-                    }
-                ]
-            })
-        }
+
+        $("#grid").igTreeGrid({
+            dataSource: ds.dataView(),
+            columns: cols,
+            height: height,
+            autoGenerateColumns: true,
+            primaryKey: "ID",
+            foreignKey: "PID",
+            width: "100%",
+            features: [
+                {
+                    name: "MultiColumnHeaders"
+                },
+                {
+                    name: "Paging",
+                    mode: "allLevels",
+                    pageSize: 100
+                }
+            ]
+        })
+
     } else {
         alert("Error");
     }
@@ -193,9 +167,12 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
     }
 });
 
-$("#creativeModal").on('hide.bs.modal', function () {
+$("#postFacebookModal").on('hide.bs.modal', function () {
     $("#objectPost").attr('src', '');
-    $("#objectPost").addClass("hide");
+    $("#objectPost").hide()
+    $("#chartsPostFacebook").hide();
+    $("#chartsPostFacebook").hide();
+    $("#mediaLoader").show();
 });
 
 
