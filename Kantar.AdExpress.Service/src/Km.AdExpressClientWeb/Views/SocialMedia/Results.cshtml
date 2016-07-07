@@ -143,6 +143,14 @@
         {{/if}}
     </script>
 
+    <script id="checkBoxTmpl" type="text/template">
+        {{if parseInt(${IdPage}) != 0}}
+        <input type="checkbox" disabled="disabled">
+        {{else}}
+        <input type="checkbox">
+        {{/if}}
+    </script>
+
 
     @Scripts.Render("~/bundles/results")
     @Scripts.Render("~/bundles/socialMedia-results")

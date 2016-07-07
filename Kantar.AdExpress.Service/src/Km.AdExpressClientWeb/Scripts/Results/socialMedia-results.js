@@ -97,6 +97,8 @@
                             cols[i].template = $("#linkToPostTmpl").html();
                         if (cols[i].key == "Url")
                             cols[i].template = $("#linkUrlTmpl").html();
+                        if (cols[i].key == "checkBox")
+                            cols[i].template = $("#checkBoxTmpl").html();
                     }
 
                     var schema = new $.ig.DataSchema("array", {
@@ -130,7 +132,7 @@
             $("#grid").igTreeGrid({
                 dataSource: ds.dataView(),
                 columns: cols,
-                height: "600px",
+                height: "400px",
                 autoGenerateColumns: false,
                 primaryKey: "ID",
                 foreignKey: "PID",
@@ -144,15 +146,6 @@
                         name: "Paging",
                         mode: "allLevels",
                         pageSize: 100
-                    },
-                    {
-                        name: "Selection",
-                        multipleSelection: true
-                    },
-                    {
-                        name: "RowSelectors",
-                        enableCheckBoxes: true,
-                        enableRowNumbering: false
                     }
                 ]
             })
@@ -164,12 +157,6 @@
                 gridWidth = 1140;
 
             $("#grid").igTreeGrid("option", "width", gridWidth + "px");
-
-            $("#grid").igTreeGrid({
-                rowCollapsed: function (evt, ui) {
-                    $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
-                }
-            });
 
         } else {
             bootbox.alert(error);

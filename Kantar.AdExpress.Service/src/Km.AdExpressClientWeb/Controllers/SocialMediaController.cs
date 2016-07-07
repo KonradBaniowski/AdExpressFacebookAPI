@@ -89,9 +89,11 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "PID" });
             columns.Add(new { headerText = "IdPage", key = "IdPage", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "IdPage" });
-
+            
             columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "PageName" });
+            columns.Add(new { headerText = "", key = "checkBox", dataType = "string", width = "*" });
+            schemaFields.Add(new { name = "checkBox" });
             columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "string", width = "*" });
             schemaFields.Add(new { name = "IdPageFacebook" });
             columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "*" });
