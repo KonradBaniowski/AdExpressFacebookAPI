@@ -2210,6 +2210,9 @@ ul.ui-selectable {
         top: 0;
         /*left: 0;*/
         border:none;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
 

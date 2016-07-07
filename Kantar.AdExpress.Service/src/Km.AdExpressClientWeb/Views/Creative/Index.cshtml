@@ -81,7 +81,7 @@
                             <param name="allowscriptaccess" value="always" />
                             <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always" allowfullscreen="false" flashvars="" />
                         </object>
-                        <iframe id="objectHTML5" src="" scrolling="no" width="100%" height="600px"></iframe>
+                        <iframe id="objectHTML5" src="" scrolling="no" width="100%" height="600px" onload="Html5Loaded()"></iframe>
                     </div>
                 </div>
                 <div class="modal-footer hide">
@@ -485,7 +485,6 @@
                             url = datas[0];
                             $("#objectHTML5").attr('src', url);
                             $("#objectHTML5").show();
-                            Html5Loaded("objectHTML5");
                             break;
                         default:
                             url = datas[0];
@@ -663,17 +662,16 @@
         });
 
         //Resize la modal avec la taille de l'iframe
-        function Html5Loaded(idElmt) {
-            var iFrameID = document.getElementById(idElmt);
+        function Html5Loaded() {
+            var iFrameID = document.getElementById("objectHTML5");
             if (iFrameID) {
-                $("#creativeModal > .modal-dialog").css("width", "auto");
-                $("#creativeModal > .modal-dialog").css("height", "auto");
-                $("#creativeModal > .modal-dialog").css("margin", "5px");
-
                 newheight = iFrameID.contentWindow.document.body.scrollHeight;
                 newwidth = iFrameID.contentWindow.document.body.scrollWidth;
                 iFrameID.height = (newheight) + "px";
                 iFrameID.width = (newwidth) + "px";
+
+                $("#creativeModal > .modal-dialog").css("width", "auto");
+                $("#creativeModal > .modal-dialog").css("height", "auto");
             }
         }
         function Html5UnLoaded(idElmt) {
