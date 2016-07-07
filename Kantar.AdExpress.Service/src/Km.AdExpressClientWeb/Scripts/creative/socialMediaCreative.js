@@ -233,8 +233,8 @@ function getData(e) {
         dis.igDataChart({
             autoMarginHeight: 15,
             autoMarginWidth: 15,
-            width: "33%",
-            height: "250px",
+            //width: "33%",
+            //height: "250px",
             title: "Evolution des commentaires",
             dataSource: arrayData,
             axes: [
@@ -282,8 +282,8 @@ function getData(e) {
         dis.igDataChart({
             autoMarginHeight: 15,
             autoMarginWidth: 15,
-            width: "33%",
-            height: "250px",
+            //width: "33%",
+            //height: "250px",
             title: "Evolution des likes",
             dataSource: arrayData,
             axes: [
@@ -330,8 +330,8 @@ function getData(e) {
         dis.igDataChart({
             autoMarginHeight: 15,
             autoMarginWidth: 15,
-            width: "33%",
-            height: "250px",
+            //width: "33%",
+            //height: "250px",
             title: "Evolution des partages",
             dataSource: arrayData,
             axes: [
