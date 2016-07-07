@@ -169,9 +169,12 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
     }
 });
 
-$("#creativeModal").on('hide.bs.modal', function () {
+$("#postFacebookModal").on('hide.bs.modal', function () {
     $("#objectPost").attr('src', '');
-    $("#objectPost").addClass("hide");
+    $("#objectPost").hide()
+    $("#chartsPostFacebook").hide();
+    $("#chartsPostFacebook").hide();
+    $("#mediaLoader").show();
 });
 
 
