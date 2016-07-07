@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KM.Framework.Constantes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -70,5 +71,19 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public string NumberComments { get; set; }
         public string NumberShares { get; set; }
         public string Commitments { get; set; }
+    }
+
+    public class PostFacebookVM
+    {
+        public PostFacebookVM()
+        {
+
+        }
+        public PostFacebookVM(PostFacebook post)
+        {
+            Post = post;
+        }
+        public PostFacebook Post { get; set; }
+        public Labels Labels { get; set; }
     }
 }

@@ -409,8 +409,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     data.LikesChart.Add(i.ToString(), likes[i]);
                 }
-
-                return PartialView("Zoom", data);
+                var model = new PostFacebookVM(data);
+                if (idLanguage > 0)
+                    model.Labels = LabelsHelper.LoadPageLabels(idLanguage);
+                return PartialView("Zoom", model);
             }
         }
     }

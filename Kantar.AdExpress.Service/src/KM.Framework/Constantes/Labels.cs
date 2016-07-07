@@ -153,6 +153,8 @@ namespace KM.Framework.Constantes
         public string WriteToUs { get; set; }
         public string CallUs { get; set; }
         public string ClientService { get; set; }
+        public string Unit { get; set; }
+        public string FacebookModalTitle { get; set; }
 
     }
 }
