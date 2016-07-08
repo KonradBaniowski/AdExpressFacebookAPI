@@ -1,5 +1,6 @@
 ﻿@model Km.AdExpressClientWeb.Models.HomePageViewModel
 @using TNS.AdExpress.Constantes.Web
+@using TNS.AdExpress.Domain.Web;
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
@@ -240,6 +241,9 @@
                 }
             </div>
         </div>
+        @*Added temporarily for Finland*@
+        @if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+        {
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
@@ -363,14 +367,16 @@
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_DISPOSITIFS">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_PROGRAMMES))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
@@ -411,34 +417,39 @@
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_PAN_EURO">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PRESSE))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_PRESSE">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_RADIO))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_RADIO">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_RADIO)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_RADIO)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_TELEVISION))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_TELEVISION">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_TELEVISION)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_TELEVISION)].Title</div>
                         }
                     </div>
                 </div>
             </div>
         </div>
+        }
     </div>
     @*RIGHT SIDE*@
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
