@@ -2329,5 +2329,7 @@
     <item mnemonic="w3071" type="System.String">Écrivez-nous</item>
     <item mnemonic="w3072" type="System.String">Appelez-nous</item>
     <item mnemonic="w3073" type="System.String">Service Client AdExpress</item>
+    <item mnemonic="w3074" type="System.String">Analyser l’exposition de vos contenus sur Facebook au travers de nombreux KPI </item>
+    <item mnemonic="w3075" type="System.String">Post Facebook </item>
   </items>
 </localization>

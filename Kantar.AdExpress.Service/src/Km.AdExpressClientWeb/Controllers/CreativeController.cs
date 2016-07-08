@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -36,7 +37,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var model = new InsertionCreativeViewModel()
             {
                 paramsUrl = new List<string>(),
-                SiteLanguage = 33, // Default
+                SiteLanguage = WebApplicationParameters.DefaultLanguage, // Default
             };
 
             model.paramsUrl.Add(ids);

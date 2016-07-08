@@ -24,12 +24,12 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             _userManager = userManager;
         }
-
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl, int siteLanguage = 33)
+        public ActionResult Login(string returnUrl, int siteLanguage = -1)
         {
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
 
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.ReturnUrl = returnUrl;
@@ -45,8 +45,10 @@ namespace Km.AdExpressClientWeb.Controllers
         //
         // GET: /Account/ChangeLanguage
         [AllowAnonymous]
-        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = 33)
+        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = -1)
         {
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
+
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
@@ -109,8 +111,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
         [Authorize]
-        public ActionResult WebSession(int siteLanguage = 33)
+        public ActionResult WebSession(int siteLanguage = -1)
         {
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
+
             var cla = new ClaimsPrincipal(User.Identity);
             var idLogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
             var login = cla.Claims.Where(e => e.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();

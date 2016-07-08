@@ -203,7 +203,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long WriteToUs = 3071;
         public const long CallUs = 3072;
         public const long ClientService = 3073;
-
+        public const long FacebookDescription = 3074;
+        public const long FacebookPost = 3075;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;        
         #endregion

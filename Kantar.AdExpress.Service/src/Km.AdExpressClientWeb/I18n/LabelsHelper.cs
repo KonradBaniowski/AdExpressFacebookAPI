@@ -142,7 +142,8 @@ namespace Km.AdExpressClientWeb.I18n
                 CallUs = GestionWeb.GetWebWord(LanguageConstantes.CallUs, siteLanguage),
                 ClientService = GestionWeb.GetWebWord(LanguageConstantes.ClientService, siteLanguage),
                 Unit =GestionWeb.GetWebWord(LanguageConstantes.Unit,siteLanguage),
-                FacebookModalTitle = siteLanguage==33?"Post Facebook":"Facebook Post"
+                FacebookDescription = GestionWeb.GetWebWord(LanguageConstantes.FacebookDescription, siteLanguage),
+                FacebookModalTitle = GestionWeb.GetWebWord(LanguageConstantes.FacebookPost, siteLanguage)                
             };
             return result;
         }
