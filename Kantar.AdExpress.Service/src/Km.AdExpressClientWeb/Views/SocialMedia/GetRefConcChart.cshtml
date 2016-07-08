@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Km.AdExpressClientWeb.Models.SocialMedia.KPIPageFacebookContract>
+
+
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    @foreach (var month in Model)
+    {
+        <div class="col-lg-4 text-center">
+            @Html.Hidden(month.Comment, null, new { @id = "comment" })
+            @Html.Hidden(month.Like, null, new { @id = "like" })
+            @Html.Hidden(month.Share, null, new { @id = "share" })
+            @Html.Hidden(month.Post, null, new { @id = "post" })
+        </div>
+    }
+
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12  margin-top-30">
+    <div class="col-lg-4">
+        <div id="chart" class="div-center">
+
+        </div>
+    </div>
+</div>

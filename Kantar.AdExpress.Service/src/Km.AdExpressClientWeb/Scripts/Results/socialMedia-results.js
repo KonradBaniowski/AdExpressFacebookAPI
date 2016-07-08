@@ -18,6 +18,7 @@
     var gridWidth;
 
     CallSocialMediaResult();
+    CallRefConcChart();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -185,7 +186,6 @@ function getData(e) {
         var arrayData = [];
         var series = []
         $.each(data, function (indexLike, value) {
-            //var likeIndex = indexLike;
             var serie = {
                 name: "name",
                 type: "line",
@@ -200,16 +200,10 @@ function getData(e) {
             var datas = $(value).attr('name').split(",");
             $.each(datas, function (index, value) {
                 index = index + 1;
-                //var Nserie = likeIndex+"-"+index;
-                //if (arrayData.find(exist, index))
-                //{
-
-                //}
                 var elem = {
-                    "DAY": "J" + index, //CHINA
+                    "DAY": "J" + index, 
                     Data: value
                 };
-                //elem[Nserie] = value;
                 arrayData.push(elem);
             });
             series.push(serie);
@@ -219,7 +213,6 @@ function getData(e) {
             autoMarginWidth: 15,
             width: "70%",
             height: "250px",
-            //title: "Evolution des partages",
             dataSource: arrayData,
             axes: [
                 {
@@ -236,7 +229,7 @@ function getData(e) {
             ],
 
             series: [{
-                name: "wahtever",
+                name: "",
                 type: "line",
                 title: "1995",
                 xAxis: "Days",
@@ -249,6 +242,72 @@ function getData(e) {
         });
     });
 }
+
+
+function getDataRefConc(e) {
+
+    var dis = $("#RefConc-chart");
+
+    var data = dis.find("chart");
+
+    var arrayData = [];
+    var series = []
+    $.each(data, function (indexLike, value) {
+        var serie = {
+            name: "",
+            type: "line",
+            title: "1995",
+            xAxis: "Days",
+            yAxis: "Value",
+            valueMemberPath: indexLike,
+            isTransitionInEnabled: true,
+            isHighlightingEnabled: true,
+            thickness: 5
+        };
+        var datas = $(value).attr('name').split(",");
+        $.each(datas, function (index, value) {
+            index = index + 1;
+            var elem = {
+                "DAY": "J" + index, 
+                Data: value
+            };
+            arrayData.push(elem);
+        });
+        series.push(serie);
+    });
+    dis.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        width: "70%",
+        height: "250px",
+        dataSource: arrayData,
+        axes: [
+            {
+                name: "Days",
+                type: "categoryX",
+                label: "DAY"
+            },
+            {
+                name: "Value",
+                type: "numericY",
+                minimumValue: 0,
+                title: serieType,
+            }
+        ],
+
+        series: [{
+            name: "wahtever",
+            type: "line",
+            title: "1995",
+            xAxis: "Days",
+            yAxis: "Value",
+            valueMemberPath: "Data",
+            isTransitionInEnabled: true,
+            isHighlightingEnabled: true,
+            thickness: 5
+        }]
+    });
+//}
 
 $('#combo > .form-control, #unity > .form-control').on('change', function () {
     var id = $('#combo > .form-control').val();
@@ -283,3 +342,22 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
         }
     });
 });
+
+
+function CallRefConcChart() {
+    $.ajax({
+        url: '/SocialMedia/GetRefConcChart',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#RefConc-chart').html('').append(data);
+            getData();
+        }
+    });
+}
+
+
