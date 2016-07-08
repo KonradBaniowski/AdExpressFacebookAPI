@@ -20,6 +20,7 @@ using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -47,7 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var model = new InsertionCreativeViewModel()
             {
                 paramsUrl = new List<string>(),
-                SiteLanguage = 33, // Default
+                SiteLanguage = WebApplicationParameters.DefaultLanguage, // Default
             };
 
             model.paramsUrl.Add(idMedia);

@@ -60,7 +60,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CalendarFormatMonths = "MM/YYYY";
         private const string CALENDARLANGUAGEEN = "En";
         private const string CALENDARLANGUAGEFR = "fr";
-        private int _siteLanguage = 33;
+        private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
 
         private string icon;
