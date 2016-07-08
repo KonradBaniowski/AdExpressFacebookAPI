@@ -247,6 +247,7 @@
     <Compile Include="Models\Shared\SaveUserResultViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Models\SocialMedia\DataFacebook.cs" />
+    <Compile Include="Models\SocialMedia\KPIPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\ResultsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

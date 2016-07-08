@@ -71,6 +71,7 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public string NumberComments { get; set; }
         public string NumberShares { get; set; }
         public string Commitments { get; set; }
+        public string ListMonths { get; set; }
     }
 
     public class PostFacebookVM

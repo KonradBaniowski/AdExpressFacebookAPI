@@ -5,11 +5,12 @@
 <div class="col-lg-12 col-md-12 col-sm-12">
     @foreach (var month in Model)
     {
-        <div class="col-lg-4 text-center">
-            @Html.Hidden(month.Comment, null, new { @id = "comment" })
-            @Html.Hidden(month.Like, null, new { @id = "like" })
-            @Html.Hidden(month.Share, null, new { @id = "share" })
-            @Html.Hidden(month.Post, null, new { @id = "post" })
+        <div class="col-lg-4 text-center elmtsChart">
+            @Html.Hidden(month.Month, null, new { @class = "monthRef" })
+            @Html.Hidden(month.Comment.ToString(), null, new { @class = "commentRef" })
+            @Html.Hidden(month.Like.ToString(), null, new { @class = "likeRef" })
+            @Html.Hidden(month.Share.ToString(), null, new { @class = "shareRef" })
+            @Html.Hidden(month.Post.ToString(), null, new { @class = "postRef" })
         </div>
     }
 
