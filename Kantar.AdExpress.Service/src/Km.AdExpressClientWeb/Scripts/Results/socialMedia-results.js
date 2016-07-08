@@ -18,6 +18,7 @@
     var gridWidth;
 
     CallSocialMediaResult();
+    CallRefConcChart();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -185,7 +186,6 @@ function getData(e) {
         var arrayData = [];
         var series = []
         $.each(data, function (indexLike, value) {
-            //var likeIndex = indexLike;
             var serie = {
                 name: "name",
                 type: "line",
@@ -200,16 +200,10 @@ function getData(e) {
             var datas = $(value).attr('name').split(",");
             $.each(datas, function (index, value) {
                 index = index + 1;
-                //var Nserie = likeIndex+"-"+index;
-                //if (arrayData.find(exist, index))
-                //{
-
-                //}
                 var elem = {
-                    "DAY": "J" + index, //CHINA
+                    "DAY": "J" + index, 
                     Data: value
                 };
-                //elem[Nserie] = value;
                 arrayData.push(elem);
             });
             series.push(serie);
@@ -219,7 +213,6 @@ function getData(e) {
             autoMarginWidth: 15,
             width: "70%",
             height: "250px",
-            //title: "Evolution des partages",
             dataSource: arrayData,
             axes: [
                 {
@@ -236,7 +229,7 @@ function getData(e) {
             ],
 
             series: [{
-                name: "wahtever",
+                name: "princip",
                 type: "line",
                 title: "1995",
                 xAxis: "Days",
@@ -247,6 +240,113 @@ function getData(e) {
                 thickness: 5
             }]
         });
+    });
+}
+
+
+function getDataRefConc(e) {
+
+    var dis = $("#RefConc-chart");
+    var data = $(".elmtsChart");
+
+    var arrayData = [];
+    $.each(data, function (index) {
+        var elem = {
+            Month: $(this).children(".monthRef").attr('name'),
+            Comment: $(this).children(".commentRef").attr('name'),
+            Like: $(this).children(".likeRef").attr('name'),
+            Share: $(this).children(".shareRef").attr('name'),
+            Post: $(this).children(".postRef").attr('name'),
+        };
+        arrayData.push(elem);
+    });
+
+    dis.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        width: "70%",
+        height: "250px",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        dataSource: arrayData,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month"
+                }, {
+                    type: "numericY",
+                    name: "KPI",
+                    title: "KPI"
+                }, {
+                    type: "numericY",
+                    name: "PostsAxe",
+                    labelLocation: "outsideRight",
+                    title: "Posts",
+                    minimumValue: 0
+                }
+        ],
+
+        series: [
+            {
+                type: "line",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Posts",
+                title: "Posts",
+                xAxis: "Month",
+                yAxis: "PostsAxe",
+                valueMemberPath: "Post",
+                brush: "red"
+            },
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Like",
+                title: "Like",
+                xAxis: "Month",
+                yAxis: "KPI",
+                valueMemberPath: "Like"
+            },
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Share",
+                title: "Share",
+                xAxis: "Month",
+                yAxis: "KPI",
+                valueMemberPath: "Share"
+            },
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Comment",
+                title: "Comment",
+                xAxis: "Month",
+                yAxis: "KPI",
+                valueMemberPath: "Comment"
+            }
+        ]
+    });
+}
+
+function CallRefConcChart() {
+    $.ajax({
+        url: '/SocialMedia/GetRefConcChart',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#RefConc-chart').html('').append(data);
+            getDataRefConc();
+        }
     });
 }
 
@@ -283,3 +383,8 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
         }
     });
 });
+
+
+
+
+

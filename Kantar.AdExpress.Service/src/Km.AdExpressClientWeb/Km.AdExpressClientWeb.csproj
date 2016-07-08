@@ -17,7 +17,7 @@
     <AssemblyName>Km.AdExpressClientWeb</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -247,6 +247,7 @@
     <Compile Include="Models\Shared\SaveUserResultViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Models\SocialMedia\DataFacebook.cs" />
+    <Compile Include="Models\SocialMedia\KPIPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\ResultsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1495,6 +1496,7 @@
     <Content Include="Content\pdf\AdExpressMediaUpdatesCalendar.pdf" />
     <Content Include="Content\pdf\AdExpress_Version-Optimisée.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
+    <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1635,6 +1637,7 @@
     <Content Include="Views\SocialMedia\SocialMediaCreative.cshtml" />
     <Content Include="Views\SocialMedia\GetTopPost.cshtml" />
     <Content Include="Views\SocialMedia\Zoom.cshtml" />
+    <Content Include="Views\SocialMedia\GetRefConcChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
