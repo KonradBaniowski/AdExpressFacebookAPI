@@ -307,7 +307,23 @@ function getDataRefConc(e) {
             thickness: 5
         }]
     });
-//}
+}
+
+function CallRefConcChart() {
+    $.ajax({
+        url: '/SocialMedia/GetRefConcChart',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#RefConc-chart').html('').append(data);
+            getData();
+        }
+    });
+}
 
 $('#combo > .form-control, #unity > .form-control').on('change', function () {
     var id = $('#combo > .form-control').val();
@@ -344,20 +360,6 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
 });
 
 
-function CallRefConcChart() {
-    $.ajax({
-        url: '/SocialMedia/GetRefConcChart',
-        contentType: "application/x-www-form-urlencoded",
-        type: "POST",
-        datatype: "json",
-        error: function (xmlHttpRequest, errorText, thrownError) {
-            bootbox.alert(thrownError);
-        },
-        success: function (data) {
-            $('#RefConc-chart').html('').append(data);
-            getData();
-        }
-    });
-}
+
 
 
