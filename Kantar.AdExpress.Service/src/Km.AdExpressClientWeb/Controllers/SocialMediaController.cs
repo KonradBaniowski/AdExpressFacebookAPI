@@ -92,25 +92,25 @@ namespace Km.AdExpressClientWeb.Controllers
             
             columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "PageName" });
-            columns.Add(new { headerText = "", key = "checkBox", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "", key = "checkBox", dataType = "string", width = "30" });
             schemaFields.Add(new { name = "checkBox" });
-            columns.Add(new { headerText = "Lien vers les Post", key = "IdPageFacebook", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Posts", key = "IdPageFacebook", dataType = "string", width = "84" });
             schemaFields.Add(new { name = "IdPageFacebook" });
-            columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "80" });
             schemaFields.Add(new { name = "Url" });
-            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Page", key = "NbPage", dataType = "number", width = "80", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NbPage" });
-            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberFan" });
-            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberPost" });
-            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberLike" });
-            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberComment" });
-            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberShare" });
-            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "number", width = "*", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "number", width = "92", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "Expenditure" });
 
             using (var client = new HttpClient())
