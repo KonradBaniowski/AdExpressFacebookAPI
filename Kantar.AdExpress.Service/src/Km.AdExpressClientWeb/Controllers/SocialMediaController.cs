@@ -18,6 +18,7 @@ using Domain = Kantar.AdExpress.Service.Core.Domain;
 using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using Km.AdExpressClientWeb.I18n;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -26,7 +27,7 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IWebSessionService _webSessionService;
         private IDetailSelectionService _detailSelectionService;
-        private int _siteLanguage = 33;
+        private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
         public SocialMediaController(IWebSessionService webSessionService, IDetailSelectionService detailSelectionService)
         {

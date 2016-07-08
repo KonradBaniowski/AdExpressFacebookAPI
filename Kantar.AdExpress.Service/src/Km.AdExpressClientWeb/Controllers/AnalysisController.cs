@@ -17,6 +17,7 @@ using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
 using TNS.FrameWork.WebResultUI;
@@ -37,7 +38,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string _controller = "Analysis";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
-        private int _siteLanguage = 33;
+        private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
         public AnalysisController(IMediaService mediaService, IWebSessionService webSessionService, IAnalysisService analysisService, IUniverseService universService, IPeriodService periodService, IOptionAnalysisService optionService, ISubPeriodService subPeriodService)
         {

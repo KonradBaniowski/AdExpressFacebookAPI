@@ -9,6 +9,7 @@ using System.Web;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Helpers
 {
@@ -28,8 +29,9 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string FACEBOOK = "SocialMedia";
         private const string ANALYSIS = "Analysis";
-        public List<NavigationNode> LoadNavBar(string idWebSession, string controller,int siteLanguage = 33, int CurrentPosition = 0)
+        public List<NavigationNode> LoadNavBar(string idWebSession, string controller,int siteLanguage = -1, int CurrentPosition = 0)
         {
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
 
             var model = new List<NavigationNode>();
             var webSession = (WebSession)WebSession.Load(idWebSession);
@@ -116,12 +118,15 @@ namespace Km.AdExpressClientWeb.Helpers
 
         public static string GetSiteLanguageName(int siteLanguage)
         {
-            switch (siteLanguage)
+            foreach (WebLanguage currentLanguage in WebApplicationParameters.AllowedLanguages.Values)
             {
-                case 44: return "EN";
-                default: return "FR";
+                if (currentLanguage.Id == siteLanguage)
+                    return currentLanguage.Name.Substring(0, 2).ToUpper();
             }
+
+            return "FR";
         }
+
         public Labels LoadPageLabels(int siteLanguage, string controller)
         {
             var result = new Labels

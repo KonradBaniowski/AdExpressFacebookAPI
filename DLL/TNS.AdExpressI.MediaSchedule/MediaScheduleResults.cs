@@ -1767,12 +1767,12 @@ namespace TNS.AdExpressI.MediaSchedule {
             string periodLabel = string.Empty;
 
             // Product Column
-            columns.Add(new { headerText = "ID_PRODUCT", key = "ID_PRODUCT", dataType = "number", width = "250", hidden = true });
+            columns.Add(new { headerText = "ID_PRODUCT", key = "ID_PRODUCT", dataType = "number", width = "350", hidden = true });
             schemaFields.Add(new { name = "ID_PRODUCT" });
-            columns.Add(new { headerText = GestionWeb.GetWebWord(804, _session.SiteLanguage), key = "PRODUCT", dataType = "string", width = "250" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(804, _session.SiteLanguage), key = "PRODUCT", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "PRODUCT" });
             columnsFixed.Add(new { columnKey = "PRODUCT", isFixed = true, allowFixing = false });
-            tableWidth = 250;
+            tableWidth = 350;
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);

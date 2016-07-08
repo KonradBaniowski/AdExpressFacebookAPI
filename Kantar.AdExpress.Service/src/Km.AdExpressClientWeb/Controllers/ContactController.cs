@@ -10,15 +10,17 @@ using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
     [Authorize]
     public class ContactController : Controller
     {
-        public ActionResult Index(string returnUrl="/", int siteLanguage = 33)
+        public ActionResult Index(string returnUrl="/", int siteLanguage = -1)
         {
-          
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
+
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             ViewBag.SiteLanguage = siteLanguage;
             var model = new ContactViewModel();
@@ -36,9 +38,10 @@ namespace Km.AdExpressClientWeb.Controllers
         //
         // GET: /Contact/ChangeLanguage
         [AllowAnonymous]
-        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = 33)
+        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = -1)
         {
-         
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
+
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             ViewBag.SiteLanguage = siteLanguage;
