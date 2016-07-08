@@ -20,19 +20,13 @@ namespace Facebook.Service.BusinessLogic
         {
             _config = new MapperConfiguration(e =>
             {
-                //e.CreateMap<OrderTemplateMedia, Right>()
-                //.ForMember(a => a.Rights, d => d.MapFrom(dst => dst.ListMedia.Split(',').Select(int.Parse).ToList()))
-                //.ForMember(a => a.IdType, d => d.MapFrom(dst => dst.IdTypeMedia));
-                //e.CreateMap<OrderClientMedia, Right>()
-                //.ForMember(a => a.Rights, d => d.MapFrom(dst => dst.ListMedia.Split(',').Select(int.Parse).ToList()))
-                //.ForMember(a => a.IdType, d => d.MapFrom(dst => dst.IdTypeMedia));
-                //e.CreateMap<OrderClientProduct, Right>()
-                //.ForMember(a => a.Rights, d => d.MapFrom(dst => dst.ListMedia.Split(',').Select(int.Parse).ToList()))
-                //.ForMember(a => a.IdType, d => d.MapFrom(dst => dst.IdTypeProduct));
-                //e.CreateMap<OrderTemplateProduct, Right>()
-                //.ForMember(a => a.Rights, d => d.MapFrom(dst => dst.ListMedia.Split(',').Select(int.Parse).ToList()))
-                //.ForMember(a => a.IdType, d => d.MapFrom(dst => dst.IdTypeProduct));
-                //e.CreateMap<RightDomain, Right>().ReverseMap();
+                e.CreateMap<DataFacebook, KPIPageFacebookContract>()
+                .ForMember(a => a.Like, d => d.MapFrom(dst => dst.NumberLike))
+                .ForMember(a => a.Month, d => d.MapFrom(dst => dst.DateMediaNum))
+                .ForMember(a => a.Post, d => d.MapFrom(dst => dst.NumberPost))
+                .ForMember(a => a.Share, d => d.MapFrom(dst => dst.NumberShare))
+                .ForMember(a => a.Comment, d => d.MapFrom(dst => dst.NumberComment));
+
                 e.CreateMap<DataFacebook, DataFacebookContract>();
                 e.CreateMap<DateFacebookContract, DataFacebookContract>();
                 e.CreateMap<CriteriaData, Criteria>().ReverseMap();

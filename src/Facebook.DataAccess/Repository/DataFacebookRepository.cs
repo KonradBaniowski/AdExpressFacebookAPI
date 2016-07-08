@@ -88,17 +88,6 @@ namespace Facebook.DataAccess.Repository
                                       Label = c.BrandLabel
                                   }).ToList(); 
                 return brandQuery;
-                //return query.GroupBy(a => new { a.IdBrand, a.IdPageFacebook }).Select(e => new DateFacebookContract
-                //{
-                //    IdBrand = e.FirstOrDefault().IdBrand,
-                //    NumberPost = e.Sum(a => a.NumberPost),
-                //    NumberLike = e.Sum(a => a.NumberLike),
-                //    NumberComment = e.Sum(a => a.NumberComment),
-                //    NumberShare = e.Sum(a => a.NumberShare),
-                //    Expenditure = e.Sum(a => a.Expenditure),
-                //    NumberFan = e.Max(a => a.NumberFan),
-                //    PageName = e.FirstOrDefault().PageName,
-                //}).ToList();
             }
             else if (Advertiser != null && Advertiser.Count > 0)
             {
@@ -128,6 +117,49 @@ namespace Facebook.DataAccess.Repository
             }
             else
                 return new List<DateFacebookContract>();
+        }
+
+        public List<DataFacebook> GetKPIDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
+        {
+            var query = (from d in context.DataFacebook
+                         where d.DateMediaNum >= Begin && d.DateMediaNum <= End
+                         select d);
+           
+            var includedProduct = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Include) && e.TypeNomenclature == (TypeNomenclature.Product));
+            var excludedProduct = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Exclude) && e.TypeNomenclature == (TypeNomenclature.Product));
+
+            Expression<Func<DataFacebook, bool>> predicate = null;
+
+            if (includedProduct != null && includedProduct.Any())
+            {
+                var include2 = query.Predicate(includedProduct);
+                predicate = arg => (include2.Invoke(arg));
+            }
+            if (excludedProduct != null && excludedProduct.Any())
+            {
+                var exclude2 = query.Predicate(excludedProduct);
+                predicate = arg => !(exclude2.Invoke(arg));
+            }
+
+            if (predicate != null)
+                query = query.AsExpandable().Where(predicate);
+
+            //if (Brand != null && Brand.Count > 0)
+            //{
+            
+            //}
+            //else
+            if (Advertiser != null && Advertiser.Count > 0)
+            {
+                query = query.Include(a => a.Advertiser)
+                    .Where(e => Advertiser.Contains(e.IdAdvertiser));
+
+                var res = (from g in query
+                            where g.IdLanguageData == idLanguage
+                            select g);
+                return res.ToList();
+            }
+            throw new AmbiguousMatchException("TOO FAR");
         }
     }
 }

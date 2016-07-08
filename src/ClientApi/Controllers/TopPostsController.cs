@@ -39,8 +39,6 @@ namespace ClientApi.Controllers
             long idPost = (long)model.idPost;
             int idLanguage = (int)model.idLanguage;
             return _fbsvc.GetPostFacebook(idPost, idLanguage);
-
         }
-
     }
 }
