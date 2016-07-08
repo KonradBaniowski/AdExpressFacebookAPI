@@ -13,7 +13,8 @@ namespace Km.AdExpressClientWeb.Controllers
         // GET: Image
         public ActionResult GetPostImage(string itemId)
         {
-            var url = "http://192.168.158.145/POSTS/";
+            //var url = "http://192.168.158.145/POSTS/";
+            var url = "~/PostsFacebook/";
             var srvURL = itemId.Substring(0, 1) + "/" + itemId.Substring(1, 3) + "/" + itemId + "_Post";
             var path = Path.Combine(url, srvURL + ".png");
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(path);

@@ -61,10 +61,10 @@ function CallInsertionsResult() {
 
     $.ajax({
         url: '/SocialMedia/GetSocialMediaCreative',
-        contentType: "application/x-www-form-urlencoded",
+        contentType: 'application/json',
         type: "POST",
         datatype: "json",
-        data: parameters,
+        data: JSON.stringify(parameters),
         error: function (xmlHttpRequest, errorText, thrownError) {
             bootbox.alert("Error : GetSocialMediaCreative");
             $("#gridLoader").hide();
@@ -150,7 +150,7 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
         };
         $.ajax({
             url: '/SocialMedia/GetKPIByPostId',
-            contentType: 'application/json',
+            ccontentType: "application/x-www-form-urlencoded",
             type: 'POST',
             datatype: 'JSON',
             data: JSON.stringify(params),
@@ -250,57 +250,7 @@ function getData(e) {
                     thickness: 5
                 }]
             });
-        //});
-    
-    //$("[id^='chart-div-comment']").each(function (index) {
-    //    var dis = $(this);
-    //    var data = dis.prev().attr('name').split(",");
-
-    //    console.log(data);
-    //    var arrayData = [];
-    //    $.each(data, function (index, value) {
-    //        index = index + 1;
-    //        var elem = {
-    //            "COMMENT": "J" + index,
-    //            "NB": value
-    //        };
-    //        arrayData.push(elem);
-    //    });
-    //    dis.igDataChart({
-    //        autoMarginHeight: 15,
-    //        autoMarginWidth: 15,
-    //        //width: "33%",
-    //        //height: "250px",
-    //        title: "Evolution des commentaires",
-    //        dataSource: arrayData,
-    //        axes: [
-    //            {
-    //                name: "NameAxis",
-    //                type: "categoryX",
-    //                label: "COMMENT"
-    //            },
-    //            {
-    //                name: "PopulationAxis",
-    //                type: "numericY",
-    //                minimumValue: 0,
-    //                title: "COMMENTS in K",
-    //            }
-    //        ],
-    //        series: [
-    //            {
-    //                name: "2005Population",
-    //                type: "line",
-    //                title: "2005",
-    //                xAxis: "NameAxis",
-    //                yAxis: "PopulationAxis",
-    //                valueMemberPath: "NB",
-    //                isTransitionInEnabled: true,
-    //                isHighlightingEnabled: true,
-    //                thickness: 5
-    //            }]
-    //    });
-    //});
-
+       
     $('#unity > .form-control').on('change', function () {
    getData();
    
