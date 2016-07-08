@@ -18,7 +18,7 @@
     var gridWidth;
 
     CallSocialMediaResult();
-    CallRefConcChart();
+    //CallRefConcChart();
 
     function UnitFormatter(val) {
         if (val > 0)

@@ -153,7 +153,7 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
             ccontentType: "application/x-www-form-urlencoded",
             type: 'POST',
             datatype: 'JSON',
-            data: JSON.stringify(params),
+            data: params,
             error: function (xmlHttpRequest, errorText, thrownError) {
                 bootbox.alert("error");
             },

@@ -17,7 +17,7 @@
     <AssemblyName>Km.AdExpressClientWeb</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -1495,6 +1495,7 @@
     <Content Include="Content\pdf\AdExpressMediaUpdatesCalendar.pdf" />
     <Content Include="Content\pdf\AdExpress_Version-Optimisée.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
+    <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
