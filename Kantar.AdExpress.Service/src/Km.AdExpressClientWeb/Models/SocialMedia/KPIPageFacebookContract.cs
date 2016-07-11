@@ -12,6 +12,7 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public long Share { get; set; }
         public long Comment { get; set; }
         public long Post { get; set; }
+        public long Expenditure { get; set; }
 
     }
 }

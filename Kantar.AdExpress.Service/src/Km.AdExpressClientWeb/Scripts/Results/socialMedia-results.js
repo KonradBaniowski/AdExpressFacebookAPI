@@ -243,10 +243,9 @@ function getData(e) {
     });
 }
 
+function getDataKPI(e) {
 
-function getDataRefConc(e) {
-
-    var dis = $("#RefConc-chart");
+    var dis = $("#chartKPI");
     var data = $(".elmtsChart");
 
     var arrayData = [];
@@ -276,9 +275,10 @@ function getDataRefConc(e) {
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Like",
-                brush: "green",
+                brush: "#FFE100",
+                outline: "#FFE100",
                 showTooltip: true,
-                tooltipTemplate: "Likes"
+                tooltipTemplate: "LikeTooltipTemplate"
             },
             {
                 type: "line",
@@ -289,9 +289,9 @@ function getDataRefConc(e) {
                 xAxis: "Month",
                 yAxis: "PostsAxe",
                 valueMemberPath: "Post",
-                brush: "red",
+                brush: "#FF0080",
                 showTooltip: true,
-                tooltipTemplate: "Posts"
+                tooltipTemplate: "PostTooltipTemplate"
             },
             {
                 type: "column",
@@ -302,9 +302,10 @@ function getDataRefConc(e) {
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Share",
-                brush: "orange",
+                brush: "#B8DC00",
+                outline: "#B8DC00",
                 showTooltip: true,
-                tooltipTemplate: "Shares"
+                tooltipTemplate: "ShareTooltipTemplate"
             },
             {
                 type: "column",
@@ -315,9 +316,10 @@ function getDataRefConc(e) {
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Comment",
-                brush: "blue",
+                brush: "#00C8FF",
+                outline: "#00C8FF",
                 showTooltip: true,
-                tooltipTemplate: "Comments"
+                tooltipTemplate: "CommentTooltipTemplate"
             }
     ];
 
@@ -325,10 +327,12 @@ function getDataRefConc(e) {
     dis.igDataChart({
         autoMarginHeight: 15,
         autoMarginWidth: 15,
-        width: "45%",
+        width:"100%",
         height: "300px",
         title: "Titre à definir",
         subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
@@ -338,12 +342,14 @@ function getDataRefConc(e) {
                     name: "Month",
                     label: "Month",
                     title: "Month",
+                    labelTextColor: "white",
                 }, {
                     type: "numericY",
                     name: "KPI",
                     title: "KPI",
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white",
                 }, {
                     type: "numericY",
                     name: "PostsAxe",
@@ -352,6 +358,7 @@ function getDataRefConc(e) {
                     minimumValue: 0,
                     majorStroke: "rgba(0,0,0,0)",
                     stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white",
                 }
         ],
 
@@ -392,6 +399,95 @@ function getDataRefConc(e) {
     });
 }
 
+function getDataExpenditure(e) {
+
+    var disExpenditure = $("#chartExpenditure");
+    var data = $(".elmtsChart");
+
+    var arrayData = [];
+    $.each(data, function () {
+
+        var datas = $(this).children(".monthRef").attr('name').split(",");
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number($(".elmtsChart").children(".monthRef").attr('name').split(",")[index]),
+                Expenditure: Number($(".elmtsChart").children(".expenditureRef").attr('name').split(",")[index]),
+                Post: Number($(".elmtsChart").children(".postRef").attr('name').split(",")[index])
+            };
+            arrayData.push(elem);
+        });
+
+    });
+
+    disExpenditure.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        dataSource: arrayData,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                    labelTextColor: "white"
+                }, {
+                    type: "numericY",
+                    name: "ExpenditureAxe",
+                    title: "Expenditure",
+                    majorStroke: "white",
+                    stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white"
+                }, {
+                    type: "numericY",
+                    name: "PostsAxe",
+                    labelLocation: "outsideRight",
+                    title: "Posts",
+                    minimumValue: 0,
+                    majorStroke: "rgba(0,0,0,0)",
+                    stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white"
+                }
+        ],
+
+        series: [
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Expenditure",
+                title: "Expenditure",
+                xAxis: "Month",
+                yAxis: "ExpenditureAxe",
+                valueMemberPath: "Expenditure",
+                brush: "#FF8C00",
+                outline: "#FF8C00",
+                showTooltip: true,
+                tooltipTemplate: "ExpenditureTooltipTemplate"
+            },
+            {
+                type: "line",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Posts",
+                title: "Posts",
+                xAxis: "Month",
+                yAxis: "PostsAxe",
+                valueMemberPath: "Post",
+                brush: "#FF0080",
+                showTooltip: true,
+                tooltipTemplate: "PostTooltipTemplate"
+            }
+        ]
+    });
+}
 
 function CallRefConcChart() {
     $.ajax({
@@ -404,7 +500,8 @@ function CallRefConcChart() {
         },
         success: function (data) {
             $('#RefConc-chart').html('').append(data);
-            getDataRefConc();
+            getDataKPI();
+            getDataExpenditure();
         }
     });
 }
