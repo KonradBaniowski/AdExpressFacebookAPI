@@ -161,10 +161,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var myMedia = GetMyMedia(webSession);
             string ids = vehiclesInfos.Select(p => p.Value.DatabaseId.ToString()).Aggregate((c, n) => c + "," + n);
             var levels = GetVehicleLabel(ids, webSession, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle));
+            VehicleInformation vehicleInfo = new VehicleInformation();
+            vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
             webSession.SelectionUniversMedia.Nodes.Clear();
             webSession.PrincipalMediaUniverses.Clear();
             foreach (var item in vehiclesInfos.Values)
             {
+                //Added temporarily for Finland
+                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND) && vehicleInfo.DatabaseId == item.DatabaseId)
+                    continue;
+
                 Core.Domain.Media media = new Core.Domain.Media();
                 //var label = GetVehicleLabel(item.DatabaseId.ToString(),_webSession, DetailLevelItemInformation.Levels.vehicle)
                 media.Id = item.DatabaseId;

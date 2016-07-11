@@ -144,7 +144,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             }
                             branch.UniversLevels.Add(level);
                         }
-                       
+
                     }
                     result.Branches.Add(branch);
                 }
@@ -1123,24 +1123,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     if (!UniversListDataAccess.IsUniverseExist(webSession, universeName))
                     {
-
-                        //Add AdExpress universe to collection
                         universes.Add(universes.Count, adExpressUniverse);
                         if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, isDefault, levels, mediaIds))
-                        //if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession))
                         {
-                            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK && request.IsDefaultUniverse)
+                            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
                             {
-                                ManageFacebookDefaultUniverse(webSession, request.IsDefaultUniverse, idSelectedUniverse);
+                                if (request.IsDefaultUniverse)
+                                {
+                                   ManageFacebookDefaultUniverse(webSession, idSelectedUniverse, universes);
+                                }
+                                else
+                                {
+                                    webSession.PrincipalProductUniverses = universes;
+                                    webSession.Save();
+                                }                                
                             }
-                            // Validation : confirmation d'enregistrement de l'univers
                             webSession.Source.Close();
                             result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
                             result.Success = true;
                         }
                         else
                         {
-                            // Erreur : Echec de l'enregistrement de l'univers
                             webSession.Source.Close();
                             result.ErrorMessage = GestionWeb.GetWebWord(922, webSession.SiteLanguage);
                             result.Success = false;
@@ -1267,17 +1270,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
-        private void ManageFacebookDefaultUniverse(WebSession webSession, bool isDefaultUniverse, long idSelectedUniverse)
-        {
-            bool success = false;
-            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK && isDefaultUniverse)
-            {
+        private void ManageFacebookDefaultUniverse(WebSession webSession, long idSelectedUniverse, Dictionary<int, AdExpressUniverse> universes)
+        {  
                 UserUnivers defaultUniverse = GetUniverses(Dimension.product, webSession, 0, true).FirstOrDefault();
                 if (defaultUniverse != null && defaultUniverse.Id == idSelectedUniverse)
                 {
-                    success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);
+                    bool success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);
+                    if (success)
+                    {
+                        webSession.PrincipalProductUniverses = universes;
+                        webSession.Save();
+                    }
                 }
-            }
+                else
+                {
+                    webSession.PrincipalProductUniverses = universes;
+                    webSession.Save();
+                }           
+            
         }
         #endregion
     }

@@ -66,15 +66,21 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var resList = _rightService.GetModulesList(idWS);
             var res = _rightService.GetModules(idWS);
-            List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
             int siteLanguage = resList.First().Value.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(siteLanguage);
             ViewBag.SiteLanguage = siteLanguage;
-            documents.Add(new Documents()
+
+            List<Documents> documents = new List<Documents>();
+
+            //Added temporarily for Finland
+            if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
             {
-                Id = 3,
-                Label = "Documents",
-                InfosNews = new List<InfosNews>()
+                documents = _infosNewsService.GetInfosNews(idWS);
+                documents.Add(new Documents()
+                {
+                    Id = 3,
+                    Label = "Documents",
+                    InfosNews = new List<InfosNews>()
                             {
                                 //new InfosNews()
                                 //{
@@ -92,7 +98,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                 //    Url = "Configuration.pdf"
                                 //}
                             }
-            });
+                });
+            }
 
             var encryptedPassword = EncryptQueryString(password);
             var encryptedLogin = EncryptQueryString(login); 
