@@ -1271,23 +1271,23 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
         private void ManageFacebookDefaultUniverse(WebSession webSession, long idSelectedUniverse, Dictionary<int, AdExpressUniverse> universes)
-        {  
+        {
+            bool success = false;
                 UserUnivers defaultUniverse = GetUniverses(Dimension.product, webSession, 0, true).FirstOrDefault();
                 if (defaultUniverse != null && defaultUniverse.Id == idSelectedUniverse)
                 {
-                    bool success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);
-                    if (success)
-                    {
-                        webSession.PrincipalProductUniverses = universes;
-                        webSession.Save();
-                    }
+                    success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);                    
                 }
                 else
                 {
-                    webSession.PrincipalProductUniverses = universes;
-                    webSession.Save();
-                }           
-            
+                    success= UniversListDataAccess.UpdateDefaultFcbUniverses(defaultUniverse.Id, idSelectedUniverse, webSession);                   
+                }
+            if (success)
+            {
+                webSession.PrincipalProductUniverses = universes;
+                webSession.Save();
+            }
+
         }
         #endregion
     }

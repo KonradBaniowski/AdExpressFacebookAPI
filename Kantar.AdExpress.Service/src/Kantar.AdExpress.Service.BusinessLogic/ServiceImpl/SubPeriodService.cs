@@ -22,7 +22,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             SubPeriod subPeriod = new SubPeriod();
 
             WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
-
+            subPeriod.HideExistButton = (CustomerSession.CurrentModule == WebCst.Module.Name.FACEBOOK);
             int periodIndex = 0;
             int i = -1;
             string labBegin = CustomerSession.PeriodBeginningDate;
