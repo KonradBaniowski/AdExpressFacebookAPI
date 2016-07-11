@@ -704,7 +704,7 @@ input.ui-button,input.ui-igbutton{border-radius:0!important}
 .touch .ui-chart-toolbar .ui-slider-handle{border:1px solid #444;background:#777;margin-left:-15px;top:-15px}
 .ui-chart-title{margin-bottom:5px;text-align:center}
 .ui-chart-subtitle{margin-bottom:5px;text-align:center}
-.ui-widget-content.ui-chart-tooltip{background-color:rgba(255,255,255,0.85)}
+.ui-widget-content.ui-chart-tooltip{background-color:rgba(255,255,255,0.85) !important;}
 .ui-sparkline{font-family:"Segoe UI",Arial,sans-serif;font-size:13px;padding:10px 5px 10px 5px;border:0}
 .ui-sparkline-tooltip{box-shadow:3px 3px 5px rgba(0,0,0,0.25)!important;padding:3px}
 .ui-sparkline-sparkpath{background:#43ABD5;border:1px solid}
@@ -945,7 +945,7 @@ tr[aria-level="3"] th.ui-iggrid-rowselector-class{
 .ui-iggrid-responsive-vertical tr>td.ui-state-hover:first-child,
 .ui-iggrid-responsive-vertical tr.ui-ig-altrecord>td.ui-state-hover:first-child{
     color:black;
-    background:white;
+    background:rgba(255,255,255,0.6);
     border:1px solid rgba(0,0,0,0.3);
     padding-left:3px;
     /*font-weight:bolder;*/
