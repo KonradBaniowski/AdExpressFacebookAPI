@@ -70,7 +70,7 @@ namespace Facebook.DataAccess.Repository
                 query = query.Include(a => a.Brand)
                     .Where(e => Brand.Contains(e.IdBrand));
                 var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand, p.IdPageFacebook, p.IdLanguageData })
-                                  join c in context.Brand on new {id= g.Key.IdBrand, IdLanguage = g.Key.IdLanguageData } equals new {id= c.Id, IdLanguage = c.IdLanguage }
+                                  join c in context.Brand on new { id = g.Key.IdBrand, IdLanguage = g.Key.IdLanguageData } equals new { id = c.Id, IdLanguage = c.IdLanguage }
                                   where c.IdLanguage == idLanguage
                                   select new DateFacebookContract
                                   {
@@ -86,7 +86,7 @@ namespace Facebook.DataAccess.Repository
                                       IdPageFacebook = g.FirstOrDefault().IdPageFacebook,
                                       Url = g.FirstOrDefault().Url,
                                       Label = c.BrandLabel
-                                  }).ToList(); 
+                                  }).ToList();
                 return brandQuery;
             }
             else if (Advertiser != null && Advertiser.Count > 0)
@@ -124,7 +124,7 @@ namespace Facebook.DataAccess.Repository
             var query = (from d in context.DataFacebook
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
                          select d);
-           
+
             var includedProduct = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Include) && e.TypeNomenclature == (TypeNomenclature.Product));
             var excludedProduct = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Exclude) && e.TypeNomenclature == (TypeNomenclature.Product));
 
@@ -144,22 +144,21 @@ namespace Facebook.DataAccess.Repository
             if (predicate != null)
                 query = query.AsExpandable().Where(predicate);
 
-            //if (Brand != null && Brand.Count > 0)
-            //{
-            
-            //}
-            //else
+            if (Brand != null && Brand.Count > 0)
+            {
+                query = query.Include(a => a.Brand)
+                   .Where(e => Advertiser.Contains(e.IdBrand));
+            }
+            else
             if (Advertiser != null && Advertiser.Count > 0)
             {
                 query = query.Include(a => a.Advertiser)
                     .Where(e => Advertiser.Contains(e.IdAdvertiser));
-
-                var res = (from g in query
-                            where g.IdLanguageData == idLanguage
-                            select g);
-                return res.ToList();
             }
-            throw new AmbiguousMatchException("TOO FAR");
+            var res = (from g in query
+                       where g.IdLanguageData == idLanguage
+                       select g);
+            return res.ToList();
         }
     }
 }

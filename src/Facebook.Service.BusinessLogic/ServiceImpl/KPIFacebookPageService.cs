@@ -37,6 +37,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 NumberShare = e.Sum(a => a.NumberShare),
                 NumberComment = e.Sum(a => a.NumberComment),
                 NumberPost = e.Sum(a => a.NumberPost),
+                Expenditure = e.Sum(a => a.Expenditure)
             }).ToList();
             var kpiResult = _mapper.Map<List<KPIPageFacebookContract>>(query);
             return kpiResult;
