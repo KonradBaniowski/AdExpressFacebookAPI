@@ -21,5 +21,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public string AllPeriodLabel { get; set; }
 
         public List<SubPeriodItem> Items { get; set; }
+
+        public bool HideExistButton { get; set; }
     }
 }

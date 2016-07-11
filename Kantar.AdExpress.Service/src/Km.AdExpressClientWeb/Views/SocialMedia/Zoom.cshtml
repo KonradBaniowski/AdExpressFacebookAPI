@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
         <h4 class="modal-title" id="postFacebookModalTitle">@Model.Labels.FacebookModalTitle</h4>
     </div>
-    
+
     <div class="modal-body col-lg-12 col-md-12 col-sm-12">
 
         <div id="mediaLoader">
@@ -41,13 +41,11 @@
                 </div>
     </div>
   </div>
-
-
+</div>
 <script>
+    if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
     var id = $('#id').val();
     $("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id);
     $("#mediaLoader").hide();
     $("#objectPost").show();
-    $("#chartsPostFacebook").show();
 </script>
-

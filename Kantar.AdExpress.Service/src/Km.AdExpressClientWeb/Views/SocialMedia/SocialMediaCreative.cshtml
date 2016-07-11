@@ -14,6 +14,9 @@
         </div>
     </div>
 
+    <div id="HeaderElmt" class="center-block">
+        @Html.Action("SubPeriodSelection", "MediaSchedule", new { zoomDate = "" })        
+    </div>
     <div class="col-md-12" style="margin-top:10px;">
         <div class="pull-right custom-button">
             <button class="btn btn-save" id="btn-export" style="display:none">Exporter&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;

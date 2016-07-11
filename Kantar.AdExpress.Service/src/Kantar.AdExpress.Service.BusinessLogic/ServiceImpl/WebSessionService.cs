@@ -548,7 +548,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession.PeriodType = CstWeb.CustomerSessions.Period.Type.nLastMonth;
             _webSession.DetailPeriod = CstPeriodDetail.dayly;
             var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
-            _webSession.PeriodBeginningDate = DateTime.Now.AddMonths(1 - _webSession.PeriodLength).ToString("yyyy0101");
+            _webSession.PeriodBeginningDate = DateTime.Now.AddMonths(1 - _webSession.PeriodLength).ToString("yyyyMM01");
             _webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
 
             //TODO: Set default product universe
