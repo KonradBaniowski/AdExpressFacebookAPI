@@ -202,7 +202,7 @@ function getData(e) {
                 index = index + 1;
                 var elem = {
                     "DAY": "J" + index, 
-                    Data: value
+                    Data: Number(value)
                 };
                 arrayData.push(elem);
             });
@@ -250,45 +250,36 @@ function getDataRefConc(e) {
     var data = $(".elmtsChart");
 
     var arrayData = [];
-    $.each(data, function (index) {
-        var elem = {
-            Month: $(this).children(".monthRef").attr('name'),
-            Comment: $(this).children(".commentRef").attr('name'),
-            Like: $(this).children(".likeRef").attr('name'),
-            Share: $(this).children(".shareRef").attr('name'),
-            Post: $(this).children(".postRef").attr('name'),
-        };
-        arrayData.push(elem);
+    $.each(data, function () {
+
+        var datas = $(this).children(".monthRef").attr('name').split(",");
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number($(".elmtsChart").children(".monthRef").attr('name').split(",")[index]),
+                Comment: Number($(".elmtsChart").children(".commentRef").attr('name').split(",")[index]),
+                Like: Number($(".elmtsChart").children(".likeRef").attr('name').split(",")[index]),
+                Share: Number($(".elmtsChart").children(".shareRef").attr('name').split(",")[index]),
+                Post: Number($(".elmtsChart").children(".postRef").attr('name').split(",")[index])
+            };
+            arrayData.push(elem);
+        });
+
     });
 
-    dis.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
-        width: "70%",
-        height: "250px",
-        horizontalZoomable: true,
-        verticalZoomable: true,
-        dataSource: arrayData,
-        axes: [
-                {
-                    type: "categoryX",
-                    name: "Month",
-                    label: "Month",
-                    title: "Month"
-                }, {
-                    type: "numericY",
-                    name: "KPI",
-                    title: "KPI"
-                }, {
-                    type: "numericY",
-                    name: "PostsAxe",
-                    labelLocation: "outsideRight",
-                    title: "Posts",
-                    minimumValue: 0
-                }
-        ],
-
-        series: [
+    var listSerie = [
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "like",
+                title: "Like",
+                xAxis: "Month",
+                yAxis: "KPI",
+                valueMemberPath: "Like",
+                brush: "green",
+                showTooltip: true,
+                tooltipTemplate: "Likes"
+            },
             {
                 type: "line",
                 isHighlightingEnabled: true,
@@ -298,41 +289,109 @@ function getDataRefConc(e) {
                 xAxis: "Month",
                 yAxis: "PostsAxe",
                 valueMemberPath: "Post",
-                brush: "red"
+                brush: "red",
+                showTooltip: true,
+                tooltipTemplate: "Posts"
             },
             {
                 type: "column",
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
-                name: "Like",
-                title: "Like",
-                xAxis: "Month",
-                yAxis: "KPI",
-                valueMemberPath: "Like"
-            },
-            {
-                type: "column",
-                isHighlightingEnabled: true,
-                isTransitionInEnabled: true,
-                name: "Share",
+                name: "share",
                 title: "Share",
                 xAxis: "Month",
                 yAxis: "KPI",
-                valueMemberPath: "Share"
+                valueMemberPath: "Share",
+                brush: "orange",
+                showTooltip: true,
+                tooltipTemplate: "Shares"
             },
             {
                 type: "column",
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
-                name: "Comment",
+                name: "comment",
                 title: "Comment",
                 xAxis: "Month",
                 yAxis: "KPI",
-                valueMemberPath: "Comment"
+                valueMemberPath: "Comment",
+                brush: "blue",
+                showTooltip: true,
+                tooltipTemplate: "Comments"
             }
-        ]
+    ];
+
+
+    dis.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        width: "45%",
+        height: "300px",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        dataSource: arrayData,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                }, {
+                    type: "numericY",
+                    name: "KPI",
+                    title: "KPI",
+                    majorStroke: "white",
+                    stroke: "rgba(0,0,0,0)",
+                }, {
+                    type: "numericY",
+                    name: "PostsAxe",
+                    labelLocation: "outsideRight",
+                    title: "Posts",
+                    minimumValue: 0,
+                    majorStroke: "rgba(0,0,0,0)",
+                    stroke: "rgba(0,0,0,0)",
+                }
+        ],
+
+        series: listSerie.slice(0,2)
+    });
+
+    $('#seriesType').on('change', function () {
+        var serieType = $(this).val();
+        var series = dis.igDataChart("option", "series");
+        var newListSeries = [];
+        
+        newListSeries = jQuery.grep(listSerie, function (value) {
+            return value.name == serieType;
+        });
+
+        //TODO : Faire une boucle (fait comme ça pour avoir les Posts (type line) au debut de la list)!!
+        dis.igDataChart("option", "series", [{ name: "like", remove: true }]);
+        dis.igDataChart("option", "series", [{ name: "share", remove: true }]);
+        dis.igDataChart("option", "series", [{ name: "comment", remove: true }]);
+        dis.igDataChart("option", "series", [{ name: "Posts", remove: true }]);
+        for (var i = 0; i < listSerie.length; i++) {
+            if (listSerie[i].type != "column") {
+                newListSeries.push(listSerie[i]);
+            }
+        }
+
+        //for (var i = 0; i < series.length; i++) {
+        //    if (series[i].type != "column") {
+        //        newListSeries.push(series[i]);
+        //    }
+        //    if (series[i].name != serieType) { // && series[i].type == "column"
+        //        dis.igDataChart("option", "series", [{ name: series[i].name, remove: true }]);
+        //    }
+        //}
+
+        dis.igDataChart("option", "series", newListSeries);
+
     });
 }
+
 
 function CallRefConcChart() {
     $.ajax({
@@ -349,6 +408,7 @@ function CallRefConcChart() {
         }
     });
 }
+
 
 $('#combo > .form-control, #unity > .form-control').on('change', function () {
     var id = $('#combo > .form-control').val();
