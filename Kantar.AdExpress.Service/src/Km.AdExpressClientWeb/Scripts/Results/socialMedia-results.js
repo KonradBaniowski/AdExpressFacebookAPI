@@ -218,13 +218,16 @@ function getData(e) {
                 {
                     name: "Days",
                     type: "categoryX",
-                    label: "DAY"
+                    label: "DAY",
+                    labelTextColor: "white"
                 },
                 {
                     name: "Value",
                     type: "numericY",
                     minimumValue: 0,
                     title: serieType,
+                    majorStroke: "white",
+                    labelTextColor: "white"
                 }
             ],
 
@@ -540,6 +543,107 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
         }
     });
 });
+
+
+$("#postFacebookModal").attr('src', '');
+$("#postFacebookModal").on('shown.bs.modal', function (event) {
+    var button = $(event.relatedTarget);// Button that triggered the modal
+    var datas = button.data('creative').toString(); // Extract info from data-* attributes
+
+    if (datas === null || datas == "" || datas == 0 || datas == "0") {
+        bootbox.alert("Post indisponible.");
+    }
+    else {
+        var params = {
+            id: datas
+        };
+        $.ajax({
+            url: '/SocialMedia/GetKPIByPostId',
+            ccontentType: "application/x-www-form-urlencoded",
+            type: 'POST',
+            datatype: 'JSON',
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("error");
+            },
+            success: function (response) {
+                $('#postFacebookModal .modal-content').html('').append(response);
+                $('#postFacebookModal').modal('show');
+                getDataZoom();
+            }
+        });
+
+    }
+});
+
+function getDataZoom(e) {
+    var serieType = $('#seriesType').val();
+    var dis = $('#chart');
+    var data = $("[id='" + serieType + "']");
+    var arrayData = [];
+    var series = []
+    $.each(data, function (indexLike, value) {
+        var serie = {
+            name: "name",
+            type: "line",
+            title: "1995",
+            xAxis: "Days",
+            yAxis: "Value",
+            valueMemberPath: indexLike,
+            isTransitionInEnabled: true,
+            isHighlightingEnabled: true,
+            thickness: 5
+        };
+        var datas = $(value).attr('value').split(",");
+        $.each(datas, function (index, value) {
+            index = index + 1;
+            var elem = {
+                "DAY": "J" + index,
+                Data: value
+            };
+            arrayData.push(elem);
+        });
+        series.push(serie);
+    });
+    dis.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        width: "70%",
+        height: "250px",
+        //title: "Evolution des partages",
+        dataSource: arrayData,
+        axes: [
+            {
+                name: "Days",
+                type: "categoryX",
+                label: "DAY"
+            },
+            {
+                name: "Value",
+                type: "numericY",
+                minimumValue: 0,
+                title: serieType,
+            }
+        ],
+
+        series: [{
+            name: "wahtever",
+            type: "line",
+            title: "1995",
+            xAxis: "Days",
+            yAxis: "Value",
+            valueMemberPath: "Data",
+            isTransitionInEnabled: true,
+            isHighlightingEnabled: true,
+            thickness: 5
+        }]
+    });
+
+    $('#unity > .form-control').on('change', function () {
+        getDataZoom();
+    });
+
+}
 
 
 
