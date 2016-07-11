@@ -18,7 +18,7 @@
     var gridWidth;
 
     CallSocialMediaResult();
-    //CallRefConcChart();
+    CallRefConcChart();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -229,7 +229,7 @@ function getData(e) {
             ],
 
             series: [{
-                name: "",
+                name: "princip",
                 type: "line",
                 title: "1995",
                 xAxis: "Days",
@@ -247,65 +247,90 @@ function getData(e) {
 function getDataRefConc(e) {
 
     var dis = $("#RefConc-chart");
-
-    var data = dis.find("chart");
+    var data = $(".elmtsChart");
 
     var arrayData = [];
-    var series = []
-    $.each(data, function (indexLike, value) {
-        var serie = {
-            name: "",
-            type: "line",
-            title: "1995",
-            xAxis: "Days",
-            yAxis: "Value",
-            valueMemberPath: indexLike,
-            isTransitionInEnabled: true,
-            isHighlightingEnabled: true,
-            thickness: 5
+    $.each(data, function (index) {
+        var elem = {
+            Month: $(this).children(".monthRef").attr('name'),
+            Comment: $(this).children(".commentRef").attr('name'),
+            Like: $(this).children(".likeRef").attr('name'),
+            Share: $(this).children(".shareRef").attr('name'),
+            Post: $(this).children(".postRef").attr('name'),
         };
-        var datas = $(value).attr('name').split(",");
-        $.each(datas, function (index, value) {
-            index = index + 1;
-            var elem = {
-                "DAY": "J" + index, 
-                Data: value
-            };
-            arrayData.push(elem);
-        });
-        series.push(serie);
+        arrayData.push(elem);
     });
+
     dis.igDataChart({
         autoMarginHeight: 15,
         autoMarginWidth: 15,
         width: "70%",
         height: "250px",
+        horizontalZoomable: true,
+        verticalZoomable: true,
         dataSource: arrayData,
         axes: [
-            {
-                name: "Days",
-                type: "categoryX",
-                label: "DAY"
-            },
-            {
-                name: "Value",
-                type: "numericY",
-                minimumValue: 0,
-                title: serieType,
-            }
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month"
+                }, {
+                    type: "numericY",
+                    name: "KPI",
+                    title: "KPI"
+                }, {
+                    type: "numericY",
+                    name: "PostsAxe",
+                    labelLocation: "outsideRight",
+                    title: "Posts",
+                    minimumValue: 0
+                }
         ],
 
-        series: [{
-            name: "wahtever",
-            type: "line",
-            title: "1995",
-            xAxis: "Days",
-            yAxis: "Value",
-            valueMemberPath: "Data",
-            isTransitionInEnabled: true,
-            isHighlightingEnabled: true,
-            thickness: 5
-        }]
+        series: [
+            {
+                type: "line",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Posts",
+                title: "Posts",
+                xAxis: "Month",
+                yAxis: "PostsAxe",
+                valueMemberPath: "Post",
+                brush: "red"
+            },
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Like",
+                title: "Like",
+                xAxis: "Month",
+                yAxis: "KPI",
+                valueMemberPath: "Like"
+            },
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Share",
+                title: "Share",
+                xAxis: "Month",
+                yAxis: "KPI",
+                valueMemberPath: "Share"
+            },
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Comment",
+                title: "Comment",
+                xAxis: "Month",
+                yAxis: "KPI",
+                valueMemberPath: "Comment"
+            }
+        ]
     });
 }
 
@@ -320,7 +345,7 @@ function CallRefConcChart() {
         },
         success: function (data) {
             $('#RefConc-chart').html('').append(data);
-            getData();
+            getDataRefConc();
         }
     });
 }

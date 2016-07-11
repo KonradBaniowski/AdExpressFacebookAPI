@@ -374,6 +374,45 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
+        public async Task<ActionResult> GetRefConcChart()
+        {
+            using (var client = new HttpClient())
+            {
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
+
+                int IndexListRef = 1;
+                if (universeMarket.Count < 2)
+                {
+                    IndexListRef = 0;
+                }
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
+                postModelRef.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelRef.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/KPI"), postModelRef).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                var data = JsonConvert.DeserializeObject<List<KPIPageFacebookContract>>(content);
+                Dictionary<string, string>  itemsChart = new Dictionary<string, string>();
+
+                //var mounth = string.Join(",", data.Select(e => e.Month).ToList());
+                //var likes = string.Join(",", data.Select(e => e.Like).ToList());
+                //var comments = string.Join(",", data.Select(e => e.Comment).ToList());
+                //var shares = string.Join(",", data.Select(e => e.Share).ToList());
+
+                //PostFacebook result = new PostFacebook { ListMonths = mounth, NumberLikes = likes, NumberComments = comments, NumberShares = shares };
+
+                return PartialView("GetRefConcChart", data);
+            }
+        }
+
+        
         public JsonResult GetDataChart(List<long> likes)
         {
             var obj = new { data = "" };
