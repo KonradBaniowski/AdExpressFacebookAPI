@@ -55,12 +55,14 @@
     <Compile Include="DataAccess\Repository\IOrderTemplateProductRepository.cs" />
     <Compile Include="DataAccess\Repository\IProductRepository.cs" />
     <Compile Include="DataAccess\Repository\ITemplateAssignmentRepository.cs" />
+    <Compile Include="DataAccess\Repository\IWebPlanMediaMonthRepository.cs" />
     <Compile Include="DomainModels\AdExprSchema\Advertiser.cs" />
     <Compile Include="DomainModels\AdExprSchema\Brand.cs" />
     <Compile Include="DomainModels\AdExprSchema\Data.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataPostFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\LevelItem.cs" />
+    <Compile Include="DomainModels\AdExprSchema\WebPlanMediaMonth.cs" />
     <Compile Include="DomainModels\BusinessModel\CriteriaData.cs" />
     <Compile Include="DomainModels\BusinessModel\DataFacebookKPI.cs" />
     <Compile Include="DomainModels\BusinessModel\PostFacebook.cs" />

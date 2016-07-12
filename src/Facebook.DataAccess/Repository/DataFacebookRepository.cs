@@ -160,5 +160,15 @@ namespace Facebook.DataAccess.Repository
                        select g);
             return res.ToList();
         }
+
+        public List<DataFacebook> GetKPIPlurimediaDataFacebook(long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
+        {
+            var query = (from d in context.DataFacebook
+                         where d.DateMediaNum >= Begin && d.DateMediaNum <= End
+                         select d);
+            return null;
+
+
+        }
     }
 }

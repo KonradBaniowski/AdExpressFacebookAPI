@@ -25,5 +25,13 @@ namespace ClientApi.Controllers
             var svc = _fbsvc.GetKPIPages(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdLanguage);
             return svc;
         }
+
+        [Route("Api/KPI/Plurimedia")]
+        [HttpPost]
+        public List<KPIPercentPageFacebookContract> GetKPIPlurimediaPages([FromBody] PostModelKPIReferents model)
+        {
+            var svc = _fbsvc.GetKPIPlurimediaPages(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdAdvertisersRef, model.IdBrands, model.IdBrandsRef, model.IdLanguage);
+            return svc;
+        }
     }
 }

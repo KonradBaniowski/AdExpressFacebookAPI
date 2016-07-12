@@ -17,6 +17,7 @@ namespace Facebook.Service.Core.DataAccess
         IDataFacebookRepository DataFacebookRepository { get; }
         IDataPostFacebookRepository DataPostFacebookRepository { get; }
         IProductRepository ProductRepository { get; }
+        IWebPlanMediaMonthRepository WebPlanMediaMonthRepository { get; }
         void Dispose();
         void Save();
     }
