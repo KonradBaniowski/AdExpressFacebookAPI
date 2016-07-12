@@ -623,6 +623,13 @@ function CallPDMChart() {
     });
 }
 
+function SetListUnivers() {
+    $.ajax({
+        url: '/SocialMedia/GetPostbyIdpage',
+    });
+}
+
+
 
 $('#combo > .form-control, #unity > .form-control').on('change', function () {
     var id = $('#combo > .form-control').val();

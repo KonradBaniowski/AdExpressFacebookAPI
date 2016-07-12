@@ -204,7 +204,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     gridData.AddRange(tmpList);
 
                 }
-                
+
             }
 
             gridResultExport.HasData = true;
@@ -238,6 +238,91 @@ namespace Km.AdExpressClientWeb.Controllers
             Response.End();
 
             return View();
+        }
+
+        public async Task<ActionResult> CreativeExport(string ids, string period)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var gridResultExport = new GridResultExport();
+            List<InfragisticData> gridData = new List<InfragisticData>();
+            List<InfragisticData> tmpList = new List<InfragisticData>();
+            List<DataPostFacebook> data = new List<DataPostFacebook>();
+            List<InfragisticColumn> columns = new List<InfragisticColumn>();
+            List<string> vals = new List<string>();
+            InfragisticData par = new InfragisticData();
+            HttpResponseMessage response = new HttpResponseMessage();
+            ExportAspose export = new ExportAspose();
+            Workbook document = new Workbook(FileFormatType.Excel2003XML);
+            document.Worksheets.Clear();
+
+            columns.Add(new InfragisticColumn { HeaderText = "Advertiser", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Brand", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Page", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Date", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Commitment", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Like", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Share", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Comment", Hidden = false });
+
+            if (!string.IsNullOrEmpty(ids) && !string.IsNullOrEmpty(period))
+            {
+                using (var client = new HttpClient())
+                {
+                    var cla = new ClaimsPrincipal(User.Identity);
+                    string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                    List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
+
+                    Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession, period); //Params : 0 = Référents; 1 = Concurrents
+
+                    postModelRef.IdPages = ids.Split(',').Select(long.Parse).ToList();
+                    if (!postModelRef.IdPages.Any())
+                    {
+                        postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                        postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                    }
+
+                    response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPostUri"]), postModelRef).Result;
+                    var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (!response.IsSuccessStatusCode)
+                        throw new Exception(response.StatusCode.ToString());
+                    data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
+                    foreach (var item in data)
+                    {
+                        InfragisticData ig = new InfragisticData();
+                        ig.Level = 2;
+                        ig.Values = new List<String> {
+                                                    item.Advertiser.ToString(),
+                                                    item.Brand.ToString(),
+                                                    item.PageName.ToString(),
+                                                    item.DateCreationPost.ToString(),
+                                                    item.Commitment.ToString(),
+                                                    item.NumberLike.ToString(),
+                                                    item.NumberShare.ToString(),
+                                                    item.NumberComment.ToString()
+                                                 };
+                        gridData.Add(ig);
+                    }
+                }
+                gridResultExport.HasData = true;
+                gridResultExport.Columns = columns;
+                gridResultExport.Data = gridData;
+                WebSession session = (WebSession)WebSession.Load(idWebSession);
+                export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
+                export.ExportFromGridResult(document, gridResultExport, session);
+                document.Worksheets.ActiveSheetIndex = 1;
+            }
+            string documentFileNameRoot;
+            documentFileNameRoot = string.Format("SocialMediaCreativeExport_{0}.{1}", DateTime.Now.ToString("ddMMyyyy"), document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            Response.Clear();
+            Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
+            Response.ContentType = "application/octet-stream";
+            document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
+            Response.End();
+            return View();
+
         }
     }
 
