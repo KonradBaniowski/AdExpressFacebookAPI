@@ -127,7 +127,8 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
 
     $(".imgPostsFacebook").each(function () {
         var datas = $(this).attr('data-post').toString();
-        var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + "_Post.png"
+        var link = "/Image/GetPostImage?itemId=" + datas;
+
         $(this).attr("src", link);
     });
 
@@ -189,7 +190,7 @@ $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
 });
 
 function getData(e) {
-            var serieType = $('#seriesType').val();
+            var serieType = $('#seriesTypeZoom').val();
             var dis = $('#chart');
             var data = $("[id='" + serieType + "']");
             var arrayData = [];
@@ -251,7 +252,7 @@ function getData(e) {
                 }]
             });
        
-    $('#unity > .form-control').on('change', function () {
+    $('#unityZoom > .form-control').on('change', function () {
         getData();
     });
 
