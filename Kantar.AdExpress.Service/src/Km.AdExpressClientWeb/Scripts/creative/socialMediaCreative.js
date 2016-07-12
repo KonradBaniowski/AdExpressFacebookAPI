@@ -265,11 +265,8 @@ function getData(e) {
             });
        
     $('#unity > .form-control').on('change', function () {
-   getData();
-   
-});
-
-   
+        getData();
+    });
 }
 
 $(document).on("click", ".btn-group.btn-group-margin > .btn.btn-default", function (event) {

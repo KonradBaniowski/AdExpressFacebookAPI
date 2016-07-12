@@ -2670,6 +2670,10 @@ ul.ui-selectable {
     background-color: white;
 }
 
+.stackChart{
+    background-color:rgba(0,0,0,0.3);
+}
+
 .legendChart.ui-corner-all.ui-widget-content.ui-chart-legend {
     display: inline-block;
     color: black;
