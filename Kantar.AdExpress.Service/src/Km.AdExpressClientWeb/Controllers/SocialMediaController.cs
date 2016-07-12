@@ -264,7 +264,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public async Task<JsonResult> GetSocialMediaCreative(string ids, string type)
+        public async Task<JsonResult> GetSocialMediaCreative(string ids, string period)
         {
             var gridResult = new GridResult();
 
@@ -280,23 +280,23 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "PID" });
             columns.Add(new { headerText = "PostId", key = "IdPost", dataType = "string", width = "*", hidden = true });
             schemaFields.Add(new { name = "IdPost" });
-            columns.Add(new { headerText = "Post", key = "IdPostFacebook", dataType = "string", width = "100px;" });
+            columns.Add(new { headerText = "Post", key = "IdPostFacebook", dataType = "string", width = "150px" });
             schemaFields.Add(new { name = "IdPostFacebook" });
-            columns.Add(new { headerText = "Advertiser", key = "Advertiser", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Advertiser", key = "Advertiser", dataType = "string", width = "150px" });
             schemaFields.Add(new { name = "Advertiser" });
-            columns.Add(new { headerText = "Brand", key = "Brand", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Brand", key = "Brand", dataType = "string", width = "150px" });
             schemaFields.Add(new { name = "Brand" });
-            columns.Add(new { headerText = "Page", key = "PageName", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Page", key = "PageName", dataType = "string", width = "150px" });
             schemaFields.Add(new { name = "PageName" });
-            columns.Add(new { headerText = "Date", key = "DateCreationPost", dataType = "string", width = "*" });
+            columns.Add(new { headerText = "Date", key = "DateCreationPost", dataType = "string", width = "150px" });
             schemaFields.Add(new { name = "DateCreationPost" });
-            columns.Add(new { headerText = "Commitment", key = "Commitment", dataType = "number", width = "*" });
+            columns.Add(new { headerText = "Commitment", key = "Commitment", dataType = "number", width = "100px", format="number",columnCssClass="numericAlignment" });
             schemaFields.Add(new { name = "Commitment" });
-            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "*" });
+            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "75px", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberLike" });
-            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "*" });
+            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "75px", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberShare" });
-            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "*" });
+            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "75px", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberComment" });
             #endregion
 
@@ -307,7 +307,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
-                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession,period); //Params : 0 = Référents; 1 = Concurrents
 
                 postModelRef.IdPages = ids.Split(',').Select(long.Parse).ToList();
                 if (!postModelRef.IdPages.Any())

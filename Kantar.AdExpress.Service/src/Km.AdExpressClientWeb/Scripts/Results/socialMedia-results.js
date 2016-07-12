@@ -583,7 +583,7 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
 });
 
 function getDataZoom(e) {
-    var serieType = $('#seriesType').val();
+    var serieType = $('#seriesTypeZoom').val();
     var dis = $('#chart');
     var data = $("[id='" + serieType + "']");
     var arrayData = [];
@@ -645,7 +645,7 @@ function getDataZoom(e) {
         }]
     });
 
-    $('#unity > .form-control').on('change', function () {
+    $('#unityZoom > .form-control').on('change', function () {
         getDataZoom();
     });
 

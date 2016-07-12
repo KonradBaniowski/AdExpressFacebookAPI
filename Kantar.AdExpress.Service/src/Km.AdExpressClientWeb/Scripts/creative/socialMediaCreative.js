@@ -7,7 +7,14 @@ $("#grid").igTreeGrid({
     width: "95%",
     defaultColumnWidth: 200,
     avgRowHeight: 60,
-    autoGenerateColumns: true
+    autoGenerateColumns: true,
+    features: [
+                {
+                    name: "Sorting",
+                    type: "local",
+                    applySortedColumnCss: false
+                }
+]
 });
 
 
@@ -31,7 +38,7 @@ var renderGrid = function (success, error) {
             autoGenerateColumns: true,
             primaryKey: "ID",
             foreignKey: "PID",
-            width: "100%",
+            width: "90%",
             features: [
                 {
                     name: "MultiColumnHeaders"
@@ -40,6 +47,11 @@ var renderGrid = function (success, error) {
                     name: "Paging",
                     mode: "allLevels",
                     pageSize: 100
+                },
+                {
+                    name: "Sorting",
+                    type: "local",
+                    applySortedColumnCss: false
                 }
             ]
         })
@@ -53,10 +65,11 @@ function CallInsertionsResult() {
     $("#gridEmpty").hide();
     $("#gridLoader").show();
     var ids = $('#ids').val();//$('#paramsUrl[0]').val();ids
+    var period = $('.btn-group.btn-group-margin > .btn.btn-default-sub-period.sub-period-btn').attr("period");
     var type = $('#type').val();
     var parameters = {
         ids:ids,
-        type:type
+        period: period
     };
 
     $.ajax({
@@ -127,7 +140,8 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
 
     $(".imgPostsFacebook").each(function () {
         var datas = $(this).attr('data-post').toString();
-        var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/" + datas + "_Post.png"
+        var link = "/Image/GetPostImage?itemId=" + datas;
+
         $(this).attr("src", link);
     });
 
@@ -189,7 +203,7 @@ $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
 });
 
 function getData(e) {
-            var serieType = $('#seriesType').val();
+            var serieType = $('#seriesTypeZoom').val();
             var dis = $('#chart');
             var data = $("[id='" + serieType + "']");
             var arrayData = [];
@@ -251,8 +265,74 @@ function getData(e) {
                 }]
             });
        
-    $('#unity > .form-control').on('change', function () {
+    $('#unityZoom > .form-control').on('change', function () {
         getData();
     });
-
 }
+
+$(document).on("click", ".btn-group.btn-group-margin > .btn.btn-default", function (event) {
+    var element = this;
+    var period = $(element).attr("period");
+    var ids = $('#ids').val();
+    var parameters = {
+        ids: ids,
+        period: period
+    };
+
+    $.ajax({
+        url: '/SocialMedia/GetSocialMediaCreative',
+        contentType: 'application/json',
+        type: "POST",
+        datatype: "json",
+        data: JSON.stringify(parameters),
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert("Error : GetSocialMediaCreative");
+            $("#gridLoader").hide();
+            $("#gridEmpty").show();
+        },
+        success: function (data) {
+
+            if (data != null && data != "") {
+                dataTreeGrid = data.datagrid;
+                colsFixed = data.columnsfixed;
+                needFixedColumns = data.needfixedcolumns;
+
+                var schema = new $.ig.DataSchema("array", {
+                    fields: data.schema
+                });
+
+                cols = data.columns
+
+                for (i = 0; i < cols.length; i++) {
+                    if (cols[i].key == "IdPostFacebook")
+                        cols[i].template = $("#colPostTmpl").html();
+                }
+
+                ds = new $.ig.DataSource({
+                    type: "json",
+                    schema: schema,
+                    dataSource: dataTreeGrid,
+                    callback: renderGrid
+                });
+
+                ds.dataBind();
+            }
+            else {
+                $("#gridLoader").hide();
+                $("#gridEmpty").show();
+                $("#grid").hide();
+            }
+        }
+    });
+    $(".btn-default-sub-period").prop('disabled', false);
+    $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
+    $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
+    $(this).prop('disabled', true);
+    $(".sub-period-btn").on('mouseenter', function (e) {
+        previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+        $("#subPeriodLabel").text($(this).attr("periodlabel"));
+    });
+    $(".sub-period-btn").on('mouseleave', function (e) {
+        $("#subPeriodLabel").text(previousSubPeriodLabel);
+    });
+});
