@@ -30,7 +30,7 @@ namespace ClientApi.Controllers
         [HttpPost]
         public List<KPIPercentPageFacebookContract> GetKPIPlurimediaPages([FromBody] PostModelKPIReferents model)
         {
-            var svc = _fbsvc.GetKPIPlurimediaPages(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdAdvertisersRef, model.IdBrands, model.IdBrandsRef, model.IdLanguage);
+            var svc = _fbsvc.GetKPIPlurimediaPages(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisersRef, model.IdAdvertisersRef, model.IdBrandsRef, model.IdBrandsRef, model.IdLanguage);
             return svc;
         }
     }

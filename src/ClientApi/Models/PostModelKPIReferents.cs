@@ -11,12 +11,12 @@ namespace ClientApi.Models
         public int IdLogin { get; set; }
         public long BeginDate { get; set; }
         public long EndDate { get; set; }
-        public List<long> IdAdvertisers { get; set; }
-        public List<long> IdBrands { get; set; }
+        public List<long> IdAdvertisersRef { get; set; }
+        public List<long> IdBrandsRef { get; set; }
         public List<long> IdPages { get; set; }
         public int IdLanguage { get; set; }
         public long IdPost { get; set; }
-        public List<long> IdAdvertisersRef { get; set; }
-        public List<long> IdBrandsRef { get; set; }
+        public List<long> IdAdvertisersConcur { get; set; }
+        public List<long> IdBrandsConcur { get; set; }
     }
 }

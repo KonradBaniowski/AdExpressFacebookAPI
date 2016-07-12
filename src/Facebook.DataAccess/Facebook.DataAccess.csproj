@@ -67,6 +67,7 @@
     <Compile Include="Mapping\Adexpr\BrandMapping.cs" />
     <Compile Include="Mapping\Adexpr\DataFacebookMapping.cs" />
     <Compile Include="Mapping\Adexpr\DataPostFacebookMapping.cs" />
+    <Compile Include="Mapping\Adexpr\DataSearchMapping.cs" />
     <Compile Include="Mapping\Adexpr\ProductMapping.cs" />
     <Compile Include="Mapping\Adexpr\WebPlanMediaMonthMapping.cs" />
     <Compile Include="Mapping\MapperFunctionOracle.cs" />

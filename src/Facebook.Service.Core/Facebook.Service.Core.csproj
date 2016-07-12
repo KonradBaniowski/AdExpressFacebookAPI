@@ -61,6 +61,7 @@
     <Compile Include="DomainModels\AdExprSchema\Data.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataPostFacebook.cs" />
+    <Compile Include="DomainModels\AdExprSchema\DataSearch.cs" />
     <Compile Include="DomainModels\AdExprSchema\LevelItem.cs" />
     <Compile Include="DomainModels\AdExprSchema\WebPlanMediaMonth.cs" />
     <Compile Include="DomainModels\BusinessModel\CriteriaData.cs" />
