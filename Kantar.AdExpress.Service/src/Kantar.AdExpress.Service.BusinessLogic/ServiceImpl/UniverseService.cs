@@ -1289,6 +1289,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
 
         }
+
+        public List<UserUnivers> GetUniverses(Dimension dimension, string webSessionId)
+        {
+            webSession = (WebSession)WebSession.Load(webSessionId);
+            return GetUniverses( dimension,  webSession, 0, false);
+        }
         #endregion
     }
 }
