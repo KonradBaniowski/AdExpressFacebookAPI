@@ -252,9 +252,7 @@ function getData(e) {
             });
        
     $('#unity > .form-control').on('change', function () {
-   getData();
-   
-});
+        getData();
+    });
 
-   
 }

@@ -398,8 +398,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
 
-                var data = JsonConvert.DeserializeObject<List<KPIPageFacebookContract>>(content);
-                Dictionary<string, string>  itemsChart = new Dictionary<string, string>();
+                List<KPIPageFacebookContract> data = JsonConvert.DeserializeObject<List<KPIPageFacebookContract>>(content);
+                if (data.Count == 0)
+                {
+                    data.Add(new KPIPageFacebookContract());
+                }
 
                 //var mounth = string.Join(",", data.Select(e => e.Month).ToList());
                 //var likes = string.Join(",", data.Select(e => e.Like).ToList());
