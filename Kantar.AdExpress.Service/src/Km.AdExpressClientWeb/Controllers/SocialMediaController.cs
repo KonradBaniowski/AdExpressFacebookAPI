@@ -415,7 +415,50 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
-        
+        public async Task<ActionResult> GetPDMChart()
+        {
+            using (var client = new HttpClient())
+            {
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                Domain.PostModel postModel = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
+
+                postModel.IdAdvertisersConcur = new List<long>();
+                postModel.IdBrandsConcur = new List<long>();
+
+                List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
+
+                if (universeMarket.Count > 1)
+                {
+
+                    postModel.IdAdvertisersConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModel.IdBrandsConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                    postModel.IdAdvertisersRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModel.IdBrandsRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                }
+                else
+                {
+                    postModel.IdAdvertisersRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModel.IdBrandsRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                }
+
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/KPI/Plurimedia"), postModel).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                List<KPIPercentPageFacebookContract> data = JsonConvert.DeserializeObject<List<KPIPercentPageFacebookContract>>(content);
+                if (data.Count == 0)
+                {
+                    data.Add(new KPIPercentPageFacebookContract());
+                }
+
+                return PartialView("GetPDMChart", data);
+            }
+        }
+
         public JsonResult GetDataChart(List<long> likes)
         {
             var obj = new { data = "" };

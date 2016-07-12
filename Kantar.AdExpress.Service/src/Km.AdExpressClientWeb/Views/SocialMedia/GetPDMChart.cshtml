@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Km.AdExpressClientWeb.Models.SocialMedia.KPIPercentPageFacebookContract>
+
+
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-4 text-center elmtsChartPDM">
+        @Html.Hidden(string.Join(",", Model.Select(e => e.Month).ToList()), null, new { @class = "monthRef" })
+        @Html.Hidden(string.Join(",", Model.Select(e => e.ReferentPercent).ToList()), null, new { @class = "refPercentRef" })
+        @Html.Hidden(string.Join(",", Model.Select(e => e.ConcurrentPercent).ToList()), null, new { @class = "concPercentRef" })
+        @Html.Hidden(string.Join(",", Model.Select(e => e.ReferentFBPercent).ToList()), null, new { @class = "refFBPercentRef" })
+        @Html.Hidden(string.Join(",", Model.Select(e => e.ConcurrentFBPercent).ToList()), null, new { @class = "concFBPercentRef" })
+    </div>
+
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="stackChart" id="chartPDM">
+
+        </div>
+    </div>
+</div>
+

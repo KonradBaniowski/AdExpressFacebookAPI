@@ -19,6 +19,7 @@
 
     CallSocialMediaResult();
     CallRefConcChart();
+    CallPDMChart();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -492,6 +493,103 @@ function getDataExpenditure(e) {
     });
 }
 
+function getDataPDM(e) {
+
+    var disPDM = $("#chartPDM");
+    var data = $(".elmtsChartPDM");
+
+    var arrayData = [];
+    $.each(data, function () {
+
+        var datas = $(this).children(".monthRef").attr('name').split(",");
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number($(".elmtsChartPDM").children(".monthRef").attr('name').split(",")[index]),
+                ReferentPercent: Number($(".elmtsChartPDM").children(".refPercentRef").attr('name').split(",")[index]),
+                ConcurrentPercent: Number($(".elmtsChartPDM").children(".concPercentRef").attr('name').split(",")[index]),
+                ReferentFBPercent: Number($(".elmtsChartPDM").children(".refFBPercentRef").attr('name').split(",")[index]),
+                ConcurrentFBPercent: Number($(".elmtsChartPDM").children(".concFBPercentRef").attr('name').split(",")[index])
+            };
+            arrayData.push(elem);
+        });
+
+    });
+
+    var listSeries = [
+        function () { // a self executing function to create the series initialization object
+            var seriesObj = {
+                name: "PDM",
+                xAxis: "Month",
+                yAxis: "PDMAxe",
+                type: "stacked100Column",
+                outline: "transparent",
+                series: [{
+                        name: "ReferentPercent",
+                        title: "ReferentPercent",
+                        type: "stackedFragment",
+                        valueMemberPath: "ReferentPercent"
+                    },
+                    {
+                        name: "ConcurrentPercent",
+                        title: "ConcurrentPercent",
+                        type: "stackedFragment",
+                        valueMemberPath: "ConcurrentPercent"
+                    }
+                ]
+            };
+            return seriesObj;
+        }()
+    ];
+    listSeries.push(
+            {
+                type: "line",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "ReferentFBPercent",
+                title: "ReferentFBPercent",
+                xAxis: "Month",
+                yAxis: "PDMAxe",
+                valueMemberPath: "ReferentFBPercent"
+            }
+        );
+
+    disPDM.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        dataSource: arrayData,
+        brushes: ["#14C896", "#B8292F", "#2D2B62", "#000000", "#787878", "#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                    labelTextColor: "white",
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true
+                }, {
+                    type: "numericY",
+                    name: "PDMAxe",
+                    title: "PDM (%)",
+                    majorStroke: "white",
+                    labelTextColor: "white",
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true
+                }
+        ],
+        series: listSeries
+   
+    });
+}
+
 function CallRefConcChart() {
     $.ajax({
         url: '/SocialMedia/GetRefConcChart',
@@ -505,6 +603,22 @@ function CallRefConcChart() {
             $('#RefConc-chart').html('').append(data);
             getDataKPI();
             getDataExpenditure();
+        }
+    });
+}
+
+function CallPDMChart() {
+    $.ajax({
+        url: '/SocialMedia/GetPDMChart',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#PDM-chart').html('').append(data);
+            getDataPDM();
         }
     });
 }
