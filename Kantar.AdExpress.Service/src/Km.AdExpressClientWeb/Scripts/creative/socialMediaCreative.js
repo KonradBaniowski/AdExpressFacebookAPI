@@ -335,3 +335,10 @@ $(document).on("click", ".btn-group.btn-group-margin > .btn.btn-default", functi
         $("#subPeriodLabel").text(previousSubPeriodLabel);
     });
 });
+
+$(document).on("click", "#btn-export", function (event) {
+    var ids = $('#ids').val();
+    var period = $('.btn-group.btn-group-margin > .btn.btn-default-sub-period.sub-period-btn').attr("period");
+    var params = "?ids=" + ids + "&period=" + period;
+    window.open('/SocialMediaExport/CreativeExport'+params, "_blank");
+});
