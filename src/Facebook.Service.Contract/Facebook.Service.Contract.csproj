@@ -43,6 +43,7 @@
     <Compile Include="BusinessModels\Criteria.cs" />
     <Compile Include="ContractModels\ModuleFacebook\DataFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\DataPostFacebookContract.cs" />
+    <Compile Include="ContractModels\ModuleFacebook\KPIClassificationContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\KPIPageFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\KPIPercentPageFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\LevelItemContract.cs" />

@@ -38,8 +38,16 @@ namespace ClientApi.Controllers
         [HttpPost]
         public List<KPIPercentPageFacebookContract> GetKPIPlurimediaStacked([FromBody] PostModelKPIReferents model)
         {
-             _fbsvc.GetKPIPlurimediaStacked(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisersRef, model.IdAdvertisersConcur, model.IdBrandsRef, model.IdBrandsConcur, model.IdLanguage);
+            _fbsvc.GetKPIPlurimediaStacked(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisersRef, model.IdAdvertisersConcur, model.IdBrandsRef, model.IdBrandsConcur, model.IdLanguage);
             return null;
+        }
+
+        [Route("Api/KPI/Classification")]
+        [HttpPost]
+        public List<KPIClassificationContract> GetKPIClassificationPages([FromBody] PostModel model)
+        {
+            var svc = _fbsvc.GetKPIClassificationPages(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisers, model.IdBrands, model.IdLanguage);
+            return svc;
         }
     }
 }
