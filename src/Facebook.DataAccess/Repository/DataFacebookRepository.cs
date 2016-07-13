@@ -167,8 +167,6 @@ namespace Facebook.DataAccess.Repository
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
                          select d);
             return null;
-
-
         }
     }
 }

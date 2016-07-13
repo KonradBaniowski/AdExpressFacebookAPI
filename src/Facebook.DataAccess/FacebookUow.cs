@@ -29,6 +29,8 @@ namespace Facebook.DataAccess
             this.OrderTemplateProductRepository = new OrderTemplateProductRepository(_context);
             this.DataPostFacebookRepository = new DataPostFacebookRepository(_context);
             this.WebPlanMediaMonthRepository = new WebPlanMediaMonthRepository(_context);
+            this.DataSearchRepository = new DataSearchRepository(_context);
+            this.DataDisplayRepository = new DataDisplayRepository(_context);
 
         }
 
@@ -41,6 +43,9 @@ namespace Facebook.DataAccess
         public IOrderClientProductRepository OrderClientProductRepository { get; private set; }
         public IOrderTemplateProductRepository OrderTemplateProductRepository { get; private set; }
         public IWebPlanMediaMonthRepository WebPlanMediaMonthRepository { get; private set; }
+        public IDataSearchRepository DataSearchRepository { get; private set; }
+
+        public IDataDisplayRepository DataDisplayRepository { get; private set; }
 
         public void Save()
         {

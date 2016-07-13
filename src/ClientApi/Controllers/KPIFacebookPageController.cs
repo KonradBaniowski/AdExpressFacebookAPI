@@ -33,5 +33,13 @@ namespace ClientApi.Controllers
             var svc = _fbsvc.GetKPIPlurimediaPages(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisersRef, model.IdAdvertisersConcur, model.IdBrandsRef, model.IdBrandsConcur, model.IdLanguage);
             return svc;
         }
+
+        [Route("Api/KPI/PlurimediaStacked")]
+        [HttpPost]
+        public List<KPIPercentPageFacebookContract> GetKPIPlurimediaStacked([FromBody] PostModelKPIReferents model)
+        {
+             _fbsvc.GetKPIPlurimediaStacked(model.IdLogin, model.BeginDate, model.EndDate, model.IdAdvertisersRef, model.IdAdvertisersConcur, model.IdBrandsRef, model.IdBrandsConcur, model.IdLanguage);
+            return null;
+        }
     }
 }

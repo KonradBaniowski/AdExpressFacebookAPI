@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Facebook.DataAccess.Mapping.Adexpr
 {
-    public class DataSearchMapping : EntityTypeConfiguration<DataSearch>
+    public class DataDisplayMapping : EntityTypeConfiguration<DataDisplay>
     {
-        public DataSearchMapping(string schema)
+        public DataDisplayMapping(string schema)
         {
-            HasKey(e => new { e.IdMedia, e.DateMediaNum, e.IdDataSearch });
-            ToTable("DATA_SEARCH", schema);
+            HasKey(e => new { e.IdMedia, e.DateMediaNum, e.IdProduct, e.IdGroupFormatBanners });
+            ToTable("DATA_MMS", schema);
             Property(e => e.IdMedia).HasColumnName("ID_MEDIA");
             Property(e => e.DateMediaNum).HasColumnName("DATE_MEDIA_NUM");
-            Property(e => e.IdDataSearch).HasColumnName("ID_DATA_SEARCH");
+            Property(e => e.IdGroupFormatBanners).HasColumnName("ID_GROUP_FORMAT_BANNERS");
             Property(e => e.IdLanguageData).HasColumnName("ID_LANGUAGE_DATA_I");
             Property(e => e.ExpenditureEuro).HasColumnName("EXPENDITURE_EURO");
             Property(e => e.IdProduct).HasColumnName("ID_PRODUCT");

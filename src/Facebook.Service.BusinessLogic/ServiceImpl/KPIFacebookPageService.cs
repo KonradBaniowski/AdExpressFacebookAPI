@@ -149,5 +149,32 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
             return percentByMonth;
         }
+
+        public void GetKPIPlurimediaStacked(int IdLogin, long Begin, long End, List<long> AdvertiserRef, List<long> AdvertiserCon, List<long> BrandRef, List<long> BrandCon, int idLanguage)
+        {
+            var criteria = _rightsvc.GetCriteria(IdLogin);
+            var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
+
+            if ((AdvertiserRef != null && AdvertiserRef.Count() != 0) && (AdvertiserCon != null && AdvertiserCon.Count() != 0))
+            {
+                var allAdvertiser = AdvertiserRef.Concat(AdvertiserCon).ToList();
+
+                var queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+
+                var queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+
+                var queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+            }
+            else if ((BrandRef != null && BrandRef.Count() != 0) && (BrandCon != null && BrandCon.Count() != 0))
+            {
+                var allBrand = BrandRef.Concat(BrandCon).ToList();
+
+                var queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, End, null, allBrand, idLanguage);
+
+                var queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
+
+                var queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
+            }
+        }
     }
 }

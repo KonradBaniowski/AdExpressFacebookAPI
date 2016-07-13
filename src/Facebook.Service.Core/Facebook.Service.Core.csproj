@@ -46,8 +46,10 @@
     <Compile Include="BusinessService\IProductService.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
     <Compile Include="DataAccess\IFacebookUow.cs" />
+    <Compile Include="DataAccess\Repository\IDataDisplayRepository.cs" />
     <Compile Include="DataAccess\Repository\IDataFacebookRepository.cs" />
     <Compile Include="DataAccess\Repository\IDataPostFacebookRepository.cs" />
+    <Compile Include="DataAccess\Repository\IDataSearchRepository.cs" />
     <Compile Include="DataAccess\Repository\IGenericRepository.cs" />
     <Compile Include="DataAccess\Repository\IOrderClientMediaRepository.cs" />
     <Compile Include="DataAccess\Repository\IOrderClientProductRepository.cs" />
@@ -59,6 +61,7 @@
     <Compile Include="DomainModels\AdExprSchema\Advertiser.cs" />
     <Compile Include="DomainModels\AdExprSchema\Brand.cs" />
     <Compile Include="DomainModels\AdExprSchema\Data.cs" />
+    <Compile Include="DomainModels\AdExprSchema\DataDisplay.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataPostFacebook.cs" />
     <Compile Include="DomainModels\AdExprSchema\DataSearch.cs" />

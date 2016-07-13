@@ -65,6 +65,7 @@
     <Compile Include="FacebookUow.cs" />
     <Compile Include="Mapping\Adexpr\AdvertiserMapping.cs" />
     <Compile Include="Mapping\Adexpr\BrandMapping.cs" />
+    <Compile Include="Mapping\Adexpr\DataDisplayMapping.cs" />
     <Compile Include="Mapping\Adexpr\DataFacebookMapping.cs" />
     <Compile Include="Mapping\Adexpr\DataPostFacebookMapping.cs" />
     <Compile Include="Mapping\Adexpr\DataSearchMapping.cs" />
@@ -77,8 +78,10 @@
     <Compile Include="Mapping\Mau\TemplateAssignmentMapping.cs" />
     <Compile Include="Mapping\Mau\TemplateMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\DataDisplayRepository.cs" />
     <Compile Include="Repository\DataFacebookRepository.cs" />
     <Compile Include="Repository\DataPostFacebookRepository.cs" />
+    <Compile Include="Repository\DataSearchRepository.cs" />
     <Compile Include="Repository\ExtensionLinq.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\OrderClientMediaRepository.cs" />

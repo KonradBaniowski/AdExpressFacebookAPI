@@ -15,6 +15,8 @@ namespace Facebook.Service.Core.DataAccess
         IOrderTemplateProductRepository OrderTemplateProductRepository { get; }
         ITemplateAssignmentRepository TemplateAssignmentRepository { get; }
         IDataFacebookRepository DataFacebookRepository { get; }
+        IDataSearchRepository DataSearchRepository { get; }
+        IDataDisplayRepository DataDisplayRepository { get; }
         IDataPostFacebookRepository DataPostFacebookRepository { get; }
         IProductRepository ProductRepository { get; }
         IWebPlanMediaMonthRepository WebPlanMediaMonthRepository { get; }
