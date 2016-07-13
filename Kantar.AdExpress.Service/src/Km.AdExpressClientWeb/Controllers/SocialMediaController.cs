@@ -374,7 +374,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
-        public async Task<ActionResult> GetRefConcChart()
+        public async Task<ActionResult> GetReferChart()
         {
             using (var client = new HttpClient())
             {
@@ -411,7 +411,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 //PostFacebook result = new PostFacebook { ListMonths = mounth, NumberLikes = likes, NumberComments = comments, NumberShares = shares };
 
-                return PartialView("GetRefConcChart", data);
+                return PartialView("GetReferChart", data);
             }
         }
 
@@ -456,6 +456,39 @@ namespace Km.AdExpressClientWeb.Controllers
                 }
 
                 return PartialView("GetPDMChart", data);
+            }
+        }
+
+        public async Task<ActionResult> GetConcurChart()
+        {
+            using (var client = new HttpClient())
+            {
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
+
+                if (universeMarket.Count < 2)
+                {
+                    throw new Exception("Pas de concurrents");
+                }
+
+                Domain.PostModel postModelConcur = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
+                postModelConcur.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelConcur.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/KPI/Classification"), postModelConcur).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                List<KPIClassificationContract> data = JsonConvert.DeserializeObject<List<KPIClassificationContract>>(content);
+                if (data.Count == 0)
+                {
+                    data.Add(new KPIClassificationContract());
+                }
+
+                return PartialView("GetConcurChart", data);
             }
         }
 

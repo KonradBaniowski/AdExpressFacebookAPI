@@ -667,6 +667,10 @@
         function Html5Loaded() {
             var iFrameID = document.getElementById("objectHTML5");
             if (iFrameID) {
+
+                $("#objectHTML5").removeAttr("width");
+                $("#objectHTML5").removeAttr("height");
+
                 newheight = iFrameID.contentWindow.document.body.scrollHeight + 50;
                 newwidth = iFrameID.contentWindow.document.body.scrollWidth + 50;
 

@@ -92,7 +92,7 @@
         </div>
         <div id="accord2" class="panel-collapse collapse in">
             <div class="panel-body">
-                <div id="RefConc-chart"></div>
+                <div id="Refer-chart"></div>
                 <div id="PDM-chart"></div>
             </div>
         </div>
@@ -106,6 +106,20 @@
             </h3>
         </div>
         <div id="accord3" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="row margin-top-30" id="Concur-chart"></div>
+            </div>
+        </div>
+    </div>
+    <div id="volet4" class="panel panel-primary panel-results">
+        <div class="panel-heading head-results">
+            <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#resaccord" href="#accord4">
+                    <i class="fa fa-line-chart"></i> Volet 4
+                </a>
+            </h3>
+        </div>
+        <div id="accord4" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="row margin-top-30" id="top-post"></div>
             </div>
@@ -127,19 +141,7 @@
         </div>
     </div>
 </div>
-<div id="gadModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
 <div id="alertModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
-<div id="exportResultModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
         </div>
@@ -198,6 +200,41 @@
         {{else}}
         <center><input type="checkbox"></center>
         {{/if}}
+    </script>
+
+    <script id="LikeTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Likes: <label class='bold'>${item.Like}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+    <script id="ShareTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Shares: <label class='bold'>${item.Share}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+    <script id="CommentTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Comments: <label class='bold'>${item.Comment}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+    <script id="ExpenditureTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Expenditure: <label class='bold'>${item.Expenditure}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+    <script id="PostTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Posts: <label class='bold'>${item.Post}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
     </script>
 
 

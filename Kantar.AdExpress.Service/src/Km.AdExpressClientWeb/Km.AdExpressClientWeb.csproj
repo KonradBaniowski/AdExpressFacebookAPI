@@ -247,6 +247,7 @@
     <Compile Include="Models\Shared\SaveUserResultViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Models\SocialMedia\DataFacebook.cs" />
+    <Compile Include="Models\SocialMedia\KPIClassificationContract.cs" />
     <Compile Include="Models\SocialMedia\KPIPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\KPIPercentPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\ResultsViewModel.cs" />
@@ -1640,8 +1641,9 @@
     <Content Include="Views\SocialMedia\SocialMediaCreative.cshtml" />
     <Content Include="Views\SocialMedia\GetTopPost.cshtml" />
     <Content Include="Views\SocialMedia\Zoom.cshtml" />
-    <Content Include="Views\SocialMedia\GetRefConcChart.cshtml" />
+    <Content Include="Views\SocialMedia\GetReferChart.cshtml" />
     <Content Include="Views\SocialMedia\GetPDMChart.cshtml" />
+    <Content Include="Views\SocialMedia\GetConcurChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

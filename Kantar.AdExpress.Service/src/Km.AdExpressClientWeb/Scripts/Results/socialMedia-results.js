@@ -18,8 +18,9 @@
     var gridWidth;
 
     CallSocialMediaResult();
-    CallRefConcChart();
+    CallReferChart();
     CallPDMChart();
+    CallConcurChart();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -170,7 +171,10 @@
 
         $(".imgPageFacebook").each(function () {
             var datas = $(this).attr('data-post').toString();
-            var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
+
+            //var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
+
+            var link = "/Image/GetPageImage?itemId=" + datas;
             $(this).attr("src", link);
         });
 
@@ -247,9 +251,9 @@ function getData(e) {
     });
 }
 
-function getDataKPI(e) {
+function getDataReferKPI(e) {
 
-    var dis = $("#chartKPI");
+    var dis = $("#chartReferKPI");
     var data = $(".elmtsChart");
 
     var arrayData = [];
@@ -403,9 +407,9 @@ function getDataKPI(e) {
     });
 }
 
-function getDataExpenditure(e) {
+function getDataReferExpenditure(e) {
 
-    var disExpenditure = $("#chartExpenditure");
+    var disExpenditure = $("#chartReferExpenditure");
     var data = $(".elmtsChart");
 
     var arrayData = [];
@@ -590,9 +594,279 @@ function getDataPDM(e) {
     });
 }
 
-function CallRefConcChart() {
+function getDataConcurKPI(e) {
+
+    var dis = $("#chartConcurKPI");
+    var data = $(".elmtsChartConcur");
+    var serieType = $('#seriesType').val();
+
+    var listSerie = [];
+    $.each(data, function () {
+        var arrayData = [];
+
+        var datas = $(this).children(".monthConcur").attr('name').split(",");
+        var label = $(this).children(".labelConcur").attr('name');
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number($(".elmtsChartConcur").children(".monthConcur").attr('name').split(",")[index]),
+                Comment: Number($(".elmtsChartConcur").children(".commentConcur").attr('name').split(",")[index]),
+                Like: Number($(".elmtsChartConcur").children(".likeConcur").attr('name').split(",")[index]),
+                Share: Number($(".elmtsChartConcur").children(".shareConcur").attr('name').split(",")[index]),
+                Post: Number($(".elmtsChartConcur").children(".postConcur").attr('name').split(",")[index])
+            };
+            arrayData.push(elem);
+        });
+        listSerie.push(
+                {
+                    dataSource: arrayData,
+                    type: "line",
+                    isHighlightingEnabled: true,
+                    isTransitionInEnabled: true,
+                    name: label,
+                    title: label,
+                    xAxis: "Month",
+                    yAxis: "KPIAxe",
+                    valueMemberPath: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
+                }
+            );
+
+    });
+
+    dis.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        width: "100%",
+        height: "300px",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        brushes: ["#000000", "#787878", "#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                    labelTextColor: "white",
+                }, {
+                    type: "numericY",
+                    name: "KPIAxe",
+                    title: "KPI",
+                    majorStroke: "white",
+                    stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white",
+                }
+        ],
+
+        series: listSerie
+    });
+}
+
+function getDataConcurExpenditure(e) {
+
+    var disExpenditure = $("#chartConcurExpenditure");
+    var data = $(".elmtsChartConcur");
+
+    var listSerie = [];
+    $.each(data, function () {
+        var arrayData = [];
+
+        var datas = $(this).children(".monthConcur").attr('name').split(",");
+        var label = $(this).children(".labelConcur").attr('name');
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number($(".elmtsChartConcur").children(".monthConcur").attr('name').split(",")[index]),
+                Expenditure: Number($(".elmtsChartConcur").children(".expenditureConcur").attr('name').split(",")[index]),
+            };
+            arrayData.push(elem);
+        });
+        listSerie.push(
+                {
+                    dataSource: arrayData,
+                    type: "line",
+                    isHighlightingEnabled: true,
+                    isTransitionInEnabled: true,
+                    name: label,
+                    title: label,
+                    xAxis: "Month",
+                    yAxis: "ExpenditureAxe",
+                    valueMemberPath: "Expenditure",
+                }
+            );
+
+    });
+
+    disExpenditure.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                    labelTextColor: "white"
+                }, {
+                    type: "numericY",
+                    name: "ExpenditureAxe",
+                    title: "Expenditure",
+                    majorStroke: "white",
+                    stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white"
+                }
+        ],
+
+        series: listSerie
+    });
+}
+
+function getDataConcurEngagement(e) {
+
+    var disExpenditure = $("#chartConcurEngagement");
+    var data = $(".elmtsChartConcur");
+
+    var listSerie = [];
+    $.each(data, function () {
+        var arrayData = [];
+
+        var datas = $(this).children(".monthConcur").attr('name').split(",");
+        var label = $(this).children(".labelConcur").attr('name');
+        var elem = { Engagement: 0}
+        $.each(datas, function (index, value) {
+            elem.Engagement = elem.Engagement + Number($(".elmtsChartConcur").children(".likeConcur").attr('name').split(",")[index])
+                            + Number($(".elmtsChartConcur").children(".shareConcur").attr('name').split(",")[index])
+                            + Number($(".elmtsChartConcur").children(".commentConcur").attr('name').split(",")[index])
+        });
+        arrayData.push(elem);
+        listSerie.push(
+                {
+                    dataSource: arrayData,
+                    type: "bar",
+                    isHighlightingEnabled: true,
+                    isTransitionInEnabled: true,
+                    name: label,
+                    title: label,
+                    xAxis: "EngagementAxe",
+                    valueMemberPath: "Engagement",
+                }
+            );
+
+    });
+
+    disExpenditure.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "EngagementAxe",
+                    label: "EngagementAxe",
+                    title: "Engagement",
+                    labelTextColor: "white"
+                }
+        ],
+
+        series: listSerie
+    });
+}
+
+function getDataConcurDecompositionEngagement(e) {
+
+    var disExpenditure = $("#chartConcurDecompositionEngagement");
+    var data = $(".elmtsChartConcur");
+
+    var listSerie = [];
+    $.each(data, function () {
+        var arrayData = [];
+
+        var datas = $(this).children(".monthConcur").attr('name').split(",");
+        var label = $(this).children(".labelConcur").attr('name');
+        var elem = { Like: 0, Share:0, Comment:0 }
+        $.each(datas, function (index, value) {
+            elem.Like = elem.Like + Number($(".elmtsChartConcur").children(".likeConcur").attr('name').split(",")[index]),
+            elem.Comment = elem.Comment + Number($(".elmtsChartConcur").children(".shareConcur").attr('name').split(",")[index]),
+            elem.Share = elem.Share + Number($(".elmtsChartConcur").children(".commentConcur").attr('name').split(",")[index])
+        });
+        arrayData.push(elem);
+        listSerie.push(
+                function () { // a self executing function to create the series initialization object
+                    var seriesObj = {
+                        name: label,
+                        xAxis: "EngagementAxe",
+                        type: "stackedBar",
+                        outline: "transparent",
+                        dataSource: arrayData,
+                        series: [{
+                            name: "like",
+                            title: "Like",
+                            type: "stackedFragment",
+                            valueMemberPath: "Like"
+                        }, {
+                            name: "share",
+                            title: "Share",
+                            type: "stackedFragment",
+                            valueMemberPath: "Share"
+                        },
+                        {
+                            name: "comment",
+                            title: "Comment",
+                            type: "stackedFragment",
+                            valueMemberPath: "Comment"
+                        }
+                        ]
+                    };
+                    return seriesObj;
+                }()
+            );
+    });
+
+    disExpenditure.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "EngagementAxe",
+                    label: "EngagementAxe",
+                    title: "Engagement",
+                    labelTextColor: "white"
+                }
+        ],
+
+        series: listSerie
+    });
+}
+
+function CallReferChart() {
     $.ajax({
-        url: '/SocialMedia/GetRefConcChart',
+        url: '/SocialMedia/GetReferChart',
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
         datatype: "json",
@@ -600,9 +874,9 @@ function CallRefConcChart() {
             bootbox.alert(thrownError);
         },
         success: function (data) {
-            $('#RefConc-chart').html('').append(data);
-            getDataKPI();
-            getDataExpenditure();
+            $('#Refer-chart').html('').append(data);
+            getDataReferKPI();
+            getDataReferExpenditure();
         }
     });
 }
@@ -623,13 +897,30 @@ function CallPDMChart() {
     });
 }
 
+function CallConcurChart() {
+    $.ajax({
+        url: '/SocialMedia/GetConcurChart',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#Concur-chart').html('').append(data);
+            getDataConcurKPI();
+            getDataConcurExpenditure();
+            getDataConcurEngagement();
+            getDataConcurDecompositionEngagement();
+        }
+    });
+}
+
 function SetListUnivers() {
     $.ajax({
         url: '/SocialMedia/GetPostbyIdpage',
     });
 }
-
-
 
 $('#combo > .form-control, #unity > .form-control').on('change', function () {
     var id = $('#combo > .form-control').val();
@@ -664,7 +955,6 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
         }
     });
 });
-
 
 $("#postFacebookModal").attr('src', '');
 $("#postFacebookModal").on('shown.bs.modal', function (event) {
@@ -720,7 +1010,7 @@ function getDataZoom(e) {
             index = index + 1;
             var elem = {
                 "DAY": "J" + index,
-                Data: value
+                Data: Number(value)
             };
             arrayData.push(elem);
         });

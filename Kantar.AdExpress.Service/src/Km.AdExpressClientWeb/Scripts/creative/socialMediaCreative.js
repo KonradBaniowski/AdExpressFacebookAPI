@@ -189,8 +189,6 @@ $("#postFacebookModal").on('hide.bs.modal', function () {
     $("#mediaLoader").show();
 });
 
-
-
 //Resize de la page, la longuer du tableau egalament
 $(window).resize(function () {
     $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
@@ -225,7 +223,7 @@ function getData(e) {
                     index = index + 1;
                     var elem = {
                         "DAY": "J" + index, 
-                        Data: value
+                        Data: Number(value)
                     };
                     arrayData.push(elem);
                 });
