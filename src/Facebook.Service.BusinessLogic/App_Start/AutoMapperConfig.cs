@@ -28,7 +28,7 @@ namespace Facebook.Service.BusinessLogic
                 .ForMember(a => a.Comment, d => d.MapFrom(dst => dst.NumberComment));
 
                 e.CreateMap<DataFacebook, DataFacebookContract>();
-                e.CreateMap<DateFacebookContract, DataFacebookContract>();
+                e.CreateMap<DateFacebookKPI, DataFacebookContract>();
                 e.CreateMap<CriteriaData, Criteria>().ReverseMap();
                 e.CreateMap<LevelItem, LevelItemContract>();
                 e.CreateMap<PostFacebook, PostFacebookContract>();

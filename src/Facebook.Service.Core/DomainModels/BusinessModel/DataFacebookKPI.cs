@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Facebook.Service.Core.DomainModels.BusinessModel
 {
-    public class DateFacebookContract
+    public class DateFacebookKPI
     {
         public string Url { get; set; }
         public long IdPage { get; set; }

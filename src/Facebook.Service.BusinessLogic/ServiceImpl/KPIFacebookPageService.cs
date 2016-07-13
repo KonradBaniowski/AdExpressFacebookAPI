@@ -149,5 +149,46 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
             return percentByMonth;
         }
+
+        public List<KPIClassificationContract> GetKPIClassificationPages(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, int idLanguage)
+        {
+            var criteria = _rightsvc.GetCriteria(idLogin);
+            var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
+            var res = _uow.DataFacebookRepository.GetKPIClassificationDataFacebook(criteriaData, begin, end, advertisers, brands, idLanguage);
+            if (advertisers != null && advertisers.Any())
+            {
+                var kpiResult = res.Select(e => new KPIClassificationContract
+                {
+                    Id = e.IdAdvertiser,
+                    Label = e.Label,
+                    Comment = e.NumberComment,
+                    Expenditure = e.Expenditure,
+                    Like = e.NumberLike,
+                    Post = e.NumberPost,
+                    Share = e.NumberShare
+                }).OrderByDescending(a => a.Id).ToList();
+
+                return kpiResult;
+
+            }
+            else
+                 if (brands != null && brands.Any())
+            {
+                var kpiResult = res.Select(e => new KPIClassificationContract
+                {
+                    Id = e.IdBrand,
+                    Label = e.Label,
+                    Comment = e.NumberComment,
+                    Expenditure = e.Expenditure,
+                    Like = e.NumberLike,
+                    Post = e.NumberPost,
+                    Share = e.NumberShare
+                }).OrderByDescending(a => a.Id).ToList();
+
+                return kpiResult;
+            }
+            else return new List<KPIClassificationContract>();
+
+        }
     }
 }
