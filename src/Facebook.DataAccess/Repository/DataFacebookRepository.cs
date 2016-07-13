@@ -150,12 +150,13 @@ namespace Facebook.DataAccess.Repository
                    .Where(e => brands.Contains(e.IdBrand));
 
              
-                var res = (from g in query.GroupBy(p => new { p.IdBrand })
+                var res = (from g in query.GroupBy(p => new { p.IdBrand,p.DateMediaNum })
                                   join c in context.Products  on new { id = g.Key.IdBrand } equals new { id = c.BrandId }
                                   where c.LanguageId == idLanguage
                                   select new DateFacebookKPI
                                   {
-                                      IdBrand = g.Key.IdBrand,
+                                      IdBrand = g.Key.IdBrand, 
+                                      Month = g.Key.DateMediaNum,
                                       NumberPost = g.Sum(a => a.NumberPost),
                                       NumberLike = g.Sum(a => a.NumberLike),
                                       NumberComment = g.Sum(a => a.NumberComment),
@@ -173,12 +174,13 @@ namespace Facebook.DataAccess.Repository
                 query = query.Include(a => a.Advertiser)
                     .Where(e => advertisers.Contains(e.IdAdvertiser));
 
-                var res = (from g in query.GroupBy(p => new { p.IdAdvertiser })
+                var res = (from g in query.GroupBy(p => new { p.IdAdvertiser, p.DateMediaNum })
                            join c in context.Products on new { id = g.Key.IdAdvertiser } equals new { id = c.AdvertiserId }
                            where c.LanguageId == idLanguage
                            select new DateFacebookKPI
                            {
                                IdAdvertiser = g.Key.IdAdvertiser,
+                               Month = g.Key.DateMediaNum,
                                NumberPost = g.Sum(a => a.NumberPost),
                                NumberLike = g.Sum(a => a.NumberLike),
                                NumberComment = g.Sum(a => a.NumberComment),

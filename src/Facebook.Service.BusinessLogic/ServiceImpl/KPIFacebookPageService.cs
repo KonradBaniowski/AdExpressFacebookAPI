@@ -165,7 +165,8 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     Expenditure = e.Expenditure,
                     Like = e.NumberLike,
                     Post = e.NumberPost,
-                    Share = e.NumberShare
+                    Share = e.NumberShare,
+                    Month = e.Month
                 }).OrderByDescending(a => a.Id).ToList();
 
                 return kpiResult;
@@ -182,7 +183,8 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     Expenditure = e.Expenditure,
                     Like = e.NumberLike,
                     Post = e.NumberPost,
-                    Share = e.NumberShare
+                    Share = e.NumberShare,
+                    Month = e.Month
                 }).OrderByDescending(a => a.Id).ToList();
 
                 return kpiResult;

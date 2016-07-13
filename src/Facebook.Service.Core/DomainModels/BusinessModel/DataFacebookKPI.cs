@@ -23,5 +23,6 @@ namespace Facebook.Service.Core.DomainModels.BusinessModel
         public string PageName { get; set; }
         public long IdPageFacebook { get; set; }
         public long IdBrand { get; set; }
+        public string Month { get; set; }
     }
 }
