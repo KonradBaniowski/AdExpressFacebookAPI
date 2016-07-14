@@ -223,13 +223,16 @@ function getData(e) {
                 {
                     name: "Days",
                     type: "categoryX",
-                    label: "DAY"
+                    label: "DAY",
+                    labelTextColor: "white"
                 },
                 {
                     name: "Value",
                     type: "numericY",
                     minimumValue: 0,
                     title: serieType,
+                    majorStroke: "white",
+                    labelTextColor: "white"
                 }
             ],
 
@@ -251,8 +254,6 @@ function getData(e) {
 function getDataReferKPI(e) {
 
     var dis = $("#chartReferKPI");
-
-
     var data = $(".elmtsChart");
 
     var arrayData = [];
@@ -281,7 +282,7 @@ function getDataReferKPI(e) {
                 title: "Like",
                 xAxis: "Month",
                 yAxis: "KPI",
-                valueMemberPath: "Like",             
+                valueMemberPath: "Like",
                 brush: "#FFE100",
                 outline: "#FFE100",
                 showTooltip: true,
@@ -296,7 +297,7 @@ function getDataReferKPI(e) {
                 xAxis: "Month",
                 yAxis: "PostsAxe",
                 valueMemberPath: "Post",
-                brush: "red",
+                brush: "#FF0080",
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
                 thickness: 4
@@ -310,9 +311,10 @@ function getDataReferKPI(e) {
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Share",
-                brush: "orange",
+                brush: "#B8DC00",
+                outline: "#B8DC00",
                 showTooltip: true,
-                tooltipTemplate: "Shares"
+                tooltipTemplate: "ShareTooltipTemplate"
             },
             {
                 type: "column",
@@ -323,9 +325,10 @@ function getDataReferKPI(e) {
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Comment",
-                brush: "blue",
+                brush: "#00C8FF",
+                outline: "#00C8FF",
                 showTooltip: true,
-                tooltipTemplate: "Comments"
+                tooltipTemplate: "CommentTooltipTemplate"
             }
     ];
 
@@ -333,10 +336,12 @@ function getDataReferKPI(e) {
     dis.igDataChart({
         autoMarginHeight: 15,
         autoMarginWidth: 15,
-        width: "45%",
+        width: "100%",
         height: "300px",
         title: "Titre à definir",
         subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
@@ -346,12 +351,14 @@ function getDataReferKPI(e) {
                     name: "Month",
                     label: "Month",
                     title: "Month",
+                    labelTextColor: "white",
                 }, {
                     type: "numericY",
                     name: "KPI",
                     title: "KPI",
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white",
                 }, {
                     type: "numericY",
                     name: "PostsAxe",
@@ -360,6 +367,7 @@ function getDataReferKPI(e) {
                     minimumValue: 0,
                     majorStroke: "rgba(0,0,0,0)",
                     stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white",
                 }
         ],
 
@@ -486,6 +494,10 @@ function getDataReferExpenditure(e) {
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
                 thickness: 4
+            }
+        ]
+    });
+}
 
 function getDataPDM(e) {
 
@@ -518,11 +530,11 @@ function getDataPDM(e) {
                 type: "stacked100Column",
                 outline: "transparent",
                 series: [{
-                        name: "ReferentPercent",
-                        title: "ReferentPercent",
-                        type: "stackedFragment",
-                        valueMemberPath: "ReferentPercent"
-                    },
+                    name: "ReferentPercent",
+                    title: "ReferentPercent",
+                    type: "stackedFragment",
+                    valueMemberPath: "ReferentPercent"
+                },
                     {
                         name: "ConcurrentPercent",
                         title: "ConcurrentPercent",
@@ -581,7 +593,7 @@ function getDataPDM(e) {
                 }
         ],
         series: listSeries
-   
+
     });
 }
 
@@ -762,7 +774,7 @@ function getDataConcurEngagement(e) {
                     yAxis: "yAxis",
                     valueMemberPath: concurMemberPathLabel,
                     showTooltip: true,
-                    radius:0
+                    radius: 0
                 }
             );
 
@@ -787,7 +799,7 @@ function getDataConcurEngagement(e) {
                     name: "EngagementAxe",
                     title: "Engagement",
                     labelTextColor: "white"
-                },{
+                }, {
                     name: "yAxis",
                     type: "categoryY",
                     overlap: -.1
@@ -816,7 +828,7 @@ function getDataConcurDecompositionEngagement(e) {
             elem.Comment = elem.Comment + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index]),
             elem.Share = elem.Share + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index])
         });
-        
+
         listSerie.push(
                 function () { // a self executing function to create the series initialization object
                     var seriesObj = {
@@ -935,18 +947,9 @@ function CallConcurChart() {
     });
 }
 
-function    LoadSocialMediaUniverses() {
+function SetListUnivers() {
     $.ajax({
-        url: '/Universe/GetUniverses',
-        contentType: "application/x-www-form-urlencoded",
-        type: "POST",
-        datatype: "json",
-        error: function (xmlHttpRequest, errorText, thrownError) {
-            bootbox.alert(thrownError);
-        },
-        success: function (data) {
-            AppendUniverseComboBox(data);
-        }
+        url: '/SocialMedia/GetPostbyIdpage',
     });
 }
 
@@ -984,8 +987,6 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
     });
 });
 
-
-   
 $("#postFacebookModal").attr('src', '');
 $("#postFacebookModal").on('shown.bs.modal', function (event) {
     var button = $(event.relatedTarget);// Button that triggered the modal
@@ -1041,7 +1042,6 @@ function getDataZoom(e) {
             var elem = {
                 "DAY": "J" + index,
                 Data: Number(value)
-    }
             };
             arrayData.push(elem);
         });

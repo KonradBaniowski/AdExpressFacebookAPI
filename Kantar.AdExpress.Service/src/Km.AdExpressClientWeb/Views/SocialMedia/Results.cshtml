@@ -20,14 +20,16 @@
         </div>
     </div>
 </div>
-<div class="row">  
-    <div class="col-md-12">
-        <div class="pull-right custom-button selectexporttype select-universe-choice">
-            @*<select id="universe-choice" class="selectdatepicker hide">
+<div class="row">
+    <div class="col-md-4">
+        <div class="pull-right custom-button selectexporttype">
+            <select id="universe-choice" class="selectdatepicker hide">
                 <option value="1"> @Model.Labels.ExportFormattedResult</option>
             </select>&nbsp;
-            <button class="btn btn-save" id="btn-universe-choice"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>*@
+            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
         </div>
+    </div>
+    <div class="col-md-8">
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
                 <option value="1"> @Model.Labels.ExportFormattedResult</option>
@@ -145,6 +147,10 @@
         </div>
     </div>
 </div>
+
+<!-- Modal zoom post -->
+<div class="modal fade text-center blo" id="postFacebookModal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
+    <div class="modal-dialog" style="width:95%;height:auto;">
         <div class="modal-content">
         </div>
     </div>
