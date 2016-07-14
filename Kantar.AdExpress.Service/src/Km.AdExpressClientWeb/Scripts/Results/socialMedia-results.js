@@ -286,7 +286,7 @@ function getDataReferKPI(e) {
                 brush: "#FFE100",
                 outline: "#FFE100",
                 showTooltip: true,
-                tooltipTemplate: "LikeTooltipTemplate"
+                tooltipTemplate: "LikeTooltipTemplate",
             },
             {
                 type: "line",
@@ -299,7 +299,8 @@ function getDataReferKPI(e) {
                 valueMemberPath: "Post",
                 brush: "#FF0080",
                 showTooltip: true,
-                tooltipTemplate: "PostTooltipTemplate"
+                tooltipTemplate: "PostTooltipTemplate",
+                thickness: 4
             },
             {
                 type: "column",
@@ -491,7 +492,8 @@ function getDataReferExpenditure(e) {
                 valueMemberPath: "Post",
                 brush: "#FF0080",
                 showTooltip: true,
-                tooltipTemplate: "PostTooltipTemplate"
+                tooltipTemplate: "PostTooltipTemplate",
+                thickness: 4
             }
         ]
     });
@@ -553,7 +555,8 @@ function getDataPDM(e) {
                 title: "ReferentFBPercent",
                 xAxis: "Month",
                 yAxis: "PDMAxe",
-                valueMemberPath: "ReferentFBPercent"
+                valueMemberPath: "ReferentFBPercent",
+                thickness: 4
             }
         );
 
@@ -601,20 +604,23 @@ function getDataConcurKPI(e) {
     var serieType = $('#seriesType').val();
 
     var listSerie = [];
+    var arrayMonth = [];
     $.each(data, function () {
         var arrayData = [];
-
         var datas = $(this).children(".monthConcur").attr('name').split(",");
         var label = $(this).children(".labelConcur").attr('name');
+        var currentElmnt = $(this);
+        arrayMonth = [];
         $.each(datas, function (index, value) {
             var elem = {
-                Month: Number($(".elmtsChartConcur").children(".monthConcur").attr('name').split(",")[index]),
-                Comment: Number($(".elmtsChartConcur").children(".commentConcur").attr('name').split(",")[index]),
-                Like: Number($(".elmtsChartConcur").children(".likeConcur").attr('name').split(",")[index]),
-                Share: Number($(".elmtsChartConcur").children(".shareConcur").attr('name').split(",")[index]),
-                Post: Number($(".elmtsChartConcur").children(".postConcur").attr('name').split(",")[index])
+                Month: Number(value),
+                Comment: Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index]),
+                Like: Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index]),
+                Share: Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index]),
+                Post: Number(currentElmnt.children(".postConcur").attr('name').split(",")[index])
             };
             arrayData.push(elem);
+            arrayMonth.push({ Month: Number(value) });
         });
         listSerie.push(
                 {
@@ -627,21 +633,22 @@ function getDataConcurKPI(e) {
                     xAxis: "Month",
                     yAxis: "KPIAxe",
                     valueMemberPath: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
+                    thickness: 4
                 }
             );
-
     });
 
     dis.igDataChart({
         autoMarginHeight: 15,
         autoMarginWidth: 15,
+        dataSource: arrayMonth,
         width: "100%",
         height: "300px",
         title: "Titre à definir",
         subtitle: "Sous titre à definir",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#000000", "#787878", "#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        brushes: ["#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
         horizontalZoomable: true,
         verticalZoomable: true,
         axes: [
@@ -671,17 +678,20 @@ function getDataConcurExpenditure(e) {
     var data = $(".elmtsChartConcur");
 
     var listSerie = [];
+    var arrayMonth = [];
     $.each(data, function () {
         var arrayData = [];
-
         var datas = $(this).children(".monthConcur").attr('name').split(",");
         var label = $(this).children(".labelConcur").attr('name');
+        var currentElmnt = $(this);
+        arrayMonth = [];
         $.each(datas, function (index, value) {
             var elem = {
-                Month: Number($(".elmtsChartConcur").children(".monthConcur").attr('name').split(",")[index]),
-                Expenditure: Number($(".elmtsChartConcur").children(".expenditureConcur").attr('name').split(",")[index]),
+                Month: Number(value),
+                Expenditure: Number(currentElmnt.children(".expenditureConcur").attr('name').split(",")[index]),
             };
             arrayData.push(elem);
+            arrayMonth.push({ Month: Number(value) });
         });
         listSerie.push(
                 {
@@ -694,6 +704,7 @@ function getDataConcurExpenditure(e) {
                     xAxis: "Month",
                     yAxis: "ExpenditureAxe",
                     valueMemberPath: "Expenditure",
+                    thickness: 4
                 }
             );
 
@@ -702,6 +713,7 @@ function getDataConcurExpenditure(e) {
     disExpenditure.igDataChart({
         autoMarginHeight: 15,
         autoMarginWidth: 15,
+        dataSource: arrayMonth,
         height: "300px",
         width: "100%",
         title: "Titre à definir",
@@ -737,51 +749,60 @@ function getDataConcurEngagement(e) {
     var data = $(".elmtsChartConcur");
 
     var listSerie = [];
+    var arrayData = [];
+    var elem = {};
     $.each(data, function () {
-        var arrayData = [];
-
         var datas = $(this).children(".monthConcur").attr('name').split(",");
         var label = $(this).children(".labelConcur").attr('name');
-        var elem = { Engagement: 0}
+        //var concurMemberPathLabel = "Engagement".concat($(this).children(".IdConcur").attr('name'))
+        var concurMemberPathLabel = label;
+        elem[concurMemberPathLabel] = 0;
+        var currentElmnt = $(this);
         $.each(datas, function (index, value) {
-            elem.Engagement = elem.Engagement + Number($(".elmtsChartConcur").children(".likeConcur").attr('name').split(",")[index])
-                            + Number($(".elmtsChartConcur").children(".shareConcur").attr('name').split(",")[index])
-                            + Number($(".elmtsChartConcur").children(".commentConcur").attr('name').split(",")[index])
+            elem[concurMemberPathLabel] = elem[concurMemberPathLabel] + Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index])
+                            + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index])
+                            + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index]);
         });
-        arrayData.push(elem);
         listSerie.push(
                 {
-                    dataSource: arrayData,
                     type: "bar",
                     isHighlightingEnabled: true,
                     isTransitionInEnabled: true,
                     name: label,
                     title: label,
                     xAxis: "EngagementAxe",
-                    valueMemberPath: "Engagement",
+                    yAxis: "yAxis",
+                    valueMemberPath: concurMemberPathLabel,
+                    showTooltip: true,
+                    radius:0
                 }
             );
 
     });
-
+    arrayData.push(elem);
     disExpenditure.igDataChart({
         autoMarginHeight: 15,
         autoMarginWidth: 15,
+        dataSource: arrayData,
         height: "300px",
         width: "100%",
         title: "Titre à definir",
         subtitle: "Sous titre à definir",
         titleTextColor: "white",
         subtitleTextColor: "white",
+        brushes: ["#000000", "#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
         horizontalZoomable: true,
         verticalZoomable: true,
         axes: [
                 {
-                    type: "categoryX",
+                    type: "numericX",
                     name: "EngagementAxe",
-                    label: "EngagementAxe",
                     title: "Engagement",
                     labelTextColor: "white"
+                },{
+                    name: "yAxis",
+                    type: "categoryY",
+                    overlap: -.1
                 }
         ],
 
@@ -795,42 +816,48 @@ function getDataConcurDecompositionEngagement(e) {
     var data = $(".elmtsChartConcur");
 
     var listSerie = [];
+    var elem = {};
     $.each(data, function () {
-        var arrayData = [];
-
         var datas = $(this).children(".monthConcur").attr('name').split(",");
         var label = $(this).children(".labelConcur").attr('name');
-        var elem = { Like: 0, Share:0, Comment:0 }
+        elem = { Like: 0, Share: 0, Comment: 0 };
+        elem["Label"] = label;
+        var currentElmnt = $(this);
         $.each(datas, function (index, value) {
-            elem.Like = elem.Like + Number($(".elmtsChartConcur").children(".likeConcur").attr('name').split(",")[index]),
-            elem.Comment = elem.Comment + Number($(".elmtsChartConcur").children(".shareConcur").attr('name').split(",")[index]),
-            elem.Share = elem.Share + Number($(".elmtsChartConcur").children(".commentConcur").attr('name').split(",")[index])
+            elem.Like = elem.Like + Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index]),
+            elem.Comment = elem.Comment + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index]),
+            elem.Share = elem.Share + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index])
         });
-        arrayData.push(elem);
+        
         listSerie.push(
                 function () { // a self executing function to create the series initialization object
                     var seriesObj = {
                         name: label,
                         xAxis: "EngagementAxe",
+                        yAxis: "yAxis",
+                        dataSource: [elem],
                         type: "stackedBar",
                         outline: "transparent",
-                        dataSource: arrayData,
+                        radius: 0,
                         series: [{
                             name: "like",
                             title: "Like",
                             type: "stackedFragment",
-                            valueMemberPath: "Like"
+                            valueMemberPath: "Like",
+                            showTooltip: true,
                         }, {
                             name: "share",
                             title: "Share",
                             type: "stackedFragment",
-                            valueMemberPath: "Share"
+                            valueMemberPath: "Share",
+                            showTooltip: true,
                         },
                         {
                             name: "comment",
                             title: "Comment",
                             type: "stackedFragment",
-                            valueMemberPath: "Comment"
+                            valueMemberPath: "Comment",
+                            showTooltip: true,
                         }
                         ]
                     };
@@ -840,23 +867,27 @@ function getDataConcurDecompositionEngagement(e) {
     });
 
     disExpenditure.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
+        dataSource: [{ Like: 0, Share: 0, Comment: 0, Label: "" }],
         height: "300px",
         width: "100%",
         title: "Titre à definir",
         subtitle: "Sous titre à definir",
         titleTextColor: "white",
         subtitleTextColor: "white",
+        brushes: ["#FFE100", "#B8DC00", "#00C8FF"],
         horizontalZoomable: true,
         verticalZoomable: true,
         axes: [
                 {
-                    type: "categoryX",
+                    type: "numericX",
                     name: "EngagementAxe",
-                    label: "EngagementAxe",
                     title: "Engagement",
                     labelTextColor: "white"
+                }, {
+                    name: "yAxis",
+                    type: "categoryY",
+                    label: "Label",
+                    overlap: -.1
                 }
         ],
 
