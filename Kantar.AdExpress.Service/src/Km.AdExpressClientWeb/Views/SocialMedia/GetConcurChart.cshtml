@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Km.AdExpressClientWeb.Models.SocialMedia.KPIClassificationContract>
+
+
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    @foreach (var concurrent in Model.GroupBy(item => item.Id)) // Model.GroupBy(item => item.Id)
+    {
+        var concurrentTemp = concurrent.GroupBy(j => j.Month).Select(j => j.First()).OrderByDescending(o => o.Month);
+        <div class="col-lg-4 text-center elmtsChartConcur">
+            @Html.Hidden(concurrentTemp.Select(e => e.Id).First().ToString(), null, new { @class = "IdConcur" })
+            @Html.Hidden(concurrentTemp.Select(e => e.Label).First(), null, new { @class = "labelConcur" })
+            @Html.Hidden(string.Join(",", concurrentTemp.Select(e => e.Month).ToList()), null, new { @class = "monthConcur" })
+            @Html.Hidden(string.Join(",", concurrentTemp.Select(e => e.Comment)), null, new { @class = "commentConcur" })
+            @Html.Hidden(string.Join(",", concurrentTemp.Select(e => e.Like).ToList()), null, new { @class = "likeConcur" })
+            @Html.Hidden(string.Join(",", concurrentTemp.Select(e => e.Share).ToList()), null, new { @class = "shareConcur" })
+            @Html.Hidden(string.Join(",", concurrentTemp.Select(e => e.Post).ToList()), null, new { @class = "postConcur" })
+            @Html.Hidden(string.Join(",", concurrentTemp.Select(e => e.Expenditure).ToList()), null, new { @class = "expenditureConcur" })
+        </div>
+    }
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="stackChart" id="chartConcurKPI">
+
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="stackChart" id="chartConcurExpenditure">
+
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="stackChart" id="chartConcurEngagement">
+
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="stackChart" id="chartConcurDecompositionEngagement">
+
+        </div>
+    </div>
+</div>

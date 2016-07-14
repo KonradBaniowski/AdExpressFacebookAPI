@@ -161,7 +161,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             Id = idTree,
                             LabelId = ElementLabelCode,
                             UniversLevels = allUnivers,
-                            AccessType = AccessType.includes
+                            AccessType = AccessType.includes,
+                            IsDefaultActive = idTree == MaxIncludeNbr + MaxExcludeNbr
                         };
                         idTree++;
                         result.Trees.Add(tree);
@@ -179,7 +180,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 Id = idTree,
                                 LabelId = ElementLabelCode,
                                 UniversLevels = allUnivers,
-                                AccessType = type
+                                AccessType = type,
+                                IsDefaultActive= (type == AccessType.includes && idTree==1)
                             };
                             idTree++;
                             result.Trees.Add(tree);

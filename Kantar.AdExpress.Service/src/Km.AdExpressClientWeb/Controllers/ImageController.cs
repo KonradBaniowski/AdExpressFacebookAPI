@@ -31,6 +31,24 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
+        public ActionResult GetPageImage(string itemId)
+        {
+            var hostName = HttpContext.Request.UrlReferrer.Authority;
+            var url = hostName + "/PostsFacebook/";
+            var srvURL = itemId.Substring(0, 1) + "/" + itemId.Substring(1, 4) + "/new_" + itemId;
+            var path = Path.Combine("http://", url, srvURL + ".jpg");
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(path);
+            request.Method = "HEAD";
+            if (exist(request))
+            {
+                return Redirect(path);
+            }
+            else
+            {
+                return File("~/Content/img/no_visu.jpg", "image/jpg");
+            }
+        }
+
         private bool exist(HttpWebRequest request)
         {
             try

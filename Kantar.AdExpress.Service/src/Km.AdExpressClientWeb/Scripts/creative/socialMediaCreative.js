@@ -189,8 +189,6 @@ $("#postFacebookModal").on('hide.bs.modal', function () {
     $("#mediaLoader").show();
 });
 
-
-
 //Resize de la page, la longuer du tableau egalament
 $(window).resize(function () {
     $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
@@ -225,7 +223,7 @@ function getData(e) {
                     index = index + 1;
                     var elem = {
                         "DAY": "J" + index, 
-                        Data: value
+                        Data: Number(value)
                     };
                     arrayData.push(elem);
                 });
@@ -335,4 +333,11 @@ $(document).on("click", ".btn-group.btn-group-margin > .btn.btn-default", functi
     $(".sub-period-btn").on('mouseleave', function (e) {
         $("#subPeriodLabel").text(previousSubPeriodLabel);
     });
+});
+
+$(document).on("click", "#btn-export", function (event) {
+    var ids = $('#ids').val();
+    var period = $('.btn-group.btn-group-margin > .btn.btn-default-sub-period.sub-period-btn').attr("period");
+    var params = "?ids=" + ids + "&period=" + period;
+    window.open('/SocialMediaExport/CreativeExport'+params, "_blank");
 });

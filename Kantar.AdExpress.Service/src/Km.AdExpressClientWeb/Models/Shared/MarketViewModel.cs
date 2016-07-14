@@ -21,9 +21,9 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public long CurrentModule { get;set;}
         public int MaxUniverseItems { get; set; }
 
-    }   
+    }
 
-   
+
     public class Tree
     {
         public long LabelId { get; set; }
@@ -34,6 +34,7 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public TNS.FrameWork.DB.Constantes.Activation MyProperty { get; set; }
 
         public string Label { get; set; }
+        public bool IsDefaultActive {get;set;}
     }
 
 

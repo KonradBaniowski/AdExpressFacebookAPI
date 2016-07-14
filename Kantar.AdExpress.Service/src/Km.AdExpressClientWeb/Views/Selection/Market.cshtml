@@ -93,7 +93,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         @foreach (var tree in Model.Trees)
                         {
-                            @*if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
+                            if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
                             {
                                 <li @(tree == Model.Trees.LastOrDefault() ? "class=active" : "" )>
                                     <a data-target="#tab-@(tree.Id)"
@@ -106,28 +106,43 @@
                                 </li>
                             }
                             else
-                            {*@
-                            <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
-                                <a data-target="#tab-@(tree.Id)"
-                                   data-tab="@(tree.Id)"
-                                   role="tab"
-                                   data-toggle="tab"
-                                   aria-expanded="true">
-                                    @tree.Label
-                                </a>
-                            </li>
-                            @*}*@
+                            {
+                                <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
+                                @*<li @(tree.IsDefaultActive ? "class=active" : "" )>*@
+                                    <a data-target="#tab-@(tree.Id)"
+                                       data-tab="@(tree.Id)"
+                                       role="tab"
+                                       data-toggle="tab"
+                                       aria-expanded="true">
+                                        @tree.Label
+                                    </a>
+                                </li>
+                            }
                         }
                     </ul>
                 </div>
                 <div class="tab-content">
-                    @{
-                        var multi = "active in";
-                    }
+                    
                     @foreach (var tree in Model.Trees)
                     {
+
+                        var multi = "active in";
+                        var isMulti = (
+             (
+             Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK
+             &&
+             tree == Model.Trees.First(e => e.AccessType == AccessType.includes)
+             )
+             ||
+             (
+             Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK
+             &&
+             tree == Model.Trees.LastOrDefault()
+             )
+             );
+
                         <div role="tabpanel"
-                             class="tab-pane @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? multi : "")"
+                             class="tab-pane @(isMulti ? multi : "")"
                              id="tab-@(tree.Id)">
                             <div class="panel-group panel-group-results"
                                  id="tree-@(tree.Id)"

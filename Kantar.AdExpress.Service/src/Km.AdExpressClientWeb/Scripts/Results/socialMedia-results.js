@@ -18,8 +18,9 @@
     var gridWidth;
 
     CallSocialMediaResult();
-    CallRefConcChart();
-    LoadSocialMediaUniverses();
+    CallReferChart();
+    CallPDMChart();
+    CallConcurChart();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -170,7 +171,10 @@
 
         $(".imgPageFacebook").each(function () {
             var datas = $(this).attr('data-post').toString();
-            var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
+
+            //var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
+
+            var link = "/Image/GetPageImage?itemId=" + datas;
             $(this).attr("src", link);
         });
 
@@ -244,10 +248,11 @@ function getData(e) {
     });
 }
 
+function getDataReferKPI(e) {
 
-function getDataRefConc(e) {
+    var dis = $("#chartReferKPI");
 
-    var dis = $("#RefConc-chart");
+
     var data = $(".elmtsChart");
 
     var arrayData = [];
@@ -276,10 +281,11 @@ function getDataRefConc(e) {
                 title: "Like",
                 xAxis: "Month",
                 yAxis: "KPI",
-                valueMemberPath: "Like",
-                brush: "green",
+                valueMemberPath: "Like",             
+                brush: "#FFE100",
+                outline: "#FFE100",
                 showTooltip: true,
-                tooltipTemplate: "Likes"
+                tooltipTemplate: "LikeTooltipTemplate",
             },
             {
                 type: "line",
@@ -292,7 +298,8 @@ function getDataRefConc(e) {
                 valueMemberPath: "Post",
                 brush: "red",
                 showTooltip: true,
-                tooltipTemplate: "Posts"
+                tooltipTemplate: "PostTooltipTemplate",
+                thickness: 4
             },
             {
                 type: "column",
@@ -393,10 +400,492 @@ function getDataRefConc(e) {
     });
 }
 
+function getDataReferExpenditure(e) {
 
-function CallRefConcChart() {
+    var disExpenditure = $("#chartReferExpenditure");
+    var data = $(".elmtsChart");
+
+    var arrayData = [];
+    $.each(data, function () {
+
+        var datas = $(this).children(".monthRef").attr('name').split(",");
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number($(".elmtsChart").children(".monthRef").attr('name').split(",")[index]),
+                Expenditure: Number($(".elmtsChart").children(".expenditureRef").attr('name').split(",")[index]),
+                Post: Number($(".elmtsChart").children(".postRef").attr('name').split(",")[index])
+            };
+            arrayData.push(elem);
+        });
+
+    });
+
+    disExpenditure.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        dataSource: arrayData,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                    labelTextColor: "white"
+                }, {
+                    type: "numericY",
+                    name: "ExpenditureAxe",
+                    title: "Expenditure",
+                    majorStroke: "white",
+                    stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white"
+                }, {
+                    type: "numericY",
+                    name: "PostsAxe",
+                    labelLocation: "outsideRight",
+                    title: "Posts",
+                    minimumValue: 0,
+                    majorStroke: "rgba(0,0,0,0)",
+                    stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white"
+                }
+        ],
+
+        series: [
+            {
+                type: "column",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Expenditure",
+                title: "Expenditure",
+                xAxis: "Month",
+                yAxis: "ExpenditureAxe",
+                valueMemberPath: "Expenditure",
+                brush: "#FF8C00",
+                outline: "#FF8C00",
+                showTooltip: true,
+                tooltipTemplate: "ExpenditureTooltipTemplate"
+            },
+            {
+                type: "line",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "Posts",
+                title: "Posts",
+                xAxis: "Month",
+                yAxis: "PostsAxe",
+                valueMemberPath: "Post",
+                brush: "#FF0080",
+                showTooltip: true,
+                tooltipTemplate: "PostTooltipTemplate",
+                thickness: 4
+
+function getDataPDM(e) {
+
+    var disPDM = $("#chartPDM");
+    var data = $(".elmtsChartPDM");
+
+    var arrayData = [];
+    $.each(data, function () {
+
+        var datas = $(this).children(".monthRef").attr('name').split(",");
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number($(".elmtsChartPDM").children(".monthRef").attr('name').split(",")[index]),
+                ReferentPercent: Number($(".elmtsChartPDM").children(".refPercentRef").attr('name').split(",")[index]),
+                ConcurrentPercent: Number($(".elmtsChartPDM").children(".concPercentRef").attr('name').split(",")[index]),
+                ReferentFBPercent: Number($(".elmtsChartPDM").children(".refFBPercentRef").attr('name').split(",")[index]),
+                ConcurrentFBPercent: Number($(".elmtsChartPDM").children(".concFBPercentRef").attr('name').split(",")[index])
+            };
+            arrayData.push(elem);
+        });
+
+    });
+
+    var listSeries = [
+        function () { // a self executing function to create the series initialization object
+            var seriesObj = {
+                name: "PDM",
+                xAxis: "Month",
+                yAxis: "PDMAxe",
+                type: "stacked100Column",
+                outline: "transparent",
+                series: [{
+                        name: "ReferentPercent",
+                        title: "ReferentPercent",
+                        type: "stackedFragment",
+                        valueMemberPath: "ReferentPercent"
+                    },
+                    {
+                        name: "ConcurrentPercent",
+                        title: "ConcurrentPercent",
+                        type: "stackedFragment",
+                        valueMemberPath: "ConcurrentPercent"
+                    }
+                ]
+            };
+            return seriesObj;
+        }()
+    ];
+    listSeries.push(
+            {
+                type: "line",
+                isHighlightingEnabled: true,
+                isTransitionInEnabled: true,
+                name: "ReferentFBPercent",
+                title: "ReferentFBPercent",
+                xAxis: "Month",
+                yAxis: "PDMAxe",
+                valueMemberPath: "ReferentFBPercent",
+                thickness: 4
+            }
+        );
+
+    disPDM.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        dataSource: arrayData,
+        brushes: ["#14C896", "#B8292F", "#2D2B62", "#000000", "#787878", "#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                    labelTextColor: "white",
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true
+                }, {
+                    type: "numericY",
+                    name: "PDMAxe",
+                    title: "PDM (%)",
+                    majorStroke: "white",
+                    labelTextColor: "white",
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true
+                }
+        ],
+        series: listSeries
+   
+    });
+}
+
+function getDataConcurKPI(e) {
+
+    var dis = $("#chartConcurKPI");
+    var data = $(".elmtsChartConcur");
+    var serieType = $('#seriesType').val();
+
+    var listSerie = [];
+    var arrayMonth = [];
+    $.each(data, function () {
+        var arrayData = [];
+        var datas = $(this).children(".monthConcur").attr('name').split(",");
+        var label = $(this).children(".labelConcur").attr('name');
+        var currentElmnt = $(this);
+        arrayMonth = [];
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number(value),
+                Comment: Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index]),
+                Like: Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index]),
+                Share: Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index]),
+                Post: Number(currentElmnt.children(".postConcur").attr('name').split(",")[index])
+            };
+            arrayData.push(elem);
+            arrayMonth.push({ Month: Number(value) });
+        });
+        listSerie.push(
+                {
+                    dataSource: arrayData,
+                    type: "line",
+                    isHighlightingEnabled: true,
+                    isTransitionInEnabled: true,
+                    name: label,
+                    title: label,
+                    xAxis: "Month",
+                    yAxis: "KPIAxe",
+                    valueMemberPath: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
+                    thickness: 4
+                }
+            );
+    });
+
+    dis.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        dataSource: arrayMonth,
+        width: "100%",
+        height: "300px",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        brushes: ["#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                    labelTextColor: "white",
+                }, {
+                    type: "numericY",
+                    name: "KPIAxe",
+                    title: "KPI",
+                    majorStroke: "white",
+                    stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white",
+                }
+        ],
+
+        series: listSerie
+    });
+}
+
+function getDataConcurExpenditure(e) {
+
+    var disExpenditure = $("#chartConcurExpenditure");
+    var data = $(".elmtsChartConcur");
+
+    var listSerie = [];
+    var arrayMonth = [];
+    $.each(data, function () {
+        var arrayData = [];
+        var datas = $(this).children(".monthConcur").attr('name').split(",");
+        var label = $(this).children(".labelConcur").attr('name');
+        var currentElmnt = $(this);
+        arrayMonth = [];
+        $.each(datas, function (index, value) {
+            var elem = {
+                Month: Number(value),
+                Expenditure: Number(currentElmnt.children(".expenditureConcur").attr('name').split(",")[index]),
+            };
+            arrayData.push(elem);
+            arrayMonth.push({ Month: Number(value) });
+        });
+        listSerie.push(
+                {
+                    dataSource: arrayData,
+                    type: "line",
+                    isHighlightingEnabled: true,
+                    isTransitionInEnabled: true,
+                    name: label,
+                    title: label,
+                    xAxis: "Month",
+                    yAxis: "ExpenditureAxe",
+                    valueMemberPath: "Expenditure",
+                    thickness: 4
+                }
+            );
+
+    });
+
+    disExpenditure.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        dataSource: arrayMonth,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "Month",
+                    label: "Month",
+                    title: "Month",
+                    labelTextColor: "white"
+                }, {
+                    type: "numericY",
+                    name: "ExpenditureAxe",
+                    title: "Expenditure",
+                    majorStroke: "white",
+                    stroke: "rgba(0,0,0,0)",
+                    labelTextColor: "white"
+                }
+        ],
+
+        series: listSerie
+    });
+}
+
+function getDataConcurEngagement(e) {
+
+    var disExpenditure = $("#chartConcurEngagement");
+    var data = $(".elmtsChartConcur");
+
+    var listSerie = [];
+    var arrayData = [];
+    var elem = {};
+    $.each(data, function () {
+        var datas = $(this).children(".monthConcur").attr('name').split(",");
+        var label = $(this).children(".labelConcur").attr('name');
+        //var concurMemberPathLabel = "Engagement".concat($(this).children(".IdConcur").attr('name'))
+        var concurMemberPathLabel = label;
+        elem[concurMemberPathLabel] = 0;
+        var currentElmnt = $(this);
+        $.each(datas, function (index, value) {
+            elem[concurMemberPathLabel] = elem[concurMemberPathLabel] + Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index])
+                            + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index])
+                            + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index]);
+        });
+        listSerie.push(
+                {
+                    type: "bar",
+                    isHighlightingEnabled: true,
+                    isTransitionInEnabled: true,
+                    name: label,
+                    title: label,
+                    xAxis: "EngagementAxe",
+                    yAxis: "yAxis",
+                    valueMemberPath: concurMemberPathLabel,
+                    showTooltip: true,
+                    radius:0
+                }
+            );
+
+    });
+    arrayData.push(elem);
+    disExpenditure.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        dataSource: arrayData,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        brushes: ["#000000", "#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        axes: [
+                {
+                    type: "numericX",
+                    name: "EngagementAxe",
+                    title: "Engagement",
+                    labelTextColor: "white"
+                },{
+                    name: "yAxis",
+                    type: "categoryY",
+                    overlap: -.1
+                }
+        ],
+
+        series: listSerie
+    });
+}
+
+function getDataConcurDecompositionEngagement(e) {
+
+    var disExpenditure = $("#chartConcurDecompositionEngagement");
+    var data = $(".elmtsChartConcur");
+
+    var listSerie = [];
+    var elem = {};
+    $.each(data, function () {
+        var datas = $(this).children(".monthConcur").attr('name').split(",");
+        var label = $(this).children(".labelConcur").attr('name');
+        elem = { Like: 0, Share: 0, Comment: 0 };
+        elem["Label"] = label;
+        var currentElmnt = $(this);
+        $.each(datas, function (index, value) {
+            elem.Like = elem.Like + Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index]),
+            elem.Comment = elem.Comment + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index]),
+            elem.Share = elem.Share + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index])
+        });
+        
+        listSerie.push(
+                function () { // a self executing function to create the series initialization object
+                    var seriesObj = {
+                        name: label,
+                        xAxis: "EngagementAxe",
+                        yAxis: "yAxis",
+                        dataSource: [elem],
+                        type: "stackedBar",
+                        outline: "transparent",
+                        radius: 0,
+                        series: [{
+                            name: "like",
+                            title: "Like",
+                            type: "stackedFragment",
+                            valueMemberPath: "Like",
+                            showTooltip: true,
+                        }, {
+                            name: "share",
+                            title: "Share",
+                            type: "stackedFragment",
+                            valueMemberPath: "Share",
+                            showTooltip: true,
+                        },
+                        {
+                            name: "comment",
+                            title: "Comment",
+                            type: "stackedFragment",
+                            valueMemberPath: "Comment",
+                            showTooltip: true,
+                        }
+                        ]
+                    };
+                    return seriesObj;
+                }()
+            );
+    });
+
+    disExpenditure.igDataChart({
+        dataSource: [{ Like: 0, Share: 0, Comment: 0, Label: "" }],
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        brushes: ["#FFE100", "#B8DC00", "#00C8FF"],
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        axes: [
+                {
+                    type: "numericX",
+                    name: "EngagementAxe",
+                    title: "Engagement",
+                    labelTextColor: "white"
+                }, {
+                    name: "yAxis",
+                    type: "categoryY",
+                    label: "Label",
+                    overlap: -.1
+                }
+        ],
+
+        series: listSerie
+    });
+}
+
+function CallReferChart() {
     $.ajax({
-        url: '/SocialMedia/GetRefConcChart',
+        url: '/SocialMedia/GetReferChart',
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
         datatype: "json",
@@ -404,8 +893,44 @@ function CallRefConcChart() {
             bootbox.alert(thrownError);
         },
         success: function (data) {
-            $('#RefConc-chart').html('').append(data);
-            getDataRefConc();
+            $('#Refer-chart').html('').append(data);
+            getDataReferKPI();
+            getDataReferExpenditure();
+        }
+    });
+}
+
+function CallPDMChart() {
+    $.ajax({
+        url: '/SocialMedia/GetPDMChart',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#PDM-chart').html('').append(data);
+            getDataPDM();
+        }
+    });
+}
+
+function CallConcurChart() {
+    $.ajax({
+        url: '/SocialMedia/GetConcurChart',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#Concur-chart').html('').append(data);
+            getDataConcurKPI();
+            getDataConcurExpenditure();
+            getDataConcurEngagement();
+            getDataConcurDecompositionEngagement();
         }
     });
 }
@@ -424,7 +949,6 @@ function    LoadSocialMediaUniverses() {
         }
     });
 }
-
 
 $('#combo > .form-control, #unity > .form-control').on('change', function () {
     var id = $('#combo > .form-control').val();
@@ -460,33 +984,107 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
     });
 });
 
-function AppendUniverseComboBox(data) {
-      $(".select-universe-choice").empty();
-    $(".select-universe-choice").hide();
-  
-    if (data != null) {
 
-        var htmlArr = [];
+   
+$("#postFacebookModal").attr('src', '');
+$("#postFacebookModal").on('shown.bs.modal', function (event) {
+    var button = $(event.relatedTarget);// Button that triggered the modal
+    var datas = button.data('creative').toString(); // Extract info from data-* attributes
 
-        //htmlArr.push("  <div class='pull-right custom-button selectexporttype'>");
-        htmlArr.push("  <select id='universe-choice' class='selectdatepicker hide'>");
-        $.each(data, function (i, val) {
-            htmlArr.push(" <option value='");
-            htmlArr.push(val.Id);
-            htmlArr.push("'");
-            if (val.IsDefault == true) {
-                htmlArr.push(" selected ");
-            }
-            htmlArr.push(">");
-            htmlArr.push(val.Description);
-            htmlArr.push("</option>");
-        });
-        htmlArr.push("  </select>&nbsp;");
-        htmlArr.push("  <button class='btn btn-save' id='btn-universe-choice'><i class='fa fa-file-excel-o fa-file-excel-size'></i></button>");//<!--btn-universe-choice-->
-        //htmlArr.push(" </div>"); //<!--pull-right custom-button selectexporttype-->      
-        $(".select-universe-choice").html(htmlArr.join(""));
-        $(".select-universe-choice").show();
+    if (datas === null || datas == "" || datas == 0 || datas == "0") {
+        bootbox.alert("Post indisponible.");
     }
+    else {
+        var params = {
+            id: datas
+        };
+        $.ajax({
+            url: '/SocialMedia/GetKPIByPostId',
+            ccontentType: "application/x-www-form-urlencoded",
+            type: 'POST',
+            datatype: 'JSON',
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("error");
+            },
+            success: function (response) {
+                $('#postFacebookModal .modal-content').html('').append(response);
+                $('#postFacebookModal').modal('show');
+                getDataZoom();
+            }
+        });
+
+    }
+});
+
+function getDataZoom(e) {
+    var serieType = $('#seriesTypeZoom').val();
+    var dis = $('#chart');
+    var data = $("[id='" + serieType + "']");
+    var arrayData = [];
+    var series = []
+    $.each(data, function (indexLike, value) {
+        var serie = {
+            name: "name",
+            type: "line",
+            title: "1995",
+            xAxis: "Days",
+            yAxis: "Value",
+            valueMemberPath: indexLike,
+            isTransitionInEnabled: true,
+            isHighlightingEnabled: true,
+            thickness: 5
+        };
+        var datas = $(value).attr('value').split(",");
+        $.each(datas, function (index, value) {
+            index = index + 1;
+            var elem = {
+                "DAY": "J" + index,
+                Data: Number(value)
+    }
+            };
+            arrayData.push(elem);
+        });
+        series.push(serie);
+    });
+    dis.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        width: "70%",
+        height: "250px",
+        //title: "Evolution des partages",
+        dataSource: arrayData,
+        axes: [
+            {
+                name: "Days",
+                type: "categoryX",
+                label: "DAY"
+            },
+            {
+                name: "Value",
+                type: "numericY",
+                minimumValue: 0,
+                title: serieType,
+            }
+        ],
+
+        series: [{
+            name: "wahtever",
+            type: "line",
+            title: "1995",
+            xAxis: "Days",
+            yAxis: "Value",
+            valueMemberPath: "Data",
+            isTransitionInEnabled: true,
+            isHighlightingEnabled: true,
+            thickness: 5
+        }]
+    });
+
+    $('#unityZoom > .form-control').on('change', function () {
+        getDataZoom();
+    });
+
 }
 
 

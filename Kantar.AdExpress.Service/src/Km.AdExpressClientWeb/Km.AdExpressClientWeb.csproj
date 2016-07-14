@@ -247,7 +247,9 @@
     <Compile Include="Models\Shared\SaveUserResultViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Models\SocialMedia\DataFacebook.cs" />
+    <Compile Include="Models\SocialMedia\KPIClassificationContract.cs" />
     <Compile Include="Models\SocialMedia\KPIPageFacebookContract.cs" />
+    <Compile Include="Models\SocialMedia\KPIPercentPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\ResultsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -566,6 +568,7 @@
     <Content Include="Content\img\bann_adexpress.jpg" />
     <Content Include="Content\img\bann_adexpress_top100.jpg" />
     <Content Include="Content\img\evaliantFormat\AVI.png" />
+    <Content Include="Content\img\evaliantFormat\HTML5.png" />
     <Content Include="Content\img\evaliantFormat\MOV.png" />
     <Content Include="Content\img\evaliantFormat\MP4.png" />
     <Content Include="Content\img\evaliantFormat\FLV.png" />
@@ -1638,7 +1641,9 @@
     <Content Include="Views\SocialMedia\SocialMediaCreative.cshtml" />
     <Content Include="Views\SocialMedia\GetTopPost.cshtml" />
     <Content Include="Views\SocialMedia\Zoom.cshtml" />
-    <Content Include="Views\SocialMedia\GetRefConcChart.cshtml" />
+    <Content Include="Views\SocialMedia\GetReferChart.cshtml" />
+    <Content Include="Views\SocialMedia\GetPDMChart.cshtml" />
+    <Content Include="Views\SocialMedia\GetConcurChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
