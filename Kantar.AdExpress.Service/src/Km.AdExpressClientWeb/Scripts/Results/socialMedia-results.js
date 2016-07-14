@@ -19,6 +19,7 @@
 
     CallSocialMediaResult();
     CallRefConcChart();
+    LoadSocialMediaUniverses();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -201,7 +202,7 @@ function getData(e) {
             $.each(datas, function (index, value) {
                 index = index + 1;
                 var elem = {
-                    "DAY": "J" + index, 
+                    "DAY": "J" + index,
                     Data: Number(value)
                 };
                 arrayData.push(elem);
@@ -218,16 +219,13 @@ function getData(e) {
                 {
                     name: "Days",
                     type: "categoryX",
-                    label: "DAY",
-                    labelTextColor: "white"
+                    label: "DAY"
                 },
                 {
                     name: "Value",
                     type: "numericY",
                     minimumValue: 0,
                     title: serieType,
-                    majorStroke: "white",
-                    labelTextColor: "white"
                 }
             ],
 
@@ -246,9 +244,10 @@ function getData(e) {
     });
 }
 
-function getDataKPI(e) {
 
-    var dis = $("#chartKPI");
+function getDataRefConc(e) {
+
+    var dis = $("#RefConc-chart");
     var data = $(".elmtsChart");
 
     var arrayData = [];
@@ -278,10 +277,9 @@ function getDataKPI(e) {
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Like",
-                brush: "#FFE100",
-                outline: "#FFE100",
+                brush: "green",
                 showTooltip: true,
-                tooltipTemplate: "LikeTooltipTemplate"
+                tooltipTemplate: "Likes"
             },
             {
                 type: "line",
@@ -292,9 +290,9 @@ function getDataKPI(e) {
                 xAxis: "Month",
                 yAxis: "PostsAxe",
                 valueMemberPath: "Post",
-                brush: "#FF0080",
+                brush: "red",
                 showTooltip: true,
-                tooltipTemplate: "PostTooltipTemplate"
+                tooltipTemplate: "Posts"
             },
             {
                 type: "column",
@@ -305,10 +303,9 @@ function getDataKPI(e) {
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Share",
-                brush: "#B8DC00",
-                outline: "#B8DC00",
+                brush: "orange",
                 showTooltip: true,
-                tooltipTemplate: "ShareTooltipTemplate"
+                tooltipTemplate: "Shares"
             },
             {
                 type: "column",
@@ -319,10 +316,9 @@ function getDataKPI(e) {
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Comment",
-                brush: "#00C8FF",
-                outline: "#00C8FF",
+                brush: "blue",
                 showTooltip: true,
-                tooltipTemplate: "CommentTooltipTemplate"
+                tooltipTemplate: "Comments"
             }
     ];
 
@@ -330,12 +326,10 @@ function getDataKPI(e) {
     dis.igDataChart({
         autoMarginHeight: 15,
         autoMarginWidth: 15,
-        width:"100%",
+        width: "45%",
         height: "300px",
         title: "Titre à definir",
         subtitle: "Sous titre à definir",
-        titleTextColor: "white",
-        subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
@@ -345,14 +339,12 @@ function getDataKPI(e) {
                     name: "Month",
                     label: "Month",
                     title: "Month",
-                    labelTextColor: "white",
                 }, {
                     type: "numericY",
                     name: "KPI",
                     title: "KPI",
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
-                    labelTextColor: "white",
                 }, {
                     type: "numericY",
                     name: "PostsAxe",
@@ -361,18 +353,17 @@ function getDataKPI(e) {
                     minimumValue: 0,
                     majorStroke: "rgba(0,0,0,0)",
                     stroke: "rgba(0,0,0,0)",
-                    labelTextColor: "white",
                 }
         ],
 
-        series: listSerie.slice(0,2)
+        series: listSerie.slice(0, 2)
     });
 
     $('#seriesType').on('change', function () {
         var serieType = $(this).val();
         var series = dis.igDataChart("option", "series");
         var newListSeries = [];
-        
+
         newListSeries = jQuery.grep(listSerie, function (value) {
             return value.name == serieType;
         });
@@ -402,95 +393,6 @@ function getDataKPI(e) {
     });
 }
 
-function getDataExpenditure(e) {
-
-    var disExpenditure = $("#chartExpenditure");
-    var data = $(".elmtsChart");
-
-    var arrayData = [];
-    $.each(data, function () {
-
-        var datas = $(this).children(".monthRef").attr('name').split(",");
-        $.each(datas, function (index, value) {
-            var elem = {
-                Month: Number($(".elmtsChart").children(".monthRef").attr('name').split(",")[index]),
-                Expenditure: Number($(".elmtsChart").children(".expenditureRef").attr('name').split(",")[index]),
-                Post: Number($(".elmtsChart").children(".postRef").attr('name').split(",")[index])
-            };
-            arrayData.push(elem);
-        });
-
-    });
-
-    disExpenditure.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
-        height: "300px",
-        width: "100%",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
-        titleTextColor: "white",
-        subtitleTextColor: "white",
-        horizontalZoomable: true,
-        verticalZoomable: true,
-        dataSource: arrayData,
-        axes: [
-                {
-                    type: "categoryX",
-                    name: "Month",
-                    label: "Month",
-                    title: "Month",
-                    labelTextColor: "white"
-                }, {
-                    type: "numericY",
-                    name: "ExpenditureAxe",
-                    title: "Expenditure",
-                    majorStroke: "white",
-                    stroke: "rgba(0,0,0,0)",
-                    labelTextColor: "white"
-                }, {
-                    type: "numericY",
-                    name: "PostsAxe",
-                    labelLocation: "outsideRight",
-                    title: "Posts",
-                    minimumValue: 0,
-                    majorStroke: "rgba(0,0,0,0)",
-                    stroke: "rgba(0,0,0,0)",
-                    labelTextColor: "white"
-                }
-        ],
-
-        series: [
-            {
-                type: "column",
-                isHighlightingEnabled: true,
-                isTransitionInEnabled: true,
-                name: "Expenditure",
-                title: "Expenditure",
-                xAxis: "Month",
-                yAxis: "ExpenditureAxe",
-                valueMemberPath: "Expenditure",
-                brush: "#FF8C00",
-                outline: "#FF8C00",
-                showTooltip: true,
-                tooltipTemplate: "ExpenditureTooltipTemplate"
-            },
-            {
-                type: "line",
-                isHighlightingEnabled: true,
-                isTransitionInEnabled: true,
-                name: "Posts",
-                title: "Posts",
-                xAxis: "Month",
-                yAxis: "PostsAxe",
-                valueMemberPath: "Post",
-                brush: "#FF0080",
-                showTooltip: true,
-                tooltipTemplate: "PostTooltipTemplate"
-            }
-        ]
-    });
-}
 
 function CallRefConcChart() {
     $.ajax({
@@ -503,15 +405,23 @@ function CallRefConcChart() {
         },
         success: function (data) {
             $('#RefConc-chart').html('').append(data);
-            getDataKPI();
-            getDataExpenditure();
+            getDataRefConc();
         }
     });
 }
 
-function SetListUnivers() {
+function    LoadSocialMediaUniverses() {
     $.ajax({
-        url: '/SocialMedia/GetPostbyIdpage',
+        url: '/Universe/GetUniverses',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            AppendUniverseComboBox(data);
+        }
     });
 }
 
@@ -550,105 +460,33 @@ $('#combo > .form-control, #unity > .form-control').on('change', function () {
     });
 });
 
+function AppendUniverseComboBox(data) {
+      $(".select-universe-choice").empty();
+    $(".select-universe-choice").hide();
+  
+    if (data != null) {
 
-$("#postFacebookModal").attr('src', '');
-$("#postFacebookModal").on('shown.bs.modal', function (event) {
-    var button = $(event.relatedTarget);// Button that triggered the modal
-    var datas = button.data('creative').toString(); // Extract info from data-* attributes
+        var htmlArr = [];
 
-    if (datas === null || datas == "" || datas == 0 || datas == "0") {
-        bootbox.alert("Post indisponible.");
-    }
-    else {
-        var params = {
-            id: datas
-        };
-        $.ajax({
-            url: '/SocialMedia/GetKPIByPostId',
-            ccontentType: "application/x-www-form-urlencoded",
-            type: 'POST',
-            datatype: 'JSON',
-            data: params,
-            error: function (xmlHttpRequest, errorText, thrownError) {
-                bootbox.alert("error");
-            },
-            success: function (response) {
-                $('#postFacebookModal .modal-content').html('').append(response);
-                $('#postFacebookModal').modal('show');
-                getDataZoom();
+        //htmlArr.push("  <div class='pull-right custom-button selectexporttype'>");
+        htmlArr.push("  <select id='universe-choice' class='selectdatepicker hide'>");
+        $.each(data, function (i, val) {
+            htmlArr.push(" <option value='");
+            htmlArr.push(val.Id);
+            htmlArr.push("'");
+            if (val.IsDefault == true) {
+                htmlArr.push(" selected ");
             }
+            htmlArr.push(">");
+            htmlArr.push(val.Description);
+            htmlArr.push("</option>");
         });
-
+        htmlArr.push("  </select>&nbsp;");
+        htmlArr.push("  <button class='btn btn-save' id='btn-universe-choice'><i class='fa fa-file-excel-o fa-file-excel-size'></i></button>");//<!--btn-universe-choice-->
+        //htmlArr.push(" </div>"); //<!--pull-right custom-button selectexporttype-->      
+        $(".select-universe-choice").html(htmlArr.join(""));
+        $(".select-universe-choice").show();
     }
-});
-
-function getDataZoom(e) {
-    var serieType = $('#seriesTypeZoom').val();
-    var dis = $('#chart');
-    var data = $("[id='" + serieType + "']");
-    var arrayData = [];
-    var series = []
-    $.each(data, function (indexLike, value) {
-        var serie = {
-            name: "name",
-            type: "line",
-            title: "1995",
-            xAxis: "Days",
-            yAxis: "Value",
-            valueMemberPath: indexLike,
-            isTransitionInEnabled: true,
-            isHighlightingEnabled: true,
-            thickness: 5
-        };
-        var datas = $(value).attr('value').split(",");
-        $.each(datas, function (index, value) {
-            index = index + 1;
-            var elem = {
-                "DAY": "J" + index,
-                Data: value
-            };
-            arrayData.push(elem);
-        });
-        series.push(serie);
-    });
-    dis.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
-        width: "70%",
-        height: "250px",
-        //title: "Evolution des partages",
-        dataSource: arrayData,
-        axes: [
-            {
-                name: "Days",
-                type: "categoryX",
-                label: "DAY"
-            },
-            {
-                name: "Value",
-                type: "numericY",
-                minimumValue: 0,
-                title: serieType,
-            }
-        ],
-
-        series: [{
-            name: "wahtever",
-            type: "line",
-            title: "1995",
-            xAxis: "Days",
-            yAxis: "Value",
-            valueMemberPath: "Data",
-            isTransitionInEnabled: true,
-            isHighlightingEnabled: true,
-            thickness: 5
-        }]
-    });
-
-    $('#unityZoom > .form-control').on('change', function () {
-        getDataZoom();
-    });
-
 }
 
 

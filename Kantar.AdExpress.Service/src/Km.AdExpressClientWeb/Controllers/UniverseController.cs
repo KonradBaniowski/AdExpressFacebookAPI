@@ -57,6 +57,20 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         /// <summary>
+        /// TEST : http://localhost:55658/Universe/GetUniverses?dimension=2
+        /// </summary>
+        /// <param name="dimension"></param>
+        /// <returns></returns>
+        public JsonResult GetUniverses(Dimension dimension)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var model = _universeService.GetUniverses(dimension, idSession);
+            return Json(new { data = model}, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// TEST : http://localhost:55658/Universe/GetClassification?levelId=7&selectedClassification=%27295196%27&selectedLevelId=6
         /// </summary>
         /// <param name="levelId"></param>
