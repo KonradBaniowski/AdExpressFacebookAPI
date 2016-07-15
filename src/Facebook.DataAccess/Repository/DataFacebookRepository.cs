@@ -31,7 +31,7 @@ namespace Facebook.DataAccess.Repository
             return new List<DataFacebook>();
         }
 
-        public List<DateFacebookKPI> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
+        public List<DataFacebookKPI> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
         {
             var query = (from d in context.DataFacebook
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
@@ -72,7 +72,7 @@ namespace Facebook.DataAccess.Repository
                 var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand, p.IdPageFacebook, p.IdLanguageData })
                                   join c in context.Brand on new { id = g.Key.IdBrand, IdLanguage = g.Key.IdLanguageData } equals new { id = c.Id, IdLanguage = c.IdLanguage }
                                   where c.IdLanguage == idLanguage
-                                  select new DateFacebookKPI
+                                  select new DataFacebookKPI
                                   {
                                       IdAdvertiser = g.Key.IdBrand,
                                       NumberPost = g.Sum(a => a.NumberPost),
@@ -97,7 +97,7 @@ namespace Facebook.DataAccess.Repository
                 var tata = (from g in query.GroupBy(p => new { p.IdAdvertiser, p.IdPageFacebook, p.IdLanguageData })
                             join c in context.Advertiser on new { g.Key.IdAdvertiser, IdLanguage = g.Key.IdLanguageData } equals new { c.IdAdvertiser, IdLanguage = c.IdLanguage }
                             where c.IdLanguage == idLanguage
-                            select new DateFacebookKPI
+                            select new DataFacebookKPI
                             {
                                 IdAdvertiser = g.Key.IdAdvertiser,
                                 NumberPost = g.Sum(a => a.NumberPost),
@@ -116,10 +116,10 @@ namespace Facebook.DataAccess.Repository
                 return tata.ToList();
             }
             else
-                return new List<DateFacebookKPI>();
+                return new List<DataFacebookKPI>();
         }
 
-        public List<DateFacebookKPI> GetKPIClassificationDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> advertisers, List<long> brands, int idLanguage)
+        public List<DataFacebookKPI> GetKPIClassificationDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> advertisers, List<long> brands, int idLanguage)
         {
             var query = (from d in context.DataFacebook
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
@@ -149,54 +149,56 @@ namespace Facebook.DataAccess.Repository
                 query = query.Include(a => a.Brand)
                    .Where(e => brands.Contains(e.IdBrand));
 
-             
-                var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand,p.DateMediaNum })
-                                  join c in context.Products  on new { id = g.Key.IdBrand } equals new { id = c.BrandId }
-                                  where c.LanguageId == idLanguage
-                                  select new DateFacebookKPI
+
+                var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand, p.DateMediaNum })
+                                  join c in context.Brand on new { id = g.Key.IdBrand } equals new { id = c.Id }
+                                  where c.IdLanguage == idLanguage
+                                  select new DataFacebookKPI
                                   {
                                       IdBrand = g.Key.IdBrand,
-                                      Label = c.Brand,
+                                      Label = c.BrandLabel,
                                       Month = g.Key.DateMediaNum.ToString(),
                                       NumberPost = g.Sum(a => a.NumberPost),
                                       NumberLike = g.Sum(a => a.NumberLike),
                                       NumberComment = g.Sum(a => a.NumberComment),
                                       NumberShare = g.Sum(a => a.NumberShare),
                                       Expenditure = g.Sum(a => a.Expenditure),
-                                      NumberFan = g.Max(a => a.NumberFan),                                    
-                                    
+                                      NumberFan = g.Max(a => a.NumberFan),
+
                                   });
-            
+
                 var res = brandQuery.ToList();
                 return res;
             }
             else
             if (advertisers != null && advertisers.Count > 0)
             {
+               
+
                 query = query.Include(a => a.Advertiser)
                     .Where(e => advertisers.Contains(e.IdAdvertiser));
 
                 var advertiserQuery = (from g in query.GroupBy(p => new { p.IdAdvertiser, p.DateMediaNum })
-                           join c in context.Products on new { id = g.Key.IdAdvertiser } equals new { id = c.AdvertiserId }
-                           where c.LanguageId == idLanguage
-                           select new DateFacebookKPI
-                           {
-                               IdAdvertiser = g.Key.IdAdvertiser,
-                               Label = c.Advertiser,
-                               Month = g.Key.DateMediaNum.ToString(),
-                               NumberPost = g.Sum(a => a.NumberPost),
-                               NumberLike = g.Sum(a => a.NumberLike),
-                               NumberComment = g.Sum(a => a.NumberComment),
-                               NumberShare = g.Sum(a => a.NumberShare),
-                               Expenditure = g.Sum(a => a.Expenditure),
-                               NumberFan = g.Max(a => a.NumberFan)                              
-                           });
+                                       join c in context.Advertiser on new { id = g.Key.IdAdvertiser } equals new { id = c.IdAdvertiser }
+                                       where c.IdLanguage == idLanguage                                                                      
+                                       select new DataFacebookKPI
+                                       {
+                                           IdAdvertiser = g.Key.IdAdvertiser,
+                                           Label = c.AdvertiserLabel,
+                                           Month = g.Key.DateMediaNum.ToString(),
+                                           NumberPost = g.Sum(a => a.NumberPost),
+                                           NumberLike = g.Sum(a => a.NumberLike),
+                                           NumberComment = g.Sum(a => a.NumberComment),
+                                           NumberShare = g.Sum(a => a.NumberShare),
+                                           Expenditure = g.Sum(a => a.Expenditure),
+                                           NumberFan = g.Max(a => a.NumberFan),
+                                       });
 
                 var res = advertiserQuery.ToList();
                 return res;
             }
-            else return new List<DateFacebookKPI>();
-           
+            else return new List<DataFacebookKPI>();
+
         }
 
         public List<DataFacebook> GetKPIDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
