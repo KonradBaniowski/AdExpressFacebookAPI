@@ -62,31 +62,28 @@
     </div>
 </div>
 
-<div class="row margin-b-20 margin-top-30">
-    <div class="col-md-12">
-        <form class="form-inline pull-right">
-            <div id="combo" class="form-group">
-                <label for="wombocombo">Filter</label>
-                <select class="form-control"></select>
-            </div>
-            <div id="unity" class="form-group">
-                <label for="unity">Unité</label>
-                <select class="form-control" id="seriesType">
-                    <option value="like" selected="selected">Like</option>
-                    <option value="share">Share</option>
-                    <option value="comment">Comment</option>
-                </select>
-            </div>
-        </form>
-    </div>
-</div>
+<div class="panel-group panel-group-results margin-b-20 hide" id="resaccord">
 
-<div class="panel-group panel-group-results margin-b-20" id="resaccord">
+    <div class="row margin-b-20 margin-top-30">
+        <div class="col-md-12">
+            <form class="form-inline pull-right">
+                <div id="unity" class="form-group">
+                    <label for="unity">Unité</label>
+                    <select class="form-control" id="seriesType">
+                        <option value="like" selected="selected">Like</option>
+                        <option value="share">Share</option>
+                        <option value="comment">Comment</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="volet2" class="panel panel-primary panel-results">
         <div class="panel-heading head-results">
             <h3 class="panel-title">
                 <a data-toggle="collapse" data-parent="#resaccord" href="#accord2">
-                    <i class="fa fa-line-chart"></i> Volet 2
+                    <i class="fa fa-line-chart"></i> Sélections Référentes
                 </a>
             </h3>
         </div>
@@ -101,13 +98,14 @@
         <div class="panel-heading head-results">
             <h3 class="panel-title">
                 <a data-toggle="collapse" data-parent="#resaccord" href="#accord3">
-                    <i class="fa fa-line-chart"></i> Volet 3
+                    <i class="fa fa-line-chart"></i> Sélections Concurrentes
                 </a>
             </h3>
         </div>
         <div id="accord3" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="row margin-top-30" id="Concur-chart"></div>
+                <div class="row margin-top-30" id="Stacked-chart"></div>
             </div>
         </div>
     </div>
@@ -115,11 +113,21 @@
         <div class="panel-heading head-results">
             <h3 class="panel-title">
                 <a data-toggle="collapse" data-parent="#resaccord" href="#accord4">
-                    <i class="fa fa-line-chart"></i> Volet 4
+                    <i class="fa fa-line-chart"></i> Posts
                 </a>
             </h3>
         </div>
         <div id="accord4" class="panel-collapse collapse in">
+
+                <div class="col-md-12 margin-top-10 margin-b-20">
+                    <form class="form-inline pull-right">
+                        <div id="combo" class="form-group">
+                            <label for="wombocombo">Filter</label>
+                            <select class="form-control"></select>
+                        </div>
+                    </form>
+                </div>
+
             <div class="panel-body">
                 <div class="row margin-top-30" id="top-post"></div>
             </div>

@@ -250,6 +250,7 @@
     <Compile Include="Models\SocialMedia\KPIClassificationContract.cs" />
     <Compile Include="Models\SocialMedia\KPIPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\KPIPercentPageFacebookContract.cs" />
+    <Compile Include="Models\SocialMedia\PDVByMediaPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\ResultsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1644,6 +1645,7 @@
     <Content Include="Views\SocialMedia\GetReferChart.cshtml" />
     <Content Include="Views\SocialMedia\GetPDMChart.cshtml" />
     <Content Include="Views\SocialMedia\GetConcurChart.cshtml" />
+    <Content Include="Views\SocialMedia\GetPlurimediaStackedChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -170,8 +170,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (!response.IsSuccessStatusCode)
                         throw new Exception(response.StatusCode.ToString());
+                    if (content.Length == 0)
+                        return null;
+
 
                     data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
+                    if (data.Count == 0)
+                        return null;
+
                     par = new DataFacebook()
                     {
                         PID = -1,
@@ -218,8 +224,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
 
         }
-
-
+        
 
         public JsonResult GetFilterPost()
         {
@@ -483,12 +488,56 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 List<KPIClassificationContract> data = JsonConvert.DeserializeObject<List<KPIClassificationContract>>(content);
-                if (data.Count == 0)
-                {
-                    data.Add(new KPIClassificationContract());
-                }
+                //if (data.Count == 0)
+                //{
+                //    data.Add(new KPIClassificationContract());
+                //}
 
                 return PartialView("GetConcurChart", data);
+            }
+        }
+
+        public async Task<ActionResult> GetPlurimediaStackedChart()
+        {
+            using (var client = new HttpClient())
+            {
+                var cla = new ClaimsPrincipal(User.Identity);
+                string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+                List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
+
+                Domain.PostModel postModel = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
+
+                postModel.IdAdvertisersConcur = new List<long>();
+                postModel.IdBrandsConcur = new List<long>();
+
+                if (universeMarket.Count > 1)
+                {
+
+                    postModel.IdAdvertisersConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModel.IdBrandsConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                    postModel.IdAdvertisersRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModel.IdBrandsRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                }
+                else
+                {
+                    postModel.IdAdvertisersRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModel.IdBrandsRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                }
+
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/KPI/PlurimediaStacked"), postModel).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+
+                List<PDVByMediaPageFacebookContract> data = JsonConvert.DeserializeObject<List<PDVByMediaPageFacebookContract>>(content);
+                if (data == null)
+                    data.Add(new PDVByMediaPageFacebookContract());
+                else if (data.Count == 0)
+                    data.Add(new PDVByMediaPageFacebookContract());
+
+                return PartialView("GetPlurimediaStackedChart", data);
             }
         }
 

@@ -18,9 +18,6 @@
     var gridWidth;
 
     CallSocialMediaResult();
-    CallReferChart();
-    CallPDMChart();
-    CallConcurChart();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -81,12 +78,14 @@
                 $("#gridLoader").addClass("hide");
             },
             success: function (data) {
-                //ComboBox Init
-                $.each(data.combo, function (index, value) {
-                    $('#combo > .form-control').append('<option ' + value.Selected + ' value=' + value.Value + '>' + value.Text + '</option>');
-                })
 
                 if (data != null && data != "") {
+
+                    //ComboBox Init
+                    $.each(data.combo, function (index, value) {
+                        $('#combo > .form-control').append('<option ' + value.Selected + ' value=' + value.Value + '>' + value.Text + '</option>');
+                    })
+
                     dataTreeGrid = data.datagrid;
                     //cols = GetColumnsFormatter(data.columns, data.unit);
                     cols = data.columns;
@@ -116,10 +115,16 @@
                     });
 
                     ds.dataBind();
+
+                    CallReferChart();
+                    CallPDMChart();
+                    CallConcurChart();
+                    CallPlurimediaStackedChart();
                 }
                 else {
                     $("#gridLoader").addClass("hide");
                     $("#grid").addClass("hide");
+                    $("#resaccord").addClass("hide");
                     $("#gridEmpty").show();
                 }
             }
@@ -132,6 +137,7 @@
             $("#grid").igTreeGrid("destroy");
             $("#gridLoader").addClass("hide");
             $("#grid").removeClass("hide");
+            $("#resaccord").removeClass("hide");
             $("#grid").igTreeGrid({
                 dataSource: ds.dataView(),
                 columns: cols,
@@ -185,23 +191,17 @@ function getData(e) {
 
     $("[id^='chart-']").each(function (index) {
         var serieType = $('#seriesType').val();
+        var brush = "#FFE100";
+        switch (serieType) {
+            case "share": brush = "#B8DC00"; break;
+            case "comment": brush = "#00C8FF"; break;
+            default: brush = "#FFE100"; break;
+        }
         var dis = $(this);
         index = index + 1;
         var data = $("[id='" + serieType + "-" + index + "']");
         var arrayData = [];
-        var series = []
         $.each(data, function (indexLike, value) {
-            var serie = {
-                name: "name",
-                type: "line",
-                title: "1995",
-                xAxis: "Days",
-                yAxis: "Value",
-                valueMemberPath: indexLike,
-                isTransitionInEnabled: true,
-                isHighlightingEnabled: true,
-                thickness: 5
-            };
             var datas = $(value).attr('name').split(",");
             $.each(datas, function (index, value) {
                 index = index + 1;
@@ -211,7 +211,6 @@ function getData(e) {
                 };
                 arrayData.push(elem);
             });
-            series.push(serie);
         });
         dis.igDataChart({
             autoMarginHeight: 15,
@@ -237,15 +236,17 @@ function getData(e) {
             ],
 
             series: [{
-                name: "princip",
+                name: serieType,
                 type: "line",
-                title: "1995",
+                title: serieType,
                 xAxis: "Days",
                 yAxis: "Value",
+                brush: brush,
                 valueMemberPath: "Data",
                 isTransitionInEnabled: true,
                 isHighlightingEnabled: true,
-                thickness: 5
+                thickness: 4,
+                showTooltip:true
             }]
         });
     });
@@ -300,7 +301,7 @@ function getDataReferKPI(e) {
                 brush: "#FF0080",
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
-                thickness: 4
+                thickness: 3
             },
             {
                 type: "column",
@@ -493,7 +494,7 @@ function getDataReferExpenditure(e) {
                 brush: "#FF0080",
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
-                thickness: 4
+                thickness: 3
             }
         ]
     });
@@ -556,7 +557,7 @@ function getDataPDM(e) {
                 xAxis: "Month",
                 yAxis: "PDMAxe",
                 valueMemberPath: "ReferentFBPercent",
-                thickness: 4
+                thickness: 3
             }
         );
 
@@ -633,7 +634,7 @@ function getDataConcurKPI(e) {
                     xAxis: "Month",
                     yAxis: "KPIAxe",
                     valueMemberPath: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
-                    thickness: 4
+                    thickness: 3
                 }
             );
     });
@@ -704,7 +705,7 @@ function getDataConcurExpenditure(e) {
                     xAxis: "Month",
                     yAxis: "ExpenditureAxe",
                     valueMemberPath: "Expenditure",
-                    thickness: 4
+                    thickness: 3
                 }
             );
 
@@ -774,6 +775,7 @@ function getDataConcurEngagement(e) {
                     yAxis: "yAxis",
                     valueMemberPath: concurMemberPathLabel,
                     showTooltip: true,
+                    outline: "transparent",
                     radius: 0
                 }
             );
@@ -895,6 +897,86 @@ function getDataConcurDecompositionEngagement(e) {
     });
 }
 
+function getDataPlurimediaStacked(e) {
+
+    var disPDM = $("#chartConcurPlurimediaStacked");
+    var data = $(".elmtsChartPDVByMediaConcur");
+
+    var arrayData = [];
+    var listSubSeries = [];
+    $.each(data, function () {
+        listSubSeries = [];
+        var media = $(this).children(".labelMediaConcur").attr('name');
+        var elem = { "Media": media };
+        var currentElmnt = $(this);
+        var datas = currentElmnt.children(".idAdvertiserBrandConcur").attr('name').split(",");
+        $.each(datas, function (index, value) {
+            var label = currentElmnt.children(".labelAdvertiserBrandConcur").attr('name').split(",")[index];
+            elem[label] = Number(currentElmnt.children(".expenditureConcur").attr('name').split(",")[index]);
+
+            listSubSeries.push({
+                name: label,
+                title: label,
+                type: "stackedFragment",
+                valueMemberPath: label,
+                showTooltip: true,
+            });
+
+        });
+        arrayData.push(elem);
+
+    });
+
+    var listSeries = [
+        function () { // a self executing function to create the series initialization object
+            var seriesObj = {
+                name: "PDV",
+                xAxis: "MediaAxe",
+                yAxis: "PDVAxe",
+                type: "stacked100Column",
+                outline: "transparent",
+                series: listSubSeries,
+            };
+            return seriesObj;
+        }()
+    ];
+
+    disPDM.igDataChart({
+        autoMarginHeight: 15,
+        autoMarginWidth: 15,
+        height: "300px",
+        width: "100%",
+        title: "Titre à definir",
+        subtitle: "Sous titre à definir",
+        titleTextColor: "white",
+        subtitleTextColor: "white",
+        horizontalZoomable: true,
+        verticalZoomable: true,
+        dataSource: arrayData,
+        axes: [
+                {
+                    type: "categoryX",
+                    name: "MediaAxe",
+                    label: "Media",
+                    title: "Media",
+                    labelTextColor: "white",
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true
+                }, {
+                    type: "numericY",
+                    name: "PDVAxe",
+                    title: "PDV (%)",
+                    majorStroke: "white",
+                    labelTextColor: "white",
+                    isTransitionInEnabled: true,
+                    isHighlightingEnabled: true
+                }
+        ],
+        series: listSeries
+
+    });
+}
+
 function CallReferChart() {
     $.ajax({
         url: '/SocialMedia/GetReferChart',
@@ -943,6 +1025,22 @@ function CallConcurChart() {
             getDataConcurExpenditure();
             getDataConcurEngagement();
             getDataConcurDecompositionEngagement();
+        }
+    });
+}
+
+function CallPlurimediaStackedChart() {
+    $.ajax({
+        url: '/SocialMedia/GetPlurimediaStackedChart',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#Stacked-chart').html('').append(data);
+            getDataPlurimediaStacked();
         }
     });
 }
