@@ -61,7 +61,7 @@ namespace Km.AdExpressClientWeb.Controllers
         /// </summary>
         /// <param name="dimension"></param>
         /// <returns></returns>
-        public JsonResult GetUniverses(Dimension dimension)
+        public JsonResult GetModuleUniverses(Dimension dimension)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
