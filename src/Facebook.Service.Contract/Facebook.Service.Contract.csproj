@@ -47,6 +47,7 @@
     <Compile Include="ContractModels\ModuleFacebook\KPIPageFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\KPIPercentPageFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\LevelItemContract.cs" />
+    <Compile Include="ContractModels\ModuleFacebook\PDVPageFacebookContract.cs" />
     <Compile Include="ContractModels\ModuleFacebook\PostFacebookContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

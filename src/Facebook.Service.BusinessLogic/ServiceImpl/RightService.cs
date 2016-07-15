@@ -93,5 +93,18 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
             return OTM;
         }
+
+        public List<Criteria> GetCriteria2(int idLogin)
+        {
+            List<Criteria> result = new List<Criteria>();
+
+            var OTP = GetTemplateProductRight(idLogin);
+            var OCP = GetProductRight(idLogin);
+            result.AddRange(OTP);
+            result.AddRange(OCP);
+
+            return result;
+        }
+
     }
 }

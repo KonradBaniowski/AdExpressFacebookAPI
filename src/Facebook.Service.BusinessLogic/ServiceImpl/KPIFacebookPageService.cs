@@ -150,31 +150,44 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             return percentByMonth;
         }
 
-        public void GetKPIPlurimediaStacked(int IdLogin, long Begin, long End, List<long> AdvertiserRef, List<long> AdvertiserCon, List<long> BrandRef, List<long> BrandCon, int idLanguage)
+        public List<PDVByMediaPageFacebookContract> GetKPIPlurimediaStacked(int IdLogin, long Begin, long End, List<long> AdvertiserRef, List<long> AdvertiserCon, List<long> BrandRef, List<long> BrandCon, int idLanguage)
         {
-            var criteria = _rightsvc.GetCriteria(IdLogin);
+
+            IEnumerable<DataFacebook> queryDataFB = null;
+            IEnumerable<DataDisplay> queryDataDisplay = null;
+            IEnumerable<DataSearch> queryDataSearch = null;
+
+            List<PDVByMediaPageFacebookContract> resultats = new List<PDVByMediaPageFacebookContract>();
+
+
+            var criteria = _rightsvc.GetCriteria2(IdLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
 
             if ((AdvertiserRef != null && AdvertiserRef.Count() != 0) && (AdvertiserCon != null && AdvertiserCon.Count() != 0))
             {
                 var allAdvertiser = AdvertiserRef.Concat(AdvertiserCon).ToList();
 
-                var queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+                queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
 
-                var queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+                queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
 
-                var queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+                queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
             }
             else if ((BrandRef != null && BrandRef.Count() != 0) && (BrandCon != null && BrandCon.Count() != 0))
             {
                 var allBrand = BrandRef.Concat(BrandCon).ToList();
 
-                var queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, End, null, allBrand, idLanguage);
+                queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, End, null, allBrand, idLanguage);
 
-                var queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
+                queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
 
-                var queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
+                queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
             }
+
+            queryDataFB = queryDataFB.Select(e => e).ToList();
+
+            return resultats;
+
         }
         public List<KPIClassificationContract> GetKPIClassificationPages(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, int idLanguage)
         {

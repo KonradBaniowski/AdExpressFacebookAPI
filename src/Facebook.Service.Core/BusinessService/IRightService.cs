@@ -6,6 +6,8 @@ namespace Facebook.Service.Core.BusinessService
     public interface IRightService
     {
         List<Criteria> GetCriteria(int idLogin);
+        List<Criteria> GetCriteria2(int idLogin);
+
         //List<Criteria> GetTemplateMediaRight(int idLogin);
         //List<Criteria> GetMediaRight(int idLogin);
 
