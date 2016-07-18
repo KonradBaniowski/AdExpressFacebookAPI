@@ -6,12 +6,15 @@ using KM.Framework.Constantes;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Result;
@@ -143,9 +146,10 @@ namespace Km.AdExpressClientWeb.Controllers
         public ExportAspose()
         { }
 
-        public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false)
+
+        public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1)
         {
-            data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            data.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
 
 
@@ -565,6 +569,136 @@ namespace Km.AdExpressClientWeb.Controllers
             //Response.End();
         }
 
+        public void ExportFromGridResult(Workbook document, GridResultExport data, WebSession session, int columnIndex = 1)
+        {
+
+            License licence = new License();
+            licence.SetLicense("Aspose.Cells.lic");
+
+            //document.Worksheets.Clear();
+
+            Worksheet sheet = document.Worksheets.Add("Resultat");
+
+            document.ChangePalette(HeaderTabBackground, 3);
+            document.ChangePalette(HeaderTabText, 2);
+            document.ChangePalette(HeaderBorderTab, 1);
+
+            document.ChangePalette(L1Background, 22);
+            document.ChangePalette(L1Text, 21);
+
+            document.ChangePalette(L2Background, 20);
+            document.ChangePalette(L2Text, 19);
+
+            document.ChangePalette(L3Background, 18);
+            document.ChangePalette(L3Text, 17);
+
+            document.ChangePalette(L4Background, 16);
+            document.ChangePalette(L4Text, 15);
+
+            document.ChangePalette(LTotalBackground, 14);
+            document.ChangePalette(LTotalText, 13);
+
+            document.ChangePalette(TabBackground, 12);
+            document.ChangePalette(TabText, 11);
+            document.ChangePalette(BorderTab, 10);
+
+            document.ChangePalette(PresentText, 9);
+            document.ChangePalette(PresentBackground, 8);
+
+            document.ChangePalette(NotPresentText, 7);
+            document.ChangePalette(NotPresentBackground, 6);
+
+            document.ChangePalette(ExtendedText, 5);
+            document.ChangePalette(ExtendedBackground, 4);
+
+
+            int rowStart = 1;
+            int columnStart = 1;
+            bool columnHide = false;
+
+            int coltmp = columnStart;
+            int nbRowTotal = 0;
+
+            if (data.HasData)
+            {
+                nbRowTotal = data.Columns.Count;
+
+                DrawHeaders(data, sheet, rowStart, columnStart);
+            }
+
+            rowStart += nbRowTotal;
+
+            int colLevel = 0;
+            int rowStartValue = rowStart;
+            int rowEndValue = 0;
+            HashSet<int> lstColEvol = new HashSet<int>();
+
+
+            // Fige les entêtes de lignes et de colonnes
+            sheet.FreezePanes(rowStart, columnStart, rowStart, columnStart);
+
+            for (int idxCol = colLevel, cellCol = columnStart + colLevel; idxCol < data.Columns.Count; idxCol++)
+            {
+                columnHide = false;
+
+                for (int idxRow = 0, cellRow = rowStart; idxRow < data.Data.Count; idxRow++, cellRow++)
+                {
+
+                    InfragisticData cell = data.Data[idxRow];
+
+                    if (data.Columns[idxCol].Hidden == true)
+                    {
+                        columnHide = true;
+                        break;
+                    }
+
+                    MEFData(session, cell, sheet, ref cellRow, cellCol, lstColEvol, idxCol);
+                    
+                    if (rowEndValue < cellRow)
+                        rowEndValue = cellRow;
+                }
+
+                if (columnHide == false)
+                    cellCol++;
+            }
+
+            #region Ajustement de la taile des cellules en fonction du contenu 
+
+            sheet.AutoFitColumns();
+
+            #endregion
+
+            #region Ajoute les icones des cellules
+            if (lstColEvol.Count() > 0)
+            {
+                int idxCondis = sheet.ConditionalFormattings.Add();
+                FormatConditionCollection fcs = sheet.ConditionalFormattings[idxCondis];
+
+                foreach (int col in lstColEvol)
+                {
+                    CellArea cellArea = new CellArea();
+                    cellArea.StartRow = rowStartValue;
+                    cellArea.EndRow = rowEndValue;
+                    cellArea.StartColumn = col;
+                    cellArea.EndColumn = col;
+
+                    fcs.AddArea(cellArea);
+                }
+
+                // Adds condition.
+                int conditionIndex = fcs.AddCondition(FormatConditionType.IconSet, OperatorType.None, "0", "0");
+                fcs[conditionIndex].IconSet.Type = IconSetType.Arrows3;
+
+                //fcs[conditionIndex].IconSet.Cfvos[0].Type = FormatConditionValueType.Number;
+                //fcs[conditionIndex].IconSet.Cfvos[0].Value = 0;                    
+                fcs[conditionIndex].IconSet.Cfvos[1].Type = FormatConditionValueType.Number;
+                fcs[conditionIndex].IconSet.Cfvos[1].Value = 0;
+                fcs[conditionIndex].IconSet.Cfvos[2].Type = FormatConditionValueType.Number;
+                fcs[conditionIndex].IconSet.Cfvos[2].Value = 0;
+            }
+            #endregion
+        }
+
         private void MEFCell(WebSession session, ICell cell, Aspose.Cells.Worksheet sheet, ref int cellRow, int cellCol, LineType lineType, HashSet<int> lstColEvol)
         {
             Color textColor;
@@ -596,6 +730,38 @@ namespace Km.AdExpressClientWeb.Controllers
                 SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
 
                 lstColEvol.Add(cellCol);
+            }
+            else if (cell is CellPage)
+            {
+                double value = ((CellPage)cell).Value;
+
+                if (double.IsInfinity(value) || double.IsNaN(value))
+                    sheet.Cells[cellRow, cellCol].Value = "";
+                else
+                    sheet.Cells[cellRow, cellCol].Value = value / 1000.0; 
+
+                if (((CellPage)cell).AsposeFormat == -1)
+                    SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                else
+                    SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellPage)cell).AsposeFormat);
+
+                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+            }
+            else if (cell is CellKEuro)
+            {
+                double value = ((CellKEuro)cell).Value;
+
+                if (double.IsInfinity(value) || double.IsNaN(value))
+                    sheet.Cells[cellRow, cellCol].Value = "";
+                else
+                    sheet.Cells[cellRow, cellCol].Value = value / 1000.0;
+
+                if (((CellKEuro)cell).AsposeFormat == -1)
+                    SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                else
+                    SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellKEuro)cell).AsposeFormat);
+
+                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
             }
             else if (cell is CellDuration)
             {
@@ -724,6 +890,55 @@ namespace Km.AdExpressClientWeb.Controllers
                     borderColor = BorderTab;
                     if (cell is CellLabel)
                         SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
+                    break;
+                default:
+                    textColor = Color.Black;
+                    backColor = Color.White;
+                    borderColor = Color.Black;
+                    break;
+            }
+
+            TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
+            BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
+        }
+
+        private void MEFData(WebSession session, InfragisticData cell , Aspose.Cells.Worksheet sheet, ref int cellRow, int cellCol, HashSet<int> lstColEvol, int idxCol)
+        {
+            Color textColor;
+            Color backColor;
+            Color borderColor;
+
+            sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode((cell).Values[idxCol]);
+
+            switch (cell.Level)
+            {
+                case 0:
+                    textColor = LTotalText;
+                    backColor = LTotalBackground;
+                    borderColor = BorderTab;
+                    break;
+                case 1:
+                    textColor = L1Text;
+                    backColor = L1Background;
+                    borderColor = BorderTab;
+                    break;
+                case 2:
+                    textColor = L2Text;
+                    backColor = L2Background;
+                    borderColor = BorderTab;
+                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
+                    break;
+                case 3:
+                    textColor = L3Text;
+                    backColor = L3Background;
+                    borderColor = BorderTab;
+                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 2);
+                    break;
+                case 4:
+                    textColor = L4Text;
+                    backColor = L4Background;
+                    borderColor = BorderTab;
+                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
                     break;
                 default:
                     textColor = Color.Black;
@@ -1184,6 +1399,25 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 if (header is HeaderGroup)
                     DrawHeaders(header, sheet, rowStart + 1, colStart);
+
+                colStart += colSpan;
+            }
+
+        }
+
+
+        private void DrawHeaders(GridResultExport head, Worksheet sheet, int rowStart, int colStart)
+        {
+            int nbRowTotal = head.Data.Count;
+
+            foreach (var item in head.Columns)
+            {
+                int colSpan = 1;
+
+                sheet.Cells[rowStart, colStart].Value = WebUtility.HtmlDecode(item.HeaderText);
+
+                TextStyle(sheet.Cells[rowStart, colStart], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                BorderStyle(sheet, rowStart, colStart, CellBorderType.Thin, HeaderBorderTab);
 
                 colStart += colSpan;
             }

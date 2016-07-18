@@ -21,12 +21,14 @@ namespace Kantar.AdExpress.Service.Core.Domain
             Trees = new List<Tree>();
             Branches = new List<UniversBranch>();
             SiteLanguage = siteLanguage;
+            MaxUniverseItems = 0;
         }
         public UniversBranchResult()
         {
             ControllerDetails = new ControllerDetails();
             Trees = new List<Tree>();
             Branches = new List<UniversBranch>();
+            MaxUniverseItems = 0;
         }
         public UniversBranchResult(int siteLanguage,int defaultBranchId, int count)
         {
@@ -35,12 +37,14 @@ namespace Kantar.AdExpress.Service.Core.Domain
             Branches = new List<UniversBranch>();
             SiteLanguage = siteLanguage;
             DefaultBranchId = defaultBranchId;
+            MaxUniverseItems = 0;
         }
         public List<UniversBranch> Branches { get; set; }
         public int SiteLanguage { get; set; }
         public int DefaultBranchId { get; set; }
         public List<Tree> Trees { get; set; }
-         public ControllerDetails ControllerDetails { get; set; }
+        public ControllerDetails ControllerDetails { get; set; }
+        public int MaxUniverseItems { get; set; }
     }
 
     public class UniversLevel
@@ -63,7 +67,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public int Id { get; set; }
         public AccessType AccessType { get; set; }
         public List<UniversLevel> UniversLevels { get; set; }
-
         public string Label { get; set; }
+        public bool IsDefaultActive { get; set; }
     }
 }

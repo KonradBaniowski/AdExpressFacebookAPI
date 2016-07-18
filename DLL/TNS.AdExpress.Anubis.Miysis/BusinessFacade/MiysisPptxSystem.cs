@@ -209,17 +209,19 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// Initialization
         /// </summary>
         /// <returns>short File Name</returns>
-        public void Init()
+        public string Init()
         {
             try
             {
-                FileName = GetFileName(_rqDetails);
+                var shortFName = "";
+                FileName = GetFileName(_rqDetails, ref shortFName);
                 IDocumentProperties dp = _pres.DocumentProperties;
                 dp.Author = _config.PdfAuthor;
                 dp.Subject = _config.PdfSubject;
                 dp.Title= GetTitle();
                 dp.Keywords = _config.PdfKeyWords;
                 dp.Manager = _config.PdfProducer;
+                return shortFName;
             }
             catch (Exception e)
             {
@@ -268,7 +270,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// <summary>
         /// Send mail
         /// </summary>
-        public virtual void Send()
+        public virtual void Send(string fileName)
         {           
 
             try
@@ -280,10 +282,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 }
                 SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
                     GetMailContent(),
-                    GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName
-                    + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
+                    GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + " \"" + _webSession.ExportedPDFFileName
+                    + "\"" + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pptx")
                     + "<br><br>"
-                    + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer),
+                    + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), "http://km-adexpress.kantarmedia.fr"),
                     true, _config.CustomerMailServer, _config.CustomerMailPort);
                 try
                 {
@@ -318,7 +320,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// </summary>
         /// <param name="rqDetails">Details of the customer request</param>
         /// <returns>Complet File Name String (path + short name)</returns>
-        private string GetFileName(DataRow rqDetails)
+        private string GetFileName(DataRow rqDetails, ref string shortName)
         {
             string pdfFileName;
 
@@ -332,10 +334,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 {
                     Directory.CreateDirectory(pdfFileName);
                 }
-                var shortName = DateTime.Now.ToString("yyyyMMdd_")
+                shortName = DateTime.Now.ToString("yyyyMMdd_")
                     + rqDetails["id_static_nav_session"].ToString()
                     + "_"
-                    + TNS.Ares.Functions.GetRandomString(30, 40);
+                    + TNS.Ares.Functions.GetRandomMailString(30, 40);
 
                 pdfFileName += @"\" + shortName + ".pptx";
 
@@ -1866,7 +1868,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// </summary>
         /// <returns>Mail content</returns>
         protected virtual string GetMailContent() {
-            return GestionWeb.GetWebWord(2006, _webSession.SiteLanguage);
+            return GestionWeb.GetWebWord(2006, _webSession.SiteLanguage).Replace("é", "e"); ;
         }
         #endregion
 

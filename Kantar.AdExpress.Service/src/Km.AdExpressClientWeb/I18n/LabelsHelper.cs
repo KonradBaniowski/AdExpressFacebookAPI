@@ -27,7 +27,7 @@ namespace Km.AdExpressClientWeb.I18n
                 Save = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, siteLanguage),
                 IncludedElements = GestionWeb.GetWebWord(LanguageConstantes.IncludedElements, siteLanguage),
                 ExcludedElements = GestionWeb.GetWebWord(LanguageConstantes.ExcludedElements, siteLanguage),
-                Results = GestionWeb.GetWebWord(LanguageConstantes.ResultsCode, siteLanguage),
+                Results = GestionWeb.GetWebWord(LanguageConstantes.Results, siteLanguage),
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
@@ -133,7 +133,17 @@ namespace Km.AdExpressClientWeb.I18n
                 FileName = GestionWeb.GetWebWord(LanguageConstantes.FileName, siteLanguage),
                 Email = GestionWeb.GetWebWord(LanguageConstantes.MailCode, siteLanguage),
                 Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
-                Close = GestionWeb.GetWebWord(LanguageConstantes.Close, siteLanguage)
+                Close = GestionWeb.GetWebWord(LanguageConstantes.Close, siteLanguage),
+                DefaultUniverse = GestionWeb.GetWebWord(LanguageConstantes.DefaultUniverse, siteLanguage),
+                FacebookAllowedLevels = GestionWeb.GetWebWord(LanguageConstantes.FacebookAllowedLevels, siteLanguage),
+                MaxFacebookItems = GestionWeb.GetWebWord(LanguageConstantes.MaxFacebookItems, siteLanguage),
+                Redirecting = GestionWeb.GetWebWord(LanguageConstantes.Redirecting, siteLanguage),
+                WriteToUs = GestionWeb.GetWebWord(LanguageConstantes.WriteToUs, siteLanguage),
+                CallUs = GestionWeb.GetWebWord(LanguageConstantes.CallUs, siteLanguage),
+                ClientService = GestionWeb.GetWebWord(LanguageConstantes.ClientService, siteLanguage),
+                Unit =GestionWeb.GetWebWord(LanguageConstantes.Unit,siteLanguage),
+                FacebookDescription = GestionWeb.GetWebWord(LanguageConstantes.FacebookDescription, siteLanguage),
+                FacebookModalTitle = GestionWeb.GetWebWord(LanguageConstantes.FacebookPost, siteLanguage)                
             };
             return result;
         }

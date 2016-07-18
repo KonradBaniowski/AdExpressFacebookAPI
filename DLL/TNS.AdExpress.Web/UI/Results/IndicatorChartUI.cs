@@ -783,7 +783,7 @@
 //            #endregion			
 			
 
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
 			
 //            compteur=-1;
 //            oldMonth=-1;

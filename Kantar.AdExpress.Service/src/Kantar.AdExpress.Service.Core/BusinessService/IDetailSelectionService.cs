@@ -1,4 +1,5 @@
-﻿using Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain;
+﻿using Kantar.AdExpress.Service.Core.Domain;
+using Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         DetailSelectionResponse LoadSessionDetails(string idSession, string idWebSession);
         DetailSelectionResponse LoadUniversDetails(string idUnivers, string idWebSession);
         DetailSelectionResponse LoadAlertDetails(string idAlert, string idWebSession);
+        List<Tree> GetMarket(string idWebSession);
     }
 }

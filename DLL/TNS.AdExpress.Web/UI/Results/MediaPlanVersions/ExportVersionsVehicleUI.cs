@@ -670,8 +670,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
 			#region Paramétrage des dates
 			//Formatting date to be used in the tabs which use APPM Press table
-			int dateBegin = int.Parse(TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd"));
-			int dateEnd = int.Parse(TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd"));
+			int dateBegin = int.Parse(TNS.AdExpress.Web.Functions.Dates.GetPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd"));
+			int dateEnd = int.Parse(TNS.AdExpress.Web.Functions.Dates.GetPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd"));
 			#endregion
 
 			#region targets
@@ -1045,8 +1045,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
             #region Dates Parameters
 			//Formatting date to be used in the query
-			string dateBegin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd");
-			string dateEnd = WebFunctions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd");
+			string dateBegin = WebFunctions.Dates.GetPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd");
+			string dateEnd = WebFunctions.Dates.GetPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd");
 			#endregion
 
             ListDictionary  mediaImpactedList = Functions.MediaDetailLevel.GetImpactedMedia(_webSession, -1, -1, -1, -1);	

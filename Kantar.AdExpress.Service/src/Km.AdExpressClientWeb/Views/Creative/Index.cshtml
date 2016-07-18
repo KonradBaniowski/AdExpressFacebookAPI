@@ -74,13 +74,14 @@
                             <PARAM name="quality" value="high">
                             <EMBED src="" play="true" swliveconnect="true" quality="high" />
                         </OBJECT>
-                        <object id="objectFLV" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version =5,0,0,0" >
+                        <object id="objectFLV" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version =5,0,0,0">
                             <param name="flashvars" value="" />
                             <param name="movie" value="/Player/playerflv.swf" />
                             <param name="allowfullscreen" value="true" />
                             <param name="allowscriptaccess" value="always" />
-                            <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always"  allowfullscreen="false"  flashvars=""  />
+                            <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always" allowfullscreen="false" flashvars="" />
                         </object>
+                        <iframe id="objectHTML5" src="" scrolling="no" onload="Html5Loaded()"></iframe>
                     </div>
                 </div>
                 <div class="modal-footer hide">
@@ -268,11 +269,13 @@
                             strHtml = "";
                             for (j = 0; j < data.filtertitle.length; j++) {
                                 strHtml += '<div class="col-md-12 titleFilter">' + data.filtertitle[j] + '</div>';
+                                strHtml += '<div class="col-md-12">';
                                 for (i = 0; i < data.filterdatas[j].length; i++) {
                                     id = data.filterdatas[j][i].id;
                                     label = data.filterdatas[j][i].label;
-                                    strHtml += '<label class="checkbox-inline no_indent"><input type="checkbox" name="EvaliantFilter" id ="' + id + '" value="' + label + '" ">' + label + '</label>';
+                                    strHtml += '<label class="checkbox-inline no_indent"><input type="checkbox" name="EvaliantFilter" id ="' + id + '" value="' + label + '" >' + label + '</label>';
                                 }
+                                strHtml += '</div>';
                             }
 
                             $("#contentFilter").html(strHtml);
@@ -414,6 +417,7 @@
             $("#creativeStream").hide();
             $("#objectSWF").hide();
             $("#objectFLV").hide();
+            $("#objectHTML5").hide();
             $("#mediaLoader").show();
             
             $("#creativeModal").on('shown.bs.modal', function (event) {
@@ -479,6 +483,11 @@
                             $("#objectFLV embed").attr("flashvars", "file=" + datas[0]);
                             $("#objectFLV").show();
                             break;
+                        case "HTML5":
+                            url = datas[0];
+                            $("#objectHTML5").attr('src', url);
+                            $("#objectHTML5").show();
+                            break;
                         default:
                             url = datas[0];
                             $("#creativeStream").attr('src', url);
@@ -497,8 +506,10 @@
                 $("#creativeStream").hide();
                 $("#objectSWF").hide();
                 $("#objectFLV").hide();
+                $("#objectHTML5").hide();
                 $("#mediaLoader").show();
                 $("#creativeModal .modal-footer").addClass("hide");
+                Html5UnLoaded("objectHTML5");
             });
         }
 
@@ -651,6 +662,32 @@
             $("#gridLoader").show();
             CallCreativeResult();
         });
+
+        //Resize la modal avec la taille de l'iframe
+        function Html5Loaded() {
+            var iFrameID = document.getElementById("objectHTML5");
+            if (iFrameID) {
+
+                $("#objectHTML5").removeAttr("width");
+                $("#objectHTML5").removeAttr("height");
+
+                newheight = iFrameID.contentWindow.document.body.scrollHeight + 50;
+                newwidth = iFrameID.contentWindow.document.body.scrollWidth + 50;
+
+                $("#creativeModal > .modal-dialog").css("width", (newwidth) + "px");
+                $("#creativeModal > .modal-dialog > .modal-content > .modal-body").css("height", (newheight) + "px");
+
+                iFrameID.height = (newheight) + "px";
+                iFrameID.width = (newwidth) + "px";
+            }
+        }
+        function Html5UnLoaded(idElmt) {
+            var iFrameID = document.getElementById(idElmt);
+            if (iFrameID) {
+                $("#creativeModal > .modal-dialog").removeAttr("style");
+                $("#creativeModal > .modal-dialog > .modal-content > .modal-body").removeAttr("style");
+            }
+        }
 
         //Change Icone Filter quand hide/show collapse
         $(document).on('show.bs.collapse', '#filterEvaliant', function (e) {

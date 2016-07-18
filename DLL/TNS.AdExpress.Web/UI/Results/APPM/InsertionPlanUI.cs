@@ -85,9 +85,9 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					html.Append(GestionWeb.GetWebWord(1727,webSession.SiteLanguage)); 
 					html.Append("<br><br>" + dtResult.Rows[0]["label"]);
 					html.Append(" " + GestionWeb.GetWebWord(1729,webSession.SiteLanguage));
-					html.Append(" " + WebFnc.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType).ToShortDateString());
+					html.Append(" " + WebFnc.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType).ToShortDateString());
 					html.Append(" " + GestionWeb.GetWebWord(1730,webSession.SiteLanguage));
-					html.Append(" " + WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType).ToShortDateString());
+					html.Append(" " + WebFnc.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType).ToShortDateString());
 
 					html.Append("</td></tr>");
 				}

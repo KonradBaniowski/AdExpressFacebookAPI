@@ -1,5 +1,6 @@
 ﻿
 var dimension = $('#Dimension').val();
+var maxUniverseItems = $('#MaxUniverseItems').val();
 //Déplacer un élement marché
 $('#move-item').on('click', function () {
     var levelSrc = $('.panel-marche .ui-selectee.ui-selected');
@@ -10,6 +11,20 @@ $('#move-item').on('click', function () {
         var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li')
         var nbItemSrc = levelSrc.length;
         var nbItemDst = levelDst.length;
+        if ($('#CurrentModule').val() == 17109)
+        {
+            if (!(universSrc == 6 || universSrc == 8))
+            {
+                bootbox.alert($('#Labels_FacebookAllowedLevels').val());
+                return
+            }
+            if (nbItemSrc > maxUniverseItems || nbItemDst > maxUniverseItems)
+            {             
+                bootbox.alert($('#Labels_MaxFacebookItems').val());
+                return
+            }
+        }
+        
         if (nbItemDst + nbItemSrc > 1000) {
             bootbox.alert($('#Labels_ErrorMessageLimitUniverses').val());
             return
@@ -85,4 +100,13 @@ $(".btn-recherche").on('click', function (event) {
 
     });
 });
+
+String.prototype.format = function () {
+    var formatted = this;
+    for (var i = 0; i < arguments.length; i++) {
+        var regexp = new RegExp('\\{' + i + '\\}', 'gi');
+        formatted = formatted.replace(regexp, arguments[i]);
+    }
+    return formatted;
+};
 

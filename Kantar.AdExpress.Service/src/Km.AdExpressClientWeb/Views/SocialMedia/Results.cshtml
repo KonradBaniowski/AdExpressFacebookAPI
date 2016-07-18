@@ -1,0 +1,251 @@
+﻿@model Km.AdExpressClientWeb.Models.SocialMedia.ResultsViewModel
+@using TNS.AdExpress.Domain.Translation;
+@{
+    var _controller = "SocialMedia";
+    ViewBag.Title = "Results";
+    Layout = "~/Views/Shared/_LayoutResults.cshtml";
+}
+
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
+
+
+<div class="row">
+    @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("DetailSelection")
+    @Html.Hidden("ExportController", "SocialMediaExport")
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+        <div class="row row-sm">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="pull-right custom-button selectexporttype">
+            <select id="universe-choice" class="selectdatepicker hide">
+                <option value="1"> @Model.Labels.ExportFormattedResult</option>
+            </select>&nbsp;
+            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="pull-right custom-button selectexporttype">
+            <select id="export-type" class="selectdatepicker hide">
+                <option value="1"> @Model.Labels.ExportFormattedResult</option>
+            </select>&nbsp;
+            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
+        </div>
+    </div>
+</div>
+@*<div class="h20">
+    </div>*@
+@*<div class="row">
+        <div class="col-md-12">
+            @Html.Action("ResultOptions", _controller)
+        </div>
+    </div>*@
+<div class="h20">
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <center>
+            <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
+            <div id="grid" class="hide">
+            </div>
+            <div id="gridLoader">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </center>
+    </div>
+</div>
+
+<div class="panel-group panel-group-results margin-b-20 hide" id="resaccord">
+
+    <div class="row margin-b-20 margin-top-30">
+        <div class="col-md-12">
+            <form class="form-inline pull-right">
+                <div id="unity" class="form-group">
+                    <label for="unity">Unité</label>
+                    <select class="form-control" id="seriesType">
+                        <option value="like" selected="selected">Like</option>
+                        <option value="share">Share</option>
+                        <option value="comment">Comment</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="volet2" class="panel panel-primary panel-results">
+        <div class="panel-heading head-results">
+            <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#resaccord" href="#accord2">
+                    <i class="fa fa-line-chart"></i> Sélections Référentes
+                </a>
+            </h3>
+        </div>
+        <div id="accord2" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div id="Refer-chart"></div>
+                <div id="PDM-chart"></div>
+            </div>
+        </div>
+    </div>
+    <div id="volet3" class="panel panel-primary panel-results">
+        <div class="panel-heading head-results">
+            <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#resaccord" href="#accord3">
+                    <i class="fa fa-line-chart"></i> Sélections Concurrentes
+                </a>
+            </h3>
+        </div>
+        <div id="accord3" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="row margin-top-30" id="Concur-chart"></div>
+                <div class="row margin-top-30" id="Stacked-chart"></div>
+            </div>
+        </div>
+    </div>
+    <div id="volet4" class="panel panel-primary panel-results">
+        <div class="panel-heading head-results">
+            <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#resaccord" href="#accord4">
+                    <i class="fa fa-line-chart"></i> Posts
+                </a>
+            </h3>
+        </div>
+        <div id="accord4" class="panel-collapse collapse in">
+
+                <div class="col-md-12 margin-top-10 margin-b-20">
+                    <form class="form-inline pull-right">
+                        <div id="combo" class="form-group">
+                            <label for="wombocombo">Filter</label>
+                            <select class="form-control"></select>
+                        </div>
+                    </form>
+                </div>
+
+            <div class="panel-body">
+                <div class="row margin-top-30" id="top-post"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row margin-top-30">
+    <div class="col-md-12">
+        <div class="post-selected" hidden>
+
+        </div>
+    </div>
+</div>
+<div id="resultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Modal zoom post -->
+<div class="modal fade text-center blo" id="postFacebookModal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
+    <div class="modal-dialog" style="width:95%;height:auto;">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="current-url" value="/@_controller/Results" />
+
+@section Scripts{
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.dv.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+
+    <script id="titleTmpl" type="text/template">
+        {{if parseInt(${IdPage}) != 0}}
+        <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src="" />
+        {{/if}}
+        ${PageName}
+    </script>
+
+    <script id="linkToPostTmpl" type="text/template">
+        <center>
+            <form id="${IdPageFacebook}" action="/SocialMedia/SocialMediaCreative" method="post" target="_blank">
+                <input type="hidden" name="ids" value="${IdPageFacebook}" />
+                <input type="hidden" name="type" value="0" />
+                <a href="javascript:;" onclick="document.getElementById('${IdPageFacebook}').submit();">
+                    <span class="fa fa-search-plus"></span>
+                </a>
+            </form>
+        </center>
+    </script>
+
+    <script id="linkUrlTmpl" type="text/template">
+        {{if ${Url} != "" }}
+        <center>
+            <a href="${Url}" target="_blank">
+                <span class="fa fa-facebook-official"></span>
+            </a>
+        </center>
+        {{/if}}
+    </script>
+
+    <script id="checkBoxTmpl" type="text/template">
+        {{if parseInt(${IdPage}) != 0}}
+        <center><input type="checkbox" disabled="disabled"></center>
+        {{else}}
+        <center><input type="checkbox"></center>
+        {{/if}}
+    </script>
+
+    <script id="LikeTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Likes: <label class='bold'>${item.Like}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+    <script id="ShareTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Shares: <label class='bold'>${item.Share}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+    <script id="CommentTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Comments: <label class='bold'>${item.Comment}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+    <script id="ExpenditureTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Expenditure: <label class='bold'>${item.Expenditure}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+    <script id="PostTooltipTemplate" type="text/x-ig-tmpl">
+        <div class='ui-chart-tooltip'>
+            <div>Posts: <label class='bold'>${item.Post}</label></div>
+            <div>Month: <label class='bold'>${item.Month}</label></div>
+        </div>
+    </script>
+
+
+    @Scripts.Render("~/bundles/results")
+    @Scripts.Render("~/bundles/socialMedia-results")
+}

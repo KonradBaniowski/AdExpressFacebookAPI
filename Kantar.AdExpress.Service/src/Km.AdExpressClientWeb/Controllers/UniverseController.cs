@@ -51,8 +51,23 @@ namespace Km.AdExpressClientWeb.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
-            var model = _universeService.GetItems(universeId, keyWord, idSession, dimension, idMedias, out totalItems);
+            Domain.SearchRequest request = new Domain.SearchRequest(universeId, keyWord, idSession, dimension, idMedias);
+            var model = _universeService.GetItems(request, out totalItems);
             return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// TEST : http://localhost:55658/Universe/GetUniverses?dimension=2
+        /// </summary>
+        /// <param name="dimension"></param>
+        /// <returns></returns>
+        public JsonResult GetModuleUniverses(Dimension dimension)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var model = _universeService.GetUniverses(dimension, idSession);
+            return Json(new { data = model}, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -124,7 +139,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 SelectUnivers = GestionWeb.GetWebWord(LanguageConstantes.SelectUnivers, data.SiteLanguage),
                 UniversLabel = GestionWeb.GetWebWord(LanguageConstantes.UniversLabel, data.SiteLanguage),
                 UserGroups = new List<SelectListItem>(),
-                UserUnivers = new List<SelectListItem>()
+                UserUnivers = new List<SelectListItem>(),
+                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, data.SiteLanguage),
+                CanSetDefaultUniverse = data.CanSetDefaultUniverse,
+                DefaultUniverse = "Default Universe"
             };
             if (data.UniversGroups.Any())
             {
@@ -167,26 +185,27 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         [HttpPost]
-        public string SaveUserUnivers(List<Tree> trees, string groupId, string universId, string name, Dimension dimension, List<long> media = null)
+        public string SaveUserUnivers(List<Tree> trees, string groupId, string universId, string name, Dimension dimension, bool isDefaultUniverse, List<long> media = null)
         {
             string error = string.Empty;
-                var claim = new ClaimsPrincipal(User.Identity);
-                string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                List<Tree> validTrees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
-                var data = Mapper.Map<List<Kantar.AdExpress.Service.Core.Domain.Tree>>(validTrees);
-                Domain.UniversGroupSaveRequest request = new Domain.UniversGroupSaveRequest
-                {
-                    Dimension = dimension,
-                    Name = name,
-                    UniversGroupId = !string.IsNullOrEmpty(groupId) ? long.Parse(groupId):0,
-                    UserUniversId = !string.IsNullOrEmpty(universId)?long.Parse(universId):0,
-                    WebSessionId = webSessionId,
-                    Trees = Mapper.Map<List<Domain.Tree>>(validTrees),
-                    IdUniverseClientDescription = 16,
-                    MediaIds = (media != null) ? media : new List<long>()
-                };
-                var result = _universeService.SaveUserUnivers(request);
-                error = result.ErrorMessage;
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            List<Tree> validTrees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
+            var data = Mapper.Map<List<Kantar.AdExpress.Service.Core.Domain.Tree>>(validTrees);
+            Domain.UniversGroupSaveRequest request = new Domain.UniversGroupSaveRequest
+            {
+                Dimension = dimension,
+                Name = name,
+                UniversGroupId = !string.IsNullOrEmpty(groupId) ? long.Parse(groupId) : 0,
+                UserUniversId = !string.IsNullOrEmpty(universId) ? long.Parse(universId) : 0,
+                WebSessionId = webSessionId,
+                Trees = Mapper.Map<List<Domain.Tree>>(validTrees),
+                IdUniverseClientDescription = 16,
+                MediaIds = (media != null) ? media : new List<long>(),
+                IsDefaultUniverse =isDefaultUniverse
+            };
+            var result = _universeService.SaveUserUnivers(request);
+            error = result.ErrorMessage;
             return error;
         }
 
@@ -389,7 +408,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var response = new Domain.AdExpressResponse
             {
                 Message = string.Empty,
-                RedirectUrl = string.Empty               
+                RedirectUrl = string.Empty
             };
             var redirectUrl = string.Empty;
             var claim = new ClaimsPrincipal(User.Identity);

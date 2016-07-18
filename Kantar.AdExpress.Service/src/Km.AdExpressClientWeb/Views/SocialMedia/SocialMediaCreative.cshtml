@@ -1,0 +1,64 @@
+﻿@model Km.AdExpressClientWeb.Models.Shared.InsertionCreativeViewModel
+
+@{
+    ViewBag.Title = "Facebook Creative";
+    Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
+}
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12" style="background-color:black;padding-bottom:15px;">
+        <div class="panel-heading">
+            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; Posts</span></h5>
+        </div>
+    </div>
+
+    <div id="HeaderElmt" class="center-block">
+        @Html.Action("SubPeriodSelection", "MediaSchedule", new { zoomDate = "" })        
+    </div>
+    <div class="col-md-12" style="margin-top:10px;">
+        <div class="pull-right custom-button">
+            <button class="btn btn-save" id="btn-export">@Model.Labels.Export    <i class="fa fa-file-excel-o fa-file-excel-size"></i></button>&nbsp;
+        </div>
+    </div>
+
+    <div class="col-md-12" style="margin-top:10px;">
+        <center>
+            <p id="gridEmpty" style="display:none">@Model.Labels.EmptyGrid</p>
+            <div id="grid" style="display:none"></div>
+            <div id="gridLoader" style="display:none">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </center>
+    </div>
+
+    <!-- Modal zoom post -->
+    <div class="modal fade text-center blo" id="postFacebookModal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
+        <div class="modal-dialog" style="width:95%;height:auto;">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+    @Html.Hidden("ids", Model.paramsUrl[0])
+    @Html.Hidden("type",Model.paramsUrl[1])
+</div>
+
+
+@section Scripts {
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+<script src="~/IgniteUI/js/infragistics.dv.js"></script>
+
+<script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+    @Scripts.Render("~/bundles/socialMedia-creative")
+    @Scripts.Render("~/bundles/language-choice")
+    <script id="colPostTmpl" type="text/template">
+        {{if parseInt(${IdPostFacebook}) != 0}}
+        <a class="triggerModal" href='#postFacebookModal' data-toggle='modal' data-creative="${IdPostFacebook}">
+            <img class="imgPostsFacebook" style="max-width:60px;" data-post="${IdPost}" src="" onError="this.onerror=null;this.src='/Content/img/no_visu.jpg';" />
+        </a>
+        {{/if}}
+    </script>
+}

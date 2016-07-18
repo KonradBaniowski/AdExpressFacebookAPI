@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class PdfController : Controller
     {
         public ActionResult PDF(string fileName)

@@ -13,6 +13,8 @@ namespace TNS.Ares {
 
         private static char[] characters = new char[46] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', '[', ']', '(', ')', '{', '}', '=', '!' };
 
+        private static char[] mailCharacters = new char[46] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', '[', ']', '(', ')', 'a', 'b', '=', '!' };
+
         #region Random String
         /// <summary>
         /// Generate a string with random size and random caracters authorized in a file name
@@ -30,6 +32,28 @@ namespace TNS.Ares {
             StringBuilder str = new StringBuilder(max);
             for (int i = 0; i < max; i++) {
                 str.Append(characters[GetRandomInteger(0, characters.Length - 1)]);
+            }
+            return str.ToString();
+        }
+
+        /// <summary>
+        /// Same as GetRandomString but uses charecters that could be sent in an html email 
+        /// </summary>
+        /// <param name="minL"></param>
+        /// <param name="maxL"></param>
+        /// <returns></returns>
+        public static string GetRandomMailString(int minL, int maxL)
+        {
+            int max;
+            r = new Random(unchecked((int)DateTime.Now.Ticks));
+            if (maxL <= 0)
+                max = GetRandomIntegerAbove(minL);
+            else
+                max = GetRandomInteger(minL, maxL);
+            StringBuilder str = new StringBuilder(max);
+            for (int i = 0; i < max; i++)
+            {
+                str.Append(mailCharacters[GetRandomInteger(0, mailCharacters.Length - 1)]);
             }
             return str.ToString();
         }

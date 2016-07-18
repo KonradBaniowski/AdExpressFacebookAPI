@@ -1007,7 +1007,7 @@
     <item mnemonic="w1773" type="System.String">Calendrier d'actions</item>
     <item mnemonic="w1774" type="System.String">Types de périodicités</item>
     <item mnemonic="w1775" type="System.String">Répartition des PDV en GRP</item>
-    <item mnemonic="w1776" type="System.String">Pour tout renseignement, rendez-vous sur www.adexpress.kantarmedia.fr ou contactez les membres du Pôle Publicité de Kantar Media.</item>
+    <item mnemonic="w1776" type="System.String">Pour tout renseignement, rendez-vous sur {0} ou contactez les membres du Pôle Publicité de Kantar Media.</item>
     <item mnemonic="w1777" type="System.String">Familles de Presse</item>
     <item mnemonic="w1778" type="System.String">Mes téléchargements</item>
     <item mnemonic="w1779" type="System.String">PUBLICITE EXTERIEURE</item>
@@ -1377,7 +1377,7 @@
     <item mnemonic="w2171" type="System.String">Plan media</item>
     <item mnemonic="w2172" type="System.String">Plan media concurrentiel</item>
     <item mnemonic="w2173" type="System.String">Analyse sectorielle: Les indicateurs graphiques </item>
-    <item mnemonic="w2174" type="System.String">Analyse sectorielle: Les tableaux dynamiques</item>
+    <item mnemonic="w2174" type="System.String">Analyse sectorielle plurimedia</item>
     <item mnemonic="w2175" type="System.String">Tableau de bord Presse</item>
     <item mnemonic="w2176" type="System.String">Tableau de bord Télévision</item>
     <item mnemonic="w2177" type="System.String">Tableau de bord Radio</item>
@@ -2319,5 +2319,17 @@
     <item mnemonic="w3061" type="System.String">Numéro SIRET</item>
     <item mnemonic="w3062" type="System.String">Recherche</item>
     <item mnemonic="w3063" type="System.String">Analyses</item>
+    <item mnemonic="w3064" type="System.String">Facebook</item>
+    <item mnemonic="w3065" type="System.String">En cours de construction</item>
+    <item mnemonic="w3066" type="System.String"> est disponible sur &lt;a href="{0}"&gt;AdExpress&lt;/a&gt;.</item>
+    <item mnemonic="w3067" type="System.String">Univers par défaut</item>
+    <item mnemonic="w3068" type="System.String">Vous ne pouvez sélectionner que des annonceurs ou des marques.</item>
+    <item mnemonic="w3069" type="System.String">Vous pouvez sélectionner au maximum {0} annonceurs ou marques.</item>
+    <item mnemonic="w3070" type="System.String">Redirection en cours</item>
+    <item mnemonic="w3071" type="System.String">Écrivez-nous</item>
+    <item mnemonic="w3072" type="System.String">Appelez-nous</item>
+    <item mnemonic="w3073" type="System.String">Service Client AdExpress</item>
+    <item mnemonic="w3074" type="System.String">Analyser l’exposition de vos contenus sur Facebook au travers de nombreux KPI </item>
+    <item mnemonic="w3075" type="System.String">Post Facebook </item>
   </items>
 </localization>

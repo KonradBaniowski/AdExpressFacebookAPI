@@ -126,7 +126,7 @@
 
 //            #region période étudiée
 //            //fin période étudiée
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
 //            #endregion
 
 //            System.Text.StringBuilder t=new System.Text.StringBuilder(10000);

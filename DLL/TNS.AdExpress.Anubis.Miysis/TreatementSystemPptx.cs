@@ -233,11 +233,11 @@ namespace TNS.AdExpress.Anubis.Miysis
 				#region PDF management
 
                 pptx = new MiysisPptxSystem(_dataSource, _miysisConfig, rqDetails, _webSession, _theme);
-                pptx.Init();
+                string fileName = pptx.Init();
                 pptx.Fill();
                 pptx.EndDoc();
                 _dataAccess.RegisterFile(_navSessionId,Path.GetFileNameWithoutExtension(pptx.FileName));
-                pptx.Send();
+                pptx.Send(fileName);
                 _dataAccess.UpdateStatus(_navSessionId, Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 
                 PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.MiysisPptx);

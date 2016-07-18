@@ -373,8 +373,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 
                 t.Append("<td class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, webSession.SiteLanguage));
                 if (zoomDate != null && zoomDate.Length > 0){
-                    t.Append("&nbsp;" + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(zoomDate, webSession.PeriodType), webSession.SiteLanguage)
-                        + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(zoomDate, webSession.PeriodType), webSession.SiteLanguage) + "&nbsp;");
+                    t.Append("&nbsp;" + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + WebFunctions.Dates.DateToString(WebFunctions.Dates.GetPeriodBeginningDate(zoomDate, webSession.PeriodType), webSession.SiteLanguage)
+                        + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + WebFunctions.Dates.DateToString(WebFunctions.Dates.GetPeriodEndDate(zoomDate, webSession.PeriodType), webSession.SiteLanguage) + "&nbsp;");
                 }
 
                 t.Append("</td>");
@@ -417,8 +417,8 @@ namespace TNS.AdExpress.Web.UI.Results{
             //A 0 car cette méthode ne peut être utilisé que sur une période (un mois ou une semaine)==> pas de multiannées. int.Parse(webSession.PeriodEndDate.Substring(0,4)) - int.Parse(webSession.PeriodBeginningDate.Substring(0,4));
             if (webSession.DetailPeriod == WebConstantes.CustomerSessions.Period.DisplayLevel.weekly)
             {
-                string periodBeginning = TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
-                string periodEnd = TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+                string periodBeginning = TNS.AdExpress.Web.Functions.Dates.GetPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+                string periodEnd = TNS.AdExpress.Web.Functions.Dates.GetPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
                 int currentDate = int.Parse(periodBeginning.Substring(0, 4));
                 int oldCurrentDate = int.Parse(periodEnd.Substring(0, 4));
                 nbColYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4)) - int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));
@@ -1136,8 +1136,8 @@ namespace TNS.AdExpress.Web.UI.Results{
                 //A 0 car cette méthode ne peut être utilisé que sur une période (un mois ou une semaine)==> pas de multiannées. int.Parse(webSession.PeriodEndDate.Substring(0,4)) - int.Parse(webSession.PeriodBeginningDate.Substring(0,4));
                 if (webSession.DetailPeriod == WebConstantes.CustomerSessions.Period.DisplayLevel.weekly)
                 {
-                    string periodBeginning = TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
-                    string periodEnd = TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+                    string periodBeginning = TNS.AdExpress.Web.Functions.Dates.GetPeriodBeginningDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
+                    string periodEnd = TNS.AdExpress.Web.Functions.Dates.GetPeriodEndDate(zoomDate, webSession.PeriodType).ToString("yyyyMMdd");
                     int currentDate = int.Parse(periodBeginning.Substring(0, 4));
                     int oldCurrentDate = int.Parse(periodEnd.Substring(0, 4));
                     nbColYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4)) - int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));

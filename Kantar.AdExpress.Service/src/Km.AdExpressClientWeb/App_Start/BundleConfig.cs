@@ -160,6 +160,13 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/bootstrap-datetimepicker.js",
                         "~/Scripts/detail-selection/detail-selection.js",
                         "~/Scripts/moment-with-locales.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/socialMedia-results").Include(
+            "~/Scripts/Results/socialMedia-results.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/socialMedia-creative").Include(
+            "~/Scripts/creative/socialMediaCreative.js",
+            "~/Scripts/creative/socialMediaZoom.js"));
         }
     }
 }

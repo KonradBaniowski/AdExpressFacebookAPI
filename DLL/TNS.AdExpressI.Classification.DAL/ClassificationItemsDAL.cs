@@ -153,7 +153,8 @@ namespace TNS.AdExpressI.Classification.DAL
                 /*To improve the performance of research. The target table varies according to the rights 
                  * of clients. For example, for a given classification level, if no rights is applied, 
                  * the corresponding table  of classification will be targeted instead of view. */
-                useView = CanUseView(_dimension, classificationRight);
+                useView = (_session.CurrentModule==WebConstantes.Module.Name.FACEBOOK)?CanUseFcbView(_dimension, classificationRight) :CanUseView(_dimension, classificationRight);
+
             }
             catch (System.Exception err)
             {
@@ -184,7 +185,8 @@ namespace TNS.AdExpressI.Classification.DAL
 
             /*Query conditions */
             sql.AppendFormat(" where ( upper(wp.{0}) like upper('{1}')  or upper(wp.{0}) like upper('{2}') ) ", classificationLevelLabel, wordToSearch1, wordToSearch2);
-
+            if (_session.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+                sql.AppendFormat(" and upper(wp.id_language) = {0}", _session.DataLanguage);
 
 
             /*Query tables joins */
@@ -324,6 +326,9 @@ namespace TNS.AdExpressI.Classification.DAL
             sql.AppendFormat(" select distinct wp.id_{0} as id_item, wp.{0} as item ", classificationLevelLabel);
 
             /*FROM clause : Obtains the targets tables of the query according to the web site data language*/
+            if (_session.CurrentModule== WebConstantes.Module.Name.FACEBOOK)
+                sql.AppendFormat(" from {0} wp", oView.Sql);
+            else
             sql.AppendFormat(" from {0}{1} wp", oView.Sql, _session.DataLanguage.ToString());
 
             /*Query conditions */
@@ -336,6 +341,8 @@ namespace TNS.AdExpressI.Classification.DAL
             {
                 sql.Append(classificationRight);
             }
+            if (_session.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+                sql.AppendFormat(" and upper(wp.id_language) = {0}", _session.DataLanguage);
 
             foreach (int filterId in Filters.Keys)
             {
@@ -674,34 +681,15 @@ namespace TNS.AdExpressI.Classification.DAL
             {
                 /* Obtains user View of the product or media classification for the modules  
                 * " Product class analysis: Graphic key reports " and "Product class analysis: Detailed reports".*/
-                case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
-                case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
-                    switch (dimension)
-                    {   //View for product classification brand
-                        case Dimension.product:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapProduct);
+                case WebConstantes.Module.Name.INDICATEUR:
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    return GetAnalysisClassificationBrand(dimension);
 
-                        //View for vehicle classification brand
-                        case Dimension.media:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapMedia);
-                        default:
-                            throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
-                    }
+                case WebConstantes.Module.Name.FACEBOOK:
+                    return GetFacebookClassificationBrand(dimension);
+
                 default:
-                    /* Obtains user View of the product or media classification for the others modules */
-                    switch (dimension)
-                    {
-                        //View for product classification brand
-                        case Dimension.product:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
-                        //View for vehicle classification brand
-                        case Dimension.media:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
-                        case Dimension.advertisingAgency:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
-                        default:
-                            throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
-                    }
+                    return GetDefaultClassificationBrand(dimension);
             }
 
         }
@@ -742,7 +730,12 @@ namespace TNS.AdExpressI.Classification.DAL
         protected virtual void GetFromClause(StringBuilder sql, View oView, string table, bool useView)
         {
             if (useView)
-                sql.AppendFormat(" from {0}{1} wp ", oView.Sql, _session.DataLanguage.ToString());
+
+            { if (_session.CurrentModule != WebConstantes.Module.Name.FACEBOOK)
+                    sql.AppendFormat(" from {0}{1} wp ", oView.Sql, _session.DataLanguage.ToString());
+            else
+                    sql.AppendFormat(" from {0} wp ", oView.Sql);
+            }
             else sql.AppendFormat(" from {0}.{1} wp ", _dBSchema, table);
         }
         #endregion
@@ -828,11 +821,67 @@ namespace TNS.AdExpressI.Classification.DAL
              * The view corresponding to a classification brand contains all fields (identifier and label) of brand.
              * For example for the product classification the View will be like this : id_produt,product, id_sector,sector, di_group_,
              * group_ etc */
-            if ((classificationRight != null && classificationRight.Length > 0)
-            || (dimension == Dimension.media && _module.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
-             || _filterWithProductSelection)
-                return true;
-            return false;
+            bool result = false;
+            bool partial = (!String.IsNullOrEmpty(classificationRight) || _filterWithProductSelection) ? true : false;
+             switch (_session.CurrentModule)
+            {
+                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    result = (dimension == Dimension.media || partial) ? true : false;
+                    break;
+                case WebConstantes.Module.Name.FACEBOOK:
+                    result = (dimension == Dimension.product) ? true : false;
+                    break;
+                default:
+                    result = partial;
+                    break;
+            }
+            return result;
+        }
+        protected virtual bool CanUseFcbView(Dimension dimension, string classificationRight)
+        {
+            //TODO check classificationRight for fcb isn't null or empty once we have an idea about this
+            var result = (_session.CurrentModule == WebConstantes.Module.Name.FACEBOOK && dimension == Dimension.product) ? true : false;
+            return result;
+        }
+        #endregion
+
+        #region Get classification brands foreach module by dimension 
+        private View GetAnalysisClassificationBrand(Dimension dimension)
+        {
+            switch (dimension)
+            {
+                case Dimension.product:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapProduct);
+
+                case Dimension.media:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapMedia);
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
+        }
+        private View GetFacebookClassificationBrand(Dimension dimension)
+        {
+            switch (dimension)
+            {
+                case Dimension.product:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allFacebookProduct);
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
+        }
+        private View GetDefaultClassificationBrand(Dimension dimension)
+        {
+            switch (dimension)
+            {
+                case Dimension.product:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+                case Dimension.media:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
+                case Dimension.advertisingAgency:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
         }
         #endregion
 

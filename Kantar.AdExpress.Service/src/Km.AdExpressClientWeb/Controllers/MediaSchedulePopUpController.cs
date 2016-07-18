@@ -10,11 +10,13 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using CoreDomain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class MediaSchedulePopUpController : Controller
     {
         private IMediaScheduleService _mediaSchedule;
@@ -39,7 +41,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var model = new InsertionCreativeViewModel()
             {
                 paramsUrl = new List<string>(),
-                SiteLanguage = 33, // Default
+                SiteLanguage = WebApplicationParameters.DefaultLanguage, // Default
             };
 
             model.paramsUrl.Add(id);

@@ -7,7 +7,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IUniverseService
     {
-        List<UniversItem> GetItems(int universeLevelId, string keyWord, string idSession, Dimension dimension, List<int> idMedias, out int nbItem);
+        List<UniversItem> GetItems(SearchRequest request, out int nbItem);
 
         List<UniversItem> GetItems(int levelId, string selectedClassificationItemsIds, int selectedLevelId, string idSession, Dimension dimension, List<int> idMedias, out int nbItems);
 
@@ -25,5 +25,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         AlertResponse GetUserAlerts(string webSessionId);
         string SaveUserResult(string webSessionId, string folderId, string saveAsResultId, string saveResult);
         List<UniversItem> GetGategoryItems( string webSessionId, out int nbItems, Dimension dimension = Dimension.product);
+
+        List<UserUnivers> GetUniverses(Dimension dimension, string webSessionId);
     }
 }

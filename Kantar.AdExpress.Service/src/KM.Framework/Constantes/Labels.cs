@@ -146,6 +146,16 @@ namespace KM.Framework.Constantes
         public string TotalInvestLabel { get; set; } //1399
         public string NbPage { get; set; } //1385
         public string RememberEmailLabel { get; set; } //2117
+        public string DefaultUniverse { get; set; }
+        public string FacebookAllowedLevels { get; set; }
+        public string MaxFacebookItems { get; set; }
+        public string Redirecting { get; set; }
+        public string WriteToUs { get; set; }
+        public string CallUs { get; set; }
+        public string ClientService { get; set; }
+        public string Unit { get; set; }
+        public string FacebookModalTitle { get; set; }
+        public string FacebookDescription { get; set; }
 
     }
 }

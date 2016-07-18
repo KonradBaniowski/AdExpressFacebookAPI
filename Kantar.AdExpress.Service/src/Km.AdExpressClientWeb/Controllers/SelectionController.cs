@@ -3,6 +3,7 @@ using Kantar.AdExpress.Service.Core;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.BusinessService;
 using Km.AdExpressClientWeb.Helpers;
+using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Models;
 using Km.AdExpressClientWeb.Models.MediaSchedule;
 using Km.AdExpressClientWeb.Models.Shared;
@@ -21,6 +22,7 @@ using Domain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class SelectionController : Controller
     {
         private IMediaService _mediaService;
@@ -64,11 +66,15 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Load Branches
             var result = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
             model.CurrentModule = result.ControllerDetails.ModuleId;
+            model.MaxUniverseItems = result.MaxUniverseItems;
             #endregion
 
             #region Load each label's text in the appropriate language
             var helper = new Helpers.PageHelper();
-            model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+            //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+            model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
+             int maxItems = int.Parse(System.Configuration.ConfigurationManager.AppSettings["FacebookMaxItems"]);
+            model.Labels.MaxFacebookItems = string.Format(model.Labels.MaxFacebookItems,maxItems);
             model.Branches = Mapper.Map<List<UniversBranch>>(result.Branches);
             foreach (var item in result.Trees)
             {
@@ -79,7 +85,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     AccessType = item.AccessType,
                     UniversLevels = Mapper.Map<List<UniversLevel>>(item.UniversLevels)
                 };
-                tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                if (result.ControllerDetails.ModuleId == Module.Name.FACEBOOK)
+                {
+                    tree.Label = (item.Id==0)? model.Labels.Concurrent : model.Labels.Referent;
+                }
+                else
+                {
+                    tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                }
                 model.Trees.Add(tree);
             }
             #endregion
@@ -172,7 +185,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
-            model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+
+            //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
+            model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
             var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
@@ -249,6 +264,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     break;
                 case Module.Name.INDICATEUR:
                 case Module.Name.TABLEAU_DYNAMIQUE:
+                case Module.Name.FACEBOOK:
                     periodModel.CalendarFormat = CalendarFormatMonths;
                     result.ControllerDetails.Name = SELECTION;
                     break;

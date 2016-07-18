@@ -58,4 +58,18 @@
     <level id="28" name="media_Seller"/>
     <level id="14" name="media"/>
   </branch>
+  <branch id="20" name="sector" labelId="2271">
+    <level id="1" name="sector"/>
+    <level id="2" name="subsector"/>
+    <level id="3" name="group_"/>
+    <level id="4" name="segment"/>
+    <level id="6" name ="advertiser"/>
+  </branch>
+  <branch id="21"  name="advertiser" labelId="857">
+    <level id="7" name ="holding_company"/>
+    <level id="6" name ="advertiser"/>    
+  </branch>
+  <branch id="22" name="brand" labelId="1889">
+    <level id="8" name ="brand"/>
+  </branch>
 </universeBranches>

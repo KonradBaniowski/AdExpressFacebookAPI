@@ -152,8 +152,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 				
 //                    //Days table
 //                    if(detailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.dayly){
-//                        DateTime currentDateTime =  WebFunctions.Dates.getPeriodBeginningDate(dateBegin.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
-//                        DateTime endDate = WebFunctions.Dates.getPeriodEndDate(dateEnd.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
+//                        DateTime currentDateTime =  WebFunctions.Dates.GetPeriodBeginningDate(dateBegin.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
+//                        DateTime endDate = WebFunctions.Dates.GetPeriodEndDate(dateEnd.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
 //                        while(currentDateTime<=endDate){
 //                            tmpDate=currentDateTime.Year.ToString();
 //                            if(currentDateTime.Month.ToString().Length<2)tmpDate+="0"+currentDateTime.Month.ToString();
@@ -589,8 +589,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 						//Days table
 						if(detailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.dayly){
-							DateTime currentDateTime =  WebFunctions.Dates.getPeriodBeginningDate(dateBegin.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
-							DateTime endDate = WebFunctions.Dates.getPeriodEndDate(dateEnd.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
+							DateTime currentDateTime =  WebFunctions.Dates.GetPeriodBeginningDate(dateBegin.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
+							DateTime endDate = WebFunctions.Dates.GetPeriodEndDate(dateEnd.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
 							while(currentDateTime<=endDate){
 								tmpDate=tmpMonthDate=currentDateTime.Year.ToString();
 								if(currentDateTime.Month.ToString().Length<2){

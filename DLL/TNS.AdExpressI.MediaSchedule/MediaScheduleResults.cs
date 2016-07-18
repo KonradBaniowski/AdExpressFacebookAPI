@@ -1767,12 +1767,12 @@ namespace TNS.AdExpressI.MediaSchedule {
             string periodLabel = string.Empty;
 
             // Product Column
-            columns.Add(new { headerText = "ID_PRODUCT", key = "ID_PRODUCT", dataType = "number", width = "250", hidden = true });
+            columns.Add(new { headerText = "ID_PRODUCT", key = "ID_PRODUCT", dataType = "number", width = "350", hidden = true });
             schemaFields.Add(new { name = "ID_PRODUCT" });
-            columns.Add(new { headerText = GestionWeb.GetWebWord(804, _session.SiteLanguage), key = "PRODUCT", dataType = "string", width = "250" });
+            columns.Add(new { headerText = GestionWeb.GetWebWord(804, _session.SiteLanguage), key = "PRODUCT", dataType = "string", width = "350" });
             schemaFields.Add(new { name = "PRODUCT" });
             columnsFixed.Add(new { columnKey = "PRODUCT", isFixed = true, allowFixing = false });
-            tableWidth = 250;
+            tableWidth = 350;
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
@@ -1917,6 +1917,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 string monthLabelHtml = "<span class=\"open-media-schedule\" date=\"" + data[0, j].ToString() + "\" style=\"cursor:pointer;\">" + monthLabel + "</span>";
                                 periodColumnsL1.Add(new { headerText = monthLabelHtml, key = monthKey, dataType = "string", width = "20", template = "<span {{if ${" + monthKey + "} == 1 }} class='orangeTg' {{elseif ${" + monthKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + monthKey + "} == 3 }} class='blackTg' {{else}} class='${" + monthKey + "}' {{/if}} ></span>" });
                                 schemaFields.Add(new { name = monthKey });
+                                columnsFixed.Add(new { columnKey = monthKey, isFixed = false, allowFixing = false });
                                 tableWidth += 20;
                                 break;
                             case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
@@ -1942,6 +1943,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     periodColumnsL1.Add(new { headerText = weekLabelHtml, key = weekLabel, dataType = "string", width = "20", template = "<span {{if ${" + weekLabel + "} == 1 }} class='orangeTg' {{elseif ${" + weekLabel + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + weekLabel + "} == 3 }} class='blackTg' {{else}} class='${" + weekLabel + "}' {{/if}} ></span>" });
                                     schemaFields.Add(new { name = weekLabel });
                                 }
+                                columnsFixed.Add(new { columnKey = weekLabel, isFixed = false, allowFixing = false });
                                 tableWidth += 20;
                                 break;
 
@@ -1995,11 +1997,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                         {
                             periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "22", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + dayKey + "} == 3 }} class='blackTg' {{else}} class='${" + dayKey + "}' {{/if}} ></span>" });
                             schemaFields.Add(new { name = dayKey });
+                            columnsFixed.Add(new { columnKey = dayKey, isFixed = false, allowFixing = false });
                         }
                         else
                         {
                             periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "22", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + dayKey + "} == 3 }} class='blackTg' {{else}} class='${" + dayKey + "}' {{/if}} ></span>" });
                             schemaFields.Add(new { name = dayKey });
+                            columnsFixed.Add(new { columnKey = dayKey, isFixed = false, allowFixing = false });
                         }
                         tableWidth += 22;
                     }

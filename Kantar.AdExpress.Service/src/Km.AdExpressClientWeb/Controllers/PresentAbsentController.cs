@@ -22,9 +22,11 @@ using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
 using Km.AdExpressClientWeb.Helpers;
 using Kantar.AdExpress.Service.Core.Domain.BusinessService;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class PresentAbsentController : Controller
     {
         private IPresentAbsentService _presentAbsentService;
@@ -49,7 +51,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const int MediaPageId = 6;
         private const int MaxIncludeNbr = 2;
         private const int MaxExcludeNbr = 1;
-        private int _siteLanguage = 33;
+        private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
         #endregion
         public PresentAbsentController(IPresentAbsentService presentAbsentService, IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universService, IPeriodService periodService, IOptionService optionService)
         {

@@ -1103,8 +1103,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 							switch(webSession.DetailPeriod){
 
 								case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-									dateLabel = Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(currentDate, webSession.PeriodType), webSession.SiteLanguage)
-									+ "-" + Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(currentDate, webSession.PeriodType), webSession.SiteLanguage);
+									dateLabel = Dates.DateToString(WebFunctions.Dates.GetPeriodBeginningDate(currentDate, webSession.PeriodType), webSession.SiteLanguage)
+									+ "-" + Dates.DateToString(WebFunctions.Dates.GetPeriodEndDate(currentDate, webSession.PeriodType), webSession.SiteLanguage);
 									break;
 								case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
 									i++;

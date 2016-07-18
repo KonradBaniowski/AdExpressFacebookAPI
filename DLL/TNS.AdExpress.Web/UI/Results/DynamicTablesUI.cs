@@ -624,7 +624,7 @@
 //            //Months
 //            if (extendedToMonths) {
 //                for (int w = 0; w <= (int.Parse(absolutePeriodEnd.Substring(4, 2)) - int.Parse(webSession.PeriodBeginningDate.Substring(4, 2))); w++) {
-//                    html.Append("<td>" + WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).AddMonths(w).ToString("MMMM") + "</td>");
+//                    html.Append("<td>" + WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).AddMonths(w).ToString("MMMM") + "</td>");
 //                }
 //            }
 //            html.Append("</tr>");
@@ -1388,7 +1388,7 @@
 //                j++;
 //            }
 //            for (i = j; i < data.GetLength(1) - PERSO_COLUMN; i++) {
-//                html.Append("<td>" + WebFunctions.Dates.getPeriodBeginningDate((int.Parse(webSession.PeriodBeginningDate) + i - j).ToString(), webSession.PeriodType).ToString("MMMM") + "</td>");
+//                html.Append("<td>" + WebFunctions.Dates.GetPeriodBeginningDate((int.Parse(webSession.PeriodBeginningDate) + i - j).ToString(), webSession.PeriodType).ToString("MMMM") + "</td>");
 //            }
 //            html.Append("</tr>");
 

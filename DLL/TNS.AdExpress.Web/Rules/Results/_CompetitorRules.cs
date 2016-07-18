@@ -1562,7 +1562,7 @@
 //            switch(webSession.CurrentModule){
 //                case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE:
 //                case WebConstantes.Module.Name.ALERTE_POTENTIELS:
-//                    return(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                    return(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
 //                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
 //                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
 //                    return(webSession.PeriodBeginningDate);
@@ -1579,7 +1579,7 @@
 //            switch(webSession.CurrentModule){
 //                case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE:
 //                case WebConstantes.Module.Name.ALERTE_POTENTIELS:
-//                    return(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+//                    return(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 //                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
 //                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
 //                    return(webSession.PeriodEndDate);

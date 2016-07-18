@@ -10,6 +10,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class InsertionsExportController : Controller
     {
         private IInsertionsService _insertionsService;

@@ -47,6 +47,16 @@
     vertical-align: top;
 }
 
+.tl-header.disabled {
+    cursor:not-allowed;
+    opacity:0.4;
+}
+
+.tl-header.disabled > * {
+    pointer-events:none;
+}
+
+
 .tl-wrap {
     display: table;
     padding: 0;
@@ -430,7 +440,7 @@ input {
 }
 
 .information-fixed {
-    height: 265px;
+    height: 275px;
     overflow-y: scroll;
 }
 
@@ -454,7 +464,7 @@ input {
 
 .tile-second {
     background-color: rgba(0,0,0,0.5);
-    height: 100px;
+    height: 110px;
     color: #fff;
     margin-bottom: 15px;
     -webkit-border-radius: 5px;
@@ -472,7 +482,7 @@ input {
 
 .tile-third {
     background-color: rgba(0,0,0,0.5);
-    height: 100px;
+    height: 110px;
     color: #fff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -490,7 +500,7 @@ input {
 
 .tile-pdf {
     background-color: rgba(255,255,255,0.2);
-    height: 100px;
+    height: 110px;
     color: #fff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -1427,6 +1437,10 @@ a {
     font-weight: normal;
 }
 
+.container .panel-group .panel {
+    overflow:inherit !important;
+}
+
 input[type=radio].with-font,
 input[type=checkbox].with-font {
     border: 0;
@@ -1698,6 +1712,13 @@ ul.ui-selectable {
     margin-left: 100%;
 }
 
+.img-responsive.center{
+    margin:0 auto;
+}
+
+.div-center {
+    margin:0 auto;
+}
 
 .logoNavBar {
     max-width: 240px;
@@ -2177,13 +2198,23 @@ ul.ui-selectable {
     overflow: hidden;
 }
 
-    .media.video-audio-container iframe, .video-audio-container object, .video-audio-container embed {
+    .video-audio-container object, .video-audio-container embed {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
     }
+
+        .media.video-audio-container iframe{
+        top: 0;
+        /*left: 0;*/
+        border:none;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
 
 .imgCreaInser {
     max-height: 200px;
@@ -2639,6 +2670,11 @@ ul.ui-selectable {
     background-color: white;
 }
 
+.stackChart{
+    background-color:rgba(0,0,0,0.3);
+    margin-bottom:10px;
+}
+
 .legendChart.ui-corner-all.ui-widget-content.ui-chart-legend {
     display: inline-block;
     color: black;
@@ -2740,4 +2776,10 @@ ul.ui-selectable {
 
 .tuile-medias.disabled-effect {
     opacity:0.4;
+}
+
+
+/*CSS pour Alignement à droite des numeriques tableau infragistics*/
+.numericAlignment {
+    text-align: right;
 }

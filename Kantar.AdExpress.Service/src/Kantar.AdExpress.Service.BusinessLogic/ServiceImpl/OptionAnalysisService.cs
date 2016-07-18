@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Level;
 using CstDB = TNS.AdExpress.Constantes.DB;
+using DBConstantesClassification = TNS.AdExpress.Constantes.Classification.DB;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -37,6 +38,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             VehicleInformation vehicle = VehiclesInformation.Get(((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
             _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicle.Id);
             #endregion
+
+            if (vehicle.Id != DBConstantesClassification.Vehicles.names.plurimedia
+                            && vehicle.Id != DBConstantesClassification.Vehicles.names.PlurimediaWithoutMms)
+                _customerWebSession.PreformatedMediaDetail = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
+            else
+                _customerWebSession.PreformatedMediaDetail = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle;
 
             #region mediaDetailOption
             if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || _customerWebSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE)
@@ -242,7 +249,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             resultTypeOption.ResultType.Items.Add(new SelectItem { Text = "Supports+Année / Mensuel+Cumul", Value = SessionCst.PreformatedDetails.PreformatedTables.mediaYear_X_Mensual.GetHashCode().ToString() });
             resultTypeOption.ResultType.Items.Add(new SelectItem { Text = "Supports+Année / Mensuel Cumulé", Value = SessionCst.PreformatedDetails.PreformatedTables.mediaYear_X_Cumul.GetHashCode().ToString() });
 
-            resultTypeOption.ResultType.SelectedId = SessionCst.PreformatedDetails.PreformatedTables.media_X_Year.GetHashCode().ToString();
+            //resultTypeOption.ResultType.SelectedId = SessionCst.PreformatedDetails.PreformatedTables.media_X_Year.GetHashCode().ToString();
+            resultTypeOption.ResultType.SelectedId = _customerWebSession.PreformatedTable.GetHashCode().ToString();
             #endregion
 
             options.MediaDetailLevel = mediaDetail;

@@ -1852,8 +1852,8 @@ namespace TNS.AdExpress.Web.UI.Results {
         //        dayOfWeek = new DateTime(int.Parse(date.ToString().Substring(0, 4)), int.Parse(date.Substring(4, 2)), int.Parse(date.ToString().Substring(6, 2)));
         //    }
         //    if(allPeriod) {
-        //        periodBeginningDate = WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType), webSession.SiteLanguage);
-        //        periodEndDate = WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType), webSession.SiteLanguage);
+        //        periodBeginningDate = WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType), webSession.SiteLanguage);
+        //        periodEndDate = WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType), webSession.SiteLanguage);
 
         //    }
 
@@ -2456,8 +2456,8 @@ namespace TNS.AdExpress.Web.UI.Results {
         //    #endregion
 
         //    #region Paramétrage des dates
-        //    int dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-        //    int dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+        //    int dateBegin = int.Parse(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+        //    int dateEnd = int.Parse(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
         //    #endregion
 
         //    //id Média
@@ -2553,8 +2553,8 @@ namespace TNS.AdExpress.Web.UI.Results {
         //    #endregion
 
         //    #region Paramétrage des dates
-        //    int dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-        //    int dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+        //    int dateBegin = int.Parse(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+        //    int dateEnd = int.Parse(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
         //    #endregion
 
         //    #region script
@@ -3286,8 +3286,8 @@ namespace TNS.AdExpress.Web.UI.Results {
         //    //			t.Append("<td>"+GestionWeb.GetWebWord(464,webSession.SiteLanguage)+"</td>");
         //    //			t.Append("</tr>");
         //    //			t.Append("<tr>");
-        //    //			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+" : "+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage)+" - "
-        //    //				+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
+        //    //			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+" : "+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage)+" - "
+        //    //				+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
         //    //			t.Append("</tr>");			
         //    //			t.Append("<tr>");
         //    //			t.Append("<td>"+GestionWeb.GetWebWord(1124,webSession.SiteLanguage)+" "+WebFunctions.ProductDetailLevel.LevelProductToExcelString(webSession)+"</td>");
@@ -3349,8 +3349,8 @@ namespace TNS.AdExpress.Web.UI.Results {
         //    //			t.Append("<td>"+GestionWeb.GetWebWord(464,webSession.SiteLanguage)+"</td>");
         //    //			t.Append("</tr>");
         //    //			t.Append("<tr>");
-        //    //			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+" : "+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage)+" - "
-        //    //				+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
+        //    //			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+" : "+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage)+" - "
+        //    //				+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
         //    //			t.Append("</tr>");						
         //    //			t.Append("<tr>");
         //    //			t.Append("<td>&nbsp;</td>");
@@ -3385,8 +3385,8 @@ namespace TNS.AdExpress.Web.UI.Results {
         //    //			t.Append("<td>"+GestionWeb.GetWebWord(1474,webSession.SiteLanguage)+"</td>");
         //    //			t.Append("</tr>");
         //    //			t.Append("<tr>");
-        //    //			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+" : "+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage)+" - "
-        //    //				+WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
+        //    //			t.Append("<td>"+GestionWeb.GetWebWord(119,webSession.SiteLanguage)+" : "+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage)+" - "
+        //    //				+WebFunctions.Dates.dateToString(WebFunctions.Dates.GetPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage)+"</td>");
         //    //			t.Append("</tr>");			
         //    //			t.Append("<tr>");
         //    //			t.Append("<td>"+GestionWeb.GetWebWord(1124,webSession.SiteLanguage)+" "+stringLevelProduct(webSession)+"</td>");
@@ -3879,8 +3879,8 @@ namespace TNS.AdExpress.Web.UI.Results {
         //    DateTime dtFirstDate = DateTime.Today;
         //    DateTime dtLastDate = DateTime.Today;
         //    if(dateBegin.Length > 0) {
-        //        dtFirstDate = WebFunctions.Dates.getPeriodBeginningDate(dateBegin, webSession.PeriodType);
-        //        dtLastDate = WebFunctions.Dates.getPeriodEndDate(dateEnd, webSession.PeriodType);
+        //        dtFirstDate = WebFunctions.Dates.GetPeriodBeginningDate(dateBegin, webSession.PeriodType);
+        //        dtLastDate = WebFunctions.Dates.GetPeriodEndDate(dateEnd, webSession.PeriodType);
 
         //    }
         //    #endregion

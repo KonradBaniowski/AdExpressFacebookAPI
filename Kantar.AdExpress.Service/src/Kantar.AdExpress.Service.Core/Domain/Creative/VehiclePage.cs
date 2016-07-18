@@ -10,6 +10,8 @@ namespace Kantar.AdExpress.Service.Core.Domain.Creative
     {
         public string ParutionDate { get; set; }
 
+        public string CoverDate { get; set; }
+
         public string Src { get; set; }
 
         public string SrcZoom { get; set; }

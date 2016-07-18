@@ -422,7 +422,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             purchaseModeOption.PurchaseMode.Items = new List<SelectItem>();
 
             Dictionary<Int64, VehicleInformation> VehicleInformationList = _customerWebSession.GetVehiclesSelected();
-            if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId))
+            if (VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId))
             {
                 var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
                 if (purchaseModeList.Count > 0)
@@ -514,9 +514,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
             }
 
-            options.ComparativeStudy = _customerWebSession.ComparativeStudy;
-            _customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
-            options.ComparativePeriodType = _customerWebSession.ComparativePeriodType;
+            if (WebApplicationParameters.UseComparativeMediaSchedule)
+            {
+                options.ComparativeStudy = _customerWebSession.ComparativeStudy;
+                _customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
+                options.ComparativePeriodType = _customerWebSession.ComparativePeriodType;
+            }
+            else
+                options.ComparativeStudy = false;
 
             _customerWebSession.Save();
 
@@ -661,7 +666,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region PurchaseModeFilter
-            if (VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId) && string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes))
+            if (VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId) && string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes))
                 _customerWebSession.SelectedPurchaseModeList = userFilter.PurchaseModeFilter.PurchaseModes;
             #endregion
 
@@ -681,8 +686,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             #endregion
 
-            _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
-            _customerWebSession.ComparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userFilter.ComparativePeriodType;
+            if (WebApplicationParameters.UseComparativeMediaSchedule)
+            {
+                _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
+                _customerWebSession.ComparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userFilter.ComparativePeriodType;
+            }
 
             _customerWebSession.Save();
         }

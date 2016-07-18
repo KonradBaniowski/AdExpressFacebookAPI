@@ -10,19 +10,22 @@ using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
+    [Authorize]
     public class ContactController : Controller
     {
-        public ActionResult Index(string returnUrl="/", int siteLanguage = 33)
+        public ActionResult Index(string returnUrl="/", int siteLanguage = -1)
         {
-          
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
+
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             ViewBag.SiteLanguage = siteLanguage;
             var model = new ContactViewModel();
             model.QuestionsTagItem = new List<SelectListItem>();
-            var labels = LabelsHelper.LoadPageLabels(33);
+            var labels = LabelsHelper.LoadPageLabels(siteLanguage);
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag1, Value = labels.QuestionTag1 });
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag2, Value = labels.QuestionTag2 });
             model.QuestionsTagItem.Add(new SelectListItem { Text = labels.QuestionTag3, Value = labels.QuestionTag3 });
@@ -35,9 +38,10 @@ namespace Km.AdExpressClientWeb.Controllers
         //
         // GET: /Contact/ChangeLanguage
         [AllowAnonymous]
-        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = 33)
+        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = -1)
         {
-         
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
+
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             ViewBag.SiteLanguage = siteLanguage;

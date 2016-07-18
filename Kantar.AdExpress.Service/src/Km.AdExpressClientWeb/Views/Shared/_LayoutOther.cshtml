@@ -1,4 +1,5 @@
 ﻿@using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,18 +49,17 @@
                     <li class="dropdown">
                         <a href="#" id="language-choice" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag.SiteLanguageName<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            @if (ViewBag.SiteLanguageName == "FR")
+                            @foreach (WebLanguage currentLanguage in WebApplicationParameters.AllowedLanguages.Values)
                             {
-                                <li><a href="#" data-language-id="33" data-url-action="/Home/ChangeLanguage" class="active">FR</a></li>
-                                <li><a href="#" data-language-id="44" data-url-action="/Home/ChangeLanguage" >EN</a></li>
+                                if (ViewBag.SiteLanguageName == currentLanguage.Name.Substring(0, 2).ToUpper())
+                                {
+                                    <li><a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Home/ChangeLanguage" class="active">@currentLanguage.Name.Substring(0, 2).ToUpper()</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Home/ChangeLanguage">@currentLanguage.Name.Substring(0, 2).ToUpper()</a></li>
+                                }
                             }
-                            else
-                            {
-                                <li><a href="#" data-language-id="33" data-url-action="/Home/ChangeLanguage" >FR</a></li>
-                                <li><a href="#" data-language-id="44" data-url-action="/Home/ChangeLanguage"  class="active">EN</a></li>
-
-                            }
-
                         </ul>
                     </li>
 

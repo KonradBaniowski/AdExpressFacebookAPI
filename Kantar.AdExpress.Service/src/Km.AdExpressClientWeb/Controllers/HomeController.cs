@@ -43,8 +43,10 @@ namespace Km.AdExpressClientWeb.Controllers
             _infosNewsService = infosNewsService;
         }
 
-        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = 33)
+        public JsonResult ChangeLanguage(string returnUrl, int siteLanguage = -1)
         {
+            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
+
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             _webSessionService.UpdateSiteLanguage(idWebSession, siteLanguage);           
@@ -64,15 +66,21 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var resList = _rightService.GetModulesList(idWS);
             var res = _rightService.GetModules(idWS);
-            List<Documents> documents = _infosNewsService.GetInfosNews(idWS);
             int siteLanguage = resList.First().Value.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(siteLanguage);
             ViewBag.SiteLanguage = siteLanguage;
-            documents.Add(new Documents()
-                        {
-                            Id = 3,
-                            Label = "Documents",
-                            InfosNews = new List<InfosNews>()
+
+            List<Documents> documents = new List<Documents>();
+
+            //Added temporarily for Finland
+            if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+            {
+                documents = _infosNewsService.GetInfosNews(idWS);
+                documents.Add(new Documents()
+                {
+                    Id = 3,
+                    Label = "Documents",
+                    InfosNews = new List<InfosNews>()
                             {
                                 //new InfosNews()
                                 //{
@@ -90,7 +98,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                 //    Url = "Configuration.pdf"
                                 //}
                             }
-                        });
+                });
+            }
 
             var encryptedPassword = EncryptQueryString(password);
             var encryptedLogin = EncryptQueryString(login); 
@@ -102,7 +111,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Documents = documents,
                 EncryptedLogin =encryptedLogin,
                 EncryptedPassword = encryptedPassword,
-                SiteLanguage = 33, // Default
+                SiteLanguage = WebApplicationParameters.DefaultLanguage, // Default
             };
 
             Home.SiteLanguage = resList.First().Value.SiteLanguage;

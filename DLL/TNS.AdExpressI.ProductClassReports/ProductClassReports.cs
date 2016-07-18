@@ -270,7 +270,8 @@ namespace TNS.AdExpressI.ProductClassReports
                     throw new NotImplementedReportException(string.Format("Tableau {0} ({1}) is not implemented.", _session.PreformatedTable, _session.PreformatedTable.GetHashCode()));
             }
             _genericEngine.Excel = excel;
-            return _genericEngine.GetResult();
+            var result = _genericEngine.GetResult();
+            return result;
         }
         #endregion
 
@@ -316,11 +317,16 @@ namespace TNS.AdExpressI.ProductClassReports
                                 colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
 
                                 var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
-                                groups.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j][g].Label, ref colKey, "*"));
+
+                                if (cell is CellEvol)
+                                    groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "90", columnCssClass = "colStyle" });
+                                else
+                                    groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*", columnCssClass = "colStyle" });
 
                                 schemaFields.Add(new { name = colKey });
                             }
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, group = groups });
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "_gr" + colKey, group = groups });
+                            columnsFixed.Add(new { columnKey = "_gr" + colKey, isFixed = false, allowFixing = false });
                         }
                         else
                         {
@@ -328,13 +334,16 @@ namespace TNS.AdExpressI.ProductClassReports
                             if (j == 0)
                             {
                                 var cell = resultTable[0, resultTable.NewHeaders.Root[j].IndexInResultTable];
-                                columns.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j].Label, ref colKey, "350"));
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350" });
                                 columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                             }
                             else
                             {
                                 var cell = resultTable[0, resultTable.NewHeaders.Root[j].IndexInResultTable];
-                                columns.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j].Label, ref colKey, "*"));
+                                if (cell is CellEvol)
+                                    columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "90", columnCssClass = "colStyle" });
+                                else
+                                    columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", columnCssClass = "colStyle" });
                                 columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
                             }
                             schemaFields.Add(new { name = colKey });
@@ -351,29 +360,29 @@ namespace TNS.AdExpressI.ProductClassReports
                     for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
                     {
                         var cell = resultTable[i, k];
-                        var link = string.Empty;
-                        if (cell is CellPercent || cell is CellEvol || cell is CellPDM)
+
+                        if (cell is CellEvol)
+                        {
+                            gridData[i, k + 1] = cell.Render().Replace("/I", "../Content/Img").Replace("<td>","").Replace("</td>", "");
+                        }
+                        else if (cell is CellPDM || cell is CellPDV)
                         {
                             double value = ((CellUnit)cell).Value;
 
-                            if (double.IsInfinity(value))
-                                gridData[i, k + 1] = "Infinity";
-                            else if (double.IsNaN(value))
-                                gridData[i, k + 1] = null;
+                            if (value == 0)
+                                gridData[i, k + 1] = "";
                             else
-                                gridData[i, k + 1] = value / 100;
+                                gridData[i, k + 1] = cell.RenderString();
                         }
                         else if (cell is CellUnit)
                         {
-                            if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
-                                gridData[i, k + 1] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, GetUnit(cell));
+                            if (cell.RenderString().Equals("0"))
+                                gridData[i, k + 1] = "";
                             else
-                                gridData[i, k + 1] = ((CellUnit)cell).Value;
+                                gridData[i, k + 1] = cell.RenderString();
                         }
                         else
-                        {
                             gridData[i, k + 1] = cell.RenderString();
-                        }
                     }
                 }
 
@@ -397,66 +406,66 @@ namespace TNS.AdExpressI.ProductClassReports
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
-            if (cell is CellPercent)
-                return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
-            else if (cell is CellEvol)
-            {
-                key += "-evol";
-                return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellPDM)
-            {
-                key += "-pdm";
-                return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellDuration)
-            {
-                key += "-unit-duration";
-                return new { headerText = headerText, key = key, dataType = "number", format = "duration", columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellInsertion)
-            {
-                string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion).StringFormat);
-                key += "-unit-insertion";
-                return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellMMC)
-            {
-                string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.mmPerCol).StringFormat);
-                key += "-unit-mmPerCol";
-                return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellPage)
-            {
-                string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat);
-                key += "-unit-pages";
-                return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellEuro)
-            {
-                string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat);
-                key += "-unit-euro";
-                return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellKEuro)
-            {
-                string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.kEuro).StringFormat);
-                key += "-unit-euro";
-                return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellGRP)
-            {
-                string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.grp).StringFormat);
-                key += "-unit-euro";
-                return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else if (cell is CellVolume)
-            {
-                string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.volume).StringFormat);
-                key += "-unit-euro";
-                return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
-            }
-            else
+            //if (cell is CellPercent)
+            //    return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
+            //else if (cell is CellEvol)
+            //{
+            //    key += "-evol";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellPDM)
+            //{
+            //    key += "-pdm";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellDuration)
+            //{
+            //    key += "-unit-duration";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = "duration", columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellInsertion)
+            //{
+            //    string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion).StringFormat);
+            //    key += "-unit-insertion";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellMMC)
+            //{
+            //    string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.mmPerCol).StringFormat);
+            //    key += "-unit-mmPerCol";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellPage)
+            //{
+            //    string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat);
+            //    key += "-unit-pages";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellEuro)
+            //{
+            //    string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat);
+            //    key += "-unit-euro";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellKEuro)
+            //{
+            //    string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.kEuro).StringFormat);
+            //    key += "-unit-euro";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellGRP)
+            //{
+            //    string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.grp).StringFormat);
+            //    key += "-unit-euro";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else if (cell is CellVolume)
+            //{
+            //    string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.volume).StringFormat);
+            //    key += "-unit-euro";
+            //    return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
+            //}
+            //else
                 return new { headerText = headerText, key = key, dataType = "string", width = width };
         }
 

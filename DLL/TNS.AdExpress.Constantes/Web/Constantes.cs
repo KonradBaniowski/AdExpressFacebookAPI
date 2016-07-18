@@ -1850,10 +1850,14 @@ namespace TNS.AdExpress.Constantes.Web
             /// </summary>
             public const int ROLEX = 9119;
             /// <summary>
+            /// Facebook
+            /// </summary>
+            public const int FACEBOOK = 17109;
+            /// <summary>
             /// Identifiant Celebrities
             /// </summary>
             public const int CELEBRITIES = 20000;
-		}
+        }
 		#endregion
 
 	}
@@ -2714,6 +2718,11 @@ namespace TNS.AdExpress.Constantes.Web
         /// Répertoire contenant les bannières de la veille promotionnelle de peugeot
         /// </summary>
         public static string LOCAL_PATH_BANNERS_PSA = string.Empty;
+
+        /// <summary>
+        /// Répertoire contenant les posts facebook
+        /// </summary>
+        public static string LOCAL_PATH_POSTS_FACEBOOK = string.Empty;
 
         /// <summary>
         /// PSA radio creative's virtual directory

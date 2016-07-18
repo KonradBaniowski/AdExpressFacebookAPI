@@ -24,7 +24,9 @@ namespace Km.AdExpressClientWeb.Models
 
         public string IconCssClass { get; set; }
 
+        public bool IsDisabled{ get; set; }
 
 
-    }
+
+}
 }

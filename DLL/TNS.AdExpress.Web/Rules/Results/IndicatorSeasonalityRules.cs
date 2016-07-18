@@ -125,8 +125,8 @@
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
 
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodBeginningDate(absolutEndPeriod, webSession.PeriodType);
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodBeginningDate(absolutEndPeriod, webSession.PeriodType);
 //            nbMonths =  (int)PeriodEndDate.Month - (int)PeriodBeginningDate.Month + 1;
 //            #endregion	
 //            //Mois courant
@@ -404,8 +404,8 @@
 //            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 //                throw new NoDataException();
 			
-//            DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-//            DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);			
+//            DateTime PeriodBeginningDate = WebFunctions.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+//            DateTime PeriodEndDate = WebFunctions.Dates.GetPeriodEndDate(absolutEndPeriod, webSession.PeriodType);			
 //            #endregion
 			
 //            #region Création du tableau de résultats							

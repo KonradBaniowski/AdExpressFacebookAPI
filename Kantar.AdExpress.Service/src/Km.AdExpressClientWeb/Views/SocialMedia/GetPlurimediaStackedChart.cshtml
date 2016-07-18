@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Km.AdExpressClientWeb.Models.SocialMedia.PDVByMediaPageFacebookContract>
+
+
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+
+    @foreach (var concurrent in Model.GroupBy(item => item.LabelMedia))
+    {
+        <div class="col-lg-4 text-center elmtsChartPDVByMediaConcur">
+            @Html.Hidden(concurrent.Select(e => e.IdMedia).First().ToString(), null, new { @class = "idMediaConcur" })
+            @Html.Hidden(concurrent.Select(e => e.LabelMedia).First(), null, new { @class = "labelMediaConcur" })
+            @Html.Hidden(string.Join(",", concurrent.Select(e => e.IdAdvertiser_Brand).ToList()), null, new { @class = "idAdvertiserBrandConcur" })
+            @Html.Hidden(string.Join(",", concurrent.Select(e => e.LabelAdvertiser_Brand)), null, new { @class = "labelAdvertiserBrandConcur" })
+            @Html.Hidden(string.Join(",", concurrent.Select(e => e.Expenditure).ToList()), null, new { @class = "expenditureConcur" })
+        </div>
+    }
+
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="stackChart" id="chartConcurPlurimediaStacked">
+
+        </div>
+    </div>
+</div>

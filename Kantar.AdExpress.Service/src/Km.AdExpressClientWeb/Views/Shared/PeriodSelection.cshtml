@@ -94,7 +94,7 @@
                                 </select>
                                 <label class="col-sm-8">@GestionWeb.GetWebWord(783, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
-                            @if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+                            @if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
                             {
                             <div class="selectdatecontainer">
                                 <select id="week-sliding" class="selectdatepicker" selectedperiod="2">
@@ -128,7 +128,7 @@
                                     <input id="previous-year" name="single-date" type="radio" class="with-font" value="2" selectedperiod="4" />
                                     <label for="previous-year">@GestionWeb.GetWebWord(787, Model.PeriodViewModel.SiteLanguage)</label>
                                 </div>
-                                @if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+                                @if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
                                 {
                                 <div>
                                     <input id="previous-month" name="single-date" type="radio" class="with-font" value="3" selectedperiod="5" />

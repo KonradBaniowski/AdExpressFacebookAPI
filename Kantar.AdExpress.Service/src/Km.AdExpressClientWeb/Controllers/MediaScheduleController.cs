@@ -60,7 +60,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CalendarFormatMonths = "MM/YYYY";
         private const string CALENDARLANGUAGEEN = "En";
         private const string CALENDARLANGUAGEFR = "fr";
-        private int _siteLanguage = 33;
+        private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
 
         private string icon;
@@ -441,33 +441,6 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
         
-        [HttpPost]
-        //public JsonResult SaveMarketSelection(List<Tree> trees, string nextStep)
-        //{
-        //    string errorMessage = string.Empty;
-        //    if (trees.Any() && trees.Where(p => p.UniversLevels != null).Any())
-        //    {
-        //        var claim = new ClaimsPrincipal(User.Identity);
-        //        string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-        //        List<Tree> validTrees = trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
-        //        var data = Mapper.Map<List<Domain.Tree>>(validTrees);
-        //        var result = _webSessionService.SaveMarketSelection(webSessionId, data,Dimension.product,Security.full,true);
-        //        if (result.Success)
-        //        {
-        //            UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-        //            var redirectUrl = context.Action(nextStep, _controller);
-        //            return Json(new { ErrorMessage = errorMessage, RedirectUrl= redirectUrl });
-        //        }
-        //        else
-        //            errorMessage = result.ErrorMessage;                 
-        //    }
-        //    else
-        //    {
-        //         errorMessage = "Invalid Selection";
-        //    }
-        //    return Json(new { ErrorMessage = errorMessage });
-        //}
-
         public JsonResult GetMediaSupport()
         {
             var claim = new ClaimsPrincipal(User.Identity);

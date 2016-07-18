@@ -47,8 +47,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 		public static object[,] GetFormattedTable(WebSession webSession,IDataSource dataSource, string beginningPeriod, string endPeriod){
 /*			
 			#region Formattage des dates sur 8 chiffres
-			string periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(beginningPeriod, webSession.PeriodType).ToString("yyyyMMdd");
-			string periodEnd = WebFunctions.Dates.getPeriodEndDate(endPeriod, webSession.PeriodType).ToString("yyyyMMdd");
+			string periodBeginning = WebFunctions.Dates.GetPeriodBeginningDate(beginningPeriod, webSession.PeriodType).ToString("yyyyMMdd");
+			string periodEnd = WebFunctions.Dates.GetPeriodEndDate(endPeriod, webSession.PeriodType).ToString("yyyyMMdd");
 			#endregion
 
 			#region targets
@@ -127,8 +127,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 
 			#region Création du tableau des jours
 			ArrayList periodItemsList=new ArrayList();
-			DateTime currentDateTime =  WebFunctions.Dates.getPeriodBeginningDate(beginningPeriod, webSession.PeriodType);
-			DateTime endDate = WebFunctions.Dates.getPeriodEndDate(endPeriod, webSession.PeriodType);
+			DateTime currentDateTime =  WebFunctions.Dates.GetPeriodBeginningDate(beginningPeriod, webSession.PeriodType);
+			DateTime endDate = WebFunctions.Dates.GetPeriodEndDate(endPeriod, webSession.PeriodType);
 			while(currentDateTime<=endDate){
 				periodItemsList.Add(currentDateTime);
 				currentDateTime = currentDateTime.AddDays(1);

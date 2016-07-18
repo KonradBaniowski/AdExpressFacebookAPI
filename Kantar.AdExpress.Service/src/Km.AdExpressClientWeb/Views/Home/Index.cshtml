@@ -1,5 +1,6 @@
 ﻿@model Km.AdExpressClientWeb.Models.HomePageViewModel
 @using TNS.AdExpress.Constantes.Web
+@using TNS.AdExpress.Domain.Web;
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
@@ -66,8 +67,6 @@
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <h4 class="text-center">@(Model.Labels.ModuleLabel)</h4>
-        @*<p class="text-center">@(Model.Labels.YourModule)</p>*@
-        @*Four Mostly Importants*@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PLAN_MEDIA))
@@ -102,16 +101,16 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
             <div class="tile">
-                @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PORTEFEUILLE))
+                @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                 {
-                    <a href="@Url.Action("MediaSelection", "Portfolio" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PORTEFEUILLE">
+                    <a href="@Url.Action("Market", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">
                         <div class="flip-container">
                             <div class="front">
-                                <i class="icon-layers sli-size blue"></i>
-                                <h3>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h3>
+                                <i class="icon-book-open sli-size blue"></i>
+                                <h3>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -121,11 +120,11 @@
                     <div class="tile-body text-center disabled-effect">
                         <div class="flip-container">
                             <div class="front">
-                                <i class="icon-layers sli-size blue"></i>
-                                <h3>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h3>
+                                <i class="icon-book-open sli-size blue"></i>
+                                <h3>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h3>
                             </div>
                             <div class="back">
-                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
+                                <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -196,8 +195,8 @@
                 }
             </div>
         </div>
-        @*Two Mostly Importants*@
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        @*Three Mostly Importants*@
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
                 @*@if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                     {
@@ -207,18 +206,18 @@
                     {
                     <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</div>
                     }*@
-                @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
+                @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PORTEFEUILLE))
                 {
 
                     @* <a href="@Url.Action("Index","Chrono")" class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">*@
-                    <a href="@Url.Action("Market", "Selection")" class="tile-body text-center module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">
+                    <a href="@Url.Action("MediaSelection", "Portfolio" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PORTEFEUILLE">
                         <div class="flip-container-second">
                             <div class="front-second">
-                                <i class="icon-book-open sli-size-small green"></i>
-                                <h5>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h5>
+                                <i class="icon-layers sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h5>
                             </div>
                             <div class="back-second">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
                             </div>
                         </div>
                     </a>
@@ -228,11 +227,11 @@
                     <div class="tile-body text-center disabled-effect">
                         <div class="flip-container">
                             <div class="front">
-                                <i class="icon-book-open sli-size-small green"></i>
-                                <h5>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h5>
+                                <i class="icon-layers sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h5>
                             </div>
                             <div class="back">
-                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -240,7 +239,10 @@
                 }
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        @*Added temporarily for Finland*@
+        @if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+        {
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
             <div class="tile-second">
                 @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
                 {
@@ -266,6 +268,39 @@
                             </div>
                             <div class="back-second">
                                 <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+            <div class="tile-second disabled">
+                @if (Model.ModuleRight.ContainsKey(Module.Name.FACEBOOK))
+                {
+                    <a href="@Url.Action("Results", "SocialMedia")"  class="tile-body text-center module-done" id="@Module.Name.FACEBOOK">
+                    @*<a class="tile-body text-center" id="@Module.Name.FACEBOOK">*@
+                        <div class="flip-container-second">
+                            <div class="front-second">
+                                <i class="icon-social-facebook sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.FACEBOOK)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.FACEBOOK)].Description</p>
+                            </div>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="tile-body text-center disabled-effect">
+                        <div class="flip-container-second">
+                            <div class="front-second">
+                                <i class="icon-social-facebook sli-size-small green"></i>
+                                <h5>@Model.Modules[(Module.Name.FACEBOOK)].Title</h5>
+                            </div>
+                            <div class="back-second">
+                                <p class="font-size12 text-center">@Model.Modules[(Module.Name.FACEBOOK)].Description</p>
                             </div>
                         </div>
                     </div>
@@ -330,14 +365,16 @@
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_DISPOSITIFS">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_PROGRAMMES))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
@@ -378,34 +415,39 @@
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_PAN_EURO">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PAN_EURO)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PRESSE))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_PRESSE">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_RADIO))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_RADIO">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_RADIO)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_RADIO)].Title</div>
                         }
                         @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_TELEVISION))
                         {
                             <a href="#" class="list-group-item text-left" id="@Module.Name.TABLEAU_DE_BORD_TELEVISION">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_TELEVISION)].Title</a>
                         }
-                        else {
+                        else
+                        {
                             <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_TELEVISION)].Title</div>
                         }
                     </div>
                 </div>
             </div>
         </div>
+        }
     </div>
     @*RIGHT SIDE*@
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -428,47 +470,18 @@
                     <div class="media">
                         <div class="media-body">
                             <div class="date pull-left">
-                                <h4 class="text-center"><strong>09</strong></h4>
-                                <h4 class="text-center"><small>JUIN</small></h4>
+                                <h4 class="text-center"><strong>06</strong></h4>
+                                <h4 class="text-center"><small>SEPT</small></h4>
                             </div>
                             <div class="title pull-left information-title-width">
-                                <h4 class="information-title">Kantar Media partenaire et membre du jury des trophées de la video online 2016 le 9 juin prochain</h4>
+                                <h4 class="information-title">Kantar Media partenaire des rencontres de l’UDECAM et du Grand Prix des Médias le 6 Septembre prochain</h4>
                                 <em>Par Equipe Ad Intelligence de Kantar Media</em>
                             </div>
                             <div class="clearfix"></div>
-                            <div class="content">
-                                <p>Les Trophées de la vidéo online récompensent les meilleures utilisations, solutions, innovations, créations, technologies, réalisations, campagnes vidéo… combinant de façon optimale Vidéo et Internet. Kantar Media y sera, tout comme l’année précédente, partenaire premium et membre du jury.</p><br />
+                            <div class="content">                                
+                                <p>Kantar Media sera de nouveau partenaire des rencontres de l’UDECAM le 6 septembre prochain. Cette édition, sur le thème « repenser le temps », abordera la manière dont les marques articulent propositions nouvelles et mise à profit de l’éphémère pour la captation de l’attention du consommateur final.</p><br />
                             </div>
-                        </div>
-                        <div class="media-body">
-                            <div class="date pull-left">
-                                <h4 class="text-center"><strong>14</strong></h4>
-                                <h4 class="text-center"><small>AVR</small></h4>
-                            </div>
-                            <div class="title pull-left information-title-width">
-                                <h4 class="information-title">Printemps des études : conférence exceptionnelle de Sir Martin Sorrell, PDG du groupe WPP</h4>
-                                <em>Par Equipe Ad Intelligence de Kantar Media</em>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="content">
-                                <p>Kantar Media vous donne rendez-vous le Jeudi 14 avril de 9h30 à 10h30 au Grand Auditorium du Palais Brongniart dans lequel Sir Martin Sorrell, PDG du groupe WPP, exposera sa vision des études et du marketing.</p>
-                                <p>A 12h, Kantar Media et Millward Brown donneront une conférence au petit Auditorium sur le thème suivant : « Comment adapter vos vidéos publicitaires aux plateformes ? ».</p><br>
-                            </div>
-                        </div>
-                        <div class="media-body">
-                            <div class="date pull-left">
-                                <h4 class="text-center"><strong>12</strong></h4>
-                                <h4 class="text-center"><small>AVR</small></h4>
-                            </div>
-                            <div class="title pull-left information-title-width">
-                                <h4 class="information-title">Kantar Media partenaire du Grand prix du Brand Content 2016 le 12 avril prochain</h4>
-                                <em>Par Equipe Ad Intelligence de Kantar Media</em>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="content">
-                                <p>Kantar Media sera une nouvelle fois partenaire du Grand Prix du Brand Content 2016 qui vise à récompenser les meilleures stratégies de contenu de marques, l’occasion de valoriser le talent  des acteurs dans ce domaine.</p><br>
-                            </div>
-                        </div>
+                        </div>                     
                     </div>
                 </div>
             </div>

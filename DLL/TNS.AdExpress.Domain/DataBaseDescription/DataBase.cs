@@ -1266,7 +1266,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All Promo Product
         /// </summary>
-        allPromoProduct = 6
+        allPromoProduct = 6,
+        /// <summary>
+        /// All Promo Product
+        /// </summary>
+        allFacebookProduct = 7
     }
     #endregion
 

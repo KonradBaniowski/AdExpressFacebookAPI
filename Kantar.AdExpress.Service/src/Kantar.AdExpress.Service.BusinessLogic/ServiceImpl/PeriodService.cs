@@ -27,6 +27,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string PRESENTABSENT = "PresentAbsent";
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string ANALYSIS = "Analysis";
+        private const string FACEBOOK = "SocialMedia";
         private const string RESULTS = "Results";
         public const string MEDIATYPESELECTIONERROR = "Selection of media type is not correct";
         public const string YYYYMM = "yyyyMM";
@@ -54,6 +55,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                         AnalysisCalendarValidation(request, result, _customerSession);
                         break;
+                    case WebConstantes.Module.Name.FACEBOOK:
+                        SocialMediaCalendarValidation(request, result, _customerSession);
+                        break;
                     default:
                         DefaultCalendarValidation(request, result, _customerSession);
                         break;
@@ -69,6 +73,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
 
         }
+
+
 
         private void DefaultCalendarValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
         {
@@ -138,6 +144,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                     AnalysisSlidingValidation(request, result, _customerSession);
                     break;
+                case WebConstantes.Module.Name.FACEBOOK:
+                    SocialMediaSlidingValidation(request, result, _customerSession);
+                    break;
                 default:
                     DefaultSlidingPeriodValidation(request, result, _customerSession);
                     break;
@@ -184,6 +193,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                     currentModuleCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
+                    currentModuleIcon = "icon-book-open";
+                    break;
+                case WebConstantes.Module.Name.FACEBOOK:
+                    currentModuleCode = WebConstantes.LanguageConstantes.FacebookCode;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? FACEBOOK : SELECTION;
+                    currentModuleIcon = "icon-social-facebook";
                     break;
                 default:
                     break;
@@ -229,7 +244,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
             object[] param = new object[1];
             param[0] = webSession;
-            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             bool isRestricted = ModulesList.GetModule(webSession.CurrentModule).DisplayIncompleteDateInCalendar;
             List<Int64> selectedVehicleList = new List<Int64>();
             if (isRestricted)
@@ -246,6 +261,51 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return Int64.Parse(p);
 
         }
+
+        private void SocialMediaCalendarValidation(PeriodSaveRequest request, PeriodResponse result, WebSession _customerSession)
+        {
+
+            if (!string.IsNullOrEmpty(request.StartDate) && !string.IsNullOrEmpty(request.EndDate))
+            {
+
+                #region Set Datetime variables
+                int startYear = Convert.ToInt32(request.StartDate.Substring(3, 4));
+                int endYear = Convert.ToInt32(request.EndDate.Substring(3, 4));
+                int starMonth = Convert.ToInt32(request.StartDate.Substring(0, 2));
+                int endMonth = Convert.ToInt32(request.EndDate.Substring(0, 2));
+                DateTime startDate = new DateTime(startYear, starMonth, 1);
+                DateTime endDate = new DateTime(endYear, endMonth, DateTime.DaysInMonth(endYear, endMonth));
+                #endregion
+
+                #region Try-Catch block
+                try
+                {
+                    SaveSocialMediaCalendarData( _customerSession, result, startDate, endDate);
+                    _customerSession.Save();
+                }
+                catch (Exception ex)
+                {
+                    _customerSession.ComparativeStudy = false;
+                    result.ErrorMessage = ex.Message;
+                }
+                #endregion
+
+                try
+                {
+                    _customerSession.Save();
+                }
+                catch (Exception ex)
+                {
+                    result.ErrorMessage = ex.Message;
+                }
+            }
+            else
+            {
+                result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.SelectPeriodErrorMsg, _customerSession.SiteLanguage);
+            }
+        }
+
+
         private void AnalysisCalendarValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
         {
             if (!string.IsNullOrEmpty(request.StartDate) && !string.IsNullOrEmpty(request.EndDate))
@@ -335,7 +395,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
             object[] param = new object[1];
             param[0] = webSession;
-            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             string absolutEndPeriod = dateDAL.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
             if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
             {
@@ -354,147 +414,264 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return result;
         }
-    #endregion
 
-    private void AnalysisSlidingValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
-    {
-        #region TOREFACTOR           
-        try
+        private PeriodResponse SaveSocialMediaCalendarData( WebSession webSession, PeriodResponse result, DateTime startDate, DateTime endDate)
         {
-            HandleSlidingData(request, webSession, result);
-        }
-        catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
-        {
-            result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
-        }
-        catch (System.Exception ex)
-        {
-            result.ErrorMessage = ex.Message;
-        }
 
-        #endregion
-    }
-
-    private void HandleSlidingData(PeriodSaveRequest request, WebSession webSession, PeriodResponse result)
-    {
-        // Cas où l'année de chargement des données est inférieur à l'année actuelle
-
-        DateTime downloadDate = new DateTime(webSession.DownLoadDate, 12, 31);
-        int months = 0;
-        int years = 0;
-        string startDateFormat = string.Empty;
-        string endDateFormat = string.Empty;
-        switch (request.SelectedPeriod)
-        {
-            case 1: // N last months
-                webSession.PeriodLength = request.SelectedValue;
-                months = 1 - webSession.PeriodLength;
-                startDateFormat = YYYYMM;
-                endDateFormat = YYYYMM;
-                webSession.PeriodType = CstPeriodType.nLastMonth;
-                webSession.DetailPeriod = CstPeriodDetail.dayly;
-                ManageAbsoluEndDate(webSession, result);
-                break;
-            case 8:// Current year
-                startDateFormat = YYYY01;
-                endDateFormat = YYYYMM;
-                webSession.PeriodType = CstPeriodType.currentYear;
-                webSession.PeriodLength = 1;
-                webSession.DetailPeriod = CstPeriodDetail.monthly;
-                ManageAbsoluEndDate(webSession, result);
-                break;
-            case 4:// Previous year
-                startDateFormat = YYYY01;
-                endDateFormat = YYYY12;
-                webSession.PeriodType = CstPeriodType.previousYear;
-                webSession.PeriodLength = 1;
-                webSession.DetailPeriod = CstPeriodDetail.monthly;
-                years = 1;
-                break;
-            case 9: // Penultimate year
-                if (IsComparativeStudy(request.StudyId) && WebApplicationParameters.DataNumberOfYear <= 3)
-                {
-                    result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.PeriodRequired, webSession.SiteLanguage);
-                    break;
-                }
-                webSession.PeriodType = CstPeriodType.nextToLastYear;
-                webSession.PeriodLength = 1;
-                webSession.DetailPeriod = CstPeriodDetail.monthly;
-                startDateFormat = YYYY01;
-                endDateFormat = YYYY12;
-                years = 2;
-                break;
-            default:
-                break;
-        };
-
-        if (DateTime.Now.Year > webSession.DownLoadDate)
-        {
-            webSession.PeriodBeginningDate = downloadDate.AddYears(-years).AddMonths(months).ToString(startDateFormat);
-            webSession.PeriodEndDate = downloadDate.AddYears(-years).ToString(endDateFormat);
-
-        }
-        else {
-            webSession.PeriodBeginningDate = DateTime.Now.AddYears(-years).AddMonths(months).ToString(startDateFormat);
-            webSession.PeriodEndDate = DateTime.Now.AddYears(-years).ToString(endDateFormat);
-        }
-        try
-        {
-            webSession.ComparativeStudy = IsComparativeStudy(request.StudyId);
-            webSession.Save();
-            webSession.Source.Close();
+            webSession.PeriodType = CstPeriodType.dateToDate;
+            webSession.DetailPeriod = CstPeriodDetail.monthly;
+            webSession.PeriodBeginningDate = startDate.ToString("yyyyMMdd");
+            webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+            result.StartYear = startDate.Year;
+            result.EndYear = endDate.Year;
             result.Success = true;
-            result.StartYear = int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));
-            result.EndYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4));
+
+            return result;
         }
-        catch (Exception ex)
+        #endregion
+
+        private void AnalysisSlidingValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
         {
-            result.ErrorMessage = ex.Message;
+            #region TOREFACTOR           
+            try
+            {
+                HandleSlidingData(request, webSession, result);
+            }
+            catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
+            {
+                result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
+            }
+            catch (System.Exception ex)
+            {
+                result.ErrorMessage = ex.Message;
+            }
+
+            #endregion
         }
-    }
-    public void ManageAbsoluEndDate(WebSession webSession, PeriodResponse result)
-    {
-        CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
-        object[] param = new object[1];
-        param[0] = webSession;
-        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 
-        string absolutEndPeriod = dateDAL.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
-        if ((int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00")))
-            result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
-
-        if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodEndDate))
-            webSession.PeriodEndDate = absolutEndPeriod;
-    }
-    private void DefaultSlidingPeriodValidation(PeriodSaveRequest request, PeriodResponse response, WebSession webSession)
-    {
-        try
+        private void SocialMediaSlidingValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
         {
-            globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
-            globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
+            #region TOREFACTOR           
+            try
+            {
+                HandleSocialMediaSlidingData(request, webSession, result);
+            }
+            catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
+            {
+                result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
+            }
+            catch (System.Exception ex)
+            {
+                result.ErrorMessage = ex.Message;
+            }
 
-            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
-            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+            #endregion
+        }
 
-            if (request.SelectedValue == 0)
+        private void HandleSocialMediaSlidingData(PeriodSaveRequest request, WebSession webSession, PeriodResponse result)
+        {
+
+            DateTime downloadDate = new DateTime(webSession.DownLoadDate, 12, 31);
+            int months = 0;
+            int years = 0;
+            string startDateFormat = string.Empty;
+            string endDateFormat = string.Empty;
+            switch (request.SelectedPeriod)
+            {
+                case 0: // N last year
+                    webSession.PeriodType = CstPeriodType.nLastYear;
+                    webSession.PeriodLength = request.SelectedValue;
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
+                    break;
+                case 1: // N last months
+                    webSession.PeriodLength = request.SelectedValue;
+                    months = 1 - webSession.PeriodLength;
+                    startDateFormat = YYYYMM;
+                    endDateFormat = YYYYMM;
+                    webSession.PeriodType = CstPeriodType.nLastMonth;
+                    webSession.DetailPeriod = CstPeriodDetail.dayly;
+                    break;
+                case 8:// Current year
+                    startDateFormat = YYYY01;
+                    endDateFormat = YYYYMM;
+                    webSession.PeriodType = CstPeriodType.currentYear;
+                    webSession.PeriodLength = 1;
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
+                    break;
+                case 4:// Previous year
+                    startDateFormat = YYYY01;
+                    endDateFormat = YYYY12;
+                    webSession.PeriodType = CstPeriodType.previousYear;
+                    webSession.PeriodLength = 1;
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
+                    years = 1;
+                    break;
+                case 5: // Previous Month
+                    var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    webSession.PeriodType = CstPeriodType.previousMonth;
+                    webSession.PeriodLength = 1;
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
+                    break;
+                default:
+                    break;
+            };
+
+
+
+            try
+            {
+                if (webSession.PeriodType == CstPeriodType.nLastYear)
+                {
+                    var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                    webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSession.PeriodLength).ToString("yyyy0101");
+                    webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+                }
+                else
+                {
+                    //previous month
+                    var endDate = new DateTime(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month, DateTime.DaysInMonth(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month));
+                    webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM01");
+                    webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+                }
+
+                webSession.Save();
+                webSession.Source.Close();
+                result.Success = true;
+                result.StartYear = int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));
+                result.EndYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4));
+            }
+            catch (Exception ex)
+            {
+                result.ErrorMessage = ex.Message;
+            }
+        }
+        private void HandleSlidingData(PeriodSaveRequest request, WebSession webSession, PeriodResponse result)
+        {
+            // Cas où l'année de chargement des données est inférieur à l'année actuelle
+
+            DateTime downloadDate = new DateTime(webSession.DownLoadDate, 12, 31);
+            int months = 0;
+            int years = 0;
+            string startDateFormat = string.Empty;
+            string endDateFormat = string.Empty;
+            switch (request.SelectedPeriod)
+            {
+
+                case 1: // N last months
+                    webSession.PeriodLength = request.SelectedValue;
+                    months = 1 - webSession.PeriodLength;
+                    startDateFormat = YYYYMM;
+                    endDateFormat = YYYYMM;
+                    webSession.PeriodType = CstPeriodType.nLastMonth;
+                    webSession.DetailPeriod = CstPeriodDetail.dayly;
+                    ManageAbsoluEndDate(webSession, result);
+                    break;
+                case 8:// Current year
+                    startDateFormat = YYYY01;
+                    endDateFormat = YYYYMM;
+                    webSession.PeriodType = CstPeriodType.currentYear;
+                    webSession.PeriodLength = 1;
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
+                    ManageAbsoluEndDate(webSession, result);
+                    break;
+                case 4:// Previous year
+                    startDateFormat = YYYY01;
+                    endDateFormat = YYYY12;
+                    webSession.PeriodType = CstPeriodType.previousYear;
+                    webSession.PeriodLength = 1;
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
+                    years = 1;
+                    break;
+                case 9: // Penultimate year
+                    if (IsComparativeStudy(request.StudyId) && WebApplicationParameters.DataNumberOfYear <= 3)
+                    {
+                        result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.PeriodRequired, webSession.SiteLanguage);
+                        break;
+                    }
+                    webSession.PeriodType = CstPeriodType.nextToLastYear;
+                    webSession.PeriodLength = 1;
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
+                    startDateFormat = YYYY01;
+                    endDateFormat = YYYY12;
+                    years = 2;
+                    break;
+                default:
+                    break;
+            };
+
+
+            try
+            {
+
+                if (DateTime.Now.Year > webSession.DownLoadDate)
+                {
+                    webSession.PeriodBeginningDate = downloadDate.AddYears(-years).AddMonths(months).ToString(startDateFormat);
+                    webSession.PeriodEndDate = downloadDate.AddYears(-years).ToString(endDateFormat);
+
+                }
+                else
+                {
+                    webSession.PeriodBeginningDate = DateTime.Now.AddYears(-years).AddMonths(months).ToString(startDateFormat);
+                    webSession.PeriodEndDate = DateTime.Now.AddYears(-years).ToString(endDateFormat);
+                }
+                webSession.ComparativeStudy = IsComparativeStudy(request.StudyId);
+
+
+                webSession.Save();
+                webSession.Source.Close();
+                result.Success = true;
+                result.StartYear = int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));
+                result.EndYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4));
+            }
+            catch (Exception ex)
+            {
+                result.ErrorMessage = ex.Message;
+            }
+        }
+
+        public void ManageAbsoluEndDate(WebSession webSession, PeriodResponse result)
+        {
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = webSession;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+
+            string absolutEndPeriod = dateDAL.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+            if ((int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00")))
+                result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
+
+            if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodEndDate))
+                webSession.PeriodEndDate = absolutEndPeriod;
+        }
+        private void DefaultSlidingPeriodValidation(PeriodSaveRequest request, PeriodResponse response, WebSession webSession)
+        {
+            try
+            {
+                globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
+                globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
+
+                CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
+                IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+
+                if (request.SelectedValue == 0)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.PeriodRequired, webSession.SiteLanguage);
+                }
+                else
+                {
+                    date.SetDate(ref webSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, request.SelectedPeriod, request.SelectedValue);
+                    webSession.Save();
+                    response.Success = true;
+                }
+
+            }
+            catch (Exception ex)
             {
                 response.Success = false;
-                response.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.PeriodRequired, webSession.SiteLanguage);
+                response.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
             }
-            else
-            {
-                date.SetDate(ref webSession, DateTime.Now, periodCalendarDisponibilityType, comparativePeriodCalendarType, request.SelectedPeriod, request.SelectedValue);
-                webSession.Save();
-                response.Success = true;
-            }
+        }
 
-        }
-        catch (Exception ex)
-        {
-            response.Success = false;
-            response.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
-        }
     }
-
-}
 }
