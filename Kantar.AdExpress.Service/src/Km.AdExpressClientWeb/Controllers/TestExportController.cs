@@ -3960,23 +3960,27 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #endregion
 
                                         #region Totals years
-                                        for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                        for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
-                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                            //if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
+                                            //    sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
 
-                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
-                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
+                                            if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k], _session.Unit);
+
+
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
                                             if (i == TOTAL_LINE_INDEX)
                                             {
-                                                TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                                TextStyle(sheet.Cells[cellRow, colTotalYears + k], LTotalText, LTotalBackground);
+                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                             }
                                             else
                                             {
-                                                TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                                TextStyle(sheet.Cells[cellRow, colTotalYears + k], L1Text, L1Background);
+                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -4071,16 +4075,19 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #endregion
 
                                         #region Totals years
-                                        for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                        for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
-                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value =  Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                            //if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
+                                            //    sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
 
-                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
-                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
+                                            if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k], _session.Unit);
 
-                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
+
+                                            TextStyle(sheet.Cells[cellRow, colTotalYears + k], L2Text, L2Background);
+                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -4174,16 +4181,19 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #endregion
 
                                         #region Totals years
-                                        for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                        for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
-                                                sheet.Cells[cellRow, colTotalYears + (k - 1)].Value =  Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                            //if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
+                                            //    sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
 
-                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
-                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
+                                            if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k], _session.Unit);
 
-                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
+
+                                            TextStyle(sheet.Cells[cellRow, colTotalYears + k], L3Text, L3Background);
+                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -4197,6 +4207,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         //        //AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear-3) + k);
                                         //    }
                                         //}
+
                                         j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
                                     }
                                     break;
@@ -4283,16 +4294,19 @@ namespace Km.AdExpressClientWeb.Controllers
                                     #endregion
 
                                     #region Totals years
-                                    for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                    for (int k = 0; k < nbColYear && _allowTotal; k++)
                                     {
-                                        if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                        //if (data[i, j + (firstPeriodIndex - nbColYear - 2) + k] != null)
+                                        //    sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
 
-                                        SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
-                                        SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
+                                        if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k] != null)
+                                            sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k], _session.Unit);
 
-                                        TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                        SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
+                                        SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
+
+                                        TextStyle(sheet.Cells[cellRow, colTotalYears + k], L4Text, L4Background);
+                                        BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                     }
                                     #endregion
 
@@ -4304,7 +4318,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                     //        //AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear-4) + k);
                                     //    }
                                     //}
+
                                     j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
+
                                     break;
                                 #endregion
 
