@@ -309,6 +309,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     Like = e.NumberLike,
                     Post = e.NumberPost,
                     Share = e.NumberShare,
+                    Commitment = e.Commitment,
                     Month = e.Month
                 }).OrderByDescending(a => a.Id).ToList();
 
