@@ -121,9 +121,11 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
+                bool concurSelected = true;
                 int IndexListRef = 1;
                 if (universeMarket.Count < 2)
                 {
+                    concurSelected = false;
                     IndexListRef = 0;
                 }
 
@@ -211,7 +213,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         return null;
 
                     string jsonData = JsonConvert.SerializeObject(datas);
-                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, combo = combos, unit = "number" };
+                    var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, combo = combos, unit = "number", concurSelected = concurSelected };
                     JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                     jsonModel.MaxJsonLength = Int32.MaxValue;
 

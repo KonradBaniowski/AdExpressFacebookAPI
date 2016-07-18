@@ -117,9 +117,13 @@
                     ds.dataBind();
 
                     CallReferChart();
-                    CallPDMChart();
-                    CallConcurChart();
-                    CallPlurimediaStackedChart();
+
+                    if (data.concurSelected) {
+                        CallPDMChart();
+                        CallConcurChart();
+                        CallPlurimediaStackedChart();
+                    }
+
                 }
                 else {
                     $("#gridLoader").addClass("hide");
