@@ -2,8 +2,8 @@
 <infoNews>
   <RulesLayer name="Default Info news rules layers" assemblyName="TNS.AdExpressI.InfosNews.France.dll" class="TNS.AdExpressI.InfosNews.France.InfoNewsResult"/>
   <directories>
-    <directory id="adExNews" description="adEx News" webTextId="2589" virtualPath="/AdExNews/" physicalPath="C:\AdexDatas\InfoNews\AdexNews\" nbMaxItemsToShow="12"/>
-    <directory id="adExReport" description="adEx Report" webTextId="2590" virtualPath="/AdExReport/" physicalPath="C:\AdexDatas\InfoNews\adexreport\" nbMaxItemsToShow="12"/>
+    <directory id="adExNews" description="adEx News" webTextId="2589" virtualPath="/AdExNews/" physicalPath="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\AdexNews\" nbMaxItemsToShow="12"/>
+    <directory id="adExReport" description="adEx Report" webTextId="2590" virtualPath="/AdExReport/" physicalPath="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\adexreport\" nbMaxItemsToShow="12"/>
     <!--<directory id="adExNews" description="adEx News" webTextId="2589" virtualPath="/AdExNews/" physicalPath="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\AdexNews\" nbMaxItemsToShow="12"/>
     <directory id="adExReport" description="adEx Report" webTextId="2590" virtualPath="/AdExReport/" physicalPath="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\adexreport\" nbMaxItemsToShow="12"/>-->
     <!--<directory id="adExReport360" description="adEx Report 360" webTextId="2608" virtualPath="/AdExReport360/" physicalPath="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\AdexReport 360\" nbMaxItemsToShow="12"/>
