@@ -193,36 +193,36 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
             if (isAdvertiser)
             {
-                foreach (var item in queryDataFB.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdMedia, Expenditure = g.Sum(b => b.Expenditure) }).ToList())
+                foreach (var item in queryDataFB.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, Expenditure = g.Sum(b => b.Expenditure) }).ToList())
                 {
                     var tmp = new PDVByMediaPageFacebookContract();
                     tmp.IdAdvertiser_Brand = item.Advertiser.IdAdvertiser;
                     tmp.LabelAdvertiser_Brand = item.Advertiser.AdvertiserLabel;
-                    tmp.IdMedia = item.IdMedia;
+                    tmp.IdMedia = item.IdVehicle;
                     tmp.Expenditure = item.Expenditure;
-                    tmp.LabelMedia = "Facebook";
+                    tmp.LabelMedia = "Social";
 
                     resultats.Add(tmp);
                 }
 
-                foreach (var item in queryDataDisplay.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdMedia, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
+                foreach (var item in queryDataDisplay.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
                 {
                     var tmp = new PDVByMediaPageFacebookContract();
                     tmp.IdAdvertiser_Brand = item.Advertiser.IdAdvertiser;
                     tmp.LabelAdvertiser_Brand = item.Advertiser.AdvertiserLabel;
-                    tmp.IdMedia = item.IdMedia;
+                    tmp.IdMedia = item.IdVehicle;
                     tmp.Expenditure = item.ExpenditureEuro;
                     tmp.LabelMedia = "Display";
 
                     resultats.Add(tmp);
                 }
 
-                foreach (var item in queryDataSearch.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdMedia, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
+                foreach (var item in queryDataSearch.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
                 {
                     var tmp = new PDVByMediaPageFacebookContract();
                     tmp.IdAdvertiser_Brand = item.Advertiser.IdAdvertiser;
                     tmp.LabelAdvertiser_Brand = item.Advertiser.AdvertiserLabel;
-                    tmp.IdMedia = item.IdMedia;
+                    tmp.IdMedia = item.IdVehicle;
                     tmp.Expenditure = item.ExpenditureEuro;
                     tmp.LabelMedia = "Search";
 
@@ -231,36 +231,36 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             }
             else
             {
-                foreach (var item in queryDataFB.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdMedia, Expenditure = g.Sum(b => b.Expenditure) }).ToList())
+                foreach (var item in queryDataFB.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, Expenditure = g.Sum(b => b.Expenditure) }).ToList())
                 {
                     var tmp = new PDVByMediaPageFacebookContract();
                     tmp.IdAdvertiser_Brand = item.Brand.Id;
                     tmp.LabelAdvertiser_Brand = item.Brand.BrandLabel;
-                    tmp.IdMedia = item.IdMedia;
+                    tmp.IdMedia = item.IdVehicle;
                     tmp.Expenditure = item.Expenditure;
-                    tmp.LabelMedia = "Facebook";
+                    tmp.LabelMedia = "Social";
 
                     resultats.Add(tmp);
                 }
 
-                foreach (var item in queryDataDisplay.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdMedia, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
+                foreach (var item in queryDataDisplay.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
                 {
                     var tmp = new PDVByMediaPageFacebookContract();
                     tmp.IdAdvertiser_Brand = item.Brand.Id;
                     tmp.LabelAdvertiser_Brand = item.Brand.BrandLabel;
-                    tmp.IdMedia = item.IdMedia;
+                    tmp.IdMedia = item.IdVehicle;
                     tmp.Expenditure = item.ExpenditureEuro;
                     tmp.LabelMedia = "Display";
 
                     resultats.Add(tmp);
                 }
 
-                foreach (var item in queryDataSearch.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdMedia, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
+                foreach (var item in queryDataSearch.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
                 {
                     var tmp = new PDVByMediaPageFacebookContract();
                     tmp.IdAdvertiser_Brand = item.Brand.Id;
                     tmp.LabelAdvertiser_Brand = item.Brand.BrandLabel;
-                    tmp.IdMedia = item.IdMedia;
+                    tmp.IdMedia = item.IdVehicle;
                     tmp.Expenditure = item.ExpenditureEuro;
                     tmp.LabelMedia = "Search";
 
@@ -290,6 +290,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     Like = e.NumberLike,
                     Post = e.NumberPost,
                     Share = e.NumberShare,
+                    Commitment = e.Commitment,
                     Month = e.Month
                 }).OrderByDescending(a => a.Id).ToList();
 

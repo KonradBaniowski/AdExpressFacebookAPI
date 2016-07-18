@@ -20,6 +20,7 @@ namespace Facebook.Service.Core.DomainModels.AdExprSchema
         public long NumberLike { get; set; }
         public long NumberComment { get; set; }
         public long NumberShare { get; set; }
+        public long Commitment { get; set; }
         public long IdPageFacebook { get; set; }
         public string PageName { get; set; }
         public long IdPage { get; set; }

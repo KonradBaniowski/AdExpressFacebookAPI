@@ -162,7 +162,8 @@ namespace Facebook.DataAccess.Repository
                                       NumberLike = g.Sum(a => a.NumberLike),
                                       NumberComment = g.Sum(a => a.NumberComment),
                                       NumberShare = g.Sum(a => a.NumberShare),
-                                      Expenditure = g.Sum(a => a.Expenditure),
+                                      Expenditure = g.Sum(a => a.Expenditure),  
+                                      Commitment = g.Sum(a => a.Commitment),
                                       NumberFan = g.Max(a => a.NumberFan),
 
                                   });
@@ -191,6 +192,7 @@ namespace Facebook.DataAccess.Repository
                                            NumberComment = g.Sum(a => a.NumberComment),
                                            NumberShare = g.Sum(a => a.NumberShare),
                                            Expenditure = g.Sum(a => a.Expenditure),
+                                           Commitment = g.Sum(a => a.Commitment),
                                            NumberFan = g.Max(a => a.NumberFan),
                                        });
 
