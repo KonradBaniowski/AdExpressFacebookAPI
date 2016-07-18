@@ -35,7 +35,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var hostName = HttpContext.Request.UrlReferrer.Authority;
             var url = hostName + "/PostsFacebook/";
-            var srvURL = itemId.Substring(0, 1) + "/" + itemId.Substring(1, 4) + "/new_" + itemId;
+            var srvURL = itemId.Substring(0, 1) + "/" + itemId.Substring(1, 3) + "/new_" + itemId;
             var path = Path.Combine("http://", url, srvURL + ".jpg");
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(path);
             request.Method = "HEAD";
