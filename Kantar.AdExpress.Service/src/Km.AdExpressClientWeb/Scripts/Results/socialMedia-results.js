@@ -125,6 +125,7 @@
                     $("#gridLoader").addClass("hide");
                     $("#grid").addClass("hide");
                     $("#resaccord").addClass("hide");
+                    $("#KPIButtonFix").addClass("hide");
                     $("#gridEmpty").show();
                 }
             }
@@ -138,6 +139,7 @@
             $("#gridLoader").addClass("hide");
             $("#grid").removeClass("hide");
             $("#resaccord").removeClass("hide");
+            $("#KPIButtonFix").removeClass("hide");
             $("#grid").igTreeGrid({
                 dataSource: ds.dataView(),
                 columns: cols,
@@ -185,6 +187,17 @@
         });
 
     });
+
+    $("#grid").on("igtreegridrowsrendered igtreegriddatarendered", function (evt, ui) {
+
+        /*Follow scroll*/
+        $('#KPIButtonFix').affix({
+            offset: { top: $('#KPIButtonFix').offset().top }
+        });
+
+    });
+    
+
 });
 
 function getData(e) {
@@ -346,6 +359,7 @@ function getDataReferKPI(e) {
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
+        overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
@@ -441,6 +455,7 @@ function getDataReferExpenditure(e) {
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
+        overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
@@ -534,13 +549,15 @@ function getDataPDM(e) {
                     name: "ReferentPercent",
                     title: "ReferentPercent",
                     type: "stackedFragment",
-                    valueMemberPath: "ReferentPercent"
+                    valueMemberPath: "ReferentPercent",
+                    showTooltip: true
                 },
                     {
                         name: "ConcurrentPercent",
                         title: "ConcurrentPercent",
                         type: "stackedFragment",
-                        valueMemberPath: "ConcurrentPercent"
+                        valueMemberPath: "ConcurrentPercent",
+                        showTooltip: true
                     }
                 ]
             };
@@ -557,7 +574,8 @@ function getDataPDM(e) {
                 xAxis: "Month",
                 yAxis: "PDMAxe",
                 valueMemberPath: "ReferentFBPercent",
-                thickness: 3
+                thickness: 3,
+                showTooltip: true,
             }
         );
 
@@ -573,7 +591,9 @@ function getDataPDM(e) {
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
-        brushes: ["#14C896", "#B8292F", "#2D2B62", "#000000", "#787878", "#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        brushes: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        outlines: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
@@ -633,6 +653,7 @@ function getDataConcurKPI(e) {
                     title: label,
                     xAxis: "Month",
                     yAxis: "KPIAxe",
+                    showTooltip: true,
                     valueMemberPath: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
                     thickness: 3
                 }
@@ -649,9 +670,11 @@ function getDataConcurKPI(e) {
         subtitle: "Sous titre à definir",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
+        outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         horizontalZoomable: true,
         verticalZoomable: true,
+        overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
@@ -662,7 +685,7 @@ function getDataConcurKPI(e) {
                 }, {
                     type: "numericY",
                     name: "KPIAxe",
-                    title: "KPI",
+                    title: serieType,
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
                     labelTextColor: "white",
@@ -670,6 +693,10 @@ function getDataConcurKPI(e) {
         ],
 
         series: listSerie
+    });
+
+    $('#unity > .form-control').on('change', function () {
+        getDataConcurKPI();
     });
 }
 
@@ -705,7 +732,8 @@ function getDataConcurExpenditure(e) {
                     xAxis: "Month",
                     yAxis: "ExpenditureAxe",
                     valueMemberPath: "Expenditure",
-                    thickness: 3
+                    thickness: 3,
+                    showTooltip: true
                 }
             );
 
@@ -721,8 +749,11 @@ function getDataConcurExpenditure(e) {
         subtitle: "Sous titre à definir",
         titleTextColor: "white",
         subtitleTextColor: "white",
+        brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
+        outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         horizontalZoomable: true,
         verticalZoomable: true,
+        overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
@@ -792,9 +823,11 @@ function getDataConcurEngagement(e) {
         subtitle: "Sous titre à definir",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#000000", "#E7E7E7", "#9C1E8D", "#3C6BBF", "#51266B", "#2B6077"],
+        brushes: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        outlines: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
         horizontalZoomable: true,
         verticalZoomable: true,
+        overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "numericX",
@@ -879,6 +912,7 @@ function getDataConcurDecompositionEngagement(e) {
         brushes: ["#FFE100", "#B8DC00", "#00C8FF"],
         horizontalZoomable: true,
         verticalZoomable: true,
+        overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "numericX",
@@ -952,7 +986,10 @@ function getDataPlurimediaStacked(e) {
         subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
+        brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
+        outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         dataSource: arrayData,
+        overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
@@ -990,6 +1027,7 @@ function CallReferChart() {
             $('#Refer-chart').html('').append(data);
             getDataReferKPI();
             getDataReferExpenditure();
+            $(".mediaLoaderRefer").hide();
         }
     });
 }
@@ -1006,6 +1044,7 @@ function CallPDMChart() {
         success: function (data) {
             $('#PDM-chart').html('').append(data);
             getDataPDM();
+            $(".mediaLoaderPDM").hide();
         }
     });
 }
@@ -1025,6 +1064,7 @@ function CallConcurChart() {
             getDataConcurExpenditure();
             getDataConcurEngagement();
             getDataConcurDecompositionEngagement();
+            $(".mediaLoaderConcur").hide();
         }
     });
 }
@@ -1041,6 +1081,7 @@ function CallPlurimediaStackedChart() {
         success: function (data) {
             $('#Stacked-chart').html('').append(data);
             getDataPlurimediaStacked();
+            $(".mediaLoaderPlurimediaStacked").hide();
         }
     });
 }
@@ -1118,6 +1159,12 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
 
 function getDataZoom(e) {
     var serieType = $('#seriesTypeZoom').val();
+    var brush = "#FFE100";
+    switch (serieType) {
+        case "share": brush = "#B8DC00"; break;
+        case "comment": brush = "#00C8FF"; break;
+        default: brush = "#FFE100"; break;
+    }
     var dis = $('#chart');
     var data = $("[id='" + serieType + "']");
     var arrayData = [];
@@ -1172,6 +1219,7 @@ function getDataZoom(e) {
             title: "1995",
             xAxis: "Days",
             yAxis: "Value",
+            brush: brush,
             valueMemberPath: "Data",
             isTransitionInEnabled: true,
             isHighlightingEnabled: true,
