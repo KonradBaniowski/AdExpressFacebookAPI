@@ -174,7 +174,9 @@
 
     $("#grid").on("igtreegridrowexpanded igtreegridrowcollapsed ", function (evt, ui) {
         /*Follow scroll*/
-        $('#KPIButtonFix').data('bs.affix').options.offset = $('#KPIButtonFix').offset().top;
+        var element = $('#grid_table');
+        var bottom = element.offset().top + element.outerHeight(true)
+        $('#KPIButtonFix').data('bs.affix').options.offset = bottom
     });
 
 });
