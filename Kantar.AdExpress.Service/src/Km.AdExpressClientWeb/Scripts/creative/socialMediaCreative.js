@@ -202,6 +202,12 @@ $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
 
 function getData(e) {
             var serieType = $('#seriesTypeZoom').val();
+            var brush = "#FFE100";
+            switch (serieType) {
+                case "share": brush = "#B8DC00"; break;
+                case "comment": brush = "#00C8FF"; break;
+                default: brush = "#FFE100"; break;
+            }
             var dis = $('#chart');
             var data = $("[id='" + serieType + "']");
             var arrayData = [];
@@ -259,6 +265,7 @@ function getData(e) {
                     valueMemberPath: "Data",
                     isTransitionInEnabled: true,
                     isHighlightingEnabled: true,
+                    brush:brush,
                     thickness: 5
                 }]
             });

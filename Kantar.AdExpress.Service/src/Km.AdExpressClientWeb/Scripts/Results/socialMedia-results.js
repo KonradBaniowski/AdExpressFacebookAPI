@@ -200,8 +200,15 @@
         });
 
     });
-    
 
+});
+
+$(window).resize(function () {
+    $('#KPIButtonFix').width($('#KPIButtonFix').parent().width());
+});
+
+$(window).scroll(function () {
+    $('#KPIButtonFix').width($('#KPIButtonFix').parent().width());
 });
 
 function getData(e) {
@@ -273,7 +280,8 @@ function getDataReferKPI(e) {
 
     var dis = $("#chartReferKPI");
     var data = $(".elmtsChart");
-
+    var serieType = $('#seriesType').val();
+    var title = "Saisonnalité des " + serieType + " vs POST";
     var arrayData = [];
     $.each(data, function () {
 
@@ -356,20 +364,20 @@ function getDataReferKPI(e) {
         autoMarginWidth: 15,
         width: "100%",
         height: "300px",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
+        title: title,
+        subtitle: "Mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
-        overviewPlusDetailPaneVisibility: "visible",
+        //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Month",
+                    title: "Mois",
                     labelTextColor: "white",
                 }, {
                     type: "numericY",
@@ -394,35 +402,38 @@ function getDataReferKPI(e) {
     });
 
     $('#seriesType').on('change', function () {
-        var serieType = $(this).val();
-        var series = dis.igDataChart("option", "series");
-        var newListSeries = [];
+        //var serieType = $(this).val();
+        //var series = dis.igDataChart("option", "series");
+        //var newListSeries = [];
 
-        newListSeries = jQuery.grep(listSerie, function (value) {
-            return value.name == serieType;
-        });
+        //newListSeries = jQuery.grep(listSerie, function (value) {
+        //    return value.name == serieType;
+        //});
 
-        //TODO : Faire une boucle (fait comme ça pour avoir les Posts (type line) au debut de la list)!!
-        dis.igDataChart("option", "series", [{ name: "like", remove: true }]);
-        dis.igDataChart("option", "series", [{ name: "share", remove: true }]);
-        dis.igDataChart("option", "series", [{ name: "comment", remove: true }]);
-        dis.igDataChart("option", "series", [{ name: "Posts", remove: true }]);
-        for (var i = 0; i < listSerie.length; i++) {
-            if (listSerie[i].type != "column") {
-                newListSeries.push(listSerie[i]);
-            }
-        }
-
-        //for (var i = 0; i < series.length; i++) {
-        //    if (series[i].type != "column") {
-        //        newListSeries.push(series[i]);
-        //    }
-        //    if (series[i].name != serieType) { // && series[i].type == "column"
-        //        dis.igDataChart("option", "series", [{ name: series[i].name, remove: true }]);
+        ////TODO : Faire une boucle (fait comme ça pour avoir les Posts (type line) au debut de la list)!!
+        //dis.igDataChart("option", "series", [{ name: "like", remove: true }]);
+        //dis.igDataChart("option", "series", [{ name: "share", remove: true }]);
+        //dis.igDataChart("option", "series", [{ name: "comment", remove: true }]);
+        //dis.igDataChart("option", "series", [{ name: "Posts", remove: true }]);
+        //for (var i = 0; i < listSerie.length; i++) {
+        //    if (listSerie[i].type != "column") {
+        //        newListSeries.push(listSerie[i]);
         //    }
         //}
 
-        dis.igDataChart("option", "series", newListSeries);
+        ////for (var i = 0; i < series.length; i++) {
+        ////    if (series[i].type != "column") {
+        ////        newListSeries.push(series[i]);
+        ////    }
+        ////    if (series[i].name != serieType) { // && series[i].type == "column"
+        ////        dis.igDataChart("option", "series", [{ name: series[i].name, remove: true }]);
+        ////    }
+        ////}
+
+        //dis.igDataChart("option", "series", newListSeries);
+
+
+        getDataReferKPI();
 
     });
 }
@@ -452,20 +463,20 @@ function getDataReferExpenditure(e) {
         autoMarginWidth: 15,
         height: "300px",
         width: "100%",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
+        title: "Saisonnalité des BRAND EXPOSURE vs POST",
+        subtitle: "Mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
-        overviewPlusDetailPaneVisibility: "visible",
+        //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Month",
+                    title: "Mois",
                     labelTextColor: "white"
                 }, {
                     type: "numericY",
@@ -588,8 +599,8 @@ function getDataPDM(e) {
         autoMarginWidth: 15,
         height: "300px",
         width: "100%",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
+        title: "PDM des référents vs univers Marché",
+        subtitle: "INVESTISSMENTS PLURIMEDIA et BRAND EXPOSURE / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -597,13 +608,13 @@ function getDataPDM(e) {
         dataSource: arrayData,
         brushes: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
         outlines: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
-        overviewPlusDetailPaneVisibility: "visible",
+        //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Month",
+                    title: "Mois",
                     labelTextColor: "white",
                     isTransitionInEnabled: true,
                     isHighlightingEnabled: true
@@ -670,21 +681,21 @@ function getDataConcurKPI(e) {
         dataSource: arrayMonth,
         width: "100%",
         height: "300px",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
+        title: "Saisonnalité des " + serieType + " par annonceur ou marque",
+        subtitle: "Mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         horizontalZoomable: true,
         verticalZoomable: true,
-        overviewPlusDetailPaneVisibility: "visible",
+        //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Month",
+                    title: "Mois",
                     labelTextColor: "white",
                 }, {
                     type: "numericY",
@@ -749,21 +760,21 @@ function getDataConcurExpenditure(e) {
         dataSource: arrayMonth,
         height: "300px",
         width: "100%",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
+        title: "Saisonnalité des BRAND EXPOSURE par annonceur ou marque",
+        subtitle: "Mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         horizontalZoomable: true,
         verticalZoomable: true,
-        overviewPlusDetailPaneVisibility: "visible",
+        //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Month",
+                    title: "Mois",
                     labelTextColor: "white"
                 }, {
                     type: "numericY",
@@ -823,15 +834,15 @@ function getDataConcurEngagement(e) {
         dataSource: arrayData,
         height: "300px",
         width: "100%",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
+        title: "Niveau d’ENGAGEMENT",
+        subtitle: "Ventilé par annonceur ou marque",
         titleTextColor: "white",
         subtitleTextColor: "white",
         brushes: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
         outlines: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
         horizontalZoomable: true,
         verticalZoomable: true,
-        overviewPlusDetailPaneVisibility: "visible",
+        //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "numericX",
@@ -909,19 +920,19 @@ function getDataConcurDecompositionEngagement(e) {
         dataSource: [{ Like: 0, Share: 0, Comment: 0, Label: "" }],
         height: "300px",
         width: "100%",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
+        title: "Cumul des LIKE, SHARE et COMMENT",
+        subtitle: "Ventilé par annonceur ou marque",
         titleTextColor: "white",
         subtitleTextColor: "white",
         brushes: ["#FFE100", "#B8DC00", "#00C8FF"],
         horizontalZoomable: true,
         verticalZoomable: true,
-        overviewPlusDetailPaneVisibility: "visible",
+        //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "numericX",
                     name: "EngagementAxe",
-                    title: "Engagement",
+                    title: "KPI",
                     labelTextColor: "white"
                 }, {
                     name: "yAxis",
@@ -984,8 +995,8 @@ function getDataPlurimediaStacked(e) {
         autoMarginWidth: 15,
         height: "300px",
         width: "100%",
-        title: "Titre à definir",
-        subtitle: "Sous titre à definir",
+        title: "PDM des annonceurs ou marques ventilées par Media",
+        subtitle: "INVESTISSEMENTS et BRAND EXPOSURE",
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -993,7 +1004,7 @@ function getDataPlurimediaStacked(e) {
         brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
         dataSource: arrayData,
-        overviewPlusDetailPaneVisibility: "visible",
+        //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
                     type: "categoryX",
