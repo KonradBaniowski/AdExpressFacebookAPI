@@ -117,7 +117,6 @@
                     ds.dataBind();
 
                     CallReferChart();
-
                     if (data.concurSelected) {
                         CallPDMChart();
                         CallConcurChart();
@@ -147,31 +146,15 @@
             $("#grid").igTreeGrid({
                 dataSource: ds.dataView(),
                 columns: cols,
-                height: "400px",
+                height:"100%",
                 autoGenerateColumns: false,
                 primaryKey: "ID",
                 foreignKey: "PID",
                 width: "1140px",
                 autofitLastColumn: false,
-                features: [
-                    {
-                        name: "MultiColumnHeaders"
-                    },
-                    {
-                        name: "Paging",
-                        mode: "allLevels",
-                        pageSize: 100
-                    }
-                ]
+                initialExpandDepth: 1
+
             })
-
-            gridWidth = $("#grid_table_headers").width();
-            gridWidth += $("#grid_table_headers_fixed").width();
-
-            if (gridWidth > 1140)
-                gridWidth = 1140;
-
-            $("#grid").igTreeGrid("option", "width", gridWidth + "px");
 
         } else {
             bootbox.alert(error);
@@ -179,34 +162,27 @@
     }
 
     //** charge les images au fur et a mesure que le teableau s'affiche (image page facebook)
-    $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollapsing", function (evt, ui) {
+    $("#grid").on("igtreegridrowsrendered", function (evt, ui) {
 
         $(".imgPageFacebook").each(function () {
             var datas = $(this).attr('data-post').toString();
 
-            //var link = "http://192.168.158.145/POSTS/" + datas.substring(0, 1) + "/" + datas.substring(1, 4) + "/new_" + datas + ".jpg"
-
             var link = "/Image/GetPageImage?itemId=" + datas;
             $(this).attr("src", link);
         });
-
     });
 
-    $("#grid").on("igtreegridrowsrendered igtreegriddatarendered", function (evt, ui) {
-
+    $("#grid").on("igtreegridrowexpanded igtreegridrowcollapsed ", function (evt, ui) {
         /*Follow scroll*/
-        $('#KPIButtonFix').affix({
-            offset: { top: $('#KPIButtonFix').offset().top }
-        });
-
+        $('#KPIButtonFix').data('bs.affix').options.offset = $('#KPIButtonFix').offset().top;
     });
 
 });
+
 
 $(window).resize(function () {
     $('#KPIButtonFix').width($('#KPIButtonFix').parent().width());
 });
-
 $(window).scroll(function () {
     $('#KPIButtonFix').width($('#KPIButtonFix').parent().width());
 });
@@ -237,9 +213,7 @@ function getData(e) {
             });
         });
         dis.igDataChart({
-            autoMarginHeight: 15,
-            autoMarginWidth: 15,
-            width: "70%",
+            width: "100%",
             height: "250px",
             dataSource: arrayData,
             axes: [
@@ -288,7 +262,7 @@ function getDataReferKPI(e) {
         var datas = $(this).children(".monthRef").attr('name').split(",");
         $.each(datas, function (index, value) {
             var elem = {
-                Month: Number($(".elmtsChart").children(".monthRef").attr('name').split(",")[index]),
+                Month: value.substring(4, 6) + "/" + value.substring(2, 4),
                 Comment: Number($(".elmtsChart").children(".commentRef").attr('name').split(",")[index]),
                 Like: Number($(".elmtsChart").children(".likeRef").attr('name').split(",")[index]),
                 Share: Number($(".elmtsChart").children(".shareRef").attr('name').split(",")[index]),
@@ -324,6 +298,7 @@ function getDataReferKPI(e) {
                 yAxis: "PostsAxe",
                 valueMemberPath: "Post",
                 brush: "#FF0080",
+                outline:"#FF0080",
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
                 thickness: 3
@@ -360,8 +335,6 @@ function getDataReferKPI(e) {
 
 
     dis.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
         width: "100%",
         height: "300px",
         title: title,
@@ -390,7 +363,7 @@ function getDataReferKPI(e) {
                     type: "numericY",
                     name: "PostsAxe",
                     labelLocation: "outsideRight",
-                    title: "Posts",
+                    title: "Post",
                     minimumValue: 0,
                     majorStroke: "rgba(0,0,0,0)",
                     stroke: "rgba(0,0,0,0)",
@@ -402,38 +375,51 @@ function getDataReferKPI(e) {
     });
 
     $('#seriesType').on('change', function () {
-        //var serieType = $(this).val();
-        //var series = dis.igDataChart("option", "series");
-        //var newListSeries = [];
+        var serieType = $(this).val();
+        var series = dis.igDataChart("option", "series");
+        var newListSeries = [];
 
-        //newListSeries = jQuery.grep(listSerie, function (value) {
-        //    return value.name == serieType;
-        //});
+        newListSeries = jQuery.grep(listSerie, function (value) {
+            return value.name == serieType;
+        });
 
-        ////TODO : Faire une boucle (fait comme ça pour avoir les Posts (type line) au debut de la list)!!
-        //dis.igDataChart("option", "series", [{ name: "like", remove: true }]);
-        //dis.igDataChart("option", "series", [{ name: "share", remove: true }]);
-        //dis.igDataChart("option", "series", [{ name: "comment", remove: true }]);
-        //dis.igDataChart("option", "series", [{ name: "Posts", remove: true }]);
-        //for (var i = 0; i < listSerie.length; i++) {
-        //    if (listSerie[i].type != "column") {
-        //        newListSeries.push(listSerie[i]);
+        //TODO : Faire une boucle (fait comme ça pour avoir les Posts (type line) au debut de la list)!!
+        dis.igDataChart("option", "series", [{ name: "like", remove: true }]);
+        dis.igDataChart("option", "series", [{ name: "share", remove: true }]);
+        dis.igDataChart("option", "series", [{ name: "comment", remove: true }]);
+        dis.igDataChart("option", "series", [{ name: "Posts", remove: true }]);
+        for (var i = 0; i < listSerie.length; i++) {
+            if (listSerie[i].type != "column") {
+                newListSeries.push(listSerie[i]);
+            }
+        }
+
+        //for (var i = 0; i < series.length; i++) {
+        //    if (series[i].type != "column") {
+        //        newListSeries.push(series[i]);
+        //    }
+        //    if (series[i].name != serieType) { // && series[i].type == "column"
+        //        dis.igDataChart("option", "series", [{ name: series[i].name, remove: true }]);
         //    }
         //}
 
-        ////for (var i = 0; i < series.length; i++) {
-        ////    if (series[i].type != "column") {
-        ////        newListSeries.push(series[i]);
-        ////    }
-        ////    if (series[i].name != serieType) { // && series[i].type == "column"
-        ////        dis.igDataChart("option", "series", [{ name: series[i].name, remove: true }]);
-        ////    }
-        ////}
+        dis.igDataChart("option", "series", newListSeries);
 
-        //dis.igDataChart("option", "series", newListSeries);
+        var serieType = $('#seriesType').val();
+        dis.igDataChart("option", "title", "Saisonnalité des " + serieType + " vs POST");
+        var axes = dis.igDataChart("option", "axes");
 
-
-        getDataReferKPI();
+        //dis.igDataChart("option", "axes", [{ name: axes[1].name, remove: true }]);
+        //dis.igDataChart("option", "axes",
+        //    [{
+        //        type: "numericY",
+        //        name: "KPI",
+        //        title: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
+        //        majorStroke: "white",
+        //        stroke: "rgba(0,0,0,0)",
+        //        labelTextColor: "white",
+        //    }]
+        //);
 
     });
 }
@@ -449,7 +435,7 @@ function getDataReferExpenditure(e) {
         var datas = $(this).children(".monthRef").attr('name').split(",");
         $.each(datas, function (index, value) {
             var elem = {
-                Month: Number($(".elmtsChart").children(".monthRef").attr('name').split(",")[index]),
+                Month: value.substring(4, 6) + "/" + value.substring(2, 4),
                 Expenditure: Number($(".elmtsChart").children(".expenditureRef").attr('name').split(",")[index]),
                 Post: Number($(".elmtsChart").children(".postRef").attr('name').split(",")[index])
             };
@@ -459,11 +445,9 @@ function getDataReferExpenditure(e) {
     });
 
     disExpenditure.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
         height: "300px",
         width: "100%",
-        title: "Saisonnalité des BRAND EXPOSURE vs POST",
+        title: "Saisonnalité des B€X vs POST",
         subtitle: "Mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
@@ -481,7 +465,7 @@ function getDataReferExpenditure(e) {
                 }, {
                     type: "numericY",
                     name: "ExpenditureAxe",
-                    title: "Expenditure",
+                    title: "Brand Exposure",
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
                     labelTextColor: "white"
@@ -503,7 +487,7 @@ function getDataReferExpenditure(e) {
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
                 name: "Expenditure",
-                title: "Expenditure",
+                title: "Brand Exposure",
                 xAxis: "Month",
                 yAxis: "ExpenditureAxe",
                 valueMemberPath: "Expenditure",
@@ -522,6 +506,7 @@ function getDataReferExpenditure(e) {
                 yAxis: "PostsAxe",
                 valueMemberPath: "Post",
                 brush: "#FF0080",
+                outline: "#FF0080",
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
                 thickness: 3
@@ -541,7 +526,7 @@ function getDataPDM(e) {
         var datas = $(this).children(".monthRef").attr('name').split(",");
         $.each(datas, function (index, value) {
             var elem = {
-                Month: Number($(".elmtsChartPDM").children(".monthRef").attr('name').split(",")[index]),
+                Month: value.substring(4, 6) + "/" + value.substring(2, 4),
                 ReferentPercent: Number($(".elmtsChartPDM").children(".refPercentRef").attr('name').split(",")[index]),
                 ConcurrentPercent: Number($(".elmtsChartPDM").children(".concPercentRef").attr('name').split(",")[index]),
                 ReferentFBPercent: Number($(".elmtsChartPDM").children(".refFBPercentRef").attr('name').split(",")[index]),
@@ -559,20 +544,23 @@ function getDataPDM(e) {
                 xAxis: "Month",
                 yAxis: "PDMAxe",
                 type: "stacked100Column",
-                outline: "transparent",
                 series: [{
-                    name: "ReferentPercent",
-                    title: "ReferentPercent",
-                    type: "stackedFragment",
-                    valueMemberPath: "ReferentPercent",
-                    showTooltip: true
-                },
+                        name: "ReferentPercent",
+                        title: "ReferentPercent",
+                        type: "stackedFragment",
+                        valueMemberPath: "ReferentPercent",
+                        brush: "#3C6BBF", outline: "#3C6BBF",
+                        showTooltip: true,
+                        tooltipTemplate: "referentPDMTooltipTemplate"
+                    },
                     {
                         name: "ConcurrentPercent",
                         title: "ConcurrentPercent",
                         type: "stackedFragment",
                         valueMemberPath: "ConcurrentPercent",
-                        showTooltip: true
+                        brush: "#E7E7E7", outline: "#E7E7E7",
+                        showTooltip: true,
+                        tooltipTemplate: "concurrentPDMTooltipTemplate"
                     }
                 ]
             };
@@ -589,25 +577,23 @@ function getDataPDM(e) {
                 xAxis: "Month",
                 yAxis: "PDMAxe",
                 valueMemberPath: "ReferentFBPercent",
+                brush: "#FF0080", outline: "#FF0080",
                 thickness: 3,
                 showTooltip: true,
+                tooltipTemplate: "referentFaceBookPDMTooltipTemplate"
             }
         );
 
     disPDM.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
         height: "300px",
         width: "100%",
         title: "PDM des référents vs univers Marché",
-        subtitle: "INVESTISSMENTS PLURIMEDIA et BRAND EXPOSURE / mois par mois",
+        subtitle: "INVESTISSMENTS PLURIMEDIA et B€X / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
         dataSource: arrayData,
-        brushes: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
-        outlines: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
         //overviewPlusDetailPaneVisibility: "visible",
         axes: [
                 {
@@ -638,6 +624,7 @@ function getDataConcurKPI(e) {
     var dis = $("#chartConcurKPI");
     var data = $(".elmtsChartConcur");
     var serieType = $('#seriesType').val();
+    var labelKPISelected = serieType.substr(0, 1).toUpperCase() + serieType.substr(1)
 
     var listSerie = [];
     var arrayMonth = [];
@@ -649,14 +636,14 @@ function getDataConcurKPI(e) {
         arrayMonth = [];
         $.each(datas, function (index, value) {
             var elem = {
-                Month: Number(value),
+                Month: value.substring(4, 6) + "/" + value.substring(2, 4),
                 Comment: Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index]),
                 Like: Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index]),
                 Share: Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index]),
                 Post: Number(currentElmnt.children(".postConcur").attr('name').split(",")[index])
             };
             arrayData.push(elem);
-            arrayMonth.push({ Month: Number(value) });
+            arrayMonth.push({ Month: value.substring(4, 6) + "/" + value.substring(2, 4) });
         });
         listSerie.push(
                 {
@@ -669,15 +656,17 @@ function getDataConcurKPI(e) {
                     xAxis: "Month",
                     yAxis: "KPIAxe",
                     showTooltip: true,
-                    valueMemberPath: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
-                    thickness: 3
+                    valueMemberPath: labelKPISelected,
+                    thickness: 3,
+                    tooltipTemplate: "<div>Mois: <label class='bold'>${item.Month}</label></div><div>" + label + ": <label class='bold'>${item." + labelKPISelected + "}</label></div>"
                 }
             );
     });
 
+    //var series = $(".selector").igMap("option", "series");
+    //series[0].brush;
+
     dis.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
         dataSource: arrayMonth,
         width: "100%",
         height: "300px",
@@ -700,7 +689,7 @@ function getDataConcurKPI(e) {
                 }, {
                     type: "numericY",
                     name: "KPIAxe",
-                    title: serieType,
+                    title: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
                     labelTextColor: "white",
@@ -730,11 +719,11 @@ function getDataConcurExpenditure(e) {
         arrayMonth = [];
         $.each(datas, function (index, value) {
             var elem = {
-                Month: Number(value),
+                Month: value.substring(4, 6) + "/" + value.substring(2, 4),
                 Expenditure: Number(currentElmnt.children(".expenditureConcur").attr('name').split(",")[index]),
             };
             arrayData.push(elem);
-            arrayMonth.push({ Month: Number(value) });
+            arrayMonth.push({ Month: value.substring(4, 6) + "/" + value.substring(2, 4) });
         });
         listSerie.push(
                 {
@@ -748,19 +737,18 @@ function getDataConcurExpenditure(e) {
                     yAxis: "ExpenditureAxe",
                     valueMemberPath: "Expenditure",
                     thickness: 3,
-                    showTooltip: true
+                    showTooltip: true,
+                    tooltipTemplate: "<div>Mois: <label class='bold'>${item.Month}</label></div><div>" + label + ": <label class='bold'>${item.Expenditure}</label></div>"
                 }
             );
 
     });
 
     disExpenditure.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
         dataSource: arrayMonth,
         height: "300px",
         width: "100%",
-        title: "Saisonnalité des BRAND EXPOSURE par annonceur ou marque",
+        title: "Saisonnalité des B€X par annonceur ou marque",
         subtitle: "Mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
@@ -821,7 +809,6 @@ function getDataConcurEngagement(e) {
                     yAxis: "yAxis",
                     valueMemberPath: concurMemberPathLabel,
                     showTooltip: true,
-                    outline: "transparent",
                     radius: 0
                 }
             );
@@ -829,8 +816,6 @@ function getDataConcurEngagement(e) {
     });
     arrayData.push(elem);
     disExpenditure.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
         dataSource: arrayData,
         height: "300px",
         width: "100%",
@@ -838,8 +823,8 @@ function getDataConcurEngagement(e) {
         subtitle: "Ventilé par annonceur ou marque",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
-        outlines: ["#3C6BBF", "#E7E7E7", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        brushes: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        outlines: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -848,7 +833,7 @@ function getDataConcurEngagement(e) {
                     type: "numericX",
                     name: "EngagementAxe",
                     title: "Engagement",
-                    labelTextColor: "white"
+                    labelTextColor: "white",
                 }, {
                     name: "yAxis",
                     type: "categoryY",
@@ -887,8 +872,8 @@ function getDataConcurDecompositionEngagement(e) {
                         yAxis: "yAxis",
                         dataSource: [elem],
                         type: "stackedBar",
-                        outline: "transparent",
                         radius: 0,
+                        outline:"transparent",
                         series: [{
                             name: "like",
                             title: "Like",
@@ -983,7 +968,6 @@ function getDataPlurimediaStacked(e) {
                 xAxis: "MediaAxe",
                 yAxis: "PDVAxe",
                 type: "stacked100Column",
-                outline: "transparent",
                 series: listSubSeries,
             };
             return seriesObj;
@@ -991,12 +975,10 @@ function getDataPlurimediaStacked(e) {
     ];
 
     disPDM.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
         height: "300px",
         width: "100%",
         title: "PDM des annonceurs ou marques ventilées par Media",
-        subtitle: "INVESTISSEMENTS et BRAND EXPOSURE",
+        subtitle: "INVESTISSEMENTS et B€X",
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -1043,6 +1025,11 @@ function CallReferChart() {
             getDataReferKPI();
             getDataReferExpenditure();
             $(".mediaLoaderRefer").hide();
+
+            /*Follow scroll*/
+            $('#KPIButtonFix').affix({
+                offset: { top: $('#KPIButtonFix').offset().top }
+            });
         }
     });
 }
@@ -1208,8 +1195,6 @@ function getDataZoom(e) {
         series.push(serie);
     });
     dis.igDataChart({
-        autoMarginHeight: 15,
-        autoMarginWidth: 15,
         width: "70%",
         height: "250px",
         //title: "Evolution des partages",
