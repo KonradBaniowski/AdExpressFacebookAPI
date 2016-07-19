@@ -93,46 +93,94 @@ namespace Km.AdExpressClientWeb.Controllers
                 };
                 gridData.Add(par);
                 vals = new List<string>();
-                foreach (var elmt in data)
+
+                data.Where(e => e.PID == -1).ToList().ForEach(p =>
                 {
-                    if (elmt.PID == -1)
+                    gridData.Add(
+                           new InfragisticData
+                           {
+                               Level = 2,
+                               Values = new List<String> {
+                                    p.PageName,
+                                    p.NbPage.ToString(),
+                                    p.NumberFan.ToString(),
+                                    p.NumberPost.ToString(),
+                                    p.NumberLike.ToString(),
+                                    p.NumberShare.ToString(),
+                                    p.NumberComment.ToString(),
+                                    p.Expenditure.ToString()
+                               }
+                           });
+
+                    data.Where(c => c.PID == p.ID).ToList().ForEach(c =>
                     {
                         gridData.Add(
-                            new InfragisticData
-                            {
-                                Level = 2,
-                                Values = new List<String> {
-                                    elmt.PageName,
-                                    elmt.NbPage.ToString(),
-                                    elmt.NumberFan.ToString(),
-                                    elmt.NumberPost.ToString(),
-                                    elmt.NumberLike.ToString(),
-                                    elmt.NumberShare.ToString(),
-                                    elmt.NumberComment.ToString(),
-                                    elmt.Expenditure.ToString()
-                                }
-                            });
-                    }
-                    else
-                    {
-                        tmpList.Add(
                         new InfragisticData
                         {
                             Level = 3,
                             Values = new List<String> {
-                                elmt.PageName,
-                                elmt.NbPage.ToString(),
-                                elmt.NumberFan.ToString(),
-                                elmt.NumberPost.ToString(),
-                                elmt.NumberLike.ToString(),
-                                elmt.NumberShare.ToString(),
-                                elmt.NumberComment.ToString(),
-                                elmt.Expenditure.ToString()
+                                c.PageName,
+                                c.NbPage.ToString(),
+                                c.NumberFan.ToString(),
+                                c.NumberPost.ToString(),
+                                c.NumberLike.ToString(),
+                                c.NumberShare.ToString(),
+                                c.NumberComment.ToString(),
+                                c.Expenditure.ToString()
                             }
                         });
-                    }
-                }
-                gridData.AddRange(tmpList);
+                    });
+                });
+
+                //foreach (var elmt in data)
+                //{
+                //    if (elmt.PID == -1)
+                //    {
+
+
+                //        gridData.Add(
+                //            new InfragisticData
+                //            {
+                //                Level = 2,
+                //                Values = new List<String> {
+                //                    elmt.PageName,
+                //                    elmt.NbPage.ToString(),
+                //                    elmt.NumberFan.ToString(),
+                //                    elmt.NumberPost.ToString(),
+                //                    elmt.NumberLike.ToString(),
+                //                    elmt.NumberShare.ToString(),
+                //                    elmt.NumberComment.ToString(),
+                //                    elmt.Expenditure.ToString()
+                //                }
+                //            });
+
+                //        if (tmpList.Any())
+                //        {
+                //            gridData.AddRange(tmpList);
+                //            tmpList = new List<InfragisticData>();
+                //        }
+
+                //    }
+                //    else
+                //    {
+                //        tmpList.Add(
+                //        new InfragisticData
+                //        {
+                //            Level = 3,
+                //            Values = new List<String> {
+                //                elmt.PageName,
+                //                elmt.NbPage.ToString(),
+                //                elmt.NumberFan.ToString(),
+                //                elmt.NumberPost.ToString(),
+                //                elmt.NumberLike.ToString(),
+                //                elmt.NumberShare.ToString(),
+                //                elmt.NumberComment.ToString(),
+                //                elmt.Expenditure.ToString()
+                //            }
+                //        });
+                //    }
+                //}
+                //gridData.AddRange(tmpList);
 
                 if (universeMarket.Count > 1)
                 {
@@ -162,46 +210,91 @@ namespace Km.AdExpressClientWeb.Controllers
                     gridData.Add(par);
                     vals = new List<string>();
                     tmpList = new List<InfragisticData>();
-                    foreach (var elmt in data)
-                    {
-                        if (elmt.PID == -1)
-                        {
-                            gridData.Add(
-                                new InfragisticData
-                                {
-                                    Level = 2,
-                                    Values = new List<String> {
-                                    elmt.PageName,
-                                    elmt.NbPage.ToString(),
-                                    elmt.NumberFan.ToString(),
-                                    elmt.NumberPost.ToString(),
-                                    elmt.NumberLike.ToString(),
-                                    elmt.NumberShare.ToString(),
-                                    elmt.NumberComment.ToString(),
-                                    elmt.Expenditure.ToString()
-                                    }
-                                });
-                        }
-                        else
-                        {
-                            tmpList.Add(
-                            new InfragisticData
-                            {
-                                Level = 3,
-                                Values = new List<String> {
-                                elmt.PageName,
-                                elmt.NbPage.ToString(),
-                                elmt.NumberFan.ToString(),
-                                elmt.NumberPost.ToString(),
-                                elmt.NumberLike.ToString(),
-                                elmt.NumberShare.ToString(),
-                                elmt.NumberComment.ToString(),
-                                elmt.Expenditure.ToString()
-                                }
-                            });
-                        }
-                    }
-                    gridData.AddRange(tmpList);
+
+                    data.Where(e => e.PID == -1).ToList().ForEach(p =>
+                   {
+                       gridData.Add(
+                              new InfragisticData
+                              {
+                                  Level = 2,
+                                  Values = new List<String> {
+                                    p.PageName,
+                                    p.NbPage.ToString(),
+                                    p.NumberFan.ToString(),
+                                    p.NumberPost.ToString(),
+                                    p.NumberLike.ToString(),
+                                    p.NumberShare.ToString(),
+                                    p.NumberComment.ToString(),
+                                    p.Expenditure.ToString()
+                                  }
+                              });
+
+                       data.Where(c => c.PID == p.ID).ToList().ForEach(c =>
+                       {
+                           gridData.Add(
+                           new InfragisticData
+                           {
+                               Level = 3,
+                               Values = new List<String> {
+                                c.PageName,
+                                c.NbPage.ToString(),
+                                c.NumberFan.ToString(),
+                                c.NumberPost.ToString(),
+                                c.NumberLike.ToString(),
+                                c.NumberShare.ToString(),
+                                c.NumberComment.ToString(),
+                                c.Expenditure.ToString()
+                               }
+                           });
+                       });
+                   });
+
+                    //foreach (var elmt in data)
+                    //{
+                    //    if (elmt.PID == -1)
+                    //    {
+
+                    //        gridData.Add(
+                    //            new InfragisticData
+                    //            {
+                    //                Level = 2,
+                    //                Values = new List<String> {
+                    //                elmt.PageName,
+                    //                elmt.NbPage.ToString(),
+                    //                elmt.NumberFan.ToString(),
+                    //                elmt.NumberPost.ToString(),
+                    //                elmt.NumberLike.ToString(),
+                    //                elmt.NumberShare.ToString(),
+                    //                elmt.NumberComment.ToString(),
+                    //                elmt.Expenditure.ToString()
+                    //                }
+                    //            });
+                    //        if (tmpList.Any())
+                    //        {
+                    //            gridData.AddRange(tmpList);
+                    //            tmpList = new List<InfragisticData>();
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        tmpList.Add(
+                    //        new InfragisticData
+                    //        {
+                    //            Level = 3,
+                    //            Values = new List<String> {
+                    //            elmt.PageName,
+                    //            elmt.NbPage.ToString(),
+                    //            elmt.NumberFan.ToString(),
+                    //            elmt.NumberPost.ToString(),
+                    //            elmt.NumberLike.ToString(),
+                    //            elmt.NumberShare.ToString(),
+                    //            elmt.NumberComment.ToString(),
+                    //            elmt.Expenditure.ToString()
+                    //            }
+                    //        });
+                    //    }
+                    //}
+                    //gridData.AddRange(tmpList);
 
                 }
 
