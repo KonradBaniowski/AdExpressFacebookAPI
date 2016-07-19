@@ -481,8 +481,16 @@ namespace Km.AdExpressClientWeb.Controllers
                 }
 
                 Domain.PostModel postModelConcur = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
-                postModelConcur.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                postModelConcur.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                List<long> advertiserIds = new List<long>();
+                advertiserIds.AddRange(universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList());
+                advertiserIds.AddRange(universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList());
+
+                List<long> brandIds = new List<long>();
+                brandIds.AddRange(universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList());
+                brandIds.AddRange(universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList());
+
+                postModelConcur.IdAdvertisers = advertiserIds;
+                postModelConcur.IdBrands = brandIds;
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/KPI/Classification"), postModelConcur).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
