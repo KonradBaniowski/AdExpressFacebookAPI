@@ -132,56 +132,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     });
                 });
 
-                //foreach (var elmt in data)
-                //{
-                //    if (elmt.PID == -1)
-                //    {
-
-
-                //        gridData.Add(
-                //            new InfragisticData
-                //            {
-                //                Level = 2,
-                //                Values = new List<String> {
-                //                    elmt.PageName,
-                //                    elmt.NbPage.ToString(),
-                //                    elmt.NumberFan.ToString(),
-                //                    elmt.NumberPost.ToString(),
-                //                    elmt.NumberLike.ToString(),
-                //                    elmt.NumberShare.ToString(),
-                //                    elmt.NumberComment.ToString(),
-                //                    elmt.Expenditure.ToString()
-                //                }
-                //            });
-
-                //        if (tmpList.Any())
-                //        {
-                //            gridData.AddRange(tmpList);
-                //            tmpList = new List<InfragisticData>();
-                //        }
-
-                //    }
-                //    else
-                //    {
-                //        tmpList.Add(
-                //        new InfragisticData
-                //        {
-                //            Level = 3,
-                //            Values = new List<String> {
-                //                elmt.PageName,
-                //                elmt.NbPage.ToString(),
-                //                elmt.NumberFan.ToString(),
-                //                elmt.NumberPost.ToString(),
-                //                elmt.NumberLike.ToString(),
-                //                elmt.NumberShare.ToString(),
-                //                elmt.NumberComment.ToString(),
-                //                elmt.Expenditure.ToString()
-                //            }
-                //        });
-                //    }
-                //}
-                //gridData.AddRange(tmpList);
-
+               
                 if (universeMarket.Count > 1)
                 {
                     Domain.PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
@@ -249,52 +200,7 @@ namespace Km.AdExpressClientWeb.Controllers
                        });
                    });
 
-                    //foreach (var elmt in data)
-                    //{
-                    //    if (elmt.PID == -1)
-                    //    {
-
-                    //        gridData.Add(
-                    //            new InfragisticData
-                    //            {
-                    //                Level = 2,
-                    //                Values = new List<String> {
-                    //                elmt.PageName,
-                    //                elmt.NbPage.ToString(),
-                    //                elmt.NumberFan.ToString(),
-                    //                elmt.NumberPost.ToString(),
-                    //                elmt.NumberLike.ToString(),
-                    //                elmt.NumberShare.ToString(),
-                    //                elmt.NumberComment.ToString(),
-                    //                elmt.Expenditure.ToString()
-                    //                }
-                    //            });
-                    //        if (tmpList.Any())
-                    //        {
-                    //            gridData.AddRange(tmpList);
-                    //            tmpList = new List<InfragisticData>();
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        tmpList.Add(
-                    //        new InfragisticData
-                    //        {
-                    //            Level = 3,
-                    //            Values = new List<String> {
-                    //            elmt.PageName,
-                    //            elmt.NbPage.ToString(),
-                    //            elmt.NumberFan.ToString(),
-                    //            elmt.NumberPost.ToString(),
-                    //            elmt.NumberLike.ToString(),
-                    //            elmt.NumberShare.ToString(),
-                    //            elmt.NumberComment.ToString(),
-                    //            elmt.Expenditure.ToString()
-                    //            }
-                    //        });
-                    //    }
-                    //}
-                    //gridData.AddRange(tmpList);
+                   
 
                 }
 
