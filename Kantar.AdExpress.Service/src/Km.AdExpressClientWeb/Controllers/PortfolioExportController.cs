@@ -653,8 +653,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                     }
 
-                  
-                        MEFData(session, cell, sheet, ref cellRow, cellCol, lstColEvol, idxCol);
+                    MEFData(session, cell, sheet, ref cellRow, cellCol, lstColEvol, idxCol);
 
                     if (rowEndValue < cellRow)
                         rowEndValue = cellRow;
@@ -910,8 +909,10 @@ namespace Km.AdExpressClientWeb.Controllers
             Color backColor;
             Color borderColor;
 
-            if (idxCol == 0) sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode((cell).Values[idxCol]);
-            else sheet.Cells[cellRow, cellCol].Value =  Convert.ToDouble((cell).Values[idxCol]);
+            long number;
+            bool result = long.TryParse((cell).Values[idxCol], out number);
+            if (result) sheet.Cells[cellRow, cellCol].Value = number;
+            else sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode((cell).Values[idxCol]);
 
             switch (cell.Level)
             {
@@ -929,7 +930,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     textColor = L2Text;
                     backColor = L2Background;
                     borderColor = BorderTab;
-                    if(idxCol ==0) SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
+                    if (idxCol == 0) SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
                     break;
                 case 3:
                     textColor = L3Text;
