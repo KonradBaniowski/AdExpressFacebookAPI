@@ -77,6 +77,9 @@
     <Compile Include="DomainModels\MauSchema\Template.cs" />
     <Compile Include="DomainModels\MauSchema\TemplateAssignment.cs" />
     <Compile Include="DomainModels\MauSchema\TypeMedia.cs" />
+    <Compile Include="DomainModels\RecpaSchema\Brand.cs" />
+    <Compile Include="DomainModels\RecpaSchema\Data.cs" />
+    <Compile Include="DomainModels\RecpaSchema\RecapPluri.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
