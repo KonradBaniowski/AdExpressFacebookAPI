@@ -210,12 +210,12 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
 
-               HeaderBase headerBase = data.NewHeaders.Root;
+                HeaderBase headerBase = data.NewHeaders.Root;
 
                 if (isExportBrut)
                 {
                     GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
-                    nbLevel = detailLevel.GetNbLevels;                   
+                    nbLevel = detailLevel.GetNbLevels;
 
                     if (nbLevel == 1)
                         headerBase = data.NewHeaders.Root;
@@ -626,7 +626,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 DrawHeaders(data, sheet, rowStart, columnStart);
             }
 
-            rowStart += nbRowTotal;
+            //rowStart += nbRowTotal;
+            rowStart++;
 
             int colLevel = 0;
             int rowStartValue = rowStart;
@@ -652,8 +653,9 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                     }
 
-                    MEFData(session, cell, sheet, ref cellRow, cellCol, lstColEvol, idxCol);
-                    
+                  
+                        MEFData(session, cell, sheet, ref cellRow, cellCol, lstColEvol, idxCol);
+
                     if (rowEndValue < cellRow)
                         rowEndValue = cellRow;
                 }
@@ -738,7 +740,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (double.IsInfinity(value) || double.IsNaN(value))
                     sheet.Cells[cellRow, cellCol].Value = "";
                 else
-                    sheet.Cells[cellRow, cellCol].Value = value / 1000.0; 
+                    sheet.Cells[cellRow, cellCol].Value = value / 1000.0;
 
                 if (((CellPage)cell).AsposeFormat == -1)
                     SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
@@ -902,13 +904,14 @@ namespace Km.AdExpressClientWeb.Controllers
             BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
         }
 
-        private void MEFData(WebSession session, InfragisticData cell , Aspose.Cells.Worksheet sheet, ref int cellRow, int cellCol, HashSet<int> lstColEvol, int idxCol)
+        private void MEFData(WebSession session, InfragisticData cell, Aspose.Cells.Worksheet sheet, ref int cellRow, int cellCol, HashSet<int> lstColEvol, int idxCol)
         {
             Color textColor;
             Color backColor;
             Color borderColor;
 
-            sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode((cell).Values[idxCol]);
+            if (idxCol == 0) sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode((cell).Values[idxCol]);
+            else sheet.Cells[cellRow, cellCol].Value =  Convert.ToDouble((cell).Values[idxCol]);
 
             switch (cell.Level)
             {
@@ -926,19 +929,19 @@ namespace Km.AdExpressClientWeb.Controllers
                     textColor = L2Text;
                     backColor = L2Background;
                     borderColor = BorderTab;
-                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
+                    if(idxCol ==0) SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
                     break;
                 case 3:
                     textColor = L3Text;
                     backColor = L3Background;
                     borderColor = BorderTab;
-                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 2);
+                    if (idxCol == 0) SetIndentLevel(sheet.Cells[cellRow, cellCol], 2);
                     break;
                 case 4:
                     textColor = L4Text;
                     backColor = L4Background;
                     borderColor = BorderTab;
-                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
+                    if (idxCol == 0) SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
                     break;
                 default:
                     textColor = Color.Black;
