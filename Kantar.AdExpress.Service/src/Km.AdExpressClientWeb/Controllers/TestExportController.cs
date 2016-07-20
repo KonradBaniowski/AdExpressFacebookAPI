@@ -484,7 +484,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 else
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
-                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                 BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                                 nbColTabFirst += nbPeriod;
@@ -499,7 +499,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
 
-                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], HeaderTabText, HeaderTabBackground);
+                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                     BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
 
                                     break;
@@ -507,7 +507,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = int.Parse(data[0, j].ToString().Substring(4, 2));
 
-                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], HeaderTabText, HeaderTabBackground);
+                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                     BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
 
                                     break;
@@ -525,7 +525,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         else
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
-                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                         BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                         break;
@@ -546,7 +546,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 else
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
-                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                 BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
                                 nbColTabFirst += nbPeriod;
@@ -578,7 +578,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         else
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
-                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                         BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                         break;
@@ -707,21 +707,21 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #endregion
 
                                         #region Totals years
-                                        for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                        for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 1) + k], _session.Unit);
-                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
-                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
+                                            sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 1) + k], _session.Unit);
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
                                             if (i == TOTAL_LINE_INDEX)
                                             {
-                                                TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                                TextStyle(sheet.Cells[cellRow, colTotalYears + k], LTotalText, LTotalBackground);
+                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                             }
                                             else
                                             {
-                                                TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                                TextStyle(sheet.Cells[cellRow, colTotalYears + k], L1Text, L1Background);
+                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -759,7 +759,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Total
                                         if (_allowTotal)
                                         {
-                                            sheet.Cells[cellRow, colTotal].Value =  Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
+                                            sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -781,14 +781,14 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #endregion
 
                                         #region Totals years
-                                        for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                        for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value =  Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
-                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
-                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
+                                            sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
-                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                            TextStyle(sheet.Cells[cellRow, colTotalYears + k], L2Text, L2Background);
+                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -847,14 +847,14 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #endregion
 
                                         #region Totals years
-                                        for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                        for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + (k - 1)].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
-                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
-                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
+                                            sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                            SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
+                                            SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
-                                            TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                            TextStyle(sheet.Cells[cellRow, colTotalYears + k], L3Text, L3Background);
+                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                         }
                                         #endregion
 
@@ -898,7 +898,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     #region Total
                                     if (_allowTotal)
                                     {
-                                        sheet.Cells[cellRow, colTotal].Value =  Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
+                                        sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -920,14 +920,14 @@ namespace Km.AdExpressClientWeb.Controllers
                                     #endregion
 
                                     #region Totals years
-                                    for (int k = 1; k <= nbColYear && _allowTotal; k++)
+                                    for (int k = 0; k < nbColYear && _allowTotal; k++)
                                     {
-                                        sheet.Cells[cellRow, colTotalYears + (k - 1)].Value =  Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
-                                        SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + (k - 1)]);
-                                        SetIndentLevel(sheet.Cells[cellRow, colTotalYears + (k - 1)], 1, true);
+                                        sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                        SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
+                                        SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
-                                        TextStyle(sheet.Cells[cellRow, colTotalYears + (k - 1)], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colTotalYears + (k - 1), CellBorderType.Thin, BorderTab);
+                                        TextStyle(sheet.Cells[cellRow, colTotalYears + k], L4Text, L4Background);
+                                        BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
                                     }
                                     #endregion
 
@@ -3677,7 +3677,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 else
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
-                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                 BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                                 nbColTabFirst += nbPeriod;
@@ -3692,7 +3692,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
 
-                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], HeaderTabText, HeaderTabBackground);
+                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                     BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
 
                                     break;
@@ -3700,7 +3700,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = int.Parse(data[0, j].ToString().Substring(4, 2));
 
-                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], HeaderTabText, HeaderTabBackground);
+                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                     BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
 
                                     break;
@@ -3718,7 +3718,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         else
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
-                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                         BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                         break;
@@ -3739,7 +3739,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 else
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
-                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                 BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
 
                                 nbColTabFirst += nbPeriod;
@@ -3771,7 +3771,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         else
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
-                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], HeaderTabText, HeaderTabBackground);
+                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                         BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
 
                         break;
@@ -4008,7 +4008,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (_allowTotal)
                                             {
                                                 if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
-                                                    sheet.Cells[cellRow, colTotalComp].Value =  Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
+                                                    sheet.Cells[cellRow, colTotalComp].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
 
                                                 SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
                                                 SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
@@ -4035,7 +4035,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             if (data[i, TOTAL_COLUMN_INDEX] != null)
-                                                sheet.Cells[cellRow, colTotal].Value =  Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
@@ -4227,7 +4227,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
-                                                sheet.Cells[cellRow, colTotalComp].Value =  Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
+                                                sheet.Cells[cellRow, colTotalComp].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit);
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalComp]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
