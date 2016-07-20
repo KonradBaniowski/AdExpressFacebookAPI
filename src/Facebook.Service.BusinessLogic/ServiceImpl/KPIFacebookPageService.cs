@@ -38,7 +38,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 NumberComment = e.Sum(a => a.NumberComment),
                 NumberPost = e.Sum(a => a.NumberPost),
                 Expenditure = e.Sum(a => a.Expenditure)
-            }).OrderByDescending(a => a.DateMediaNum).ToList();
+            }).OrderBy(a => a.DateMediaNum).ToList();
             var kpiResult = _mapper.Map<List<KPIPageFacebookContract>>(query);
             return kpiResult;
         }
@@ -83,14 +83,14 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                    {
                        MonthMediaNum = e.FirstOrDefault().MonthMediaNum,
                        TotalUnite = e.Sum(a => a.TotalUnite)
-                   }).OrderByDescending(r => r.MonthMediaNum).ToList();
+                   }).OrderBy(r => r.MonthMediaNum).ToList();
 
             pluriRef = pluriRef.GroupBy(e => e.MonthMediaNum)
                     .Select(e => new WebPlanMediaMonth
                     {
                         MonthMediaNum = e.FirstOrDefault().MonthMediaNum,
                         TotalUnite = e.Sum(a => a.TotalUnite)
-                    }).OrderByDescending(r => r.MonthMediaNum).ToList();
+                    }).OrderBy(r => r.MonthMediaNum).ToList();
 
 
             facebookAll = facebookAll.GroupBy(e => e.DateMediaNum)
@@ -98,14 +98,14 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                      {
                          DateMediaNum = e.FirstOrDefault().DateMediaNum,
                          Expenditure = e.Sum(a => a.Expenditure)
-                     }).OrderByDescending(r => r.DateMediaNum).ToList();
+                     }).OrderBy(r => r.DateMediaNum).ToList();
 
             facebookRef = facebookRef.GroupBy(e => e.DateMediaNum)
                      .Select(e => new DataFacebook
                      {
                          DateMediaNum = e.FirstOrDefault().DateMediaNum,
                          Expenditure = e.Sum(a => a.Expenditure)
-                     }).OrderByDescending(r => r.DateMediaNum).ToList();
+                     }).OrderBy(r => r.DateMediaNum).ToList();
 
             foreach (var item in pluriAll)
             {
@@ -187,9 +187,9 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
             }
 
-            queryDataFB = queryDataFB.Select(e => e).ToList();
-            queryDataDisplay = queryDataDisplay.Select(e => e).ToList();
-            queryDataSearch = queryDataSearch.Select(e => e).ToList();
+            queryDataFB = queryDataFB.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
+            queryDataDisplay = queryDataDisplay.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
+            queryDataSearch = queryDataSearch.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
 
             if (isAdvertiser)
             {
@@ -292,7 +292,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     Share = e.NumberShare,
                     Commitment = e.Commitment,
                     Month = e.Month
-                }).OrderByDescending(a => a.Id).ToList();
+                }).OrderBy(r => r.Month).ToList();
 
                 return kpiResult;
 
@@ -311,7 +311,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     Share = e.NumberShare,
                     Commitment = e.Commitment,
                     Month = e.Month
-                }).OrderByDescending(a => a.Id).ToList();
+                }).OrderBy(r => r.Month).ToList();
 
                 return kpiResult;
             }
