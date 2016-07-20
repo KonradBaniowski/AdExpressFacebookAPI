@@ -1526,7 +1526,9 @@ input[type=checkbox].with-font {
         box-shadow: none;
     }
 
-    .selectdatecontainer .bootstrap-select .btn.selectpicker {
+    .selectdatecontainer .bootstrap-select .btn.selectpicker,
+    .optionsChartContainer .bootstrap-select .btn.selectpicker
+     {
         background-color: transparent !important;
         border: 1px solid rgba(255,255,255,0.2);
         color: #fff;
@@ -1541,26 +1543,39 @@ input[type=checkbox].with-font {
         float: left !important;
     }
 
-    .selectdatecontainer .dropdown-menu > li > a {
+    .optionsChartContainer .selectdatepicker {
+        width: 100% !important;
+    }
+
+    .selectdatecontainer .dropdown-menu > li > a,
+    .optionsChartContainer .dropdown-menu > li > a
+     {
         color: #fff;
         background-color: #00c1ff;
     }
 
-    .selectdatecontainer .bootstrap-select.btn-group .dropdown-menu {
+    .selectdatecontainer .bootstrap-select.btn-group .dropdown-menu,
+    .optionsChartContainer .bootstrap-select.btn-group .dropdown-menu
+     {
         background-color: #009ACC !important;
         border: 1px solid #009ACC; /* @beegray*/
         padding: 0;
     }
 
     .selectdatecontainer .dropdown-menu > li > a:hover,
-    .selectdatecontainer .dropdown-menu > li > a:focus {
+    .selectdatecontainer .dropdown-menu > li > a:focus,
+    .optionsChartContainer .dropdown-menu > li > a:hover,
+    .optionsChartContainer .dropdown-menu > li > a:focus
+     {
         text-decoration: none;
         color: #fff;
         background-color: transparent !important;
         outline: none !important;
     }
 
-    .selectdatecontainer .dropdown-menu > li.selected > a {
+    .selectdatecontainer .dropdown-menu > li.selected > a,
+    .optionsChartContainer .dropdown-menu > li.selected > a
+     {
         color: #fff;
         outline: none !important;
     }
@@ -2773,11 +2788,9 @@ ul.ui-selectable {
     opacity: 0.4;
 }
 
-
 .tuile-medias.disabled-effect {
     opacity:0.4;
 }
-
 
 /*CSS pour Alignement à droite des numeriques tableau infragistics*/
 .numericAlignment {
@@ -2796,3 +2809,5 @@ ul.ui-selectable {
         position: static;
     }
 }
+
+

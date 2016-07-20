@@ -83,8 +83,14 @@
 
                     //ComboBox Init
                     $.each(data.combo, function (index, value) {
-                        $('#combo > .form-control').append('<option ' + value.Selected + ' value=' + value.Value + '>' + value.Text + '</option>');
+                        text = "";
+                        for (var i = 0; i < Number(value.Level) ; i++){
+                            text += "&nbsp;&nbsp;&nbsp;&nbsp;"
+                        }
+                        text += value.Text;
+                        $('#combo > #pageAdverBrandTypeCombo').append('<option ' + value.Selected + ' value=' + value.Value + ' title="'+value.Text+'">' + text + '</option>');
                     })
+                    $('#pageAdverBrandTypeCombo').selectpicker();
 
                     dataTreeGrid = data.datagrid;
                     //cols = GetColumnsFormatter(data.columns, data.unit);
@@ -162,7 +168,7 @@
     }
 
     //** charge les images au fur et a mesure que le teableau s'affiche (image page facebook)
-    $("#grid").on("igtreegridrowsrendered", function (evt, ui) {
+    $("#grid").on("igtreegridrowsrendered igtreegridrowexpanded", function (evt, ui) {
 
         $(".imgPageFacebook").each(function () {
             var datas = $(this).attr('data-post').toString();
@@ -172,13 +178,17 @@
         });
     });
 
-    $("#grid").on("igtreegridrowexpanded igtreegridrowcollapsed ", function (evt, ui) {
+    $("#grid").on("igtreegridrowexpanded igtreegridrowcollapsed", function (evt, ui) {
         /*Follow scroll*/
         var element = $('#grid_table');
-        var bottom = element.offset().top + element.outerHeight(true)
-        $('#KPIButtonFix').data('bs.affix').options.offset = bottom
+        var bottom = element.offset().top + element.outerHeight(true);
+        //$('#KPIButtonFix').data('bs.affix').options.offset = bottom;
+        $(window).off('.affix');
+        $('#KPIButtonFix').removeData('bs.affix').removeClass('affix affix-top affix-bottom');
+        $('#KPIButtonFix').affix({ offset: { top: bottom } });
     });
 
+    $('#seriesType').selectpicker();
 });
 
 
@@ -360,6 +370,7 @@ function getDataReferKPI(e) {
                     title: "KPI",
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
+                    minimumValue: 0,
                     labelTextColor: "white",
                 }, {
                     type: "numericY",
@@ -701,7 +712,7 @@ function getDataConcurKPI(e) {
         series: listSerie
     });
 
-    $('#unity > .form-control').on('change', function () {
+    $('#seriesType').on('change', function () {
         getDataConcurKPI();
     });
 }
@@ -1096,8 +1107,8 @@ function SetListUnivers() {
     });
 }
 
-$('#combo > .form-control, #unity > .form-control').on('change', function () {
-    var id = $('#combo > .form-control').val();
+$('#pageAdverBrandTypeCombo, #seriesType').on('change', function () {
+    var id = $('#combo > .selectdatepicker').val();
     if (!id)
         return false;
     var array = id.split(",");
@@ -1229,7 +1240,7 @@ function getDataZoom(e) {
         }]
     });
 
-    $('#unityZoom > .form-control').on('change', function () {
+    $('#unityZoom > .selectdatepicker').on('change', function () {
         getDataZoom();
     });
 

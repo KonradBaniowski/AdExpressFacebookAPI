@@ -80,7 +80,8 @@ namespace Km.AdExpressClientWeb.Controllers
             List<DataFacebook> datas = new List<DataFacebook>();
             HttpResponseMessage response = new HttpResponseMessage();
             DataFacebook par = new DataFacebook();
-            List<SelectListItem> combos = new List<SelectListItem>();
+            List<object> combos = new List<object>();
+            List<object> tmpList = new List<object>();
             string content = string.Empty;
 
             //Hierachical ids for Treegrid
@@ -158,10 +159,19 @@ namespace Km.AdExpressClientWeb.Controllers
                 datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
 
-                combos.Add(new SelectListItem { Text = "TOP 3 des posts", Value = "", Selected = true });
-                combos.Add(new SelectListItem { Text = par.PageName, Value = par.IdPageFacebook });
-                combos.AddRange(data.Select(e => { return new SelectListItem { Text = e.PageName, Value = e.IdPageFacebook }; }).ToList());
+                combos.Add(new { Text = "TOP 3 des posts", Value = "", Selected = true , Level = 0});
+                combos.Add(new { Text = par.PageName, Value = par.IdPageFacebook, Level = 0 });
+                data.Where(e => e.PID == 1).ToList().ForEach(j =>
+                    {
+                        tmpList.Add(new { Text = j.PageName, Value = j.IdPageFacebook, Level = 1 });
 
+                        data.Where(c => c.PID == j.ID).ToList().ForEach(c =>
+                        {
+                            tmpList.Add(new { Text = c.PageName, Value = c.IdPageFacebook, Level = 2 });
+                        });
+                    }
+                );
+                combos.AddRange(tmpList);
                 if (universeMarket.Count > 1)
                 {
                     Domain.PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
@@ -198,8 +208,19 @@ namespace Km.AdExpressClientWeb.Controllers
                     datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
                     datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 2).Select(e => e).ToList());
 
-                    combos.Add(new SelectListItem { Text = par.PageName, Value = par.IdPageFacebook });
-                    combos.AddRange(data.Select(e => { return new SelectListItem { Text = e.PageName, Value = e.IdPageFacebook }; }).ToList());
+                    combos.Add(new { Text = par.PageName, Value = par.IdPageFacebook, Level = 0 });
+                    data.Where(e => e.PID == 2).ToList().ForEach(j =>
+                        {
+                            tmpList.Add(new { Text = j.PageName, Value = j.IdPageFacebook, Level = 1 });
+
+                            data.Where(c => c.PID == j.ID).ToList().ForEach(c =>
+                            {
+                                tmpList.Add(new { Text = c.PageName, Value = c.IdPageFacebook, Level = 2 });
+                            });
+                        }
+                    );
+                    combos.AddRange(tmpList);
+                    tmpList = new List<object>();
                 }
 
                 gridResult.HasData = true;
