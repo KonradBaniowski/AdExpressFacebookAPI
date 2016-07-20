@@ -88,7 +88,7 @@
                             text += "&nbsp;&nbsp;&nbsp;&nbsp;"
                         }
                         text += value.Text;
-                        $('#combo > #pageAdverBrandTypeCombo').append('<option ' + value.Selected + ' value=' + value.Value + ' title="'+value.Text+'">' + text + '</option>');
+                        $('#combo > #pageAdverBrandTypeCombo').append('<option ' + value.Selected + ' value="' + value.Value + '" title="'+value.Text+'">' + text + '</option>');
                     })
                     $('#pageAdverBrandTypeCombo').selectpicker();
 
@@ -267,7 +267,7 @@ function getDataReferKPI(e) {
     var dis = $("#chartReferKPI");
     var data = $(".elmtsChart");
     var serieType = $('#seriesType').val();
-    var title = "Saisonnalité des " + serieType + " vs POST";
+    var title = "Saisonnalité des " + serieType.toUpperCase() + " vs POST";
     var arrayData = [];
     $.each(data, function () {
 
@@ -376,7 +376,7 @@ function getDataReferKPI(e) {
                     type: "numericY",
                     name: "PostsAxe",
                     labelLocation: "outsideRight",
-                    title: "Post",
+                    title: "POST",
                     minimumValue: 0,
                     majorStroke: "rgba(0,0,0,0)",
                     stroke: "rgba(0,0,0,0)",
@@ -419,7 +419,7 @@ function getDataReferKPI(e) {
         dis.igDataChart("option", "series", newListSeries);
 
         var serieType = $('#seriesType').val();
-        dis.igDataChart("option", "title", "Saisonnalité des " + serieType + " vs POST");
+        dis.igDataChart("option", "title", "Saisonnalité des " + serieType.toUpperCase() + " vs POST");
         var axes = dis.igDataChart("option", "axes");
 
         //dis.igDataChart("option", "axes", [{ name: axes[1].name, remove: true }]);
@@ -486,7 +486,7 @@ function getDataReferExpenditure(e) {
                     type: "numericY",
                     name: "PostsAxe",
                     labelLocation: "outsideRight",
-                    title: "Posts",
+                    title: "POST",
                     minimumValue: 0,
                     majorStroke: "rgba(0,0,0,0)",
                     stroke: "rgba(0,0,0,0)",
@@ -683,8 +683,8 @@ function getDataConcurKPI(e) {
         dataSource: arrayMonth,
         width: "100%",
         height: "300px",
-        title: "Saisonnalité des " + serieType + " par annonceur ou marque",
-        subtitle: "Mois par mois",
+        title: "Saisonnalité des " + serieType.toUpperCase(),
+        subtitle: "Annonceur ou marque / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
@@ -702,7 +702,7 @@ function getDataConcurKPI(e) {
                 }, {
                     type: "numericY",
                     name: "KPIAxe",
-                    title: serieType.substr(0, 1).toUpperCase() + serieType.substr(1),
+                    title: serieType.toUpperCase(),
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
                     labelTextColor: "white",
@@ -761,8 +761,8 @@ function getDataConcurExpenditure(e) {
         dataSource: arrayMonth,
         height: "300px",
         width: "100%",
-        title: "Saisonnalité des B€X par annonceur ou marque",
-        subtitle: "Mois par mois",
+        title: "Saisonnalité des B€X",
+        subtitle: "Annonceur ou marque / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
@@ -780,7 +780,7 @@ function getDataConcurExpenditure(e) {
                 }, {
                     type: "numericY",
                     name: "ExpenditureAxe",
-                    title: "Expenditure",
+                    title: "Brand Exposure",
                     majorStroke: "white",
                     stroke: "rgba(0,0,0,0)",
                     labelTextColor: "white"
@@ -990,7 +990,7 @@ function getDataPlurimediaStacked(e) {
     disPDM.igDataChart({
         height: "300px",
         width: "100%",
-        title: "PDM des annonceurs ou marques ventilées par Media",
+        title: "PDV annonceurs ou marques ventilées par Media",
         subtitle: "INVESTISSEMENTS et B€X",
         titleTextColor: "white",
         subtitleTextColor: "white",
@@ -1108,7 +1108,7 @@ function SetListUnivers() {
 }
 
 $('#pageAdverBrandTypeCombo, #seriesType').on('change', function () {
-    var id = $('#combo > .selectdatepicker').val();
+    var id = $('#pageAdverBrandTypeCombo').val();
     if (!id)
         return false;
     var array = id.split(",");
