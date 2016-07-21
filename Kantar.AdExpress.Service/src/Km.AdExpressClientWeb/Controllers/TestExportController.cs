@@ -709,7 +709,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Totals years
                                         for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 1) + k], _session.Unit);
+                                            if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k], _session.Unit);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
@@ -783,7 +785,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Totals years
                                         for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                            if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k], _session.Unit);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
@@ -849,7 +853,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         #region Totals years
                                         for (int k = 0; k < nbColYear && _allowTotal; k++)
                                         {
-                                            sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                            if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k] != null)
+                                                sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k], _session.Unit);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
@@ -922,7 +928,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                     #region Totals years
                                     for (int k = 0; k < nbColYear && _allowTotal; k++)
                                     {
-                                        sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, j + (firstPeriodIndex - nbColYear - 2) + k], _session.Unit);
+                                        if (data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k] != null)
+                                            sheet.Cells[cellRow, colTotalYears + k].Value = Units.ConvertUnitValue(data[i, TOTAL_COMPARATIVE_COLUMN_INDEX + k], _session.Unit);
+
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotalYears + k]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
