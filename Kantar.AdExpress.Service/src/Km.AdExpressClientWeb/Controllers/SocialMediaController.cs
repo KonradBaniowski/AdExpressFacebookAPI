@@ -616,5 +616,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 return PartialView("Zoom", model);
             }
         }
+
+       
     }
 }

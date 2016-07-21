@@ -181,7 +181,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 LabelId = ElementLabelCode,
                                 UniversLevels = allUnivers,
                                 AccessType = type,
-                                IsDefaultActive= (type == AccessType.includes && idTree==1)
+                                IsDefaultActive = (type == AccessType.includes && idTree == 1)
                             };
                             idTree++;
                             result.Trees.Add(tree);
@@ -831,6 +831,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             nbItems = result.Count;
             return result.Take(1000).ToList();
         }
+
+
         #region private methods
         private Tuple<List<long>, List<int>, WebSession, int, int> GetAllowedIds(WebSession webSession, Dimension dimension, bool selectionPage = true)
         {
@@ -1132,13 +1134,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             {
                                 if (request.IsDefaultUniverse)
                                 {
-                                   ManageFacebookDefaultUniverse(webSession, idSelectedUniverse, universes);
+                                    ManageFacebookDefaultUniverse(webSession, idSelectedUniverse, universes);
                                 }
                                 else
                                 {
                                     webSession.PrincipalProductUniverses = universes;
                                     webSession.Save();
-                                }                                
+                                }
                             }
                             webSession.Source.Close();
                             result.ErrorMessage = GestionWeb.GetWebWord(921, webSession.SiteLanguage);
@@ -1275,15 +1277,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private void ManageFacebookDefaultUniverse(WebSession webSession, long idSelectedUniverse, Dictionary<int, AdExpressUniverse> universes)
         {
             bool success = false;
-                UserUnivers defaultUniverse = GetUniverses(Dimension.product, webSession, 0, true).FirstOrDefault();
-                if (defaultUniverse != null && defaultUniverse.Id == idSelectedUniverse)
-                {
-                    success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);                    
-                }
-                else
-                {
-                    success= UniversListDataAccess.UpdateDefaultFcbUniverses(defaultUniverse.Id, idSelectedUniverse, webSession);                   
-                }
+            UserUnivers defaultUniverse = GetUniverses(Dimension.product, webSession, 0, true).FirstOrDefault();
+            if (defaultUniverse != null && defaultUniverse.Id == idSelectedUniverse)
+            {
+                success = UniversListDataAccess.UpdateDefaultFcbUniverse(defaultUniverse.Id, webSession, 0);
+            }
+            else
+            {
+                success = UniversListDataAccess.UpdateDefaultFcbUniverses(defaultUniverse.Id, idSelectedUniverse, webSession);
+            }
             if (success)
             {
                 webSession.PrincipalProductUniverses = universes;
@@ -1295,7 +1297,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public List<UserUnivers> GetUniverses(Dimension dimension, string webSessionId)
         {
             webSession = (WebSession)WebSession.Load(webSessionId);
-            return GetUniverses( dimension,  webSession, 0, false);
+            return GetUniverses(dimension, webSession, 0, false);
+        }
+
+        public void ChangeMarketUniverse(long universeId, string webSessionId)
+        {
+            webSession = (WebSession)WebSession.Load(webSessionId);
+            var adExpressUniverse = (Dictionary<int, AdExpressUniverse>)UniversListDataAccess.GetObjectUniverses(universeId, webSession);
+            if (adExpressUniverse != null && adExpressUniverse.Count > 0)
+            {
+                webSession.PrincipalProductUniverses = adExpressUniverse;
+                webSession.Save();
+            }
         }
         #endregion
     }
