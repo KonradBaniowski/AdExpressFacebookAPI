@@ -17,7 +17,10 @@
     var needFixedColumns = false;
     var gridWidth;
 
+     LoadSocialMediaUniverses();
     CallSocialMediaResult();
+
+   
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -1247,6 +1250,56 @@ function getDataZoom(e) {
 }
 
 
+function LoadSocialMediaUniverses() {
+
+    var params = {
+        dimension: 0
+    };
+    $.ajax({
+        url: '/Universe/GetModuleUniverses',
+        contentType: "application/x-www-form-urlencoded",
+        data:params,
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            AppendUniverseComboBox(data);
+        }
+    });
+}
+
+function AppendUniverseComboBox(data) {
+    //$(".custom-button.selectexporttype.select-universe-choice").empty();
+    $(".custom-button.selectexporttype.select-universe-choice").hide();
+
+    if (data != null) {
+
+        var htmlArr = [];
+
+        //htmlArr.push("  <div class='pull-right custom-button selectexporttype'>");
+        htmlArr.push("  <select id='universe-choice' class='selectdatepicker'>");
+        $.each(data, function (i, val) {
+            htmlArr.push(" <option value='");
+            htmlArr.push(val.Id);
+            htmlArr.push("'");
+            if (val.IsDefault == true) {
+                htmlArr.push(" selected ");
+            }
+            htmlArr.push(">");
+            htmlArr.push(val.Description);
+            htmlArr.push("</option>");
+        });
+        htmlArr.push("  </select>&nbsp;");
+        htmlArr.push("  <button class='btn btn-save' id='btn-universe-choice' title='Sélectionner un univers marché'><i class='fa fa-check fa-file-excel-size'></i></button>");//<!--btn-universe-choice-->
+        //htmlArr.push(" </div>"); //<!--pull-right custom-button selectexporttype-->      
+        $(".custom-button.selectexporttype.select-universe-choice").html(htmlArr.join(""));
+        $('#universe-choice').selectpicker();
+
+        $(".custom-button.selectexporttype.select-universe-choice").show();
+    }
+}
 
 
 

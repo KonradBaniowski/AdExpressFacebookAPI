@@ -67,7 +67,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             var model = _universeService.GetUniverses(dimension, idSession);
-            return Json(new { data = model}, JsonRequestBehavior.AllowGet);
+            return Json( model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
