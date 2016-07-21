@@ -946,8 +946,8 @@ tr[aria-level="3"] th.ui-iggrid-rowselector-class{
 .ui-iggrid-responsive-vertical tr.ui-ig-altrecord>td.ui-state-hover:first-child{
     color:black;
     background:rgba(255,255,255,0.6);
-    border:1px solid rgba(0,0,0,0.3);
-    padding-left:3px;
+    /*border:1px solid rgba(0,0,0,0.3);*/
+    /*padding-left:3px;*/
     /*font-weight:bolder;*/
 }
 

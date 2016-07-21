@@ -159,7 +159,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
 
-                combos.Add(new { Text = "TOP 3 des posts", Value = "", Selected = true , Level = 0});
+                combos.Add(new { Text = "Tout", Value = "", Selected = true , Level = 0});
                 combos.Add(new { Text = par.PageName, Value = par.IdPageFacebook, Level = 0 });
                 data.Where(e => e.PID == 1).ToList().ForEach(j =>
                     {

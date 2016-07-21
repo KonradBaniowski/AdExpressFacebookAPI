@@ -123,10 +123,14 @@
                     ds.dataBind();
 
                     CallReferChart();
+                    CallTopPostsAll();
                     if (data.concurSelected) {
                         CallPDMChart();
                         CallConcurChart();
                         CallPlurimediaStackedChart();
+                    }
+                    else {
+                        $("#resaccord > #volet3").hide();
                     }
 
                 }
@@ -239,7 +243,7 @@ function getData(e) {
                     name: "Value",
                     type: "numericY",
                     minimumValue: 0,
-                    title: serieType,
+                    title: serieType.toUpperCase(),
                     majorStroke: "white",
                     labelTextColor: "white"
                 }
@@ -1101,6 +1105,38 @@ function CallPlurimediaStackedChart() {
     });
 }
 
+function CallTopPostsAll() {
+    var ids = []
+    $('#pageAdverBrandTypeCombo > option').each(function () {
+        var a = Number($(this).val().split(","));
+        if ($(this).val().split(",").length == 1 && $(this).val().split(",") != 0)
+            Number(ids.push($(this).val().split(",")[0]));
+    });
+    if (ids.length == 0)
+        return false;
+
+    var params = {
+        ids: ids
+    };
+    $.ajax({
+        url: '/SocialMedia/GetPostbyIdpage',
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        datatype: "json",
+        data: {
+            ids: ids
+        },
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            $('#top-post').html('').append(data);
+            getData();
+            $(".mediaLoaderTopPost").hide();
+        }
+    });
+}
+
 function SetListUnivers() {
     $.ajax({
         url: '/SocialMedia/GetPostbyIdpage',
@@ -1222,7 +1258,7 @@ function getDataZoom(e) {
                 name: "Value",
                 type: "numericY",
                 minimumValue: 0,
-                title: serieType,
+                title: serieType.toUpperCase(),
             }
         ],
 
