@@ -196,6 +196,10 @@
     });
 
     $('#seriesType').selectpicker();
+
+   
+
+
 });
 
 
@@ -1338,4 +1342,26 @@ function AppendUniverseComboBox(data) {
 }
 
 
+
+$(document).on("click", "#btn-universe-choice", function (event) {
+    // event.preventDefault();
+    var selectedValue = $('#universe-choice').val();
+    var params = {
+        universeId: selectedValue
+    };
+
+    $.ajax({
+        url: '/Universe/ChangeMarketUniverse',
+        contentType: "application/x-www-form-urlencoded",
+        data: params,
+        type: "POST",
+        datatype: "json",
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert(thrownError);
+        },
+        success: function (data) {
+            CallSocialMediaResult();
+        }
+    });
+});
 
