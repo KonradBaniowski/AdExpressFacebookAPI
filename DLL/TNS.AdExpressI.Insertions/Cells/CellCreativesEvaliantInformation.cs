@@ -839,12 +839,13 @@ namespace TNS.AdExpressI.Insertions.Cells
                                     #endregion
 
                                     //tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
-                                    tmpStr.AppendFormat("{1};", openBaliseA, s, closeBaliseA);
+                                    tmpStr.AppendFormat("{1}", openBaliseA, s, closeBaliseA);
                                 }
                                 else
                                 {
-                                    tmpStr.AppendFormat("{0};", s);
+                                    tmpStr.AppendFormat("{0}", s);
                                 }
+                                tmpStr.Append(";");
                             }
                         }
                         else
