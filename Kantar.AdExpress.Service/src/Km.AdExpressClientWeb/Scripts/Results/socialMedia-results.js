@@ -17,10 +17,8 @@
     var needFixedColumns = false;
     var gridWidth;
 
-     LoadSocialMediaUniverses();
+    LoadSocialMediaUniverses();
     CallSocialMediaResult();
-
-   
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -83,7 +81,7 @@
             success: function (data) {
 
                 if (data != null && data != "") {
-
+                    $('#combo > #pageAdverBrandTypeCombo').html('');
                     //ComboBox Init
                     $.each(data.combo, function (index, value) {
                         text = "";
@@ -93,7 +91,7 @@
                         text += value.Text;
                         $('#combo > #pageAdverBrandTypeCombo').append('<option ' + value.Selected + ' value="' + value.Value + '" title="'+value.Text+'">' + text + '</option>');
                     })
-                    $('#pageAdverBrandTypeCombo').selectpicker();
+                    $('#pageAdverBrandTypeCombo').selectpicker('refresh');
 
                     dataTreeGrid = data.datagrid;
                     //cols = GetColumnsFormatter(data.columns, data.unit);
@@ -128,6 +126,7 @@
                     CallReferChart();
                     CallTopPostsAll();
                     if (data.concurSelected) {
+                        $("#resaccord > #volet3").show();
                         CallPDMChart();
                         CallConcurChart();
                         CallPlurimediaStackedChart();
@@ -195,13 +194,38 @@
         $('#KPIButtonFix').affix({ offset: { top: bottom } });
     });
 
+
+
+    /** Change universe **/
     $('#seriesType').selectpicker();
+    $(document).on("click", "#btn-universe-choice", function (event) {
+        $("#gridLoader").removeClass("hide");
+        $("#grid").addClass("hide");
+        $("#resaccord").addClass("hide");
+        $("#KPIButtonFix").addClass("hide");
 
-   
+        // event.preventDefault();
+        var selectedValue = $('#universe-choice').val();
+        var params = {
+            universeId: selectedValue
+        };
 
+        $.ajax({
+            url: '/Universe/ChangeMarketUniverse',
+            contentType: "application/x-www-form-urlencoded",
+            data: params,
+            type: "POST",
+            datatype: "json",
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert(thrownError);
+            },
+            success: function (data) {
+                CallSocialMediaResult();
+            }
+        });
+    });
 
 });
-
 
 $(window).resize(function () {
     $('#KPIButtonFix').width($('#KPIButtonFix').parent().width());
@@ -698,8 +722,8 @@ function getDataConcurKPI(e) {
         subtitle: "Annonceur ou marque / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
-        outlines: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -774,8 +798,8 @@ function getDataConcurExpenditure(e) {
         subtitle: "Annonceur ou marque / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
-        outlines: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -1340,28 +1364,3 @@ function AppendUniverseComboBox(data) {
         $(".custom-button.selectexporttype.select-universe-choice").show();
     }
 }
-
-
-
-$(document).on("click", "#btn-universe-choice", function (event) {
-    // event.preventDefault();
-    var selectedValue = $('#universe-choice').val();
-    var params = {
-        universeId: selectedValue
-    };
-
-    $.ajax({
-        url: '/Universe/ChangeMarketUniverse',
-        contentType: "application/x-www-form-urlencoded",
-        data: params,
-        type: "POST",
-        datatype: "json",
-        error: function (xmlHttpRequest, errorText, thrownError) {
-            bootbox.alert(thrownError);
-        },
-        success: function (data) {
-            CallSocialMediaResult();
-        }
-    });
-});
-
