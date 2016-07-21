@@ -1283,7 +1283,7 @@ function getDataZoom(e) {
         }]
     });
 
-    $('#unityZoom > .selectdatepicker').on('change', function () {
+    $('#unityZoom > .form-control').on('change', function () {
         getDataZoom();
     });
 
