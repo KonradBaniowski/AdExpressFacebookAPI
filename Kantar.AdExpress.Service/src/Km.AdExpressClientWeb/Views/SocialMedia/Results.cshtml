@@ -21,28 +21,25 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
-        @*<div class="pull-right custom-button selectexporttype">
-            <select id="universe-choice" class="selectdatepicker hide">
-                <option value="1"> @Model.Labels.ExportFormattedResult</option>
-            </select>&nbsp;
-            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
-        </div>*@
+    <div class="col-md-3">
+        <div class="custom-button selectexporttype select-universe-choice">        
+        </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
+       
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
                 <option value="1"> @Model.Labels.ExportFormattedResult</option>
             </select>&nbsp;
-            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-export"><i class="glyphicon glyphicon-floppy-open fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
         </div>
     </div>
 </div>
 
-<div class="h20">
-</div>
+@*<div class="h20">
+</div>*@
 <div class="row">
     <div class="col-md-12">
         <center>
