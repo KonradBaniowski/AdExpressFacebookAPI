@@ -81,7 +81,7 @@
                             </div>
                             <div class="col-md-12 margin-top-10">
                                 <div id="combo" class="optionsChartContainer">
-                                    <label for="wombocombo">Filtre</label>
+                                    <label for="wombocombo">TOP 3 des posts</label>
                                     <select id="pageAdverBrandTypeCombo" class="selectdatepicker"></select>
                                 </div>
                             </div>
@@ -101,14 +101,22 @@
                     <div class="panel-heading head-results">
                         <h3 class="panel-title">
                             <a data-toggle="collapse" href="#accord2">
-                                <i class="fa fa-line-chart"></i> Sélections Référentes
+                                <i class="fa fa-bar-chart"></i> Sélections Référentes
                             </a>
                         </h3>
                     </div>
                     <div id="accord2" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <div id="Refer-chart"></div>
-                            <div id="PDM-chart"></div>
+                            <div id="Refer-chart">
+                                <div class="mediaLoaderRefer">
+                                    <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+                                </div>
+                            </div>
+                            <div id="PDM-chart">
+                                @*<div class="mediaLoaderPDM">
+                                    <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+                                </div>*@
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -123,9 +131,15 @@
                     <div id="accord3" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <div class="row margin-top-30" id="Concur-chart">
-                                <center>Aucun concurrents sélectionnés</center>
+                                @*<div class="mediaLoaderConcur">
+                                    <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+                                </div>*@
                             </div>
-                            <div class="row margin-top-30" id="Stacked-chart"></div>
+                            <div class="row" id="Stacked-chart">
+                                <div class="mediaLoaderPlurimediaStacked">
+                                    <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -140,7 +154,9 @@
                     <div id="accord4" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <div class="row margin-top-30" id="top-post">
-                                <center>Veuillez selectionner un annonceur</center>
+                                <div class="mediaLoaderTopPost">
+                                    <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+                                </div>
                             </div>
                         </div>
                     </div>

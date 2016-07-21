@@ -474,17 +474,18 @@ namespace TNS.AdExpressI.Insertions.Cells
                                     if (_adressId != -1)
                                     {
                                         openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}')\">", _session.IdSession, value, _adressId);
-                                        closeBaliseA = "</a>;";
+                                        closeBaliseA = "</a>";
                                     }
                                     #endregion
 
                                     //tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
-                                    tmpStr.AppendFormat("{1};", openBaliseA, s, closeBaliseA);
+                                    tmpStr.AppendFormat("{1}", openBaliseA, s, closeBaliseA);
                                 }
                                 else
                                 {
-                                    tmpStr.AppendFormat("{0};", s);
+                                    tmpStr.AppendFormat("{0}", s);
                                 }
+                                tmpStr.Append(";");
                             }
                         }
                         else

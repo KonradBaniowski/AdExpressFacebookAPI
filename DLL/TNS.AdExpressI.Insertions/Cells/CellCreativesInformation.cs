@@ -623,7 +623,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                                     if (_adressId != -1)
                                     {
                                         openBaliseA = string.Format("<span class=\"gadCreativeLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\"> ", _session.IdSession, value, _adressId);
-                                        closeBaliseA = "</span>;";
+                                        closeBaliseA = "</span>";
                                     }
                                     #endregion
 
@@ -632,8 +632,9 @@ namespace TNS.AdExpressI.Insertions.Cells
                                 }
                                 else
                                 {
-                                    tmpStr.AppendFormat("{0};", s);
+                                    tmpStr.AppendFormat("{0}", s);
                                 }
+                                tmpStr.Append(";");
                             }
                         }
                         else
