@@ -262,7 +262,7 @@ function getData(e) {
                 valueMemberPath: "Data",
                 isTransitionInEnabled: true,
                 isHighlightingEnabled: true,
-                thickness: 4,
+                thickness: 3,
                 showTooltip:true
             }]
         });
@@ -694,8 +694,8 @@ function getDataConcurKPI(e) {
         subtitle: "Annonceur ou marque / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
-        outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
+        brushes: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        outlines: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -710,8 +710,6 @@ function getDataConcurKPI(e) {
                     type: "numericY",
                     name: "KPIAxe",
                     title: serieType.toUpperCase(),
-                    majorStroke: "white",
-                    stroke: "rgba(0,0,0,0)",
                     labelTextColor: "white",
                 }
         ],
@@ -772,8 +770,8 @@ function getDataConcurExpenditure(e) {
         subtitle: "Annonceur ou marque / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
-        outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
+        brushes: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        outlines: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -788,8 +786,6 @@ function getDataConcurExpenditure(e) {
                     type: "numericY",
                     name: "ExpenditureAxe",
                     title: "Brand Exposure",
-                    majorStroke: "white",
-                    stroke: "rgba(0,0,0,0)",
                     labelTextColor: "white"
                 }
         ],
@@ -843,8 +839,8 @@ function getDataConcurEngagement(e) {
         subtitle: "Ventilé par annonceur ou marque",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
-        outlines: ["#3C6BBF", "#51266B", "#2B6077", "#14C896", "#B8292F", "#2D2B62"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -1003,8 +999,8 @@ function getDataPlurimediaStacked(e) {
         subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
-        brushes: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
-        outlines: ["#3C6BBF", "#9C1E8D", "#51266B", "#2B6077"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
         dataSource: arrayData,
         //overviewPlusDetailPaneVisibility: "visible",
         axes: [
@@ -1111,9 +1107,8 @@ function CallPlurimediaStackedChart() {
 function CallTopPostsAll() {
     var ids = []
     $('#pageAdverBrandTypeCombo > option').each(function () {
-        var a = Number($(this).val().split(","));
-        if ($(this).val().split(",").length == 1 && $(this).val().split(",") != 0)
-            Number(ids.push($(this).val().split(",")[0]));
+        if ($(this).val().split(",").length == 1 && $(this).val().split(",") != "*" && Number($(this).val().split(",")) != 0)
+            ids.push(Number($(this).val().split(",")[0]));
     });
     if (ids.length == 0)
         return false;
@@ -1150,6 +1145,11 @@ $('#pageAdverBrandTypeCombo, #seriesType').on('change', function () {
     var id = $('#pageAdverBrandTypeCombo').val();
     if (!id)
         return false;
+    if (id == "*") {
+        CallTopPostsAll();
+        return;
+    }
+
     var array = id.split(",");
     var ids = []
     $.each(array, function (index, value) {
