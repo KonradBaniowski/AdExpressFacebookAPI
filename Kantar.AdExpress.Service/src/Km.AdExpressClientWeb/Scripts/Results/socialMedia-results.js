@@ -92,6 +92,8 @@
                         $('#combo > #pageAdverBrandTypeCombo').append('<option ' + value.Selected + ' value="' + value.Value + '" title="'+value.Text+'">' + text + '</option>');
                     })
                     $('#pageAdverBrandTypeCombo').selectpicker('refresh');
+                    $('#seriesType').val("like");
+                    $('#seriesType').selectpicker('refresh');
 
                     dataTreeGrid = data.datagrid;
                     //cols = GetColumnsFormatter(data.columns, data.unit);
@@ -195,15 +197,12 @@
     });
 
 
-
     /** Change universe **/
-    $('#seriesType').selectpicker();
     $(document).on("click", "#btn-universe-choice", function (event) {
         $("#gridLoader").removeClass("hide");
         $("#grid").addClass("hide");
         $("#resaccord").addClass("hide");
         $("#KPIButtonFix").addClass("hide");
-
         // event.preventDefault();
         var selectedValue = $('#universe-choice').val();
         var params = {
@@ -259,6 +258,7 @@ function getData(e) {
                 arrayData.push(elem);
             });
         });
+
         dis.igDataChart({
             width: "100%",
             height: "250px",
@@ -282,7 +282,7 @@ function getData(e) {
 
             series: [{
                 name: serieType,
-                type: "line",
+                type: "spline",
                 title: serieType,
                 xAxis: "Days",
                 yAxis: "Value",
@@ -336,7 +336,7 @@ function getDataReferKPI(e) {
                 tooltipTemplate: "LikeTooltipTemplate",
             },
             {
-                type: "line",
+                type: "spline",
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
                 name: "Posts",
@@ -379,7 +379,6 @@ function getDataReferKPI(e) {
                 tooltipTemplate: "CommentTooltipTemplate"
             }
     ];
-
 
     dis.igDataChart({
         width: "100%",
@@ -424,6 +423,7 @@ function getDataReferKPI(e) {
 
     $('#seriesType').on('change', function () {
         var serieType = $(this).val();
+        var dis = $("#chartReferKPI");
         var series = dis.igDataChart("option", "series");
         var newListSeries = [];
 
@@ -545,7 +545,7 @@ function getDataReferExpenditure(e) {
                 tooltipTemplate: "ExpenditureTooltipTemplate"
             },
             {
-                type: "line",
+                type: "spline",
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
                 name: "Posts",
@@ -617,7 +617,7 @@ function getDataPDM(e) {
     ];
     listSeries.push(
             {
-                type: "line",
+                type: "spline",
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
                 name: "ReferentFBPercent",
@@ -696,7 +696,7 @@ function getDataConcurKPI(e) {
         listSerie.push(
                 {
                     dataSource: arrayData,
-                    type: "line",
+                    type: "spline",
                     isHighlightingEnabled: true,
                     isTransitionInEnabled: true,
                     name: label,
@@ -774,7 +774,7 @@ function getDataConcurExpenditure(e) {
         listSerie.push(
                 {
                     dataSource: arrayData,
-                    type: "line",
+                    type: "spline",
                     isHighlightingEnabled: true,
                     isTransitionInEnabled: true,
                     name: label,
@@ -859,6 +859,7 @@ function getDataConcurEngagement(e) {
 
     });
     arrayData.push(elem);
+
     disExpenditure.igDataChart({
         dataSource: arrayData,
         height: "300px",
