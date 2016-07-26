@@ -224,6 +224,51 @@
         });
     });
 
+
+
+    /**Export des chartes**/
+    function downloadCanvas(link, dataUrl, filename) {
+        link.href = dataUrl;
+        link.download = filename;
+    }
+
+    $(document).on("click", "#exportCharts", function (event) {
+
+        var listChart = ["chartReferKPI", "chartReferExpenditure", "chartPDM", "chartConcurKPI", "chartConcurExpenditure", "chartConcurEngagement", "chartConcurDecompositionEngagement", "chartConcurPlurimediaStacked"];
+        var indexI = 0;
+        var indexP = 0;
+
+        var canvasAll = document.getElementById('exportCanvas');
+        var contextAll = canvasAll.getContext('2d');
+
+        contextAll.fillStyle = "rgba(0, 0, 0, 0.3)";
+        contextAll.canvas.width = 800;
+        contextAll.canvas.height = (listChart.length / 2) * 300;
+        contextAll.fillRect(0, 0, canvasAll.width, canvasAll.height);
+
+        $.each(listChart, function (index, value) {
+            try{
+                canvas = $("#" + value).igDataChart("exportImage", 400, 300);
+
+                if (index % 2 === 0) {
+                    contextAll.drawImage(canvas, 0, 300 * indexP);
+                    indexP++
+                }
+                else {
+                    contextAll.drawImage(canvas, 400, 300 * indexI);
+                    indexI++
+                }
+            }catch(err){}
+
+        });
+
+        var dataURL = canvasAll.toDataURL();
+        downloadCanvas(this, dataURL, 'charts.png');
+
+
+        contextAll.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
 });
 
 $(window).resize(function () {
@@ -1313,7 +1358,6 @@ function getDataZoom(e) {
     });
 
 }
-
 
 function LoadSocialMediaUniverses() {
 
