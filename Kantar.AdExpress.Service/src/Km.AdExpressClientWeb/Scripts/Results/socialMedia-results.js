@@ -85,11 +85,11 @@
                     //ComboBox Init
                     $.each(data.combo, function (index, value) {
                         text = "";
-                        for (var i = 0; i < Number(value.Level) ; i++){
+                        for (var i = 0; i < Number(value.Level) ; i++) {
                             text += "&nbsp;&nbsp;&nbsp;&nbsp;"
                         }
                         text += value.Text;
-                        $('#combo > #pageAdverBrandTypeCombo').append('<option ' + value.Selected + ' value="' + value.Value + '" title="'+value.Text+'">' + text + '</option>');
+                        $('#combo > #pageAdverBrandTypeCombo').append('<option ' + value.Selected + ' value="' + value.Value + '" title="' + value.Text + '">' + text + '</option>');
                     })
                     $('#pageAdverBrandTypeCombo').selectpicker('refresh');
                     $('#seriesType').val("like");
@@ -160,7 +160,7 @@
             $("#grid").igTreeGrid({
                 dataSource: ds.dataView(),
                 columns: cols,
-                height:"100%",
+                height: "100%",
                 autoGenerateColumns: false,
                 primaryKey: "ID",
                 foreignKey: "PID",
@@ -208,20 +208,22 @@
         var params = {
             universeId: selectedValue
         };
+        if (selectedValue != '0') {
+            $.ajax({
+                url: '/Universe/ChangeMarketUniverse',
+                contentType: "application/x-www-form-urlencoded",
+                data: params,
+                type: "POST",
+                datatype: "json",
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    bootbox.alert(thrownError);
+                },
+                success: function (data) {
+                    CallSocialMediaResult();
+                }
+            });
+        }
 
-        $.ajax({
-            url: '/Universe/ChangeMarketUniverse',
-            contentType: "application/x-www-form-urlencoded",
-            data: params,
-            type: "POST",
-            datatype: "json",
-            error: function (xmlHttpRequest, errorText, thrownError) {
-                bootbox.alert(thrownError);
-            },
-            success: function (data) {
-                CallSocialMediaResult();
-            }
-        });
     });
 
 
@@ -336,7 +338,7 @@ function getData(e) {
                 isTransitionInEnabled: true,
                 isHighlightingEnabled: true,
                 thickness: 3,
-                showTooltip:true
+                showTooltip: true
             }]
         });
     });
@@ -390,7 +392,7 @@ function getDataReferKPI(e) {
                 yAxis: "PostsAxe",
                 valueMemberPath: "Post",
                 brush: "#FF0080",
-                outline:"#FF0080",
+                outline: "#FF0080",
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
                 thickness: 3
@@ -638,14 +640,14 @@ function getDataPDM(e) {
                 yAxis: "PDMAxe",
                 type: "stacked100Column",
                 series: [{
-                        name: "ReferentPercent",
-                        title: "ReferentPercent",
-                        type: "stackedFragment",
-                        valueMemberPath: "ReferentPercent",
-                        brush: "#3C6BBF", outline: "#3C6BBF",
-                        showTooltip: true,
-                        tooltipTemplate: "referentPDMTooltipTemplate"
-                    },
+                    name: "ReferentPercent",
+                    title: "ReferentPercent",
+                    type: "stackedFragment",
+                    valueMemberPath: "ReferentPercent",
+                    brush: "#3C6BBF", outline: "#3C6BBF",
+                    showTooltip: true,
+                    tooltipTemplate: "referentPDMTooltipTemplate"
+                },
                     {
                         name: "ConcurrentPercent",
                         title: "ConcurrentPercent",
@@ -963,7 +965,7 @@ function getDataConcurDecompositionEngagement(e) {
                         dataSource: [elem],
                         type: "stackedBar",
                         radius: 0,
-                        outline:"transparent",
+                        outline: "transparent",
                         series: [{
                             name: "like",
                             title: "Like",
@@ -1367,14 +1369,15 @@ function LoadSocialMediaUniverses() {
     $.ajax({
         url: '/Universe/GetModuleUniverses',
         contentType: "application/x-www-form-urlencoded",
-        data:params,
+        data: params,
         type: "POST",
         datatype: "json",
         error: function (xmlHttpRequest, errorText, thrownError) {
             bootbox.alert(thrownError);
         },
         success: function (data) {
-            AppendUniverseComboBox(data);
+            if (data != null)
+                AppendUniverseComboBox(data);
         }
     });
 }
@@ -1389,6 +1392,10 @@ function AppendUniverseComboBox(data) {
 
         //htmlArr.push("  <div class='pull-right custom-button selectexporttype'>");
         htmlArr.push("  <select id='universe-choice' class='selectdatepicker'>");
+        //Default
+        htmlArr.push(" <option value='0'>");
+        htmlArr.push("'Sélectionner un univers marché'");
+        htmlArr.push("</option>");
         $.each(data, function (i, val) {
             htmlArr.push(" <option value='");
             htmlArr.push(val.Id);
@@ -1405,7 +1412,6 @@ function AppendUniverseComboBox(data) {
         //htmlArr.push(" </div>"); //<!--pull-right custom-button selectexporttype-->      
         $(".custom-button.selectexporttype.select-universe-choice").html(htmlArr.join(""));
         $('#universe-choice').selectpicker();
-
         $(".custom-button.selectexporttype.select-universe-choice").show();
     }
 }

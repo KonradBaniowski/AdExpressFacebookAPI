@@ -457,10 +457,12 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         public ActionResult ChangeMarketUniverse(long universeId)
-        {
-            var identity = (ClaimsIdentity)User.Identity;
-            var idWebSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            _universeService.ChangeMarketUniverse(universeId, idWebSession);
+        {   if(universeId > 0)
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var idWebSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                _universeService.ChangeMarketUniverse(universeId, idWebSession);
+            }          
             return new EmptyResult();
         }
     }
