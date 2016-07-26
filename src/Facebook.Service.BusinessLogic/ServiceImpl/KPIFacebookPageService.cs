@@ -9,6 +9,7 @@ using AutoMapper;
 using Facebook.Service.Core.DataAccess;
 using Facebook.Service.Core.DomainModels.BusinessModel;
 using Facebook.Service.Core.DomainModels.AdExprSchema;
+using Facebook.Service.Core.DomainModels.RecpaSchema;
 
 namespace Facebook.Service.BusinessLogic.ServiceImpl
 {
@@ -156,8 +157,10 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             IEnumerable<DataFacebook> queryDataFB = null;
             IEnumerable<DataDisplay> queryDataDisplay = null;
             IEnumerable<DataSearch> queryDataSearch = null;
+            IEnumerable<RecapPluriExpenditure> queryDataRecapPluri = null;
 
             List<PDVByMediaPageFacebookContract> resultats = new List<PDVByMediaPageFacebookContract>();
+            
             bool isAdvertiser = true;
 
             var criteria = _rightsvc.GetCriteria2(IdLogin);
@@ -173,6 +176,8 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
 
                 queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+
+                queryDataRecapPluri = _uow.DataRecapPluriRepository.GetDataRecapPluri(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
             }
             else if ((BrandRef != null && BrandRef.Count() != 0) && (BrandCon != null && BrandCon.Count() != 0))
             {
@@ -185,95 +190,208 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
 
                 queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
+
+                queryDataRecapPluri = _uow.DataRecapPluriRepository.GetDataRecapPluri(criteriaData, Begin, End, allBrand, null, idLanguage);
             }
 
             queryDataFB = queryDataFB.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
             queryDataDisplay = queryDataDisplay.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
             queryDataSearch = queryDataSearch.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
+            queryDataRecapPluri = queryDataRecapPluri.Select(e => e).ToList();
+
+            //long minMonth = queryDataFB.Min(e => e.DateMediaNum);
+            //if (queryDataDisplay.Min(e => e.DateMediaNum) < minMonth)
+            //    minMonth = queryDataDisplay.Min(e => e.DateMediaNum);
+            //if (queryDataSearch.Min(e => e.DateMediaNum) < minMonth)
+            //    minMonth = queryDataSearch.Min(e => e.DateMediaNum);
+
+            //queryDataFB = queryDataFB.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
+            //queryDataDisplay = queryDataDisplay.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
+            //queryDataSearch = queryDataSearch.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
 
             if (isAdvertiser)
             {
-                foreach (var item in queryDataFB.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, Expenditure = g.Sum(b => b.Expenditure) }).ToList())
-                {
-                    var tmp = new PDVByMediaPageFacebookContract();
-                    tmp.IdAdvertiser_Brand = item.Advertiser.IdAdvertiser;
-                    tmp.LabelAdvertiser_Brand = item.Advertiser.AdvertiserLabel;
-                    tmp.IdMedia = item.IdVehicle;
-                    tmp.Expenditure = item.Expenditure;
-                    tmp.LabelMedia = "Social";
+                queryDataFB.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, Expenditure = g.Sum(b => b.Expenditure) }).ToList().ForEach(item =>
+                    {
+                        var tmp = new PDVByMediaPageFacebookContract();
+                        tmp.Id = item.Advertiser.IdAdvertiser;
+                        tmp.Label = item.Advertiser.AdvertiserLabel;
+                        tmp.IdVehicle = item.IdVehicle;
+                        tmp.Expenditure = item.Expenditure;
+                        tmp.LabelVehicle = "Social";
 
-                    resultats.Add(tmp);
-                }
+                        resultats.Add(tmp);
+                    }
+                );
 
-                foreach (var item in queryDataDisplay.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
-                {
-                    var tmp = new PDVByMediaPageFacebookContract();
-                    tmp.IdAdvertiser_Brand = item.Advertiser.IdAdvertiser;
-                    tmp.LabelAdvertiser_Brand = item.Advertiser.AdvertiserLabel;
-                    tmp.IdMedia = item.IdVehicle;
-                    tmp.Expenditure = item.ExpenditureEuro;
-                    tmp.LabelMedia = "Display";
 
-                    resultats.Add(tmp);
-                }
+                queryDataDisplay.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList().ForEach(item =>
+                    {
+                        var tmp = new PDVByMediaPageFacebookContract();
+                        tmp.Id = item.Advertiser.IdAdvertiser;
+                        tmp.Label = item.Advertiser.AdvertiserLabel;
+                        tmp.IdVehicle = item.IdVehicle;
+                        tmp.Expenditure = item.ExpenditureEuro;
+                        tmp.LabelVehicle = "Display";
 
-                foreach (var item in queryDataSearch.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
-                {
-                    var tmp = new PDVByMediaPageFacebookContract();
-                    tmp.IdAdvertiser_Brand = item.Advertiser.IdAdvertiser;
-                    tmp.LabelAdvertiser_Brand = item.Advertiser.AdvertiserLabel;
-                    tmp.IdMedia = item.IdVehicle;
-                    tmp.Expenditure = item.ExpenditureEuro;
-                    tmp.LabelMedia = "Search";
+                        resultats.Add(tmp);
+                    }
+                );
 
-                    resultats.Add(tmp);
-                }
+                queryDataSearch.GroupBy(j => j.Advertiser.IdAdvertiser).Select(g => new { g.First().Advertiser, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList().ForEach(item =>
+                    {
+                        var tmp = new PDVByMediaPageFacebookContract();
+                        tmp.Id = item.Advertiser.IdAdvertiser;
+                        tmp.Label = item.Advertiser.AdvertiserLabel;
+                        tmp.IdVehicle = item.IdVehicle;
+                        tmp.Expenditure = item.ExpenditureEuro;
+                        tmp.LabelVehicle = "Search";
+
+                        resultats.Add(tmp);
+                    }
+                );
             }
             else
             {
-                foreach (var item in queryDataFB.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, Expenditure = g.Sum(b => b.Expenditure) }).ToList())
-                {
-                    var tmp = new PDVByMediaPageFacebookContract();
-                    tmp.IdAdvertiser_Brand = item.Brand.Id;
-                    tmp.LabelAdvertiser_Brand = item.Brand.BrandLabel;
-                    tmp.IdMedia = item.IdVehicle;
-                    tmp.Expenditure = item.Expenditure;
-                    tmp.LabelMedia = "Social";
+                queryDataFB.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, Expenditure = g.Sum(b => b.Expenditure) }).ToList().ForEach(item =>
+                    {
+                        var tmp = new PDVByMediaPageFacebookContract();
+                        tmp.Id = item.Brand.Id;
+                        tmp.Label = item.Brand.BrandLabel;
+                        tmp.IdVehicle = item.IdVehicle;
+                        tmp.Expenditure = item.Expenditure;
+                        tmp.LabelVehicle = "Social";
 
-                    resultats.Add(tmp);
-                }
+                        resultats.Add(tmp);
+                    }
+                );
 
-                foreach (var item in queryDataDisplay.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
-                {
-                    var tmp = new PDVByMediaPageFacebookContract();
-                    tmp.IdAdvertiser_Brand = item.Brand.Id;
-                    tmp.LabelAdvertiser_Brand = item.Brand.BrandLabel;
-                    tmp.IdMedia = item.IdVehicle;
-                    tmp.Expenditure = item.ExpenditureEuro;
-                    tmp.LabelMedia = "Display";
+                queryDataDisplay.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList().ForEach(item =>
+                    {
+                        var tmp = new PDVByMediaPageFacebookContract();
+                        tmp.Id = item.Brand.Id;
+                        tmp.Label = item.Brand.BrandLabel;
+                        tmp.IdVehicle = item.IdVehicle;
+                        tmp.Expenditure = item.ExpenditureEuro;
+                        tmp.LabelVehicle = "Display";
 
-                    resultats.Add(tmp);
-                }
+                        resultats.Add(tmp);
+                    }
+                );
 
-                foreach (var item in queryDataSearch.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList())
-                {
-                    var tmp = new PDVByMediaPageFacebookContract();
-                    tmp.IdAdvertiser_Brand = item.Brand.Id;
-                    tmp.LabelAdvertiser_Brand = item.Brand.BrandLabel;
-                    tmp.IdMedia = item.IdVehicle;
-                    tmp.Expenditure = item.ExpenditureEuro;
-                    tmp.LabelMedia = "Search";
+                queryDataSearch.GroupBy(j => j.Brand.Id).Select(g => new { g.First().Brand, g.First().IdVehicle, ExpenditureEuro = g.Sum(b => b.ExpenditureEuro) }).ToList().ForEach(item =>
+                    {
+                        var tmp = new PDVByMediaPageFacebookContract();
+                        tmp.Id = item.Brand.Id;
+                        tmp.Label = item.Brand.BrandLabel;
+                        tmp.IdVehicle = item.IdVehicle;
+                        tmp.Expenditure = item.ExpenditureEuro;
+                        tmp.LabelVehicle = "Search";
 
-                    resultats.Add(tmp);
-                }
+                        resultats.Add(tmp);
+                    }
+                );
             }
 
+            resultats.AddRange(setPlurimediaExpenditure(queryDataRecapPluri, isAdvertiser, Begin, End));
 
+            resultats.GroupBy(e => e.IdVehicle).ToList().ForEach(k =>
+                  {
+                      long total = k.Sum(j => j.Expenditure);
+                      k.ToList().ForEach(item =>
+                        {
+                            double pdv = ((double)item.Expenditure / (double)total) * 100.00;
+                            item.Expenditure = (long)pdv;
+                        }
+                      );
+                }
+            );
 
 
             return resultats;
 
         }
+
+        private List<PDVByMediaPageFacebookContract> setPlurimediaExpenditure(IEnumerable<RecapPluriExpenditure> queryDataRecapPluri, bool isAdvertiser, long Begin, long End)
+        {
+            List<PDVByMediaPageFacebookContract> resultats = new List<PDVByMediaPageFacebookContract>();
+            List<PDVByMediaPageFacebookContract> resultatsTmp = new List<PDVByMediaPageFacebookContract>();
+            List<string> listProp = new List<string>();
+            long sumExpend = 0;
+
+            Dictionary<long, string> dateToFieldName = new Dictionary<long, string>();
+
+            int currentYear = DateTime.Now.Year;
+
+            var YearNBegin = currentYear - int.Parse(Begin.ToString().Substring(0, 4));
+            int MonthNBegin = int.Parse(Begin.ToString().Substring(4, 2));
+            var YearNEnd = currentYear - int.Parse(End.ToString().Substring(0, 4));
+            int MonthNEnd = int.Parse(End.ToString().Substring(4, 2));
+
+            //TODO : provisoir
+            for (int j = YearNEnd; j <= YearNBegin; j++)
+            {
+                string propertyName = "Expenditure_Euro_N";
+                if (j == 0){
+                    propertyName += "_";
+                }
+                else
+                {
+                    propertyName += j.ToString();
+                }
+
+                if (YearNEnd == YearNBegin)
+                {
+                    for (int k = MonthNBegin; k <= MonthNEnd; k++)
+                    {
+                        listProp.Add(propertyName + k.ToString());
+                    }
+                }
+                else
+                {
+                    if (j != 0){
+                        propertyName += "_";
+                    }
+                    if (j == YearNBegin)
+                    {
+                        for (int k = MonthNBegin; k <= 12; k++)
+                        {
+                            listProp.Add(propertyName + k.ToString());
+                        }
+                    }
+                    else if (j == YearNEnd)
+                    {
+                        for (int k = 1; k <= MonthNEnd; k++)
+                        {
+                            listProp.Add(propertyName + k.ToString());
+                        }
+                    }
+                }
+            }
+
+            sumExpend = 0;
+            queryDataRecapPluri.ToList().ForEach(k =>
+                {
+                    sumExpend = 0;
+                    foreach (string elem in listProp)
+                    {
+                        sumExpend += (long)k.GetType().GetProperty(elem).GetValue(k, null);
+                    }
+
+                    PDVByMediaPageFacebookContract tmp = new PDVByMediaPageFacebookContract();
+                    tmp.Id = k.Id;
+                    tmp.Label = k.Label;
+                    tmp.IdVehicle = 50;
+                    tmp.Expenditure = sumExpend;
+                    tmp.LabelVehicle = "Plurimedia";
+
+                    resultats.Add(tmp);
+                }
+            );
+
+            return resultats;
+        }
+
         public List<KPIClassificationContract> GetKPIClassificationPages(int idLogin, long begin, long end, List<long> advertisers, List<long> brands, int idLanguage)
         {
             var criteria = _rightsvc.GetCriteria(idLogin);

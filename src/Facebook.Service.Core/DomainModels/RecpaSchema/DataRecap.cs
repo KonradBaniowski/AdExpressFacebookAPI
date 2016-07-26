@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Facebook.Service.Core.DomainModels.RecpaSchema
 {
-   public class Data
+    public class DataRecap
     {
         public long IdSegment { get; set; }
         public long IdGroup { get; set; }
@@ -16,6 +15,5 @@ namespace Facebook.Service.Core.DomainModels.RecpaSchema
         public long IdBrand { get; set; }
         public long IdCategory { get; set; }
         public long IdVehicle { get; set; }
-        public long IdMedia { get; set; }
     }
 }

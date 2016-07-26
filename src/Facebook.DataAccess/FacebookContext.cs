@@ -1,5 +1,6 @@
 ﻿using Facebook.Service.Core.DomainModels.AdExprSchema;
 using Facebook.Service.Core.DomainModels.MauSchema;
+using Facebook.Service.Core.DomainModels.RecpaSchema;
 using Oracle.ManagedDataAccess.EntityFramework;
 using System;
 using System.Data.Entity;
@@ -11,6 +12,8 @@ namespace Facebook.DataAccess
 
     public class FacebookContext : DbContext
     {
+        const string schemaRecapPluri = "RECAP01";
+
         const string schemaMau = "MAU01";
         const string schema = "ADEXPR03";
         const string connectionString = "adexpr03";
@@ -45,6 +48,18 @@ namespace Facebook.DataAccess
                     dynamic mapping = Activator.CreateInstance(p, schema);
                     modelBuilder.Configurations.Add(mapping);
                 });
+
+            var assemblyTypes3 = GetType().Assembly.GetTypes().ToList();
+
+            assemblyTypes3.Where(p => p.Namespace != null
+                && p.Namespace.Contains("Recap")
+                && p.BaseType != null
+                && p.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>)).ToList().ForEach(
+                p =>
+                {
+                    dynamic mapping = Activator.CreateInstance(p, schemaRecapPluri);
+                    modelBuilder.Configurations.Add(mapping);
+                });
         }
 
         public DbSet<OrderClientMedia> OrderClientMedia { get; set; }
@@ -54,9 +69,11 @@ namespace Facebook.DataAccess
         public DbSet<DataFacebook> DataFacebook { get; set; }
         public DbSet<DataDisplay> DataDisplay { get; set; }
         public DbSet<DataSearch> DataSearch { get; set; }
-        public DbSet<Advertiser> Advertiser { get; set; }
+        public DbSet<RecapPluri> DataRecapPluri { get; set; }
+        public DbSet<Service.Core.DomainModels.AdExprSchema.Advertiser> Advertiser { get; set; }
         public DbSet<DataPostFacebook> DataPostFacebook { get; set; }
-        public DbSet<Brand> Brand { get; set; }
+        public DbSet<Service.Core.DomainModels.AdExprSchema.Brand> Brand { get; set; }
+        public DbSet<Service.Core.DomainModels.RecpaSchema.BrandRecap> BrandRecap { get; set; }
     }
 
     public class ModelConfiguration : DbConfiguration

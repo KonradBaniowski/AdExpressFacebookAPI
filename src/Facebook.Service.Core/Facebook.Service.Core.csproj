@@ -49,6 +49,7 @@
     <Compile Include="DataAccess\Repository\IDataDisplayRepository.cs" />
     <Compile Include="DataAccess\Repository\IDataFacebookRepository.cs" />
     <Compile Include="DataAccess\Repository\IDataPostFacebookRepository.cs" />
+    <Compile Include="DataAccess\Repository\IDataRecapPluriRepository.cs" />
     <Compile Include="DataAccess\Repository\IDataSearchRepository.cs" />
     <Compile Include="DataAccess\Repository\IGenericRepository.cs" />
     <Compile Include="DataAccess\Repository\IOrderClientMediaRepository.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="DomainModels\BusinessModel\CriteriaData.cs" />
     <Compile Include="DomainModels\BusinessModel\DataFacebookKPI.cs" />
     <Compile Include="DomainModels\BusinessModel\PostFacebook.cs" />
+    <Compile Include="DomainModels\BusinessModel\RecapPluriExpenditure.cs" />
     <Compile Include="DomainModels\MauSchema\OrderClientMedia.cs" />
     <Compile Include="DomainModels\MauSchema\OrderClientProduct.cs" />
     <Compile Include="DomainModels\MauSchema\OrderTemplateMedia.cs" />
@@ -77,8 +79,9 @@
     <Compile Include="DomainModels\MauSchema\Template.cs" />
     <Compile Include="DomainModels\MauSchema\TemplateAssignment.cs" />
     <Compile Include="DomainModels\MauSchema\TypeMedia.cs" />
-    <Compile Include="DomainModels\RecpaSchema\Brand.cs" />
-    <Compile Include="DomainModels\RecpaSchema\Data.cs" />
+    <Compile Include="DomainModels\RecpaSchema\AdvertiserRecap.cs" />
+    <Compile Include="DomainModels\RecpaSchema\BrandRecap.cs" />
+    <Compile Include="DomainModels\RecpaSchema\DataRecap.cs" />
     <Compile Include="DomainModels\RecpaSchema\RecapPluri.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

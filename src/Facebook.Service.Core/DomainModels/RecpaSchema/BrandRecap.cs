@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Facebook.Service.Core.DomainModels.RecpaSchema
 {
-   public class Brand
+   public class BrandRecap
     {
-
         public long Id { get; set; }
         public long IdLanguage { get; set; }
         public string BrandLabel { get; set; }

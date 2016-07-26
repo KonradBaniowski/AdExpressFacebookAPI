@@ -82,6 +82,7 @@
     <Compile Include="Repository\DataDisplayRepository.cs" />
     <Compile Include="Repository\DataFacebookRepository.cs" />
     <Compile Include="Repository\DataPostFacebookRepository.cs" />
+    <Compile Include="Repository\DataRecapPluriRepository.cs" />
     <Compile Include="Repository\DataSearchRepository.cs" />
     <Compile Include="Repository\ExtensionLinq.cs" />
     <Compile Include="Repository\GenericRepository.cs" />

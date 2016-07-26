@@ -1,16 +1,13 @@
-﻿using Facebook.Service.Core.DomainModels.AdExprSchema;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Facebook.Service.Core.DomainModels.RecpaSchema
+namespace Facebook.Service.Core.DomainModels.BusinessModel
 {
-    public class RecapPluri : DataRecap
+    public class RecapPluriExpenditure
     {
-        public long IdHoldingCompany { get; set; }
-        public long IdProduct { get; set; }
         public long Expenditure_Euro_N_1 { get; set; }
         public long Expenditure_Euro_N_2 { get; set; }
         public long Expenditure_Euro_N_3 { get; set; }
@@ -50,8 +47,7 @@ namespace Facebook.Service.Core.DomainModels.RecpaSchema
         public long Expenditure_Euro_N2_11 { get; set; }
         public long Expenditure_Euro_N2_12 { get; set; }
         public long TOTAL_YEAR_N2 { get; set; }
-        public virtual Advertiser Advertiser { get; set; }
-        public virtual Brand Brand{ get; set; }
-        public long IdLanguageData { get; set; }
+        public long Id { get; set; }
+        public string Label { get; set; }
     }
 }
