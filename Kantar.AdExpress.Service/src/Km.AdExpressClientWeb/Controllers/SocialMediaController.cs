@@ -626,7 +626,7 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult GetPostHtml(string id)
         {
             var hostName = HttpContext.Request.UrlReferrer.Authority;
-            var url = "http://localhost:82/Facebook/GetPost?id=" + id;
+            var url = "localhost:82/Facebook/GetPost?id=" + id;
             var path = Path.Combine("http://", url);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(path);
             request.Method = "HEAD";
