@@ -135,10 +135,14 @@
 
             function GetItems(idItems) {
                 var items = '';
-                for (var i in idItems) {
-                    items += idItems[i] + ",";
+
+                if (idItems != null) {
+                    $.each(idItems, function (index, value) {
+                        items += value + ",";
+                    });
+                    return items.substring(0, items.length - 1);
                 }
-                return items.substring(0, items.length - 1);
+                return items;
             }
 
             function GenericDetailLevelFilter() {
