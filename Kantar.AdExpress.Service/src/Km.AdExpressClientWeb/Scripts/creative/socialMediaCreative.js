@@ -9,11 +9,11 @@ $("#grid").igTreeGrid({
     avgRowHeight: 60,
     autoGenerateColumns: true,
     features: [
-                {
-                    name: "Sorting",
-                    type: "local",
-                    applySortedColumnCss: false
-                }
+            {
+                name: "Sorting",
+                type: "local",
+                applySortedColumnCss: false
+            }
 ]
 });
 
@@ -87,6 +87,7 @@ function CallInsertionsResult() {
 
             if (data != null && data != "") {
                 dataTreeGrid = data.datagrid;
+                var a = dataTreeGrid.length;
                 colsFixed = data.columnsfixed;
                 needFixedColumns = data.needfixedcolumns;
 
@@ -112,6 +113,7 @@ function CallInsertionsResult() {
             }
             else {
                 $("#gridLoader").hide();
+                $("#btn-export").hide();
                 $("#gridEmpty").show();
                 $("#grid").hide();
             }
@@ -193,12 +195,6 @@ $("#postFacebookModal").on('hide.bs.modal', function () {
 $(window).resize(function () {
     $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
 });
-$(document).on('shown.bs.collapse', '#lvlperso', function (e) {
-    $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
-});
-$(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
-    $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
-});
 
 function getData(e) {
             var serieType = $('#seriesTypeZoom').val();
@@ -276,6 +272,10 @@ function getData(e) {
 }
 
 $(document).on("click", ".btn-group.btn-group-margin > .btn.btn-default", function (event) {
+    $("#btn-export").hide();
+    $("#gridEmpty").hide();
+    $("#grid").hide();
+    $("#gridLoader").show();
     var element = this;
     var period = $(element).attr("period");
     var ids = $('#ids').val();

@@ -1698,6 +1698,11 @@ ul.ui-selectable {
     cursor: pointer;
 }
 
+.btn-save-univers:hover, .btn-save-univers:focus{
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+}
+
 .modal-save-univers-footer {
     padding: 8px 20px 6px;
     margin-top: 10px;

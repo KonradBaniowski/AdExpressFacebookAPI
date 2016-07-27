@@ -40,7 +40,8 @@
 <script>
     if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
     var id = $('#id').val();
-    $("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id);
+    var link = "/SocialMedia/GetPostHtml?id=" + id;
+    $("#objectPost").attr('src', link);
     $("#mediaLoader").hide();
     $("#objectPost").show();
 </script>

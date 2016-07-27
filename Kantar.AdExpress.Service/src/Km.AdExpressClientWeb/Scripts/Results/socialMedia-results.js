@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
     if (typeof jQuery === "undefined") { throw new Error("jQuery") }
 
+    var listChart = ["chartReferKPI", "chartReferExpenditure", "chartPDM", "chartConcurKPI", "chartConcurExpenditure", "chartConcurEngagement", "chartConcurDecompositionEngagement", "chartConcurPlurimediaStacked"];
+
     $('#export-type').removeClass("hide");
     $('#export-type').selectpicker();
 
@@ -186,7 +188,7 @@
         });
     });
 
-    $("#grid").on("igtreegridrowexpanded igtreegridrowcollapsed", function (evt, ui) {
+    $("#grid").on("igtreegridrowexpanded igtreegridrowcollapsed igtreegriddatarendered", function (evt, ui) {
         /*Follow scroll*/
         var element = $('#grid_table');
         var bottom = element.offset().top + element.outerHeight(true);
@@ -199,16 +201,23 @@
 
     /** Change universe **/
     $(document).on("click", "#btn-universe-choice", function (event) {
-        $("#gridLoader").removeClass("hide");
-        $("#grid").addClass("hide");
-        $("#resaccord").addClass("hide");
-        $("#KPIButtonFix").addClass("hide");
-        // event.preventDefault();
         var selectedValue = $('#universe-choice').val();
         var params = {
             universeId: selectedValue
         };
         if (selectedValue != '0') {
+            $("#gridLoader").removeClass("hide");
+            $("#grid").addClass("hide");
+            $("#resaccord").addClass("hide");
+            $("#KPIButtonFix").addClass("hide");
+
+            $.each(listChart, function (index, value) {
+                try {
+                    $("#" + value).igDataChart("destroy");
+                } catch (err) { }
+            });
+
+            // event.preventDefault();
             $.ajax({
                 url: '/Universe/ChangeMarketUniverse',
                 contentType: "application/x-www-form-urlencoded",
@@ -233,10 +242,7 @@
         link.href = dataUrl;
         link.download = filename;
     }
-
     $(document).on("click", "#exportCharts", function (event) {
-
-        var listChart = ["chartReferKPI", "chartReferExpenditure", "chartPDM", "chartConcurKPI", "chartConcurExpenditure", "chartConcurEngagement", "chartConcurDecompositionEngagement", "chartConcurPlurimediaStacked"];
         var indexI = 0;
         var indexP = 0;
 
@@ -267,8 +273,8 @@
         var dataURL = canvasAll.toDataURL();
         downloadCanvas(this, dataURL, 'charts.png');
 
-
         contextAll.clearRect(0, 0, canvas.width, canvas.height);
+
     });
 
 });
@@ -1046,6 +1052,7 @@ function getDataPlurimediaStacked(e) {
                 type: "stackedFragment",
                 valueMemberPath: label,
                 showTooltip: true,
+                tooltipTemplate: "<div>Media: <label class='bold'>${item.Media}</label></div><div>" + label + ": <label class='bold'>${item."+label+"} %</label></div>"
             });
 
         });
@@ -1394,7 +1401,7 @@ function AppendUniverseComboBox(data) {
         htmlArr.push("  <select id='universe-choice' class='selectdatepicker'>");
         //Default
         htmlArr.push(" <option value='0'>");
-        htmlArr.push("'Sélectionner un univers marché'");
+        htmlArr.push("Sélectionner un univers marché");
         htmlArr.push("</option>");
         $.each(data, function (i, val) {
             htmlArr.push(" <option value='");
