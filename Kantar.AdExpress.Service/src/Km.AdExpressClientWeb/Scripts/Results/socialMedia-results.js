@@ -1285,13 +1285,20 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
                 bootbox.alert("error");
             },
             success: function (response) {
-                $('#postFacebookModal .modal-content').html('').append(response);
+                $('#postFacebookModal .modal-content .modal-body').html('').append(response);
                 $('#postFacebookModal').modal('show');
                 getDataZoom();
+                $("#mediaLoader").hide();
             }
         });
 
     }
+});
+
+$("#postFacebookModal").on('hide.bs.modal', function () {
+    $("#objectPost").attr('src', '');
+    $('#postFacebookModal .modal-content .modal-body').html('');
+    $("#mediaLoader").show();
 });
 
 function getDataZoom(e) {

@@ -171,8 +171,11 @@ namespace Km.AdExpressClientWeb.Helpers
                 Concurrent = GestionWeb.GetWebWord(LanguageConstantes.Concurrent, siteLanguage),
                 Referent = GestionWeb.GetWebWord(LanguageConstantes.Referent, siteLanguage),
                 WarningBackNavigator = GestionWeb.GetWebWord(LanguageConstantes.WarningBackNavigatorCode, siteLanguage),
-                ResultError = ConvertToHtmlString(GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage))
+                ResultError = ConvertToHtmlString(GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage)),
+                EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
+                FacebookModalTitle = GestionWeb.GetWebWord(LanguageConstantes.FacebookPost, siteLanguage)
             };
+
             return result;
         }
 

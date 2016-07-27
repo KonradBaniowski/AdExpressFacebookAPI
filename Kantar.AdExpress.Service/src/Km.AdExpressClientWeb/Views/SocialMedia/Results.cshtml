@@ -43,7 +43,7 @@
 <div class="row">
     <div class="col-md-12">
         <center>
-            <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
+            <p id="gridEmpty" style="display:none">@Model.Labels.EmptyGrid</p>
             <div id="grid" class="hide">
             </div>
             <div id="gridLoader">
@@ -195,6 +195,14 @@
     <div class="modal fade text-center blo" id="postFacebookModal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
         <div class="modal-dialog" style="width:95%;height:auto;">
             <div class="modal-content">
+                <div class="modal-header header-kantar-popup">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                    <h4 class="modal-title" id="postFacebookModalTitle">@Model.Labels.FacebookModalTitle</h4>
+                </div>
+                <div id="mediaLoader">
+                    <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+                </div>
+                <div class="modal-body"></div>
             </div>
         </div>
     </div>

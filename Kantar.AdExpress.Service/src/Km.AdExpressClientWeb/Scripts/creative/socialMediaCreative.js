@@ -151,6 +151,7 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
 
 $("#postFacebookModal").attr('src', '');
 $("#postFacebookModal").on('shown.bs.modal', function (event) {
+    $("#mediaLoader").show();
     var button = $(event.relatedTarget);// Button that triggered the modal
     var datas = button.data('creative').toString(); // Extract info from data-* attributes
 
@@ -158,9 +159,6 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
         bootbox.alert("Post indisponible.");
     }
     else {
-        //id = datas;
-        //$("#objectPost").attr('src', "http://kmchmd1002:82/Facebook/GetPost?id=" + id);
-        //$("#objectPost").show();
         var params = {
             id: datas
         };
@@ -174,9 +172,10 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
                 bootbox.alert("error");
             },
             success: function (response) {                
-                $('#postFacebookModal .modal-content').html('').append(response);
+                $('#postFacebookModal .modal-content .modal-body').html('').append(response);
                 $('#postFacebookModal').modal('show');
-                getData();               
+                getData();
+                $("#mediaLoader").hide();
             }
         });
 
@@ -185,9 +184,7 @@ $("#postFacebookModal").on('shown.bs.modal', function (event) {
 
 $("#postFacebookModal").on('hide.bs.modal', function () {
     $("#objectPost").attr('src', '');
-    $("#objectPost").hide()
-    $("#chartsPostFacebook").hide();
-    $("#chartsPostFacebook").hide();
+    $('#postFacebookModal .modal-content .modal-body').html('');
     $("#mediaLoader").show();
 });
 
