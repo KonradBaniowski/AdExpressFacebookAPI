@@ -414,7 +414,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region PurchaseModeOption
-            PurchaseModeOption purchaseModeOption = new PurchaseModeOption();
+            bool showPurchaseMode = false;
+            if (WebApplicationParameters.UsePurchaseMode && _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG)
+                && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+                && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+                showPurchaseMode = true;
+
+                PurchaseModeOption purchaseModeOption = new PurchaseModeOption();
 
             purchaseModeOption.PurchaseMode = new SelectControl();
             purchaseModeOption.PurchaseMode.Id = "purchaseMode";
@@ -422,7 +428,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             purchaseModeOption.PurchaseMode.Items = new List<SelectItem>();
 
             Dictionary<Int64, VehicleInformation> VehicleInformationList = _customerWebSession.GetVehiclesSelected();
-            if (VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId))
+            if (showPurchaseMode && VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId))
             {
                 var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
                 if (purchaseModeList.Count > 0)
@@ -666,8 +672,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region PurchaseModeFilter
-            if (VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId) && string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes))
-                _customerWebSession.SelectedPurchaseModeList = userFilter.PurchaseModeFilter.PurchaseModes;
+            if (VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)  )
+            {             
+                _customerWebSession.SelectedPurchaseModeList = (!string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes)) 
+                    ? userFilter.PurchaseModeFilter.PurchaseModes :string.Empty;               
+            }
+              
             #endregion
 
             #region initializeMedia
