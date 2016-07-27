@@ -19,6 +19,8 @@ using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using Km.AdExpressClientWeb.I18n;
 using TNS.AdExpress.Domain.Web;
+using System.IO;
+using System.Net;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -352,8 +354,12 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 List<DataPostFacebook> data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
+                if(data.Count == 0)
+                {
+                    return null;
+                }
                 string jsonData = JsonConvert.SerializeObject(data);
-                var obj = new { datagrid = jsonData, columns = columns, schema = schemaFields, columnsfixed = columnsFixed, needfixedcolumns = false, isonecolumnline = gridResult.isOneColumnLine };
+                var obj = new { datagrid = jsonData, columns = columns, schema = schemaFields, columnsfixed = columnsFixed, needfixedcolumns = false };
                 JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                 jsonModel.MaxJsonLength = Int32.MaxValue;
 
@@ -617,6 +623,17 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
-       
+        public ActionResult GetPostHtml(string id)
+        {
+            var hostName = HttpContext.Request.UrlReferrer.Authority;
+            var url = "http://localhost:82/Facebook/GetPost?id=" + id;
+            var path = Path.Combine("http://", url);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(path);
+            request.Method = "HEAD";
+
+            return Redirect(path);
+        }
+
+
     }
 }
