@@ -1,4 +1,4 @@
-﻿    @model Km.AdExpressClientWeb.Models.Shared.MediaSelectionViewModel
+﻿@model Km.AdExpressClientWeb.Models.Shared.MediaSelectionViewModel
 
 @{
     ViewBag.Title = "MediaSelection";
@@ -27,11 +27,11 @@
         <div class="panel-group panel-group-results" id="media-accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-primary panel-results">
                 <div class="panel-heading head-results" role="tab" id="headingOne">
-                    <h3 class="panel-title pull-left">
-                        <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h3 class="panel-title pull-left">
                             <i class="fa fa-eye"></i> @Model.Labels.SelectMedia
-                        </a>
-                    </h3>
+                        </h3>
+                    </a>
                     @if (Model.Multiple)
                     {
                         <span class="pull-right">
@@ -75,13 +75,13 @@
                 </div>
             </div>
             <div class="panel panel-primary panel-results optional-area">
-                <div class="panel-heading head-results" role="tab" id="headingTwo">
-                    <h4 class="panel-title">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <div class="panel-heading head-results" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
                             <i class="fa fa-search"></i> @Model.Labels.Refine
-                        </a>
-                    </h4>
-                </div>
+                        </h4>
+                    </div>
+                </a>
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
                         <div class="row">

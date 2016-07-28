@@ -21,6 +21,7 @@ using Km.AdExpressClientWeb.I18n;
 using TNS.AdExpress.Domain.Web;
 using System.IO;
 using System.Net;
+using System.Configuration;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -599,7 +600,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession);
                 long idPost = id;
                 int idLanguage = postModelRef.IdLanguage;
-                HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookOnePostUri"]), new { idPost, idLanguage }).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri(ConfigurationManager.AppSettings["FacebookOnePostUri"]), new { idPost, idLanguage }).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 if (!response.IsSuccessStatusCode)
                     throw new Exception(response.StatusCode.ToString());
@@ -625,15 +626,20 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public ActionResult GetPostHtml(string id)
         {
-            var hostName = HttpContext.Request.UrlReferrer.Authority;
-            var url = "localhost:82/Facebook/GetPost?id=" + id;
-            var path = Path.Combine("http://", url);
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(path);
-            request.Method = "HEAD";
+            try
+            {
+                var uri = ConfigurationManager.AppSettings["FacebookPostWebUri"];
+                var url = string.Format("{0}?id={1}", uri, id);
+                WebRequest request = WebRequest.Create(url);
+                WebResponse response = request.GetResponse();
 
-            return Redirect(path);
+                return File(response.GetResponseStream(), "text/html");
+            }
+            catch
+            {
+                return File("~/Content/img/no_visu.jpg", "image/jpg");
+            }
+
         }
-
-
     }
 }

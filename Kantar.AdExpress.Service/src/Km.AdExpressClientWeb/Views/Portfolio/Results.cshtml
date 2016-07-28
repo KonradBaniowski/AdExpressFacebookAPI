@@ -26,7 +26,7 @@
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
                 <option value="1"> @Model.Labels.ExportFormattedResult</option>
-                <option value="3"> @Model.Labels.ExportGrossResult</option>             
+                <option value="3"> @Model.Labels.ExportGrossResult</option>
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="glyphicon glyphicon-floppy-open fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
@@ -51,14 +51,14 @@
 <div class="panel-group panel-group-results hide" id="resaccord" style="margin-bottom:20px;">
     <div id="allPeriodInsertions" class="text-center margin-bot-30"></div>
     <div id="GridPanel" class="panel panel-primary panel-results">
-        <div class="panel-heading head-results">
-            <h3 class="panel-title pull-left">
-                <a data-toggle="collapse" data-parent="#resaccord" href="#accord1">
+        <a data-toggle="collapse" href="#accord1">
+            <div class="panel-heading head-results">
+                <h3 class="panel-title pull-left">
                     <i class="fa fa-table"></i> @GestionWeb.GetWebWord(1192, Model.Presentation.SiteLanguage)
-                </a>
-            </h3>
-            <div class="clearfix"></div>
-        </div>
+                </h3>
+                <div class="clearfix"></div>
+            </div>
+        </a>
         <div id="accord1" class="panel-collapse collapse in">
             <div class="panel-body">
                 <center>
@@ -70,13 +70,13 @@
         </div>
     </div>
     <div id="ChartPanel" class="panel panel-primary panel-results" style="display:none;">
-        <div class="panel-heading head-results">
-            <h3 class="panel-title">
-                <a data-toggle="collapse" data-parent="#resaccord" href="#accord2">
+        <a data-toggle="collapse" href="#accord2">
+            <div class="panel-heading head-results">
+                <h3 class="panel-title">
                     <i class="fa fa-line-chart"></i> @GestionWeb.GetWebWord(1191, Model.Presentation.SiteLanguage)
-                </a>
-            </h3>
-        </div>
+                </h3>
+            </div>
+        </a>
         <div id="accord2" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div id="listCharts">
@@ -85,13 +85,13 @@
         </div>
     </div>
     <div id="carou-vehicleView" class="panel panel-primary panel-results" style="display:none; overflow:visible;">
-        <div class="panel-heading head-results">
-            <h3 class="panel-title">
-                <a data-toggle="collapse" data-parent="#resaccord" href="#accord3">
+        <a data-toggle="collapse" href="#accord3">
+            <div class="panel-heading head-results">
+                <h3 class="panel-title">
                     <i class="fa fa-newspaper-o"></i> @GestionWeb.GetWebWord(1397, Model.Presentation.SiteLanguage)
-                </a>
-            </h3>
-        </div>
+                </h3>
+            </div>
+        </a>
         <div id="accord3" class="collapse in">
             <!--/panel-heading text-left-->
             <div class="panel-body">
@@ -164,7 +164,7 @@
 </div>
 <input type="hidden" id="current-url" value="/@_controller/Results" />
 @section Scripts {
-    
+
     @switch (Model.Presentation.SiteLanguage.ToString())
     {
         case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
@@ -325,7 +325,7 @@
                                     type: "local",
                                     applySortedColumnCss: false
                                 }
-                                 
+
                             ]
                         })
                     }
@@ -352,7 +352,7 @@
                                      type: "local",
                                      applySortedColumnCss: false
                                  }
-                                 
+
                             ]
                         })
                     }
@@ -610,7 +610,7 @@
                 else {
                     var params = {
                         idAddress: datas[2],
-                        advertiser: datas[1]                        
+                        advertiser: datas[1]
                     };
                     CallGadInfos(params);
                 }
@@ -930,7 +930,7 @@
             var LABEL_NEXT = "Suivant";
             var LABEL_PREV = "Précédent";
 
-            OpenOneVehicleModalCarouselAsync( LABEL_NB_PAGES, LABEL_NEXT, LABEL_PREV);
+            OpenOneVehicleModalCarouselAsync(LABEL_NB_PAGES, LABEL_NEXT, LABEL_PREV);
 
             OpenZoomImageModal();
 
