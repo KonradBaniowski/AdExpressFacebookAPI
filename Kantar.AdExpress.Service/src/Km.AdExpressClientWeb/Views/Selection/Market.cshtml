@@ -108,7 +108,7 @@
                             else
                             {
                                 <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
-                                @*<li @(tree.IsDefaultActive ? "class=active" : "" )>*@
+                                    @*<li @(tree.IsDefaultActive ? "class=active" : "" )>*@
                                     <a data-target="#tab-@(tree.Id)"
                                        data-tab="@(tree.Id)"
                                        role="tab"
@@ -122,7 +122,7 @@
                     </ul>
                 </div>
                 <div class="tab-content">
-                    
+
                     @foreach (var tree in Model.Trees)
                     {
 
@@ -152,22 +152,22 @@
                                 @foreach (var level in tree.UniversLevels)
                                 {
                                     <div class="panel panel-primary panel-results">
-                                        <div class="panel-heading head-results"
-                                             role="tab"
-                                             id="heading-@(level.Id)-@(tree.Id)"
-                                             data-id="@level.Id">
-                                            <h6 class="panel-title famille ">
-                                                <a role="button"
-                                                   data-toggle="collapse"
-                                                   data-parent="#tree-@(tree.Id)"
-                                                   href="#collapse-@(level.Id)-@(tree.Id)"
-                                                   aria-expanded="true"
-                                                   aria-controls="collapse-@(level.Id)">
+                                        <a role="button"
+                                           data-toggle="collapse"
+                                           data-parent="#tree-@(tree.Id)"
+                                           href="#collapse-@(level.Id)-@(tree.Id)"
+                                           aria-expanded="true"
+                                           aria-controls="collapse-@(level.Id)">
+                                            <div class="panel-heading head-results"
+                                                 role="tab"
+                                                 id="heading-@(level.Id)-@(tree.Id)"
+                                                 data-id="@level.Id">
+                                                <h6 class="panel-title famille ">
                                                     @level.Label
                                                     <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                                                </a>
-                                            </h6>
-                                        </div>
+                                                </h6>
+                                            </div>
+                                        </a>
                                         <div id="collapse-@(level.Id)-@(tree.Id)"
                                              class="panel-collapse collapse"
                                              role="tabpanel"

@@ -8,15 +8,16 @@
 
 <div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-primary panel-options">
-        <div class="panel-heading head-results" role="tab" id="headingOne">
-            <h3 class="panel-title pull-left orange">
-                <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
+        <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
+            <div class="panel-heading head-results" role="tab" id="headingOne">
+                <h3 class="panel-title pull-left orange">
+
                     <i class="fa fa-cog text-lg orange"></i> @GestionWeb.GetWebWord(792, Model.SiteLanguage)
                     <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                </a>
-            </h3>
-            <div class="clearfix"></div>
-        </div>
+                </h3>
+                <div class="clearfix"></div>
+            </div>
+        </a>
         <div id="collapseContainerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-sans text-left options-control">
                 <div class="row">
@@ -334,7 +335,7 @@
                             <div class="checkbox padder media-schedule-option">
                                 @if (Model.ComparativeStudy)
                                 {
-                                    <input id="comparative-study" type="checkbox" name="comparative-study" class="with-font" checked/>
+                                    <input id="comparative-study" type="checkbox" name="comparative-study" class="with-font" checked />
                                 }
                                 else
                                 {
@@ -343,30 +344,30 @@
                                 }
                                 <label for="comparative-study">@GestionWeb.GetWebWord(1118, Model.SiteLanguage)</label>
                             </div>
-                            <div id="comparative-period-type" class="@classHide">
-                                <div class="padder-radio media-schedule-option">
-                                    @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
-                                    {
-                                        <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" checked />
-                                    }
-                                    else
-                                    {
-                                        <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" />
-                                    }
-                                    <label for="date-to-date">@GestionWeb.GetWebWord(2294, Model.SiteLanguage)</label>
+                                <div id="comparative-period-type" class="@classHide">
+                                    <div class="padder-radio media-schedule-option">
+                                        @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
+                                        {
+                                            <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" checked />
+                                        }
+                                        else
+                                        {
+                                            <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" />
+                                        }
+                                        <label for="date-to-date">@GestionWeb.GetWebWord(2294, Model.SiteLanguage)</label>
+                                    </div>
+                                    <div class="padder-radio media-schedule-option">
+                                        @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate)
+                                        {
+                                            <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" checked />
+                                        }
+                                        else
+                                        {
+                                            <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" />
+                                        }
+                                        <label for="comparative-week-date">@GestionWeb.GetWebWord(2295, Model.SiteLanguage)</label>
+                                    </div>
                                 </div>
-                                <div class="padder-radio media-schedule-option">
-                                    @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate)
-                                    {
-                                        <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" checked />
-                                    }
-                                    else
-                                    {
-                                        <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" />
-                                    }
-                                    <label for="comparative-week-date">@GestionWeb.GetWebWord(2295, Model.SiteLanguage)</label>
-                                </div>
-                            </div>
                         }
                         @if (Model.InitializeMedia.Enabled)
                         {
@@ -376,7 +377,7 @@
                             </div>
                         }
                     </div>
-                    </div>
+                </div>
 
                 <div class="row">
                     <div class="padder-btn btn-options pull-right">

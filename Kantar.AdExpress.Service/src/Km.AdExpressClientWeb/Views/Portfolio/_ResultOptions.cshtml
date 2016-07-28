@@ -6,15 +6,15 @@
 
 <div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-primary panel-options">
-        <div class="panel-heading head-results" role="tab" id="headingOne">
-            <h3 class="panel-title pull-left orange">
-                <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
+        <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
+            <div class="panel-heading head-results" role="tab" id="headingOne">
+                <h3 class="panel-title pull-left orange">
                     <i class="fa fa-cog text-lg orange"></i> @GestionWeb.GetWebWord(792, Model.SiteLanguage)
                     <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                </a>
-            </h3>
-            <div class="clearfix"></div>
-        </div>
+                </h3>
+                <div class="clearfix"></div>
+            </div>
+        </a>
         <div id="collapseContainerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-sans text-left options-control">
                 <div class="row">
@@ -29,10 +29,10 @@
                                 <div class="panel-body mi-padder">
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.ResultTypeOption.ResultType.Id" class="selectdatepicker">
-                                           @foreach (var item in Model.ResultTypeOption.ResultType.Items)
-                                           {
-                                               if (item.Value == Model.ResultTypeOption.ResultType.SelectedId)
-                                               {
+                                            @foreach (var item in Model.ResultTypeOption.ResultType.Items)
+                                            {
+                                                if (item.Value == Model.ResultTypeOption.ResultType.SelectedId)
+                                                {
                                                     <option value="@item.Value" selected>@item.Text</option>
                                                 }
                                                 else
@@ -153,7 +153,7 @@
                             @Html.Raw("</div><div class='row'>");
                         }
                     }
-                   
+
                     @if (@Model.FormatOption.Format.Visible)
                     {
                         <div class="col-md-4">
@@ -308,7 +308,7 @@
                                                 <option value="@item.Value">@item.Text</option>
                                             }
                                         </select>
-                                    </div>                                   
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -321,7 +321,7 @@
                             @Html.Raw("</div><div class='row'>");
                         }
                     }
-                    <div class="col-md-4">                       
+                    <div class="col-md-4">
                         @if (Model.InitializeProduct.Enabled)
                         {
                             <div id="initializeProductContainer" class="checkbox padder media-schedule-option">

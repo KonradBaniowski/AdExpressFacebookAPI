@@ -1132,6 +1132,10 @@ input {
     border-radius: 0;
 }
 
+.panel-heading.head-results:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
 .panel-group .panel-heading + .panel-collapse .panel-body {
     border-top: 0px solid #eaedef;
 }

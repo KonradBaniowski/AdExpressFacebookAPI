@@ -22,11 +22,11 @@
 </div>
 <div class="row">
     <div class="col-md-3">
-        <div class="custom-button selectexporttype select-universe-choice">        
+        <div class="custom-button selectexporttype select-universe-choice">
         </div>
     </div>
     <div class="col-md-9">
-       
+
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
                 <option value="1"> @Model.Labels.ExportFormattedResult</option>
@@ -39,7 +39,7 @@
 </div>
 
 @*<div class="h20">
-</div>*@
+    </div>*@
 <div class="row">
     <div class="col-md-12">
         <center>
@@ -59,13 +59,13 @@
 
         <div class="panel-group panel-group-results hide" id="KPIButtonFix">
             <div id="voletOptions" class="panel panel-primary panel-results">
-                <div class="panel-heading head-results">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" href="#accordOpt">
+                <a data-toggle="collapse" href="#accordOpt">
+                    <div class="panel-heading head-results">
+                        <h3 class="panel-title">
                             <i class="fa fa-filter"></i> Options
-                        </a>
-                    </h3>
-                </div>
+                        </h3>
+                    </div>
+                </a>
                 <div id="accordOpt" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <div class="row">
@@ -97,202 +97,202 @@
 
     </div>
 
-        <div class="col-md-10 col-lg-10 col-sm-12">
-            <div class="panel-group panel-group-results hide" id="resaccord">
+    <div class="col-md-10 col-lg-10 col-sm-12">
+        <div class="panel-group panel-group-results hide" id="resaccord">
 
-                <div id="volet2" class="panel panel-primary panel-results">
+            <div id="volet2" class="panel panel-primary panel-results">
+                <a data-toggle="collapse" href="#accord2">
                     <div class="panel-heading head-results">
                         <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#accord2">
-                                <i class="fa fa-bar-chart"></i> Sélections Référentes
-                            </a>
+                            <i class="fa fa-bar-chart"></i> Sélections Référentes
                         </h3>
                     </div>
-                    <div id="accord2" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <div id="Refer-chart">
-                                <div class="mediaLoaderRefer">
-                                    <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
-                                </div>
+                </a>
+                <div id="accord2" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div id="Refer-chart">
+                            <div class="mediaLoaderRefer">
+                                <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
                             </div>
-                            <div id="PDM-chart">
-                                @*<div class="mediaLoaderPDM">
+                        </div>
+                        <div id="PDM-chart">
+                            @*<div class="mediaLoaderPDM">
                                     <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
                                 </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="volet3" class="panel panel-primary panel-results">
+                <a data-toggle="collapse" href="#accord3">
+                    <div class="panel-heading head-results">
+                        <h3 class="panel-title">
+                            <i class="fa fa-line-chart"></i> Sélections Concurrentes
+                        </h3>
+                    </div>
+                </a>
+                <div id="accord3" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row margin-top-30" id="Concur-chart">
+                            @*<div class="mediaLoaderConcur">
+                                    <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+                                </div>*@
+                        </div>
+                        <div class="row" id="Stacked-chart">
+                            <div class="mediaLoaderPlurimediaStacked">
+                                <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="volet3" class="panel panel-primary panel-results">
+            </div>
+            <div id="volet4" class="panel panel-primary panel-results">
+                <a data-toggle="collapse" href="#accord4">
                     <div class="panel-heading head-results">
                         <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#accord3">
-                                <i class="fa fa-line-chart"></i> Sélections Concurrentes
-                            </a>
+                            <i class="fa fa-line-chart"></i> Posts
                         </h3>
                     </div>
-                    <div id="accord3" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <div class="row margin-top-30" id="Concur-chart">
-                                @*<div class="mediaLoaderConcur">
-                                    <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
-                                </div>*@
-                            </div>
-                            <div class="row" id="Stacked-chart">
-                                <div class="mediaLoaderPlurimediaStacked">
-                                    <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="volet4" class="panel panel-primary panel-results">
-                    <div class="panel-heading head-results">
-                        <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#accord4">
-                                <i class="fa fa-line-chart"></i> Posts
-                            </a>
-                        </h3>
-                    </div>
-                    <div id="accord4" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <div class="row margin-top-30" id="top-post">
-                                <div class="mediaLoaderTopPost">
-                                    <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
-                                </div>
+                </a>
+                <div id="accord4" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row margin-top-30" id="top-post">
+                            <div class="mediaLoaderTopPost">
+                                <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     <canvas id="exportCanvas" width="0" height="0" style="display:none;"></canvas>
-    </div>
+</div>
 
 
-    <div class="row margin-top-30">
-        <div class="col-md-12">
-            <div class="post-selected" hidden>
+<div class="row margin-top-30">
+    <div class="col-md-12">
+        <div class="post-selected" hidden>
 
-            </div>
         </div>
     </div>
-    <div id="resultModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            </div>
+</div>
+<div id="resultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
         </div>
     </div>
-    <div id="alertModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            </div>
+</div>
+<div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
         </div>
     </div>
+</div>
 
-    <!-- Modal zoom post -->
-    <div class="modal fade text-center blo" id="postFacebookModal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
-        <div class="modal-dialog" style="width:95%;height:auto;">
-            <div class="modal-content">
-                <div class="modal-header header-kantar-popup">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-                    <h4 class="modal-title" id="postFacebookModalTitle">@Model.Labels.FacebookModalTitle</h4>
-                </div>
-                <div id="mediaLoader">
-                    <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
-                </div>
-                <div class="modal-body"></div>
+<!-- Modal zoom post -->
+<div class="modal fade text-center blo" id="postFacebookModal" tabindex="-1" role="dialog" aria-labelledby="postFacebook" aria-hidden="true">
+    <div class="modal-dialog" style="width:95%;height:auto;">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                <h4 class="modal-title" id="postFacebookModalTitle">@Model.Labels.FacebookModalTitle</h4>
             </div>
+            <div id="mediaLoader">
+                <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+            </div>
+            <div class="modal-body"></div>
         </div>
     </div>
+</div>
 
-    <input type="hidden" id="current-url" value="/@_controller/Results" />
+<input type="hidden" id="current-url" value="/@_controller/Results" />
 
-    @section Scripts{
-        <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
-        <script src="~/IgniteUI/js/infragistics.core.js"></script>
-        <script src="~/IgniteUI/js/infragistics.dv.js"></script>
-        <script src="~/IgniteUI/js/infragistics.lob.js"></script>
-        <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+@section Scripts{
+    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+    <script src="~/IgniteUI/js/infragistics.core.js"></script>
+    <script src="~/IgniteUI/js/infragistics.dv.js"></script>
+    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
 
-        <script id="titleTmpl" type="text/template">
-            {{if parseInt(${IdPage}) != 0}}
-            <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src="" />
-            {{/if}}
-            ${PageName}
-        </script>
+    <script id="titleTmpl" type="text/template">
+        {{if parseInt(${IdPage}) != 0}}
+        <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src="" />
+        {{/if}}
+        ${PageName}
+    </script>
 
-        <script id="linkToPostTmpl" type="text/template">
-            <center>
-                <form id="${IdPageFacebook}" action="/SocialMedia/SocialMediaCreative" method="post" target="_blank">
-                    <input type="hidden" name="ids" value="${IdPageFacebook}" />
-                    <input type="hidden" name="type" value="0" />
-                    <a href="javascript:;" onclick="document.getElementById('${IdPageFacebook}').submit();">
-                        <span class="fa fa-search-plus"></span>
-                    </a>
-                </form>
-            </center>
-        </script>
-
-        <script id="linkUrlTmpl" type="text/template">
-            {{if ${Url} != "" }}
-            <center>
-                <a href="${Url}" target="_blank">
-                    <span class="fa fa-facebook-official"></span>
+    <script id="linkToPostTmpl" type="text/template">
+        <center>
+            <form id="${IdPageFacebook}" action="/SocialMedia/SocialMediaCreative" method="post" target="_blank">
+                <input type="hidden" name="ids" value="${IdPageFacebook}" />
+                <input type="hidden" name="type" value="0" />
+                <a href="javascript:;" onclick="document.getElementById('${IdPageFacebook}').submit();">
+                    <span class="fa fa-search-plus"></span>
                 </a>
-            </center>
-            {{/if}}
-        </script>
+            </form>
+        </center>
+    </script>
 
-        <script id="checkBoxTmpl" type="text/template">
-            {{if parseInt(${IdPage}) != 0}}
-            <center><input type="checkbox" disabled="disabled"></center>
-            {{else}}
-            <center><input type="checkbox"></center>
-            {{/if}}
-        </script>
+    <script id="linkUrlTmpl" type="text/template">
+        {{if ${Url} != "" }}
+        <center>
+            <a href="${Url}" target="_blank">
+                <span class="fa fa-facebook-official"></span>
+            </a>
+        </center>
+        {{/if}}
+    </script>
 
-        <script id="LikeTooltipTemplate" type="text/x-ig-tmpl">
-            <div><label class='bold'>${item.Like}</label> Like</div>
-            <div>Mois: <label class='bold'>${item.Month}</label></div>
-        </script>
+    <script id="checkBoxTmpl" type="text/template">
+        {{if parseInt(${IdPage}) != 0}}
+        <center><input type="checkbox" disabled="disabled"></center>
+        {{else}}
+        <center><input type="checkbox"></center>
+        {{/if}}
+    </script>
 
-        <script id="ShareTooltipTemplate" type="text/x-ig-tmpl">
-            <div><label class='bold'>${item.Share}</label> Shares</div>
-            <div>Mois: <label class='bold'>${item.Month}</label></div>
-        </script>
+    <script id="LikeTooltipTemplate" type="text/x-ig-tmpl">
+        <div><label class='bold'>${item.Like}</label> Like</div>
+        <div>Mois: <label class='bold'>${item.Month}</label></div>
+    </script>
 
-        <script id="CommentTooltipTemplate" type="text/x-ig-tmpl">
-            <div><label class='bold'>${item.Comment}</label> Comments</div>
-            <div>Mois: <label class='bold'>${item.Month}</label></div>
-        </script>
+    <script id="ShareTooltipTemplate" type="text/x-ig-tmpl">
+        <div><label class='bold'>${item.Share}</label> Shares</div>
+        <div>Mois: <label class='bold'>${item.Month}</label></div>
+    </script>
 
-        <script id="ExpenditureTooltipTemplate" type="text/x-ig-tmpl">
-            <div><label class='bold'>${item.Expenditure}</label> B€X</div>
-            <div>Mois: <label class='bold'>${item.Month}</label></div>
-        </script>
+    <script id="CommentTooltipTemplate" type="text/x-ig-tmpl">
+        <div><label class='bold'>${item.Comment}</label> Comments</div>
+        <div>Mois: <label class='bold'>${item.Month}</label></div>
+    </script>
 
-        <script id="PostTooltipTemplate" type="text/x-ig-tmpl">
-            <div><label class='bold'>${item.Post}</label> Posts</div>
-            <div>Mois: <label class='bold'>${item.Month}</label></div>
-        </script>
+    <script id="ExpenditureTooltipTemplate" type="text/x-ig-tmpl">
+        <div><label class='bold'>${item.Expenditure}</label> B€X</div>
+        <div>Mois: <label class='bold'>${item.Month}</label></div>
+    </script>
 
-        <script id="referentPDMTooltipTemplate" type="text/x-ig-tmpl">
-            <div>Plurimedia Référents: <label class='bold'>${item.ReferentPercent}</label> %</div>
-            <div>Mois: <label class='bold'>${item.Month}</label></div>
-        </script>
+    <script id="PostTooltipTemplate" type="text/x-ig-tmpl">
+        <div><label class='bold'>${item.Post}</label> Posts</div>
+        <div>Mois: <label class='bold'>${item.Month}</label></div>
+    </script>
 
-        <script id="concurrentPDMTooltipTemplate" type="text/x-ig-tmpl">
-            <div>Plurimedia Concurrents: <label class='bold'>${item.ConcurrentPercent}</label> %</div>
-            <div>Mois: <label class='bold'>${item.Month}</label></div>
-        </script>
+    <script id="referentPDMTooltipTemplate" type="text/x-ig-tmpl">
+        <div>Plurimedia Référents: <label class='bold'>${item.ReferentPercent}</label> %</div>
+        <div>Mois: <label class='bold'>${item.Month}</label></div>
+    </script>
 
-        <script id="referentFaceBookPDMTooltipTemplate" type="text/x-ig-tmpl">
-            <div>Facebook Référents: <label class='bold'>${item.ReferentFBPercent}</label> %</div>
-            <div>Mois: <label class='bold'>${item.Month}</label></div>
-        </script>
+    <script id="concurrentPDMTooltipTemplate" type="text/x-ig-tmpl">
+        <div>Plurimedia Concurrents: <label class='bold'>${item.ConcurrentPercent}</label> %</div>
+        <div>Mois: <label class='bold'>${item.Month}</label></div>
+    </script>
 
-        @Scripts.Render("~/bundles/results")
-        @Scripts.Render("~/bundles/socialMedia-results")
-    }
+    <script id="referentFaceBookPDMTooltipTemplate" type="text/x-ig-tmpl">
+        <div>Facebook Référents: <label class='bold'>${item.ReferentFBPercent}</label> %</div>
+        <div>Mois: <label class='bold'>${item.Month}</label></div>
+    </script>
+
+    @Scripts.Render("~/bundles/results")
+    @Scripts.Render("~/bundles/socialMedia-results")
+}
