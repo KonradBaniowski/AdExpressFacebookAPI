@@ -19,5 +19,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool PDM { get; set; }
 
         public bool PDV { get; set; }
+
+        public bool IsSelectRetailerDisplay { get; set; }
     }
 }

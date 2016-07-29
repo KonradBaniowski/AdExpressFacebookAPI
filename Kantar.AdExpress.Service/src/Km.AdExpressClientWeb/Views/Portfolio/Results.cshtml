@@ -1,5 +1,6 @@
 ﻿@model Km.AdExpressClientWeb.Models.Portfolio.ResultsViewModel
 @using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
 @{
     ViewBag.Title = "Results";
     var _controller = Model.NavigationBar.First().Controller;
@@ -28,9 +29,12 @@
                 <option value="1"> @Model.Labels.ExportFormattedResult</option>
                 <option value="3"> @Model.Labels.ExportGrossResult</option>
             </select>&nbsp;
-            <button class="btn btn-save" id="btn-export"><i class="glyphicon glyphicon-floppy-open fa-file-excel-size"></i></button>
+            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
-            <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
+            @if (Model.isAlertVisible)
+            {
+                <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
+            }
         </div>
     </div>
 </div>
@@ -179,9 +183,18 @@
             <script src="~/IgniteUI/js/infragistics.dv.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            }
+            else
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            }
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.FINLAND:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.dv.js"></script> // Pour graph
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
             break;
@@ -189,7 +202,14 @@
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.dv.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
-            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            }
+            else
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            }
             break;
     }
     @Scripts.Render("~/bundles/results")
@@ -288,6 +308,7 @@
                 this.PurchaseModeFilter = new PurchaseModeFilter();
                 this.ResultTypeFilter = new ResultTypeFilter();
                 this.InitializeProduct = false;
+                this.IsSelectRetailerDisplay = false;
             }
 
             var userFilter = new UserFilter();
@@ -849,6 +870,22 @@
                 }
                 else {
                     userFilter.InitializeProduct = false;
+                }
+            });
+
+            if ($("#retailer-display").prop('checked') == true) {
+                userFilter.IsSelectRetailerDisplay = true;
+            }
+            else {
+                userFilter.IsSelectRetailerDisplay = false;
+            }
+
+            $("#retailer-display").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.IsSelectRetailerDisplay = true;
+                }
+                else {
+                    userFilter.IsSelectRetailerDisplay = false;
                 }
             });
 

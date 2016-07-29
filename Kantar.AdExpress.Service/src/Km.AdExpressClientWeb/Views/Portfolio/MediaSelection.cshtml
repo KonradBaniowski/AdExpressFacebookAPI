@@ -27,14 +27,15 @@
         }
         <div class="panel-group panel-group-results" id="media-accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-primary panel-results">
-                <div class="panel-heading head-results" role="tab" id="headingOne">
-                    <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <h3 class="panel-title pull-left">
-                            <i class="fa fa-eye"></i> @Model.Labels.SelectMedia
-                        </h3>
-                    </a>
-                    @if (Model.Multiple)
-                    {
+                @if (Model.Multiple)
+                {
+                    <div class="panel-heading head-results" role="tab" id="headingOne">
+                        <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h3 class="panel-title pull-left">
+                                <i class="fa fa-eye"></i> @Model.Labels.SelectMedia
+                            </h3>
+                        </a>
+
                         <span class="pull-right">
                             <small class="v-super">@Model.Labels.PreSelection </small>
                             <label class="i-switch" id="switch">
@@ -42,9 +43,23 @@
                                 <i></i>
                             </label>
                         </span>
-                    }
-                    <div class="clearfix"></div>
-                </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                }
+                else
+                {
+                    <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="panel-heading head-results" role="tab" id="headingOne">
+
+                            <h3 class="panel-title pull-left">
+                                <i class="fa fa-eye"></i> @Model.Labels.SelectMedia
+                            </h3>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                }
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
                         @foreach (var item in Model.Medias)

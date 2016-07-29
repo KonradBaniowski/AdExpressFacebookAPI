@@ -10,6 +10,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
+using System.Web.Mvc;
 
 namespace Km.AdExpressClientWeb.Helpers
 {
@@ -29,7 +30,7 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string FACEBOOK = "SocialMedia";
         private const string ANALYSIS = "Analysis";
-        public List<NavigationNode> LoadNavBar(string idWebSession, string controller,int siteLanguage = -1, int CurrentPosition = 0)
+        public List<NavigationNode> LoadNavBar(string idWebSession, string controller, int siteLanguage = -1, int CurrentPosition = 0)
         {
             if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
 
@@ -86,7 +87,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 IconCssClass = "fa fa-eye",
                 Position = CurrentPosition,
                 IsDisabled = isSelectionDisabled(webSession.CurrentModule)
-    };
+            };
             model.Add(media);
             var dates = new NavigationNode
             {
@@ -98,7 +99,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 Controller = controller,
                 IconCssClass = "fa fa-calendar",
                 Position = CurrentPosition
-};
+            };
             model.Add(dates);
             var result = new NavigationNode
             {
@@ -179,7 +180,7 @@ namespace Km.AdExpressClientWeb.Helpers
             return result;
         }
 
-        public PresentationModel LoadPresentationBar(int siteLanguage, Domain.ControllerDetails controllerDetails,bool showCurrentSelection = true)
+        public PresentationModel LoadPresentationBar(int siteLanguage, Domain.ControllerDetails controllerDetails, bool showCurrentSelection = true)
         {
             PresentationModel result = new PresentationModel
             {
@@ -275,6 +276,37 @@ namespace Km.AdExpressClientWeb.Helpers
 
             return isDisabled;
         }
+
+        public static bool IsAlertVisible(string countryCode)
+        {
+            bool returnValue = false;
+            switch (countryCode)
+            {
+                case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
+                    returnValue = true;
+                    break;
+                default:
+                    returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
+
+        internal static bool IsMyAdexpressVisible(string countryCode)
+        {
+            bool returnValue = false;
+            switch (countryCode)
+            {
+                case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
+                    returnValue = true;
+                    break;
+                default:
+                    returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
+
     }
-    
+
 }

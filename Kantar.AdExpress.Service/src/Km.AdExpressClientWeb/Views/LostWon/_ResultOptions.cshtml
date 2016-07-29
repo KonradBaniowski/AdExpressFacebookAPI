@@ -1,5 +1,6 @@
 ﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.Options
 @using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
 @{
     var optionsNb = 2;
 }
@@ -368,6 +369,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="checkbox padder media-schedule-option">
+                            @*TODO : verifier si actif pour la finlande*@
                             @if (Model.PDM.Value)
                             {
                                 <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" checked />
@@ -378,6 +380,20 @@
                             }
                             <label for="set-pdm">@GestionWeb.GetWebWord(806, Model.SiteLanguage)</label>
                         </div>
+                        @if (WebApplicationParameters.UseRetailer)
+                        {
+                            <div class="checkbox padder media-schedule-option">
+                                @if (Model.IsSelectRetailerDisplay)
+                                {
+                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" checked />
+                                }
+                                else
+                                {
+                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" />
+                                }
+                                <label for="retailer-display">@GestionWeb.GetWebWord(2857, Model.SiteLanguage)</label>
+                            </div>
+                        }
                     </div>
                 </div>
 

@@ -168,8 +168,12 @@ namespace Km.AdExpressClientWeb.Controllers
             model.SavedUnivers = univers;
             #endregion
             #region Alerts
-            var alertsResponse = _universService.GetUserAlerts(idWebSession);
-            model.Alerts = alertsResponse.Alerts;
+            if (PageHelper.IsMyAdexpressVisible(WebApplicationParameters.CountryCode))
+            {
+                var alertsResponse = _universService.GetUserAlerts(idWebSession);
+                model.Alerts = alertsResponse.Alerts;
+                model.isMyAlertVisible = false;
+            }
             #endregion
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
             ViewBag.SiteLanguage = result.SiteLanguage;

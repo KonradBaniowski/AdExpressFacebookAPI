@@ -12,5 +12,6 @@ namespace Km.AdExpressClientWeb.Models.PresentAbsent
         public List<NavigationNode> NavigationBar { get; set; }
         public PresentationModel Presentation { get; set; }
         public Labels Labels { get; set; }
+        public bool isAlertVisible { get; set; }
     }
 }

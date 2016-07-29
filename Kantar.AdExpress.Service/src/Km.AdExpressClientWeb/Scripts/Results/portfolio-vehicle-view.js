@@ -183,7 +183,7 @@ function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, 
                 htmlArr.push(val.Title);
                 htmlArr.push(" - ");
                 htmlArr.push(val.ParutionDate);
-                htmlArr.push("</h4><p class='pull-right text-white'>");
+                htmlArr.push("</h4><p class='text-white'>");
                 htmlArr.push(labelNbPages);
                 htmlArr.push(val.NbPage);
                 htmlArr.push(" </p>  </div>");
@@ -204,13 +204,19 @@ function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, 
             // <!--item et row-->
             if (colNb == 1) {
                 if (i == 0) {
-
                     htmlArr.push("<div class='item active'><div class='row'> ");
+
+                    //  <!--col-md-6 Empty-->
+                    htmlArr.push("<div class='col-md-6 no-padder' >");
+                    htmlArr.push("</div>");
+                    //  <!/--col-md-6-->
+
+                    colNb++
                 }
                 else htmlArr.push("<div class='item'><div class='row'>");
             }
 
-            //  <!--col-md-4-->
+            //  <!--col-md-6-->
             htmlArr.push("<div class='col-md-6 no-padder' href='#modal-vehicleView-Img' data-toggle='modal' ");
             htmlArr.push(" data-src-zoom='");
             htmlArr.push(val.SrcZoom);
@@ -222,8 +228,9 @@ function OpenOneVehicleModalCarousel(vehicleItemsData, labelNbPages, labelNext, 
             htmlArr.push(val.Title);
             htmlArr.push("' src='");
             htmlArr.push(val.Src);
-            htmlArr.push("'> </div>");
-            //  <!/--col-md-4-->
+            htmlArr.push("'> <br / > <div class='text-center' style='color:black'>Page : " + (i + 1) + " </div> </div>");
+            //  <!/--col-md-6-->
+
 
             if (colNb == 2) {
                 colNb = 0;

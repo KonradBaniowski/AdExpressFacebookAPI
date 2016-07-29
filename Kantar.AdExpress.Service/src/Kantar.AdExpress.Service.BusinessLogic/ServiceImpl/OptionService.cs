@@ -529,6 +529,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             else
                 options.ComparativeStudy = false;
 
+            if (WebApplicationParameters.UseRetailer)
+            {
+                options.IsSelectRetailerDisplay = _customerWebSession.IsSelectRetailerDisplay;
+            }
+            else
+                options.IsSelectRetailerDisplay = false;
+
+
             _customerWebSession.Save();
 
             return options;
@@ -700,6 +708,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
                 _customerWebSession.ComparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userFilter.ComparativePeriodType;
+            }
+
+            if (WebApplicationParameters.UseRetailer)
+            {
+                _customerWebSession.IsSelectRetailerDisplay = userFilter.IsSelectRetailerDisplay;
             }
 
             _customerWebSession.Save();

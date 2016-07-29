@@ -344,36 +344,50 @@
                                 }
                                 <label for="comparative-study">@GestionWeb.GetWebWord(1118, Model.SiteLanguage)</label>
                             </div>
-                                <div id="comparative-period-type" class="@classHide">
-                                    <div class="padder-radio media-schedule-option">
-                                        @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
-                                        {
-                                            <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" checked />
-                                        }
-                                        else
-                                        {
-                                            <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" />
-                                        }
-                                        <label for="date-to-date">@GestionWeb.GetWebWord(2294, Model.SiteLanguage)</label>
-                                    </div>
-                                    <div class="padder-radio media-schedule-option">
-                                        @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate)
-                                        {
-                                            <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" checked />
-                                        }
-                                        else
-                                        {
-                                            <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" />
-                                        }
-                                        <label for="comparative-week-date">@GestionWeb.GetWebWord(2295, Model.SiteLanguage)</label>
-                                    </div>
+                            <div id="comparative-period-type" class="@classHide">
+                                <div class="padder-radio media-schedule-option">
+                                    @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
+                                    {
+                                        <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" checked />
+                                    }
+                                    else
+                                    {
+                                        <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" />
+                                    }
+                                    <label for="date-to-date">@GestionWeb.GetWebWord(2294, Model.SiteLanguage)</label>
                                 </div>
+                                <div class="padder-radio media-schedule-option">
+                                    @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate)
+                                    {
+                                        <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" checked />
+                                    }
+                                    else
+                                    {
+                                        <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" />
+                                    }
+                                    <label for="comparative-week-date">@GestionWeb.GetWebWord(2295, Model.SiteLanguage)</label>
+                                </div>
+                            </div>
                         }
                         @if (Model.InitializeMedia.Enabled)
                         {
                             <div id="initializeMediaContainer" class="checkbox padder media-schedule-option">
                                 <input id="@Model.InitializeMedia.Id" type="checkbox" name="@Model.InitializeMedia.Id" class="with-font" />
                                 <label for="@Model.InitializeMedia.Id">@GestionWeb.GetWebWord(2069, Model.SiteLanguage)</label>
+                            </div>
+                        }
+                        @if (WebApplicationParameters.UseRetailer)
+                        {
+                            <div class="checkbox padder media-schedule-option">
+                                @if (Model.IsSelectRetailerDisplay)
+                                {
+                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" checked />
+                                }
+                                else
+                                {
+                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" />
+                                }
+                                <label for="retailer-display">@GestionWeb.GetWebWord(2857, Model.SiteLanguage)</label>
                             </div>
                         }
                     </div>

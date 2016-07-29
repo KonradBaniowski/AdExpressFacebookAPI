@@ -35,6 +35,7 @@
         this.PDM = false;
         this.PDV = false;
         this.ResultTypeFilter = new ResultTypeFilter();
+        this.IsSelectRetailerDisplay = false;
     }
 
     var userFilter = new UserFilter();
@@ -155,6 +156,22 @@
         }
         else {
             userFilter.PDV = false;
+        }
+    });
+
+    if ($("#retailer-display").prop('checked') == true) {
+        userFilter.IsSelectRetailerDisplay = true;
+    }
+    else {
+        userFilter.IsSelectRetailerDisplay = false;
+    }
+
+    $("#retailer-display").click(function () {
+        if ($(this).prop('checked') == true) {
+            userFilter.IsSelectRetailerDisplay = true;
+        }
+        else {
+            userFilter.IsSelectRetailerDisplay = false;
         }
     });
 
