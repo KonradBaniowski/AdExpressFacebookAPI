@@ -260,6 +260,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             options.PDV = pdv;
             options.ResultTypeOption = resultTypeOption;
 
+            if (WebApplicationParameters.UseRetailer)
+            {
+                options.IsSelectRetailerDisplay = _customerWebSession.IsSelectRetailerDisplay;
+            }
+            else
+                options.IsSelectRetailerDisplay = false;
+
             _customerWebSession.Save();
 
             return options;
@@ -275,6 +282,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerWebSession.PDM = userFilter.PDM;
             _customerWebSession.PDV = userFilter.PDV;
             _customerWebSession.PreformatedTable = (SessionCst.PreformatedDetails.PreformatedTables)userFilter.ResultTypeFilter.ResultType;
+
+            if (WebApplicationParameters.UseRetailer)
+            {
+                _customerWebSession.IsSelectRetailerDisplay = userFilter.IsSelectRetailerDisplay;
+            }
 
             _customerWebSession.Save();
         }

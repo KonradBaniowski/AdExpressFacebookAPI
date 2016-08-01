@@ -8,7 +8,7 @@
 
 
 <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-b-20">
         <h1 class=""><i class="icon-user blue"></i>&nbsp;@Model.PresentationModel.ModuleTitle</h1>
         <small class="">@Model.PresentationModel.ModuleDescription</small>
     </div>
@@ -19,7 +19,10 @@
     <ul id="tab-myadexpress" class="nav nav-tabs">
         <li role="presentation" class="active"><a href="#@(UniversType.Result)" data-toggle="tab">@Model.Labels.MyResults</a></li>
         <li role="presentation"><a href="#@(UniversType.Univers)" data-toggle="tab">@Model.Labels.UserUniversCode</a></li>
-        <li role="presentation"><a href="#alertes" data-toggle="tab">@Model.Labels.AlertsCode</a></li>
+        @if (Model.isMyAlertVisible)
+        {
+            <li role="presentation"><a href="#alertes" data-toggle="tab">@Model.Labels.AlertsCode</a></li>
+        }
     </ul>
     <div id="tab-content-myadexpress" class="tab-content">
 
@@ -27,7 +30,10 @@
 
         @Html.Partial("MyAdExpressSavedResults", Model.SavedUnivers)
 
-        @Html.Partial("MyAdExpressAlerts", Model)
+        @if (Model.isMyAlertVisible)
+        {
+            Html.Partial("MyAdExpressAlerts", Model);
+        }
 
     </div>
 </div>

@@ -335,7 +335,7 @@ function getData(e) {
 
             series: [{
                 name: serieType,
-                type: "spline",
+                type: "line",
                 title: serieType,
                 xAxis: "Days",
                 yAxis: "Value",

@@ -1,5 +1,6 @@
 ﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.Options
 @using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
 @{
     var optionsNb = 1;
 }
@@ -327,6 +328,20 @@
                             <div id="initializeProductContainer" class="checkbox padder media-schedule-option">
                                 <input id="@Model.InitializeProduct.Id" type="checkbox" name="@Model.InitializeProduct.Id" class="with-font" />
                                 <label for="@Model.InitializeProduct.Id">@GestionWeb.GetWebWord(1131, Model.SiteLanguage)</label>
+                            </div>
+                        }
+                        @if (WebApplicationParameters.UseRetailer)
+                        {
+                            <div class="checkbox padder media-schedule-option">
+                                @if (Model.IsSelectRetailerDisplay)
+                                {
+                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" checked />
+                                }
+                                else
+                                {
+                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" />
+                                }
+                                <label for="retailer-display">@GestionWeb.GetWebWord(2857, Model.SiteLanguage)</label>
                             </div>
                         }
                     </div>

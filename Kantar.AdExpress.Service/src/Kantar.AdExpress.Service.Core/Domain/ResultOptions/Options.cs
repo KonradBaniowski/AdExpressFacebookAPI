@@ -38,5 +38,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public globalCalendar.comparativePeriodType ComparativePeriodType { get; set; }
 
         public CheckBoxOption PDM { get; set; }
+
+        public bool IsSelectRetailerDisplay { get; set; }
     }
 }

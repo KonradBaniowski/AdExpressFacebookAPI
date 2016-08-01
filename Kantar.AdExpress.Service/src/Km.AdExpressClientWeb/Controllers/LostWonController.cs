@@ -302,7 +302,8 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage,4),
                 Presentation = navigationHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
-                Labels =LoadPageLabels(result.WebSession.SiteLanguage)
+                Labels =LoadPageLabels(result.WebSession.SiteLanguage),
+                isAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession)
             };
 
             return View(model);

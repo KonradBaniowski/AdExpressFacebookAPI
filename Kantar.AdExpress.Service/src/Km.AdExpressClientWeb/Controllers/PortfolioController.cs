@@ -22,6 +22,7 @@ using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
 using Km.AdExpressClientWeb.Helpers;
 using Kantar.AdExpress.Service.Core.Domain.BusinessService;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -295,11 +296,15 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguage = _siteLanguage;
             var resultNode = new NavigationNode { Position = 4 };
             var navigationHelper = new Helpers.PageHelper();
+
+
+
             var model = new Models.Portfolio.ResultsViewModel
             {
-                NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage,4),
+                NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = navigationHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
-                Labels = LoadPageLabels(result.WebSession.SiteLanguage)
+                Labels = LoadPageLabels(result.WebSession.SiteLanguage),
+                isAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession)
             };
 
             return View(model);
