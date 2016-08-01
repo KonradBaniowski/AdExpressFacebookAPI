@@ -312,6 +312,7 @@
     <Content Include="Configuration\353\GenericColumn.xml" />
     <Content Include="Configuration\353\GenericDetailLevel.xml" />
     <Content Include="Configuration\353\HeaderConfiguration.xml" />
+    <Content Include="Configuration\353\HomeNumbers.xml" />
     <Content Include="Configuration\353\InfoNews.xml" />
     <Content Include="Configuration\353\Lists.xml" />
     <Content Include="Configuration\353\MediaPlanInsertionConfiguration.xml" />
@@ -349,6 +350,7 @@
     <Content Include="Configuration\35\GenericColumn.xml" />
     <Content Include="Configuration\35\GenericDetailLevel.xml" />
     <Content Include="Configuration\35\HeaderConfiguration.xml" />
+    <Content Include="Configuration\35\HomeNumbers.xml" />
     <Content Include="Configuration\35\InfoNews.xml" />
     <Content Include="Configuration\35\Lists.xml" />
     <Content Include="Configuration\35\MediaPlanInsertionConfiguration.xml" />
@@ -386,6 +388,7 @@
     <Content Include="Configuration\420\GenericColumn.xml" />
     <Content Include="Configuration\420\GenericDetailLevel.xml" />
     <Content Include="Configuration\420\HeaderConfiguration.xml" />
+    <Content Include="Configuration\420\HomeNumbers.xml" />
     <Content Include="Configuration\420\InfoNews.xml" />
     <Content Include="Configuration\420\Lists.xml" />
     <Content Include="Configuration\420\MediaPlanInsertionConfiguration.xml" />
@@ -423,6 +426,7 @@
     <Content Include="Configuration\4211\GenericColumn.xml" />
     <Content Include="Configuration\4211\GenericDetailLevel.xml" />
     <Content Include="Configuration\4211\HeaderConfiguration.xml" />
+    <Content Include="Configuration\4211\HomeNumbers.xml" />
     <Content Include="Configuration\4211\InfoNews.xml" />
     <Content Include="Configuration\4211\Lists.xml" />
     <Content Include="Configuration\4211\MediaPlanInsertionConfiguration.xml" />
@@ -460,6 +464,7 @@
     <Content Include="Configuration\421\GenericColumn.xml" />
     <Content Include="Configuration\421\GenericDetailLevel.xml" />
     <Content Include="Configuration\421\HeaderConfiguration.xml" />
+    <Content Include="Configuration\421\HomeNumbers.xml" />
     <Content Include="Configuration\421\InfoNews.xml" />
     <Content Include="Configuration\421\Lists.xml" />
     <Content Include="Configuration\421\MediaPlanInsertionConfiguration.xml" />
@@ -497,6 +502,7 @@
     <Content Include="Configuration\48\GenericColumn.xml" />
     <Content Include="Configuration\48\GenericDetailLevel.xml" />
     <Content Include="Configuration\48\HeaderConfiguration.xml" />
+    <Content Include="Configuration\48\HomeNumbers.xml" />
     <Content Include="Configuration\48\InfoNews.xml" />
     <Content Include="Configuration\48\Lists.xml" />
     <Content Include="Configuration\48\MediaPlanInsertionConfiguration.xml" />
@@ -534,6 +540,7 @@
     <Content Include="Configuration\7\GenericColumn.xml" />
     <Content Include="Configuration\7\GenericDetailLevel.xml" />
     <Content Include="Configuration\7\HeaderConfiguration.xml" />
+    <Content Include="Configuration\7\HomeNumbers.xml" />
     <Content Include="Configuration\7\InfoNews.xml" />
     <Content Include="Configuration\7\Lists.xml" />
     <Content Include="Configuration\7\MediaPlanInsertionConfiguration.xml" />
@@ -563,7 +570,7 @@
     <Content Include="Content\date-picker-theming.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\HomePageValues\HomeNumbers.xml" />
+    <Content Include="Configuration\33\HomeNumbers.xml" />
     <Content Include="Content\icon-kantar.css" />
     <Content Include="Content\img\Bann-new-AdExpress.jpg" />
     <Content Include="Content\img\bann_adexpress.jpg" />
@@ -1649,6 +1656,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\HomePageValues\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
     <Folder Include="Views\AnalyseSectoExport\" />

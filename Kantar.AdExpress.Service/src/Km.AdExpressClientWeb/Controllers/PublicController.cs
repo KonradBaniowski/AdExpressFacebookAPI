@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -16,9 +17,8 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var model = new HomeNumbersViewModel();
             model.Numbers = new Dictionary<string, string>();
-            var file = HttpContext.Server.MapPath("~/Content/HomePageValues/HomeNumbers.xml");
+            var file = HttpContext.Server.MapPath(string.Format("~/Configuration/{0}/HomeNumbers.xml",WebApplicationParameters.CountryCode));
             XDocument doc = XDocument.Load(file);
-            //var labels = LabelsHelper.LoadPageLabels(33);
             foreach (XElement el in doc.Root.Elements())
             {
                 var textValue = GestionWeb.GetWebWord(long.Parse(el.Attribute("webTextId").Value), siteLanguage);
