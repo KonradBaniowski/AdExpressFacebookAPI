@@ -16,5 +16,6 @@ namespace Km.AdExpressClientWeb.Models
         public string EncryptedLogin { get; set; }
         public int SiteLanguage { get; set; }
         public Labels Labels { get; set; }
+        public string CountryCode { get; set; }
     }
 }

@@ -1646,6 +1646,8 @@
     <Content Include="Views\SocialMedia\GetPDMChart.cshtml" />
     <Content Include="Views\SocialMedia\GetConcurChart.cshtml" />
     <Content Include="Views\SocialMedia\GetPlurimediaStackedChart.cshtml" />
+    <Content Include="Views\Home\_HomeNewsFr.cshtml" />
+    <Content Include="Views\Home\_HomeNewsFi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
