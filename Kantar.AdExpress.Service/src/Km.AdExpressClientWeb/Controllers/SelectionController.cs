@@ -16,6 +16,7 @@ using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
 using Domain = Kantar.AdExpress.Service.Core.Domain;
@@ -247,7 +248,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var result = _periodService.GetPeriod(idSession);
             
             PeriodViewModel periodModel = new PeriodViewModel((int)result.ControllerDetails.ModuleId);
-
+            periodModel.SlidingYearsNb = WebApplicationParameters.DataNumberOfYear;
+            periodModel.IsSlidingYearsNbVisible = true;
             periodModel.SiteLanguage = result.SiteLanguage;
             periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
