@@ -11,6 +11,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using System.Web.Mvc;
+using TNS.Alert.Domain;
 
 namespace Km.AdExpressClientWeb.Helpers
 {
@@ -277,13 +278,19 @@ namespace Km.AdExpressClientWeb.Helpers
             return isDisabled;
         }
 
-        public static bool IsAlertVisible(string countryCode)
+        public static bool IsAlertVisible(string countryCode, string idWebSession)
         {
             bool returnValue = false;
+            var webSession = (WebSession)WebSession.Load(idWebSession);
             switch (countryCode)
             {
                 case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
-                    returnValue = true;
+                    if (AlertConfiguration.IsActivated
+                        && webSession.CustomerLogin.HasModuleAssignmentAlertsAdExpress()
+                        && webSession.CustomerLogin.IsModuleAssignmentValidDateAlertsAdExpress())
+                    {
+                        returnValue = true;
+                    }
                     break;
                 default:
                     returnValue = false;
