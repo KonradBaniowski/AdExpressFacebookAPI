@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li title="@GestionWeb.GetWebWord(3055, ViewBag.SiteLanguage)">
-                        <a href="@Url.Action("Index", "Contact")">
+                        <a href="@Url.Action("Index", "Contact", new { siteLanguage = ViewBag.SiteLanguage })">
                             <i class="glyphicon glyphicon-comment"></i>
                         </a>
                     </li>
