@@ -60,6 +60,57 @@ namespace TNS.AdExpress.Domain.XmlLoader {
         }
         #endregion
 
+        #region Site Uri
+        /// <summary>
+        /// Load Site Name
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <returns>Site Name</returns>
+        public static string LoadSiteUri(IDataSource source)
+        {
+
+            XmlTextReader reader = null;
+            string webSiteUri = "";
+            try
+            {
+                reader = (XmlTextReader)source.GetSource();
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element)
+                    {
+                        switch (reader.LocalName)
+                        {
+                            case "configuration":
+                                if (reader.GetAttribute("countryName") != null && reader.GetAttribute("directoryName").Length > 0 && reader.GetAttribute("webSiteUri") != null && reader.GetAttribute("webSiteUri").Length > 0)
+                                {
+                                    webSiteUri = reader.GetAttribute("webSiteUri");
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                #region Fermeture du fichier
+                if (source.GetSource() != null) source.Close();
+                #endregion
+
+            }
+            #region Traitement des erreurs
+            catch (System.Exception e)
+            {
+
+                #region Fermeture du fichier
+                if (source.GetSource() != null) source.Close();
+                #endregion
+
+                throw (new XmlException("Impossible load directory name", e));
+            }
+            #endregion
+
+            return (webSiteUri);
+        }
+        #endregion
+
         #region Directory name
         /// <summary>
         /// Load Directory Name

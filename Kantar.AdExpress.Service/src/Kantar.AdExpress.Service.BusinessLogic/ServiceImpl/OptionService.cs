@@ -300,7 +300,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case Vehicles.names.newspaper:
                     case Vehicles.names.magazine:
                     case Vehicles.names.internationalPress:
-                        insertOption = true;
+                        if (WebApplicationParameters.AllowInsetOption) insertOption = true;
                         break;
                 }
             }

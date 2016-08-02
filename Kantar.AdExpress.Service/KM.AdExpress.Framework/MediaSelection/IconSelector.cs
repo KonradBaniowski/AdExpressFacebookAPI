@@ -22,6 +22,7 @@ namespace KM.AdExpress.Framework.MediaSelection
                     icon = "iconkantar-internet94";
                     break;
                 case Vehicles.names.press:
+                case Vehicles.names.magazine:
                     icon = "iconkantar-news12";
                     break;
                 case Vehicles.names.tv:
@@ -31,6 +32,7 @@ namespace KM.AdExpress.Framework.MediaSelection
                     icon = "iconkantar-cellphone55";
                     break;
                 case Vehicles.names.mms:
+                case Vehicles.names.internet:
                     icon = "iconkantar-planetary2";
                     break;
                 case Vehicles.names.directMarketing:
@@ -43,6 +45,7 @@ namespace KM.AdExpress.Framework.MediaSelection
                     icon = "iconkantar-monitor74";
                     break;
                 case Vehicles.names.internationalPress:
+                case Vehicles.names.newspaper:
                     icon = "iconkantar-newspapers5";
                     break;
                 case Vehicles.names.outdoor:

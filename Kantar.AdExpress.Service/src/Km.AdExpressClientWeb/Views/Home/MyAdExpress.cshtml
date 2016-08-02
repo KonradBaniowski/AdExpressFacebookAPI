@@ -19,7 +19,7 @@
     <ul id="tab-myadexpress" class="nav nav-tabs">
         <li role="presentation" class="active"><a href="#@(UniversType.Result)" data-toggle="tab">@Model.Labels.MyResults</a></li>
         <li role="presentation"><a href="#@(UniversType.Univers)" data-toggle="tab">@Model.Labels.UserUniversCode</a></li>
-        @if (Model.isMyAlertVisible)
+        @if (Model.IsMyAlertVisible)
         {
             <li role="presentation"><a href="#alertes" data-toggle="tab">@Model.Labels.AlertsCode</a></li>
         }
@@ -30,9 +30,9 @@
 
         @Html.Partial("MyAdExpressSavedResults", Model.SavedUnivers)
 
-        @if (Model.isMyAlertVisible)
+        @if (Model.IsMyAlertVisible)
         {
-            Html.Partial("MyAdExpressAlerts", Model);
+            @Html.Partial("MyAdExpressAlerts", Model);
         }
 
     </div>
