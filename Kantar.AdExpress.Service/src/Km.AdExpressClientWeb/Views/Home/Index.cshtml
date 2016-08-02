@@ -21,8 +21,10 @@
             $('#' + moduleId).on('click', function (e) {
                 var lo = encodeURIComponent('@Model.EncryptedLogin');
                 var pa = encodeURIComponent('@Model.EncryptedPassword');
-                var mo = moduleId
-                var link = 'http://adexpress.kantarmedia.fr/index.aspx?l=' + lo + '&p=' + pa + '&m=' + mo;
+                var mo = moduleId;
+
+                var link = '@Model.WebSiteUri' + 'index.aspx?l=' + lo + '&p=' + pa + '&m=' + mo;
+                
                 window.open(link, "_blank");
                 return false;
             });
@@ -36,12 +38,6 @@
 
         //Redirect to Tendencies
         RedirectToOldWebSite(@Module.Name.TENDACES);
-
-        //Redirect to Tendencies
-        RedirectToOldWebSite(@Module.Name.TENDACES);
-
-        //Redirect to Tendencies
-        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
 
         //Redirect to Tendencies
         RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
@@ -240,7 +236,7 @@
             </div>
         </div>
         @*Added temporarily for Finland*@
-        @if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+        @if (!Model.CountryCode.Equals(CountryCode.FINLAND))
         {
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
                 <div class="tile-second">
@@ -445,6 +441,74 @@
                             }
                         </div>
                     </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+                <div class="tile-second">
+                    @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DE_BORD_PRESSE))
+                {
+                        <a class="tile-body text-center" id="@Module.Name.TABLEAU_DE_BORD_PRESSE">
+                            <div class="flip-container-second">
+                                <div class="front-second">
+                                    <i class="icon-note sli-size-small green"></i>
+                                    <h5>@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</h5>
+                                </div>
+                                <div class="back-second">
+                                    <p class="font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Description</p>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="tile-body text-center disabled-effect">
+                            <div class="flip-container-second">
+                                <div class="front-second">
+                                    <i class="icon-note sli-size-small green"></i>
+                                    <h5>@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Title</h5>
+                                </div>
+                                <div class="back-second">
+                                    <p class="font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DE_BORD_PRESSE)].Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+                <div class="tile-second disabled">
+                    @if (Model.ModuleRight.ContainsKey(Module.Name.TENDACES))
+                {
+                        <a class="tile-body text-center" id="@Module.Name.TENDACES">
+                            @*<a class="tile-body text-center" id="@Module.Name.FACEBOOK">*@
+                            <div class="flip-container-second">
+                                <div class="front-second">
+                                    <i class="icon-vector sli-size-small green"></i>
+                                    <h5>@Model.Modules[(Module.Name.TENDACES)].Title</h5>
+                                </div>
+                                <div class="back-second">
+                                    <p class="font-size12 text-center">@Model.Modules[(Module.Name.TENDACES)].Description</p>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="tile-body text-center disabled-effect">
+                            <div class="flip-container-second">
+                                <div class="front-second">
+                                    <i class="icon-vector sli-size-small green"></i>
+                                    <h5>@Model.Modules[(Module.Name.TENDACES)].Title</h5>
+                                </div>
+                                <div class="back-second">
+                                    <p class="font-size12 text-center">@Model.Modules[(Module.Name.TENDACES)].Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         }
