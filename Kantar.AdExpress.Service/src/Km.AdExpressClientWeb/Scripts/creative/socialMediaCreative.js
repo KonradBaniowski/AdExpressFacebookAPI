@@ -29,6 +29,7 @@ var renderGrid = function (success, error) {
         $("#grid").igTreeGrid("destroy");
         $("#gridLoader").hide();
         $("#grid").show();
+        $("#btn-export").show();
         var height = window.innerHeight - $("#grid").offset().top - 10;
 
         $("#grid").igTreeGrid({

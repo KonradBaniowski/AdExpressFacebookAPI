@@ -354,6 +354,9 @@
     <Content Include="Configuration\35\CustomerErrorMail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\35\CustomStyles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\35\Database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
