@@ -64,7 +64,7 @@
                             if (!item.Disabled)
                             {
                                 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                                    <div class="block margin-b-20 padder-v bg-black-only tuile-medias text-center" data-attr-id="@item.Id">
+                                    <div style="cursor:pointer;" class="block margin-b-20 padder-v bg-black-only tuile-medias text-center" data-attr-id="@item.Id">
                                         <div class="top text-center w-full">
                                             <i class="fa @item.icon m-r-sm"></i>
                                         </div>
@@ -239,12 +239,13 @@
                                                 </div>
                                             }
                                         </div>
+
+                                        <div class="col-md-12 margin-top-10 margin-b-20">
+                                            <div class="pull-right">
+                                                <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-floppy-o"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30 margin-bot-30">
-                                <div class="col-lg-offset-7 col-md-offset-7 col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <a id="save-universe" data-toggle="modal" href="#saveunivers" class="btn btn-save-univers">@Model.Labels.SaveUnivers <i class="fa fa-floppy-o"></i></a>
                                 </div>
                             </div>
                         </div>
