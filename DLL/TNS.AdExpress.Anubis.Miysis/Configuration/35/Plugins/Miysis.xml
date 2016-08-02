@@ -5,7 +5,7 @@
 
   
   <!--<PdfPath path="\\fitnses-dmzad01\AdExCustomerFiles"/>-->
-  <PdfPath path="AdExCustomerFiles"/>
+  <PdfPath path="F:\AdExCustomerFiles"/>
   <!--If path empty then path = current directory of executable-->
   <ThemePath path="App_Themes"/>
   <PressScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
