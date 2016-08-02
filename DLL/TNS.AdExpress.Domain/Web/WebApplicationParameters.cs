@@ -40,6 +40,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         protected static string _webSiteName;
         /// <summary>
+        /// Web site uri
+        /// </summary>
+        protected static string _webSiteUri;
+        /// <summary>
         /// Configuration directory root
         /// </summary>
         private static string _configurationDirectoryRoot;
@@ -230,6 +234,8 @@ namespace TNS.AdExpress.Domain.Web {
             _configurationDirectoryRoot=AppDomain.CurrentDomain.BaseDirectory+CONFIGARION_DIRECTORY_NAME+@"\";
 
             _webSiteName=WebParamtersXL.LoadSiteName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
+            _webSiteUri= WebParamtersXL.LoadSiteUri(new XmlReaderDataSource(_configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
+
             _countryCode = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
             _countryConfigurationDirectoryRoot = _configurationDirectoryRoot + _countryCode + @"\";
             
@@ -270,6 +276,13 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         public static string WebSiteName {
             get { return _webSiteName; }
+        }
+        /// <summary>
+        /// Get Web site uri
+        /// </summary>
+        public static string WebSiteUri
+        {
+            get { return _webSiteUri; }
         }
         /// <summary>
         /// Get country code

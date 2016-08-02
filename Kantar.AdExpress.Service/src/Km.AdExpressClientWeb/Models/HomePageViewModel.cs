@@ -17,5 +17,6 @@ namespace Km.AdExpressClientWeb.Models
         public int SiteLanguage { get; set; }
         public Labels Labels { get; set; }
         public string CountryCode { get; set; }
+        public string WebSiteUri { get; internal set; }
     }
 }

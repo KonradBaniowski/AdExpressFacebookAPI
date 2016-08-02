@@ -112,7 +112,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 EncryptedLogin = encryptedLogin,
                 EncryptedPassword = encryptedPassword,
                 SiteLanguage = WebApplicationParameters.DefaultLanguage, // Default
-                CountryCode = WebApplicationParameters.CountryCode
+                CountryCode = WebApplicationParameters.CountryCode,
+                WebSiteUri = WebApplicationParameters.WebSiteUri
             };
 
             Home.SiteLanguage = resList.First().Value.SiteLanguage;
@@ -169,11 +170,11 @@ namespace Km.AdExpressClientWeb.Controllers
             model.SavedUnivers = univers;
             #endregion
             #region Alerts
-            if (PageHelper.IsMyAdexpressVisible(WebApplicationParameters.CountryCode))
+            if (PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idWebSession))
             {
                 var alertsResponse = _universService.GetUserAlerts(idWebSession);
                 model.Alerts = alertsResponse.Alerts;
-                model.isMyAlertVisible = false;
+                model.IsMyAlertVisible = true;
             }
             #endregion
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
