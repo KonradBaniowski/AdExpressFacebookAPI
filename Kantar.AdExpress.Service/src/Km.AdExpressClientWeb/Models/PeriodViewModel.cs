@@ -23,7 +23,9 @@ namespace Km.AdExpressClientWeb.Models
         /// <summary>
         /// Nombre d'année à afficher pour la Sélection de périodes glissantes
         /// </summary>
-        private const int YEARS_NUMBER = 3;
+        private int _yearsNumber = 3;
+
+       
         #endregion
 
         public PeriodViewModel()
@@ -33,12 +35,16 @@ namespace Km.AdExpressClientWeb.Models
         public PeriodViewModel(int currentModuleId)
         {
             if (currentModuleId == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || currentModuleId == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+            {
                 MONTHS_NUMBER = 6;
+            }
+               
         }
 
         public int SlidingYearsNb
         {
-            get { return YEARS_NUMBER; }
+            get { return _yearsNumber; }
+            set { _yearsNumber = value; }
         }
 
         public int SlidingMonthsNb
@@ -63,6 +69,8 @@ namespace Km.AdExpressClientWeb.Models
         public string EndYear { get; set; }
         public string CalendarFormat { get; set; }
         public string LanguageName { get; set; }
+
+        public bool IsSlidingYearsNbVisible { get; set; }
 
 
     }

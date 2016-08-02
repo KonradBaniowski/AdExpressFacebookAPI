@@ -189,7 +189,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var result = _periodService.GetPeriod(idSession);
 
-            PeriodViewModel periodModel = new PeriodViewModel();
+            PeriodViewModel periodModel = new PeriodViewModel();            
             periodModel.SiteLanguage = result.SiteLanguage;
             periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
             periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);

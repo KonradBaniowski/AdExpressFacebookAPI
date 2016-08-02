@@ -223,50 +223,55 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             var model = new Core.Domain.Tree();
                             int index = k + i;// (defaultFcbUniverse) ? k + i : i;
-                            List<long> levelIdsList = result[index].GetLevelIdsList();
-                            model.AccessType = result[index].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
-                            if (model.AccessType == AccessType.excludes)
+                            if (index < result.Count)
                             {
-                                model.Label = GestionWeb.GetWebWord(2269, SiteLanguage);
-                                model.LabelId = 2269;
-                            }
-                            else
-                            {
-                                model.Label = GestionWeb.GetWebWord(2270, SiteLanguage);
-                                model.LabelId = 2270;
-                            }
-                            model.UniversLevels = new List<Core.Domain.UniversLevel>();
-                            if (levelIdsList != null)
-                            {
-                                for (int j = 0; j < levelIdsList.Count; j++)
+                                List<long> levelIdsList = result[index].GetLevelIdsList();
+                                model.AccessType = result[index].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
+                                if (model.AccessType == AccessType.excludes)
                                 {
-                                    var universLevel = new UniversLevel();
-                                    universLevel.LabelId = UniverseLevels.Get(levelIdsList[j]).LabelId;
-                                    universLevel.UniversItems = new List<UniversItem>();
-                                    universLevel.Label = GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, SiteLanguage);
-                                    universLevel.Id = levelIdsList[j];
-                                    TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = 
-                                        factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[index].GetAsString(levelIdsList[j]));
-                                    if (universeItems != null)
+                                    model.Label = GestionWeb.GetWebWord(2269, SiteLanguage);
+                                    model.LabelId = 2269;
+                                }
+                                else
+                                {
+                                    model.Label = GestionWeb.GetWebWord(2270, SiteLanguage);
+                                    model.LabelId = 2270;
+                                }
+                                #region populate Universlevels
+                                model.UniversLevels = new List<Core.Domain.UniversLevel>();
+                                if (levelIdsList != null)
+                                {
+                                    for (int j = 0; j < levelIdsList.Count; j++)
                                     {
-                                        itemIdList = universeItems.IdListOrderByClassificationItem;
-                                        if (itemIdList != null && itemIdList.Count > 0)
+                                        var universLevel = new UniversLevel();
+                                        universLevel.LabelId = UniverseLevels.Get(levelIdsList[j]).LabelId;
+                                        universLevel.UniversItems = new List<UniversItem>();
+                                        universLevel.Label = GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, SiteLanguage);
+                                        universLevel.Id = levelIdsList[j];
+                                        TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems =
+                                            factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[index].GetAsString(levelIdsList[j]));
+                                        if (universeItems != null)
                                         {
-                                            for (int z = 0; z < itemIdList.Count; z++)
+                                            itemIdList = universeItems.IdListOrderByClassificationItem;
+                                            if (itemIdList != null && itemIdList.Count > 0)
                                             {
-                                                var universItem = new UniversItem();
-                                                universItem.Label = universeItems[itemIdList[z]];
-                                                universLevel.UniversItems.Add(universItem);
+                                                for (int z = 0; z < itemIdList.Count; z++)
+                                                {
+                                                    var universItem = new UniversItem();
+                                                    universItem.Label = universeItems[itemIdList[z]];
+                                                    universLevel.UniversItems.Add(universItem);
 
-                                                universItem.Id = itemIdList[z];
-                                                universItem.IdLevelUniverse = levelIdsList[j];
+                                                    universItem.Id = itemIdList[z];
+                                                    universItem.IdLevelUniverse = levelIdsList[j];
+                                                }
                                             }
                                         }
+                                        model.UniversLevels.Add(universLevel);
                                     }
-                                    model.UniversLevels.Add(universLevel);
                                 }
+                                #endregion
+                                treeDefined.Add(model);
                             }
-                            treeDefined.Add(model);
                         }
                     }
                 }
