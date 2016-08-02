@@ -198,33 +198,41 @@ $(document).on('click', '#btnMoveUnivers', function () {
 });
 
 $(document).on('click', '.btnDeleteUnivers', function () {
-    universId = $(this).attr("data-id");
-    var params = {
-        universId: universId
-    };
-    $.ajax({
-        url: '/Universe/DeleteUnivers',
-        contentType: 'application/json',
-        type: 'POST',
-        datatype: 'JSON',
-        data: JSON.stringify(params),
-        error: function (xmlHttpRequest, errorText, thrownError) {
-            bootbox.alert("An error occurred while processing your request.");
-        },
-        success: function (response) {
-            //Reload the page
-            $.ajax({
-                url: '/Home/ReloadUnivers',
-                type: 'POST',
-                data: params,
-                error: function (data) {
-                    bootbox.alert(data);
-                },
-                success: function (data) {
-                    $("#Univers").html(data);
-                }
-            });
-            bootbox.alert(response.Message);
+    var universId = $(this).attr("data-id");
+    bootbox.confirm({
+        size: 'small',
+        message: $('#Labels_DeleteRequestMessageConfirmLabel').val(),
+        callback: function (confirmed) {
+            if (confirmed == true) {
+                var params = {
+                    universId: universId
+                };
+                $.ajax({
+                    url: '/Universe/DeleteUnivers',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    datatype: 'JSON',
+                    data: JSON.stringify(params),
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                        bootbox.alert("An error occurred while processing your request.");
+                    },
+                    success: function (response) {
+                        //Reload the page
+                        $.ajax({
+                            url: '/Home/ReloadUnivers',
+                            type: 'POST',
+                            data: params,
+                            error: function (data) {
+                                bootbox.alert(data);
+                            },
+                            success: function (data) {
+                                $("#Univers").html(data);
+                            }
+                        });
+                        bootbox.alert(response.Message);
+                    }
+                });
+            }
         }
     });
 });
