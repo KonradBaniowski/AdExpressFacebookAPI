@@ -1,4 +1,4 @@
-﻿@model Km.AdExpressClientWeb.Models.SocialMedia.ResultsViewModel
+﻿@model Km.AdExpressClientWeb.Models.Shared.ResultsViewModel
 @using TNS.AdExpress.Domain.Translation;
 @{
     var _controller = "SocialMedia";
@@ -26,15 +26,7 @@
         </div>
     </div>
     <div class="col-md-9">
-
-        <div class="pull-right custom-button selectexporttype">
-            <select id="export-type" class="selectdatepicker hide">
-                <option value="1"> @Model.Labels.ExportFormattedResult</option>
-            </select>&nbsp;
-            <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
-            <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
-            <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
-        </div>
+        @Html.Partial("_ExportTypeResults", Model)
     </div>
 </div>
 

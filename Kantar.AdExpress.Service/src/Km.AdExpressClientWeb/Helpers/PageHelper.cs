@@ -268,7 +268,7 @@ namespace Km.AdExpressClientWeb.Helpers
             switch (module)
             {
                 case Module.Name.ANALYSE_CONCURENTIELLE:
-                case Module.Name.ALERTE_PORTEFEUILLE:
+                case Module.Name.ANALYSE_PORTEFEUILLE:
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PLAN_MEDIA:
                 case Module.Name.TABLEAU_DYNAMIQUE:
@@ -362,7 +362,7 @@ namespace Km.AdExpressClientWeb.Helpers
             switch (currentModule)
             {            
                 case Module.Name.ANALYSE_DYNAMIQUE:
-                case Module.Name.ALERTE_PORTEFEUILLE:
+                case Module.Name.ANALYSE_PORTEFEUILLE:
                 case Module.Name.ANALYSE_CONCURENTIELLE:
                     ids.Add(ExportFormattedResult);
                     ids.Add( ExportGrossResult );

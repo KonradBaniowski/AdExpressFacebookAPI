@@ -304,7 +304,7 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguage = _siteLanguage;
             var resultNode = new NavigationNode { Position = 4 };
             var pageHelper = new Helpers.PageHelper();
-            var model = new VM.ResultsViewModel
+            var model = new Models.Shared.ResultsViewModel
             {
                 NavigationBar = pageHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = pageHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),

@@ -228,21 +228,17 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\Labels.cs" />
-    <Compile Include="Models\LostWon\ResultsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\ExportResultModel.cs" />
     <Compile Include="Models\Shared\ExportTypeViewModel.cs" />
     <Compile Include="Models\Shared\InsertionCreativeViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
     <Compile Include="Models\Shared\PresentationModel.cs" />
-    <Compile Include="Models\MediaSchedule\ResultsViewModel.cs" />
     <Compile Include="Models\NavigationNode.cs" />
     <Compile Include="Models\PeriodSelectionViewModel.cs" />
     <Compile Include="Models\PeriodViewModel.cs" />
     <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />
-    <Compile Include="Models\Portfolio\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\ErrorMessage.cs" />
     <Compile Include="Models\Shared\MediaSelectionViewModel.cs" />
     <Compile Include="Models\Shared\ResultsViewModel.cs" />
@@ -253,7 +249,6 @@
     <Compile Include="Models\SocialMedia\KPIPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\KPIPercentPageFacebookContract.cs" />
     <Compile Include="Models\SocialMedia\PDVByMediaPageFacebookContract.cs" />
-    <Compile Include="Models\SocialMedia\ResultsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1657,12 +1652,15 @@
     <Content Include="Views\SocialMedia\GetPlurimediaStackedChart.cshtml" />
     <Content Include="Views\Home\_HomeNewsFr.cshtml" />
     <Content Include="Views\Home\_HomeNewsFi.cshtml" />
+    <Content Include="Views\Shared\_ExportTypeResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\HomePageValues\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\Insertions\" />
+    <Folder Include="Models\LostWon\" />
+    <Folder Include="Models\PresentAbsent\" />
     <Folder Include="Views\AnalyseSectoExport\" />
     <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
