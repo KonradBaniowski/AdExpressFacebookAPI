@@ -31,6 +31,14 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string FACEBOOK = "SocialMedia";
         private const string ANALYSIS = "Analysis";
+        const int ExportFormattedResult = 1;
+        const int ExportResultWithValue = 2;
+        const int ExportGrossResult = 3;
+        const int ExportPdfResult = 4;
+        const int ExportPptResult = 5;
+
+      
+
         public List<NavigationNode> LoadNavBar(string idWebSession, string controller, int siteLanguage = -1, int CurrentPosition = 0)
         {
             if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
@@ -312,6 +320,66 @@ namespace Km.AdExpressClientWeb.Helpers
                     break;
             }
             return returnValue;
+        }
+
+        internal static bool IsPowerpointResultVisible(string countryCode)
+        {
+            bool returnValue = false;
+            switch (countryCode)
+            {
+                case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
+                    returnValue = true;
+                    break;
+                default:
+                    returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
+
+        public static List<ExportTypeViewModel> GetExportTypes(string countryCode,int currentModule,int siteLanguage)
+        {
+                       List<ExportTypeViewModel> exportTypeViewModels = new List<ExportTypeViewModel>();
+            exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportFormattedResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportFormattedResult, siteLanguage), Visible = true });
+            exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportResultWithValue, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportResultWithValue, siteLanguage), Visible = true });
+            exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPdfResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage), Visible = true });
+           
+            switch (countryCode)
+            {
+                case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportGrossResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage), Visible = true });
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
+                    break;               
+            }
+
+            SetExportTypesVisibilityByModule(exportTypeViewModels, currentModule);
+            return exportTypeViewModels;
+        }
+
+        private static void SetExportTypesVisibilityByModule(List<ExportTypeViewModel> exportTypeViewModels, int currentModule)
+        {
+            List<int> ids = new List<int>();
+            switch (currentModule)
+            {            
+                case Module.Name.ANALYSE_DYNAMIQUE:
+                case Module.Name.ALERTE_PORTEFEUILLE:
+                case Module.Name.ANALYSE_CONCURENTIELLE:
+                    ids.Add(ExportFormattedResult);
+                    ids.Add( ExportGrossResult );
+                    break;                             
+                case Module.Name.TABLEAU_DYNAMIQUE:
+                case Module.Name.INDICATEUR:                 
+                case Module.Name.FACEBOOK:
+                    ids.Add(ExportFormattedResult);
+                    break;
+                default:
+                    break;
+            }
+
+            exportTypeViewModels.ForEach(p =>
+            {
+                if (ids.Any() && !ids.Contains(p.Id)) p.Visible = false;
+            });
         }
 
     }

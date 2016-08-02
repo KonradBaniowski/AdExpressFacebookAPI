@@ -232,6 +232,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PresentAbsent\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\ExportResultModel.cs" />
+    <Compile Include="Models\Shared\ExportTypeViewModel.cs" />
     <Compile Include="Models\Shared\InsertionCreativeViewModel.cs" />
     <Compile Include="Models\Shared\MarketViewModel.cs" />
     <Compile Include="Models\MediaSchedule\MediaScheduleViewModel.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Models\Portfolio\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\ErrorMessage.cs" />
     <Compile Include="Models\Shared\MediaSelectionViewModel.cs" />
+    <Compile Include="Models\Shared\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserResultViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
     <Compile Include="Models\SocialMedia\DataFacebook.cs" />

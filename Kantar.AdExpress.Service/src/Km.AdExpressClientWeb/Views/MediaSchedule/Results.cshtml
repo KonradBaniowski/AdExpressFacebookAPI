@@ -25,19 +25,18 @@
     <div class="col-md-12">
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
-                <option value="1">@Model.Labels.ExportFormattedResult</option>
-                <option value="2">@Model.Labels.ExportResultWithValue</option>
-                <option value="3">@Model.Labels.ExportGrossResult</option>
-                <option value="4">@Model.Labels.ExportPdfResult</option>
-
-                @if (TNS.AdExpress.Domain.Web.WebApplicationParameters.CountryCode != TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+                @foreach (var item in Model.ExportTypeViewModels)
                 {
-                    <option value="5">@Model.Labels.ExportPptResult</option>
+                    if (item.Visible)
+                    {
+                        <option value="@item.Id">@item.Label</option>
+                    }
                 }
+
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>
             <button class="btn btn-save" id="btn-save-result" title="@Model.Labels.Save"><i class="glyphicon glyphicon-floppy-save fa-file-excel-size"></i></button>
-            @if (Model.isAlertVisible)
+            @if (Model.IsAlertVisible)
             {
                 <button class="btn btn-save" id="btn-create-alert" title="@Model.Labels.CreateAlert"><i class="fa fa-clock-o fa-file-excel-size"></i></button>
             }
