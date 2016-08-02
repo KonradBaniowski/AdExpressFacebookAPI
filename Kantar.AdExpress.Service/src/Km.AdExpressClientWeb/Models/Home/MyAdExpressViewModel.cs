@@ -15,6 +15,6 @@ namespace Km.AdExpressClientWeb.Models.Home
         public Domain.AdExpressUniversResponse SavedResults { get; set; }
         public Domain.AdExpressUniversResponse SavedUnivers { get; set; }
         public List<Domain.Alert> Alerts { get; set; }
-        public bool isMyAlertVisible { get; set; }
+        public bool IsMyAlertVisible { get; set; }
 }
 }
