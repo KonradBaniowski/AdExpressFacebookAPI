@@ -145,7 +145,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             #region Univers Market :
             domain.UniversMarket = new List<Core.Domain.Tree>();
-            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, domain.UniversMarket, factoryLevels, _webSession.SiteLanguage);
+            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, domain.UniversMarket, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
             #endregion
 
             #region Media : 
@@ -153,7 +153,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.UniversMedia = new List<Core.Domain.Tree>();
             domain.MediasSelectedLabel = string.Join(",", domain.MediasSelected.Select(_ => _.Label));
 
-            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalMediaUniverses, domain.UniversMedia, factoryLevels, _webSession.SiteLanguage);
+            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalMediaUniverses, domain.UniversMedia, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
             #endregion
 
             #region Période sélectionnée :
@@ -209,7 +209,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return domain;
         }
 
-        private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage, bool defaultFcbUniverse=false)
+        private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage, long currentModule, bool defaultFcbUniverse=false)
         {
             List<long> itemIdList = null;
             for (int k = 0; k < Principal.Count; k++)
@@ -222,8 +222,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         for (int i = 0; i < result.Count; i++)
                         {
                             var model = new Core.Domain.Tree();
-                            int index = k + i;// (defaultFcbUniverse) ? k + i : i;
-                            if (index < result.Count)
+                            int index =(currentModule== WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE ) ? i : k + i;// (defaultFcbUniverse) ? k + i : i;
+                            if (index < result.Count || currentModule == WebConstantes.Module.Name.FACEBOOK)
                             {
                                 List<long> levelIdsList = result[index].GetLevelIdsList();
                                 model.AccessType = result[index].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
@@ -377,7 +377,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     result.UniversMarket = new List<Tree>();
                     result.ShowMarket = true;
                     result.ModuleLabel = GestionWeb.GetWebWord(468, webSession.SiteLanguage);
-                    ExtractTreeFromAdExpressUniverse(adExpressUniverse, result.UniversMarket, factoryLevels, webSession.SiteLanguage);
+                    ExtractTreeFromAdExpressUniverse(adExpressUniverse, result.UniversMarket, factoryLevels, webSession.SiteLanguage, webSession.CurrentModule);
                     break;
                 case Dimension.media:
                     //TODO //result.MediasSelected = GetLabels(webSession.SelectionUniversMedia, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource);
@@ -385,7 +385,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     result.UniversMedia = new List<Tree>();
                     result.ShowUnivers = true;
                     result.ModuleLabel = GestionWeb.GetWebWord(363, webSession.SiteLanguage);                
-                    ExtractTreeFromAdExpressUniverse(adExpressUniverse, result.UniversMedia, factoryLevels, webSession.SiteLanguage);
+                    ExtractTreeFromAdExpressUniverse(adExpressUniverse, result.UniversMedia, factoryLevels, webSession.SiteLanguage, webSession.CurrentModule);
                     break;
                 default:
                     return result;
@@ -407,7 +407,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
            
             var UniversMarket = new List<Core.Domain.Tree>();
             
-            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, UniversMarket, factoryLevels, _webSession.SiteLanguage);
+            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, UniversMarket, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
 
             return UniversMarket;
         }
