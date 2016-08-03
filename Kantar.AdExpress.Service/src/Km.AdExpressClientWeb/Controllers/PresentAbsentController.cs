@@ -10,7 +10,6 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using VM = Km.AdExpressClientWeb.Models.PresentAbsent;
 using KM.AdExpress.Framework.MediaSelection;
 using Domain = Kantar.AdExpress.Service.Core.Domain;
 using Kantar.AdExpress.Service.Core;
@@ -306,12 +305,13 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguage = _siteLanguage;
             var resultNode = new NavigationNode { Position = 4 };
             var navigationHelper = new Helpers.PageHelper();
-            var model = new Models.PresentAbsent.ResultsViewModel
+            var model = new Models.Shared.ResultsViewModel
             {
                 NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = navigationHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
                 Labels = LoadPageLabels(result.WebSession.SiteLanguage),
-                isAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession)
+                IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, Module.Name.ANALYSE_DYNAMIQUE, _siteLanguage)
             };
 
             return View(model);

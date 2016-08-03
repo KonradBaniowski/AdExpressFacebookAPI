@@ -301,12 +301,13 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
 
-            var model = new Models.Portfolio.ResultsViewModel
+            var model = new Models.Shared.ResultsViewModel
             {
                 NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = navigationHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
                 Labels = LoadPageLabels(result.WebSession.SiteLanguage),
-                isAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession)
+                IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, Module.Name.ANALYSE_PORTEFEUILLE, _siteLanguage)
             };
 
             return View(model);

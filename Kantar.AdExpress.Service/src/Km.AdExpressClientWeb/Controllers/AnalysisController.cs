@@ -79,12 +79,13 @@ namespace Km.AdExpressClientWeb.Controllers
             var resultNode = new NavigationNode { Position = 4 };
             var pageHelper = new Helpers.PageHelper();
             var result = _webSessionService.GetWebSession(idSession);
-            var model = new Models.LostWon.ResultsViewModel
+            var model = new Models.Shared.ResultsViewModel
             {
                 NavigationBar = pageHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = pageHelper.LoadPresentationBar(CustomerSession.SiteLanguage, result.ControllerDetails),
                 Labels = LabelsHelper.LoadPageLabels(CustomerSession.SiteLanguage),
-                isAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession)
+                IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, Module.Name.TABLEAU_DYNAMIQUE, _siteLanguage)
             };
 
             return View(model);
