@@ -4,8 +4,8 @@
 @{
     ViewBag.Title = "Results";
     var _controller = "Analysis";
-    //var _exportController = "ProductClassAnalysisExport";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
+    var analysisResults = string.Format("/{0}/Results", _controller);
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" id="current-url" value="@analysisResults" />
 @section Scripts {
     @switch (Model.Presentation.SiteLanguage.ToString())
     {
