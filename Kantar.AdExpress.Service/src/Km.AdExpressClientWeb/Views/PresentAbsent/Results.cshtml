@@ -113,6 +113,11 @@
 
             if (typeof jQuery === "undefined") { throw new Error("jQuery") }
 
+            // Set text for select picker
+            $.fn.selectpicker.defaults = {
+                all: '@GestionWeb.GetWebWord(201, Model.Presentation.SiteLanguage)'
+            };
+
             $("#grid").igTreeGrid({
                 //dataSource: data,
                 primaryKey: "ClassifId",
