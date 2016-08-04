@@ -2287,7 +2287,7 @@
     <item mnemonic="w3030" type="System.String">il n'est pas possible de faire une étude plurimédia si vous sélectionnez le média Social, veuillez changer votre sélection</item>
     <!--export powerpoint-->
     <item mnemonic="w3031" type="System.String">Résultat PowerPoint</item>
-    <item mnemonic="w3032" type="System.String">PowerPoint Alerte Plan Média</item>   
+    <item mnemonic="w3032" type="System.String">PowerPoint Alerte Plan Média</item>
     <item mnemonic="w3033" type="System.String">Veuillez saisir au moins 2 caractères pour effectuer votre recherche.</item>
     <item mnemonic="w3034" type="System.String">Vous ne pouvez déplacer qu'un seul support.</item>
     <item mnemonic="w3035" type="System.String">L'élement que vous déplacez n'est pas un support.</item>
@@ -2295,7 +2295,7 @@
     <item mnemonic="w3037" type="System.String">Ajouter un concurrent</item>
     <item mnemonic="w3038" type="System.String">Ce support a déjà été ajouté dans l'arbre de référence ou dans un concurrent</item>
     <item mnemonic="w3039" type="System.String">Référents</item>
-    <item mnemonic="w3040" type="System.String">Valider</item>    
+    <item mnemonic="w3040" type="System.String">Valider</item>
     <item mnemonic="w3041" type="System.String">Votre question concerne</item>
     <item mnemonic="w3042" type="System.String">Problème technique</item>
     <item mnemonic="w3043" type="System.String">Souscrire à un module additionnel</item>
@@ -2331,5 +2331,9 @@
     <item mnemonic="w3073" type="System.String">Service Client AdExpress</item>
     <item mnemonic="w3074" type="System.String">Analyser l’exposition de vos contenus sur Facebook au travers de nombreux KPI </item>
     <item mnemonic="w3075" type="System.String">Post Facebook </item>
+    <item mnemonic="w3076" type="System.String">Année</item>
+    <item mnemonic="w3077" type="System.String">Mensuel Cumulé</item>
+    <item mnemonic="w3078" type="System.String">Cumul</item>
+    <item mnemonic="w3079" type="System.String">Mensuel</item>
   </items>
 </localization>

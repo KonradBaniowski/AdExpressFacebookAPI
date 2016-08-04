@@ -12,8 +12,9 @@ $("#load-detail-selection").on('click', function (e) {
             bootbox.alert("An error occurred while processing your request.");
         },
         success: function (data) {
-            $('#detail-selection .modal-body').html('');
-            $('#detail-selection .modal-body').append(data);
+            $("#DetailSelectionLoader").hide();
+            $('#detail-selection .modal-body .datas').html('');
+            $('#detail-selection .modal-body .datas').append(data);
             $('.treeview').each(function () {
                 var tree = $(this);
                 tree.treeview();
@@ -21,3 +22,8 @@ $("#load-detail-selection").on('click', function (e) {
         }
     });
 });
+
+$('#myModal').on('hidden.bs.modal', function (e) {
+    $('#detail-selection .modal-body .datas').html('');
+    $("#DetailSelectionLoader").show();
+})

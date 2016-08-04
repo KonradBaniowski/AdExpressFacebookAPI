@@ -22,6 +22,7 @@ using TNS.AdExpress.Domain.Web;
 using System.IO;
 using System.Net;
 using System.Configuration;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -61,11 +62,13 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguage = _siteLanguage;
             var resultNode = new NavigationNode { Position = 4 };
             var navigationHelper = new Helpers.PageHelper();
-            var model = new Models.SocialMedia.ResultsViewModel
+            var model = new Models.Shared.ResultsViewModel
             {
                 NavigationBar = navigationHelper.LoadNavBar(idSession, result.ControllerDetails.Name, _siteLanguage, 4),
                 Presentation = navigationHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
-                Labels = navigationHelper.LoadPageLabels(_siteLanguage, result.ControllerDetails.Name)
+                Labels = navigationHelper.LoadPageLabels(_siteLanguage, result.ControllerDetails.Name),
+                IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.FACEBOOK, _siteLanguage)
             };
 
             return View(model);

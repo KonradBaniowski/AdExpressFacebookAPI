@@ -600,7 +600,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                            // idMedia = 2003 & dayOfWeek = Wednesday & ecran = 515
                                 k++;
                                 gridData[currentLineIndex, k] =
-                                    string.Format("<a href='javascript:window.open(\"{0}?idMedia={1}&dayOfWeek={2}&ecran={3}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'>{4}</a>",
+                                    string.Format("<a href='{0}?idMedia={1}&dayOfWeek={2}&ecran={3}' target='_blank'>{4}</a>",
                                     insertionDetailPath,  _idMedia, dayName[i], dr["screenCode"].ToString(), Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));
 
                             }

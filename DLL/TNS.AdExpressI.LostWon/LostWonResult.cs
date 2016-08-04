@@ -2139,9 +2139,9 @@ namespace TNS.AdExpressI.LostWon
                             link = c.GetLink();
                             if (!string.IsNullOrEmpty(link))
                             {
-                                link = string.Format("<center><a href='javascript:window.open(\"{0}?{1}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);'><span class='fa fa-search-plus'></span></a></center>"
-                           , mediaSchedulePath
-                           , link);
+                                link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
+                               , mediaSchedulePath
+                               , link);
                             }
                         }
                         gridData[i, k + 2] = link;

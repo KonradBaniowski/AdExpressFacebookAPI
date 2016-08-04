@@ -303,13 +303,14 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             ViewBag.SiteLanguage = _siteLanguage;
             var resultNode = new NavigationNode { Position = 4 };
-            var pageHelper = new Helpers.PageHelper();      
-            var model = new VM.ResultsViewModel
+            var pageHelper = new Helpers.PageHelper();
+            var model = new Models.Shared.ResultsViewModel
             {
                 NavigationBar = pageHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = pageHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
                 Labels = pageHelper.LoadPageLabels(result.WebSession.SiteLanguage, _controller),
-                isAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession)
+                IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA, _siteLanguage)
             };
 
             return View(model);

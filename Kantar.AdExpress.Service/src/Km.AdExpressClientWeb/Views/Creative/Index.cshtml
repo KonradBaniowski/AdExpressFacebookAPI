@@ -81,7 +81,7 @@
                             <param name="allowscriptaccess" value="always" />
                             <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always" allowfullscreen="false" flashvars="" />
                         </object>
-                        <iframe id="objectHTML5" src="" scrolling="no" onload="Html5Loaded()"></iframe>
+                        <iframe id="objectHTML5" frameborder="0" src="" scrolling="no" onload="Html5Loaded()" style="display:none;" align="center" marginheight="0" marginwidth="0"></iframe>
                     </div>
                 </div>
                 <div class="modal-footer hide">
@@ -472,28 +472,30 @@
                     switch (format) {
                         case "AVI":
                             ajaxGetLinkPath();
+                            $("#mediaLoader").hide()
                             break;
                         case "SWF":
                             $("#objectSWF param").first().attr("value", datas[0]);
                             $("#objectSWF embed").attr("src", datas[0]);
                             $("#objectSWF").show();
+                            $("#mediaLoader").hide()
                             break;
                         case "FLV":
                             $("#objectFLV param").first().attr("value", "file=" + datas[0]);
                             $("#objectFLV embed").attr("flashvars", "file=" + datas[0]);
                             $("#objectFLV").show();
+                            $("#mediaLoader").hide()
                             break;
                         case "HTML5":
                             url = datas[0];
                             $("#objectHTML5").attr('src', url);
-                            $("#objectHTML5").show();
                             break;
                         default:
                             url = datas[0];
                             $("#creativeStream").attr('src', url);
                             $("#creativeStream").show();
+                            $("#mediaLoader").hide()
                     }
-                    $("#mediaLoader").hide()
                 }
                 else{
                     ajaxGetLinkPath();
@@ -671,21 +673,67 @@
                 $("#objectHTML5").removeAttr("width");
                 $("#objectHTML5").removeAttr("height");
 
-                newheight = iFrameID.contentWindow.document.body.scrollHeight + 50;
-                newwidth = iFrameID.contentWindow.document.body.scrollWidth + 50;
+                newheight = getIFrameHeight(iFrameID);
+                newwidth = getIFrameWidth(iFrameID);
 
-                $("#creativeModal > .modal-dialog").css("width", (newwidth) + "px");
-                $("#creativeModal > .modal-dialog > .modal-content > .modal-body").css("height", (newheight) + "px");
+                iFrameID.height = newheight;
+                iFrameID.width = newwidth;
 
-                iFrameID.height = (newheight) + "px";
-                iFrameID.width = (newwidth) + "px";
+                $("#creativeModal > .modal-dialog").css("width", parseInt(newwidth + 100) + "px");
+                $("#creativeModal > .modal-dialog > .modal-content > .modal-body").css("height", parseInt(newheight + 100) + "px");
+
+                $("#mediaLoader").hide();
+                $("#objectHTML5").show();
+
             }
         }
+
+
+        function getIFrameHeight(iFrameID) {
+            function getComputedBodyStyle(prop, iFrameID) {
+                var
+                    el = iFrameID.contentWindow.document.body,
+                    retVal = 0;
+
+                if (document.defaultView && document.defaultView.getComputedStyle) {
+                    retVal = document.defaultView.getComputedStyle(el, null)[prop];
+                }
+
+                return parseInt(retVal, 10);
+            }
+
+            return iFrameID.contentWindow.document.body.scrollHeight +
+                getComputedBodyStyle('marginTop', iFrameID) +
+                getComputedBodyStyle('marginBottom', iFrameID);
+        }
+
+        function getIFrameWidth(iFrameID) {
+            function getComputedBodyStyle(prop, iFrameID) {
+                var
+                    el = iFrameID.contentWindow.document.body,
+                    retVal = 0;
+
+                if (document.defaultView && document.defaultView.getComputedStyle) {
+                    retVal = document.defaultView.getComputedStyle(el, null)[prop];
+                }
+
+                return parseInt(retVal, 10);
+            }
+
+            return iFrameID.contentWindow.document.body.scrollWidth +
+                getComputedBodyStyle('marginRight', iFrameID) +
+                getComputedBodyStyle('marginLeft', iFrameID);
+        }
+
+
         function Html5UnLoaded(idElmt) {
             var iFrameID = document.getElementById(idElmt);
             if (iFrameID) {
+                $("#" + idElmt).hide();
+                $("#mediaLoader").show();
                 $("#creativeModal > .modal-dialog").removeAttr("style");
                 $("#creativeModal > .modal-dialog > .modal-content > .modal-body").removeAttr("style");
+                //$("#" + idElmt).attr('src', "");
             }
         }
 
