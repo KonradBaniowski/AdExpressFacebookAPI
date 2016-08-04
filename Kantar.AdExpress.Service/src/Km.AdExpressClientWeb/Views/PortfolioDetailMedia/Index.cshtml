@@ -84,7 +84,7 @@
     <script id="colPlanMediaPopUpTmpl" type="text/template">
         {{if ${1478}.startsWith('[') && ${1478}.endsWith(']') }}
         <center>
-            <a class="linkPlanMediaPopUp" href='' data-url="${1478}">
+            <a class="linkPlanMediaPopUp" href='' target='_blank' data-url="${1478}">
                 <span class='fa fa-search-plus'></span>
             </a>
         </center>
@@ -348,7 +348,7 @@
                 var datas = $(this).data('url').toString();
                 datas = datas.replace(/\[|\]/g, '');
                 datas = datas.split(",");
-                $(this).attr("href", 'javascript: window.open("/MediaSchedulePopUp?idSession=' + datas[0] + '&id=' + datas[1] + '&Level=' + datas[2] + '", "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700"); void (0);');
+                $(this).attr("href", 'javascript: window.open("/MediaSchedulePopUp?idSession=' + datas[0] + '&id=' + datas[1] + '&Level=' + datas[2] + '")');
             });
 
             //Zoom visuel
