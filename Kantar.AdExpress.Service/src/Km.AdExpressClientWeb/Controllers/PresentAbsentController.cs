@@ -319,7 +319,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public JsonResult PresentAbsentResult()
         {
-            var claim = new ClaimsPrincipal(User.Identity);
+            var claim = new ClaimsPrincipal(User.Identity); 
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var gridResultResponse = _presentAbsentService.GetGridResult(idWebSession);
 

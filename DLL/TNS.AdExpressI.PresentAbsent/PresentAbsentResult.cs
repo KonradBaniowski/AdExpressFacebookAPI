@@ -832,7 +832,7 @@ namespace TNS.AdExpressI.PresentAbsent
             #endregion
 
             #region Indexes de comparaison
-            Int32 comparaisonIndexInTabResult = universesSubTotal[1].IndexInResultTable;
+            Int32 comparaisonIndexInTabResult = universesSubTotal[0].IndexInResultTable;//1
             Int32 levelLabelColIndex = data.GetHeadersIndexInResultTable(LEVEL_HEADER_ID.ToString());
             #endregion
 
@@ -2018,6 +2018,8 @@ namespace TNS.AdExpressI.PresentAbsent
             string mediaSchedulePath = "/MediaSchedulePopUp";
             string insertionPath = "/Insertions";
             string versionPath = "/Creative";
+            LineStart cLineStart = null;
+            int nbLines = 0;
 
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
             {
@@ -2030,9 +2032,25 @@ namespace TNS.AdExpressI.PresentAbsent
             object[,] gridData = null;
             if (_session.CurrentTab != DynamicAnalysis.SYNTHESIS)
             {
-                gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+                for (int i = 0; i < resultTable.LinesNumber; i++)
+                {
+                    cLineStart = resultTable.GetLineStart(i);
+                    if (!(cLineStart is LineHide))
+                        nbLines++;
+                }
+                if (nbLines == 0)
+                {
+                    gridResult.HasData = false;
+                    return gridResult;
+                }
+                gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
             }
-            else gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber]; //+2 car ID et PID en plus  -  //_data.LinesNumber 
+            else
+            {
+                nbLines = resultTable.LinesNumber;
+                gridData = new object[nbLines, resultTable.ColumnsNumber];
+            }//+2 car ID et PID en plus  -  //_data.LinesNumber 
+
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
@@ -2203,10 +2221,15 @@ namespace TNS.AdExpressI.PresentAbsent
             }
 
             //table body rows
-            for (int i = 0; i < resultTable.LinesNumber; i++) //_data.LinesNumber
+            int currentLine = 0;
+            for (int i = 0; i < resultTable.LinesNumber; i++) //
             {
-                gridData[i, 0] = i; // Pour column ID
-                gridData[i, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
+                cLineStart = resultTable.GetLineStart(i);
+                if (resultTable.GetLineStart(i) is LineHide)
+                    continue;
+            
+                gridData[currentLine, 0] = currentLine; // Pour column ID
+                gridData[currentLine, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
 
                 for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
                 {
@@ -2226,7 +2249,7 @@ namespace TNS.AdExpressI.PresentAbsent
                            , link);
                             }
                         }
-                        gridData[i, k + 2] = link;
+                        gridData[currentLine, k + 2] = link;
 
                     }
                     else if (cell is CellOneLevelInsertionsLink)
@@ -2244,7 +2267,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             }
 
                         }
-                        gridData[i, k + 2] = link;
+                        gridData[currentLine, k + 2] = link;
                     }
                     else if (cell is CellOneLevelCreativesLink)
                     {
@@ -2261,7 +2284,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             }
 
                         }
-                        gridData[i, k + 2] = link;
+                        gridData[currentLine, k + 2] = link;
                     }
                     else
                     {
@@ -2270,11 +2293,11 @@ namespace TNS.AdExpressI.PresentAbsent
                             double value = ((CellUnit)cell).Value;
 
                             if (double.IsInfinity(value))
-                                gridData[i, k + 2] = "Infinity";
+                                gridData[currentLine, k + 2] = "Infinity";
                             else if (double.IsNaN(value))
-                                gridData[i, k + 2] = null;
+                                gridData[currentLine, k + 2] = null;
                             else
-                                gridData[i, k + 2] = value / 100;
+                                gridData[currentLine, k + 2] = value / 100;
                         }
                         else if (cell is CellUnit)
                         {
@@ -2282,12 +2305,12 @@ namespace TNS.AdExpressI.PresentAbsent
                             {
                                 if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
                                 {
-                                    gridData[i, k + 1] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                                    gridData[currentLine, k + 1] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                                 }
-                                else gridData[i, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                                else gridData[currentLine, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                             }
                             else
-                                gridData[i, k + 2] = ((CellUnit)cell).Value;
+                                gridData[currentLine, k + 2] = ((CellUnit)cell).Value;
                         }
                         else if (cell is AdExpressCellLevel)
                         {
@@ -2295,22 +2318,23 @@ namespace TNS.AdExpressI.PresentAbsent
                             string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
 
                             if (gadParams.Length > 0)
-                                gridData[i, 2] = gadParams;
+                                gridData[currentLine, 2] = gadParams;
                             else
-                                gridData[i, 2] = "";
+                                gridData[currentLine, 2] = "";
 
-                            gridData[i, k + 2] = label;
+                            gridData[currentLine, k + 2] = label;
                         }
                         else
                         {
                             if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
                             {
-                                gridData[i, k + 1] = cell.RenderString();
+                                gridData[currentLine, k + 1] = cell.RenderString();
                             }
-                            else gridData[i, k + 2] = cell.RenderString();
+                            else gridData[currentLine, k + 2] = cell.RenderString();
                         }
                     }
                 }
+                currentLine++;
             }
             gridResult.NeedFixedColumns = true;
             gridResult.HasData = true;
