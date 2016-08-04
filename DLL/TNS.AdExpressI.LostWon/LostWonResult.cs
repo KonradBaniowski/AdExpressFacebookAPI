@@ -2028,17 +2028,28 @@ namespace TNS.AdExpressI.LostWon
             GridResult gridResult = new GridResult();
             ResultTable resultTable = GetResult();
             string mediaSchedulePath = "/MediaSchedulePopUp";
-          
+            LineStart cLineStart = null;
+            int nbLines = 0;
 
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
             {
                 gridResult.HasData = false;
                 return gridResult;
             }
-
+            for (int i = 0; i < resultTable.LinesNumber; i++)
+            {
+                cLineStart = resultTable.GetLineStart(i);
+                if (!(cLineStart is LineHide))
+                    nbLines++;
+            }
+            if (nbLines == 0)
+            {
+                gridResult.HasData = false;
+                return gridResult;
+            }
             resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+            object[,] gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
@@ -2121,14 +2132,19 @@ namespace TNS.AdExpressI.LostWon
             }
 
             //table body rows
+            int currentLine = 0;
             for (int i = 0; i < resultTable.LinesNumber; i++) //_data.LinesNumber
             {
-                gridData[i, 0] = i; // Pour column ID
-                gridData[i, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
+                cLineStart = resultTable.GetLineStart(i);
+                if (cLineStart is LineHide)
+                    continue;
+
+                gridData[currentLine, 0] = i; // Pour column ID
+                gridData[currentLine, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
 
                 for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
                 {
-                    var cell = resultTable[i, k];
+                    var cell = resultTable[currentLine, k];
                     var link = string.Empty;
                     if (cell is CellMediaScheduleLink)
                     {
@@ -2144,7 +2160,7 @@ namespace TNS.AdExpressI.LostWon
                                , link);
                             }
                         }
-                        gridData[i, k + 2] = link;
+                        gridData[currentLine, k + 2] = link;
 
                     }
 
@@ -2155,18 +2171,18 @@ namespace TNS.AdExpressI.LostWon
                             double value = ((CellUnit)cell).Value;
 
                             if (double.IsInfinity(value))
-                                gridData[i, k + 2] = (value < 0) ? "-Infinity" : "+Infinity";
+                                gridData[currentLine, k + 2] = (value < 0) ? "-Infinity" : "+Infinity";
                             else if (double.IsNaN(value))
-                                gridData[i, k + 2] = null;
+                                gridData[currentLine, k + 2] = null;
                             else
-                                gridData[i, k + 2] = value / 100;
+                                gridData[currentLine, k + 2] = value / 100;
                         }
                         else if (cell is CellUnit)
                         {
                             if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
-                                gridData[i, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                                gridData[currentLine, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                             else
-                                gridData[i, k + 2] = ((CellUnit)cell).Value;
+                                gridData[currentLine, k + 2] = ((CellUnit)cell).Value;
                         }
                         else if(cell is AdExpressCellLevel)
                         {
@@ -2174,18 +2190,19 @@ namespace TNS.AdExpressI.LostWon
                             string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
 
                             if (gadParams.Length > 0)
-                                gridData[i, 2] = gadParams;
+                                gridData[currentLine, 2] = gadParams;
                             else
-                                gridData[i, 2] = "";
+                                gridData[currentLine, 2] = "";
 
-                            gridData[i, k + 2] = label;
+                            gridData[currentLine, k + 2] = label;
                         }
                         else
                         {
-                            gridData[i, k + 2] = cell.RenderString();
+                            gridData[currentLine, k + 2] = cell.RenderString();
                         }
                     }
                 }
+                currentLine++;
             }
             gridResult.NeedFixedColumns = true;
             gridResult.HasData = true;

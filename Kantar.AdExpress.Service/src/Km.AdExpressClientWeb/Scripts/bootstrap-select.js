@@ -146,7 +146,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    searchAccentInsensitive: false
+    searchAccentInsensitive: false,
+    all: 'All'
   };
 
   Selectpicker.prototype = {
@@ -394,7 +395,7 @@
       var totalCount = this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length;
       
 
-      var title = !this.multiple ? selectedItems[0] : (selectedItems.length != totalCount ? selectedItems.join(this.options.multipleSeparator) : "Tous");
+      var title = !this.multiple ? selectedItems[0] : (selectedItems.length != totalCount ? selectedItems.join(this.options.multipleSeparator) : this.options.all);
 
       //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
@@ -1244,6 +1245,7 @@
 
             return arr;
         },
+        all: 'Tous',
         multipleSeparator: ', '
     };
 }(jQuery));
