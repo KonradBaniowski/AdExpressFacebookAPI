@@ -2225,10 +2225,10 @@ namespace TNS.AdExpressI.PresentAbsent
             for (int i = 0; i < resultTable.LinesNumber; i++) //
             {
                 cLineStart = resultTable.GetLineStart(i);
-                if (resultTable.GetLineStart(i) is LineHide)
+                if (cLineStart is LineHide)
                     continue;
             
-                gridData[currentLine, 0] = currentLine; // Pour column ID
+                gridData[currentLine, 0] = i; // Pour column ID
                 gridData[currentLine, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
 
                 for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
