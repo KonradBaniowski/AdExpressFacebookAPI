@@ -44,13 +44,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="font-normal" style="color:white;"><i></i></h4>
                 </div>
                 <div class="modal-body">
                     <div class="media video-audio-container">
                         <video id="creativeStream" class="hide" width="100%" controls="controls" preload="auto" autoplay>
-                          Votre navigateur ne gère pas l'élément
+                            Votre navigateur ne gère pas l'élément
                         </video>
                         <div id="mediaLoader">
                             <center><i style="color:black;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
@@ -97,28 +97,28 @@
 
     <script id="colVisuTmpl" type="text/template">
         {{if ${Visu}.startsWith('[') && ${Visu}.endsWith(']') }}
-            <!-- Slider -->
-            <div class="row">
-                <div style="width:350px;margin-bottom:10px; float:left" id="visuCarou" datavisu="${Visu}" class="carousel slide" >
-                    <div class="carousel-inner" role="listbox"></div>
+        <!-- Slider -->
+        <div class="row">
+            <div style="width:350px;margin-bottom:10px; float:left" id="visuCarou" datavisu="${Visu}" class="carousel slide">
+                <div class="carousel-inner" role="listbox"></div>
 
-                    <a class="left carousel-control">
-                        <span style="color:black;" class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Precedent</span>
-                    </a>
-                    <a class="right carousel-control">
-                        <span  style="color:black;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Suivant</span>
-                    </a>
-                </div>
-                <div style="margin-left:350px;" class="infos"></div>
+                <a class="left carousel-control">
+                    <span style="color:black;" class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Precedent</span>
+                </a>
+                <a class="right carousel-control">
+                    <span style="color:black;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Suivant</span>
+                </a>
             </div>
+            <div style="margin-left:350px;" class="infos"></div>
+        </div>
         {{else}}
-            ${Visu}
+        ${Visu}
         {{/if}}
     </script>
     <script>
-    if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
+        if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
 
         $("#grid").igTreeGrid({
             //dataSource: data,
@@ -186,7 +186,12 @@
                                 name: "ColumnFixing",
                                 fixingDirection: "left",
                                 columnSettings: colsFixed
+                            },
+                            {
+                                name: "Tooltips",
+                                visibility: "always"
                             }
+
                         ]
                     })
                 }
@@ -207,6 +212,13 @@
                                 name: "Paging",
                                 mode: "allLevels",
                                 pageSize: 100
+                            },
+                            {
+                                name: "Tooltips",
+                                visibility: "always"
+                            },
+                            {
+                                name: "Resizing"
                             }
                         ]
                     })
@@ -374,7 +386,7 @@
         function GetDetailLevelItem() {
             var params = {
                 idVehicle: userFilter.paramsUrl.idVehicle,
-                isVehicleChanged : userFilter.isVehicleChanged
+                isVehicleChanged: userFilter.isVehicleChanged
             };
             $.ajax({
                 url: '@Url.Action("GetDetailLevel", "Insertions")',
@@ -484,7 +496,7 @@
                     $(this).html('<center><img id="pop" class="imgCreaInser" src="' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
                 }
                 for (j = infos.length - 1; j >= 0; j--) {
-                    if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
+                    if (infos[j] != "" && (infos[j].indexOf(":") >= 0)) {
                         tmp = infos[j].split(":");
                         $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp[0] + '</span> : ' + tmp[1] + '</div>')
                     }
@@ -584,7 +596,7 @@
 
         //Export btn
         $('#btn-export').on('click', function (e) {
-           window.open('@Url.Action("InsertionsResult", "InsertionsExport")?ids='+userFilter.paramsUrl.ids+'&zoomDate='+userFilter.paramsUrl.zoomDate+'&idUnivers='+userFilter.paramsUrl.idUnivers+'&moduleId='+userFilter.paramsUrl.moduleId+'&idVehicle='+userFilter.paramsUrl.idVehicle, '_blank');
+            window.open('@Url.Action("InsertionsResult", "InsertionsExport")?ids=' + userFilter.paramsUrl.ids + '&zoomDate=' + userFilter.paramsUrl.zoomDate + '&idUnivers=' + userFilter.paramsUrl.idUnivers + '&moduleId=' + userFilter.paramsUrl.moduleId + '&idVehicle=' + userFilter.paramsUrl.idVehicle, '_blank');
         });
 
         //Resize de la page, la longuer du tableau egalament
