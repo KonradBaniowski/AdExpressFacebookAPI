@@ -54,7 +54,7 @@ function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest,
         var onclick = "";
         if (resultType == "3") { //Pour detailSupport
             href="";
-            onclick = "javascript:window.open(\"/PortfolioDetailMedia?idMedia=" + val.Id + "&dayOfWeek=" + val.DayN + "&ecran=\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\"); void(0);"
+            onclick = "javascript:window.open(\"/PortfolioDetailMedia?idMedia=" + val.Id + "&dayOfWeek=" + val.DayN + "&ecran=\",  \"_blank\"); void(0);"
         }
             
 
