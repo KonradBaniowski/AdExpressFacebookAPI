@@ -785,17 +785,27 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             else if (cell is CellUnit)
             {
-                double value = ((CellUnit)cell).GetValue();
-                if (value != 0.0)
+                //string formatString = string.Format("{{0:{0}}}",
+                //                  WebApplicationParameters.GenericColumnItemsInformation.
+                //                  Get(GenericColumnItemInformation.Columns.airtime.GetHashCode()).StringFormat);
+                if (((CellUnit)cell).StringFormat.Contains("airtime"))//formatString)
                 {
-                    sheet.Cells[cellRow, cellCol].Value = value;
+                    sheet.Cells[cellRow, cellCol].Value = cell;
+                }
+                else
+                {
+                    double value = ((CellUnit)cell).GetValue();
+                    if (value != 0.0)
+                    {
+                        sheet.Cells[cellRow, cellCol].Value = value;
 
-                    if (((CellUnit)cell).AsposeFormat == -1)
-                        SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
-                    else
-                        SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
+                        if (((CellUnit)cell).AsposeFormat == -1)
+                            SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                        else
+                            SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
 
-                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                    }
                 }
             }
             else if (cell is CellLabel)
