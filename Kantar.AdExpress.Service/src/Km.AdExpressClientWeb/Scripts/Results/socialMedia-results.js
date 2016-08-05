@@ -112,6 +112,8 @@
                             cols[i].template = $("#linkUrlTmpl").html();
                         if (cols[i].key == "checkBox")
                             cols[i].template = $("#checkBoxTmpl").html();
+                        if (cols[i].key == "PageName")
+                            cols[i].template = $("#pageNameTmpl").html();
                     }
 
                     var schema = new $.ig.DataSchema("array", {
@@ -274,6 +276,46 @@
         downloadCanvas(this, dataURL, 'charts.png');
 
         contextAll.clearRect(0, 0, canvas.width, canvas.height);
+
+    });
+
+
+    /** click on page name  **/
+    $(document).on("click", ".pageNameFacebookLink", function (event) {
+
+        var id = $(this).attr('data-pagefb');
+
+        /***TODO : a mettre dans le success ***/
+        $('#pageAdverBrandTypeCombo').val(id);
+        $('#pageAdverBrandTypeCombo').selectpicker('refresh');
+
+        var postPosition = $('#post-id').offset().top;
+        $('html, body').animate({ scrollTop: postPosition }, 'slow');
+        /*************************************/
+
+        var array = id.split(",");
+        var ids = []
+        $.each(array, function (index, value) {
+            ids.push(Number(value));
+        });
+       
+
+        $.ajax({
+            url: '/SocialMedia/GetPostbyIdpage',
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            datatype: "json",
+            data: {
+                ids: ids
+            },
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert(thrownError);
+            },
+            success: function (data) {
+                $('#top-post').html('').append(data);
+                getData();
+            }
+        });
 
     });
 
@@ -1258,7 +1300,6 @@ $('#pageAdverBrandTypeCombo, #seriesType').on('change', function () {
             getData();
             var postPosition = $('#post-id').offset().top;
             $('html, body').animate({ scrollTop: postPosition }, 'slow');
-
         }
     });
 });

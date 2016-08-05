@@ -2847,3 +2847,8 @@ ul.ui-selectable {
 }
 
 
+.pageNameFacebookLink{
+    color : inherit !important;
+    text-decoration:underline;
+}
+
