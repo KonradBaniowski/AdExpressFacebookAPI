@@ -84,6 +84,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long EndDateAfterBeginDate = 1855;
         public const long LevelDetails = 1886;
         public const long CreativeLabel = 1888;
+        public const long NiveauxPersonalises = 1896;
         public const long Delete = 1951;
         public const long Save = 1990;
         public const long Export = 1992;

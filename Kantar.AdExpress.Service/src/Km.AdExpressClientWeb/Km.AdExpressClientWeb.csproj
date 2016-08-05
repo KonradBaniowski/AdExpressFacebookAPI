@@ -227,6 +227,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
+    <Compile Include="Models\Insertions\DetailLevelViewModel.cs" />
     <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Shared\ExportResultModel.cs" />
@@ -1658,7 +1659,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\HomePageValues\" />
     <Folder Include="Models\Creative\" />
-    <Folder Include="Models\Insertions\" />
     <Folder Include="Models\LostWon\" />
     <Folder Include="Models\PresentAbsent\" />
     <Folder Include="Views\AnalyseSectoExport\" />
