@@ -52,16 +52,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 periodBegin = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
                 tmp = new AtomicPeriodWeek(new DateTime(int.Parse(realPeriodEnd.Substring(0, 4)), int.Parse(realPeriodEnd.Substring(4, 2)), int.Parse(realPeriodEnd.Substring(6, 2))));
                 periodEnd = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
-                subPeriod.PeriodLabel = "Semaine";
+                subPeriod.PeriodLabel = GestionWeb.GetWebWord(2277, CustomerSession.SiteLanguage);
             }
             else
             {
                 periodType = WebCst.CustomerSessions.Period.Type.dateToDateMonth;
                 periodBegin = realPeriodBegin.Substring(0, 6);
                 periodEnd = realPeriodEnd.Substring(0, 6);
-                subPeriod.PeriodLabel = "Mois";
+                subPeriod.PeriodLabel = GestionWeb.GetWebWord(2276, CustomerSession.SiteLanguage);
             }
 
+            subPeriod.LeaveZoom = GestionWeb.GetWebWord(2309, CustomerSession.SiteLanguage);
 
             string currentPeriod = periodBegin;
             periodIndex = -1;

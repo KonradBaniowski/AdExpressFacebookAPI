@@ -1,10 +1,11 @@
 ﻿@model List<Kantar.AdExpress.Service.Core.Domain.DetailLevel>
+@using TNS.AdExpress.Domain.Translation;
 
 <div>
     <a data-toggle="collapse" class="collapsed" href="#lvlperso">
         <div id="lvlPersoHeader" class="panel-heading" role="tab" id="headingOne">
             <h5 class="panel-title">
-                Niveaux personnalisés
+                @GestionWeb.GetWebWord(1896, ViewBag.SiteLanguage)
                 <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
             </h5>
         </div>

@@ -120,6 +120,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle, isVehicleChanged);
 
+            ViewBag.SiteLanguage = _webSessionService.GetSiteLanguage(idWebSession);
+
             return PartialView("_DetailLevel", detailLevel);
         }
 
