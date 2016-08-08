@@ -1157,6 +1157,10 @@ namespace TNS.AdExpress
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)
                         && _flagsRights[Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG] != null);
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.dooh:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DOOH_CREATION_ACCESS_FLAG)) return true;
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DOOH_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_DOOH_CREATION_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.indoor:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INDOOR_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INDOOR_CREATION_ACCESS_FLAG)

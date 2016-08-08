@@ -200,6 +200,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 case CstDBClassif.Vehicles.names.czinternet:
                 case CstDBClassif.Vehicles.names.internet:
                 case CstDBClassif.Vehicles.names.outdoor:
+                case CstDBClassif.Vehicles.names.dooh:
                 case CstDBClassif.Vehicles.names.indoor:
                 case CstDBClassif.Vehicles.names.instore:
                 case CstDBClassif.Vehicles.names.cinema:

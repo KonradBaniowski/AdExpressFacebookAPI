@@ -121,7 +121,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor
-                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.dooh
+                    || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.dooh
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo)
                 creatives.Items = creatives.Items.OrderBy(i => i.NbVisuals).ToList();

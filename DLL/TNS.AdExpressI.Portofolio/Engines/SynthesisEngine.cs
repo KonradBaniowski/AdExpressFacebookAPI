@@ -193,6 +193,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 ))
             {
                 if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.dooh
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
                 {
@@ -433,8 +434,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
         protected virtual string GetDataProductNumberInTracking()
         {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
-                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.dooh
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
@@ -463,6 +465,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                   && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.dooh
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
@@ -528,6 +531,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
         protected virtual DataTable GetDataTypeSale()
         {
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.dooh
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
             {
@@ -572,6 +576,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
                 // Date begin and date end for outdooor
                 if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.dooh
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
                     && isAlertModule)
@@ -817,6 +822,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
             #region Compute data
             if (dataUnit != null
                 && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.dooh
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore))
             {
@@ -853,6 +859,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
             #region Compute data
             if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.dooh
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
                 && isAlertModule)
@@ -1425,6 +1432,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
             #region Compute data
             if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.dooh
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
@@ -1471,6 +1479,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
             #region Compute data
             if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.dooh
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing

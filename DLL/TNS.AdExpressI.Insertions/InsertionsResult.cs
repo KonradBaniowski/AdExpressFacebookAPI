@@ -288,6 +288,8 @@ namespace TNS.AdExpressI.Insertions
                     vehicles.Add(VehiclesInformation.Get(Vehicles.names.magazine));
                 if (VehiclesInformation.Contains(Vehicles.names.outdoor))
                     vehicles.Add(VehiclesInformation.Get(Vehicles.names.outdoor));
+                if (VehiclesInformation.Contains(Vehicles.names.dooh))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.dooh));
                 if (VehiclesInformation.Contains(Vehicles.names.indoor))
                     vehicles.Add(VehiclesInformation.Get(Vehicles.names.indoor));
                 if (VehiclesInformation.Contains(Vehicles.names.instore))
@@ -425,6 +427,7 @@ namespace TNS.AdExpressI.Insertions
                         case Vehicles.names.mailValo:
                         case Vehicles.names.directMarketing:
                         case Vehicles.names.outdoor:
+                        case Vehicles.names.dooh:
                         case Vehicles.names.indoor:
                         case Vehicles.names.instore:
                             vignettes = GetOutDoorVignettes(idVehicle, currentRow, vignettes, imagesList);
@@ -656,6 +659,9 @@ namespace TNS.AdExpressI.Insertions
                 case Vehicles.names.outdoor:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_OUTDOOR_CREATION_ACCESS_FLAG);
                     break;
+                case Vehicles.names.dooh:
+                    hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOOH_CREATION_ACCESS_FLAG);
+                    break;
                 case Vehicles.names.instore:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_INSTORE_CREATION_ACCESS_FLAG);
                     break;
@@ -768,6 +774,7 @@ namespace TNS.AdExpressI.Insertions
                         case Vehicles.names.newspaper:
                         case Vehicles.names.magazine:
                         case Vehicles.names.outdoor:
+                        case Vehicles.names.dooh:
                         case Vehicles.names.instore:
                         case Vehicles.names.indoor:
                             setLine = SetAggregLine;
@@ -1435,6 +1442,7 @@ namespace TNS.AdExpressI.Insertions
                     case Vehicles.names.czinternet:
                     case Vehicles.names.internationalPress:
                     case Vehicles.names.outdoor:
+                    case Vehicles.names.dooh:
                     case Vehicles.names.instore:
                     case Vehicles.names.indoor:
                     case Vehicles.names.press:
@@ -1557,6 +1565,11 @@ namespace TNS.AdExpressI.Insertions
                     break;
                 case Vehicles.names.outdoor:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG))
+                        break;
+                    AddVisuals(row, visuals, GetCreativePathOutDoor);
+                    break;
+                case Vehicles.names.dooh:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DOOH_CREATION_ACCESS_FLAG))
                         break;
                     AddVisuals(row, visuals, GetCreativePathOutDoor);
                     break;
