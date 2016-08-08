@@ -2,8 +2,10 @@
 
 var idMedias = [];
 $(document).ready(function () {
+    var outdoor = '8';
     var searchId = '18';
-    var plurimedia ='50';
+    var dooh = '22';
+    var plurimedia = '50';
     //var socialId=TBD
     if ($('#Multiple').val() == "True") {
 
@@ -33,9 +35,9 @@ $(document).ready(function () {
     else {
         idList = "";
         $('.tuile-medias[data-attr-id]').on('click', selectUnique)
-        
+
     }
-    
+
 
     function highlight() {
         var grp = $(this).attr('data-grp');
@@ -54,11 +56,10 @@ $(document).ready(function () {
             $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
         }
         idList = id;
-        if (idList== plurimedia) {
+        if (idList == plurimedia) {
             $('.panel.panel-primary.panel-results.optional-area').toggle();
         }
-        else
-        {
+        else {
             $('.panel.panel-primary.panel-results.optional-area').show();
         }
     }
@@ -66,13 +67,27 @@ $(document).ready(function () {
     function selectMultiple(e) {
         $(this).toggleClass("tuile-medias tuile-medias-active")
         var id = $(this).attr("data-attr-id");
-
-        var index = $.inArray(id, idList);
-        if (index > -1) {
-            idList.splice(index, 1);
+        if (id == searchId) {
+            $.each(idList, function (index, value) {
+                if (value != searchId) {
+                    $('.tuile-medias-active[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active");
+                    $(this).removeAttr("checked");
+                }
+            });
+            idList = [];
+            idList.push(id);
         }
         else {
-            idList.push(id);
+
+            var index = $.inArray(id, idList);
+            if (index > -1) {
+                idList.splice(index, 1);
+            }
+            else {
+                //Manage exclusif selection of outdoor and dooh
+                manageDoohSelection(id);
+                idList.push(id);
+            }
         }
     }
 
@@ -91,6 +106,21 @@ $(document).ready(function () {
             });
             $(this).attr("checked", "");
         }
+    }
+    function manageDoohSelection(id) {
+        var outdoorIndex = $.inArray(outdoor, idList);
+        var doohIndex = $.inArray(dooh, idList);
+        if (outdoorIndex > -1 && id == dooh) {
+            handleExclusifSelection(outdoorIndex,outdoor);
+        }
+        if (doohIndex > -1 && id == outdoor) {
+            handleExclusifSelection(doohIndex,dooh);
+        }
+    }
+    function handleExclusifSelection(excludedIndex, excludedValue) {
+        idList.splice(excludedIndex, 1);
+        $('.tuile-medias-active[data-attr-id="' + excludedValue + '"]').toggleClass("tuile-medias tuile-medias-active");
+        $(this).removeAttr("checked");
     }
 });
 
@@ -134,7 +164,7 @@ $('#Market').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
-    if (nextUrl === "MediaSchedule"|| nextUrl==="Analysis") {
+    if (nextUrl === "MediaSchedule" || nextUrl === "Analysis") {
         //nextUrl = "Index";
         nextUrl = "Market";
     }
@@ -145,8 +175,8 @@ $('#Dates').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
-    
-    if (nextUrl === "MediaSchedule"|| nextUrl==="Analysis") {
+
+    if (nextUrl === "MediaSchedule" || nextUrl === "Analysis") {
         //nextUrl = "Index";
         nextUrl = "Market";
     }
@@ -160,14 +190,12 @@ $('#Results').on('click', function (e) {
     var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
     $.each(items, function (index, value) {
         var page = $(value).attr('id');
-        if (page == "Dates" || page =="Market")
-        {
+        if (page == "Dates" || page == "Market") {
             gotoResult = false;
             return;
         }
     });
-    if(gotoResult)
-    {
+    if (gotoResult) {
         var nextUrl = $(this).attr('href').split('/').pop();
         if (nextUrl === "MediaSchedule") {
             strHtml += "<li>" + page + "</li>";
@@ -177,8 +205,7 @@ $('#Results').on('click', function (e) {
         var dis = this;
         NextStep(nextUrl, dis)
     }
-    else
-    {
+    else {
         strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>" + strHtml + "</ul>";
         bootbox.alert(strHtml);
     }
@@ -223,13 +250,12 @@ function validate() {
     if ($('.tuile-medias-active').length > 0) {
         $.each($('.tuile-medias-active'), function (index, value) {
             idMedias.push($(value).attr('data-attr-id'));
-            
+
         });
     }
     if (idMedias.length == 0)
         message = $('#Labels_ErrorMediaSelected').val();
-    else
-    {
+    else {
         var nbElemExclus = $("[id^='tree'][data-access-type='0'] li[data-id]").length;
         if (nbElemExclus > 0) {
             var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
@@ -237,7 +263,7 @@ function validate() {
                 message = $('#Labels_ErrorMininumInclude').val();
             }
         }
-     
+
     }
     return message;
 }
@@ -249,7 +275,7 @@ function NextStep(nextUrl, dis) {
         return;
     }
     $('#btnSubmitMarketSelection').off('click');
-   
+
     var selectedMediaSupportTrees = getSelectedMediaSupport();
     var params = {
         selectedMedia: idMedias,
