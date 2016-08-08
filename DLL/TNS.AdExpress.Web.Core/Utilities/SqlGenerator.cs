@@ -2996,6 +2996,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 				case ClassificationConstantes.DB.Vehicles.names.press:
                     return WebApplicationParameters.GetDataTable(TableIds.recapPress, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.outdoor:
+                case ClassificationConstantes.DB.Vehicles.names.dooh:
                     return WebApplicationParameters.GetDataTable(TableIds.recapOutDoor, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.instore:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInStore, isRetailerSelected).Sql;
@@ -3049,6 +3050,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case ClassificationConstantes.DB.Vehicles.names.magazine:
                     return WebApplicationParameters.GetDataTable(TableIds.recapMagazineSegment, isRetailerSelected).Sql; 
                 case ClassificationConstantes.DB.Vehicles.names.outdoor:
+                case ClassificationConstantes.DB.Vehicles.names.dooh:
                     return WebApplicationParameters.GetDataTable(TableIds.recapOutDoorSegment, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.indoor:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInDoorSegment, isRetailerSelected).Sql;
@@ -3621,6 +3623,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.others:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.indoor:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInDoor, isRetailerSelected).SqlWithPrefix);
@@ -3687,6 +3690,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.others:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.indoor:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInDoorAlert, isRetailerSelected).SqlWithPrefix);
@@ -3774,6 +3778,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.others:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.indoor:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInDoor, isRetailerSelected).Label);
@@ -3840,6 +3845,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.others:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.indoor:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInDoorAlert, isRetailerSelected).Label);
@@ -3901,6 +3907,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         case DBClassificationConstantes.Vehicles.names.others:
                             return WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.outdoor:
+                        case DBClassificationConstantes.Vehicles.names.dooh:
                             return WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.indoor:
                             return WebApplicationParameters.GetDataTable(TableIds.dataInDoorAlert, isRetailerSelected).SqlWithPrefix;
@@ -3948,6 +3955,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         case DBClassificationConstantes.Vehicles.names.others:
                             return WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.outdoor:
+                        case DBClassificationConstantes.Vehicles.names.dooh:
                             return WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.indoor:
                             return WebApplicationParameters.GetDataTable(TableIds.dataInDoor, isRetailerSelected).SqlWithPrefix;
@@ -4596,6 +4604,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.others:
                     return WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     return WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.indoor:
                     return WebApplicationParameters.GetDataTable(TableIds.dataInDoorAlert, isRetailerSelected);
@@ -4647,6 +4656,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.others:
                     return WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     return WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.indoor:
                     return WebApplicationParameters.GetDataTable(TableIds.dataInDoor, isRetailerSelected);
@@ -4950,6 +4960,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     fields += " sum(" + dataTotalTablePrefixe + ".DURATION_EVOL)/count(" + DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE + ".MEDIA)) as SUB_DURATION_EVOL ";
                     return (fields);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                 case DBClassificationConstantes.Vehicles.names.indoor:
                 case DBClassificationConstantes.Vehicles.names.instore:
                     fields = dataTablePrefixe + ".EXPENDITURE_CUR, ";

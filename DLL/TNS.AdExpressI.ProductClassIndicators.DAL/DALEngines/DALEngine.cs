@@ -208,6 +208,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapInternet, _session.IsSelectRetailerDisplay)
                         : WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.outdoor:
+                case CstDBClassif.Vehicles.names.dooh:
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapOutDoor, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapOutDoorSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.indoor:

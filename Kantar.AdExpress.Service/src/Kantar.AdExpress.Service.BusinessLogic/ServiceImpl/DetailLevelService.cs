@@ -48,16 +48,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 detaiLevelltmp.level = i;
                 DetailLevelItemInformation.Levels loadDetailLevel = new DetailLevelItemInformation.Levels();
 
-                if (((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))
-                    && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.outdoor))
-                    || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.dooh))
-                    || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_DOOH_ACCESS_FLAG))
-                    && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.instore))
-                    || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INDOOR_ACCESS_FLAG))
-                    && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.indoor))
+                if (((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.outdoor))
+                    || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_DOOH_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.dooh))
+                    || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.instore))
+                    || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INDOOR_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.indoor))
                     || (VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.outdoor
                         && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.instore
-                          && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.dooh
+                        && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.dooh
                         && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.indoor)
                     )
                 {

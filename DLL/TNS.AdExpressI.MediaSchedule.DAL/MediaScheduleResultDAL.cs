@@ -1241,6 +1241,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                         case CstDBClassif.Vehicles.names.magazine:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
+                        case CstDBClassif.Vehicles.names.dooh:
                         case CstDBClassif.Vehicles.names.instore:
                         case CstDBClassif.Vehicles.names.indoor:
                             switch (displayPeriod)
@@ -1252,7 +1253,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                                 default:
                                     if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.instore
                                         || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.indoor
-                                        || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.outdoor)
+                                        || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.outdoor
+                                        || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.dooh)
                                     {
                                         return (" trunc(CEIL(max(duration)/86400)) as period_count ");
                                     }
