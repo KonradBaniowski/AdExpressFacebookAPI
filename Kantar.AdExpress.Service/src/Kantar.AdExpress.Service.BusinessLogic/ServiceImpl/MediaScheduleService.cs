@@ -36,7 +36,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public object[,] GetMediaScheduleData(string idWebSession)
         {
             IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "");
-            
+
             return mediaScheduleResult.ComputeData();
         }
 
@@ -74,7 +74,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             VehicleInformation vehicle = VehiclesInformation.Get(Int64.Parse(vehicles[0]));
             data = resultMSCreatives.GetMSCreatives(vehicle, fromDate, toDate, filters, -1, zoomDate);
 
-            switch(vehicle.Id) {
+            switch (vehicle.Id)
+            {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
                     return GetEvaliantCreatives(data, vehicle);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
@@ -120,6 +121,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor
+                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.dooh
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo)
                 creatives.Items = creatives.Items.OrderBy(i => i.NbVisuals).ToList();
@@ -206,7 +208,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return creatives;
         }
 
-        public void SetMSCreatives(string idWebSession, ArrayList slogans) {
+        public void SetMSCreatives(string idWebSession, ArrayList slogans)
+        {
 
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
 
@@ -218,7 +221,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate)
         {
-           
+
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
 
             TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
@@ -410,6 +413,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
         #endregion
-    
+
     }
 }

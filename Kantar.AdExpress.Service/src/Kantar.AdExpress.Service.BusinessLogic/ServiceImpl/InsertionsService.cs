@@ -93,6 +93,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     insertionResponse.Message = GestionWeb.GetWebWord(1882, _customerWebSession.SiteLanguage);
                 }
+                else if (vehicle.Id == CstDBClassif.Vehicles.names.dooh &&
+                !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_DOOH_ACCESS_FLAG))
+                {
+                    insertionResponse.Message = GestionWeb.GetWebWord(3050, _customerWebSession.SiteLanguage);
+                }
                 else if (vehicle.Id == CstDBClassif.Vehicles.names.instore &&
                     !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INSTORE_ACCESS_FLAG))
                 {
@@ -345,6 +350,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         break;
                     case CstDBClassif.Vehicles.names.outdoor:
                         vehicle = GestionWeb.GetWebWord(1302, _customerWebSession.SiteLanguage);
+                        break;
+                    case CstDBClassif.Vehicles.names.dooh:
+                        vehicle = GestionWeb.GetWebWord(3049, _customerWebSession.SiteLanguage);
                         break;
                     case CstDBClassif.Vehicles.names.instore:
                         vehicle = GestionWeb.GetWebWord(2665, _customerWebSession.SiteLanguage);

@@ -296,6 +296,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case CstDBClassif.Vehicles.names.outdoor:
                         vehicle = GestionWeb.GetWebWord(1302, _customerWebSession.SiteLanguage);
                         break;
+                    case CstDBClassif.Vehicles.names.dooh:
+                        vehicle = GestionWeb.GetWebWord(3049, _customerWebSession.SiteLanguage);
+                        break;
                     case CstDBClassif.Vehicles.names.instore:
                         vehicle = GestionWeb.GetWebWord(2665, _customerWebSession.SiteLanguage);
                         break;

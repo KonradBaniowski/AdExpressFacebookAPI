@@ -1,11 +1,10 @@
-﻿@model List<Kantar.AdExpress.Service.Core.Domain.DetailLevel>
-@using TNS.AdExpress.Domain.Translation;
+﻿@model Km.AdExpressClientWeb.Models.Insertions.DetailLevelViewModel
 
 <div>
     <a data-toggle="collapse" class="collapsed" href="#lvlperso">
         <div id="lvlPersoHeader" class="panel-heading" role="tab" id="headingOne">
             <h5 class="panel-title">
-                @GestionWeb.GetWebWord(1896, ViewBag.SiteLanguage)
+                @Model.Labels.NiveauxPersonalises
                 <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
             </h5>
         </div>
@@ -15,9 +14,9 @@
             <div class="form-group">
                     @for (int i = 0; i < 3; i++)
                     {
-                        <select id="l@(Model[i].level)Detail" class="form-control">
+                        <select id="l@(Model.Items[i].level)Detail" class="form-control">
                             <option value="-1">--------</option>
-                            @foreach (var item in Model[i].Items)
+                            @foreach (var item in Model.Items[i].Items)
                             {
                                 if (@item.IsSelected)
                                 {
@@ -31,7 +30,7 @@
                         </select>
                     }
             </div>
-            <button id="submitLvl" class="pull-right btn btn-action">Valider</button>
+            <button id="submitLvl" class="pull-right btn btn-action">@Model.Labels.Submit</button>
         </div>
     </div>
 </div>

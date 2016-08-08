@@ -1,5 +1,8 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
+using Km.AdExpressClientWeb.Helpers;
+using Km.AdExpressClientWeb.Models.Insertions;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
 using Newtonsoft.Json;
@@ -118,11 +121,13 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle, isVehicleChanged);
+            List<DetailLevel> detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle, isVehicleChanged);
+
+            DetailLevelViewModel model = new DetailLevelViewModel { Labels = LoadPageLabels(_webSessionService.GetSiteLanguage(idWebSession)) , Items = detailLevel};
 
             ViewBag.SiteLanguage = _webSessionService.GetSiteLanguage(idWebSession);
-
-            return PartialView("_DetailLevel", detailLevel);
+            
+            return PartialView("_DetailLevel", model);
         }
 
         public void SetDetailLevel(UserFilter userFilter)
@@ -140,7 +145,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
                 InsertionsLabel = GestionWeb.GetWebWord(LanguageConstantes.InsertionsLabel, siteLanguage),
                 DownloadLabel = GestionWeb.GetWebWord(LanguageConstantes.DownloadLabel, siteLanguage),
-                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage)
+                VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage),
+                Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
+                NiveauxPersonalises = GestionWeb.GetWebWord(LanguageConstantes.NiveauxPersonalises, siteLanguage)
             };
 
             return result;

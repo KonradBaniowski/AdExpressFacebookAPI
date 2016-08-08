@@ -146,6 +146,18 @@
         </detailColumn>
       </detailColumns>
     </vehicle>
+    <vehicle id="22"   name="DOOH" >
+      <detailColumns>
+        <detailColumn id="14">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Present/Absent" privilegecode="278"/>
+            <allowedModule name="Lost/Won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
   </vehicleGroups>
 
 </configuration>
