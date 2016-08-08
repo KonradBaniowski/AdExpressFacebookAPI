@@ -70,6 +70,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case ClassificationCst.DB.Vehicles.names.radioSponsorship:
                         case ClassificationCst.DB.Vehicles.names.radioMusic:
                         case ClassificationCst.DB.Vehicles.names.outdoor:
+                        case ClassificationCst.DB.Vehicles.names.dooh:
                         case ClassificationCst.DB.Vehicles.names.indoor:
                         case ClassificationCst.DB.Vehicles.names.mediasTactics:
                             mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1141, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString() });

@@ -1091,6 +1091,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS
                         || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));
                 case ClassificationCst.DB.Vehicles.names.outdoor:
+                case ClassificationCst.DB.Vehicles.names.dooh:
                 case ClassificationCst.DB.Vehicles.names.instore:
                 case ClassificationCst.DB.Vehicles.names.indoor:
                 case ClassificationCst.DB.Vehicles.names.cinema:

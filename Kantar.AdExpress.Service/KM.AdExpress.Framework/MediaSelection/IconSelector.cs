@@ -51,6 +51,9 @@ namespace KM.AdExpress.Framework.MediaSelection
                 case Vehicles.names.outdoor:
                     icon = "iconkantar-commercial";
                     break;
+                case Vehicles.names.dooh:
+                    icon = "iconkantar-dooh";
+                    break;
                 case Vehicles.names.radio:
                     icon = "iconkantar-radio46";
                     break;
