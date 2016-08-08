@@ -55,6 +55,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string FACEBOOK = "SocialMedia";
         private const int ADVERTISERID = 6;
         private const int BRANDID = 8;
+        private const int OUTDOOR = 8;
+        private const int DOOH = 22;
         private const string FcbMarketErrorMsg = "Please select at maximum 5 advertisers or brands.";
         #endregion
         private WebSession _webSession = null;
@@ -76,8 +78,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 else
                 {
-                    #region Save Media Selection in WebSession
+                #region Save Media Selection in WebSession
                     WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
+                    if(_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && request.MediaIds.Contains(OUTDOOR)&&request.MediaIds.Contains(DOOH))
+                    {
+                        response.ErrorMessage = "Inavlid Selection";
+                        return response;
+                    }
                     _webSession.Insert = CstWeb.CustomerSessions.Insert.total;
                     List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
                     System.Windows.Forms.TreeNode tmpNode;
