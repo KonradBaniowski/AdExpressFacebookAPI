@@ -108,6 +108,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             #endregion
             _siteLanguage = result.SiteLanguage;
+            model.CurrentModule = result.ControllerDetails.ModuleId;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             ViewBag.SiteLanguage = _siteLanguage;
             var marketNode = new NavigationNode { Position = 1 };

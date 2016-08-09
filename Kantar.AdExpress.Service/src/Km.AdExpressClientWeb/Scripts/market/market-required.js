@@ -98,38 +98,36 @@ $(function () {
             }
         });
     }
-    var moduleId = $('#CurrentModule').val();
-    if (moduleId == 194 || moduleId == 195)
-    {
-     $("#branch1 > div").each(function () {
-        var DIS = $(this);
-        var universe = parseFloat($(this).attr('data-universe'))
-        var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
-        if (universe === 1) {
-            $.ajax({
-        url: '/Universe/GetCategoryItems',
-        contentType: 'application/json',
-        type: 'POST',
-        datatype: 'JSON',
-        error: function (xmlHttpRequest, errorText, thrownError) {
-                    alert("error");
-    },
-        success: function (response) {
-                    DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+    //var moduleId = $('#CurrentModule').val();
+    // $("#branch1 > div").each(function () {
+    //    var DIS = $(this);
+    //    var universe = parseFloat($(this).attr('data-universe'))
+    //    var univerLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
+    //    if (universe === 1) {
+    //        $.ajax({
+    //    url: '/Universe/GetCategoryItems',
+    //    contentType: 'application/json',
+    //    type: 'POST',
+    //    datatype: 'JSON',
+    //    error: function (xmlHttpRequest, errorText, thrownError) {
+    //                alert("error");
+    //},
+    //    success: function (response) {
+    //                DIS.fillGroupSelectable(univerLabel, response.data, response.total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
 
-                    $('#selectable' + universe).selectableScroll({
-        stop: SelectedItems
-    });
+    //                $('#selectable' + universe).selectableScroll({
+    //    stop: SelectedItems
+    //});
 
-    }
-    });
-    }
-    else {
-            DIS.fillGroupSelectable(univerLabel, undefined, 0, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
-    }
-
-    })
-    }
+    //}
+    //});
+    //}
+    //    else {
+    //        if ((universe == 4 && (moduleId == 194 || moduleId == 195)) || universe != 4) { // universe 4 (SubGroup) is shown by default only for Analysis 
+    //            DIS.fillGroupSelectable(univerLabel, undefined, 0, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+    //        }
+    //}
+    //})
 });
 
 function validate() {
