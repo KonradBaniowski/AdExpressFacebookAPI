@@ -4,7 +4,9 @@
     <message from="tnsadexpress@tnsmi.fr">
 		<!--			
 		<to>youssef.rkaina@tnsmi.fr</to>
+    <to>dede.mussuma@tnsmi.fr</to>
     -->
-		<to>dede.mussuma@tnsmi.fr</to>
+    <to>dede.mussuma@tnsmi.fr</to>
+    <to>youssef.rkaina@tnsmi.fr</to>
     </message>
 </smtp>
