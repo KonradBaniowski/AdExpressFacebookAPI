@@ -38,6 +38,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const long SecurityMsg = 2285;
         private const long OverLimitMsgCode = 2286;
         public const long ElementLabelCode = 2278;
+        public const int CATEGORY = 1;
+        public const int PARENT = 7;
 
         public List<UniversItem> GetItems(SearchRequest request, out int nbItems)
         {
@@ -804,9 +806,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public List<UniversItem> GetGategoryItems(string webSessionId, out int nbItems, Dimension dimension = Dimension.product)
         {
-            List<UniversItem> result = new List<UniversItem>();
-            int levelId = 1;
+            List<UniversItem> result = new List<UniversItem>();            
             webSession = (WebSession)WebSession.Load(webSessionId);
+            int levelId = (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+                           || webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+                           ? PARENT : CATEGORY;
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[3];

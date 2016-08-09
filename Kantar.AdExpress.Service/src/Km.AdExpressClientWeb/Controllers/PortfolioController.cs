@@ -76,6 +76,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             #region Load Branches
             var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            model.CurrentModule = result.ControllerDetails.ModuleId;
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
