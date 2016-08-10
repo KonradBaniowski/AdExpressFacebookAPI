@@ -82,7 +82,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
                     if(_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && request.MediaIds.Contains(OUTDOOR)&&request.MediaIds.Contains(DOOH))
                     {
-                        response.ErrorMessage = "Inavlid Selection";
+                        response.ErrorMessage = GestionWeb.GetWebWord(3080, _webSession.SiteLanguage);
                         return response;
                     }
                     _webSession.Insert = CstWeb.CustomerSessions.Insert.total;

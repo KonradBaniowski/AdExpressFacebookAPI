@@ -2335,5 +2335,6 @@
     <item mnemonic="w3077" type="System.String">Mensuel Cumulé</item>
     <item mnemonic="w3078" type="System.String">Cumul</item>
     <item mnemonic="w3079" type="System.String">Mensuel</item>
+    <item mnemonic="w3080" type="System.String">Vous ne pouvez pas sélectionner simultanément : Publicité Extérieure et DOOH</item>
   </items>
 </localization>
