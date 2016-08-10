@@ -190,6 +190,7 @@ namespace Km.AdExpressClientWeb.Controllers
             //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
             model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
             var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
+            model.CurrentModule = response.ControllerDetails.ModuleId;
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {

@@ -21,6 +21,7 @@
         @Html.HiddenFor(e => e.Labels.ErrorMininumInclude)
         @Html.HiddenFor(e => e.Labels.CurrentController)
         @Html.HiddenFor(e => e.Labels.ErrorMessageLimitKeyword)
+        @Html.HiddenFor(e => e.CurrentModule)
         @foreach (int i in Model.IdMediasCommon)
         {
             <input type="hidden" name="HiddenIntList" value="@i" />
@@ -158,7 +159,7 @@
                                             </div>
                                             @foreach (var item in Model.Branches)
                                             {
-                                                <div id="branch@(item.Id)" class="universes" style="display:none">
+                                                <div id="branch@(item.Id)" class="universes">
                                                     @foreach (var level in item.UniversLevels)
                                                     {
                                                         <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"

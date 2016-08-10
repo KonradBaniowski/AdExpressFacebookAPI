@@ -15,6 +15,7 @@
     @Html.HiddenFor(e => e.Labels.ErrorMessageLimitKeyword)
     @Html.HiddenFor(e => e.Labels.ErrorMininumInclude)
     @Html.HiddenFor(e => e.Labels.ErrorMediaSelected)
+    @Html.HiddenFor(e => e.CurrentModule)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         @Html.Partial("NavigationBar", @Model.NavigationBar)
     </div>
@@ -152,7 +153,7 @@
                                             </div>
                                             @foreach (var item in Model.Branches)
                                             {
-                                                <div id="branch@(item.Id)" class="universes" style="display:none">
+                                                <div id="branch@(item.Id)" class="universes">
                                                     @foreach (var level in item.UniversLevels)
                                                     {
                                                         <div id="groupSelectable@(level.Id)" data-label="@(level.Label)"

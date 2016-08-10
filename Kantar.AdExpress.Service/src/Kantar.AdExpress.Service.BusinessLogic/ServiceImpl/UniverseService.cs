@@ -804,25 +804,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public List<UniversItem> GetGategoryItems(string webSessionId, out int nbItems, Dimension dimension = Dimension.product)
+        public List<UniversItem> GetGategoryItems(SearchItemsCriteria criteria, out int nbItems, Dimension dimension = Dimension.product)
         {
             List<UniversItem> result = new List<UniversItem>();            
-            webSession = (WebSession)WebSession.Load(webSessionId);
-            int levelId = (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
-                           || webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
-                           ? PARENT : CATEGORY;
+            webSession = (WebSession)WebSession.Load(criteria.WebSessionId);
+            int levelId = criteria.UniverseLevel;
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[3];
             param[0] = webSession;
-            param[1] = dimension;
-
+            param[1] = criteria.Dimension;
+            if (criteria.Dimension == Dimension.media && criteria.MediaIds != null)
+                param[2] = string.Join(",", criteria.MediaIds.Select(e => e));
             IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
                 string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
               cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+
             classficationDAL.DBSchema = GetSchema(webSession.CurrentModule);
             DataTable data = classficationDAL.GetItems(levelId, "*").Tables[0];
-
             foreach (var item in data.AsEnumerable())
             {
                 var UItem = new UniversItem

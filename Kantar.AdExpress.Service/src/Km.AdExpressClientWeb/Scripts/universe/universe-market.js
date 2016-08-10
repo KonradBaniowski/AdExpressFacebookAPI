@@ -113,7 +113,11 @@ String.prototype.format = function () {
 $(function () {
     var moduleId = $('#CurrentModule').val();
     var idBranch = $('#branch').attr("data-branch");    
-    var firstUniverse = parseFloat($("#branch" + idBranch + " :first-child").attr('data-universe'));;
+    var firstUniverse = parseFloat($("#branch" + idBranch + " :first-child").attr('data-universe'));
+    var params = {
+        idUniverse: firstUniverse,
+        dimension: dimension
+    };
     
     $("#branch" + idBranch + " > div").each(function () {
         var DIS = $(this);
@@ -125,6 +129,7 @@ $(function () {
                 contentType: 'application/json',
                 type: 'POST',
                 datatype: 'JSON',
+                data: JSON.stringify(params),
                 error: function (xmlHttpRequest, errorText, thrownError) {
                     alert("error");
                 },

@@ -49,8 +49,46 @@ $(document).ready(function () {
             $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
         }
         idList = id;
+        autoPopulateFirstUniverseLevel()
     }
 
+    function autoPopulateFirstUniverseLevel() {
+        var moduleId = $('#CurrentModule').val();
+        var dimension = $('#Dimension').val();
+        var idBranch = $('#branch').attr("data-branch");
+        var firstUniverse = parseFloat($("#branch" + idBranch + " :first-child").attr('data-universe'));;
+        var params = {
+            idUniverse: firstUniverse,
+            dimension: dimension,
+            idMedia: idList
+        };
+
+        $("#branch" + idBranch + " > div").each(function () {
+            var DIS = $(this);
+            var universe = parseFloat($(this).attr('data-universe'))
+            var universeLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
+            if (universe === firstUniverse) {
+                $.ajax({
+                    url: '/Universe/GetCategoryItems',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    datatype: 'JSON',
+                    data: JSON.stringify(params),
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                        alert("error");
+                    },
+                    success: function (response) {
+                        DIS.populateSelectableContainers(universe, universeLabel,response.data,response.total,DIS);
+                    }
+                });
+            }
+            else {
+                if ((universe == 4 && (moduleId != 196 || moduleId != 17109)) || (universe != 4) || (universe == 5 && moduleId != 17109)) { // universe 4 (SubGroup) is not shown by default only for MediaSchedule 
+                    DIS.populateSelectableContainers(universe, universeLabel, null, null, DIS);
+                }
+            }
+        })
+    }
     function selectMultiple(e) {
         $(this).toggleClass("tuile-medias tuile-medias-active")
         var id = $(this).attr("data-attr-id");
@@ -77,6 +115,20 @@ $(document).ready(function () {
             $(this).attr("checked", "");
         }
     }
+    //function populateSelectableContainers(universe, universeLabel, data, total, DIS) {
+    //    var htmlSelectableContainer = $("#containerSelectable" + universe).html();
+    //    if (htmlSelectableContainer != undefined) {
+    //        $("#containerSelectable" + universe).html('');
+    //        $("#groupSelectable" + universe).updateGroup(universeLabel, data, total, 'panel-heading', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.', $("#containerSelectable" +universe), $("#groupSelectable" + universe + " > .panel-heading"));
+    //    }
+    //    else {
+    //        DIS.fillGroupSelectable(universeLabel, data, total, 'panel-heading', 'panel-body', universe, undefined, 1000, '{NB_ELEM_MAX} éléments sur {NB_ELEM}. Affinez votre recherche.');
+    //    }
+    //    $('#selectable' + universe).selectableScroll(
+    //        {
+    //            stop: SelectedItems
+    //        });
+    //}
 });
 
 //VALIDER TODO
@@ -152,8 +204,7 @@ $('#Market').on('click', function (e) {
     e.preventDefault();
     var dis = this;
     var nextUrl = $(this).attr('href').split('/').pop();
-    if (nextUrl === "Portfolio")
-    {
+    if (nextUrl === "Portfolio") {
         nextUrl = "Index";
     }
     NextStep(nextUrl, dis)
@@ -170,7 +221,7 @@ $('#Dates').on('click', function (e) {
 });
 
 $('#Results').on('click', function (e) {
-    e.preventDefault();    
+    e.preventDefault();
     var gotoResult = true;
     strHtml = "";
     var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
@@ -202,7 +253,7 @@ function NextStep(nextUrl, dis) {
         return;
     }
     //var things = [];
-    $('#btnSubmitMarketSelection').off('click');  
+    $('#btnSubmitMarketSelection').off('click');
     var selectedMediaSupportTrees = getSelectedMediaSupport();
     var params = {
         selectedMedia: idList,

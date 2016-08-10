@@ -335,3 +335,44 @@ $('#move-item').on('click', function () {
         });
     }
 });
+
+$('.panel.panel-primary.panel-results.optional-area').on('click', function(event)
+{
+    event.preventDefault();
+    var moduleId = $('#CurrentModule').val();
+    var dimension = $('#Dimension').val();
+    var idBranch = $('#branch').attr("data-branch");
+    var firstUniverse = parseFloat($("#branch" + idBranch + " :first-child").attr('data-universe'));;
+    var params = {
+        idUniverse: firstUniverse,
+        dimension: dimension,
+        idMedia: idList
+    };
+
+    $("#branch" + idBranch + " > div").each(function () {
+        var DIS = $(this);
+        var universe = parseFloat($(this).attr('data-universe'))
+        var universeLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
+        if (universe === firstUniverse) {
+            $.ajax({
+                url: '/Universe/GetCategoryItems',
+                contentType: 'application/json',
+                type: 'POST',
+                datatype: 'JSON',
+                data: JSON.stringify(params),
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    alert("error");
+                },
+                success: function (response) {
+                    DIS.populateSelectableContainers(universe, universeLabel, response.data, response.total, DIS);
+
+                }
+            });
+        }
+        else {
+            if ((universe == 4 && (moduleId != 196 || moduleId != 17109)) || (universe != 4) || (universe == 5 && moduleId != 17109)) { // universe 4 (SubGroup) is not shown by default only for MediaSchedule 
+                DIS.populateSelectableContainers(universe, universeLabel, null, 0, DIS);
+            }
+        }
+    })
+})
