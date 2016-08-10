@@ -112,17 +112,9 @@ String.prototype.format = function () {
 
 $(function () {
     var moduleId = $('#CurrentModule').val();
-    var idBranch = 2;
-    var firstUniverse = 7;
-    if (moduleId == 17109)
-    {
-        idBranch = 21;
-    }
-        
-    if (moduleId != 196 && moduleId != 17109) {
-        idBranch = 1;
-        firstUniverse = 1;
-    }
+    var idBranch = $('#branch').attr("data-branch");    
+    var firstUniverse = parseFloat($("#branch" + idBranch + " :first-child").attr('data-universe'));;
+    
     $("#branch" + idBranch + " > div").each(function () {
         var DIS = $(this);
         var universe = parseFloat($(this).attr('data-universe'))
