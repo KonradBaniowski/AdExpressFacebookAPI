@@ -79,6 +79,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cells\CellCreativesDoohInformation.cs" />
+    <Compile Include="Cells\CellInsertionDoohInformation.cs" />
     <Compile Include="Cells\CellInsertionVMCInformation.cs" />
     <Compile Include="Cells\CellInsertionInformation.cs" />
     <Compile Include="Cells\CellCreativesInformation.cs" />

@@ -1091,6 +1091,10 @@ namespace TNS.AdExpressI.Insertions
                         c = new CellInsertionInformation(_session, columns, columnsName, cells);
                         tab[cLine, 1] = c;
                         break;
+                    case Vehicles.names.dooh:
+                        c = new CellInsertionDoohInformation(_session, columns, columnsName, cells);
+                        tab[cLine, 1] = c;
+                        break;
                     default:
                         tab[cLine, 1] = c = new CellInsertionInformation(_session, columns, columnsName, cells);
                         break;
@@ -1145,6 +1149,9 @@ namespace TNS.AdExpressI.Insertions
                         break;
                     case CstDBClassif.Vehicles.names.evaliantMobile:
                         tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
+                        break;
+                    case CstDBClassif.Vehicles.names.dooh:
+                        tab[cLine, 1] = c = new CellCreativesDoohInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);

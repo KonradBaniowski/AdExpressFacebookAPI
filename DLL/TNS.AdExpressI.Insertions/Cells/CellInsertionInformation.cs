@@ -434,7 +434,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 //str.Append("[/Content/img/no_visu.jpg],"); 
             }
 
-
+            str.Append("[],");
             str.Append("[");
             foreach (GenericColumnItemInformation g in _columns)
             {
