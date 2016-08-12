@@ -66,7 +66,7 @@
               <allowedUniverseLevel id="8" name="brand"/>
               <allowedUniverseLevel id="5" name="product"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="2">
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
               <allowedUniverseBranch id="3" name="brand\product"/>
