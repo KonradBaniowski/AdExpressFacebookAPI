@@ -11,7 +11,7 @@ $(".dropdown-menu.bg-blue li > a").on('click', function (e) {
     $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').attr("data-branch", selValue);
     //CLEAN PANEL ON CHANGE BRANCH
     $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
-    autoPopulateFirstUniverseLevel();
+    //autoPopulateFirstUniverseLevel();
 });
 
 //Touche ENTER 
